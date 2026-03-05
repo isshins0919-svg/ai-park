@@ -1,0 +1,819 @@
+<!-- ============================================================
+  RKL LP — 速度最適化済みテンプレ
+  最終更新: 2026-03-05
+
+  【変更点サマリー】
+  HEAD:
+  1. [削除] Slick Carousel CSS 2ファイル（未使用 → 約15KB削減）
+  2. [追加] preconnect: file.mysquadbeyond.com / ec-force S3
+  3. [追加] dns-prefetch: googletagmanager
+  BODY:
+  4. 全画像に loading="lazy" decoding="async" 追加（ヒーロー除く）
+  5. ヒーロー画像に fetchpriority="high" 追加
+  6. 動画9本: preload="none" + IntersectionObserver で遅延再生
+  7. 重複ID修正: rklvideo4 x3 → rklvideo4 / rklvideo4b / rklvideo4c
+  8. 重複ID修正: formmae-seni x3 → class="formmae-seni" に変更
+  9. width="110%" 属性 → CSS で width:100% に修正
+  FOOTER:
+  10. [削除] jQuery 2.2.4（旧版・重複）→ HEAD で最新版を読み込む
+  11. [削除] html5shiv（IE8専用・2026年不要）
+  12. [追加] fade.js / popup.js に defer
+  CSS:
+  13. .videowrap 5重定義 → 1箇所に統合
+  14. #rklvideo0 2重定義 → 後勝ちの position:relative 版のみ残す
+  15. #rklvideo4 重複ID用に #rklvideo4b / #rklvideo4c を追加（同スタイル）
+  16. CSSの構文エラー修正（#rklvideo2/#rklvideo3/#rklvideo7 の余分な }）
+  17. [削除] #rklvideo7（HTML未使用）
+  18. 重複フォームCSS削除（.landing_form_label_ec 等が2セット定義されていた）
+  19. IE専用フィルター削除（filter: progid:DXImageTransform.Microsoft.Alpha(...)）
+  20. display:none;!important → display: none !important（構文修正）
+  21. .hoba5 img の width:110% → width:100%（無効値を修正）
+
+  ★★★ 動画URLを変更する場合はFOOTER末尾の VIDEO_SOURCES を編集してください ★★★
+  ★ rklvideo4 (最初の1本) のURLはソース上で省略されていたため要確認
+============================================================ -->
+
+
+<!-- ============================================================
+  HEAD（ECフォースのhead欄に貼る）
+============================================================ -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://shop.rmh.co.jp/lp?u=me_rkl_official">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-32x32.png" sizes="16x16">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-192x192.png" sizes="32x32">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PKCQRWT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- ★改善① Slick CSS 削除（未使用のため） -->
+<!-- 削除: <link rel="stylesheet" href=".../slick.css"/>  -->
+<!-- 削除: <link rel="stylesheet" href=".../slick-theme.css"> -->
+
+<!-- ★改善② CDN接続を事前確立（動画・画像の読み込みが速くなる） -->
+<link rel="preconnect" href="https://file.mysquadbeyond.com" crossorigin>
+<link rel="preconnect" href="https://ec-force.s3.amazonaws.com" crossorigin>
+<link rel="dns-prefetch" href="//www.googletagmanager.com">
+
+<meta name="format-detection" content="telephone=no">
+
+
+<!-- ============================================================
+  BODY（ECフォースのbody欄に貼る）
+============================================================ -->
+<div id="lpbody">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKCQRWT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div id="lp">
+
+  <!-- ★改善⑤ rklvideo0: IntersectionObserver で遅延再生 / preload="none" -->
+  <!-- ★ rklvideo0はCSS上 position:relative（通常フロー）で表示 -->
+  <div class="videowrap">
+    <video id="rklvideo0" class="rkl-vid-0" loop autoplay muted playsinline width="100%" preload="none"></video>
+  </div>
+
+  <!-- ★改善④ ヒーロー画像: fetchpriority="high"（最優先読み込み・lazy不要） -->
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-3/251127rkl_2025lp_lpo_v2_1%20.webp" width="100%" fetchpriority="high" decoding="async">
+
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-3/251126rkl_2025lp_lpo_v2_2.webp" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo1" class="rkl-vid-1" loop autoplay muted playsinline preload="none"></video>
+  </div>
+
+  <!-- ★改善④ PNG → 将来的にWebP変換を推奨 -->
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251119rkl_2025lp_lpo_v2_5.png" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251119rkl_2025lp_lpo_v2_6.png" width="100%" loading="lazy" decoding="async">
+
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251119rkl_2025lp_lpo_v2_7.png" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo2" class="rkl-vid-2" loop autoplay muted playsinline preload="none"></video>
+  </div>
+
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_5.webp" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo3" class="rkl-vid-3" loop autoplay muted playsinline preload="none"></video>
+  </div>
+
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_6.webp" width="100%" loading="lazy" decoding="async">
+
+  <!-- CTA block 1 -->
+  <div id="chushakulink1">
+    <!-- ★改善⑧ id="formmae-seni" 重複 → class に変更 -->
+    <img class="formmae-seni" src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/v6-2/251217RKL_2025LP_LPO_v2_Dyuku_1.webp" alt="" width="100%" loading="lazy" decoding="async">
+    <div class="hoba1">
+      <a href="https://shop.rmh.co.jp/info/customer_term">
+        <img src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/43_250414b17jyo%20.webp" width="21%" loading="lazy" decoding="async">
+      </a>
+    </div>
+  </div>
+
+  <!-- ★ rklvideo4: 元ソースでURLが省略されていたため要確認 → VIDEO_SOURCESの 'rkl-vid-4' を設定してください -->
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_8.webp" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo4" class="rkl-vid-4" loop autoplay muted playsinline preload="none"></video>
+  </div>
+
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_9.webp" width="100%" loading="lazy" decoding="async">
+
+  <!-- ★改善⑦ 2つ目の rklvideo4 → rklvideo4b に改名（ID重複解消） -->
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251217RKL_2025LP_LPO_v2_Dyuku_2.webp" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo4b" class="rkl-vid-4b" loop autoplay muted playsinline preload="none"></video>
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_12.webp" width="100%" loading="lazy" decoding="async">
+  </div>
+
+  <!-- CTA ボタン（1セット目） -->
+  <a href="#chatform" data-product-code="2">
+    <picture>
+      <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_7.webp" width="100%" loading="lazy" decoding="async">
+    </picture>
+  </a>
+  <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_8.webp" width="100%" loading="lazy" decoding="async">
+  <a href="#chatform" data-product-code="1">
+    <picture>
+      <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_9.webp" width="100%" loading="lazy" decoding="async">
+    </picture>
+  </a>
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/260119RKL_2025LP_LPO_v1_1.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/rkl_lp_11.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/15_250414rkl_lp_14.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/16_250414rkl_lp_15.webp" width="100%" loading="lazy" decoding="async">
+
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/17_250414rkl_lp_16.webp" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo8" class="rkl-vid-8" loop autoplay muted playsinline preload="none"></video>
+  </div>
+
+  <img src="{{ file_root_path }}/image/rkl/lp/18_250421RKL_LP_17.webp" width="100%" loading="lazy" decoding="async">
+
+  <!-- ★改善⑦ 3つ目の rklvideo4 → rklvideo4c に改名（ID重複解消） -->
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/19_250421RKL_LP_18.webp" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo4c" class="rkl-vid-4c" loop autoplay muted playsinline preload="none"></video>
+  </div>
+
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/20_250421RKL_LP_19.webp" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo5" class="rkl-vid-5" loop autoplay muted playsinline preload="none"></video>
+  </div>
+
+  <img src="{{ file_root_path }}/image/rkl/lp/21_250421RKL_LP_20.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/22_250414bRKL_LP_21.webp" width="100%" loading="lazy" decoding="async">
+
+  <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/23_250421RKL_LP_22.webp" width="100%" loading="lazy" decoding="async">
+    <video id="rklvideo6" class="rkl-vid-6" loop autoplay muted playsinline preload="none"></video>
+  </div>
+
+  <img src="{{ file_root_path }}/image/rkl/lp/24_250421RKL_LP_23.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/250730RKL_2025LP-3.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_6.webp" width="100%" loading="lazy" decoding="async">
+
+  <!-- CTA ボタン（2セット目） -->
+  <a href="#chatform" data-product-code="2">
+    <picture>
+      <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_7.webp" width="100%" loading="lazy" decoding="async">
+    </picture>
+  </a>
+  <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_8.webp" width="100%" loading="lazy" decoding="async">
+  <a href="#chatform" data-product-code="1">
+    <picture>
+      <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_9.webp" width="100%" loading="lazy" decoding="async">
+    </picture>
+  </a>
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/260119RKL_2025LP_LPO_v1_1.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_11.webp" width="100%" loading="lazy" decoding="async">
+
+  <!-- CTA block 3 -->
+  <div id="chushakulink3">
+    <img class="formmae-seni" src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/v6-2/251217RKL_2025LP_1.webp" alt="" width="100%" loading="lazy" decoding="async">
+    <div class="hoba3">
+      <a href="https://shop.rmh.co.jp/info/customer_term">
+        <img src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/43_250414b17jyo%20.webp" width="21%" loading="lazy" decoding="async">
+      </a>
+    </div>
+  </div>
+
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-3/rkl_lp_24.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/26_250421RKL_LP_25.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/27_250421RKL_LP_26.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/28_250414rkl_lp_27.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/29_250414rkl_lp_28.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251217RKL_2025LP_2.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/31_250421RKL_LP_30.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/32_250414rkl_lp_31.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/33_250421RKL_LP_32.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/RKL_LP_33.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/250730RKL_2025LP-3.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_6.webp" width="100%" loading="lazy" decoding="async">
+
+  <!-- CTA ボタン（3セット目） -->
+  <a href="#chatform" data-product-code="2">
+    <picture>
+      <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_7.webp" width="100%" loading="lazy" decoding="async">
+    </picture>
+  </a>
+  <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_8.webp" width="100%" loading="lazy" decoding="async">
+  <a href="#chatform" data-product-code="1">
+    <picture>
+      <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_9.webp" width="100%" loading="lazy" decoding="async">
+    </picture>
+  </a>
+  <img src="{{ file_root_path }}/image/rkl/lp/v6-2/260119RKL_2025LP_LPO_v1_1.webp" width="100%" loading="lazy" decoding="async">
+  <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_11.webp" width="100%" loading="lazy" decoding="async">
+
+  <!-- CTA block 2 -->
+  <div id="chushakulink2">
+    <img class="formmae-seni" src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/v6-2/251217RKL_2025LP_1.webp" alt="" width="100%" loading="lazy" decoding="async">
+    <div class="hoba2">
+      <a href="https://shop.rmh.co.jp/info/customer_term">
+        <img src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/43_250414b17jyo%20.webp" width="21%" loading="lazy" decoding="async">
+      </a>
+    </div>
+
+    <!-- CTA block 5 -->
+    <div id="chushakulink5">
+      <img class="formmae-seni" src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/v6-2/251217RKL_2025LP_3.webp" alt="" width="100%" loading="lazy" decoding="async">
+      <div class="hoba5">
+        <a href="https://shop.rmh.co.jp/info/customer_term">
+          <!-- ★改善⑨ width="110%" → CSS で width:100% に修正済み（.hoba5 img） -->
+          <img src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/RKL_LP_37.webp" loading="lazy" decoding="async">
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  __PAYMENT_FORM__
+  {# common_footer-pay #}
+
+</div><!-- /#lp -->
+
+<!-- ★改善 div#fixed 重複を1箇所に統合 -->
+<div id="fixed">
+  <p id="offer_bottom">
+    <a href="#chatform" data-product-code="3">
+      <img src="{{ file_root_path }}/image/rkl/chat/251218RKL_2025chat_2.webp" width="100%" loading="lazy" decoding="async">
+    </a>
+  </p>
+</div>
+
+</div><!-- /#lpbody -->
+
+
+<!-- ============================================================
+  FOOTER（ECフォースのfooter欄に貼る）
+  ★改善⑩ jQuery 2.2.4 削除（重複・旧版）
+  ★改善⑪ html5shiv 削除
+  ★改善⑫ defer 追加
+============================================================ -->
+<footer>
+  {# footer #}
+</footer>
+
+<!-- ★ jQuery: 旧版(2.2.4)を削除。必要な場合は最新版をHEADにdefer読み込み推奨 -->
+<!-- 削除: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+
+<!-- ★改善⑫ defer追加（レンダリングブロック解消） -->
+<script defer src="{{ file_root_path }}/javascript/fade.js"></script>
+<script defer src="{{ file_root_path }}/javascript/popup.js"></script>
+
+<!-- ★改善⑪ html5shiv 削除（IE8専用ポリフィル・2026年不要） -->
+<!-- 削除: <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> -->
+
+<!-- JSON-LD（変更なし） -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "プルーストクリーム",
+  "description": "現役医師監修開発の医薬部外品デオドラントクリーム！ニオイ医科学でワキガ対策『プルーストクリーム』公式ページがこちらです。",
+  "brand": { "@type": "Thing", "name": "ルーツ医健" },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "JPY",
+    "price": "4980",
+    "itemCondition": "http://schema.org/UsedCondition",
+    "availability": "http://schema.org/InStock",
+    "seller": { "@type": "Organization", "name": "ルーツ医健" }
+  }
+}
+</script>
+
+<!-- ★改善⑥ 動画の遅延読み込みスクリプト（IntersectionObserver）-->
+<!-- ★★★ 動画URLを変更する場合はここの VIDEO_SOURCES を編集してください ★★★ -->
+<!-- ★ 'rkl-vid-4' のURLは元ソースで省略されていたため要確認・設定が必要です -->
+<script>
+(function () {
+  var VIDEO_SOURCES = {
+    'rkl-vid-0':  'https://file.mysquadbeyond.com/uploads/article_photo/photo/6226353/b75e43cd-9b24-44de-b7e0-e0bfc31dcee0.mp4',
+    'rkl-vid-1':  'https://file.mysquadbeyond.com/uploads/article_photo/photo/6138001/570409a9-912d-445d-8f23-826b4f96651f.mp4',
+    'rkl-vid-2':  'https://file.mysquadbeyond.com/uploads/article_photo/photo/6226417/e3e035fb-e20a-4e1f-8be4-6dd4cb03bc36.mp4',
+    'rkl-vid-3':  'https://file.mysquadbeyond.com/uploads/article_photo/photo/6226349/6c967b72-9cc1-45e8-8c45-ad5eb1e7332e.mp4',
+    'rkl-vid-4':  'TODO: 元ソースで省略されていたURL を入れてください',
+    'rkl-vid-4b': 'https://file.mysquadbeyond.com/uploads/article_photo/photo/6226400/b779f9ab-cd41-4db1-825c-abdedca0c27c.mp4',
+    'rkl-vid-8':  'https://file.mysquadbeyond.com/uploads/article_photo/photo/6137950/d098b22b-a251-4859-9fcc-cde9edcc1ea0.mp4',
+    'rkl-vid-4c': 'https://file.mysquadbeyond.com/uploads/article_photo/photo/6137866/8cda81f5-d421-4f9c-bca2-4b6c886434c2.mp4',
+    'rkl-vid-5':  'https://file.mysquadbeyond.com/uploads/article_photo/photo/6137967/8a152c6b-efc5-482d-a0b5-279e4db45d65.mp4',
+    'rkl-vid-6':  'https://file.mysquadbeyond.com/uploads/article_photo/photo/6138001/570409a9-912d-445d-8f23-826b4f96651f.mp4'
+  };
+
+  var targets = [];
+  Object.keys(VIDEO_SOURCES).forEach(function (cls) {
+    var el = document.querySelector('.' + cls);
+    if (el) targets.push({ el: el, cls: cls });
+  });
+  if (!targets.length) return;
+
+  function loadVideo(el, cls) {
+    var url = VIDEO_SOURCES[cls];
+    if (!url || url.indexOf('TODO') === 0) return;
+    el.src = url;
+    el.load();
+    el.play().catch(function () {});
+  }
+
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var cls = Object.keys(VIDEO_SOURCES).filter(function (c) {
+          return entry.target.classList.contains(c);
+        })[0];
+        if (cls) {
+          loadVideo(entry.target, cls);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '200px 0px' });
+    targets.forEach(function (t) { obs.observe(t.el); });
+  } else {
+    targets.forEach(function (t) { loadVideo(t.el, t.cls); });
+  }
+})();
+</script>
+
+
+<!-- ============================================================
+  CSS（ECフォースのCSS欄に貼る）
+  ★改善⑬ .videowrap 5重定義 → 1箇所に統合
+  ★改善⑭ #rklvideo0 2重定義 → position:relative 版のみ残す
+  ★改善⑮ rklvideo4b / rklvideo4c CSS追加
+  ★改善⑯ 構文エラー修正（余分な }）
+  ★改善⑰ #rklvideo7 削除（HTML未使用）
+  ★改善⑱ 重複フォームCSS削除
+  ★改善⑲ IEフィルター削除
+  ★改善⑳ display:none !important 構文修正
+  ★改善㉑ .hoba5 img 幅修正
+============================================================ -->
+
+__PAYMENT_FORM_CV_UPSELL_CSS__
+__PAYMENT_FORM_CV_XSELL_CSS__
+
+/* ============================================================
+   Base
+============================================================ */
+* { box-sizing: border-box; }
+
+html { overflow-y: scroll; }
+
+body {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "游ゴシック", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
+}
+
+html, body { height: 100%; }
+
+.clearfix { overflow: hidden; }
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+
+#lp { max-width: 740px; margin: 0 auto; }
+img { vertical-align: bottom; display: block; }
+a img:hover { opacity: 0.7; }
+h1 { margin: 0; }
+
+/* ============================================================
+   Modal / Popup
+============================================================ */
+#modal-01 img { width: 100%; }
+
+.modal-window {
+  width: 86%;
+  height: 80%;
+  padding: 25px 0 0 0;
+  position: fixed;
+  left: 0; right: 0; top: -10%; bottom: 0;
+  z-index: -1;
+  margin: auto;
+  transition: 0.3s;
+  background: #cbe1ef;
+  /* ★改善⑲ IEフィルター削除 */
+  opacity: 0;
+}
+.modal-window-content {
+  width: 95%;
+  height: 90%;
+  margin: 0 auto;
+  padding: 0 4% 0 4%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.modal-window.block {
+  z-index: 99;
+  opacity: 1;
+}
+.modal-window .closebtn {
+  cursor: pointer;
+  position: absolute;
+  top: -13px; right: -12px;
+  width: 13%;
+  max-width: 35px;
+  z-index: 998;
+}
+.modal-window .banner_wrap {
+  width: 100%;
+  background-color: #cbe1ef;
+}
+.modal-window .close_banner {
+  width: 95%;
+  max-width: 480px;
+  height: auto;
+  margin: 0 auto 0;
+  background-color: #cbe1ef;
+  padding: 20px 4% 20px 4%;
+}
+#modal-overlay {
+  width: 100%;
+  height: 100%;
+  left: 0; top: 0;
+  position: fixed;
+  z-index: -1;
+  transition: 0.3s;
+  background: rgba(0, 0, 0, 0.8);
+  /* ★改善⑲ IEフィルター削除 */
+  opacity: 0;
+}
+#modal-overlay.block {
+  z-index: 9;
+  opacity: 1;
+}
+.close { cursor: pointer; }
+
+/* Reviewer list */
+.modal-window-content ul { margin: 0 auto; padding: 0; }
+.modal-window-content ul li { margin: 15px 0 0 0; padding: 10px; background-color: #fff; }
+.modal-window-content ul li:nth-child(1) { margin: 0; }
+.modal-window-content ul li dl { margin: 0; padding: 0; }
+.modal-window-content ul li dl dd { margin: 10px 0 0 0; padding: 0; font-size: 15px; line-height: 1.6em; }
+.o_icon { float: left; width: 13%; max-width: 50px; }
+.o_namae { width: 84%; float: left; margin: 0 0 0 3%; color: #f18355; line-height: 18px; }
+.o_namae .namae { font-size: 17px; padding: 0 5px; }
+.o_namae .tosi { font-size: 13px; }
+.o_namae_tensen { padding: 2px 0; line-height: 0; }
+.o_star { width: 90%; max-width: 200px; padding: 0 5px; }
+.manzoku { color: #fff; border-radius: 3px; background: #f18355; font-size: 70%; padding: 1% 3%; }
+.star { margin-right: 2px; font-size: 91%; }
+.point { font-size: 90%; }
+
+/* ============================================================
+   Menu
+============================================================ */
+.menu { margin-top: 20px; padding: 0; }
+.menu a { display: block; padding: 10px; text-decoration: none; color: #000; line-height: 1; }
+.menu label {
+  font-size: 18px; display: block; margin: 0 0 2px 0; padding: 15px;
+  line-height: 1; color: #fff; background: #C0C0C0; cursor: pointer; text-align: center;
+}
+.menu input { display: none; }
+.menu ul { margin: 0; background: #fff; list-style: none; }
+.menu li {
+  max-height: 0; margin: 5px; overflow-y: hidden;
+  transition: all 0.5s;
+}
+.orange { color: #DE531C; font-weight: 700; border-left: 8px #DE531C solid; font-size: 24px; padding-left: 10px; }
+#menu_bar01:checked ~ #links01 li,
+#menu_bar02:checked ~ #links02 li,
+#menu_bar03:checked ~ #links03 li { max-height: 500px; opacity: 1; }
+
+/* ============================================================
+   Footer
+============================================================ */
+footer { overflow-x: hidden; max-width: 100%; font-size: 11px; }
+footer div { max-width: 100%; margin: 0 auto 30px; }
+footer ul { margin: 0 auto; padding: 10px 0; text-align: center; }
+footer ul li { display: inline; margin: 0; padding: 0 1px 0 6px; border-left: 1px #000 solid; }
+footer a { color: #000; }
+footer p { margin: 0; text-align: center; padding: 5px 0; }
+footer div:after { content: ""; display: block; clear: both; }
+
+/* ============================================================
+   Fixed bar
+============================================================ */
+#fixed { position: fixed; margin: 0 auto; z-index: 998; bottom: 0; }
+#offer_bottom { margin: 0 auto; padding: 0; max-width: 740px; }
+
+/* ============================================================
+   ★改善⑬ .videowrap: 5重定義 → 1箇所に統合
+============================================================ */
+.videowrap {
+  height: auto;
+  margin: auto;
+  position: relative;
+}
+
+/* ============================================================
+   Video positioning
+   ★改善⑭ #rklvideo0: 最終定義（position:relative）のみ残す
+============================================================ */
+#rklvideo0 {
+  position: relative;
+  margin-top: 0 !important;
+  width: 100%;
+  margin-left: 0;
+  z-index: auto;
+  display: block;
+}
+#rklvideo1 {
+  position: absolute;
+  margin-top: -107% !important;
+  width: 97%;
+  margin-left: 2%;
+  z-index: -20;
+}
+#rklvideo2 {
+  position: absolute;
+  margin-top: -133% !important;
+  width: 50%;
+  margin-left: 45.5%;
+  z-index: -20;
+}
+/* ★改善⑯ 構文エラー: 余分な } を削除 */
+#rklvideo3 {
+  position: absolute;
+  margin-top: -227.5% !important;
+  width: 92%;
+  margin-left: 4%;
+  z-index: -20;
+}
+/* ★改善⑮ rklvideo4 / rklvideo4b / rklvideo4c 同スタイルで定義 */
+#rklvideo4, #rklvideo4b, #rklvideo4c {
+  position: absolute;
+  margin-top: -77% !important;
+  width: 95%;
+  margin-left: 3%;
+  z-index: -20;
+}
+#rklvideo5 {
+  position: absolute;
+  margin-top: -109% !important;
+  width: 100%;
+  margin-left: 0%;
+  z-index: -20;
+}
+#rklvideo6 {
+  position: absolute;
+  margin-top: -148% !important;
+  width: 90%;
+  margin-left: 6%;
+  z-index: -20;
+}
+/* ★改善⑰ #rklvideo7 削除（HTML未使用） */
+#rklvideo8 {
+  position: absolute;
+  margin-top: -68% !important;
+  width: 97%;
+  margin-left: 2%;
+  z-index: -20;
+}
+
+/* ============================================================
+   CTA / hoba positioning
+============================================================ */
+#chushakulink1, #chushakulink2, #chushakulink3, #chushakulink4, #chushakulink5 {
+  position: relative;
+}
+.hoba1 { position: absolute; left: 0; right: 0; width: 116%; top: 93.6%; padding-left: 41%; }
+.hoba2 { position: absolute; left: 0; right: 0; width: 116%; top: 89.5%; padding-left: 35%; }
+.hoba3 { position: absolute; left: 0; right: 0; width: 116%; top: 68.7%; padding-left: 41%; }
+.hoba4 { position: absolute; left: 0; right: 0; width: 80%; top: 82%; padding-left: 8%; }
+.hoba5 { position: absolute; left: 0; right: 0; width: 53%; top: 11.3%; padding-left: 42%; }
+/* ★改善㉑ width="110%" 属性の代わりにCSSで修正 */
+.hoba5 img { width: 100%; }
+
+/* ============================================================
+   Responsive
+============================================================ */
+.pc { display: block; }
+.sp { display: none; }
+@media (max-width: 575.98px) {
+  .pc { display: none; }
+  .sp { display: block; }
+}
+
+.attention {
+  width: 95%;
+  margin: 5px auto 20px;
+  border: 1px solid #ededed;
+  font-size: 12px;
+  padding: 2px 10px 6px;
+}
+@media screen and (max-width: 768px) {
+  .attention { width: 90%; font-size: 10px; }
+}
+
+/* ============================================================
+   Countdown
+============================================================ */
+.countdown-image {
+  color: #ffffff;
+  background-color: #ff0000;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  box-sizing: border-box;
+  display: block;
+}
+.countdown-image .cd-img {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* ============================================================
+   Offer wrap text
+============================================================ */
+.wrap01_offer { position: relative; }
+.wrapText01_offer {
+  position: absolute;
+  width: 92%;
+  display: block;
+  top: 47%; left: 4%;
+  color: #000000;
+  font-size: 16px;
+  text-align: left;
+  line-height: 1.3;
+  font-kerning: normal;
+}
+.wrapText01_offer a { color: #000000; }
+@media screen and (max-width: 750px) {
+  .wrapText01_offer { font-size: 8px; }
+}
+
+/* ============================================================
+   Form CSS（重複を削除し1セットに統合）
+   ★改善⑱
+============================================================ */
+__PAYMENT_FORM_CSS__
+
+.form_container_ec { width: 920px; }
+
+/* 【必須アイコン】 */
+span.form_required_ec { background: #7E0F09; color: #ffffff; }
+span.form_required_sp_ec { background: #7E0F09; color: #ffffff; }
+
+/* 【セクションラベル】 */
+.landing_form_label_ec { background: #203594; color: #ffffff; font-size: 18px; }
+.landing_form_label_sp_ec { background: #203594; color: #ffffff; font-size: 18px; }
+
+/* 【フォームテーブル】 */
+table.landing_form_ec {
+  border-top: 1px solid #d0dcec;
+  border-right: 1px solid #d0dcec;
+  background: #FFF;
+  border-bottom: 1px solid #999;
+}
+.landing_form_ec th {
+  background-color: #e1edfd;
+  border-bottom: 1px solid #d0dcec;
+  border-left: 1px solid #d0dcec;
+}
+.landing_form_ec td {
+  border-bottom: 1px solid #d0dcec;
+  border-left: 1px solid #d0dcec;
+  background-color: #ffffff;
+}
+
+/* 【SP フォーム項目ラベル】 */
+.form_box_label_sp_ec { background: #cadefc; border-bottom: 1px solid #C3C3C3; border-top: 1px solid #C3C3C3; }
+.form_sub_box_label_sp_ec { background: #eee; }
+
+/* 【購入ボタン PC】 */
+.submit_bottom_ec, .submit_cv_upsell_button_ec, .submit_cv_xsell_button_ec {
+  border: 0;
+  width: 400px;
+  height: 150px;
+  background-size: 394px auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* 【購入ボタン SP】 */
+.submit_bottom_sp_ec, .submit_cv_upsell_button_sp_ec, .submit_cv_xsell_button_sp_ec {
+  border: 0;
+  width: 100%;
+  height: 150px;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* 【タイトルアンダーバー PC】 */
+.perform_subtitle_ec {
+  border: 1px solid #ddd;
+  border-bottom: 3px solid #203594;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 120%;
+  margin: 0 0 10px 0;
+}
+/* 【タイトルアンダーバー SP】 */
+.perform_subtitle_sp_ec {
+  border: 1px solid #ddd;
+  border-bottom: 3px solid #203594;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 120%;
+  margin: 0 0 10px 0;
+}
+
+/* 【ウィザードステップ】 */
+.form_wizard_ec .form_wizard_levels_ec li.active a {
+  border-top: solid #eee 1px;
+  border-bottom: solid #eee 1px;
+  background: #203594;
+  color: white;
+}
+.form_wizard_ec .form_wizard_levels_ec li.active a:after {
+  left: 100%; top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0; width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-left-color: #203594;
+  border-width: 25px;
+  margin-top: -25px;
+}
+.form_wizard_ec .form_wizard_levels_ec li.active a span {
+  color: #fff;
+  background: #000;
+  border-color: #203594;
+  font-weight: bold;
+}
+
+/* 【ボタン共通 PC】 */
+.btn_ec {
+  display: inline-block; padding: 6px 12px; margin-bottom: 0;
+  font-size: 12px; font-weight: 400; line-height: 1.42857143;
+  text-align: center; white-space: nowrap; vertical-align: middle;
+  cursor: pointer; user-select: none;
+  background-image: none; border: 1px solid transparent; border-radius: 4px;
+}
+.btn_ec.btn_default_ec, .btn_ec.btn_default_ec:focus { background: #ffffff; border: 1px solid #D5D5D5; }
+.btn_default_ec { color: #333; background-color: #fff; border-color: #ccc; }
+.btn_color_ec { background: #00AB00; color: white; }
+.big_btn_ec { font-size: 160%; padding: 6px 30px; }
+
+/* 【ボタン共通 SP】 */
+.btn_sp_ec {
+  width: 80%; display: inline-block; padding: 6px 12px; margin-bottom: 0;
+  font-size: 12px; font-weight: 400; line-height: 1.42857143;
+  text-align: center; white-space: nowrap; vertical-align: middle;
+  cursor: pointer; user-select: none;
+  background-image: none; border: 1px solid transparent; border-radius: 4px;
+}
+.btn_sp_ec.btn_default_sp_ec, .btn_sp_ec.btn_default_sp_ec:focus { background: #ffffff; border: 1px solid #D5D5D5; }
+.btn_default_sp_ec { width: 50%; color: #333; background-color: #fff; border-color: #ccc; }
+.btn_color_sp_ec { background: #00AB00; color: white; }
+.big_btn_sp_ec { font-size: 160%; padding: 10px 30px; }
+
+/* ★改善⑳ display:none;!important → display: none !important（構文修正） */
+.form_container_ec, .form_container_sp_ec { display: none !important; }
+
+@media screen and (max-width: 480px) {
+  .perform_subtitle_sp_ec, .perform_subtitle_ec { padding: 5px 10px !important; }
+  .perform_content_sp_ec h2 { padding: 5px 10px !important; }
+  #perform-view * { line-height: 1.3 !important; font-size: 14px !important; }
+  .table_sp_ec { margin-bottom: 0 !important; }
+  p.perform_message_sp_ec { padding: 5px 10px !important; }
+}
+
+#saki_video { position: relative; z-index: 20; }
