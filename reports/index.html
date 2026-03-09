@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Park — レポート一覧</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+      background: #0f0f13;
+      color: #e8e8f0;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    header .logo {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: #7c7c9a;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      margin-top: 10px;
+      color: #7c7c9a;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #1a1a24;
+      border: 1px solid #2a2a3a;
+      border-radius: 16px;
+      padding: 28px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #a78bfa, #60a5fa);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #3a3a5a;
+      box-shadow: 0 12px 40px rgba(167, 139, 250, 0.12);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #a78bfa;
+      background: rgba(167, 139, 250, 0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #e8e8f0;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: #7c7c9a;
+      line-height: 1.7;
+    }
+
+    .card-meta {
+      font-size: 12px;
+      color: #5a5a7a;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid #2a2a3a;
+    }
+
+    .card-arrow {
+      position: absolute;
+      top: 28px;
+      right: 24px;
+      color: #3a3a5a;
+      font-size: 18px;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .card:hover .card-arrow {
+      color: #a78bfa;
+      transform: translateX(3px);
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: #5a5a7a;
+      padding: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">AI Park</div>
+  <h1>レポート一覧</h1>
+  <p>生成されたリサーチ・インサイトレポートを確認できます</p>
+</header>
+
+<div class="grid">
+
+  <a class="card" href="growth-supplement-competitive-report.html">
+    <span class="card-tag">📊 競合分析</span>
+    <div class="card-title">成長期サポートサプリ<br>競合 imp 分析レポート</div>
+    <div class="card-desc">全媒体の imp ランキング・クリエイティブ傾向・訴求軸を分析。2025/11〜2026/03 期間データ。</div>
+    <div class="card-meta">2025/11 〜 2026/03</div>
+    <span class="card-arrow">→</span>
+  </a>
+
+  <a class="card" href="gungun_insight_report.html">
+    <span class="card-tag">💡 顧客インサイト</span>
+    <div class="card-title">伸長ぐんぐん習慣<br>顧客インサイトレポート</div>
+    <div class="card-desc">購買動機・継続理由・解約要因など顧客の声を構造化した定性分析レポート。</div>
+    <div class="card-meta">2026</div>
+    <span class="card-arrow">→</span>
+  </a>
+
+</div>
+
+</body>
+</html>
