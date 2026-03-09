@@ -61,12 +61,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- ============================================================
   BODY（ECフォースのbody欄に貼る）
 ============================================================ -->
-<script>
-  window.onload = function() {
-    window.scrollTo(0, 0);
-  };
-</script>
-
 <div id="lpbody">
   <!-- Google Tag Manager (noscript)（変更なし） -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKCQRWT"
@@ -485,6 +479,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     el.src = VIDEO_SOURCES[cls];
     el.load();
     el.play().catch(function() {});
+    var placeholder = el.parentNode.querySelector('img');
+    if (placeholder) placeholder.style.display = 'none';
   }
 
   if ('IntersectionObserver' in window) {
