@@ -267,28 +267,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <div class="lp-timer">残り 20分 00秒</div>
         </div>
 
-        <!-- ★改善⑤ 動画: srcをHTMLに書かずJSで注入（ECフォース書き換え対策） -->
-        <!-- ★★★ 動画URLを変更する場合は末尾の <script> 内の VIDEO_SOURCES を編集してください ★★★ -->
-        <style>
-          /* imgを土台にしてvideoをその上に重ねる。srcなし=透明なので img がプレースホルダーとして表示 */
-          .videowrap { position: relative; }
-          .videowrap img { display: block; width: 100%; }
-          .videowrap video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        </style>
-        <div class="videowrap">
-          <video class="video_lpo0_module" loop autoplay muted playsinline width="100%" preload="none"></video>
-          <img id="video_lpo0" src="{{ file_root_path }}/image/proust2/LP/v12-2/1.webp"
-               width="100%" loading="lazy" decoding="async">
-        </div>
+        <video src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6526862/600e93d2-980d-4e70-a656-c67190a2c107.mp4"
+               loop autoplay muted playsinline width="100%"></video>
 
         <img src="{{ file_root_path }}/image/proust2/LP/v9/proust2_02.webp"
              width="100%" loading="lazy" decoding="async">
 
-        <div class="videowrap">
-          <video class="video_lpo1_module" loop autoplay muted playsinline width="100%" preload="none"></video>
-          <img id="video_lpo1" src="{{ file_root_path }}/image/proust2/LP/v9/proust2_03.webp"
-               width="100%" loading="lazy" decoding="async">
-        </div>
+        <video src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6526832/7f1c94f0-73e0-4040-873b-05c00d82989e.mp4"
+               loop autoplay muted playsinline width="100%"></video>
 
         <img src="{{ file_root_path }}/image/proust2/LP/v9/proust2_04.webp"
              width="100%" loading="lazy" decoding="async">
@@ -363,23 +349,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <img src="{{ file_root_path }}/image/proust2/LP/v9/proust2_19.webp"
              width="100%" loading="lazy" decoding="async">
 
-        <div class="videowrap">
-          <video class="video_lpo2_module" loop autoplay muted playsinline width="100%" preload="none"></video>
-          <img id="video_lpo2" src="{{ file_root_path }}/image/proust2/LP/v9/proust2_20.webp"
-               width="100%" loading="lazy" decoding="async">
-        </div>
+        <video src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6526833/7c1f259b-32b2-4e6f-a1c2-af7a5d0e9108.mp4"
+               loop autoplay muted playsinline width="100%"></video>
 
-        <div class="videowrap">
-          <video class="video_lpo3_module" loop autoplay muted playsinline width="100%" preload="none"></video>
-          <img id="video_lpo3" src="{{ file_root_path }}/image/proust2/LP/v9/proust2_21.webp"
-               width="100%" loading="lazy" decoding="async">
-        </div>
+        <video src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6526834/24b98c01-eee4-472c-a290-06a1e022a546.mp4"
+               loop autoplay muted playsinline width="100%"></video>
 
-        <div class="videowrap">
-          <video class="video_lpo4_module" loop autoplay muted playsinline width="100%" preload="none"></video>
-          <img id="video_lpo4" src="{{ file_root_path }}/image/proust2/LP/v9/proust2_22.webp"
-               width="100%" loading="lazy" decoding="async">
-        </div>
+        <video src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6526959/613078be-dc8c-4be3-a1a3-ea8a69a602fd.mp4"
+               loop autoplay muted playsinline width="100%"></video>
 
         <img src="{{ file_root_path }}/image/proust2/LP/v9/proust2_23.webp"
              width="100%" loading="lazy" decoding="async">
@@ -388,8 +365,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <img src="{{ file_root_path }}/image/proust2/LP/v9/proust2_25.webp"
              width="100%" loading="lazy" decoding="async">
 
-        <!-- ★単独動画（クラスで識別） -->
-        <video class="video_standalone_module" loop autoplay muted playsinline width="100%" preload="none"></video>
+        <video src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6526835/7004dc1a-bae0-4400-b8ba-dbc28a576aa2.mp4"
+               loop autoplay muted playsinline width="100%"></video>
 
         <img src="{{ file_root_path }}/image/proust2/LP/v9/proust2_27.webp"
              width="100%" loading="lazy" decoding="async">
@@ -459,55 +436,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "seller": { "@type": "Organization", "name": "ルーツ医健" }
   }
 }
-</script>
-
-<!-- ★改善⑤ 動画の遅延読み込みスクリプト -->
-<!-- ★★★ 動画URLを変更する場合はここの VIDEO_SOURCES を編集してください ★★★ -->
-<script>
-(function() {
-  var VIDEO_SOURCES = {
-    'video_lpo0_module':    'https://file.mysquadbeyond.com/uploads/article_photo/photo/6526862/600e93d2-980d-4e70-a656-c67190a2c107.mp4',
-    'video_lpo1_module':    'https://file.mysquadbeyond.com/uploads/article_photo/photo/6526832/7f1c94f0-73e0-4040-873b-05c00d82989e.mp4',
-    'video_lpo2_module':    'https://file.mysquadbeyond.com/uploads/article_photo/photo/6526833/7c1f259b-32b2-4e6f-a1c2-af7a5d0e9108.mp4',
-    'video_lpo3_module':    'https://file.mysquadbeyond.com/uploads/article_photo/photo/6526834/24b98c01-eee4-472c-a290-06a1e022a546.mp4',
-    'video_lpo4_module':    'https://file.mysquadbeyond.com/uploads/article_photo/photo/6526959/613078be-dc8c-4be3-a1a3-ea8a69a602fd.mp4',
-    'video_standalone_module': 'https://file.mysquadbeyond.com/uploads/article_photo/photo/6526835/7004dc1a-bae0-4400-b8ba-dbc28a576aa2.mp4'
-  };
-
-  var targets = [];
-  Object.keys(VIDEO_SOURCES).forEach(function(cls) {
-    var video = document.querySelector('.' + cls);
-    if (!video) return;
-    // videowrapがある場合は親を監視、ない場合はvideo自身を監視
-    var observed = video.closest('.videowrap') || video;
-    targets.push({ video: video, observed: observed, cls: cls });
-  });
-  if (!targets.length) return;
-
-  function loadVideo(video, cls) {
-    video.src = VIDEO_SOURCES[cls];
-    video.load();
-    video.play().catch(function() {});
-    var placeholder = video.parentNode.querySelector('img');
-    if (placeholder) placeholder.style.display = 'none';
-  }
-
-  if ('IntersectionObserver' in window) {
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return;
-        var t = targets.filter(function(t) { return t.observed === entry.target; })[0];
-        if (t) {
-          loadVideo(t.video, t.cls);
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '200px 0px' });
-    targets.forEach(function(t) { obs.observe(t.observed); });
-  } else {
-    targets.forEach(function(t) { loadVideo(t.video, t.cls); });
-  }
-})();
 </script>
 
 <!-- タイマー・スクロール制御（変更なし） -->
