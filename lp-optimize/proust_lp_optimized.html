@@ -29,8 +29,8 @@
 <link rel="icon" href="{{ file_root_path }}/image/cropped-logo-32x32.png" sizes="16x16">
 <link rel="icon" href="{{ file_root_path }}/image/cropped-logo-192x192.png" sizes="32x32">
 
-<!-- ★改善① jQuery: 未圧縮→圧縮版 + defer（レンダリングブロック解消） -->
-<script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery: 圧縮版を使用（deferは外す — ECフォースの内部スクリプトがjQuery同期ロードに依存） -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Google Fonts（変更なし・preconnectはすでにOK） -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -269,6 +269,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <!-- ★改善⑤ 動画: srcをHTMLに書かずJSで注入（ECフォース書き換え対策） -->
         <!-- ★★★ 動画URLを変更する場合は末尾の <script> 内の VIDEO_SOURCES を編集してください ★★★ -->
+        <style>
+          /* srcがない間はvideoを非表示にしてプレースホルダーimgのみ表示 */
+          .videowrap video:not([src]) { display: none; }
+          .videowrap video { display: block; width: 100%; }
+        </style>
         <div class="videowrap">
           <video class="video_lpo0_module" loop autoplay muted playsinline width="100%" preload="none"></video>
           <img id="video_lpo0" src="{{ file_root_path }}/image/proust2/LP/v12-2/1.webp"
@@ -429,9 +434,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- ★ jQueryはHEADで読み込み済み → ここから削除（重複排除） -->
 <!-- 削除: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 
-<!-- ★ defer追加（レンダリングブロック解消） -->
-<script defer src="{{ file_root_path }}/javascript/fade.js"></script>
-<script defer src="{{ file_root_path }}/javascript/popup.js"></script>
+<!-- fade.js / popup.js（deferは外す — jQuery同期ロードに依存しているため） -->
+<script src="{{ file_root_path }}/javascript/fade.js"></script>
+<script src="{{ file_root_path }}/javascript/popup.js"></script>
 
 <!-- ★ html5shiv削除（IE8専用ポリフィル・2026年不要） -->
 <!-- 削除: <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> -->
