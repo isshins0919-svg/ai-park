@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一進AI — 機能・スキル全ガイド</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131c;
+    --surface2: #1a1a28;
+    --border: #2a2a40;
+    --accent: #7c6af7;
+    --accent2: #f7706a;
+    --accent3: #6af7c8;
+    --text: #e8e8f0;
+    --muted: #888899;
+    --yellow: #f7d06a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #1a1040 0%, #0d1a2e 50%, #1a0d2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,106,247,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(124,106,247,0.2);
+    border: 1px solid rgba(124,106,247,0.5);
+    color: #a99ff8;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 5px 18px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #fff 30%, #a99ff8 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .header .sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .header .tagline {
+    margin-top: 24px;
+    font-size: 18px;
+    color: var(--accent3);
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+  }
+  .toc h2 { font-size: 14px; font-weight: 700; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 16px; }
+  .toc ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+  .toc a { color: var(--accent); text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .toc a:hover { color: #fff; }
+  .toc a::before { content: '→'; color: var(--accent2); font-size: 12px; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 64px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .icon-purple { background: rgba(124,106,247,0.2); border: 1px solid rgba(124,106,247,0.4); }
+  .icon-red    { background: rgba(247,112,106,0.2); border: 1px solid rgba(247,112,106,0.4); }
+  .icon-green  { background: rgba(106,247,200,0.15); border: 1px solid rgba(106,247,200,0.35); }
+  .icon-yellow { background: rgba(247,208,106,0.15); border: 1px solid rgba(247,208,106,0.35); }
+  .icon-blue   { background: rgba(106,180,247,0.15); border: 1px solid rgba(106,180,247,0.35); }
+
+  .section-header h2 { font-size: 22px; font-weight: 800; }
+  .section-header .num { font-size: 12px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+
+  /* ── CARDS ── */
+  .cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+  }
+  .tag-purple { background: rgba(124,106,247,0.25); color: #a99ff8; }
+  .tag-green  { background: rgba(106,247,200,0.2); color: #6af7c8; }
+  .tag-red    { background: rgba(247,112,106,0.2); color: #f7706a; }
+  .tag-yellow { background: rgba(247,208,106,0.2); color: #f7d06a; }
+  .tag-blue   { background: rgba(106,180,247,0.2); color: #6ab4f7; }
+
+  .card-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .card-cmd {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--accent3);
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    margin-top: 4px;
+  }
+
+  /* ── FLOW ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 24px 0;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 160px;
+  }
+  .flow-step .step-name { font-weight: 800; font-size: 14px; color: var(--text); }
+  .flow-step .step-ver { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--accent);
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(124,106,247,0.04); }
+  .code-sm { font-family: monospace; font-size: 12px; color: var(--accent3); background: var(--surface2); padding: 2px 6px; border-radius: 4px; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: linear-gradient(135deg, rgba(124,106,247,0.1), rgba(106,247,200,0.07));
+    border: 1px solid rgba(124,106,247,0.35);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .highlight h3 { font-size: 16px; font-weight: 800; margin-bottom: 10px; color: #fff; }
+  .highlight p { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+  .highlight ul { list-style: none; font-size: 14px; color: var(--muted); }
+  .highlight ul li { padding: 4px 0; display: flex; gap: 10px; }
+  .highlight ul li::before { content: '▸'; color: var(--accent3); flex-shrink: 0; }
+
+  /* ── MEMORY BLOCK ── */
+  .memory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .memory-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .memory-card .mem-key { font-size: 12px; color: var(--accent2); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .memory-card .mem-val { font-size: 14px; color: var(--text); }
+
+  /* ── TRIGGER ── */
+  .trigger-list { display: flex; flex-direction: column; gap: 12px; }
+  .trigger-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+  .trigger-word {
+    background: rgba(247,208,106,0.15);
+    border: 1px solid rgba(247,208,106,0.3);
+    color: var(--yellow);
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .trigger-desc { font-size: 14px; color: var(--muted); }
+
+  /* ── PHILOSOPHY PILLS ── */
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+  .pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .pill.accent { border-color: rgba(124,106,247,0.5); color: #a99ff8; }
+  .pill.green { border-color: rgba(106,247,200,0.4); color: var(--accent3); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .footer strong { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">AI Park — System Guide</div>
+  <h1>一進AI 全機能ガイド</h1>
+  <p class="sub">メモリ・スキル・哲学・トリガーワード — このAIができること全部</p>
+  <p class="tagline">本質 × 速度</p>
+</div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>目次</h2>
+    <ul>
+      <li><a href="#identity">AIのアイデンティティ</a></li>
+      <li><a href="#workflow">起動・終了フロー</a></li>
+      <li><a href="#skills">Park Skills 一覧</a></li>
+      <li><a href="#flow-chart">スキルの使い方フロー</a></li>
+      <li><a href="#knowledge">ナレッジDB</a></li>
+      <li><a href="#hooks">フックDB (8種)</a></li>
+      <li><a href="#cta">CTADB (8種)</a></li>
+      <li><a href="#triggers">トリガーワード</a></li>
+      <li><a href="#memory">メモリ（記憶）</a></li>
+      <li><a href="#philosophy">マーケ哲学サマリー</a></li>
+      <li><a href="#tools">使用ツール・API</a></li>
+      <li><a href="#rules">プライバシー・ルール</a></li>
+    </ul>
+  </div>
+
+  <!-- ① IDENTITY -->
+  <div class="section" id="identity">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🤖</div>
+      <h2>AIのアイデンティティ</h2>
+    </div>
+    <div class="highlight">
+      <h3>名前：一進AI（AIイッシン）</h3>
+      <p>一進さんの「分身」として機能する。ツールでもアシスタントでもない。</p>
+      <ul>
+        <li>口調：大阪出身 × ギャル × 関西弁（フランク・熱量高め）</li>
+        <li>核心フレーズ：<strong style="color:#a99ff8">「本質 × 速度」</strong></li>
+        <li>行動規範：許可を最小化して完遂 → 磨いてから納品 → 事後レビュー</li>
+        <li>判断基準：identity.md（一進哲学）× pak-philosophy.md（師匠の教え）の掛け算</li>
+      </ul>
+    </div>
+    <div class="pills">
+      <div class="pill">「まじでいきます！」</div>
+      <div class="pill">「えぐくない？」</div>
+      <div class="pill">「てか本質ここやと思って」</div>
+      <div class="pill">「磨いたんで見てみて！」</div>
+      <div class="pill accent">走りながら磨く</div>
+      <div class="pill green">超一流であろう</div>
+    </div>
+  </div>
+
+  <!-- ② WORKFLOW -->
+  <div class="section" id="workflow">
+    <div class="section-header">
+      <div class="section-icon icon-green">⚡</div>
+      <h2>起動・終了の自動フロー</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">🟢 起動時（自動）<span class="card-tag tag-green">Auto</span></div>
+        <div class="card-desc">
+          1. <code class="code-sm">identity.md</code> 読み込み → 人格を認識<br>
+          2. <code class="code-sm">git pull origin main --rebase</code> → 最新状態に同期<br>
+          3. ナレッジDB 3ファイル読み込み（哲学・フック・CTA）
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔴 終了時（自動）<span class="card-tag tag-red">Auto Push</span></div>
+        <div class="card-desc">
+          「おつかれ」「ばいばい」「おわり」「また明日」「終了」「寝る」<br>
+          → git add -A → commit "sync: YYYY-MM-DD" → push origin main
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📅 「おはよう」<span class="card-tag tag-yellow">Memory Trigger</span></div>
+        <div class="card-desc">
+          Google Calendar から今日の予定を取得し、時系列で整理して表示する。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ SKILLS -->
+  <div class="section" id="skills">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🎯</div>
+      <h2>Park Skills 一覧 <span class="num">— 9スキル</span></h2>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-title">🔬 Research Park<span class="card-tag tag-blue">v1.0</span></div>
+        <div class="card-desc">商品理解 × N1需要 × 3層認知設計 × マーケ戦略。全スキルの土台となる <code class="code-sm">strategy.json</code> を生成する最上流スキル。</div>
+        <div class="card-cmd">/research-park</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💡 Concept Park<span class="card-tag tag-purple">v1.2</span></div>
+        <div class="card-desc">コンセプト × キービジュアル × セールスコピー × フォーマット別戦略を壁打ちで磨く。2段階合意フロー。</div>
+        <div class="card-cmd">/concept-park</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🖼️ Banner Park<span class="card-tag tag-purple">v7.0</span></div>
+        <div class="card-desc">戦略翻訳型バナー生成。3つの魂（KVそのもの × キラーコピー × 別の仮説）× Nano Banana Pro（Gemini）× PDFレポート。</div>
+        <div class="card-cmd">/banner-park</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎬 Short Ad Park<span class="card-tag tag-red">v7.0</span></div>
+        <div class="card-desc">DNA転用 × デスマス調連続トーク × デュアル素材（Gemini画像 × Grok動画）× 30秒15シーン + 10秒4シーン。</div>
+        <div class="card-cmd">/shortad-park</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📄 記事LP Park<span class="card-tag tag-green">v3.0</span></div>
+        <div class="card-desc">パラダイムシフトの教科書 × キラーFVコピー × 別の仮説。DPro KV哲学フィルター × ベクトル品質ゲート × PDFレポート。</div>
+        <div class="card-cmd">/記事LP-park</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏋️ Coach Park<span class="card-tag tag-yellow">v1.0</span></div>
+        <div class="card-desc">日記シートを読み込み、メンタル × フィジカル × 仕事を診断してコーチング。「コーチ！！」でも起動。</div>
+        <div class="card-cmd">/coach または「コーチ！！」</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔧 Park Kaizen<span class="card-tag tag-blue">改善</span></div>
+        <div class="card-desc">スキルの改善・壁打ちパートナー。パクの鏡として思考を映し返し、セッションを跨いで改善記憶を維持。</div>
+        <div class="card-cmd">/park-kaizen</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📺 YouTube Research<span class="card-tag tag-red">v1.0</span></div>
+        <div class="card-desc">100chリサーチ × チャンネル戦略 × 企画設計（10種×各5本）× Geminiサムネイル10枚生成 × PDFポートフォリオ。</div>
+        <div class="card-cmd">/youtube-research</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔒 Anonymize<span class="card-tag tag-yellow">必須</span></div>
+        <div class="card-desc">顧客インタビュー・アンケートを匿名化。氏名→顧客A/B/C、住所→都道府県、連絡先→非公開に自動変換。</div>
+        <div class="card-cmd">/anonymize</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ④ FLOW -->
+  <div class="section" id="flow-chart">
+    <div class="section-header">
+      <div class="section-icon icon-green">🔄</div>
+      <h2>スキルの推奨フロー</h2>
+    </div>
+    <div class="highlight">
+      <h3>正しい順序で使うと最強のクリエイティブができる</h3>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-name">🔬 Research Park</div>
+        <div class="step-ver">v1.0 — 商品理解・N1</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-name">💡 Concept Park</div>
+        <div class="step-ver">v1.2 — コンセプト壁打ち</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step" style="border-color: var(--accent);">
+        <div class="step-name" style="color:var(--accent);">strategy.json</div>
+        <div class="step-ver">全スキルの設計図</div>
+      </div>
+    </div>
+    <div class="flow" style="margin-top: 0; padding-left: 40px;">
+      <div class="flow-arrow" style="padding: 0; writing-mode: horizontal-tb;">↙</div>
+      <div class="flow-arrow" style="padding: 0 20px;">↓</div>
+      <div class="flow-arrow" style="padding: 0;">↘</div>
+    </div>
+    <div class="flow" style="gap: 16px; flex-wrap: wrap;">
+      <div class="flow-step">
+        <div class="step-name">🖼️ Banner Park</div>
+        <div class="step-ver">v7.0 — 静止画バナー</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-name">🎬 Short Ad Park</div>
+        <div class="step-ver">v7.0 — 動画広告</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-name">📄 記事LP Park</div>
+        <div class="step-ver">v3.0 — 記事LP</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ KNOWLEDGE -->
+  <div class="section" id="knowledge">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">📚</div>
+      <h2>ナレッジDB</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ファイル名</th>
+            <th>内容</th>
+            <th>用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="code-sm">pak-philosophy.md</span></td>
+            <td>マーケティング哲学全文（パクの師匠の教え）</td>
+            <td>全クリエイティブの判断基準。毎回読み込み</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">hook-db.md</span></td>
+            <td>フックコピーDB（バナー8種 + ショート広告8種）</td>
+            <td>広告のつかみコピー選定</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">cta-db.md</span></td>
+            <td>CTAコピーDB（バナー8種 + ショート広告8種）</td>
+            <td>行動喚起コピー選定</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">article-lp-rules.md</span></td>
+            <td>記事LP制作ルール</td>
+            <td>記事LP Park で参照</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">banner-dna-templates.md</span></td>
+            <td>バナーDNAテンプレート集</td>
+            <td>Banner Park で参照</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">shortad-dna-templates.md</span></td>
+            <td>ショート広告DNAテンプレート集</td>
+            <td>Short Ad Park で参照</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">motion-patterns.md</span></td>
+            <td>動画モーションパターン集</td>
+            <td>Short Ad Park で参照</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">scene-role-tags.md</span></td>
+            <td>シーン役割タグ定義</td>
+            <td>Short Ad Park で参照</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">asset-guide.md</span></td>
+            <td>アセット管理ガイド</td>
+            <td>素材管理</td>
+          </tr>
+          <tr>
+            <td><span class="code-sm">google-slides-recipe.md</span></td>
+            <td>Google Slidesレシピ</td>
+            <td>資料作成</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ⑥ HOOK DB -->
+  <div class="section" id="hooks">
+    <div class="section-header">
+      <div class="section-icon icon-red">🎣</div>
+      <h2>フックDB — バナー × ショート広告</h2>
+    </div>
+    <p style="color:var(--muted); font-size:14px; margin-bottom:20px;">広告の冒頭でN1の「注意」を引き剥がすためのパターン集</p>
+
+    <h3 style="font-size:15px; color:var(--muted); margin-bottom:12px; letter-spacing:1px; text-transform:uppercase;">バナー用（8種）</h3>
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead><tr><th>#</th><th>タイプ</th><th>テンプレート</th><th>推奨カテゴリ</th></tr></thead>
+        <tbody>
+          <tr><td class="code-sm">BH1</td><td>数字衝撃</td><td>「-Xkg」「X万人突破」「X%OFF」</td><td>EC・健康・美容</td></tr>
+          <tr><td class="code-sm">BH2</td><td>疑問/問題提起</td><td>「まだXXで悩んでる?」「XXでいいの?」</td><td>リード・教育</td></tr>
+          <tr><td class="code-sm">BH3</td><td>ビフォーアフター</td><td>写真2枚比較 + 矢印</td><td>美容・ダイエット</td></tr>
+          <tr><td class="code-sm">BH4</td><td>社会的証明</td><td>「XX万人が選んだ」「満足度XX%」</td><td>全カテゴリ</td></tr>
+          <tr><td class="code-sm">BH5</td><td>緊急性</td><td>「今だけ」「残りX個」「本日限定」</td><td>EC・期間限定</td></tr>
+          <tr><td class="code-sm">BH6</td><td>権威引用</td><td>「専門家推奨」「XX医師監修」</td><td>医療・健康</td></tr>
+          <tr><td class="code-sm">BH7</td><td>UGC風</td><td>スマホスクショ風・口コミ風</td><td>美容・日用品</td></tr>
+          <tr><td class="code-sm">BH8</td><td>新常識提案</td><td>「XXはもう古い」「まだXXしてるの?」</td><td>SaaS・テック</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:15px; color:var(--muted); margin-bottom:12px; letter-spacing:1px; text-transform:uppercase;">ショート広告用（8種）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>タイプ</th><th>テンプレート</th><th>平均cost_diff</th><th>感情入口</th></tr></thead>
+        <tbody>
+          <tr><td class="code-sm">H1</td><td>疑問形</td><td>「○○していませんか?」</td><td style="color:#f7d06a;">¥33M</td><td>Pain</td></tr>
+          <tr><td class="code-sm">H2</td><td>衝撃/禁止</td><td>「○○やめてください」</td><td style="color:#f7d06a;">¥31M</td><td>Shock</td></tr>
+          <tr><td class="code-sm">H3</td><td>日常シーン</td><td>「今日は○○デート!」</td><td style="color:#f7706a;">¥28M</td><td>Curiosity</td></tr>
+          <tr><td class="code-sm">H4</td><td>ターゲット呼びかけ</td><td>「○○な人を緊急で探しております」</td><td style="color:#f7706a;">¥17M</td><td>Pain</td></tr>
+          <tr><td class="code-sm">H5</td><td>条件提示</td><td>「○○する代わりに無料で○○」</td><td style="color:#f7706a;">¥15M</td><td>Curiosity</td></tr>
+          <tr><td class="code-sm">H6</td><td>UGC祝福</td><td>「まだ○○残ってる人おめでとう」</td><td style="color:#f7d06a;">¥31M</td><td>Social</td></tr>
+          <tr><td class="code-sm">H7</td><td>乗り換え</td><td>「○○やめてこれにした」</td><td style="color:#f7706a;">¥18M</td><td>Pain</td></tr>
+          <tr><td class="code-sm">H8</td><td>数字衝撃</td><td>「○万人が○○した方法」</td><td style="color:#f7706a;">¥11M</td><td>Social</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ⑦ CTA DB -->
+  <div class="section" id="cta">
+    <div class="section-header">
+      <div class="section-icon icon-green">📢</div>
+      <h2>CTADB — 行動喚起コピー</h2>
+    </div>
+
+    <h3 style="font-size:15px; color:var(--muted); margin-bottom:12px; letter-spacing:1px; text-transform:uppercase;">バナー用（8種）</h3>
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead><tr><th>#</th><th>遷移先</th><th>CTAテンプレート</th><th>ファネル</th></tr></thead>
+        <tbody>
+          <tr><td class="code-sm">BC1</td><td>LP（獲得）</td><td>「今すぐ始める」「無料で試す」</td><td>獲得</td></tr>
+          <tr><td class="code-sm">BC2</td><td>LP（検討）</td><td>「詳しく見る」「比較する」</td><td>検討</td></tr>
+          <tr><td class="code-sm">BC3</td><td>LINE登録</td><td>「LINE追加」「無料相談」</td><td>リード</td></tr>
+          <tr><td class="code-sm">BC4</td><td>記事LP</td><td>「チェックする」「読んでみる」</td><td>検討・認知</td></tr>
+          <tr><td class="code-sm">BC5</td><td>EC直販</td><td>「カートに入れる」「購入する」</td><td>獲得</td></tr>
+          <tr><td class="code-sm">BC6</td><td>アプリ</td><td>「ダウンロード」「インストール」</td><td>獲得</td></tr>
+          <tr><td class="code-sm">BC7</td><td>リタゲ</td><td>「もう一度見る」「お忘れですか?」</td><td>リタゲ</td></tr>
+          <tr><td class="code-sm">BC8</td><td>認知</td><td>「知る」「発見する」</td><td>認知</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:15px; color:var(--muted); margin-bottom:12px; letter-spacing:1px; text-transform:uppercase;">ショート広告用（8種）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>遷移先</th><th>CTAテンプレート</th><th>平均cost_diff</th></tr></thead>
+        <tbody>
+          <tr><td class="code-sm">C1</td><td>LINE誘導</td><td>「今すぐLINE追加して、限定情報をゲット」</td><td style="color:#6af7c8; font-weight:700;">¥18.7M ★最強</td></tr>
+          <tr><td class="code-sm">C2</td><td>記事LP</td><td>「検索しても出てこないので今すぐチェック」</td><td>¥12.3M</td></tr>
+          <tr><td class="code-sm">C3</td><td>記事LP(variant)</td><td>「二度と表示されない可能性があるので今すぐ」</td><td>¥12.3M</td></tr>
+          <tr><td class="code-sm">C4</td><td>アンケートLP</td><td>「アンケート回答した方に○○をプレゼント」</td><td>¥11.2M</td></tr>
+          <tr><td class="code-sm">C5</td><td>LP（価格訴求）</td><td>「約○%OFF。送料無料・定期縛りなし」</td><td>¥10.8M</td></tr>
+          <tr><td class="code-sm">C6</td><td>LP（無料体験）</td><td>「今なら○○が無料。お得に始めたい人は今すぐ」</td><td>¥10.8M</td></tr>
+          <tr><td class="code-sm">C7</td><td>アプリストア</td><td>「ダウンロードはこちら」</td><td>¥15.8M</td></tr>
+          <tr><td class="code-sm">C8</td><td>モール</td><td>「○○で検索」</td><td>¥11.8M</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ⑧ TRIGGERS -->
+  <div class="section" id="triggers">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">⌨️</div>
+      <h2>トリガーワード一覧</h2>
+    </div>
+    <div class="trigger-list">
+      <div class="trigger-item">
+        <div class="trigger-word">コーチ！！</div>
+        <div class="trigger-desc">Coach Park v1.0 を自動起動。日記シートを読み込みコーチングセッション開始。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">おはよう</div>
+        <div class="trigger-desc">Google Calendarから今日の予定を取得し、時系列で整理して表示する。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">おつかれ / ばいばい / おわり / また明日 / 終了 / 寝る</div>
+        <div class="trigger-desc">セッション終了判定 → git add -A & commit & push で自動同期する。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">/research-park</div>
+        <div class="trigger-desc">Research Park v1.0 起動。商品理解・N1分析・strategy.json生成を開始。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">/concept-park</div>
+        <div class="trigger-desc">Concept Park v1.2 起動。コンセプト壁打ちセッション開始。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">/banner-park</div>
+        <div class="trigger-desc">Banner Park v7.0 起動。Gemini（Nano Banana Pro）でバナー生成。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">/shortad-park</div>
+        <div class="trigger-desc">Short Ad Park v7.0 起動。Grok動画 × Gemini画像でショート広告制作。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">/記事LP-park</div>
+        <div class="trigger-desc">記事LP Park v3.0 起動。パラダイムシフト型記事LP生成。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">/youtube-research</div>
+        <div class="trigger-desc">YouTube Research Park v1.0 起動。100chリサーチ × 企画設計 × サムネイル生成。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">/park-kaizen</div>
+        <div class="trigger-desc">Park Kaizen 起動。スキル改善の壁打ちパートナーとして記憶を維持しながら対話。</div>
+      </div>
+      <div class="trigger-item">
+        <div class="trigger-word">/anonymize</div>
+        <div class="trigger-desc">個人情報匿名化スキル起動。顧客データを自動で匿名化処理する。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑨ MEMORY -->
+  <div class="section" id="memory">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🧠</div>
+      <h2>AIのメモリ（記憶）</h2>
+    </div>
+    <div class="memory-grid">
+      <div class="memory-card">
+        <div class="mem-key">日記シートURL</div>
+        <div class="mem-val">Googleスプレッドシート（ライフログ）。WebFetchでCSV取得して分析可能。毎日の睡眠・運動・気分・仕事スコアを記録。</div>
+      </div>
+      <div class="memory-card">
+        <div class="mem-key">ユーザープロフィール</div>
+        <div class="mem-val">現職：マーケティング職（5〜6月退職予定）/ SAWADA（テキスタイル事業）立ち上げ中 / 2026年8〜10月 世界一周予定。</div>
+      </div>
+      <div class="memory-card">
+        <div class="mem-key">コミュニケーションスタイル</div>
+        <div class="mem-val">気の良いギャル口調。元気・フレンドリー・明るいトーン。ユーザーが元気出る雰囲気を大事に。</div>
+      </div>
+      <div class="memory-card">
+        <div class="mem-key">観測データ開始日</div>
+        <div class="mem-val">気分スコア・エネルギー量は 2026-03-09 から開始。それ以前は空白が正常。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑩ PHILOSOPHY -->
+  <div class="section" id="philosophy">
+    <div class="section-header">
+      <div class="section-icon icon-purple">📜</div>
+      <h2>マーケティング哲学サマリー</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">🎈 最上位目的</div>
+        <div class="card-desc">「今この瞬間、この美しき世界を愛し、愛されること。」全てのビジネスはこの目的のためにある。</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎯 N1モデル</div>
+        <div class="card-desc">N1を見つけ、需要のニュアンスを捉え、コンセプトを作って、コンセプトに一貫したコミュニケーションで脳内1番乗りする。</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏆 Only1 > No1</div>
+        <div class="card-desc">No.1ポジションではなく、Only1のポジションを取る。差別化ではなく、唯一無二であること。</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎨 クリエイティブ3つの魂</div>
+        <div class="card-desc">①KVそのもの（ブランドKVレベルで美しい）②キラーキャッチコピー（1行で全てを語る）③別の仮説（各クリエが固有の検証仮説を持つ）</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔀 戦略翻訳</div>
+        <div class="card-desc">クリエイティブは「生成」するものではなく、strategy.jsonという設計図を各フォーマットに「翻訳」するもの。</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🛡️ ベクトルは守護神</div>
+        <div class="card-desc">ベクトルは「良いものを作る魔法」ではなく「ダメなものを通さないフィルター」。品質ゲートとして機能する。</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <p style="font-size:14px; color:var(--muted); margin-bottom:12px;">3層認知設計（ターゲット層の分類）</p>
+      <div class="pills">
+        <div class="pill">潜在層 → 「原因の気づき」+「解決策の方向性」</div>
+        <div class="pill accent">準顕在層 → 「既存の限界」+「新しい判断基準」</div>
+        <div class="pill green">顕在層 → 「根本的な違い」+「パラメータ書き換え」</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑪ TOOLS -->
+  <div class="section" id="tools">
+    <div class="section-header">
+      <div class="section-icon icon-green">🛠️</div>
+      <h2>使用ツール・API</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ツール名</th><th>用途</th><th>スキル</th></tr></thead>
+        <tbody>
+          <tr><td>Gemini 3 Pro Image<br><span class="code-sm">GEMINI_API_KEY_1/2/3</span></td><td>静止画生成（バナー・サムネイル・記事LP画像）。Nano Banana Proとも呼ぶ。キーローテーション3本体制。</td><td>Banner / 記事LP / YouTube Research</td></tr>
+          <tr><td>Grok Imagine Video<br><span class="code-sm">XAI_API_KEY</span></td><td>動画生成（ショート広告の動画素材）</td><td>Short Ad Park</td></tr>
+          <tr><td>Fish Audio TTS<br><span class="code-sm">FISH_AUDIO_API_KEY</span></td><td>テキスト読み上げ（ナレーション音声生成）</td><td>Short Ad Park</td></tr>
+          <tr><td>Google Calendar MCP</td><td>予定取得・「おはよう」トリガーで今日の予定表示</td><td>Coach / 日常</td></tr>
+          <tr><td>Canva MCP</td><td>デザイン生成・編集・エクスポート</td><td>Banner / 記事LP</td></tr>
+          <tr><td>WebFetch / WebSearch</td><td>URLからコンテンツ取得・Web検索（リサーチ・日記CSV取得）</td><td>全スキル</td></tr>
+          <tr><td>Git + GitHub</td><td>2台同期（起動時pull / 終了時push）。sync.shスクリプトも利用可。</td><td>システム全体</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ⑫ RULES -->
+  <div class="section" id="rules">
+    <div class="section-header">
+      <div class="section-icon icon-red">🔒</div>
+      <h2>プライバシー・ルール</h2>
+    </div>
+    <div class="highlight">
+      <h3>個人情報保護（必須・自動適用）</h3>
+      <ul>
+        <li>氏名 → 顧客A / 顧客B / 解約者A … に自動置き換え</li>
+        <li>居住地 → 都道府県レベルに粗粒化（市区町村以下削除）</li>
+        <li>年齢 → 「40代」「50代」などに丸める</li>
+        <li>メール・電話 → [非公開] に置き換え</li>
+        <li>勤務先 → 業種のみ残す（「建設業」「事務職」）</li>
+        <li>HTMLレポート・GitHubにpushするファイルに実名を含めない</li>
+        <li>ユーザーから指示がなくても、AIが先に匿名化してから出力する</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  生成日: <strong>2026-03-09</strong> | 一進AI — AI Park プロジェクト | 本質 × 速度
+</div>
+
+</body>
+</html>
