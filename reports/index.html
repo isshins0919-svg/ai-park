@@ -17,7 +17,7 @@
 
     header {
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 40px;
     }
 
     header .logo {
@@ -43,6 +43,52 @@
       font-size: 14px;
     }
 
+    /* ── タブ ── */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 8px 22px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: 1px solid #2a2a3a;
+      background: transparent;
+      color: #7c7c9a;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      border-color: #a78bfa;
+      color: #a78bfa;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    /* カテゴリ別アクティブ色 */
+    .tab[data-tab="ヨミテ"].active  { background: linear-gradient(135deg, #f59e0b, #ef4444); border-color: transparent; color:#fff; }
+    .tab[data-tab="澤田"].active    { background: linear-gradient(135deg, #10b981, #06b6d4); border-color: transparent; color:#fff; }
+    .tab[data-tab="個人"].active    { background: linear-gradient(135deg, #a78bfa, #ec4899); border-color: transparent; color:#fff; }
+
+    /* ── カウンター ── */
+    .tab .count {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-left: 4px;
+    }
+
+    /* ── グリッド ── */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -58,7 +104,7 @@
       padding: 28px;
       text-decoration: none;
       color: inherit;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -76,14 +122,26 @@
       transition: opacity 0.2s;
     }
 
+    .card[data-category="ヨミテ"]::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+    .card[data-category="澤田"]::before   { background: linear-gradient(90deg, #10b981, #06b6d4); }
+    .card[data-category="個人"]::before   { background: linear-gradient(90deg, #a78bfa, #ec4899); }
+
     .card:hover {
       transform: translateY(-4px);
       border-color: #3a3a5a;
       box-shadow: 0 12px 40px rgba(167, 139, 250, 0.12);
     }
 
-    .card:hover::before {
-      opacity: 1;
+    .card:hover::before { opacity: 1; }
+
+    .card.hidden {
+      display: none;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
     .card-tag {
@@ -92,13 +150,24 @@
       gap: 6px;
       font-size: 11px;
       letter-spacing: 0.1em;
-      text-transform: uppercase;
       color: #a78bfa;
       background: rgba(167, 139, 250, 0.1);
       padding: 4px 10px;
       border-radius: 20px;
       width: fit-content;
     }
+
+    .cat-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .cat-badge.ヨミテ { background: rgba(245,158,11,0.15); color: #f59e0b; }
+    .cat-badge.澤田   { background: rgba(16,185,129,0.15);  color: #10b981; }
+    .cat-badge.個人   { background: rgba(167,139,250,0.15); color: #a78bfa; }
 
     .card-title {
       font-size: 17px;
@@ -130,17 +199,17 @@
       transition: color 0.2s, transform 0.2s;
     }
 
-    .card:hover .card-arrow {
-      color: #a78bfa;
-      transform: translateX(3px);
-    }
+    .card:hover .card-arrow { color: #a78bfa; transform: translateX(3px); }
 
     .empty {
       grid-column: 1 / -1;
       text-align: center;
       color: #5a5a7a;
       padding: 60px;
+      display: none;
     }
+
+    .empty.show { display: block; }
   </style>
 </head>
 <body>
@@ -151,57 +220,114 @@
   <p>生成されたリサーチ・インサイトレポートを確認できます</p>
 </header>
 
+<!-- タブ -->
+<div class="tabs">
+  <button class="tab active" data-tab="全て">全て <span class="count"></span></button>
+  <button class="tab" data-tab="ヨミテ">ヨミテ <span class="count"></span></button>
+  <button class="tab" data-tab="澤田">澤田 <span class="count"></span></button>
+  <button class="tab" data-tab="個人">個人 <span class="count"></span></button>
+</div>
+
 <div class="grid">
 
-  <a class="card" href="growth-supplement-competitive-report.html">
-    <span class="card-tag">📊 競合分析</span>
-    <div class="card-title">成長期サポートサプリ<br>競合 imp 分析レポート</div>
-    <div class="card-desc">全媒体の imp ランキング・クリエイティブ傾向・訴求軸を分析。2025/11〜2026/03 期間データ。</div>
-    <div class="card-meta">2025/11 〜 2026/03</div>
-    <span class="card-arrow">→</span>
-  </a>
-
-  <a class="card" href="gungun_insight_report.html">
-    <span class="card-tag">💡 顧客インサイト</span>
-    <div class="card-title">伸長ぐんぐん習慣<br>顧客インサイトレポート</div>
-    <div class="card-desc">購買動機・継続理由・解約要因など顧客の声を構造化した定性分析レポート。</div>
-    <div class="card-meta">2026</div>
-    <span class="card-arrow">→</span>
-  </a>
-
-  <a class="card" href="gungun_article_lp.html">
-    <span class="card-tag" style="color:#43e97b;background:rgba(67,233,123,0.1)">📄 記事LP</span>
-    <div class="card-title">伸長ぐんぐん習慣<br>記事LP（ドラフト版）</div>
-    <div class="card-desc">N1インタビューデータからリサーチ→記事LP化。コンセプト「遺伝より、習慣。」。※薬機法未対応版。</div>
-    <div class="card-meta">2026-03-09</div>
-    <span class="card-arrow">→</span>
-  </a>
-
-  <a class="card" href="gungun_article_lp_yakki.html">
-    <span class="card-tag" style="color:#f7c948;background:rgba(247,201,72,0.1)">✅ 記事LP（薬機法準拠）</span>
-    <div class="card-title">伸長ぐんぐん習慣<br>記事LP — 薬機法準拠版</div>
-    <div class="card-desc">栄養機能食品の規定表示文言に統一。「身長サポート」等の表現を全修正。配信可能な正式版。</div>
-    <div class="card-meta">2026-03-09</div>
-    <span class="card-arrow">→</span>
-  </a>
-
-  <a class="card" href="yomite-ai-policy.html">
-    <span class="card-tag" style="color:#f59e0b;background:rgba(245,158,11,0.1)">📋 AI方針</span>
+  <!-- ヨミテ -->
+  <a class="card" href="yomite-ai-policy.html" data-category="ヨミテ">
+    <div class="card-tags">
+      <span class="cat-badge ヨミテ">ヨミテ</span>
+      <span class="card-tag" style="color:#f59e0b;background:rgba(245,158,11,0.1)">📋 AI方針</span>
+    </div>
     <div class="card-title">YOMITE<br>AI方針 2026</div>
     <div class="card-desc">全50名向けAI活用ガイド。ツール地図・データ活用3大ライン・プロンプト型集・ロードマップ・新入社員Day1チェックリストを収録。</div>
     <div class="card-meta">2026-03-10</div>
     <span class="card-arrow">→</span>
   </a>
 
-  <a class="card" href="ai-park-capabilities.html">
-    <span class="card-tag" style="color:#60a5fa;background:rgba(96,165,250,0.1)">🤖 システムガイド</span>
+  <a class="card" href="growth-supplement-competitive-report.html" data-category="ヨミテ">
+    <div class="card-tags">
+      <span class="cat-badge ヨミテ">ヨミテ</span>
+      <span class="card-tag">📊 競合分析</span>
+    </div>
+    <div class="card-title">成長期サポートサプリ<br>競合 imp 分析レポート</div>
+    <div class="card-desc">全媒体の imp ランキング・クリエイティブ傾向・訴求軸を分析。2025/11〜2026/03 期間データ。</div>
+    <div class="card-meta">2025/11 〜 2026/03</div>
+    <span class="card-arrow">→</span>
+  </a>
+
+  <a class="card" href="gungun_insight_report.html" data-category="ヨミテ">
+    <div class="card-tags">
+      <span class="cat-badge ヨミテ">ヨミテ</span>
+      <span class="card-tag">💡 顧客インサイト</span>
+    </div>
+    <div class="card-title">伸長ぐんぐん習慣<br>顧客インサイトレポート</div>
+    <div class="card-desc">購買動機・継続理由・解約要因など顧客の声を構造化した定性分析レポート。</div>
+    <div class="card-meta">2026</div>
+    <span class="card-arrow">→</span>
+  </a>
+
+  <a class="card" href="gungun_article_lp.html" data-category="ヨミテ">
+    <div class="card-tags">
+      <span class="cat-badge ヨミテ">ヨミテ</span>
+      <span class="card-tag" style="color:#43e97b;background:rgba(67,233,123,0.1)">📄 記事LP</span>
+    </div>
+    <div class="card-title">伸長ぐんぐん習慣<br>記事LP（ドラフト版）</div>
+    <div class="card-desc">N1インタビューデータからリサーチ→記事LP化。コンセプト「遺伝より、習慣。」。※薬機法未対応版。</div>
+    <div class="card-meta">2026-03-09</div>
+    <span class="card-arrow">→</span>
+  </a>
+
+  <a class="card" href="gungun_article_lp_yakki.html" data-category="ヨミテ">
+    <div class="card-tags">
+      <span class="cat-badge ヨミテ">ヨミテ</span>
+      <span class="card-tag" style="color:#f7c948;background:rgba(247,201,72,0.1)">✅ 記事LP（薬機法準拠）</span>
+    </div>
+    <div class="card-title">伸長ぐんぐん習慣<br>記事LP — 薬機法準拠版</div>
+    <div class="card-desc">栄養機能食品の規定表示文言に統一。「身長サポート」等の表現を全修正。配信可能な正式版。</div>
+    <div class="card-meta">2026-03-09</div>
+    <span class="card-arrow">→</span>
+  </a>
+
+  <!-- 個人 -->
+  <a class="card" href="ai-park-capabilities.html" data-category="個人">
+    <div class="card-tags">
+      <span class="cat-badge 個人">個人</span>
+      <span class="card-tag" style="color:#60a5fa;background:rgba(96,165,250,0.1)">🤖 システムガイド</span>
+    </div>
     <div class="card-title">一進AI<br>全機能・スキル ガイド</div>
     <div class="card-desc">メモリ・Park Skills 9種・フックDB・CTADB・トリガーワード・マーケ哲学を網羅した完全ガイド。</div>
     <div class="card-meta">2026-03-09</div>
     <span class="card-arrow">→</span>
   </a>
 
+  <div class="empty" id="empty-msg">このカテゴリにはまだレポートがありません</div>
+
 </div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const cards = document.querySelectorAll('.card[data-category]');
+  const emptyMsg = document.getElementById('empty-msg');
+
+  // カウント表示
+  const counts = { 全て: cards.length, ヨミテ: 0, 澤田: 0, 個人: 0 };
+  cards.forEach(c => { const cat = c.dataset.category; if (counts[cat] !== undefined) counts[cat]++; });
+  tabs.forEach(t => { t.querySelector('.count').textContent = `(${counts[t.dataset.tab] ?? 0})`; });
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const selected = tab.dataset.tab;
+      let visible = 0;
+      cards.forEach(card => {
+        const show = selected === '全て' || card.dataset.category === selected;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      emptyMsg.classList.toggle('show', visible === 0);
+    });
+  });
+</script>
 
 </body>
 </html>
