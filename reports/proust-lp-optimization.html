@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プルーストLP 高速化レポート</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container { max-width: 780px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .tag {
+    display: inline-block;
+    background: #238636;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .header .sub {
+    font-size: 13px;
+    color: #8b949e;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid #21262d;
+    margin: 36px 0;
+  }
+
+  /* Stats row */
+  .stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    flex: 1;
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: #8b949e;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .stat-card .value {
+    font-size: 26px;
+    font-weight: 700;
+    color: #3fb950;
+  }
+  .stat-card .desc {
+    font-size: 11px;
+    color: #8b949e;
+    margin-top: 4px;
+  }
+
+  /* Section title */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  /* Change items */
+  .change-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .change-item {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-left: 3px solid #3fb950;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .change-item .icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .change-item .content .title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e6edf3;
+    margin-bottom: 4px;
+  }
+  .change-item .content .detail {
+    font-size: 12px;
+    color: #8b949e;
+    line-height: 1.6;
+  }
+  .change-item .content .badge {
+    display: inline-block;
+    background: #0d2818;
+    border: 1px solid #238636;
+    color: #3fb950;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 6px;
+  }
+
+  /* Bug fix items */
+  .bug-item {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-left: 3px solid #f85149;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .bug-item.fixed {
+    border-left-color: #3fb950;
+  }
+  .bug-item .bug-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .bug-item .bug-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #2d1214;
+    border: 1px solid #f85149;
+    color: #f85149;
+  }
+  .bug-item.fixed .bug-badge {
+    background: #0d2818;
+    border-color: #3fb950;
+    color: #3fb950;
+  }
+  .bug-item .bug-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e6edf3;
+  }
+  .before-after {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .before-after .box {
+    flex: 1;
+    background: #0d1117;
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  .before-after .box .box-label {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .before-after .box.before .box-label { color: #f85149; }
+  .before-after .box.after .box-label { color: #3fb950; }
+  .before-after .box p {
+    font-size: 12px;
+    color: #8b949e;
+    line-height: 1.6;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #484f58;
+    padding-top: 24px;
+  }
+
+  @media (max-width: 500px) {
+    .stats { flex-direction: column; }
+    .before-after { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="tag">LP OPTIMIZATION REPORT</div>
+    <h1>プルーストクリーム アンケートLP<br>高速化レポート</h1>
+    <p class="sub">me_proust2_v12 → me_proust2_v12_test_kousoku ／ 2026.03.11</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="label">JS削減量</div>
+      <div class="value">▼210KB</div>
+      <div class="desc">jQuery min化で削減</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">修正バグ数</div>
+      <div class="value">2件</div>
+      <div class="desc">スクロール / Q5重複</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">変更箇所</div>
+      <div class="value">7箇所</div>
+      <div class="desc">HEAD / BODY / FOOTER</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Performance changes -->
+  <div class="section-title">パフォーマンス改善</div>
+  <div class="change-list">
+
+    <div class="change-item">
+      <div class="icon">⚡</div>
+      <div class="content">
+        <div class="title">jQuery min化（HEAD）</div>
+        <div class="detail">jquery-3.6.0.js → jquery-3.6.0.min.js に変更。コメント・空白を除去した軽量版に切り替え。</div>
+        <div class="badge">約210KB削減</div>
+      </div>
+    </div>
+
+    <div class="change-item">
+      <div class="icon">🔤</div>
+      <div class="content">
+        <div class="title">Google Fonts 非同期読み込み（HEAD）</div>
+        <div class="detail">通常の読み込みから printメディア切り替え方式に変更。フォント読み込みがレンダリングをブロックしなくなった。</div>
+        <div class="badge">初期ブロック解消</div>
+      </div>
+    </div>
+
+    <div class="change-item">
+      <div class="icon">🌐</div>
+      <div class="content">
+        <div class="title">CDNへの preconnect 追加（HEAD）</div>
+        <div class="detail">CloudFront・mysquadbeyond への DNS先読みを追加。最初のリクエスト前に接続を確立しておくことで待ち時間を削減。</div>
+        <div class="badge">接続待ち時間削減</div>
+      </div>
+    </div>
+
+    <div class="change-item">
+      <div class="icon">🖼️</div>
+      <div class="content">
+        <div class="title">ファーストビュー画像の preload（HEAD）</div>
+        <div class="detail">LCP対象となるファーストビュー画像を &lt;link rel="preload"&gt; で先読み。ページ表示の体感速度が向上。</div>
+        <div class="badge">LCP改善</div>
+      </div>
+    </div>
+
+    <div class="change-item">
+      <div class="icon">🗑️</div>
+      <div class="content">
+        <div class="title">jQuery 二重読み込み削除（FOOTER）</div>
+        <div class="detail">FooTERにあった jquery-2.2.4（旧版）の読み込みを削除。HEADの3.6.0と二重になっており不要だった。</div>
+        <div class="badge">不要リクエスト削減</div>
+      </div>
+    </div>
+
+    <div class="change-item">
+      <div class="icon">🎬</div>
+      <div class="content">
+        <div class="title">動画6本に preload="none" 追加（BODY）</div>
+        <div class="detail">lpbody6内の動画すべてに preload="none" を設定。初期ロード時に動画データを取得しないようにした。</div>
+        <div class="badge">初期ロード軽量化</div>
+      </div>
+    </div>
+
+    <div class="change-item">
+      <div class="icon">📸</div>
+      <div class="content">
+        <div class="title">lpbody6（LP本体）画像に loading="lazy" 追加（BODY）</div>
+        <div class="detail">30枚以上ある LP本体画像をスクロール時にのみ読み込む設定に。初期ロードの対象画像数を大幅削減。</div>
+        <div class="badge">遅延読み込みで軽量化</div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- Bug fixes -->
+  <div class="section-title">バグ修正</div>
+
+  <div class="bug-item fixed">
+    <div class="bug-header">
+      <div class="bug-badge">FIXED</div>
+      <div class="bug-title">スマホでアンケート回答のたびにページトップへ飛ぶ</div>
+    </div>
+    <div class="before-after">
+      <div class="box before">
+        <div class="box-label">BEFORE</div>
+        <p>lpbody2〜5の画像すべてに loading="lazy" を設定していたため、各セクションの高さが0pxになり、アンカーリンクの飛び先がページ最上部と同じ座標になっていた。</p>
+      </div>
+      <div class="box after">
+        <div class="box-label">AFTER</div>
+        <p>lpbody2〜5の loading="lazy" を削除。各セクションが正しい高さを持つようになり、アンカースクロールが意図した位置へ正常に動作するようになった。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bug-item fixed">
+    <div class="bug-header">
+      <div class="bug-badge">FIXED</div>
+      <div class="bug-title">Q5（最終設問）回答後にQ5エリアがLPに重なって残る</div>
+    </div>
+    <div class="before-after">
+      <div class="box before">
+        <div class="box-label">BEFORE</div>
+        <p>Q5のYES/NOボタン処理をjQueryに依存していたが、Vue.js環境（Ecforce）でsynthetic clickが安定して発火しないケースがあり、Q5エリアが非表示にならなかった。</p>
+      </div>
+      <div class="box after">
+        <div class="box-label">AFTER</div>
+        <p>クリック時に .lpbody5 を直接 display:none、.lpbody6 を直接表示するDOM操作をキャプチャフェーズに追加。jQuery依存なしで確実に動作するよう修正。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="footer">
+    AI Park × Claude Code ／ me_proust2_v12_test_kousoku で動作確認済み
+  </div>
+
+</div>
+</body>
+</html>
