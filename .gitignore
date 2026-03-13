@@ -5,6 +5,23 @@ GカレAPI.txt
 credentials.json
 .env
 .env.*
+*.key
+*.pem
+*.p12
+*.pfx
+token.json
+*_token.json
+
+# ログ
+*.log
+logs/
 
 # OS
 .DS_Store
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
