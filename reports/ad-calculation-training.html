@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>広告運用 計算問題 解説資料 | マーケター育成研修</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+  :root {
+    --primary: #1a73e8;
+    --primary-dark: #1557b0;
+    --primary-light: #e8f0fe;
+    --accent: #ff6d00;
+    --accent-light: #fff3e0;
+    --success: #1e8e3e;
+    --success-light: #e6f4ea;
+    --warning: #f9ab00;
+    --warning-light: #fef9e7;
+    --danger: #d93025;
+    --danger-light: #fce8e6;
+    --gray-50: #f8f9fa;
+    --gray-100: #f1f3f4;
+    --gray-200: #e8eaed;
+    --gray-600: #80868b;
+    --gray-800: #3c4043;
+    --gray-900: #202124;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #f0f4f8;
+    color: var(--gray-900);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* ヘッダー */
+  .hero {
+    background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 60%, #311b92 100%);
+    color: white;
+    padding: 60px 40px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    padding: 6px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16px;
+    opacity: 0.85;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* メインコンテンツ */
+  .container {
+    max-width: 900px;
+    margin: -40px auto 60px;
+    padding: 0 24px;
+  }
+
+  /* セクションカード */
+  .card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .card-header .section-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+    flex-shrink: 0;
+  }
+  .card-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .card-header p {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-top: 4px;
+  }
+  .card-body {
+    padding: 32px;
+  }
+
+  /* 用語解説 */
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .glossary-item {
+    background: var(--gray-50);
+    border-radius: 10px;
+    padding: 18px 20px;
+    border-left: 4px solid var(--primary);
+  }
+  .glossary-item .term {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--primary-dark);
+    margin-bottom: 6px;
+  }
+  .glossary-item .full {
+    font-size: 12px;
+    color: var(--gray-600);
+    margin-bottom: 8px;
+  }
+  .glossary-item .desc {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .glossary-item .formula {
+    margin-top: 8px;
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    color: var(--primary-dark);
+    border: 1px solid var(--gray-200);
+  }
+
+  /* 問題ブロック */
+  .question-block {
+    margin-bottom: 36px;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .question-block:last-child { margin-bottom: 0; }
+
+  .q-header {
+    padding: 16px 24px;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .q-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .q-body { padding: 20px 24px; }
+
+  /* データテーブル */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  .data-table th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .data-table td {
+    padding: 10px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--gray-200);
+    background: white;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table td.label {
+    text-align: left;
+    font-weight: 600;
+    background: var(--gray-50);
+    color: var(--gray-800);
+  }
+
+  /* ステップ解説 */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .step-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  /* 計算式ボックス */
+  .formula-box {
+    background: linear-gradient(135deg, var(--primary-light), #fff);
+    border: 1.5px solid var(--primary);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+  .formula-box .formula-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .formula-box .formula-text {
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1.6;
+  }
+  .formula-box .formula-calc {
+    font-size: 14px;
+    color: var(--gray-600);
+    margin-top: 6px;
+  }
+
+  /* 答えボックス */
+  .answer-box {
+    background: var(--success-light);
+    border: 1.5px solid var(--success);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .answer-box .check {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .answer-box .answer-text {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--success);
+  }
+  .answer-box .answer-sub {
+    font-size: 13px;
+    color: #2e7d32;
+    margin-top: 2px;
+  }
+
+  /* 注意ボックス */
+  .note-box {
+    background: var(--warning-light);
+    border-left: 4px solid var(--warning);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .note-box .note-title {
+    font-weight: 700;
+    color: #e65100;
+    margin-bottom: 4px;
+  }
+
+  /* ポイントボックス */
+  .point-box {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .point-box .point-title {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  /* 概念問題 */
+  .concept-item {
+    background: var(--gray-50);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--primary);
+  }
+  .concept-item:last-child { margin-bottom: 0; }
+  .concept-q {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .concept-a {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* チートシート */
+  .cheatsheet {
+    background: linear-gradient(135deg, #0d47a1, #1a237e);
+    color: white;
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 32px;
+  }
+  .cheatsheet h2 {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cheat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .cheat-item {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    backdrop-filter: blur(4px);
+  }
+  .cheat-item .cheat-term {
+    font-size: 18px;
+    font-weight: 900;
+    color: #82b1ff;
+    margin-bottom: 6px;
+  }
+  .cheat-item .cheat-formula {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+  }
+
+  /* 色別セクション */
+  .color-1 { background: linear-gradient(135deg, #1a73e8, #1557b0); }
+  .color-2 { background: linear-gradient(135deg, #e91e63, #c2185b); }
+  .color-3 { background: linear-gradient(135deg, #00897b, #00695c); }
+  .color-4 { background: linear-gradient(135deg, #f57c00, #e65100); }
+  .color-5 { background: linear-gradient(135deg, #7b1fa2, #6a1b9a); }
+
+  .divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin: 24px 0;
+  }
+
+  /* アラート */
+  .alert {
+    background: var(--danger-light);
+    border: 1.5px solid var(--danger);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .alert .alert-title {
+    font-weight: 700;
+    color: var(--danger);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* フッター */
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--gray-600);
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 26px; }
+    .card-body { padding: 20px; }
+    .cheat-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="hero">
+  <div style="position:relative; z-index:1;">
+    <div class="hero-badge">📊 マーケター育成研修</div>
+    <h1>広告運用 計算問題<br>完全解説ガイド</h1>
+    <p>CPC・CPM・CPA・CVRなど、広告運用で必須の指標を<br>計算の仕組みからしっかり理解しよう</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 基本用語集 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num" style="background: linear-gradient(135deg,#1a73e8,#0d47a1);">📖</div>
+      <div>
+        <h2>はじめに：基本用語を確認しよう</h2>
+        <p>この資料に登場する指標の意味と計算式を最初に押さえておこう</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="glossary-grid">
+        <div class="glossary-item">
+          <div class="term">imp（インプレッション）</div>
+          <div class="full">Impressions</div>
+          <div class="desc">広告が表示された回数。1回画面に表示されたら1imp。</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">click（クリック数）</div>
+          <div class="full">Clicks</div>
+          <div class="desc">広告がクリックされた回数。</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">CTR（クリック率）</div>
+          <div class="full">Click Through Rate</div>
+          <div class="desc">表示されたうち何%がクリックされたか。</div>
+          <div class="formula">CTR = click ÷ imp × 100</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">CPC（クリック単価）</div>
+          <div class="full">Cost Per Click</div>
+          <div class="desc">1クリックにかかった広告費。</div>
+          <div class="formula">CPC = 広告費 ÷ click</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">CPM（1000imp単価）</div>
+          <div class="full">Cost Per Mille</div>
+          <div class="desc">広告1,000回表示あたりのコスト。"M"はラテン語の1000。</div>
+          <div class="formula">CPM = 広告費 ÷ imp × 1,000</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">mCV（記事LP流入数）</div>
+          <div class="full">middle ConVersion</div>
+          <div class="desc">広告→記事LPに遷移したユーザー数。</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">CV（コンバージョン数）</div>
+          <div class="full">ConVersion</div>
+          <div class="desc">最終的な成果（購入・申込など）の件数。</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">mCVR（記事遷移率）</div>
+          <div class="full">middle ConVersion Rate</div>
+          <div class="desc">クリックしたユーザーのうち記事LPに遷移した割合。</div>
+          <div class="formula">mCVR = mCV ÷ click × 100</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">着地CVR（購買転換率）</div>
+          <div class="full">Landing ConVersion Rate</div>
+          <div class="desc">記事LPを見たユーザーのうち最終CVした割合。</div>
+          <div class="formula">着地CVR = CV ÷ mCV × 100</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">CPA（獲得単価）</div>
+          <div class="full">Cost Per Acquisition</div>
+          <div class="desc">1件のCVを獲得するのにかかった広告費。</div>
+          <div class="formula">CPA = CPC ÷ (mCVR × 着地CVR)</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">mCPA（記事LP流入単価）</div>
+          <div class="full">middle Cost Per Acquisition</div>
+          <div class="desc">1件のmCVを獲得するのにかかった広告費。</div>
+          <div class="formula">mCPA = CPC ÷ mCVR</div>
+        </div>
+        <div class="glossary-item">
+          <div class="term">vCTR（視認CTR）</div>
+          <div class="full">Viewable CTR</div>
+          <div class="desc">実際に表示された広告（vimp）に対するクリック率。</div>
+          <div class="formula">vCTR = click ÷ vimp × 100</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 大問1 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num color-1">1</div>
+      <div>
+        <h2>大問1：基本指標の計算</h2>
+        <p>imp・click・mCV・CVから代表的な指標を求める</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <p style="margin-bottom:20px; font-size:14px; color:var(--gray-600);">以下のデータを使って3つの指標を計算しよう。</p>
+
+      <table class="data-table" style="margin-bottom:28px;">
+        <tr>
+          <th>広告費</th>
+          <th>imp</th>
+          <th>click</th>
+          <th>mCV</th>
+          <th>CV</th>
+        </tr>
+        <tr>
+          <td>10,000円</td>
+          <td>500,000</td>
+          <td>1,000</td>
+          <td>50</td>
+          <td>5</td>
+        </tr>
+      </table>
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <div class="q-header" style="background: var(--primary-light);">
+          <div class="q-num">1</div>
+          mCVR と 着地CVR を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <div class="steps">
+            <div class="step">
+              <div class="step-icon">①</div>
+              <div class="step-content">
+                <div class="step-label">mCVRの考え方</div>
+                <p style="font-size:14px;">「クリックした人のうち、何%が記事LPに進んだか？」<br>click=1,000件に対して、記事LPに飛んだ（mCV）のが50件。</p>
+              </div>
+            </div>
+          </div>
+          <div class="formula-box">
+            <div class="formula-title">計算式</div>
+            <div class="formula-text">mCVR = mCV ÷ click × 100</div>
+            <div class="formula-calc">= 50 ÷ 1,000 × 100 = <strong>5.00%</strong></div>
+          </div>
+          <div class="steps" style="margin-top:16px;">
+            <div class="step">
+              <div class="step-icon">②</div>
+              <div class="step-content">
+                <div class="step-label">着地CVRの考え方</div>
+                <p style="font-size:14px;">「記事LPを見た人のうち、何%が最終的に購入（CV）したか？」<br>mCV=50件に対して、CV（購入）したのが5件。</p>
+              </div>
+            </div>
+          </div>
+          <div class="formula-box">
+            <div class="formula-title">計算式</div>
+            <div class="formula-text">着地CVR = CV ÷ mCV × 100</div>
+            <div class="formula-calc">= 5 ÷ 50 × 100 = <strong>10%</strong></div>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <div class="answer-box" style="flex:1; min-width:200px;">
+              <div class="check">✅</div>
+              <div>
+                <div class="answer-text">mCVR = 5.00%</div>
+                <div class="answer-sub">50件 ÷ 1,000件</div>
+              </div>
+            </div>
+            <div class="answer-box" style="flex:1; min-width:200px;">
+              <div class="check">✅</div>
+              <div>
+                <div class="answer-text">着地CVR = 10%</div>
+                <div class="answer-sub">5件 ÷ 50件</div>
+              </div>
+            </div>
+          </div>
+          <div class="point-box" style="margin-top:12px;">
+            <div class="point-title">💡 ポイント</div>
+            記事LP型の広告構造では「広告→記事LP→購入LP」という2段階の遷移がある。mCVRは<strong>広告のCTRに近い感覚</strong>、着地CVRは<strong>記事LP自体の訴求力</strong>を表す指標。
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <div class="q-header" style="background: var(--primary-light);">
+          <div class="q-num">2</div>
+          CPC（クリック単価）を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <p style="font-size:14px; margin-bottom:12px;">「1クリックにいくらかかったか」を計算する。</p>
+          <div class="formula-box">
+            <div class="formula-title">計算式</div>
+            <div class="formula-text">CPC = 広告費 ÷ click</div>
+            <div class="formula-calc">= 10,000 ÷ 1,000 = <strong>10円</strong></div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">CPC = 10円</div>
+              <div class="answer-sub">広告費10,000円 ÷ クリック数1,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <div class="q-header" style="background: var(--primary-light);">
+          <div class="q-num">3</div>
+          CPM（1,000imp単価）を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <p style="font-size:14px; margin-bottom:12px;">「1,000回広告を表示させるのにいくらかかったか」を計算する。</p>
+          <div class="formula-box">
+            <div class="formula-title">計算式</div>
+            <div class="formula-text">CPM = 広告費 ÷ imp × 1,000</div>
+            <div class="formula-calc">= 10,000 ÷ 500,000 × 1,000 = <strong>20円</strong></div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">CPM = 20円</div>
+              <div class="answer-sub">広告費10,000円 ÷ 500,000imp × 1,000</div>
+            </div>
+          </div>
+          <div class="note-box" style="margin-top:12px;">
+            <div class="note-title">📌 なぜ×1,000？</div>
+            CPMは「1,000回」表示あたりの単価。imp単位（500,000）だと大きすぎるので、×1,000して「1,000imp単位」に換算している。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 大問2 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num color-2">2</div>
+      <div>
+        <h2>大問2：CPAから逆算する</h2>
+        <p>目標CPAと各CVRからCPCや広告費を逆算する</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <table class="data-table" style="margin-bottom:28px;">
+        <tr>
+          <th>CPA（目標）</th>
+          <th>mCVR</th>
+          <th>着地CVR</th>
+          <th>広告費</th>
+        </tr>
+        <tr>
+          <td>¥12,000</td>
+          <td>12%</td>
+          <td>5%</td>
+          <td>60,000円</td>
+        </tr>
+      </table>
+
+      <div class="point-box" style="margin-bottom:24px;">
+        <div class="point-title">💡 大問2の考え方：CPAの構造を理解する</div>
+        <p style="font-size:14px; margin-top:4px;">CPAは「CPC ÷ (mCVR × 着地CVR)」で成り立っている。<br>つまり逆に言えば、<strong>CPC = CPA × mCVR × 着地CVR</strong>。<br>目標CPAと各CVRがわかれば、あるべきCPCを逆算できる。</p>
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <div class="q-header" style="background: #fce4ec;">
+          <div class="q-num" style="background:#e91e63;">1</div>
+          CPC を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <div class="steps">
+            <div class="step">
+              <div class="step-icon">①</div>
+              <div class="step-content">
+                <div class="step-label">まずCPAの公式を確認</div>
+                <div class="formula-box">
+                  <div class="formula-text">CPA = CPC ÷ (mCVR × 着地CVR)</div>
+                </div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-icon">②</div>
+              <div class="step-content">
+                <div class="step-label">CPCを左辺に持ってくる（式を変形）</div>
+                <div class="formula-box">
+                  <div class="formula-text">CPC = CPA × mCVR × 着地CVR</div>
+                  <div class="formula-calc">= 12,000 × 0.12 × 0.05 = <strong>72円</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">CPC = 72円</div>
+              <div class="answer-sub">12,000 × 12% × 5% = 72円</div>
+            </div>
+          </div>
+          <div class="note-box">
+            <div class="note-title">📌 実務での使い方</div>
+            目標CPAが決まったら、このCPCを下回るように媒体の入札設定や最適化を行う。「CPCを72円以下に保つ」という目標設定が生まれる。
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <div class="q-header" style="background: #fce4ec;">
+          <div class="q-num" style="background:#e91e63;">2</div>
+          mCPA（記事LP流入単価）を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <p style="font-size:14px; margin-bottom:12px;">「記事LPに1件流入させるのにいくらかかったか」を計算する。</p>
+          <div class="formula-box">
+            <div class="formula-title">計算式</div>
+            <div class="formula-text">mCPA = CPC ÷ mCVR</div>
+            <div class="formula-calc">= 72 ÷ 0.12 = <strong>600円</strong></div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">mCPA = 600円</div>
+              <div class="answer-sub">72円 ÷ 12%</div>
+            </div>
+          </div>
+          <div class="point-box">
+            <div class="point-title">💡 mCPAとは？</div>
+            mCPAは「記事LPまで人を送り込むコスト」。記事LP型広告では、購入ではなく<strong>記事LP到達を中間目標</strong>として管理することで、どの広告が記事LPへの誘導を効率よく行っているか分析できる。
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <div class="q-header" style="background: #fce4ec;">
+          <div class="q-num" style="background:#e91e63;">3</div>
+          何件 mCV しましたか？（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <p style="font-size:14px; margin-bottom:12px;">広告費とmCPAがわかれば、合計のmCV件数を逆算できる。</p>
+          <div class="formula-box">
+            <div class="formula-title">計算式</div>
+            <div class="formula-text">mCV件数 = 広告費 ÷ mCPA</div>
+            <div class="formula-calc">= 60,000 ÷ 600 = <strong>100件</strong></div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">mCV = 100件</div>
+              <div class="answer-sub">広告費60,000円 ÷ mCPA600円</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 大問3 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num color-3">3</div>
+      <div>
+        <h2>大問3：CPMから広告費・vCTRを求める</h2>
+        <p>Viewable Impression（視認imp）も含めた応用計算</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <table class="data-table" style="margin-bottom:28px;">
+        <tr>
+          <th>CPM</th>
+          <th>imp</th>
+          <th>click</th>
+          <th>vimp（視認imp）</th>
+        </tr>
+        <tr>
+          <td>40円</td>
+          <td>500,000</td>
+          <td>1,000</td>
+          <td>500,000</td>
+        </tr>
+      </table>
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <div class="q-header" style="background: var(--success-light);">
+          <div class="q-num" style="background:var(--success);">1</div>
+          広告費を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <p style="font-size:14px; margin-bottom:12px;">CPMと表示回数がわかれば、広告費が逆算できる。</p>
+          <div class="formula-box">
+            <div class="formula-title">計算式</div>
+            <div class="formula-text">広告費 = CPM × imp ÷ 1,000</div>
+            <div class="formula-calc">= 40 × 500,000 ÷ 1,000 = <strong>20,000円</strong></div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">広告費 = 20,000円</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <div class="q-header" style="background: var(--success-light);">
+          <div class="q-num" style="background:var(--success);">2</div>
+          vCTR（Viewable CTR）を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <div class="note-box" style="margin-bottom:12px;">
+            <div class="note-title">📌 vimpとは？</div>
+            vimp（Viewable Impression）＝画面上に実際に表示された広告のimp。スクロールして見えなかった位置のimpは含まれない。vCTRは「本当に見えた広告に対するクリック率」。
+          </div>
+          <div class="formula-box">
+            <div class="formula-title">計算式</div>
+            <div class="formula-text">vCTR = click ÷ vimp × 100</div>
+            <div class="formula-calc">= 1,000 ÷ 500,000 × 100 = <strong>0.20%</strong></div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">vCTR = 0.20%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <div class="q-header" style="background: var(--success-light);">
+          <div class="q-num" style="background:var(--success);">3</div>
+          CPC を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <div class="formula-box">
+            <div class="formula-title">計算式（大問3で出した広告費を使う）</div>
+            <div class="formula-text">CPC = 広告費 ÷ click</div>
+            <div class="formula-calc">= 20,000 ÷ 1,000 = <strong>20円</strong></div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">CPC = 20円</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 大問4 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num color-4">4</div>
+      <div>
+        <h2>大問4：CPMとCTRからCPCを求める</h2>
+        <p>配信データなしでCPCを推算できる重要な公式</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <table class="data-table" style="margin-bottom:28px;">
+        <tr>
+          <th>CPM</th>
+          <th>CTR</th>
+        </tr>
+        <tr>
+          <td>40円</td>
+          <td>0.10%</td>
+        </tr>
+      </table>
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <div class="q-header" style="background: var(--accent-light);">
+          <div class="q-num" style="background:var(--accent);">1</div>
+          CPC を求めなさい（計算式も書くこと）
+        </div>
+        <div class="q-body">
+          <div class="steps">
+            <div class="step">
+              <div class="step-icon">①</div>
+              <div class="step-content">
+                <div class="step-label">公式の導き方（なぜこの式になるか）</div>
+                <p style="font-size:14px; margin-top:4px;">
+                  1,000impあたりを考えると…<br>
+                  ・コスト = CPM = 40円<br>
+                  ・クリック数 = CTR × 1,000 = 0.001 × 1,000 = 1クリック<br>
+                  ・よって CPC = 40 ÷ 1 = 40円
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="formula-box">
+            <div class="formula-title">計算式（CTRは小数で入力）</div>
+            <div class="formula-text">CPC = CPM ÷ (CTR × 1,000)</div>
+            <div class="formula-calc">= 40 ÷ (0.001 × 1,000) = 40 ÷ 1 = <strong>40円</strong></div>
+          </div>
+          <div class="answer-box">
+            <div class="check">✅</div>
+            <div>
+              <div class="answer-text">CPC = 40円</div>
+            </div>
+          </div>
+
+          <div class="alert">
+            <div class="alert-title">⚠️ 数式の書き方に注意！</div>
+            <p style="font-size:14px;"><code>CPC = CPM ÷ CTR × 1,000</code> と括弧なしで書くと、計算順序が変わって誤答になる。<br>
+            必ず <code>CPC = CPM ÷ (CTR × 1,000)</code> と括弧をつけること。</p>
+            <p style="font-size:14px; margin-top:8px;">※ CTRを%のまま（0.10）で入力する場合は <code>CPC = CPM ÷ (CTR÷100 × 1,000)</code> = <code>CPM × 10 ÷ CTR(%)</code> となる。</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <p style="font-weight:700; margin-bottom:12px;">【CPMの2つの使い方】</p>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+            <div style="background:var(--gray-50); border-radius:10px; padding:16px; border-left:4px solid var(--primary);">
+              <p style="font-weight:700; font-size:13px; color:var(--primary); margin-bottom:8px;">① 配信結果のCPM（実績）</p>
+              <p style="font-size:13px;">配信が終わった後に「実際にかかったCPM」を確認する計算</p>
+              <div style="margin-top:8px; background:white; border-radius:6px; padding:8px 12px; font-family:monospace; font-size:12px; border:1px solid var(--gray-200);">CPM = 広告費 ÷ imp × 1,000</div>
+            </div>
+            <div style="background:var(--gray-50); border-radius:10px; padding:16px; border-left:4px solid var(--accent);">
+              <p style="font-weight:700; font-size:13px; color:var(--accent); margin-bottom:8px;">② eCPM（推定CPM）</p>
+              <p style="font-size:13px;">配信中に「媒体からの評価」を推測したい場合に使う計算</p>
+              <div style="margin-top:8px; background:white; border-radius:6px; padding:8px 12px; font-family:monospace; font-size:12px; border:1px solid var(--gray-200);">eCPM = CTR × CPC × 1,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 大問5 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="section-num color-5">5</div>
+      <div>
+        <h2>大問5：指標の関係性を理解する</h2>
+        <p>計算式の構造から「なぜそうなるか」を論理的に説明できるようになる</p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="concept-item">
+        <div class="concept-q">Q1. CPCが下がると、CPAはどうなる？</div>
+        <div class="answer-box" style="margin-bottom:12px;">
+          <div class="check">✅</div>
+          <div><div class="answer-text">CPAも下がる</div></div>
+        </div>
+        <div class="concept-a">
+          <strong>理由：</strong><code>CPA = CPC ÷ (mCVR × 着地CVR)</code> なので、CPCが小さくなれば割り算の分子が減り、CPAも下がる。CVRが変わらなければ、CPCとCPAは比例関係。
+        </div>
+      </div>
+
+      <div class="concept-item">
+        <div class="concept-q">Q2. CTRが上がると、CPCはどうなる？</div>
+        <div class="answer-box" style="margin-bottom:12px;">
+          <div class="check">✅</div>
+          <div><div class="answer-text">CPCは下がる</div></div>
+        </div>
+        <div class="concept-a">
+          <strong>理由：</strong><code>CPC = CPM ÷ (CTR × 1,000)</code> なので、CTRが上がれば分母が大きくなり、CPCは下がる。同じ広告費でより多くクリックされれば、1クリックあたりのコストは下がる。
+        </div>
+      </div>
+
+      <div class="concept-item">
+        <div class="concept-q">Q3. mCVRが2倍に、着地CVRは変化なし、CPCが1/2に。CPAの変化は？</div>
+        <div class="answer-box" style="margin-bottom:12px;">
+          <div class="check">✅</div>
+          <div><div class="answer-text">CPAは 1/4 になる</div></div>
+        </div>
+        <div class="concept-a">
+          <p><strong>計算で確認：</strong></p>
+          <div class="formula-box" style="margin-top:12px;">
+            <div class="formula-text">新CPA = 新CPC ÷ (新mCVR × 着地CVR)</div>
+            <div class="formula-calc">= (CPC × 1/2) ÷ (mCVR × 2 × 着地CVR)</div>
+            <div class="formula-calc">= CPC ÷ (mCVR × 着地CVR) × <strong>1/4</strong></div>
+            <div class="formula-calc">= 元のCPA × <strong>1/4</strong></div>
+          </div>
+          分子が1/2になり、分母が2倍になるので、結果として1/4になる。
+        </div>
+      </div>
+
+      <div class="concept-item">
+        <div class="concept-q">Q4. なぜCPCを下げることが重要なのか？</div>
+        <div class="answer-box" style="margin-bottom:12px;">
+          <div class="check">✅</div>
+          <div><div class="answer-text">CPCを下げることでCPAを下げられるから</div></div>
+        </div>
+        <div class="concept-a">
+          <code>CPA = CPC ÷ CVR</code> という構造なので、CVRが一定のとき<strong>CPCの削減がそのままCPAの削減につながる</strong>。広告費を効率よく使うための最重要指標。
+        </div>
+      </div>
+
+      <div class="concept-item">
+        <div class="concept-q">Q5. なぜCTRを上げることが重要なのか？ 2つ答えよ。</div>
+        <div class="answer-box" style="margin-bottom:12px;">
+          <div class="check">✅</div>
+          <div>
+            <div class="answer-text">① CPCが下がる　② 媒体からの評価が上がりimpが伸びやすい</div>
+          </div>
+        </div>
+        <div class="concept-a">
+          <p><strong>① CPCへの影響：</strong><br>
+          前述の通り <code>CPC = CPM ÷ (CTR × 1,000)</code> なのでCTRが高いほどCPCは低くなる。</p>
+          <p style="margin-top:12px;"><strong>② 媒体評価（eCPM）への影響：</strong><br>
+          MetaやYouTubeなどの広告媒体はオークション形式で広告枠を配分している。媒体側は「この広告はよくクリックされる＝ユーザーに好まれる広告だ」と評価し、より多くのimpを割り当てる。つまり<strong>CTRが高いほどリーチが広がりやすい</strong>。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- チートシート -->
+  <div class="cheatsheet">
+    <h2>📋 計算式チートシート（まとめ）</h2>
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-term">CTR</div>
+        <div class="cheat-formula">= click ÷ imp × 100</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-term">CPC</div>
+        <div class="cheat-formula">= 広告費 ÷ click<br>= CPM ÷ (CTR × 1,000)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-term">CPM</div>
+        <div class="cheat-formula">= 広告費 ÷ imp × 1,000<br>= CTR × CPC × 1,000（eCPM）</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-term">mCVR</div>
+        <div class="cheat-formula">= mCV ÷ click × 100</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-term">着地CVR</div>
+        <div class="cheat-formula">= CV ÷ mCV × 100</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-term">CPA</div>
+        <div class="cheat-formula">= CPC ÷ (mCVR × 着地CVR)</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-term">mCPA</div>
+        <div class="cheat-formula">= CPC ÷ mCVR</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-term">vCTR</div>
+        <div class="cheat-formula">= click ÷ vimp × 100</div>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-term">逆算：CPC</div>
+        <div class="cheat-formula">= CPA × mCVR × 着地CVR</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>広告運用計算問題 解説資料 | マーケター育成研修</p>
+</footer>
+
+</body>
+</html>
