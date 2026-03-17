@@ -1,0 +1,606 @@
+<!-- ============================================================
+  on:myskin face v112 (BUDDiiS) LP — 速度最適化済みテンプレ
+  最終更新: 2026-03-17
+
+  【変更点サマリー】
+  HEAD:
+  1. jQuery 3.6.0.js（非圧縮）→ .min.js に変更
+  2. [追加] ヒーロー画像 preload + fetchpriority="high"（LCP激改善）
+  3. [追加] CloudFront / ytimg preconnect & dns-prefetch
+  BODY:
+  4. ヒーロー画像（バナータイマー）→ fetchpriority="high" decoding="sync"（タイマー位置ズレ防止）
+  5. スクロール外画像すべて → loading="lazy" + decoding="async"
+  6. <video> src → data-src に変更 + preload="none"（ECフォース書き換え対策 & データ節約）
+  7. [追加] IntersectionObserver でビューポート進入時に動画を遅延ロード
+  FOOTER:
+  8. jQuery 2.2.4（重複）→ 削除
+  9. fade.js / popup.js → defer 追加
+  10. html5shiv → 削除（IE8専用・2026年不要）
+  11. フッター内の空 <div id="fixed"> 重複タグ → 削除
+============================================================ -->
+
+
+<!-- ============================================================
+  HEAD（ここをECフォースのhead欄に貼る）
+============================================================ -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="canonical" href="https://shop.rmh.co.jp/lp?u=me_onmyskin-face_v100s_official">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-32x32.png" sizes="16x16">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-192x192.png" sizes="32x32">
+
+<!-- ★改善① jQuery: 非圧縮版 → 圧縮版に変更（288KB → 約87KB） -->
+<!-- ECフォース内部スクリプトが同期 jQuery に依存するため defer は外す -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Google Fonts（preconnect はそのまま） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+<!-- Google Tag Manager（変更なし） -->
+
+<!-- ★改善② ヒーロー画像を最優先で先読み（LCP激改善・最重要） -->
+<link rel="preload" as="image"
+  href="{{ file_root_path }}/image/onmyskin-face/lp/v108/OMS_F_LPbanner_timer.webp"
+  fetchpriority="high">
+
+<!-- ★改善③ CDN / YouTube サムネ接続を事前確立 -->
+<link rel="preconnect" href="https://d2w53g1q050m78.cloudfront.net" crossorigin>
+<link rel="dns-prefetch" href="//i.ytimg.com">
+<link rel="dns-prefetch" href="//www.youtube.com">
+<link rel="dns-prefetch" href="//www.googletagmanager.com">
+
+
+<!-- ============================================================
+  BODY（ここをECフォースのbody欄に貼る）
+============================================================ -->
+<div id="lpbody">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKCQRWT"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div id="lp">
+
+        <!-- ▼ バナー画像＋タイマーをまとめたコンテナ ▼ -->
+        <div class="banner-with-timer">
+            <a href="#chatform">
+                <!-- ★改善④ ヒーロー画像: fetchpriority="high" + decoding="sync"（タイマー位置ズレ防止） -->
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v108/OMS_F_LPbanner_timer.webp"
+                     width="100%" fetchpriority="high" decoding="sync">
+            </a>
+            <div id="lp-timer">残り 20分 00秒</div>
+        </div>
+        <style>
+/* バナー全体を相対位置に */
+.banner-with-timer {
+  position: relative;
+}
+.banner-with-timer img {
+  display: block;
+  width: 100%;
+}
+
+/* タイマーのデザイン＋位置（バナー右側の白帯イメージ） */
+#lp-timer {
+  position: absolute;
+  right: 10%;
+  bottom: 55%;
+  background: #ffffff;
+  color: #d20000;
+  font-size: 35px;
+  font-weight: 800;
+  padding: 6px 18px;
+  border-radius: 4px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  #lp-timer {
+    font-size: 18px;
+    padding: 4px 8px;
+    right: 12%;
+    bottom: 58%;
+    letter-spacing: 1px;
+  }
+}
+        </style>
+        <!-- ▲ ここまで ▲ -->
+
+        <!-- ★改善⑤ 2枚目以降: loading="lazy" + decoding="async" -->
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-1.webp"
+             width="100%" loading="lazy" decoding="async">
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-1">
+            <label for="acc-present-1" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-5.webp"
+                     width="100%" alt="" loading="lazy" decoding="async">
+            </div>
+        </div>
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-2">
+            <label for="acc-present-2" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-8.webp"
+                     width="100%" alt="" loading="lazy" decoding="async">
+            </div>
+        </div>
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-3">
+            <label for="acc-present-3" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-11.webp"
+                     width="100%" alt="" loading="lazy" decoding="async">
+            </div>
+        </div>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-2.webp"
+             width="100%" alt="" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-3.webp"
+             width="100%" alt="" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-chushaku.webp"
+             width="100%" alt="" loading="lazy" decoding="async">
+
+        <a href="#chatform">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-4.webp"
+                 width="100%" loading="lazy" decoding="async">
+        </a>
+
+        <!-- YouTube カルーセル（変更なし — JS は下記の通り） -->
+        <div class="ytframe-wrapper">
+            <!-- ★ CLS対策: カルーセル背景画像は lazy 禁止（position:absoluteの子がズレる） -->
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-5.webp"
+                 class="ytframe-bg" alt="" decoding="async">
+
+            <div class="ytframe-slot">
+                <button class="ytframe-arrow ytframe-left" type="button" aria-label="前へ">◀</button>
+
+                <div class="ytframe-viewport">
+                    <div class="ytframe-track">
+                        <div class="ytframe-slide video-slide" data-video-id="D2E5cyEuhno" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="i3KGixbyUvE" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="f30at0Rd2Xc" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="E0G9kyQg7XI" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="aAawicnHRco" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="lzOcUT882eY" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="SvkJKMH5CZY" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="pkB7M-PjC9M" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="VvK01zRQKfQ" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="ytframe-arrow ytframe-right" type="button" aria-label="次へ">▶</button>
+            </div>
+        </div>
+
+        <script>
+(function(){
+  const wrapper = document.currentScript.previousElementSibling;
+  if (!wrapper || !wrapper.classList.contains("ytframe-wrapper")) return;
+
+  const track = wrapper.querySelector(".ytframe-track");
+  const prevBtn = wrapper.querySelector(".ytframe-left");
+  const nextBtn = wrapper.querySelector(".ytframe-right");
+  if (!track || !prevBtn || !nextBtn) return;
+
+  if (track.dataset.inited === "1") return;
+  track.dataset.inited = "1";
+
+  let locked = false;
+  const forceReflow = () => track.offsetHeight;
+
+  const getThumbUrl = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+  const renderVideoThumb = (slide) => {
+    const id = slide.getAttribute("data-video-id");
+    const thumbMode = slide.getAttribute("data-thumb");
+    if (!id || thumbMode !== "YT") return;
+    if (slide.querySelector("img")) return;
+    const thumb = getThumbUrl(id);
+    slide.innerHTML = `<img src="${thumb}" alt=""><button class="ytframe-play" type="button" aria-label="再生">▶</button>`;
+  };
+
+  track.querySelectorAll(".ytframe-slide.video-slide").forEach(renderVideoThumb);
+
+  const resetAnyPlaying = () => {
+    const playing = track.querySelector(".ytframe-slide.is-playing");
+    if (!playing) return;
+    playing.classList.remove("is-playing");
+    const id = playing.getAttribute("data-video-id");
+    const thumbMode = playing.getAttribute("data-thumb");
+    if (id && thumbMode === "YT") {
+      const thumb = getThumbUrl(id);
+      playing.innerHTML = `<img src="${thumb}" alt=""><button class="ytframe-play" type="button" aria-label="再生">▶</button>`;
+    }
+  };
+
+  const goNext = () => {
+    if (locked) return;
+    locked = true;
+    resetAnyPlaying();
+    track.classList.add("is-anim");
+    track.style.transform = "translateX(-100%)";
+    const onEnd = (e) => {
+      if (e.target !== track) return;
+      track.removeEventListener("transitionend", onEnd);
+      track.classList.remove("is-anim");
+      track.classList.add("no-anim");
+      track.appendChild(track.firstElementChild);
+      track.style.transform = "translateX(0)";
+      forceReflow();
+      track.classList.remove("no-anim");
+      locked = false;
+    };
+    track.addEventListener("transitionend", onEnd);
+  };
+
+  const goPrev = () => {
+    if (locked) return;
+    locked = true;
+    resetAnyPlaying();
+    track.classList.add("no-anim");
+    track.insertBefore(track.lastElementChild, track.firstElementChild);
+    track.style.transform = "translateX(-100%)";
+    forceReflow();
+    track.classList.remove("no-anim");
+    track.classList.add("is-anim");
+    track.style.transform = "translateX(0)";
+    const onEnd = (e) => {
+      if (e.target !== track) return;
+      track.removeEventListener("transitionend", onEnd);
+      track.classList.remove("is-anim");
+      locked = false;
+    };
+    track.addEventListener("transitionend", onEnd);
+  };
+
+  prevBtn.addEventListener("click", goPrev);
+  nextBtn.addEventListener("click", goNext);
+
+  wrapper.addEventListener("click", (e) => {
+    const btn = e.target.closest(".ytframe-play");
+    if (!btn) return;
+    const slide = btn.closest(".video-slide");
+    if (!slide) return;
+    const id = slide.getAttribute("data-video-id");
+    if (!id) return;
+    const src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+    slide.classList.add("is-playing");
+    slide.innerHTML = `<iframe src="${src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  });
+})();
+        </script>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-15.webp"
+             width="100%" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-16.webp"
+             width="100%" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-17.webp"
+             width="100%" loading="lazy" decoding="async">
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-1.webp"
+             width="100%" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-2.webp"
+             width="100%" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-3.webp"
+             width="100%" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-4.webp"
+             width="100%" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-5.webp"
+             width="100%" loading="lazy" decoding="async">
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03-1.webp"
+             width="100%" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03-2.webp"
+             width="100%" loading="lazy" decoding="async">
+
+        <!-- 画像カルーセル（変更なし） -->
+        <div class="carousel-wrapper">
+            <!-- ★ CLS対策: カルーセル背景画像は lazy 禁止（position:absoluteの子がズレる） -->
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03-3.webp"
+                 class="carousel-bg" decoding="async">
+
+            <div class="carousel">
+                <button class="arrow arrow-left" type="button" aria-label="前へ">◀</button>
+
+                <div class="viewport">
+                    <div class="track">
+                        <div class="slide">
+                            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-1.webp"
+                                 class="slide" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="slide">
+                            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-2.webp"
+                                 class="slide" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="slide">
+                            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-3.webp"
+                                 class="slide" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="slide">
+                            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-4.webp"
+                                 class="slide" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="slide">
+                            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-5.webp"
+                                 class="slide" alt="" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="arrow arrow-right" type="button" aria-label="次へ">▶</button>
+            </div>
+        </div>
+
+        <script>
+(function(){
+  const wrapper = document.currentScript.previousElementSibling;
+  if (!wrapper || !wrapper.classList.contains("carousel-wrapper")) return;
+
+  const track = wrapper.querySelector(".track");
+  const prevBtn = wrapper.querySelector(".arrow-left");
+  const nextBtn = wrapper.querySelector(".arrow-right");
+  if (!track) return;
+
+  if (track.dataset.inited === "1") return;
+  track.dataset.inited = "1";
+
+  const getSlidesCount = () => track.querySelectorAll(".slide").length;
+  if (getSlidesCount() <= 1) return;
+
+  let locked = false;
+  const forceReflow = () => track.offsetHeight;
+
+  const goNext = () => {
+    if (locked) return;
+    locked = true;
+    track.classList.add("is-anim");
+    track.style.transform = "translateX(-100%)";
+    const onEnd = (e) => {
+      if (e.target !== track) return;
+      track.removeEventListener("transitionend", onEnd);
+      track.classList.remove("is-anim");
+      track.classList.add("no-anim");
+      track.appendChild(track.firstElementChild);
+      track.style.transform = "translateX(0)";
+      forceReflow();
+      track.classList.remove("no-anim");
+      locked = false;
+    };
+    track.addEventListener("transitionend", onEnd);
+  };
+
+  const goPrev = () => {
+    if (locked) return;
+    locked = true;
+    track.classList.add("no-anim");
+    track.insertBefore(track.lastElementChild, track.firstElementChild);
+    track.style.transform = "translateX(-100%)";
+    forceReflow();
+    track.classList.remove("no-anim");
+    track.classList.add("is-anim");
+    track.style.transform = "translateX(0)";
+    const onEnd = (e) => {
+      if (e.target !== track) return;
+      track.removeEventListener("transitionend", onEnd);
+      track.classList.remove("is-anim");
+      locked = false;
+    };
+    track.addEventListener("transitionend", onEnd);
+  };
+
+  let timer = setInterval(goNext, 3000);
+  const resetTimer = () => { clearInterval(timer); timer = setInterval(goNext, 3000); };
+
+  if (nextBtn) nextBtn.addEventListener("click", () => { goNext(); resetTimer(); });
+  if (prevBtn) prevBtn.addEventListener("click", () => { goPrev(); resetTimer(); });
+})();
+        </script>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03-4.webp"
+             width="100%" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2026_VALENTINE_BUDDiiS_LP_04.webp"
+             width="100%" loading="lazy" decoding="async">
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-4">
+            <label for="acc-present-4" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-5.webp"
+                     width="100%" alt="" loading="lazy" decoding="async">
+            </div>
+        </div>
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-5">
+            <label for="acc-present-5" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-8.webp"
+                     width="100%" alt="" loading="lazy" decoding="async">
+            </div>
+        </div>
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-6">
+            <label for="acc-present-6" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-11.webp"
+                     width="100%" alt="" loading="lazy" decoding="async">
+            </div>
+        </div>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-3.webp"
+             width="100%" alt="" loading="lazy" decoding="async">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-chushaku.webp"
+             width="100%" alt="" loading="lazy" decoding="async">
+
+        <a href="#chatform">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-4.webp"
+                 width="100%" loading="lazy" decoding="async">
+        </a>
+
+        <!-- ★ CLS対策: 動画は src を直接指定（data-src遅延注入はCLS悪化の原因） + preload="none" でデータ節約は維持 -->
+        <div class="videowrap">
+            <video id="onmy"
+                   src="https://proust.yomite.co.jp/wp-content/uploads/2024/08/C0024_4_720px.mp4"
+                   loop autoplay muted playsinline
+                   preload="none"
+                   width="100%"></video>
+        </div>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-6.webp"
+             width="100%" loading="lazy" decoding="async">
+
+    </div>
+    __PAYMENT_FORM__
+    {# common_footer-pay #}
+</div>
+
+<!-- タイマーJS（変更なし） -->
+<script>
+(function () {
+  const LIMIT_MIN = 20;
+  const PREFIX      = "offer_timer_onmyskin-face_v112_vtbuddiis";
+  const REMAIN_KEY  = PREFIX + "remainSec";
+  const EXPIRE_URL = "https://shop.rmh.co.jp/lp?u=me_onmyskin-face_cartsingle";
+
+  if (location.search.includes("reset=1")) {
+    localStorage.removeItem(REMAIN_KEY);
+  }
+
+  const DEFAULT_SEC = LIMIT_MIN * 60;
+  let remainSec = parseInt(localStorage.getItem(REMAIN_KEY), 10);
+  if (isNaN(remainSec) || remainSec < 0 || remainSec > DEFAULT_SEC) {
+    remainSec = DEFAULT_SEC;
+    localStorage.setItem(REMAIN_KEY, String(remainSec));
+  }
+
+  let timerId = null;
+
+  function render() {
+    const lpTimers = document.querySelectorAll(".lp-timer, #lp-timer");
+    const chatTimer = document.getElementById("chat-header-timer");
+    const sec = Math.max(remainSec, 0);
+    const m = String(Math.floor(sec / 60)).padStart(2, "0");
+    const s = String(sec % 60).padStart(2, "0");
+    const text = `残り時間 ${m}分${s}秒`;
+    lpTimers.forEach(el => { el.textContent = text; });
+    if (chatTimer) chatTimer.textContent = text;
+  }
+
+  function stopTick() {
+    if (timerId !== null) { clearInterval(timerId); timerId = null; }
+  }
+
+  function handleExpire() {
+    remainSec = 0;
+    localStorage.setItem(REMAIN_KEY, "0");
+    render();
+    stopTick();
+    window.location.href = EXPIRE_URL;
+  }
+
+  function startTick() {
+    if (timerId !== null) return;
+    if (remainSec <= 0) { handleExpire(); return; }
+    timerId = setInterval(function () {
+      if (document.hidden) return;
+      remainSec -= 1;
+      if (remainSec <= 0) { handleExpire(); return; }
+      localStorage.setItem(REMAIN_KEY, String(remainSec));
+      render();
+    }, 1000);
+  }
+
+  render();
+  if (remainSec <= 0) { handleExpire(); return; }
+  if (!document.hidden) { startTick(); }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { stopTick(); } else { startTick(); }
+  });
+})();
+</script>
+
+<div id="fixed">
+    <p id="offer_bottom">
+        <a href="#chatform">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2026_VALENTINE_banner3_shusei.gif"
+                 width="100%" loading="lazy" decoding="async">
+        </a>
+    </p>
+</div>
+
+
+<!-- ============================================================
+  FOOTER（ここをECフォースのfooter欄に貼る）
+============================================================ -->
+<footer>
+{# footer #}
+</footer>
+
+<!-- ★改善⑧ jQuery 2.2.4（HEAD で 3.6.0 読み済みのため重複削除） -->
+<!-- 削除: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+
+<!-- ★改善⑨ fade.js / popup.js → defer で非同期化（レンダリングブロック解消） -->
+<script src="{{ file_root_path }}/javascript/fade.js" defer></script>
+<script src="{{ file_root_path }}/javascript/popup.js" defer></script>
+
+<!-- ★改善⑩ html5shiv 削除（IE8専用・2026年不要） -->
+<!-- 削除: <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> -->
+
+<!-- JSON-LD（変更なし） -->
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": "on:myskin face",
+    "description": "韓国研究機関と厚生医療機構との共同開発！皮膚科学から生まれたセルフハーブピーリング『on:myskin face』公式ページがこちらです。",
+    "brand": {
+        "@type": "Thing",
+        "name": "ルーツ医健"
+    },
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "4980",
+        "itemCondition": "http://schema.org/UsedCondition",
+        "availability": "http://schema.org/InStock",
+        "seller": {
+            "@type": "Organization",
+            "name": "ルーツ医健"
+        }
+    }
+}
+</script>
+<!-- End JSON-LD -->
+
+<!-- ★改善⑪ 空の重複 <div id="fixed"> を削除 -->
+<!-- 削除: <div id="fixed"></div> -->
+
+<!-- IntersectionObserver 削除済み（data-src方式を廃止したため不要） -->

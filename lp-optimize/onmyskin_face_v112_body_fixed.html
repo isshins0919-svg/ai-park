@@ -1,0 +1,388 @@
+<!-- ============================================================
+  on:myskin face v112 BODY — CLS修正版
+  最終更新: 2026-03-17
+
+  【変更点】
+  - loading="lazy" decoding="async" を全画像から削除（CLS悪化の原因）
+  - ヒーロー画像の fetchpriority="high" decoding="sync" は維持（LCP改善）
+  - カルーセル背景画像の decoding="async" は維持（lazyなしなので問題なし）
+  - 動画の preload="none" は維持（データ節約）
+  - JS・構造・デザインは一切変更なし
+============================================================ -->
+
+<!-- ============================================================
+  BODY（ここをECフォースのbody欄に貼る）
+============================================================ -->
+<div id="lpbody">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKCQRWT"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div id="lp">
+
+        <!-- ▼ バナー画像＋タイマーをまとめたコンテナ ▼ -->
+        <div class="banner-with-timer">
+            <a href="#chatform">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v108/OMS_F_LPbanner_timer.webp"
+                     width="100%" fetchpriority="high" decoding="sync">
+            </a>
+            <div id="lp-timer">残り 20分 00秒</div>
+        </div>
+        <style>
+.banner-with-timer { position: relative; }
+.banner-with-timer img { display: block; width: 100%; }
+#lp-timer {
+  position: absolute;
+  right: 10%;
+  bottom: 55%;
+  background: #ffffff;
+  color: #d20000;
+  font-size: 35px;
+  font-weight: 800;
+  padding: 6px 18px;
+  border-radius: 4px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  #lp-timer {
+    font-size: 18px;
+    padding: 4px 8px;
+    right: 12%;
+    bottom: 58%;
+    letter-spacing: 1px;
+  }
+}
+        </style>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-1.webp" width="100%">
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-1">
+            <label for="acc-present-1" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-5.webp" width="100%" alt="">
+            </div>
+        </div>
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-2">
+            <label for="acc-present-2" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-8.webp" width="100%" alt="">
+            </div>
+        </div>
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-3">
+            <label for="acc-present-3" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-11.webp" width="100%" alt="">
+            </div>
+        </div>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-2.webp" width="100%" alt="">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-3.webp" width="100%" alt="">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-chushaku.webp" width="100%" alt="">
+
+        <a href="#chatform">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-4.webp" width="100%">
+        </a>
+
+        <div class="ytframe-wrapper">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-5.webp"
+                 class="ytframe-bg" alt="" decoding="async">
+
+            <div class="ytframe-slot">
+                <button class="ytframe-arrow ytframe-left" type="button" aria-label="前へ">◀</button>
+                <div class="ytframe-viewport">
+                    <div class="ytframe-track">
+                        <div class="ytframe-slide video-slide" data-video-id="D2E5cyEuhno" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="i3KGixbyUvE" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="f30at0Rd2Xc" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="E0G9kyQg7XI" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="aAawicnHRco" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="lzOcUT882eY" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="SvkJKMH5CZY" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="pkB7M-PjC9M" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                        <div class="ytframe-slide video-slide" data-video-id="VvK01zRQKfQ" data-thumb="YT">
+                            <button class="ytframe-play" type="button" aria-label="再生">▶</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="ytframe-arrow ytframe-right" type="button" aria-label="次へ">▶</button>
+            </div>
+        </div>
+
+        <script>
+(function(){
+  const wrapper = document.currentScript.previousElementSibling;
+  if (!wrapper || !wrapper.classList.contains("ytframe-wrapper")) return;
+  const track = wrapper.querySelector(".ytframe-track");
+  const prevBtn = wrapper.querySelector(".ytframe-left");
+  const nextBtn = wrapper.querySelector(".ytframe-right");
+  if (!track || !prevBtn || !nextBtn) return;
+  if (track.dataset.inited === "1") return;
+  track.dataset.inited = "1";
+  let locked = false;
+  const forceReflow = () => track.offsetHeight;
+  const getThumbUrl = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  const renderVideoThumb = (slide) => {
+    const id = slide.getAttribute("data-video-id");
+    const thumbMode = slide.getAttribute("data-thumb");
+    if (!id || thumbMode !== "YT") return;
+    if (slide.querySelector("img")) return;
+    const thumb = getThumbUrl(id);
+    slide.innerHTML = `<img src="${thumb}" alt=""><button class="ytframe-play" type="button" aria-label="再生">▶</button>`;
+  };
+  track.querySelectorAll(".ytframe-slide.video-slide").forEach(renderVideoThumb);
+  const resetAnyPlaying = () => {
+    const playing = track.querySelector(".ytframe-slide.is-playing");
+    if (!playing) return;
+    playing.classList.remove("is-playing");
+    const id = playing.getAttribute("data-video-id");
+    const thumbMode = playing.getAttribute("data-thumb");
+    if (id && thumbMode === "YT") {
+      const thumb = getThumbUrl(id);
+      playing.innerHTML = `<img src="${thumb}" alt=""><button class="ytframe-play" type="button" aria-label="再生">▶</button>`;
+    }
+  };
+  const goNext = () => {
+    if (locked) return; locked = true; resetAnyPlaying();
+    track.classList.add("is-anim"); track.style.transform = "translateX(-100%)";
+    const onEnd = (e) => {
+      if (e.target !== track) return;
+      track.removeEventListener("transitionend", onEnd);
+      track.classList.remove("is-anim"); track.classList.add("no-anim");
+      track.appendChild(track.firstElementChild); track.style.transform = "translateX(0)";
+      forceReflow(); track.classList.remove("no-anim"); locked = false;
+    };
+    track.addEventListener("transitionend", onEnd);
+  };
+  const goPrev = () => {
+    if (locked) return; locked = true; resetAnyPlaying();
+    track.classList.add("no-anim");
+    track.insertBefore(track.lastElementChild, track.firstElementChild);
+    track.style.transform = "translateX(-100%)"; forceReflow();
+    track.classList.remove("no-anim"); track.classList.add("is-anim"); track.style.transform = "translateX(0)";
+    const onEnd = (e) => {
+      if (e.target !== track) return;
+      track.removeEventListener("transitionend", onEnd); track.classList.remove("is-anim"); locked = false;
+    };
+    track.addEventListener("transitionend", onEnd);
+  };
+  prevBtn.addEventListener("click", goPrev);
+  nextBtn.addEventListener("click", goNext);
+  wrapper.addEventListener("click", (e) => {
+    const btn = e.target.closest(".ytframe-play");
+    if (!btn) return;
+    const slide = btn.closest(".video-slide");
+    if (!slide) return;
+    const id = slide.getAttribute("data-video-id");
+    if (!id) return;
+    const src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+    slide.classList.add("is-playing");
+    slide.innerHTML = `<iframe src="${src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  });
+})();
+        </script>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-15.webp" width="100%">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-16.webp" width="100%">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-17.webp" width="100%">
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-1.webp" width="100%">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-2.webp" width="100%">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-3.webp" width="100%">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-4.webp" width="100%">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_02-5.webp" width="100%">
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03-1.webp" width="100%">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03-2.webp" width="100%">
+
+        <div class="carousel-wrapper">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03-3.webp"
+                 class="carousel-bg" decoding="async">
+            <div class="carousel">
+                <button class="arrow arrow-left" type="button" aria-label="前へ">◀</button>
+                <div class="viewport">
+                    <div class="track">
+                        <div class="slide"><img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-1.webp" class="slide" alt=""></div>
+                        <div class="slide"><img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-2.webp" class="slide" alt=""></div>
+                        <div class="slide"><img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-3.webp" class="slide" alt=""></div>
+                        <div class="slide"><img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-4.webp" class="slide" alt=""></div>
+                        <div class="slide"><img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03_carousel-5.webp" class="slide" alt=""></div>
+                    </div>
+                </div>
+                <button class="arrow arrow-right" type="button" aria-label="次へ">▶</button>
+            </div>
+        </div>
+
+        <script>
+(function(){
+  const wrapper = document.currentScript.previousElementSibling;
+  if (!wrapper || !wrapper.classList.contains("carousel-wrapper")) return;
+  const track = wrapper.querySelector(".track");
+  const prevBtn = wrapper.querySelector(".arrow-left");
+  const nextBtn = wrapper.querySelector(".arrow-right");
+  if (!track) return;
+  if (track.dataset.inited === "1") return;
+  track.dataset.inited = "1";
+  const getSlidesCount = () => track.querySelectorAll(".slide").length;
+  if (getSlidesCount() <= 1) return;
+  let locked = false;
+  const forceReflow = () => track.offsetHeight;
+  const goNext = () => {
+    if (locked) return; locked = true;
+    track.classList.add("is-anim"); track.style.transform = "translateX(-100%)";
+    const onEnd = (e) => {
+      if (e.target !== track) return;
+      track.removeEventListener("transitionend", onEnd);
+      track.classList.remove("is-anim"); track.classList.add("no-anim");
+      track.appendChild(track.firstElementChild); track.style.transform = "translateX(0)";
+      forceReflow(); track.classList.remove("no-anim"); locked = false;
+    };
+    track.addEventListener("transitionend", onEnd);
+  };
+  const goPrev = () => {
+    if (locked) return; locked = true;
+    track.classList.add("no-anim");
+    track.insertBefore(track.lastElementChild, track.firstElementChild);
+    track.style.transform = "translateX(-100%)"; forceReflow();
+    track.classList.remove("no-anim"); track.classList.add("is-anim"); track.style.transform = "translateX(0)";
+    const onEnd = (e) => {
+      if (e.target !== track) return;
+      track.removeEventListener("transitionend", onEnd); track.classList.remove("is-anim"); locked = false;
+    };
+    track.addEventListener("transitionend", onEnd);
+  };
+  let timer = setInterval(goNext, 3000);
+  const resetTimer = () => { clearInterval(timer); timer = setInterval(goNext, 3000); };
+  if (nextBtn) nextBtn.addEventListener("click", () => { goNext(); resetTimer(); });
+  if (prevBtn) prevBtn.addEventListener("click", () => { goPrev(); resetTimer(); });
+})();
+        </script>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_03-4.webp" width="100%">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2026_VALENTINE_BUDDiiS_LP_04.webp" width="100%">
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-4">
+            <label for="acc-present-4" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-5.webp" width="100%" alt="">
+            </div>
+        </div>
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-5">
+            <label for="acc-present-5" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-8.webp" width="100%" alt="">
+            </div>
+        </div>
+
+        <div class="img-acc">
+            <input type="checkbox" id="acc-present-6">
+            <label for="acc-present-6" class="img-acc__trigger"></label>
+            <div class="img-acc__content">
+                <img src="{{ file_root_path }}/image/onmyskin-face/lp/v111/OMS_BUDDiiSLP_01-11.webp" width="100%" alt="">
+            </div>
+        </div>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-3.webp" width="100%" alt="">
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-chushaku.webp" width="100%" alt="">
+
+        <a href="#chatform">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-4.webp" width="100%">
+        </a>
+
+        <div class="videowrap">
+            <video id="onmy"
+                   src="https://proust.yomite.co.jp/wp-content/uploads/2024/08/C0024_4_720px.mp4"
+                   loop autoplay muted playsinline
+                   preload="none"
+                   width="100%"></video>
+        </div>
+
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2603CPN-6.webp" width="100%">
+
+    </div>
+    __PAYMENT_FORM__
+    {# common_footer-pay #}
+</div>
+
+<!-- タイマーJS（変更なし） -->
+<script>
+(function () {
+  const LIMIT_MIN = 20;
+  const PREFIX      = "offer_timer_onmyskin-face_v112_vtbuddiis";
+  const REMAIN_KEY  = PREFIX + "remainSec";
+  const EXPIRE_URL = "https://shop.rmh.co.jp/lp?u=me_onmyskin-face_cartsingle";
+  if (location.search.includes("reset=1")) { localStorage.removeItem(REMAIN_KEY); }
+  const DEFAULT_SEC = LIMIT_MIN * 60;
+  let remainSec = parseInt(localStorage.getItem(REMAIN_KEY), 10);
+  if (isNaN(remainSec) || remainSec < 0 || remainSec > DEFAULT_SEC) {
+    remainSec = DEFAULT_SEC;
+    localStorage.setItem(REMAIN_KEY, String(remainSec));
+  }
+  let timerId = null;
+  function render() {
+    const lpTimers = document.querySelectorAll(".lp-timer, #lp-timer");
+    const chatTimer = document.getElementById("chat-header-timer");
+    const sec = Math.max(remainSec, 0);
+    const m = String(Math.floor(sec / 60)).padStart(2, "0");
+    const s = String(sec % 60).padStart(2, "0");
+    const text = `残り時間 ${m}分${s}秒`;
+    lpTimers.forEach(el => { el.textContent = text; });
+    if (chatTimer) chatTimer.textContent = text;
+  }
+  function stopTick() { if (timerId !== null) { clearInterval(timerId); timerId = null; } }
+  function handleExpire() {
+    remainSec = 0; localStorage.setItem(REMAIN_KEY, "0"); render(); stopTick();
+    window.location.href = EXPIRE_URL;
+  }
+  function startTick() {
+    if (timerId !== null) return;
+    if (remainSec <= 0) { handleExpire(); return; }
+    timerId = setInterval(function () {
+      if (document.hidden) return;
+      remainSec -= 1;
+      if (remainSec <= 0) { handleExpire(); return; }
+      localStorage.setItem(REMAIN_KEY, String(remainSec));
+      render();
+    }, 1000);
+  }
+  render();
+  if (remainSec <= 0) { handleExpire(); return; }
+  if (!document.hidden) { startTick(); }
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { stopTick(); } else { startTick(); }
+  });
+})();
+</script>
+
+<div id="fixed">
+    <p id="offer_bottom">
+        <a href="#chatform">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v112/OMS_2026_VALENTINE_banner3_shusei.gif" width="100%">
+        </a>
+    </p>
+</div>

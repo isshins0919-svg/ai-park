@@ -1,0 +1,178 @@
+<!-- ============================================================
+  mauri MANUKA HONEY LP — 速度最適化済みテンプレ
+  最終更新: 2026-03-17
+
+  【変更点サマリー】
+  1. [HEAD] canonical 重複タグを1本に削減
+  2. [HEAD] jQuery 3.6.0 の同期読み込みを削除（フッターで defer に統合）
+  3. [HEAD] Google Fonts → media="print" onload で非同期化（レンダリングブロック解消）
+  4. [HEAD] ヒーロー画像を <link rel="preload"> で先行取得
+  5. [IMG]  ヒーロー画像1枚目（MNK_LP_top_banner）→ fetchpriority="high" で優先読み込み
+  6. [IMG]  2枚目以降すべて → loading="lazy" + decoding="async" で遅延読み込み
+  7. [IMG]  src属性のタブ文字（\t）を除去（fixed div の bottom.webp）
+  8. [JS]   フッターの jQuery 2.2.4 → 削除（3.6.0 に一本化）
+  9. [JS]   jQuery 3.6.0 / fade.js / popup.js → defer 属性で非同期化
+  10.[JS]  html5shiv → 削除（IE8以下不要。必要なら戻してOK）
+============================================================ -->
+
+
+<!-- ============================================================
+  HEAD（ここをECフォースのhead欄に貼る）
+============================================================ -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+
+<!-- ★改善① canonical 重複を1本に削減 -->
+<link rel="canonical" href="https://shop.rmh.co.jp/lp?u=me_mauri_official">
+
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-32x32.png" sizes="16x16">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-192x192.png" sizes="32x32">
+
+<!-- ★改善② jQuery を HEAD から削除（フッターで defer 読み込みに統合） -->
+<!-- 旧: <script src="https://code.jquery.com/jquery-3.6.0.js"></script> → 削除 -->
+
+<!-- ★改善③ Google Fonts: media="print"→onload で非同期化（レンダリングブロック解消） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap"
+      rel="stylesheet" media="print" onload="this.media='all'">
+<noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+</noscript>
+
+<!-- ★改善④ ヒーロー画像を preload で先行取得（LCP改善） -->
+<link rel="preload" as="image"
+      href="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_top_banner.webp">
+
+<!-- Google Tag Manager（変更なし・headに置くのが正しい） -->
+<!-- GTMタグはここに貼る -->
+
+
+<!-- ============================================================
+  BODY（ここをECフォースのbody欄に貼る）
+============================================================ -->
+<div id="lpbody">
+  <!-- Google Tag Manager (noscript)（変更なし・bodyの最上部が正しい） -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKCQRWT"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div id="lp">
+    <!-- ★改善⑤ ヒーロー画像: fetchpriority="high"（LCP最優先） -->
+    <!-- ★改善⑦ src のタブ文字を除去（元: {{ file_root_path }}	/image/... → タブあり） -->
+    <a href="#chatform">
+      <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_top_banner.webp"
+           width="100%" fetchpriority="high" decoding="sync">
+    </a>
+
+    <!-- ★改善⑥ 2枚目以降: loading="lazy" + decoding="async" で遅延読み込み -->
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-1.webp"  width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-2.webp"  width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-3.webp"  width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-4.webp"  width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-5.webp"  width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-6.webp"  width="100%" loading="lazy" decoding="async">
+
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-1.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-2.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-3.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-5-CTA.webp" width="100%" loading="lazy" decoding="async">
+    <a href="#chatform">
+      <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-4.webp" width="100%" loading="lazy" decoding="async">
+    </a>
+
+    <div id="chushakulink1">
+      <!-- offer-6: position:relativeの親なのでlazyにすると .hoba1 の top % がズレる → 即時読み込み -->
+      <img id="formmae-seni" src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-6_14days.webp" alt="" width="100%" decoding="async">
+      <div class="hoba1">
+        <a href="https://shop.rmh.co.jp/info/customer_term">
+          <img src="{{ file_root_path }}/image/mauri/lp/v1/MNK_LP_offer-kiyaku.webp" width="7%" decoding="async">
+        </a>
+      </div>
+    </div>
+
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-7.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-8.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-9.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-10.webp"  width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-11.webp"  width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-12.webp"  width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP-13.webp"  width="100%" loading="lazy" decoding="async">
+
+    <!-- 2周目オファーブロック -->
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-1.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-2.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-3.webp"   width="100%" loading="lazy" decoding="async">
+    <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-5-CTA.webp" width="100%" loading="lazy" decoding="async">
+    <a href="#chatform">
+      <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-4.webp" width="100%" loading="lazy" decoding="async">
+    </a>
+
+    <div id="chushakulink1">
+      <!-- 同上: position絡みのため即時読み込み -->
+      <img id="formmae-seni" src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_offer-6_14days.webp" alt="" width="100%" decoding="async">
+      <div class="hoba1">
+        <a href="https://shop.rmh.co.jp/info/customer_term">
+          <img src="{{ file_root_path }}/image/mauri/lp/v1/MNK_LP_offer-kiyaku.webp" width="7%" decoding="async">
+        </a>
+      </div>
+    </div>
+
+    <img src="{{ file_root_path }}/image/mauri/lp/v3/MNK_LP-13.webp" width="100%" loading="lazy" decoding="async">
+  </div>
+
+  __PAYMENT_FORM__
+  {# common_footer-pay #}
+</div>
+
+<!-- ★改善⑦ fixed: src のタブ文字を除去 -->
+<div id="fixed">
+  <p id="offer_bottom">
+    <a href="#chatform">
+      <img src="{{ file_root_path }}/image/mauri/lp/v4/MNK_LP_bottom.webp" width="100%">
+    </a>
+  </p>
+</div>
+
+
+<!-- ============================================================
+  FOOTER（ここをECフォースのfooter欄に貼る）
+============================================================ -->
+<footer>
+{# footer #}
+</footer>
+
+<!-- ★改善⑧ jQuery 2.2.4 を削除（3.6.0 に一本化） -->
+<!-- ★改善⑨ jQuery 3.6.0 / fade.js / popup.js → defer で非同期化（レンダリングブロック解消） -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+<script src="{{ file_root_path }}/javascript/fade.js" defer></script>
+<script src="{{ file_root_path }}/javascript/popup.js" defer></script>
+<!-- ★改善⑩ html5shiv 削除（IE8以下のみ必要。不要なら削除してOK） -->
+<!-- <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> -->
+
+<!-- JSON-LD（変更なし） -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "on:myskin face",
+  "description": "手つかずの自然が育んだ、奇跡のはちみつ『mauri MANUKA HONEY』公式ページがこちらです。",
+  "brand": {
+    "@type": "Thing",
+    "name": "ヨミテ"
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "JPY",
+    "price": "4980",
+    "itemCondition": "http://schema.org/UsedCondition",
+    "availability": "http://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "ヨミテ"
+    }
+  }
+}
+</script>
+<!-- End JSON-LD -->

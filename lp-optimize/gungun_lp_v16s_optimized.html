@@ -1,0 +1,405 @@
+<!-- ============================================================
+  伸長ぐんぐん習慣 v16s LP — 速度最適化済みテンプレ
+  最終更新: 2026-03-17
+  対象URL: https://shop.rmh.co.jp/lp?u=me_gun_v16s_test_inhouse_kousokuka
+
+  【変更点サマリー】
+  ★改善① HEAD: Slick CSS → media="print" onload で非同期化（レンダリングブロック解消）
+  ★改善② BODY: ヒーロー画像1枚目（バナータイマー）→ fetchpriority="high"（LCP改善）
+  ★改善③ FOOTER: jQuery / fade.js / popup.js → defer（レンダリングブロック解消）
+  ★改善④ FOOTER: html5shiv → 削除（IE8専用・2026年不要）
+
+  ⚠ やっていないこと（禁止ルールに基づく）:
+  - loading="lazy" は一切つけない（wrap01/03_offer内の絶対配置テキストがズレるため）
+  - body内の<style>タグは一切削除しない（#lp-timerのCSSが壊れるため）
+  - CSS欄は一切変更しない（wrap01/03_offer の position基準が崩れるため）
+============================================================ -->
+
+
+<!-- ============================================================
+  HEAD（ここをECフォースのhead欄に貼る）
+============================================================ -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://shop.rmh.co.jp/lp?u=gun_official">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-32x32.png" sizes="16x16">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-192x192.png" sizes="32x32">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PKCQRWT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- ★改善① Slick CSS: media="print" onload で非同期化（レンダリングブロック解消） -->
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css"
+  media="print" onload="this.media='all'"/>
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css"
+  media="print" onload="this.media='all'">
+
+
+<!-- ============================================================
+  BODY（ここをECフォースのbody欄に貼る）
+============================================================ -->
+<div id="lpbody">
+    <style>
+.banner-with-timer { position: relative; }
+.banner-with-timer img { display: block; width: 100%; }
+#lp-timer {
+  position: absolute;
+  right: 10%;
+  bottom: 48%;
+  background: #ffffff;
+  color: #d20000;
+  font-size: 35px;
+  font-weight: 800;
+  padding: 6px 18px;
+  border-radius: 4px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  #lp-timer {
+    font-size: 18px;
+    padding: 4px 8px;
+    right: 12%;
+    bottom: 41%;
+    letter-spacing: 1px;
+  }
+}
+</style>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKCQRWT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="lp">
+    <div class="banner-with-timer">
+　<a href="javascript:void(0)" class="cvbtn bot_open">
+            <!-- ★改善② ヒーロー画像: fetchpriority="high" でLCP優先読み込み -->
+            <img src="{{ file_root_path }}/image/gun/lp/gun_F_LPbanner_timer.webp" alt="" width="100%" fetchpriority="high" onclick="window.chamo.open({'widget_open':'1'})">
+    </a>
+        <!-- ここがバナーの中に乗るタイマー -->
+        <div id="lp-timer">残り 20分 00秒</div>
+</div>
+        <style>
+/* バナー全体を相対位置に */
+.banner-with-timer {
+  position: relative;
+}
+.banner-with-timer img {
+  display: block;
+  width: 100%;
+}
+
+/* タイマーのデザイン＋位置（バナー右側の白帯イメージ） */
+#lp-timer {
+  position: absolute;
+  right: 10%;        /* 右からの距離（%で調整してOK） */
+  bottom: 48%;       /* 下からの距離（%で調整してOK） */
+  background: #ffffff;
+  color: #d20000;
+  font-size: 35px;
+  font-weight: 800;
+  padding: 6px 18px;
+  border-radius: 4px;
+  letter-spacing: 2px;
+  white-space: nowrap;  /* 改行しない */
+}
+
+@media (max-width: 768px) {
+  #lp-timer {
+    font-size: 18px;
+    padding: 4px 8px;
+    right: 12%;
+    bottom: 41%;
+    letter-spacing: 1px;
+  }
+}
+</style>
+
+    <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-18.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-27.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-28.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-29.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-30.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-31.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-32.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-33.webp" alt="" width="100%">
+      <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-34.webp" alt="" width="100%">
+      <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-35.webp" alt="" width="100%">
+ 	<img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-19.webp" alt="" width="100%">
+      <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-20.webp" alt="" width="100%">
+      <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-21.webp" alt="" width="100%">
+     <a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-22.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a>
+<div class="wrap01_offer">
+            <div class="wrap02_offer">
+             <p class="wrapText01_offer">●本コースは伸長ぐんぐん習慣を特別価格でお届けするお得な定期コースです。●定期コースの契約は解約のお申し出がない限り自動更新となります。●本コースに購入回数の縛りはございません。●2回目以降は1袋あたり約20%OFFの4,860円で2袋お届けします。合計金額は9,720円(税込)です。●︎後払い選択時は、別途手数料が220円加算されます。●引渡時期はご注文から1週間前後、2回目は30日後に2袋、3回目以降は60日毎に2袋お届けします。●︎お支払い時期は、クレジットカード：決済確認後発送、後払い：商品到着後10日以内です。●︎休止・解約・お届け周期の変更ご希望の場合は次回発送予定日の５日前までに0570-200-363(平日10-13/14-17)またはマイページにてご変更ください。●︎安全性確保の観点から返品は不可とさせていただいております。詳しくは<a href="https://shop.rmh.co.jp/info/customer_term/" target="_blank">利用規約</a>をご確認下さい。</p>
+            </div>
+    <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-23.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-24.webp" alt="" width="100%">
+     <a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v16/gun_251128-25.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a>
+
+     <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_2_250325-1.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_2_250325-2.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_2_250325-3.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/gungun_2_250325-4.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/gungun_2_250325-5.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_2_250325-6.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_2_250325-7.webp" alt="" width="100%">
+
+     <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_3_250325-1.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_3-2.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_3-3.webp" alt="" width="100%">
+     <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_3-4.webp" alt="" width="100%">
+ 　　<img src="{{ file_root_path }}/image/gun/lp/v12/5months/gungun_3-5.webp" alt="" width="100%">
+
+    <img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_1970_250325_mima_01.jpg" alt="" width="100%"></a>
+ 	<img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_0_250327-2.webp" alt="" width="100%"></a>
+	<a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v12/LPO/250425_0-2.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a>
+     	<img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-4.webp" alt="" width="100%"></a>
+<div class="wrap03_offer">
+            <div class="wrap04_offer">
+             <p class="wrapText02_offer">●本コースは伸長ぐんぐん習慣を特別価格でお届けするお得な定期コースです。●定期コースの契約は解約のお申し出がない限り自動更新となります。●本コースに購入回数の縛りはございません。●2回目以降は1袋あたり約20%OFFの4,860円で2袋お届けします。合計金額は9,720円(税込)です。●︎後払い選択時は、別途手数料が220円加算されます。●引渡時期はご注文から1週間前後、2回目は30日後に2袋、3回目以降は60日毎に2袋お届けします。●︎お支払い時期は、クレジットカード：決済確認後発送、後払い：商品到着後10日以内です。●︎休止・解約・お届け周期の変更ご希望の場合は次回発送予定日の５日前までに0570-200-363(平日10-13/14-17)またはマイページにてご変更ください。●︎安全性確保の観点から返品は不可とさせていただいております。詳しくは<a href="https://shop.rmh.co.jp/info/customer_term/" target="_blank">利用規約</a>をご確認下さい。</p>
+            </div>
+        <img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-5.webp" alt="" width="100%"></a>
+</div>
+        <a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-6.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a>
+
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_4_250325-1.webp" alt="" width="100%">
+	<img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_4_250325-2.webp" alt="" width="100%">
+	<img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_4-3.webp" alt="" width="100%">
+	<img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_4-4.webp" alt="" width="100%">
+	<img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_4_250325-5.webp" alt="" width="100%">
+	<img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_4_250325-6.webp" alt="" width="100%">
+	<img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_4-7.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/soccer/250825_gungun_Shizuoka Gakuen_Shibuya City FC-1.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/soccer/250825_gungun_Shizuoka Gakuen_Shibuya City FC-2.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/soccer/250825_gungun_Shizuoka Gakuen_Shibuya City FC-3.webp" alt="" width="100%">
+
+     <img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_1970_250325_mima_01.jpg" alt="" width="100%"></a>
+    <img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_0_250327-2.webp" alt="" width="100%"></a>
+	<a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v12/LPO/250425_0-2.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a>
+     	<img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-4.webp" alt="" width="100%"></a>
+<div class="wrap03_offer">
+            <div class="wrap04_offer">
+             <p class="wrapText02_offer">●本コースは伸長ぐんぐん習慣を特別価格でお届けするお得な定期コースです。●定期コースの契約は解約のお申し出がない限り自動更新となります。●本コースに購入回数の縛りはございません。●2回目以降は1袋あたり約20%OFFの4,860円で2袋お届けします。合計金額は9,720円(税込)です。●︎後払い選択時は、別途手数料が220円加算されます。●引渡時期はご注文から1週間前後、2回目は30日後に2袋、3回目以降は60日毎に2袋お届けします。●︎お支払い時期は、クレジットカード：決済確認後発送、後払い：商品到着後10日以内です。●︎休止・解約・お届け周期の変更ご希望の場合は次回発送予定日の５日前までに0570-200-363(平日10-13/14-17)またはマイページにてご変更ください。●︎安全性確保の観点から返品は不可とさせていただいております。詳しくは<a href="https://shop.rmh.co.jp/info/customer_term/" target="_blank">利用規約</a>をご確認下さい。</p>
+            </div>
+        <img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-5.webp" alt="" width="100%"></a>
+</div>
+        <a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-6.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a>
+
+    	<section class="videowrap">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_5-2.webp" alt="" width="100%">
+                            <video id="video_lpo" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/3560578/7145b3cd-447e-4cf5-abb5-10ea3d9b1c02.mp4" loop="" autoplay="" muted="" playsinline="" width="100%"></video>
+                                    <video id="video_lpo2" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/3560577/203a017a-8d0f-439d-890f-aaff166d128b.mp4" loop="" autoplay="" muted="" playsinline="" width="100%"></video>
+        </section>
+	<img src="{{ file_root_path }}/image/gun/lp/v12/LPO/gungun_5_250325-3.webp" alt="" width="100%">
+	<img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_5-4.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/anshin/gungun_5-5.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/anshin/gungun_5-6.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/anshin/gungun_5-7.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/anshin/gungun_5-8.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_5-9.webp" alt="" width="100%">
+    <img src="{{ file_root_path }}/image/gun/lp/v12/LPO/anshin/gungun_5-10.webp" alt="" width="100%">
+
+    <img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_1970_250325_mima_01.jpg" alt="" width="100%"></a>
+    <img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_0_250327-2.webp" alt="" width="100%"></a>
+	<a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v12/LPO/250425_0-2.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a>
+     	<img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-4.webp" alt="" width="100%"></a>
+<div class="wrap03_offer">
+            <div class="wrap04_offer">
+             <p class="wrapText02_offer">●本コースは伸長ぐんぐん習慣を特別価格でお届けするお得な定期コースです。●定期コースの契約は解約のお申し出がない限り自動更新となります。●本コースに購入回数の縛りはございません。●2回目以降は1袋あたり約20%OFFの4,860円で2袋お届けします。合計金額は9,720円(税込)です。●︎後払い選択時は、別途手数料が220円加算されます。●引渡時期はご注文から1週間前後、2回目は30日後に2袋、3回目以降は60日毎に2袋お届けします。●︎お支払い時期は、クレジットカード：決済確認後発送、後払い：商品到着後10日以内です。●︎休止・解約・お届け周期の変更ご希望の場合は次回発送予定日の５日前までに0570-200-363(平日10-13/14-17)またはマイページにてご変更ください。●︎安全性確保の観点から返品は不可とさせていただいております。詳しくは<a href="https://shop.rmh.co.jp/info/customer_term/" target="_blank">利用規約</a>をご確認下さい。</p>
+            </div>
+        <img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-5.webp" alt="" width="100%"></a>
+</div>
+        <a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v12/gungun_0_250327-6.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a>
+
+	 	<img src="{{ file_root_path }}/image/gun/lp/v12/6months/regu/gungun_0_250327-7.webp" alt="" width="100%"></a>
+	 	<img src="{{ file_root_path }}/image/gun/lp/v8/gungun_0_0628-7.webp" alt="" width="100%"></a>
+        <img src="{{ file_root_path }}/image/gun/lp/gungun_6.jpg" alt="" width="100%"></a>
+
+</div>
+__PAYMENT_FORM__
+     {# common_footer-pay #}
+</div>
+<script>
+(function () {
+  const LIMIT_MIN = 20;  // 制限時間（分）
+
+  // ★商品ごと変更箇所★　このLP専用のキー名
+  const PREFIX      = "offer_timer_gungun_v16";
+  const REMAIN_KEY  = PREFIX + "remainSec";
+
+  // ★商品ごと変更箇所★　時間切れ時の遷移先URL
+  const EXPIRE_URL = "https://shop.rmh.co.jp/lp?u=me_gun_cartsingle";
+
+  // テスト用：?reset=1 で完全リセット
+  if (location.search.includes("reset=1")) {
+    localStorage.removeItem(REMAIN_KEY);
+  }
+
+  // 残り秒数を localStorage から取得（なければ 20分で初期化）
+  const DEFAULT_SEC = LIMIT_MIN * 60;
+  let remainSec = parseInt(localStorage.getItem(REMAIN_KEY), 10);
+  if (isNaN(remainSec) || remainSec < 0 || remainSec > DEFAULT_SEC) {
+    remainSec = DEFAULT_SEC;
+    localStorage.setItem(REMAIN_KEY, String(remainSec));
+  }
+
+  let timerId = null;
+
+  function render() {
+    // LP上部（idでもclassでも対応）
+    const lpTimers = document.querySelectorAll(".lp-timer, #lp-timer");
+    // スマログ側ヘッダー
+    const chatTimer = document.getElementById("chat-header-timer");
+
+    const sec = Math.max(remainSec, 0);
+    const m = String(Math.floor(sec / 60)).padStart(2, "0");
+    const s = String(sec % 60).padStart(2, "0");
+    const text = `残り時間 ${m}分${s}秒`;
+
+    lpTimers.forEach(el => {
+      el.textContent = text;
+    });
+    if (chatTimer) chatTimer.textContent = text;
+  }
+
+  function stopTick() {
+    if (timerId !== null) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+  }
+
+  // ★時間切れ時の共通処理
+  function handleExpire() {
+    remainSec = 0;
+    localStorage.setItem(REMAIN_KEY, "0");
+    render();
+    stopTick();
+    // 時間切れで遷移
+    window.location.href = EXPIRE_URL;
+  }
+
+  function startTick() {
+    // 二重起動防止
+    if (timerId !== null) return;
+    // 既に0なら即遷移
+    if (remainSec <= 0) {
+      handleExpire();
+      return;
+    }
+
+    timerId = setInterval(function () {
+      // ページが非表示のときは減らさない（保険）
+      if (document.hidden) return;
+
+      remainSec -= 1;
+
+      if (remainSec <= 0) {
+        handleExpire();
+        return;
+      }
+
+      localStorage.setItem(REMAIN_KEY, String(remainSec));
+      render();
+    }, 1000);
+  }
+
+  // 初回表示
+  render();
+
+  // 読み込み時点で0以下なら即遷移
+  if (remainSec <= 0) {
+    handleExpire();
+    return;
+  }
+
+  // ページが見えてるならスタート
+  if (!document.hidden) {
+    startTick();
+  }
+
+  // タブの可視・非可視で「動かす／止める」を切替
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      // アプリ隠した・別タブに移動 → 一時停止
+      stopTick();
+    } else {
+      // このタブが前面に戻った → 再開
+      startTick();
+    }
+  });
+})();
+</script>
+</div>
+
+
+<!-- ============================================================
+  FOOTER（ここをECフォースのfooter欄に貼る）
+============================================================ -->
+<footer>
+{# footer #}
+</footer>
+
+<!-- ★改善③ jQuery / fade.js / popup.js → defer で非同期化（レンダリングブロック解消） -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" defer></script>
+<script src="{{ file_root_path }}/javascript/fade.js" defer></script>
+<script src="{{ file_root_path }}/javascript/popup.js" defer></script>
+
+<!-- ★改善④ html5shiv → 削除（IE8専用・2026年不要） -->
+<!-- 削除: <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> -->
+
+<!-- JSON-LD（変更なし） -->
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": "プルーストクリーム",
+    "description": "現役医師監修開発の医薬部外品デオドラントクリーム！ニオイ医科学でワキガ対策『プルーストクリーム』公式ページがこちらです。",
+    "brand": {
+    	"@type": "Thing",
+        "name": "ルーツ医健"
+    },
+    "offers": {
+    	"@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "4980",
+        "itemCondition": "http://schema.org/UsedCondition",
+        "availability": "http://schema.org/InStock",
+         "seller": {
+         	"@type": "Organization",
+            "name": "ルーツ医健"
+    	 }
+    }
+    }
+    </script>
+    <!-- End JSON-LD -->
+
+    <!-- fixed -->
+    <div id="fixed">
+<p id="offer_bottom"><a href="javascript:void(0)" class="cvbtn bot_open"><img src="{{ file_root_path }}/image/gun/lp/v14/250611_gungun_wip_CTA.webp" alt="" width="100%" onclick="window.chamo.open({'widget_open':'1'})"></a></p>
+    </div>
+    <!-- End fixed -->
+
+
+<!-- ============================================================
+  CSS（ECフォースのCSS欄 — 変更なし・そのままコピー）
+============================================================ -->
+<!-- 省略: CSS欄は一切変更しない（変更するとwrap01/03_offerの絶対配置テキストがズレる） -->
+<!-- 元のCSS欄をそのままECフォースにコピーしてください -->
+
+
+<!-- ============================================================
+  JavaScript（ECフォースのJS欄 — 変更なし）
+============================================================ -->
+<!-- 省略: JS欄（カウントダウンタイマー）は変更なし -->
+<!-- 元のJS欄をそのままECフォースにコピーしてください -->

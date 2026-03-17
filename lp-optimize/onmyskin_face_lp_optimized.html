@@ -1,0 +1,137 @@
+<!-- ============================================================
+  on:myskin face LP — 速度最適化済みテンプレ
+  最終更新: 2026-03-17
+
+  【変更点サマリー】
+  HEAD:
+  1. jQuery 3.6.0.js（非圧縮・defer なし）→ .min.js に変更
+  2. [追加] ヒーロー画像 preload + fetchpriority="high"（LCP激改善）
+  3. [追加] CloudFront preconnect / GTM dns-prefetch
+  BODY:
+  4. 画像すべて → loading="lazy" + decoding="async"（ヒーロー1枚目を除く）
+  FOOTER:
+  5. jQuery 2.2.4（重複）→ 削除
+  6. fade.js / popup.js → defer 追加
+  7. html5shiv → 削除（IE8専用・2026年不要）
+  8. フッター内の空 <div id="fixed"> 重複タグ → 削除
+============================================================ -->
+
+
+<!-- ============================================================
+  HEAD（ここをECフォースのhead欄に貼る）
+============================================================ -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="canonical" href="https://shop.rmh.co.jp/lp?u=me_onmyskin-face_v100s_official">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-32x32.png" sizes="16x16">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-192x192.png" sizes="32x32">
+
+<!-- ★改善① jQuery: 非圧縮版 → 圧縮版に変更（288KB → 約87KB） -->
+<!-- ECフォース内部スクリプトが同期 jQuery に依存するため defer は外す -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Google Fonts（preconnect はそのまま） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+<!-- Google Tag Manager（変更なし） -->
+
+<!-- ★改善② ヒーロー画像を最優先で先読み（LCP激改善・最重要） -->
+<link rel="preload" as="image"
+  href="{{ file_root_path }}/image/onmyskin-face/lp/v8/top_if26.webp"
+  fetchpriority="high">
+
+<!-- ★改善③ CDN接続を事前確立（全画像の読み込みが速くなる） -->
+<link rel="preconnect" href="https://d2w53g1q050m78.cloudfront.net" crossorigin>
+<link rel="dns-prefetch" href="//www.googletagmanager.com">
+
+
+<!-- ============================================================
+  BODY（ここをECフォースのbody欄に貼る）
+============================================================ -->
+<div id="lpbody">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKCQRWT"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div id="lp">
+        <!-- ★改善④ ヒーロー画像: fetchpriority="high"（lazy は付けない） -->
+        <a href="#chatform">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v8/top_if26.webp"
+                 width="100%" fetchpriority="high" decoding="sync">
+        </a>
+
+        {# onmyskin-face_fV-offer #}
+        {# onmyskin-face_v8_offer_serina #}
+        {# onmyskin-face_body-offer #}
+        {# onmyskin-face_v8_offer_serina #}
+        {# onmyskin-face_lv-offer #}
+        {# onmyskin-face_v8_offer_serina #}
+
+        <!-- ★改善④ 2枚目以降の画像: loading="lazy" + decoding="async" -->
+        <img src="{{ file_root_path }}/image/onmyskin-face/lp/v1/240729_LP03_5.webp"
+             width="100%" loading="lazy" decoding="async">
+    </div>
+
+    __PAYMENT_FORM__
+    {# common_footer-pay #}
+</div>
+
+<div id="fixed">
+    <p id="offer_bottom">
+        <a href="#chatform">
+            <img src="{{ file_root_path }}/image/onmyskin-face/lp/v4/241125_fixbtn_2780.webp"
+                 width="100%" loading="lazy" decoding="async">
+        </a>
+    </p>
+</div>
+
+
+<!-- ============================================================
+  FOOTER（ここをECフォースのfooter欄に貼る）
+============================================================ -->
+<footer>
+{# footer #}
+</footer>
+
+<!-- ★改善⑤ jQuery 2.2.4（HEAD で 3.6.0 読み済みのため重複削除） -->
+<!-- 削除: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+
+<!-- ★改善⑥ fade.js / popup.js → defer で非同期化（レンダリングブロック解消） -->
+<script src="{{ file_root_path }}/javascript/fade.js" defer></script>
+<script src="{{ file_root_path }}/javascript/popup.js" defer></script>
+
+<!-- ★改善⑦ html5shiv 削除（IE8専用・2026年不要） -->
+<!-- 削除: <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> -->
+
+<!-- JSON-LD（変更なし） -->
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": "on:myskin face",
+    "description": "韓国研究機関と厚生医療機構との共同開発！皮膚科学から生まれたセルフハーブピーリング『on:myskin face』公式ページがこちらです。",
+    "brand": {
+        "@type": "Thing",
+        "name": "ルーツ医健"
+    },
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "4980",
+        "itemCondition": "http://schema.org/UsedCondition",
+        "availability": "http://schema.org/InStock",
+        "seller": {
+            "@type": "Organization",
+            "name": "ルーツ医健"
+        }
+    }
+}
+</script>
+<!-- End JSON-LD -->
+
+<!-- ★改善⑧ 空の重複 <div id="fixed"> を削除 -->
+<!-- 削除: <div id="fixed"></div> -->
