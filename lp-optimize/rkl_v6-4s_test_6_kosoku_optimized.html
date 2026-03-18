@@ -1,0 +1,274 @@
+<!-- ============================================================
+  RKL LP v6-4s — 高速化版
+  元URL: https://shop.rmh.co.jp/lp?u=me_rkl_v6-4s_test_6_kosoku
+  最終更新: 2026-03-18
+
+  【変更点】
+  HEAD:
+  1. Slick CSS 2本 → media="print" onload="this.media='all'" で非同期化（ノンブロッキング）
+  2. preconnect: file.mysquadbeyond.com / ec-force S3 追加
+  3. dns-prefetch: googletagmanager 追加
+
+  BODY:
+  4. 1枚目img（251127rkl_2025lp_lpo_v2_1）に fetchpriority="high" 追加
+     ※ それ以外は一切変更なし
+
+  FOOTER:
+  5. fade.js / popup.js に defer 追加
+  6. html5shiv 削除（IE8専用、不要）
+
+  CSS / JS: 変更なし
+============================================================ -->
+
+
+<!-- ============================================================
+  HEAD（ECフォースのhead欄に貼る）
+============================================================ -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://shop.rmh.co.jp/lp?u=me_rkl_official">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-32x32.png" sizes="16x16">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-192x192.png" sizes="32x32">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PKCQRWT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- preconnect: 主要リソースの接続を先行確立 -->
+<link rel="preconnect" href="https://file.mysquadbeyond.com">
+<link rel="preconnect" href="https://ec-force.s3.amazonaws.com">
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
+<!-- Slick CSS: 非同期読み込み（レンダリングブロック解消） -->
+<link rel="stylesheet" type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css"
+      media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
+</noscript>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css"
+      media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
+</noscript>
+
+<meta name="format-detection" content="telephone=no">
+
+
+<!-- ============================================================
+  BODY（ECフォースのbody欄に貼る）
+============================================================ -->
+<div id="lpbody">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKCQRWT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div id="lp">
+    <div class="videowrap">
+        <video id="rklvideo0" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6226353/b75e43cd-9b24-44de-b7e0-e0bfc31dcee0.mp4" loop="" autoplay="" muted="" playsinline="" width="100%"></video> </div>
+    <!-- ★ LCP対象: fetchpriority="high" を追加 -->
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-3/251127rkl_2025lp_lpo_v2_1%20.webp" width="100%" fetchpriority="high">
+ 		<div class="videowrap">
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-3/251126rkl_2025lp_lpo_v2_2.webp" width="100%">
+        <video id="rklvideo1" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6138001/570409a9-912d-445d-8f23-826b4f96651f.mp4" loop="" autoplay="" muted="" playsinline=""></video>
+    </div>
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251119rkl_2025lp_lpo_v2_5.png" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251119rkl_2025lp_lpo_v2_6.png" width="100%">
+    <div class="videowrap">
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251119rkl_2025lp_lpo_v2_7.png" width="100%">
+        <video id="rklvideo2" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6226417/e3e035fb-e20a-4e1f-8be4-6dd4cb03bc36.mp4" loop="" autoplay="" muted="" playsinline=""></video>
+    </div>
+    <div class="videowrap">
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_5.webp" width="100%">
+        <video id="rklvideo3" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6226349/6c967b72-9cc1-45e8-8c45-ad5eb1e7332e.mp4" loop="" autoplay="" muted="" playsinline=""></video>
+    </div>
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_6.webp" width="100%">
+ <div id="chushakulink1">
+    <img id="formmae-seni" src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/v6-2/251217RKL_2025LP_LPO_v2_Dyuku_1.webp" alt="" width="100%">
+    <div class="hoba1">
+        <a href="https://shop.rmh.co.jp/info/customer_term">
+            <img src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/43_250414b17jyo%20.webp" width="21%">
+        </a>
+    </div>
+</div> <div class="videowrap">
+    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_8.webp" width="100%">
+</div>
+	    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_9.webp" width="100%">
+    <div class="videowrap">
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251217RKL_2025LP_LPO_v2_Dyuku_2.webp" width="100%">
+        <video id="rklvideo4" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6226400/b779f9ab-cd41-4db1-825c-abdedca0c27c.mp4" loop="" autoplay="" muted="" playsinline=""></video>
+	    <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251120rkl_2025lp_lpO_v2_12.webp" width="100%">
+ </div>
+       <a href="#chatform" data-product-code="2">
+       <picture>
+           <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_7.webp" width="100%">
+       </picture>
+       </a>
+        <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_8.webp" width="100%">
+        <a href="#chatform" data-product-code="1">
+       <picture>
+           <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_9.webp" width="100%">
+       </picture>
+       </a>
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/260119RKL_2025LP_LPO_v1_1.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/rkl_lp_11.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/15_250414rkl_lp_14.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/16_250414rkl_lp_15.webp" width="100%">
+     <div class="videowrap">
+        <img src="{{ file_root_path }}/image/rkl/lp/17_250414rkl_lp_16.webp" width="100%">
+        <video id="rklvideo8" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6137950/d098b22b-a251-4859-9fcc-cde9edcc1ea0.mp4" loop="" autoplay="" muted="" playsinline=""></video>
+    </div>
+        <img src="{{ file_root_path }}/image/rkl/lp/18_250421RKL_LP_17.webp" width="100%">
+     <div class="videowrap">
+        <img src="{{ file_root_path }}/image/rkl/lp/19_250421RKL_LP_18.webp" width="100%">
+        <video id="rklvideo4" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6137866/8cda81f5-d421-4f9c-bca2-4b6c886434c2.mp4" loop="" autoplay="" muted="" playsinline=""></video>
+    </div>
+     <div class="videowrap">
+        <img src="{{ file_root_path }}/image/rkl/lp/20_250421RKL_LP_19.webp" width="100%">
+        <video id="rklvideo5" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6137967/8a152c6b-efc5-482d-a0b5-279e4db45d65.mp4" loop="" autoplay="" muted="" playsinline=""></video>
+    </div>
+         <img src="{{ file_root_path }}/image/rkl/lp/21_250421RKL_LP_20.webp" width="100%">
+         <img src="{{ file_root_path }}/image/rkl/lp/22_250414bRKL_LP_21.webp" width="100%">
+     <div class="videowrap">
+        <img src="{{ file_root_path }}/image/rkl/lp/23_250421RKL_LP_22.webp" width="100%">
+        <video id="rklvideo6" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/6138001/570409a9-912d-445d-8f23-826b4f96651f.mp4" loop="" autoplay="" muted="" playsinline=""></video>
+    </div>
+         <img src="{{ file_root_path }}/image/rkl/lp/24_250421RKL_LP_23.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/250730RKL_2025LP-3.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_6.webp" width="100%">
+        <a href="#chatform" data-product-code="2">
+       <picture>
+           <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_7.webp" width="100%">
+       </picture>
+       </a>
+        <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_8.webp" width="100%">
+        <a href="#chatform" data-product-code="1">
+       <picture>
+           <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_9.webp" width="100%">
+       </picture>
+       </a>
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/260119RKL_2025LP_LPO_v1_1.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_11.webp" width="100%">
+  <div id="chushakulink3">
+        <img  id="formmae-seni" src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/v6-2/251217RKL_2025LP_1.webp" alt="" width="100%">
+           <div class="hoba3">
+            <a href="https://shop.rmh.co.jp/info/customer_term">
+                <img src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/43_250414b17jyo%20.webp" width="21%">
+                    </a>
+            </div>
+      </div>
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-3/rkl_lp_24.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/26_250421RKL_LP_25.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/27_250421RKL_LP_26.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/28_250414rkl_lp_27.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/29_250414rkl_lp_28.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/251217RKL_2025LP_2.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/31_250421RKL_LP_30.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/32_250414rkl_lp_31.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/33_250421RKL_LP_32.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/RKL_LP_33.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/250730RKL_2025LP-3.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_6.webp" width="100%">
+        <a href="#chatform" data-product-code="2">
+       <picture>
+           <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_7.webp" width="100%">
+       </picture>
+       </a>
+        <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_8.webp" width="100%">
+        <a href="#chatform" data-product-code="1">
+       <picture>
+           <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_9.webp" width="100%">
+       </picture>
+       </a>
+        <img src="{{ file_root_path }}/image/rkl/lp/v6-2/260119RKL_2025LP_LPO_v1_1.webp" width="100%">
+        <img src="{{ file_root_path }}/image/rkl/lp/v5-v6/250909_rkl_lp_11.webp" width="100%">
+  <div id="chushakulink2">
+        <img  id="formmae-seni" src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/v6-2/251217RKL_2025LP_1.webp" alt="" width="100%">
+           <div class="hoba2">
+            <a href="https://shop.rmh.co.jp/info/customer_term">
+                <img src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/43_250414b17jyo%20.webp" width="21%">
+                    </a>
+            </div>
+ <div id="chushakulink5">
+        <img  id="formmae-seni" src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/v6-2/251217RKL_2025LP_3.webp"alt="" width="100%">
+           <div class="hoba5">
+            <a href="https://shop.rmh.co.jp/info/customer_term">
+                <img src="https://ec-force.s3.amazonaws.com/rmh/uploads/image/rkl/lp/RKL_LP_37.webp"width="110%">
+                    </a>
+            </div>
+      </div>
+
+
+    __PAYMENT_FORM__
+         {# common_footer-pay #}
+</div>
+
+<div id="fixed">
+    <p id="offer_bottom">
+        <a href="#chatform" data-product-code="3"><img src="{{ file_root_path }}/image/rkl/chat/251218RKL_2025chat_2.webp" width="100%"></a>
+    </p>
+</div>
+
+
+<!-- ============================================================
+  FOOTER（ECフォースのfooter欄に貼る）
+============================================================ -->
+<footer>
+{# footer #}
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- defer追加: レンダリングブロック解消 -->
+<script src="{{ file_root_path }}/javascript/fade.js" defer></script>
+<script src="{{ file_root_path }}/javascript/popup.js" defer></script>
+<!-- html5shiv 削除（IE8専用・不要） -->
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+    {
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": "プルーストクリーム",
+    "description": "現役医師監修開発の医薬部外品デオドラントクリーム！ニオイ医科学でワキガ対策『プルーストクリーム』公式ページがこちらです。",
+    "brand": {
+    	"@type": "Thing",
+        "name": "ルーツ医健"
+    },
+    "offers": {
+    	"@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "4980",
+        "itemCondition": "http://schema.org/UsedCondition",
+        "availability": "http://schema.org/InStock",
+         "seller": {
+         	"@type": "Organization",
+            "name": "ルーツ医健"
+    	 }
+    }
+    }
+    </script>
+    <!-- End JSON-LD -->
+
+    <!-- fixed -->
+    <div id="fixed">
+
+    </div>
+    <!-- End fixed -->
+
+
+<!-- ============================================================
+  CSS（ECフォースのCSS欄に貼る）— 変更なし
+============================================================ -->
+<!-- ★ CSSは元のまま変更なし。貼り替え不要。 -->
+
+
+<!-- ============================================================
+  JS（ECフォースのJS欄に貼る）— 変更なし
+============================================================ -->
+<!-- ★ JSは元のまま変更なし。貼り替え不要。 -->
