@@ -19,6 +19,9 @@ logs/
 # OS
 .DS_Store
 
+# Claude Code ワークツリー（古い参照が残るため除外）
+.claude/worktrees/
+
 # Node
 node_modules/
 
