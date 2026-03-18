@@ -1,0 +1,29 @@
+{
+  "bannerIndex": 2,
+  "hypothesis": "顕在層N1: 「これなら私も使えるかも」という共感・安心",
+  "hookAngle": "着用シーン①：ローファー・オフィス共感",
+  "hookSource": "HV02",
+  "gazeFlow": "Z型",
+  "gazeDescription": "左上: ヘッドライン → 右上: サブコピー/アイコン → 左下: 商品/足元写真 → 右下: ブランドロゴ",
+  "headline": "オフィスでも使える、バレない5本指",
+  "subHeadline": "ローファーでも、フラットシューズでも。靴を脱いでも普通のソックスに見える。",
+  "ctaText": null,
+  "aspectRatio": "1:1",
+  "size": "1600x1600",
+  "visualDirection": {
+    "mood": "ナチュラル・清潔・上質・軽やか。ファッション誌の足元カット感覚",
+    "productPresentation": "足元close-up。甲側から見ると普通のソックスと区別がつかない「シームレスな甲」を正面に。くるぶし上まで見えるアングル推奨",
+    "colorDirection": {
+      "primary": "#66b780",
+      "accent": "#ffffff",
+      "background": "#ffffff（Amazon白背景）"
+    },
+    "composition": "足元close-up。オフ色ソックス×ローファー。靴を半脱ぎして5本指＋ローファー両方見える構図",
+    "typography": "丸ゴシック系（Zen Maru Gothic相当）。太字見出し＋細字サブ。グリーン/白コントラスト",
+    "differentiator": "「指の輪郭が出ない甲」ビジュアルが最大の差別化。競合は全て指の膨らみが見える。Camicksだけフラット"
+  },
+  "kvPhilosophy": "画像2は '着用シーン①：ローファー・オフィス共感' の仮説を体現するKV。顕在層の '「これなら私も使えるかも」という共感・安心' という感情反応を狙う。",
+  "killerCopyPhilosophy": "「オフィスでも使える、バレない5本指」は顕在層の '5本指=ダサい' パラメータに直撃するキラーコピー。",
+  "testHypothesis": "この画像が '「これなら私も使えるかも」という共感・安心' を引き出し、購買クリックに繋がるか",
+  "fullBannerPrompt": "Create a professional 1:1 square (1600x1600px) Amazon product sub-image for 'Camicks Secret 5-Toe Socks' (Japanese brand, made in Japan).\n\n[VISUAL CONCEPT - Image 2: 着用シーン①：ローファー・オフィス共感]\nClose-up of feet wearing off-white/cream colored Camicks socks with brown loafers (one shoe half removed). Wooden floor or clean neutral background. The sock instep looks completely normal/non-toe-separated from above. Elegant, natural lighting.\n\n[LAYOUT: Z型 eye flow]\n左上: ヘッドライン → 右上: サブコピー/アイコン → 左下: 商品/足元写真 → 右下: ブランドロゴ\n\n[JAPANESE TEXT - Place directly in image, perfectly legible]\nHEADLINE (largest, bold, prominent): 「オフィスでも使える、バレない5本指」\nSUB (smaller, below headline): 「ローファーでも、フラットシューズでも。靴を脱いでも普通のソックスに見える。」\nBRAND TAG (small, bottom area): 「Camicks | 和紙シークレット5本指ソックス | marusawa」\n\n[TEXT REQUIREMENTS - CRITICAL]\n- All Japanese characters must be perfectly rendered with NO errors or blurring\n- High contrast: use white text on dark/colored areas, or dark green text on white\n- Font: clean modern rounded sans-serif (similar to Noto Sans JP or Zen Maru Gothic)\n- Headline font size: very large, dominant\n- Keep 5% safe margin from all edges\n- Text must NOT be cut off\n\n[COLOR PALETTE]\nPrimary: #66b780 (medium green)\nAccent: #acd2b8 (light green)  \nBackground: white (#ffffff) or very light\nText on white: #2d5a3d (dark green) or #ffffff on colored\nCTA elements: #66b780 green\n\n[BRAND FEEL]\nNatural, premium, clean, Japanese craftsmanship aesthetic.\nNOT medical/clinical. Fashion-forward yet trustworthy.\nThe product is socks - show quality and elegance.\n\n[DO NOT include]\nWatermarks, overlapping text, blurry text, English translations of Japanese text,\nstock photo watermarks, cluttered layout, medical symbols.\n"
+}

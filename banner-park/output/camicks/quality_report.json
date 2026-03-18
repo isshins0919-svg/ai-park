@@ -1,0 +1,60 @@
+{
+  "quality_report": [
+    {
+      "index": 1,
+      "file": "banner_01.png",
+      "hook": "シークレット構造差別化（常識逆転）",
+      "text_ok": true,
+      "text_result": "OK: 5本指なのに、\n足元に「指の跡」が出ない\n外見は普通のソックス。中身は5本指の健康設計。\nVS\n一般の5本指\nCamicks\nCamicks | 和紙シークレット5本指ソックス | marusawa",
+      "kv_star": 4,
+      "kv_reason": "★4 - 5本指ソックスに見えないことを訴求しており、商品の特徴がよく伝わる。清潔感もあり、Amazonの商品画像として十分機能する。"
+    },
+    {
+      "index": 2,
+      "file": "banner_02.png",
+      "hook": "着用シーン①：ローファー・オフィス共感",
+      "text_ok": true,
+      "text_result": "OK: オフィスでも使える、\nバレない5本指\nローファーでも、フラットシューズでも。\n靴を脱いでも普通のソックスに見える。\nCamicks\n| 和紙シークレット5本指ソックス |\nmarusawa",
+      "kv_star": 4,
+      "kv_reason": "★4 — オフィスでも使える5本指ソックスという訴求が明確で、商品の特徴が分かりやすく表現されているため。"
+    },
+    {
+      "index": 3,
+      "file": "banner_03.png",
+      "hook": "着用シーン②：スニーカー・アクティブ共感",
+      "text_ok": true,
+      "text_result": "OK: 歩き回っても蒸れない、ズレない\n和紙40%の吸湿速乾。ウォーキング・ヨガ・立ち仕事にも。\nCamicks | 和紙シークレット5本指ソックス|marusawa",
+      "kv_star": 4,
+      "kv_reason": "★4 - 商品の特徴が明確に伝わり、ターゲット層に響く可能性が高い。"
+    },
+    {
+      "index": 4,
+      "file": "banner_04.png",
+      "hook": "素材・機能インフォグラフィック（根拠訴求）",
+      "text_ok": true,
+      "text_result": "OK: 和紙40%が、足の蒸れをリセットする\n吸湿・速乾・抗菌防臭。大阪泉州、1969年創業の老舗が編む日本製。\n和紙40%配合\n抗菌防臭\nCamicks | 和紙シークレット5本指ソックス | marusawa\n吸湿・速乾\n日本製",
+      "kv_star": 4,
+      "kv_reason": "★4 — 商品の機能性を訴求しており、アマゾン商品画像として十分な品質。"
+    },
+    {
+      "index": 5,
+      "file": "banner_05.png",
+      "hook": "カラーバリエーション・コーデ訴求",
+      "text_ok": true,
+      "text_result": "OK: 全15色。おしゃれを\n犠牲にしない5本指。\n今日の気分や服で選べる豊富なカラー。ギフトにも最適。\nCamicks\nCamicks\nCamicks\nCamicks\nCamicks | 和紙シークレット5本指ソックス | marusawa\nCamicks",
+      "kv_star": 4,
+      "kv_reason": "★4 — 商品のバリエーションと質感が伝わり、ターゲット層にアピールする可能性がある。"
+    },
+    {
+      "index": 6,
+      "file": "banner_06.png",
+      "hook": "品質・耐久性・ケア安心感",
+      "text_ok": true,
+      "text_result": "OK: 洗濯を繰り返しても、\n型崩れしない\n毛玉・穴あきが出にくい高耐久。\n洗濯機対応(30℃・ネット推奨)。\n30°C\n30°C\nMachine wash Mesh laundry bag Tumble dry low\nCamicks | 和紙シークレット5本指ソックス | marusawa",
+      "kv_star": 4,
+      "kv_reason": "★4 — 洗濯に対する耐久性とケアのしやすさを強調しており、消費者の安心感を高めることができる。"
+    }
+  ],
+  "avg_kv": 4.0,
+  "text_issues": []
+}

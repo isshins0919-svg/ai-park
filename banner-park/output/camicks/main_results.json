@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-03-19T00:51:31.330996",
+  "ok": 5,
+  "ng": 0,
+  "results": [
+    {
+      "index": 1,
+      "status": "ok",
+      "size_kb": 556
+    },
+    {
+      "index": 2,
+      "status": "ok",
+      "size_kb": 509
+    },
+    {
+      "index": 3,
+      "status": "ok",
+      "size_kb": 347
+    },
+    {
+      "index": 4,
+      "status": "ok",
+      "size_kb": 490
+    },
+    {
+      "index": 5,
+      "status": "ok",
+      "size_kb": 402
+    }
+  ]
+}

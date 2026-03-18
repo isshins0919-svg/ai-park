@@ -1,0 +1,29 @@
+{
+  "bannerIndex": 4,
+  "hypothesis": "顕在層N1: 「なぜ蒸れないのか」の納得・信頼",
+  "hookAngle": "素材・機能インフォグラフィック（根拠訴求）",
+  "hookSource": "HV04",
+  "gazeFlow": "F型",
+  "gazeDescription": "上段横: ヘッドライン → 左側縦: サブポイント4項目 → 下段: CTAテキスト",
+  "headline": "和紙40%が、足の蒸れをリセットする",
+  "subHeadline": "吸湿・速乾・抗菌防臭。大阪泉州、1969年創業の老舗が編む日本製。",
+  "ctaText": null,
+  "aspectRatio": "1:1",
+  "size": "1600x1600",
+  "visualDirection": {
+    "mood": "ナチュラル・清潔・上質・軽やか。ファッション誌の足元カット感覚",
+    "productPresentation": "足元close-up。甲側から見ると普通のソックスと区別がつかない「シームレスな甲」を正面に。くるぶし上まで見えるアングル推奨",
+    "colorDirection": {
+      "primary": "#66b780",
+      "accent": "#ffffff",
+      "background": "#ffffff（Amazon白背景）"
+    },
+    "composition": "商品写真中央。四隅にアイコン＋テキスト：①和紙40% ②吸湿速乾 ③抗菌防臭 ④日本製。背景ライトグリーン or ホワイト",
+    "typography": "丸ゴシック系（Zen Maru Gothic相当）。太字見出し＋細字サブ。グリーン/白コントラスト",
+    "differentiator": "「指の輪郭が出ない甲」ビジュアルが最大の差別化。競合は全て指の膨らみが見える。Camicksだけフラット"
+  },
+  "kvPhilosophy": "画像4は '素材・機能インフォグラフィック（根拠訴求）' の仮説を体現するKV。顕在層の '「なぜ蒸れないのか」の納得・信頼' という感情反応を狙う。",
+  "killerCopyPhilosophy": "「和紙40%が、足の蒸れをリセットする」は顕在層の '5本指=ダサい' パラメータに直撃するキラーコピー。",
+  "testHypothesis": "この画像が '「なぜ蒸れないのか」の納得・信頼' を引き出し、購買クリックに繋がるか",
+  "fullBannerPrompt": "Create a professional 1:1 square (1600x1600px) Amazon product sub-image for 'Camicks Secret 5-Toe Socks' (Japanese brand, made in Japan).\n\n[VISUAL CONCEPT - Image 4: 素材・機能インフォグラフィック（根拠訴求）]\nCenter: product photo of Camicks sock on white background. Four corners with icon + text: top-left=leaf icon '和紙40%配合', top-right=droplet icon '吸湿・速乾', bottom-left=shield icon '抗菌防臭', bottom-right=Japan map icon '日本製'. Light green (#acd2b8) background gradient. Clean infographic style.\n\n[LAYOUT: F型 eye flow]\n上段横: ヘッドライン → 左側縦: サブポイント4項目 → 下段: CTAテキスト\n\n[JAPANESE TEXT - Place directly in image, perfectly legible]\nHEADLINE (largest, bold, prominent): 「和紙40%が、足の蒸れをリセットする」\nSUB (smaller, below headline): 「吸湿・速乾・抗菌防臭。大阪泉州、1969年創業の老舗が編む日本製。」\nBRAND TAG (small, bottom area): 「Camicks | 和紙シークレット5本指ソックス | marusawa」\n\n[TEXT REQUIREMENTS - CRITICAL]\n- All Japanese characters must be perfectly rendered with NO errors or blurring\n- High contrast: use white text on dark/colored areas, or dark green text on white\n- Font: clean modern rounded sans-serif (similar to Noto Sans JP or Zen Maru Gothic)\n- Headline font size: very large, dominant\n- Keep 5% safe margin from all edges\n- Text must NOT be cut off\n\n[COLOR PALETTE]\nPrimary: #66b780 (medium green)\nAccent: #acd2b8 (light green)  \nBackground: white (#ffffff) or very light\nText on white: #2d5a3d (dark green) or #ffffff on colored\nCTA elements: #66b780 green\n\n[BRAND FEEL]\nNatural, premium, clean, Japanese craftsmanship aesthetic.\nNOT medical/clinical. Fashion-forward yet trustworthy.\nThe product is socks - show quality and elegance.\n\n[DO NOT include]\nWatermarks, overlapping text, blurry text, English translations of Japanese text,\nstock photo watermarks, cluttered layout, medical symbols.\n"
+}
