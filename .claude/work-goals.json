@@ -5,10 +5,10 @@
       "id": 1,
       "name": "sawada 靴下Amazon出店",
       "goal": "来週前半までに出品完了状態にする（残り50%を完走）",
-      "status": "active",
+      "status": "completed",
       "priority": "high",
       "created_at": "2026-03-19",
-      "notes": "50%完了時点で週終了。Camicksで確立した画像生成フローを転用して完走する"
+      "notes": "2026-03-19完了！50%完了後、共有まで完走。Camicksで確立した画像生成フローを転用"
     },
     {
       "id": 2,
@@ -23,10 +23,10 @@
       "id": 3,
       "name": "えみさん ぐんぐんCRM試作スケジュール",
       "goal": "テレカンでえみさんとCRM試作スケジュールを合意・確定させる",
-      "status": "active",
+      "status": "completed",
       "priority": "high",
       "created_at": "2026-03-19",
-      "notes": "テレカン待ち。合意後すぐ試作着手できるよう準備しておく"
+      "notes": "2026-03-19完了！テレカンで合意取れた"
     },
     {
       "id": 4,
