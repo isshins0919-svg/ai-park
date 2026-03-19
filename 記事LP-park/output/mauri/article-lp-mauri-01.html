@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マヌカハニー、本当に「本物」を選べていますか？ | mauri MANUKA HONEY</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
+    background:#FDF8EF;
+    color:#2C2C2C;
+    max-width:480px;
+    margin:0 auto;
+    padding-bottom:80px;
+  }
+  img{width:100%;display:block}
+  a{text-decoration:none;color:inherit}
+
+  /* ─── フローティングCTA ─── */
+  .floating-cta{
+    position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+    width:100%;max-width:480px;
+    background:rgba(212,160,23,0.97);
+    padding:10px 16px;z-index:999;
+    box-shadow:0 -2px 12px rgba(0,0,0,0.15);
+  }
+  .floating-cta a{
+    display:block;background:#2D5016;color:#fff;
+    font-size:1rem;font-weight:700;
+    text-align:center;padding:13px 8px;
+    border-radius:8px;
+    box-shadow:0 3px 8px rgba(0,0,0,0.25);
+  }
+  .floating-cta .sub{font-size:.72rem;color:#fff;text-align:center;margin-top:5px}
+
+  /* ─── ヘッダー ─── */
+  .site-header{
+    background:#2D5016;padding:10px 16px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .site-header .brand{color:#D4A017;font-size:.85rem;font-weight:700;letter-spacing:.05em}
+  .site-header .tag{color:#fff;font-size:.7rem;background:rgba(255,255,255,.15);padding:3px 8px;border-radius:20px}
+
+  /* ─── FVセクション ─── */
+  .fv-section{background:#1a3009}
+
+  .fv-tabs{
+    display:flex;background:#1a3009;
+    border-bottom:2px solid #D4A017;
+  }
+  .fv-tab{
+    flex:1;padding:10px 4px;
+    font-size:.72rem;font-weight:600;color:#aaa;
+    background:transparent;border:none;cursor:pointer;
+    transition:all .2s;
+  }
+  .fv-tab.active{color:#D4A017;border-bottom:2px solid #D4A017;margin-bottom:-2px}
+
+  .fv-panel{display:none;position:relative}
+  .fv-panel.active{display:block}
+
+  .fv-panel img{width:100%}
+  .fv-overlay{
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.6) 50%,transparent 100%);
+    padding:24px 18px 20px;
+  }
+  .fv-badge-row{display:flex;gap:8px;margin-bottom:10px}
+  .fv-badge{
+    background:#D4A017;color:#fff;
+    font-size:.65rem;font-weight:700;
+    padding:3px 8px;border-radius:20px;
+  }
+  .fv-main-copy{
+    color:#fff;font-size:1.15rem;font-weight:700;
+    line-height:1.55;margin-bottom:8px;
+    text-shadow:0 1px 4px rgba(0,0,0,.5);
+  }
+  .fv-sub-copy{color:#F5D77A;font-size:.8rem;line-height:1.5;margin-bottom:14px}
+  .fv-cta-btn{
+    display:block;background:#D4A017;color:#fff;
+    font-size:.95rem;font-weight:700;text-align:center;
+    padding:13px;border-radius:8px;
+    box-shadow:0 3px 10px rgba(212,160,23,.4);
+  }
+  .fv-cta-sub{color:rgba(255,255,255,.75);font-size:.68rem;text-align:center;margin-top:6px}
+
+  .fv-indicator{
+    text-align:center;color:#888;font-size:.7rem;
+    padding:8px;background:#1a3009;
+  }
+
+  /* ─── Social Proof Bar ─── */
+  .sp-bar{
+    display:flex;background:#2D5016;
+    padding:10px 0;
+  }
+  .sp-item{
+    flex:1;text-align:center;
+    color:#fff;font-size:.7rem;line-height:1.4;
+    border-right:1px solid rgba(255,255,255,.2);
+    padding:0 8px;
+  }
+  .sp-item:last-child{border-right:none}
+  .sp-num{display:block;font-size:1.1rem;font-weight:700;color:#D4A017}
+
+  /* ─── PR表記 ─── */
+  .pr-notice{
+    background:#f0ebe0;text-align:center;
+    font-size:.65rem;color:#888;padding:6px;
+  }
+
+  /* ─── 記事本文 ─── */
+  .article-wrap{padding:0 16px}
+
+  .section-block{margin:28px 0}
+
+  h2.section-title{
+    font-size:1.05rem;font-weight:700;
+    color:#2D5016;margin-bottom:12px;
+    line-height:1.5;
+  }
+  h3.sub-title{
+    font-size:.9rem;font-weight:700;
+    color:#2C2C2C;margin:16px 0 8px;
+    line-height:1.5;
+  }
+  p.body-text{
+    font-size:.88rem;line-height:1.8;
+    color:#3C3C3C;margin-bottom:12px;
+  }
+  .lead-box{
+    background:#FFF9ED;border-left:3px solid #D4A017;
+    padding:14px 16px;margin:16px 0;border-radius:0 8px 8px 0;
+  }
+  .lead-box p{font-size:.88rem;line-height:1.8;color:#3C3C3C}
+
+  /* ─── 仮想敵・問題提起 ─── */
+  .question-block{
+    background:#fff;border:1px solid #E8E0D0;
+    border-radius:10px;padding:16px;margin:16px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+  }
+  .question-block .q-icon{font-size:1.4rem;margin-bottom:8px}
+  .question-block p{font-size:.88rem;line-height:1.7;color:#3C3C3C}
+
+  /* ─── リスト ─── */
+  ul.check-list{list-style:none;padding:0;margin:12px 0}
+  ul.check-list li{
+    font-size:.88rem;line-height:1.7;color:#3C3C3C;
+    padding:6px 0 6px 24px;position:relative;
+    border-bottom:1px solid #f0ebe0;
+  }
+  ul.check-list li:last-child{border-bottom:none}
+  ul.check-list li::before{
+    content:"✓";color:#D4A017;font-weight:700;
+    position:absolute;left:0;
+  }
+
+  ul.x-list{list-style:none;padding:0;margin:12px 0}
+  ul.x-list li{
+    font-size:.88rem;line-height:1.7;color:#3C3C3C;
+    padding:6px 0 6px 24px;position:relative;
+    border-bottom:1px solid #f0ebe0;
+  }
+  ul.x-list li:last-child{border-bottom:none}
+  ul.x-list li::before{
+    content:"×";color:#c0392b;font-weight:700;
+    position:absolute;left:0;
+  }
+
+  /* ─── 強調BOX ─── */
+  .highlight-box{
+    background:linear-gradient(135deg,#2D5016,#3d6b1e);
+    color:#fff;border-radius:12px;
+    padding:20px 18px;margin:20px 0;text-align:center;
+  }
+  .highlight-box .hl-title{font-size:1rem;font-weight:700;margin-bottom:10px;color:#D4A017}
+  .highlight-box p{font-size:.88rem;line-height:1.8}
+
+  .warn-box{
+    background:#FFF3CD;border:1px solid #F0C040;
+    border-radius:10px;padding:14px 16px;margin:16px 0;
+  }
+  .warn-box .warn-title{font-size:.85rem;font-weight:700;color:#856404;margin-bottom:8px}
+  .warn-box p{font-size:.85rem;line-height:1.7;color:#6c5610}
+
+  /* ─── パラダイムシフトポイント ─── */
+  .paradigm-shift{
+    background:linear-gradient(135deg,#D4A017,#E8C04A);
+    border-radius:12px;padding:20px 18px;margin:24px 0;
+    text-align:center;
+  }
+  .paradigm-shift .ps-label{
+    font-size:.72rem;font-weight:700;color:#2D5016;
+    letter-spacing:.1em;margin-bottom:10px;
+  }
+  .paradigm-shift .ps-title{
+    font-size:1.1rem;font-weight:700;color:#2D5016;
+    line-height:1.5;margin-bottom:10px;
+  }
+  .paradigm-shift p{font-size:.85rem;line-height:1.7;color:#3a2800}
+
+  /* ─── 比較テーブル ─── */
+  .compare-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.8rem}
+  .compare-table th{background:#2D5016;color:#fff;padding:10px 8px;text-align:center}
+  .compare-table td{padding:10px 8px;text-align:center;border-bottom:1px solid #E8E0D0}
+  .compare-table tr:nth-child(even) td{background:#FDF8EF}
+  .compare-table .good{color:#2D5016;font-weight:700}
+  .compare-table .bad{color:#c0392b}
+
+  /* ─── 権威・証明 ─── */
+  .authority-box{
+    background:#fff;border:2px solid #D4A017;
+    border-radius:12px;padding:18px;margin:20px 0;
+  }
+  .authority-box .auth-title{
+    font-size:.9rem;font-weight:700;color:#D4A017;
+    margin-bottom:12px;display:flex;align-items:center;gap:8px;
+  }
+  .authority-box .auth-icon{font-size:1.3rem}
+  .authority-box .auth-item{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:8px 0;border-bottom:1px solid #f0ebe0;
+  }
+  .authority-box .auth-item:last-child{border-bottom:none}
+  .authority-box .auth-num{
+    background:#D4A017;color:#fff;
+    font-size:.7rem;font-weight:700;
+    min-width:24px;height:24px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .authority-box .auth-text{font-size:.85rem;line-height:1.6;color:#3C3C3C}
+
+  /* ─── 口コミ ─── */
+  .testimonial{
+    background:#fff;border-radius:10px;
+    padding:16px;margin:12px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    border-left:3px solid #D4A017;
+  }
+  .testimonial .stars{color:#D4A017;font-size:.9rem;margin-bottom:6px}
+  .testimonial .reviewer{font-size:.75rem;color:#888;margin-bottom:8px}
+  .testimonial p{font-size:.88rem;line-height:1.7;color:#3C3C3C}
+
+  /* ─── 使い方ステップ ─── */
+  .step-card{
+    display:flex;align-items:flex-start;gap:14px;
+    background:#fff;border-radius:10px;
+    padding:14px;margin:10px 0;
+    box-shadow:0 2px 6px rgba(0,0,0,.06);
+  }
+  .step-num{
+    background:#2D5016;color:#fff;
+    font-size:.9rem;font-weight:700;
+    min-width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .step-content .step-title{font-size:.9rem;font-weight:700;margin-bottom:4px;color:#2C2C2C}
+  .step-content p{font-size:.82rem;line-height:1.6;color:#666}
+
+  /* ─── CTA ─── */
+  .cta-section{
+    background:linear-gradient(135deg,#2D5016,#3d6b1e);
+    border-radius:12px;padding:20px 18px;margin:24px 0;
+    text-align:center;
+  }
+  .cta-section .cta-headline{
+    font-size:1rem;font-weight:700;color:#fff;
+    margin-bottom:6px;line-height:1.5;
+  }
+  .cta-section .cta-price{
+    font-size:1.4rem;font-weight:700;color:#D4A017;
+    margin-bottom:4px;
+  }
+  .cta-section .cta-price .regular{
+    font-size:.8rem;color:#aaa;text-decoration:line-through;margin-right:8px;
+  }
+  .cta-section .cta-note{font-size:.72rem;color:rgba(255,255,255,.75);margin-bottom:14px}
+  .cta-btn{
+    display:block;background:#D4A017;color:#fff;
+    font-size:1rem;font-weight:700;text-align:center;
+    padding:15px;border-radius:10px;
+    box-shadow:0 4px 12px rgba(212,160,23,.4);
+    letter-spacing:.05em;
+  }
+  .cta-btn-sub{color:rgba(255,255,255,.7);font-size:.7rem;text-align:center;margin-top:8px}
+
+  /* ─── オファー詳細 ─── */
+  .offer-detail{
+    background:#fff;border-radius:10px;
+    padding:16px;margin:16px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+  }
+  .offer-detail .offer-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 0;border-bottom:1px solid #f0ebe0;
+    font-size:.85rem;
+  }
+  .offer-detail .offer-row:last-child{border-bottom:none}
+  .offer-detail .offer-label{color:#666}
+  .offer-detail .offer-value{font-weight:700;color:#2C2C2C}
+  .offer-detail .offer-value.highlight{color:#D4A017}
+
+  /* ─── 安心保証 ─── */
+  .guarantee-box{
+    background:#F0F8F0;border:1px solid #2D5016;
+    border-radius:10px;padding:16px;margin:16px 0;
+    text-align:center;
+  }
+  .guarantee-box .g-title{font-size:.9rem;font-weight:700;color:#2D5016;margin-bottom:8px}
+  .guarantee-box p{font-size:.82rem;line-height:1.7;color:#3C3C3C}
+
+  /* ─── フッター ─── */
+  .article-footer{
+    background:#2D5016;padding:20px 16px;margin-top:32px;
+    text-align:center;
+  }
+  .article-footer p{color:rgba(255,255,255,.7);font-size:.7rem;line-height:1.8}
+
+  .notice-text{
+    font-size:.7rem;color:#888;line-height:1.8;
+    padding:16px;text-align:center;
+  }
+
+  /* ─── 仕切り ─── */
+  .section-divider{
+    text-align:center;color:#D4A017;font-size:1.2rem;
+    margin:8px 0;letter-spacing:4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- フローティングCTA -->
+<div class="floating-cta">
+  <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" id="floating-cta-btn">
+    ▶ 初回58%OFF 3,310円（税込・送料込）で試してみる
+  </a>
+  <p class="sub">定期縛りなし・いつでも解約OK ｜ 1歳未満の乳児には与えないでください</p>
+</div>
+
+<!-- ヘッダー -->
+<header class="site-header">
+  <div class="brand">mauri MANUKA HONEY</div>
+  <div class="tag">PR・広告</div>
+</header>
+
+<!-- ─── FVセクション ─── -->
+<section class="fv-section">
+  <div class="fv-tabs" role="tablist">
+    <button class="fv-tab active" data-fv="a" role="tab">A: 続かない理由</button>
+    <button class="fv-tab" data-fv="b" role="tab">B: 本物の違い</button>
+    <button class="fv-tab" data-fv="c" role="tab">C: 気づきの朝</button>
+  </div>
+
+  <div id="fv-swipe" style="overflow:hidden">
+
+    <!-- FV パターンA: 痛み直撃型 -->
+    <div class="fv-panel active" id="fv-a">
+      <div style="position:relative">
+        <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP-1.webp" alt="mauri MANUKA HONEY" loading="eager">
+        <div class="fv-overlay">
+          <div class="fv-badge-row">
+            <span class="fv-badge">NZ直送</span>
+            <span class="fv-badge">農薬不使用</span>
+            <span class="fv-badge">非加熱</span>
+          </div>
+          <div class="fv-main-copy">マヌカハニーを毎朝続けているのに<br>なんとなく守られている感じがしない。<br><br>それ、選び方が<br>間違っているかもしれません。</div>
+          <div class="fv-sub-copy">「美味しい」は本物の証明にはなりません</div>
+          <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="fv-cta-btn">
+            本物の選び方を知る → 初回58%OFFで試す
+          </a>
+          <div class="fv-cta-sub">定期縛りなし ｜ 通常7,200円 → 2,980円+送料330円</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FV パターンB: 新常識提示型 -->
+    <div class="fv-panel" id="fv-b">
+      <div style="position:relative">
+        <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/260309_MNK_LP-2.webp" alt="mauri NZ産地" loading="lazy">
+        <div class="fv-overlay">
+          <div class="fv-badge-row">
+            <span class="fv-badge">MPI認定ラボ分析済</span>
+            <span class="fv-badge">実測MGO345</span>
+          </div>
+          <div class="fv-main-copy">「美味しい」マヌカハニーは<br>体を守れない。</div>
+          <div class="fv-sub-copy">NZ政府認定ラボが実証した「本物」の条件とは</div>
+          <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="fv-cta-btn">
+            本物の条件を確認する → 初回58%OFFで試す
+          </a>
+          <div class="fv-cta-sub">定期縛りなし ｜ 通常7,200円 → 2,980円+送料330円</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FV パターンC: ストーリー導入型 -->
+    <div class="fv-panel" id="fv-c">
+      <div style="position:relative">
+        <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP-3.webp" alt="mauri 朝のルーティン" loading="lazy">
+        <div class="fv-overlay">
+          <div class="fv-badge-row">
+            <span class="fv-badge">60代から始める本物</span>
+          </div>
+          <div class="fv-main-copy">毎朝続けていた。<br>でも何かが足りなかった。<br><br>その理由が、<br>やっとわかった。</div>
+          <div class="fv-sub-copy">60代から始める「本物」の健康管理</div>
+          <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="fv-cta-btn">
+            足りていたものを知る → 初回58%OFFで試す
+          </a>
+          <div class="fv-cta-sub">定期縛りなし ｜ 通常7,200円 → 2,980円+送料330円</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="fv-indicator" id="fv-indicator">1 / 3</div>
+</section>
+
+<!-- Social Proof Bar -->
+<div class="sp-bar">
+  <div class="sp-item">
+    <span class="sp-num">MGO345</span>
+    実測値保証
+  </div>
+  <div class="sp-item">
+    <span class="sp-num">0</span>
+    グリホサート
+  </div>
+  <div class="sp-item">
+    <span class="sp-num">NZ政府</span>
+    認定ラボ
+  </div>
+</div>
+
+<p class="pr-notice">※ この記事はPR（広告）です</p>
+
+<!-- ─── 記事本文 ─── -->
+<div class="article-wrap">
+
+  <!-- 共感ブロック -->
+  <div class="section-block">
+    <p class="body-text" style="margin-top:20px">
+      毎朝、スプーン1杯のマヌカハニー。<br>
+      続けているのに、なぜか漠然と不安を感じたことはありませんか？
+    </p>
+
+    <div class="question-block">
+      <div class="q-icon">🤔</div>
+      <p>「本当に効いているのかな？」<br>「高いものを買えば安全なのかな？」<br>「美味しいから良いものだと思っていたけど…」</p>
+    </div>
+
+    <p class="body-text">
+      実はこの「なんとなく続けているけど確信が持てない」という感覚、
+      マヌカハニーを使い始めた多くの60代女性が抱えています。
+    </p>
+    <p class="body-text">
+      その原因は、<strong>「選び方」にあるかもしれません。</strong>
+    </p>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP-4.webp" alt="マヌカハニーの選び方" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- 問題深掘り -->
+  <div class="section-block">
+    <h2 class="section-title">マヌカハニー市場の知られざる現実</h2>
+
+    <p class="body-text">
+      日本でマヌカハニーを購入できる商品は、数十種類以上あります。
+      価格帯もさまざまで、「どれを選べばいいかわからない」という声をよく聞きます。
+    </p>
+
+    <div class="lead-box">
+      <p>多くの方が<strong>「美味しいもの」「有名ブランド」「高価格」</strong>を選ぶ基準にしています。<br>しかし、これらは「本物のマヌカハニー」を選ぶ基準には<strong>なりません</strong>。</p>
+    </div>
+
+    <p class="body-text">
+      なぜかというと、マヌカハニーの有効成分である
+      <strong>MGO（メチルグリオキサール）は、実はほぼ無味無臭</strong>だからです。
+    </p>
+    <p class="body-text">
+      「甘くて美味しい」と感じる成分は主に単糖類や水分量によるもので、
+      MGO濃度とは別の話。つまり<strong>美味しいマヌカハニーが高品質とは限りません。</strong>
+    </p>
+  </div>
+
+  <!-- 仮想敵セクション（教育） -->
+  <div class="section-block">
+    <h2 class="section-title">「美味しさで選ぶ」が間違いである理由</h2>
+
+    <div class="warn-box">
+      <div class="warn-title">⚠️ 知っておいてほしいこと</div>
+      <p>マヌカハニーに関して、日本の消費者が最も誤解しやすいのが<strong>「MGO表示値」と「実測値」の違い</strong>です。</p>
+    </div>
+
+    <p class="body-text">
+      パッケージに「MGO263+」と書いてあっても、
+      それが<strong>メーカーによる自己申告の場合</strong>があります。
+      第三者機関による実測値ではない場合、実際の含有量が大きく異なる可能性も。
+    </p>
+
+    <h3 class="sub-title">さらに見落とされがちな「農薬問題」</h3>
+
+    <p class="body-text">
+      海外の農産物には農薬（グリホサートなど）が使用されているケースがあります。
+      マヌカハニーも例外ではなく、<strong>産地の環境管理が不十分な場合は農薬が検出される</strong>こともあります。
+    </p>
+
+    <ul class="x-list">
+      <li>美味しさだけで選んだマヌカハニー</li>
+      <li>MGO表示値の根拠が不明な商品</li>
+      <li>加熱処理されて成分が変質している商品</li>
+      <li>産地・生産者不明のOEM商品</li>
+    </ul>
+
+    <p class="body-text">
+      これらは「体を守りたい」という目的に対して、
+      本当に応えられているか確認が難しい商品です。
+    </p>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP-5.webp" alt="NZの牧草地" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- パラダイムシフト -->
+  <div class="section-block">
+    <div class="paradigm-shift">
+      <div class="ps-label">── パラダイムシフト ──</div>
+      <div class="ps-title">「本物のマヌカハニー」を<br>選ぶ3つの基準</div>
+      <p>美味しさでも、価格でも、ブランドでもない。<br>体を守る本物は、この3つで判断できます。</p>
+    </div>
+
+    <div class="authority-box">
+      <div class="auth-title"><span class="auth-icon">🏆</span>本物の証明 3条件</div>
+      <div class="auth-item">
+        <div class="auth-num">1</div>
+        <div class="auth-text"><strong>実測MGO値の証明書（CoA）がある</strong><br>第三者機関がMGO含有量を実測した「分析証明書」が存在すること</div>
+      </div>
+      <div class="auth-item">
+        <div class="auth-num">2</div>
+        <div class="auth-text"><strong>農薬不使用・グリホサート不検出が証明されている</strong><br>農薬試験で検出限界以下（<0.01mg/kg）であること</div>
+      </div>
+      <div class="auth-item">
+        <div class="auth-num">3</div>
+        <div class="auth-text"><strong>非加熱・純粋であること</strong><br>熱処理や添加物で成分が変質していないこと</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 商品紹介 -->
+  <div class="section-block">
+    <h2 class="section-title">mauri MANUKA HONEY は<br>3条件すべてを満たしています</h2>
+
+    <p class="body-text">
+      mauriは、ニュージーランド・Katikati地方の
+      BeeNZ社が生産する純粋マヌカハニーです。
+    </p>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP-6.webp" alt="mauri 商品" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- 権威・証明 -->
+  <div class="section-block">
+    <div class="authority-box">
+      <div class="auth-title"><span class="auth-icon">📋</span>mauriが示せる3つの証拠</div>
+      <div class="auth-item">
+        <div class="auth-num">1</div>
+        <div class="auth-text">
+          <strong>NZ第一次産業省（MPI）認定ラボ分析</strong><br>
+          バッチ番号25BZ25 / 実測MGO値：<strong>345mg/kg</strong><br>
+          <span style="font-size:.75rem;color:#888">（MGO263+表示を大幅に上回る実測値）</span>
+        </div>
+      </div>
+      <div class="auth-item">
+        <div class="auth-num">2</div>
+        <div class="auth-text">
+          <strong>グリホサート試験：検出限界以下</strong><br>
+          農薬試験結果：&lt;0.01mg/kg（検出限界以下）<br>
+          <span style="font-size:.75rem;color:#888">（NZは牧草地への農薬散布が法律で禁止）</span>
+        </div>
+      </div>
+      <div class="auth-item">
+        <div class="auth-num">3</div>
+        <div class="auth-text">
+          <strong>非加熱・100%天然・添加物不使用</strong><br>
+          モノフローラル認証取得<br>
+          <span style="font-size:.75rem;color:#888">製造日：2025年9月 / 賞味期限：2030年9月</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP-7.webp" alt="BeeNZ社 証明書" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- 商品詳細 -->
+  <div class="section-block">
+    <h2 class="section-title">NZ・Katikati地方から直送</h2>
+    <p class="body-text">
+      mauriの産地はニュージーランド北島・Katikati地方。
+      この地域は農薬散布が法律で厳しく制限されており、
+      マヌカの木が自生する清潔な環境でのみハチが採蜜します。
+    </p>
+    <p class="body-text">
+      生産者はBeeNZ社のManaging Director・Julie Hayes。
+      化学物質を一切使わない養蜂にこだわり続ける農場主です。
+    </p>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP-8.webp" alt="mauri 産地NZ" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- 比較 -->
+  <div class="section-block">
+    <h2 class="section-title">一般的なマヌカハニーとの比較</h2>
+    <table class="compare-table">
+      <tr>
+        <th></th>
+        <th style="color:#D4A017">mauri</th>
+        <th>一般商品</th>
+      </tr>
+      <tr>
+        <td>MGO実測証明</td>
+        <td class="good">✓ あり</td>
+        <td class="bad">△ 自己申告が多い</td>
+      </tr>
+      <tr>
+        <td>農薬試験</td>
+        <td class="good">✓ 不検出証明</td>
+        <td class="bad">△ 不明な場合あり</td>
+      </tr>
+      <tr>
+        <td>加熱処理</td>
+        <td class="good">✓ 非加熱</td>
+        <td class="bad">△ 加熱品が多い</td>
+      </tr>
+      <tr>
+        <td>生産者明示</td>
+        <td class="good">✓ Julie Hayes</td>
+        <td class="bad">△ OEM不明多数</td>
+      </tr>
+      <tr>
+        <td>認定機関</td>
+        <td class="good">✓ NZ政府MPI認定</td>
+        <td class="bad">△ 未認定多数</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 口コミ -->
+  <div class="section-block">
+    <h2 class="section-title">続けている方の実感</h2>
+
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <div class="reviewer">60代女性・2ヶ月継続</div>
+      <p>今まで別のマヌカハニーを使っていましたが、実測値の証明書があるものを選んだのはmauriが初めてです。毎朝続けていて、喉の調子が以前より安定している気がします。木製スプーンも可愛くて気に入っています。</p>
+    </div>
+
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <div class="reviewer">65歳女性・3ヶ月継続</div>
+      <p>農薬不使用の証明があるところが決め手でした。砂糖はやめたいけれど甘いものが好きで、健康的な甘味として毎日続けています。定期縛りなしなのも安心です。</p>
+    </div>
+
+    <div class="testimonial">
+      <div class="stars">★★★★☆</div>
+      <div class="reviewer">62歳女性・1ヶ月継続</div>
+      <p>NZ政府の認定ラボで検査しているという点が信頼できました。以前は「美味しいから良いもの」と思って選んでいましたが、それだけじゃないんだなと気づきました。</p>
+    </div>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP-9.webp" alt="mauri 使い方" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- 使い方 -->
+  <div class="section-block">
+    <h2 class="section-title">毎日の続け方、たった3ステップ</h2>
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">朝、起き抜けに</div>
+        <p>食前にスプーン1杯（約7g）。空腹時に摂ることで内側からのケアに。混ぜずにそのまま舐める。</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">同梱の木製スプーンで</div>
+        <p>初回は同梱のオリジナル木製スプーン付き。金属スプーンは使わずに保管・摂取するのがおすすめ。</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">毎日続けるだけ</div>
+        <p>1回7gで200gが約28日分。40日周期の定期便で切らさず続けられます。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中間CTA -->
+  <div class="cta-section" id="cta-mid">
+    <div class="cta-headline">まずは本物を、58%OFFで体験する</div>
+    <div class="cta-price">
+      <span class="regular">通常 7,200円</span>
+      初回 <strong>2,980円</strong>+送料330円
+    </div>
+    <div class="cta-note">= 合計 3,310円（税込）58%OFF</div>
+    <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="cta-btn">▶ 初回特別価格で試してみる</a>
+    <div class="cta-btn-sub">定期縛りなし・いつでも解約OK</div>
+  </div>
+
+  <!-- オファー詳細 -->
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP_offer-1.webp" alt="mauri オファー" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <div class="section-block">
+    <h2 class="section-title">初回特別セットの内容</h2>
+    <div class="offer-detail">
+      <div class="offer-row">
+        <span class="offer-label">商品</span>
+        <span class="offer-value">mauri MANUKA HONEY MGO263+ 200g</span>
+      </div>
+      <div class="offer-row">
+        <span class="offer-label">通常価格</span>
+        <span class="offer-value" style="text-decoration:line-through;color:#888">7,200円（税込）</span>
+      </div>
+      <div class="offer-row">
+        <span class="offer-label">初回定期価格</span>
+        <span class="offer-value highlight">2,980円（税込）+送料330円</span>
+      </div>
+      <div class="offer-row">
+        <span class="offer-label">合計</span>
+        <span class="offer-value highlight" style="font-size:1rem">3,310円（58%OFF）</span>
+      </div>
+      <div class="offer-row">
+        <span class="offer-label">初回同梱品</span>
+        <span class="offer-value">木製スプーン・パンフレット</span>
+      </div>
+      <div class="offer-row">
+        <span class="offer-label">2回目以降</span>
+        <span class="offer-value">2個 12,640円 送料無料（12%OFF）</span>
+      </div>
+      <div class="offer-row">
+        <span class="offer-label">お届け周期</span>
+        <span class="offer-value">初回→20日後→以降40日</span>
+      </div>
+    </div>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP_offer-2.webp" alt="mauri 定期特典" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- 安心保証 -->
+  <div class="guarantee-box">
+    <div class="g-title">🛡 安心してお試しください</div>
+    <p>定期縛りなし。次回お届けの8日前までにご連絡いただければ、いつでも解約・変更が可能です。まずはお試し感覚でどうぞ。</p>
+  </div>
+
+  <!-- 緊急性 -->
+  <div class="warn-box" style="background:#FFF0E6;border-color:#E87000">
+    <div class="warn-title" style="color:#B35900">📦 初回特別価格について</div>
+    <p style="color:#7A3D00">初回58%OFFは、定期コースのお試し価格です。この特別価格でご提供できる期間には限りがある場合がございます。</p>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP_offer-5-CTA.webp" alt="mauri 申し込み" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- 最終CTA -->
+  <div class="cta-section" id="cta-final" style="margin-top:24px">
+    <div class="cta-headline">本物のマヌカハニーを<br>体験してみませんか？</div>
+    <div class="cta-price">
+      <span class="regular">通常 7,200円</span>
+      初回 <strong>2,980円</strong>+送料330円
+    </div>
+    <div class="cta-note">= 合計 3,310円（税込）58%OFF ｜ 定期縛りなし</div>
+    <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="cta-btn" style="font-size:1.05rem;padding:18px">
+      ▶ 初回特別価格で申し込む
+    </a>
+    <div class="cta-btn-sub">いつでも解約OK ｜ NZ直送 ｜ 農薬不使用</div>
+  </div>
+
+  <img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP_offer-kiyaku.webp" alt="利用規約" loading="lazy" style="margin:0 -16px;width:calc(100% + 32px)">
+
+  <!-- 注意事項 -->
+  <p class="notice-text">
+    ※ 1歳未満の乳児には与えないでください<br>
+    ※ 食物アレルギーのある方はご注意ください<br>
+    ※ 本品は食品です。疾病の診断・治療・予防を目的とするものではありません<br>
+    ※ 後払い（NP後払い）の場合、手数料220円が別途かかります<br>
+    ※ 表示価格はすべて税込です
+  </p>
+
+</div><!-- /article-wrap -->
+
+<img src="file:///Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/MNK_LP_bottom.webp" alt="mauri フッター" loading="lazy">
+
+<footer class="article-footer">
+  <p>mauri MANUKA HONEY ｜ 運営：株式会社Yomite（ヨミテ）<br>
+  〒 | squadbeyond経由配信<br>
+  ©2026 Yomite Inc. All rights reserved.</p>
+</footer>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.fv-tab');
+  var panels = document.querySelectorAll('.fv-panel');
+  var indicator = document.getElementById('fv-indicator');
+  var current = 0;
+
+  function switchTo(idx){
+    current = idx;
+    tabs.forEach(function(t){ t.classList.remove('active'); });
+    panels.forEach(function(p){ p.classList.remove('active'); });
+    tabs[idx].classList.add('active');
+    panels[idx].classList.add('active');
+    if(indicator) indicator.textContent = (idx+1) + ' / ' + panels.length;
+  }
+
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){ switchTo(i); });
+  });
+
+  // タッチスワイプ
+  var container = document.getElementById('fv-swipe');
+  var startX = 0;
+  if(container){
+    container.addEventListener('touchstart', function(e){
+      startX = e.touches[0].clientX;
+    }, {passive:true});
+    container.addEventListener('touchend', function(e){
+      var diff = startX - e.changedTouches[0].clientX;
+      if(Math.abs(diff) > 50){
+        if(diff > 0 && current < panels.length-1) switchTo(current+1);
+        if(diff < 0 && current > 0) switchTo(current-1);
+      }
+    }, {passive:true});
+  }
+})();
+</script>
+
+</body>
+</html>

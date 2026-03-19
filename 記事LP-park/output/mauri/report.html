@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mauri 記事LP Park v3.0 マーケティングインテリジェンスレポート</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#0f0f0f;color:#e0e0e0;padding:24px}
+  @media print{body{background:#fff;color:#000}}
+  h1{font-size:1.4rem;font-weight:700;color:#D4A017;margin-bottom:6px}
+  h2{font-size:1.1rem;font-weight:700;color:#D4A017;margin:28px 0 12px;border-bottom:1px solid #333;padding-bottom:8px}
+  h3{font-size:.95rem;font-weight:700;color:#fff;margin:16px 0 8px}
+  p{font-size:.85rem;line-height:1.8;color:#ccc;margin-bottom:10px}
+  .cover{text-align:center;padding:40px 20px;border:1px solid #333;border-radius:12px;margin-bottom:32px;background:#1a1a1a}
+  .cover .subtitle{font-size:.85rem;color:#888;margin-top:8px}
+  .cover .concept{font-size:1.1rem;font-weight:700;color:#fff;margin:16px 0;padding:12px;background:#2D5016;border-radius:8px}
+  .cover .meta{font-size:.78rem;color:#666;margin-top:16px}
+  .card{background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:18px;margin:12px 0}
+  .card h3{margin-top:0}
+  .lp-card{background:#1a1a1a;border:1px solid #D4A017;border-radius:12px;padding:20px;margin:16px 0}
+  .lp-card .lp-title{font-size:1rem;font-weight:700;color:#D4A017;margin-bottom:12px}
+  .hypothesis-badge{background:#2D5016;color:#fff;font-size:.72rem;padding:4px 10px;border-radius:20px;display:inline-block;margin-bottom:12px}
+  .fv-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+  .fv-item{background:#0f0f0f;border:1px solid #333;border-radius:8px;padding:10px}
+  .fv-label{font-size:.65rem;color:#D4A017;margin-bottom:6px;font-weight:700}
+  .fv-copy{font-size:.75rem;line-height:1.5;color:#e0e0e0}
+  .vector-table{width:100%;border-collapse:collapse;margin:12px 0}
+  .vector-table th{background:#2D5016;color:#fff;padding:8px;font-size:.78rem;text-align:center}
+  .vector-table td{padding:8px;font-size:.78rem;border-bottom:1px solid #222;text-align:center}
+  .pass{color:#4CAF50;font-weight:700}
+  .fail{color:#f44336;font-weight:700}
+  .tag{background:#333;color:#ccc;font-size:.68rem;padding:2px 8px;border-radius:20px;display:inline-block;margin:2px}
+  .section-divider{border:none;border-top:1px solid #333;margin:24px 0}
+  table.compare{width:100%;border-collapse:collapse;margin:12px 0}
+  table.compare th{background:#1D4011;color:#fff;padding:8px;font-size:.78rem}
+  table.compare td{padding:8px;font-size:.78rem;border-bottom:1px solid #222;color:#ccc}
+  .ab-round{background:#1a1a1a;border:1px solid #444;border-radius:8px;padding:14px;margin:10px 0}
+  .ab-round .round-label{font-size:.72rem;font-weight:700;color:#D4A017;margin-bottom:8px}
+  .next-action{background:#1D4011;border-radius:10px;padding:16px;margin:12px 0}
+  .next-action li{font-size:.82rem;color:#ccc;margin:6px 0;padding-left:14px;position:relative}
+  .next-action li::before{content:"→";position:absolute;left:0;color:#D4A017}
+</style>
+</head>
+<body>
+
+<!-- 表紙 -->
+<div class="cover">
+  <h1>mauri MANUKA HONEY</h1>
+  <div class="subtitle">記事LP Park ver.3.0 — マーケティングインテリジェンスレポート</div>
+  <div class="concept">コンセプト：「本物が守る」<br><span style="font-size:.85rem;color:rgba(255,255,255,.8)">毎朝1杯。体に入れるものは、本物だけでいい。</span></div>
+  <div class="meta">
+    生成日：2026-03-20 ｜ 記事LP：2本 × 各FV3パターン<br>
+    ターゲット：60代女性・本物志向・健康意識高め
+  </div>
+</div>
+
+<!-- 戦略サマリー -->
+<h2>01. 戦略サマリー</h2>
+
+<div class="card">
+  <h3>N1ペルソナ</h3>
+  <p><strong>山田恵子（仮名）/ 60代女性 / 準顕在層</strong></p>
+  <p>体の衰えを感じ始め、薬には頼りたくないが健康を守りたい。砂糖・添加物を避けるオーガニック志向。本物・品質へのこだわり。金銭的余裕あり。</p>
+  <p><strong>購買動機TOP3：</strong> ①守られる感覚 ②本物への信頼 ③継続できるか</p>
+</div>
+
+<div class="card">
+  <h3>既存記事の失敗診断</h3>
+  <p>既存3記事（悩み記事・美味しい記事×2）のCVR低下の原因：</p>
+  <p>→ <strong>「美味しさ」訴求 = 購買動機とズレ</strong><br>60代N1の購買動機は「守られる感覚・安心感」。美味しさは副次的要素。「美味しい」訴求はN1の脳内に刺さらない。</p>
+  <span class="tag">角度ミス</span>
+  <span class="tag">N1ニーズ不一致</span>
+  <span class="tag">仮想敵なし</span>
+</div>
+
+<div class="card">
+  <h3>新コンセプト：「本物が守る」</h3>
+  <p>Only1ポジション：<strong>MGO実測値・農薬不検出を証明書で示せる、NZ直送の純粋マヌカハニー</strong></p>
+  <p>パラダイムシフト：美味しさ/価格/ブランドで選ぶ → <strong>実測値+農薬不使用+非加熱の3証明で選ぶ</strong></p>
+</div>
+
+<!-- 記事LPポートフォリオ -->
+<h2>02. 記事LPポートフォリオ</h2>
+
+<div class="lp-card">
+  <div class="lp-title">LP1：「味で選ぶは間違い」仮説</div>
+  <div class="hypothesis-badge">常識否定型フック × 準顕在層</div>
+  <p><strong>仮説：</strong>「美味しいマヌカハニーを探していた60代女性に、本物の選び方を教育することで購買決定を促せるか？」</p>
+  <p><strong>仮想敵：</strong>「マヌカハニーは美味しいものを選べばいい」という常識</p>
+  <p><strong>パラダイムシフト：</strong>美味しさ ≠ 本物。体を守るのは「純粋性・実測値・農薬不使用」</p>
+  <p><strong>検証問い：</strong>「美味しさ」訴求の既存記事より高いCVRを出せるか？</p>
+  <div class="fv-preview">
+    <div class="fv-item">
+      <div class="fv-label">A: 痛み直撃型</div>
+      <div class="fv-copy">マヌカハニーを毎朝続けているのになんとなく守られている感じがしない。それ、選び方が間違っているかもしれません。</div>
+    </div>
+    <div class="fv-item">
+      <div class="fv-label">B: 新常識提示型</div>
+      <div class="fv-copy">「美味しい」マヌカハニーは体を守れない。</div>
+    </div>
+    <div class="fv-item">
+      <div class="fv-label">C: ストーリー型</div>
+      <div class="fv-copy">毎朝続けていた。でも何かが足りなかった。その理由が、やっとわかった。</div>
+    </div>
+  </div>
+  <p style="font-size:.75rem;color:#888">ファイル：<strong>article-lp-mauri-01.html</strong></p>
+</div>
+
+<div class="lp-card">
+  <div class="lp-title">LP2：「MGO実測値問題」仮説</div>
+  <div class="hypothesis-badge">恐怖訴求 + 信頼構築型 × 顕在層</div>
+  <p><strong>仮説：</strong>「MGO表示値詐称への恐怖 → 証明書付き本物への安心」という恐怖→信頼構築フローは、常識否定型LP1より高いCVRを出せるか？」</p>
+  <p><strong>仮想敵：</strong>「MGO数値が高ければ本物」という常識</p>
+  <p><strong>パラダイムシフト：</strong>表示値 ≠ 実測値。グリホサート問題を知らないと守られない</p>
+  <p><strong>検証問い：</strong>恐怖訴求 vs 常識否定——どちらのフローが60代女性に刺さるか？</p>
+  <div class="fv-preview">
+    <div class="fv-item">
+      <div class="fv-label">A: 恐怖訴求型</div>
+      <div class="fv-copy">あなたのマヌカハニー、本当にMGO263+の実力がありますか？</div>
+    </div>
+    <div class="fv-item">
+      <div class="fv-label">B: 新常識提示型</div>
+      <div class="fv-copy">MGO数値は「証明書」がなければ信じてはいけない。</div>
+    </div>
+    <div class="fv-item">
+      <div class="fv-label">C: 生産者ストーリー型</div>
+      <div class="fv-copy">NZの農場主・Julieが教えてくれた。本物のマヌカハニーに必要な3つの証明。</div>
+    </div>
+  </div>
+  <p style="font-size:.75rem;color:#888">ファイル：<strong>article-lp-mauri-02.html</strong></p>
+</div>
+
+<!-- ベクトル検証 -->
+<h2>03. 品質検証サマリー</h2>
+
+<div class="card">
+  <h3>コピー品質チェック（ポメ太さんDIVE哲学）</h3>
+  <table class="vector-table">
+    <tr>
+      <th>チェック項目</th>
+      <th>LP1</th>
+      <th>LP2</th>
+    </tr>
+    <tr>
+      <td>シーン喚起力（FV）</td>
+      <td class="pass">✓ 5/5</td>
+      <td class="pass">✓ 4/5</td>
+    </tr>
+    <tr>
+      <td>好奇心のギャップ</td>
+      <td class="pass">✓ あり</td>
+      <td class="pass">✓ あり</td>
+    </tr>
+    <tr>
+      <td>情報欠落設計</td>
+      <td class="pass">✓ あり</td>
+      <td class="pass">✓ あり</td>
+    </tr>
+    <tr>
+      <td>コンセプト一貫性</td>
+      <td class="pass">✓ 本物が守る</td>
+      <td class="pass">✓ 本物が守る</td>
+    </tr>
+    <tr>
+      <td>「頑張りたくない」一貫性</td>
+      <td class="pass">✓ 1日1回だけ</td>
+      <td class="pass">✓ 続けるだけ</td>
+    </tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3>法規チェック（薬機法・景表法）</h3>
+  <table class="vector-table">
+    <tr>
+      <th>チェック項目</th>
+      <th>LP1</th>
+      <th>LP2</th>
+    </tr>
+    <tr>
+      <td>「抗菌」等NG表現</td>
+      <td class="pass">✓ 使用なし</td>
+      <td class="pass">✓ 使用なし</td>
+    </tr>
+    <tr>
+      <td>「免疫力アップ」等</td>
+      <td class="pass">✓ 使用なし</td>
+      <td class="pass">✓ 使用なし</td>
+    </tr>
+    <tr>
+      <td>「完全無農薬」</td>
+      <td class="pass">✓ 「農薬不使用」使用</td>
+      <td class="pass">✓ 「農薬不使用」使用</td>
+    </tr>
+    <tr>
+      <td>1歳未満注意書き</td>
+      <td class="pass">✓ フローティングCTA・フッターに記載</td>
+      <td class="pass">✓ フローティングCTA・フッターに記載</td>
+    </tr>
+    <tr>
+      <td>疾病治療表現</td>
+      <td class="pass">✓ 使用なし</td>
+      <td class="pass">✓ 使用なし</td>
+    </tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3>記事LP間の多様性確認</h3>
+  <p>LP1とLP2は以下の点で異なる仮説を持ちます：</p>
+  <table class="compare">
+    <tr>
+      <th></th>
+      <th>LP1</th>
+      <th>LP2</th>
+    </tr>
+    <tr>
+      <td>フック角度</td>
+      <td>常識否定型</td>
+      <td>恐怖訴求 + 信頼型</td>
+    </tr>
+    <tr>
+      <td>仮想敵</td>
+      <td>美味しさ基準</td>
+      <td>MGO表示値信頼</td>
+    </tr>
+    <tr>
+      <td>ターゲット深度</td>
+      <td>準顕在層</td>
+      <td>顕在層（知識あり）</td>
+    </tr>
+    <tr>
+      <td>FVトーン</td>
+      <td>温かみ・共感</td>
+      <td>問い・警告・信頼</td>
+    </tr>
+    <tr>
+      <td>パラダイムシフト</td>
+      <td>味 → 純粋性</td>
+      <td>表示値 → 実測証明書</td>
+    </tr>
+  </table>
+  <p style="color:#4CAF50;font-size:.78rem">✓ 2本は明確に異なる仮説を持ち、A/Bテストで「どちらの仮説が当たったか」を判定できる設計</p>
+</div>
+
+<!-- A/Bテスト戦略 -->
+<h2>04. A/Bテスト戦略</h2>
+
+<div class="ab-round">
+  <div class="round-label">Round 1：FVパターン ABCテスト（先行）</div>
+  <p>各記事LP内でFVパターンA/B/Cを切り替えながら配信。最初のテスト。</p>
+  <p>指標：<strong>CTR（クリック率）/ スクロール率（FV通過率）</strong></p>
+  <p>判定基準：業界平均×1.5以上を合格ライン</p>
+  <p>推奨期間：2週間</p>
+</div>
+
+<div class="ab-round">
+  <div class="round-label">Round 2：LP仮説テスト（LP1 vs LP2）</div>
+  <p>FVパターンを固定し、LP1（常識否定）vs LP2（恐怖訴求+信頼）のCVR比較。</p>
+  <p>指標：<strong>CVR（コンバージョン率）/ CPA</strong></p>
+  <p>判定基準：直近平均CVR×1.2を合格ライン</p>
+  <p>推奨期間：2〜4週間</p>
+</div>
+
+<div class="ab-round">
+  <div class="round-label">Round 3：勝ちパターン深化</div>
+  <p>Round 1+2で「当たった仮説」を確認し、その角度をさらに深める第3弾記事LPを作成。</p>
+  <p>例：LP1が勝った場合 → 「美味しさ訴求」比較記事形式にする等</p>
+</div>
+
+<!-- Next Action -->
+<h2>05. Next Action</h2>
+
+<div class="next-action">
+  <ul>
+    <li><strong>即時</strong>：squadbeyond経由でLP1・LP2を配信設定。FVパターンA/B/CをURLパラメータで分岐</li>
+    <li><strong>2週間後</strong>：FVパターンの結果確認 → 最強パターン特定</li>
+    <li><strong>4週間後</strong>：LP1 vs LP2のCVR比較 → 仮説検証</li>
+    <li><strong>次回生成</strong>：勝ち仮説の角度を深めたLP3・バナー（Banner Park v7.0）を並行作成</li>
+    <li><strong>バナー</strong>：LP1/LP2の勝ちFVコピーをバナー用に転用（FVとの一貫性重要）</li>
+    <li><strong>ショートAd</strong>：口コミ体験型 × 30秒構成（ShortAd Park v7.0）</li>
+    <li><strong>攻めるべき未探索角度</strong>：「生産者ストーリー」深掘り（LP2パターンCの展開）/ 「NZ政府認定」特化記事</li>
+  </ul>
+</div>
+
+<!-- 納品物一覧 -->
+<h2>06. 納品物一覧</h2>
+
+<div class="card">
+  <table class="vector-table">
+    <tr>
+      <th>ファイル</th>
+      <th>内容</th>
+      <th>ステータス</th>
+    </tr>
+    <tr>
+      <td>article-lp-mauri-01.html</td>
+      <td>記事LP1（常識否定型）× FV3パターン</td>
+      <td class="pass">✅ 完成</td>
+    </tr>
+    <tr>
+      <td>article-lp-mauri-02.html</td>
+      <td>記事LP2（恐怖訴求+信頼型）× FV3パターン</td>
+      <td class="pass">✅ 完成</td>
+    </tr>
+    <tr>
+      <td>specs/lp_01_spec.json</td>
+      <td>LP1設計書（仮説カード付き）</td>
+      <td class="pass">✅ 完成</td>
+    </tr>
+    <tr>
+      <td>specs/lp_02_spec.json</td>
+      <td>LP2設計書（仮説カード付き）</td>
+      <td class="pass">✅ 完成</td>
+    </tr>
+    <tr>
+      <td>report.html</td>
+      <td>マーケティングインテリジェンスレポート</td>
+      <td class="pass">✅ 本ファイル</td>
+    </tr>
+    <tr>
+      <td>strategy.json</td>
+      <td>mauri戦略ファイル（全スキル共通）</td>
+      <td class="pass">✅ 完成</td>
+    </tr>
+  </table>
+</div>
+
+<p style="color:#555;font-size:.72rem;text-align:center;margin-top:32px">
+  記事LP Park ver.3.0 ｜ mauri MANUKA HONEY ｜ 2026-03-20<br>
+  Generated by 一進AI × AI Park
+</p>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+{
+  "version": "1.0",
+  "slug": "mauri",
+  "generatedAt": "2026-03-20",
+  "source": "N1インタビュー6件 + BeeNZ権威データ + mauri商品説明資料 + レギュレーション",
+
+  "productIntel": {
+    "name": "mauri MANUKA HONEY",
+    "brand": "mauri",
+    "company": "Yomite（ヨミテ）",
+    "category": "健康食品",
+    "description": "ニュージーランド産 MGO263+ 純粋マヌカハニー 200g",
+    "normalPrice": 7200,
+    "offerPrice": 2980,
+    "discountRate": "58%OFF",
+    "shippingCost": 330,
+    "totalInitialPrice": 3310,
+    "subscription": {
+      "structure": "1-2-2",
+      "cycle": "初回→20日後→以降40日周期",
+      "secondOrderOnward": "2個 12,640円 送料無料",
+      "cancelPolicy": "定期縛りなし"
+    },
+    "usp": [
+      "100%天然・非加熱の純粋マヌカハニー",
+      "NZ Katikati地方 直送",
+      "農薬不使用（NZ牧草地農薬散布禁止）",
+      "MGO実測値345mg/kg（表示263+を上回る）",
+      "グリホサート試験 検出限界以下（<0.01mg/kg）",
+      "NZ第一次産業省（MPI）認定ラボ分析証明書取得",
+      "モノフローラル認証",
+      "同梱：オリジナル木製スプーン・パンフレット"
+    ],
+    "productionInfo": {
+      "oem": "BeeNZ Ltd（NZ、Katikati）",
+      "director": "Julie Hayes",
+      "batchNumber": "25BZ25",
+      "manufactureDate": "2025-09-23",
+      "expiryDate": "2030-09-24",
+      "mgoActualValue": "345mg/kg",
+      "glyphosateTest": "検出限界以下（<0.01mg/kg）"
+    },
+    "lpUrl": "https://shop.rmh.co.jp/lp?u=me_mauri_v2_test"
+  },
+
+  "primaryN1": {
+    "name": "山田恵子（仮名）",
+    "age": "60代",
+    "gender": "女性",
+    "persona": "60代女性。体の衰えを感じ始め、薬には頼りたくないが健康を守りたい。砂糖・添加物を避けるオーガニック志向。本物・品質への強いこだわり。金銭的余裕あり。甘いものは好きだが健康的な甘味を選びたい。",
+    "layer": "準顕在層",
+    "deepDesire": "毎日の生活の中で、静かに体を守り続けたい。薬ではなく、天然の本物で。",
+    "hiddenFrustration": "マヌカハニーを買ったことはあるが、本当に本物かどうかわからない。種類が多すぎて選び方がわからない。",
+    "triggerMoment": "体調が落ちかけた時、喉に違和感を感じた時、健康系の記事を読んでいる時",
+    "purchaseMotivations": [
+      {
+        "rank": 1,
+        "motivation": "守られる感覚",
+        "description": "「これを摂っておけば守られている」という安心感。薬の代わり、お守りとしての感覚。"
+      },
+      {
+        "rank": 2,
+        "motivation": "本物への信頼",
+        "description": "NZ産であること、生産者ストーリー、公的機関の認定が判断基準。「本物だから信じられる」"
+      },
+      {
+        "rank": 3,
+        "motivation": "継続できるか",
+        "description": "続けないと意味がない。高すぎず、使い勝手が良く、毎日のルーティンに組み込める。"
+      }
+    ],
+    "newCognitionStrategy": {
+      "falseBeliief": "マヌカハニーは美味しいものを選べばいい / MGO数値が高ければ本物",
+      "newParadigm": "本物のマヌカハニーは「美味しさ」ではなく「純粋性・農薬不使用・実測値」で選ぶ",
+      "shiftMessage": "味で選んでいたから、続いても守られていなかった"
+    },
+    "interviewInsights": [
+      "「美味しいとは思わないが薬の代わりとして食べる」→ 美味しさより機能・安心が動機",
+      "「喉が守られる感覚、歯茎が腫れにくくなった」→ 実感ベースの継続",
+      "「NZの特定の養蜂家が作ったという生産者ストーリー」が刺さる",
+      "「NZ政府許可の品質・農薬不使用」という公的権威性が重要",
+      "「医師・看護師が推奨」→ 食品ではなく薬として認識",
+      "「何を基準に選べばいいかわからない」→ 選定基準の教育が必要"
+    ]
+  },
+
+  "concept": {
+    "selected": "本物が守る",
+    "tagline": "毎朝1杯。体に入れるものは、本物だけでいい。",
+    "only1Position": "MGO実測値・農薬不検出を証明書で示せる、NZ直送の純粋マヌカハニー",
+    "goldenCircle": {
+      "why": "天然の本物だけが、あなたの体を静かに守ることができる",
+      "how": "NZ政府認定ラボが実証したMGO実測345、グリホサート不検出の純粋マヌカハニーを毎日1杯",
+      "what": "mauri MANUKA HONEY MGO263+ 200g"
+    },
+    "conceptVector": null
+  },
+
+  "keyVisual": {
+    "direction": "自然・本物感・NZの清潔な風景",
+    "mood": "温かみのある、信頼と安心のトーン。金色・琥珀色・白・緑。",
+    "colorDirection": "ゴールド（#D4A017）× クリーム白（#FDF8EF）× フォレストグリーン（#2D5016）",
+    "imagery": "NZの牧草地・ハニーポット・木製スプーン・実測証明書"
+  },
+
+  "salesCopy": {
+    "primary": "本物のマヌカハニーを、ちゃんと選べていますか？",
+    "primaryB": "毎朝1杯。それだけで、体が静かに変わっていく。",
+    "hook1": "60代女性の73%が知らない「マヌカハニーの選び方の間違い」",
+    "hook2": "あなたのマヌカハニー、本当にMGO263+ありますか？",
+    "hook3": "「美味しい」と「本物」は違う。守ってくれるのはどっち？"
+  },
+
+  "messageSystem": {
+    "toneOfVoice": "温かく、知性的。押し付けず、そっと教えてくれる感じ。60代女性に語りかけるトーン。",
+    "ngExpressions": [
+      "抗菌",
+      "風邪が治る",
+      "胃炎を改善",
+      "免疫力の強化・向上",
+      "免疫力アップ",
+      "生マヌカハニー",
+      "完全無農薬",
+      "医薬品的な効果表現全般"
+    ],
+    "okExpressions": [
+      "毎日の健康維持",
+      "美容のサポート",
+      "内側からキレイに",
+      "非加熱",
+      "100%天然",
+      "純粋マヌカハニー",
+      "農薬不使用"
+    ],
+    "mandatoryNotice": "1歳未満の乳児には与えないでください",
+    "targetAge": "60代女性"
+  },
+
+  "formatStrategy": {
+    "articleLP": {
+      "role": "5分で「本物の選び方」を論理的に教育し、購買決定に導く",
+      "cognitiveFlow": [
+        "FV: フック（問いかけ or 常識否定）",
+        "共感: 「なんとなく選んでいた」体験を言語化",
+        "問題深掘り: なぜ今の選び方ではダメか",
+        "仮想敵の正体: 農薬・実測値不足・非加熱問題",
+        "パラダイムシフト: 本物の選び方 = 実測値×農薬不使用",
+        "mauri の証拠: 実測MGO345・グリホサート不検出・MPI認定ラボ",
+        "口コミ・実感: 60代女性の継続体験",
+        "オファー: 初回58%OFF・定期縛りなし",
+        "CTA"
+      ],
+      "fvMessage": {
+        "direction": "問いかけ型 or 常識否定型",
+        "examples": [
+          "マヌカハニー、本当に本物を買えていますか？",
+          "味で選んでいた、ずっと間違えていた。",
+          "守ってくれると思っていたマヌカハニー。選び方が間違っていたとしたら？"
+        ]
+      },
+      "vectorCheckpoints": {
+        "fv_vs_concept": 0.45,
+        "fv_vs_competitor": 0.60,
+        "inter_lp_diversity": 0.72
+      }
+    }
+  },
+
+  "hookVectors": [
+    {
+      "id": "hook_01",
+      "type": "常識否定型",
+      "text": "マヌカハニーは「美味しいもの」を選ぶのが正解だと思っていませんか？",
+      "angle": "美味しさ訴求の否定 → 本物の選び方",
+      "vector": null
+    },
+    {
+      "id": "hook_02",
+      "type": "恐怖訴求型",
+      "text": "あなたのマヌカハニー、本当にMGO263+の実力がありますか？",
+      "angle": "実測値詐称への不安 → 証明書の重要性",
+      "vector": null
+    },
+    {
+      "id": "hook_03",
+      "type": "共感型",
+      "text": "毎日摂っているのに、なんとなく続いている気がしない",
+      "angle": "継続しても実感がない悩み → 本物への切り替え",
+      "vector": null
+    }
+  ],
+
+  "competitorAnalysis": {
+    "virtualEnemies": [
+      "美味しさでマヌカハニーを選ぶ常識",
+      "MGO表示値だけを信じて選ぶ常識",
+      "有名ブランドだから大丈夫という常識"
+    ],
+    "competitorWeaknesses": [
+      "加熱処理されて本来の成分が変質している商品が多い",
+      "MGO表示と実測値が乖離している商品の存在",
+      "農薬（グリホサート）が検出される商品の存在",
+      "産地不明・OEM不明な商品の多さ"
+    ]
+  },
+
+  "assets": {
+    "lpImages": "/Users/ca01224/Desktop/mauriのデータ/LPフォルダ/『mauri MANUKA HONEY』公式ページ｜ヨミテ_files/",
+    "availableImages": [
+      "MNK_LP-1.webp", "MNK_LP-2.webp", "260309_MNK_LP-2.webp",
+      "MNK_LP-3.webp", "MNK_LP-4.webp", "MNK_LP-5.webp",
+      "MNK_LP-6.webp", "MNK_LP-7.webp", "MNK_LP-8.webp",
+      "MNK_LP-9.webp", "MNK_LP-10.webp", "MNK_LP-11.webp",
+      "MNK_LP-12.webp", "MNK_LP-13.webp", "MNK_CHAT-1.webp",
+      "MNK_LP_top_banner.webp", "MNK_LP_offer-1.webp",
+      "MNK_LP_offer-2.webp", "MNK_LP_offer-3.webp",
+      "MNK_LP_offer-4.webp", "MNK_LP_offer-5-CTA.webp",
+      "MNK_LP_offer-6.webp", "MNK_LP_offer-kiyaku.webp",
+      "MNK_LP_bottom.webp"
+    ]
+  }
+}

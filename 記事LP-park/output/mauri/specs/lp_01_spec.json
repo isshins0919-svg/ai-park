@@ -1,0 +1,90 @@
+{
+  "lpIndex": 1,
+  "slug": "mauri-lp01",
+  "hypothesis": "常識否定型フック × 準顕在層 — 「美味しいマヌカハニー」を探していた60代女性が、本物の選び方を知って購買決定する",
+  "hookAngle": "常識否定型",
+  "hookSource": "hook_01",
+  "targetN1": "60代女性・マヌカハニーを知っているが選び方が曖昧・美味しさで選んでいた層",
+  "testHypothesis": "「美味しさ ≠ 本物」という常識否定フックは、既存記事（美味しい記事）より高いCVRを出せるか？",
+
+  "virtualEnemy": {
+    "falseBelief": "マヌカハニーは美味しいものを選べばいい。美味しいということは品質が良いということ。",
+    "whyWrong": "マヌカハニーの有効成分MGOは無味無臭。美味しさは別の成分（単糖類・水分量）で決まる。美味しさと純粋性は全く別の指標。",
+    "newParadigm": "本物のマヌカハニーは『実測MGO値・農薬不使用・非加熱』の3つで選ぶ。味ではない。",
+    "shiftMoment": "「だから美味しかったのに続いても守られている感じがなかったんだ」という気づき",
+    "sceneEvocation": {
+      "before": "毎朝スプーン1杯。続けているのになんとなく不安。本当に効いているのかな…",
+      "after": "証明書付きの本物を見つけた。これなら信じられる。今日から体が守られる感覚が変わる。"
+    },
+    "curiosityGap": "「美味しいマヌカハニーほど、実は体を守れない理由」→ 理由をまだ言わない"
+  },
+
+  "fvPatterns": {
+    "patternA": {
+      "type": "痛み直撃型",
+      "mainCopy": "マヌカハニーを毎朝続けているのに\nなんとなく守られている感じがしない。\nそれ、選び方が間違っているかもしれません。",
+      "subCopy": "「美味しい」は本物の証明にはならない",
+      "eyeFlow": "F型",
+      "visualDirection": "温かみのある琥珀色背景に商品",
+      "sceneEvocationScore": 5,
+      "curiosityGapScore": 4
+    },
+    "patternB": {
+      "type": "新常識提示型",
+      "mainCopy": "「美味しい」マヌカハニーは\n体を守れない。",
+      "subCopy": "NZ政府認定ラボが実証した本物の選び方",
+      "eyeFlow": "Z型",
+      "visualDirection": "NZの清潔な牧草地・自然",
+      "sceneEvocationScore": 4,
+      "curiosityGapScore": 5
+    },
+    "patternC": {
+      "type": "ストーリー導入型",
+      "mainCopy": "毎朝続けていた。\nでも何かが足りなかった。\nその理由が、やっとわかった。",
+      "subCopy": "60代から始める「本物」の健康管理",
+      "eyeFlow": "中央集中型",
+      "visualDirection": "60代女性の穏やかな朝のシーン",
+      "sceneEvocationScore": 5,
+      "curiosityGapScore": 4
+    }
+  },
+
+  "articleStructure": {
+    "sections": [
+      {"order": 1, "elementId": "fv", "content": "FV3パターン タブ切替"},
+      {"order": 2, "elementId": "anchor_cta", "content": "フローティングCTA"},
+      {"order": 3, "elementId": "problem_empathy", "content": "「なんとなく選んでいた」共感ブロック"},
+      {"order": 4, "elementId": "statistics", "content": "選び方を知らない人の割合・市場データ"},
+      {"order": 5, "elementId": "cause_education", "content": "なぜ美味しさ訴求が間違いか（MGOの仕組み）"},
+      {"order": 6, "elementId": "existing_denial", "content": "既存の選び方の限界（表示値≠実測値）"},
+      {"order": 7, "elementId": "fear_appeal", "content": "農薬・グリホサート問題"},
+      {"order": 8, "elementId": "paradigm_shift", "content": "★パラダイムシフト: 本物の3つの証明"},
+      {"order": 9, "elementId": "solution_intro", "content": "mauri = 3つ全てを満たす唯一の選択肢"},
+      {"order": 10, "elementId": "product_detail", "content": "mauri 商品詳細・NZ産地"},
+      {"order": 11, "elementId": "authority", "content": "BeeNZ社 MPI認定・分析証明書"},
+      {"order": 12, "elementId": "testimonials", "content": "60代女性の使用実感・口コミ"},
+      {"order": 13, "elementId": "usage_flow", "content": "たった3ステップの使い方"},
+      {"order": 14, "elementId": "cta_mid", "content": "中間CTA"},
+      {"order": 15, "elementId": "discount_offer", "content": "初回58%OFF オファー"},
+      {"order": 16, "elementId": "risk_reversal", "content": "定期縛りなし・安心保証"},
+      {"order": 17, "elementId": "urgency", "content": "数量限定・初回価格"},
+      {"order": 18, "elementId": "final_cta", "content": "最終CTA"}
+    ],
+    "paradigmShiftPoint": 8,
+    "ctaPositions": ["fv", "section_14", "section_17", "final"],
+    "sectionDensity": {
+      "introduction_empathy": "20%",
+      "education": "30%",
+      "product_proof": "25%",
+      "socialProof": "15%",
+      "ctaOffer": "10%"
+    }
+  },
+
+  "copyGuidelines": {
+    "tone": "温かく、知性的。押し付けず、そっと教えてくれる感じ。60代女性に語りかけるトーン。",
+    "ngExpressions": ["抗菌", "免疫力アップ", "風邪が治る", "完全無農薬", "生マヌカハニー"],
+    "conceptKeyword": "本物が守る",
+    "mandatoryNotice": "1歳未満の乳児には与えないでください"
+  }
+}

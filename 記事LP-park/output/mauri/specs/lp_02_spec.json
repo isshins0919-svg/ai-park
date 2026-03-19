@@ -1,0 +1,89 @@
+{
+  "lpIndex": 2,
+  "slug": "mauri-lp02",
+  "hypothesis": "恐怖訴求型フック × 顕在層 — 「MGO表示値と実測値の乖離」問題を知り、証明書付きの本物に切り替える",
+  "hookAngle": "恐怖訴求 + 信頼構築型",
+  "hookSource": "hook_02",
+  "targetN1": "60代女性・マヌカハニー経験者・MGOを知っているが実測値問題を知らない層",
+  "testHypothesis": "「表示値詐称への恐怖 → 証明書の安心」という恐怖→信頼構築フローは、常識否定型LP1より高いCVRを出せるか？",
+
+  "virtualEnemy": {
+    "falseBelief": "MGO数値が高ければ高品質。パッケージに書いてある数字が本物の証拠。",
+    "whyWrong": "MGO表示値と実測値が乖離している商品が存在する。また農薬（グリホサート）が検出される商品もある。表示を信じるだけでは守られない。",
+    "newParadigm": "本物は「分析証明書（CoA）付き・実測MGO345・グリホサート不検出」の3点で確認できる。",
+    "shiftMoment": "「パッケージの数字だけ見ていた。証明書があるものが本物なんだ」という気づき",
+    "sceneEvocation": {
+      "before": "高いMGO数値が書いてある商品を買っていた。でも、その数字は誰が調べたんだろう？",
+      "after": "NZ政府認定ラボの証明書がある。実測値MGO345。これが本物の証拠。安心して続けられる。"
+    },
+    "curiosityGap": "「MGO263+表示の商品が、実際にはMGO100以下だった事例がある」→ 詳細をまだ言わない"
+  },
+
+  "fvPatterns": {
+    "patternA": {
+      "type": "痛み直撃型",
+      "mainCopy": "あなたのマヌカハニー、\n本当にMGO263+の\n実力がありますか？",
+      "subCopy": "パッケージの数字と実測値は違うことがある",
+      "eyeFlow": "F型",
+      "visualDirection": "証明書・ラボ分析のビジュアル",
+      "sceneEvocationScore": 4,
+      "curiosityGapScore": 5
+    },
+    "patternB": {
+      "type": "新常識提示型",
+      "mainCopy": "MGO数値は「証明書」がなければ\n信じてはいけない。",
+      "subCopy": "NZ政府認定ラボが実測したものだけが本物",
+      "eyeFlow": "Z型",
+      "visualDirection": "公的認定・信頼のビジュアル",
+      "sceneEvocationScore": 4,
+      "curiosityGapScore": 5
+    },
+    "patternC": {
+      "type": "ストーリー導入型",
+      "mainCopy": "NZの農場主・Julieが\n教えてくれた。\n本物のマヌカハニーに必要な\n3つの証明。",
+      "subCopy": "生産者が語る、本物の条件",
+      "eyeFlow": "中央集中型",
+      "visualDirection": "NZの養蜂家・温かいストーリービジュアル",
+      "sceneEvocationScore": 5,
+      "curiosityGapScore": 4
+    }
+  },
+
+  "articleStructure": {
+    "sections": [
+      {"order": 1, "elementId": "fv", "content": "FV3パターン タブ切替"},
+      {"order": 2, "elementId": "anchor_cta", "content": "フローティングCTA"},
+      {"order": 3, "elementId": "problem_empathy", "content": "「信じていた商品への不安」共感ブロック"},
+      {"order": 4, "elementId": "statistics", "content": "マヌカハニー市場の実態・品質問題"},
+      {"order": 5, "elementId": "cause_education", "content": "MGO表示値と実測値が乖離する理由"},
+      {"order": 6, "elementId": "fear_appeal", "content": "農薬（グリホサート）問題の実態"},
+      {"order": 7, "elementId": "existing_denial", "content": "「高価格＝安全」という常識の崩壊"},
+      {"order": 8, "elementId": "paradigm_shift", "content": "★パラダイムシフト: 本物の証明書3点"},
+      {"order": 9, "elementId": "solution_intro", "content": "mauri = 3つの証明を全て持つ唯一の選択肢"},
+      {"order": 10, "elementId": "authority", "content": "BeeNZ社 CoA・MPI認定・実測MGO345・グリホサート不検出"},
+      {"order": 11, "elementId": "brand_story", "content": "Julie Hayesと生産者ストーリー"},
+      {"order": 12, "elementId": "product_detail", "content": "mauri 商品詳細"},
+      {"order": 13, "elementId": "testimonials", "content": "60代女性の使用実感"},
+      {"order": 14, "elementId": "cta_mid", "content": "中間CTA"},
+      {"order": 15, "elementId": "discount_offer", "content": "初回58%OFF オファー"},
+      {"order": 16, "elementId": "risk_reversal", "content": "定期縛りなし・安心の証明"},
+      {"order": 17, "elementId": "final_cta", "content": "最終CTA"}
+    ],
+    "paradigmShiftPoint": 8,
+    "ctaPositions": ["fv", "section_14", "section_16", "final"],
+    "sectionDensity": {
+      "introduction_empathy": "18%",
+      "education_fear": "32%",
+      "authority_proof": "28%",
+      "socialProof": "12%",
+      "ctaOffer": "10%"
+    }
+  },
+
+  "copyGuidelines": {
+    "tone": "真剣だが押し付けない。「あなたのことが心配」という温かさ。証拠を提示して信頼を積む。",
+    "ngExpressions": ["抗菌", "免疫力アップ", "風邪が治る", "完全無農薬", "生マヌカハニー"],
+    "conceptKeyword": "本物が守る",
+    "mandatoryNotice": "1歳未満の乳児には与えないでください"
+  }
+}
