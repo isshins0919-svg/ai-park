@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-03-19T15:36:20.810957",
+  "total": 7,
+  "ok": 7,
+  "ng": 0,
+  "results": [
+    {
+      "index": 0,
+      "filename": "amazon_00_main.png",
+      "status": "ok",
+      "size_kb": 587
+    },
+    {
+      "index": 1,
+      "filename": "amazon_01_punchline.png",
+      "status": "ok",
+      "size_kb": 353
+    },
+    {
+      "index": 2,
+      "filename": "amazon_02_material.png",
+      "status": "ok",
+      "size_kb": 521
+    },
+    {
+      "index": 3,
+      "filename": "amazon_03_structure.png",
+      "status": "ok",
+      "size_kb": 378
+    },
+    {
+      "index": 4,
+      "filename": "amazon_04_health.png",
+      "status": "ok",
+      "size_kb": 393
+    },
+    {
+      "index": 5,
+      "filename": "amazon_05_scene.png",
+      "status": "ok",
+      "size_kb": 501
+    },
+    {
+      "index": 6,
+      "filename": "amazon_06_brand.png",
+      "status": "ok",
+      "size_kb": 572
+    }
+  ]
+}
