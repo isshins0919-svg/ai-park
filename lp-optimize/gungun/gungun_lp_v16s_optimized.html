@@ -6,7 +6,7 @@
   【変更点サマリー】
   ★改善① HEAD: Slick CSS → media="print" onload で非同期化（レンダリングブロック解消）
   ★改善② BODY: ヒーロー画像1枚目（バナータイマー）→ fetchpriority="high"（LCP改善）
-  ★改善③ FOOTER: jQuery / fade.js / popup.js → defer（レンダリングブロック解消）
+  ★改善③ FOOTER: fade.js / popup.js → defer（jQueryはEC-Force側で提供、LP側では読み込まない）
   ★改善④ FOOTER: html5shiv → 削除（IE8専用・2026年不要）
 
   ⚠ やっていないこと（禁止ルールに基づく）:
@@ -350,8 +350,8 @@ __PAYMENT_FORM__
 {# footer #}
 </footer>
 
-<!-- ★改善③ jQuery / fade.js / popup.js → defer で非同期化（レンダリングブロック解消） -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" defer></script>
+<!-- ★改善③ fade.js / popup.js → defer（jQueryはEC-Force側で読み込み済みのため除外） -->
+<!-- ⚠ jQuery を LP側で再読み込みするとEC-Forceの購入スクリプトが壊れるため削除 -->
 <script src="{{ file_root_path }}/javascript/fade.js" defer></script>
 <script src="{{ file_root_path }}/javascript/popup.js" defer></script>
 
