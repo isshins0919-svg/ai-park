@@ -1,4 +1,41 @@
 {
-  "last_updated": "",
-  "jobs": []
+  "last_updated": "2026-03-19",
+  "jobs": [
+    {
+      "id": 1,
+      "name": "sawada 靴下Amazon出店",
+      "goal": "来週前半までに出品完了状態にする（残り50%を完走）",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-03-19",
+      "notes": "50%完了時点で週終了。Camicksで確立した画像生成フローを転用して完走する"
+    },
+    {
+      "id": 2,
+      "name": "ameru 原価削減提案",
+      "goal": "提案後の反応・実行可否を確認する",
+      "status": "completed",
+      "priority": "high",
+      "created_at": "2026-03-19",
+      "notes": "2026-03-19完了！削減ロジック：糸色数削減＋パーツを編む→はめる設計変更＋クリップ3→1個。来週フォロー確認"
+    },
+    {
+      "id": 3,
+      "name": "えみさん ぐんぐんCRM試作スケジュール",
+      "goal": "テレカンでえみさんとCRM試作スケジュールを合意・確定させる",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-03-19",
+      "notes": "テレカン待ち。合意後すぐ試作着手できるよう準備しておく"
+    },
+    {
+      "id": 4,
+      "name": "on:myskin LP高速化 効果計測",
+      "goal": "v8/v112の高速化施策後の計測結果を確認し次手を検討する",
+      "status": "completed",
+      "priority": "medium",
+      "created_at": "2026-03-19",
+      "notes": "2026-03-19完了。LP高速化（v8/v112）一連の作業をすべて終了"
+    }
+  ]
 }
