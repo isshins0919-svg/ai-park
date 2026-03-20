@@ -174,6 +174,20 @@
   .award-badge{flex:1;background:linear-gradient(135deg,#D4A017,#f0c830);border-radius:8px;padding:10px 6px;text-align:center}
   .award-badge .aw-title{font-size:.65rem;font-weight:700;color:#1a3009}
   .award-badge .aw-en{font-size:.58rem;color:#2D5016;margin-top:2px}
+
+  /* 動画 */
+  .video-block{border-radius:10px;overflow:hidden;margin:10px 0;background:#000}
+  .video-block video{width:100%;display:block;aspect-ratio:auto;max-height:480px;object-fit:contain}
+  .video-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+  .video-grid .video-block{margin:0}
+  .video-label{font-size:.72rem;color:#888;text-align:center;margin-top:4px;margin-bottom:10px}
+
+  /* 証明書引用ブロック */
+  .cert-block{border:1px solid #D4A017;border-radius:8px;padding:14px;margin:8px 0;background:#FFFEF8}
+  .cert-issuer{font-size:.68rem;color:#888;margin-bottom:5px;display:flex;align-items:center;gap:4px}
+  .cert-issuer .cert-tag{background:#2D5016;color:#fff;font-size:.6rem;font-weight:700;padding:1px 5px;border-radius:2px}
+  .cert-data{font-size:.85rem;font-weight:700;color:#1a3009;line-height:1.8;margin:4px 0}
+  .cert-id{font-size:.65rem;color:#aaa;font-family:monospace;margin-top:4px}
 </style>
 </head>
 <body>
@@ -259,6 +273,15 @@
 </div>
 
 <p class="pr-notice">※ この記事はPR（広告）です</p>
+
+<!-- ブランドムービー -->
+<div style="max-width:420px;margin:0 auto;padding:0 12px 16px">
+  <div class="video-block">
+    <video autoplay muted playsinline loop>
+      <source src="file:///Users/ca01224/Desktop/mauriのデータ/現在配信実績のある記事フォルダー（結果は良くない）/記事LPで使用してる動画一覧/b1da8e2a-b8ae-4eee-baed-a7b971de41ae.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
 
 <!-- 記事本文 -->
 <div class="article-wrap">
@@ -370,6 +393,50 @@
         <div class="auth-text"><strong>非加熱・100%天然・添加物不使用</strong><br>モノフローラル認証・11種の国際認証取得済み。</div>
       </div>
     </div>
+
+    <!-- 実際の書類から引用 -->
+    <p class="body-text" style="font-size:.78rem;color:#888;margin:16px 0 8px">▼ 実際の第三者機関発行書類から引用</p>
+
+    <div class="cert-block">
+      <div class="cert-issuer">
+        <span class="cert-tag">NZ政府公式</span> New Zealand Ministry for Primary Industries
+      </div>
+      <div class="cert-data">
+        「本製品はNZ法に基づく登録施設で製造され、人の食用として<br>
+        規制要件を満たすことを証明する」
+      </div>
+      <div class="cert-id">証明書番号 NZL2025/BEENZ 1/25108 ｜ 発行 2025年10月8日 ｜ 署名：S R PALMER, BVSC（NZ政府公式獣医師）</div>
+    </div>
+
+    <div class="cert-block">
+      <div class="cert-issuer">
+        <span class="cert-tag">NZ政府承認ラボ</span> ALS Food &amp; Environmental NZ（MPI認定）
+      </div>
+      <div class="cert-data">
+        グリホサート &lt;0.010 mg/kg ／ グルホシネート &lt;0.010 mg/kg<br>
+        アミノメチルホスホン酸 &lt;0.010 mg/kg — 3種すべて検出限界以下
+      </div>
+      <div class="cert-id">Report ID: 25-16033 ｜ Sample: 25BZ25 ｜ 分析完了 2025年6月6日</div>
+    </div>
+
+    <div class="cert-block">
+      <div class="cert-issuer">
+        <span class="cert-tag">生産者証明</span> BeeNZ Ltd — Julie Hayes, Managing Director
+      </div>
+      <div class="cert-data">
+        「防腐剤・添加物・抗生物質は一切不使用。<br>
+        純粋な天然はちみつ以外、何も入っていません」
+      </div>
+      <div class="cert-id">Ingredient Statement ｜ INV-3854 ｜ 2025年9月17日署名</div>
+    </div>
+
+    <div class="cert-block">
+      <div class="cert-issuer">
+        <span class="cert-tag">日本第三者機関</span> 一般財団法人 日本食品分析センター（JFRL）
+      </div>
+      <div class="cert-data">品質試験 実施済み ― 第25109059001-0101号</div>
+      <div class="cert-id">依頼者：株式会社ヨミテ ｜ 試験完了 2025年12月25日</div>
+    </div>
   </div>
 
   <!-- 商品写真 -->
@@ -408,6 +475,46 @@
       <div class="stars">★★★★☆</div>
       <div class="reviewer">62歳女性・1ヶ月継続</div>
       <p>NZ政府認定ラボで検査しているという点が信頼できました。以前は「美味しいから良いもの」と思って選んでいましたが、それだけじゃないんだなと気づきました。</p>
+    </div>
+  </div>
+
+  <!-- 動画口コミ -->
+  <div class="section-block" style="padding-top:4px">
+    <h2 class="section-title">動画でも確認できます</h2>
+    <div class="video-grid">
+      <div>
+        <div class="video-block">
+          <video autoplay muted playsinline loop>
+            <source src="file:///Users/ca01224/Desktop/mauriのデータ/現在配信実績のある記事フォルダー（結果は良くない）/記事LPで使用してる動画一覧/08317cbb-514c-4cab-96aa-111d2c592b71.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div>
+        <div class="video-block">
+          <video autoplay muted playsinline loop>
+            <source src="file:///Users/ca01224/Desktop/mauriのデータ/現在配信実績のある記事フォルダー（結果は良くない）/記事LPで使用してる動画一覧/a043a652-e074-4878-b1be-f0606f883670.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div>
+        <div class="video-block">
+          <video autoplay muted playsinline loop>
+            <source src="file:///Users/ca01224/Desktop/mauriのデータ/現在配信実績のある記事フォルダー（結果は良くない）/記事LPで使用してる動画一覧/6fa476c5-3466-4477-9acd-9627e4910233.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div>
+        <div class="video-block">
+          <video autoplay muted playsinline loop>
+            <source src="file:///Users/ca01224/Desktop/mauriのデータ/現在配信実績のある記事フォルダー（結果は良くない）/記事LPで使用してる動画一覧/5bbbb3a8-f72d-4db7-b9d6-6f92dd0ac129.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    <div class="video-block" style="margin-top:8px">
+      <video autoplay muted playsinline loop>
+        <source src="file:///Users/ca01224/Desktop/mauriのデータ/現在配信実績のある記事フォルダー（結果は良くない）/記事LPで使用してる動画一覧/b3c0c5cf-e489-4482-934e-6868dfa7d17a.mp4" type="video/mp4">
+      </video>
     </div>
   </div>
 
