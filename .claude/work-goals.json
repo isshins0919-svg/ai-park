@@ -1,50 +1,50 @@
 {
-  "last_updated": "2026-03-20",
+  "last_updated": "2026-03-23",
   "jobs": [
     {
       "id": 1,
-      "name": "sawada 靴下Amazon出店",
-      "goal": "来週前半までに出品完了状態にする（残り50%を完走）",
+      "name": "OJT AIパワフルモード作成",
+      "goal": "OJT AIのパワフルモードを今週中に完成させる",
       "status": "completed",
       "priority": "high",
-      "created_at": "2026-03-19",
-      "notes": "2026-03-19完了！50%完了後、共有まで完走。Camicksで確立した画像生成フローを転用"
+      "created_at": "2026-03-23",
+      "notes": "2026-03-23完了！"
     },
     {
       "id": 2,
-      "name": "ameru 原価削減提案",
-      "goal": "提案後の反応・実行可否を確認する",
-      "status": "completed",
+      "name": "てつさんへのメッセ",
+      "goal": "てつさんへのメッセージを書いて送る",
+      "status": "active",
       "priority": "high",
-      "created_at": "2026-03-19",
-      "notes": "2026-03-19完了！削減ロジック：糸色数削減＋パーツを編む→はめる設計変更＋クリップ3→1個。来週フォロー確認"
+      "created_at": "2026-03-23",
+      "notes": ""
     },
     {
       "id": 3,
-      "name": "えみさん ぐんぐんCRM試作スケジュール",
-      "goal": "テレカンでえみさんとCRM試作スケジュールを合意・確定させる",
-      "status": "completed",
+      "name": "記事LP → 記事1本作成",
+      "goal": "記事LPアップデート後に記事を1本作成する",
+      "status": "active",
       "priority": "high",
-      "created_at": "2026-03-19",
-      "notes": "2026-03-19完了！テレカンで合意取れた"
+      "created_at": "2026-03-23",
+      "notes": "10:30-12:30のブロック活用"
     },
     {
       "id": 4,
-      "name": "on:myskin LP高速化 効果計測",
-      "goal": "v8/v112の高速化施策後の計測結果を確認し次手を検討する",
-      "status": "completed",
+      "name": "AI動画作成（Sora活用）",
+      "goal": "Soraを使って動画作成まで進める",
+      "status": "active",
       "priority": "medium",
-      "created_at": "2026-03-19",
-      "notes": "2026-03-19完了。LP高速化（v8/v112）一連の作業をすべて終了"
+      "created_at": "2026-03-23",
+      "notes": ""
     },
     {
       "id": 5,
-      "name": "結婚式スピーチ原稿",
-      "goal": "初稿を今日中に完成させる",
+      "name": "Claude codeエージェント活用イメージ整理",
+      "goal": "AIエージェントの活用イメージを鮮明にして説明できる状態にする",
       "status": "active",
-      "priority": "high",
-      "created_at": "2026-03-20",
-      "notes": "結婚式仕込み中に完成させる"
+      "priority": "medium",
+      "created_at": "2026-03-23",
+      "notes": "claude合宿（18-21時）で使えるかも"
     }
   ]
 }

@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>澤田株式会社 AI導入コンサルティング戦略レポート v1.0</title>
+<style>
+  :root {
+    --primary: #1a2e4a;
+    --accent: #2c7be5;
+    --accent2: #e8732a;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --bg: #f8f9fc;
+    --card: #ffffff;
+    --text: #2d3748;
+    --muted: #718096;
+    --border: #e2e8f0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Helvetica Neue', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, #1a2e4a 0%, #0f1f35 60%, #162540 100%);
+    color: white;
+    padding: 80px 60px;
+    min-height: 320px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    right: -100px; top: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(44,123,229,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover-label {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .cover h1 span { color: #64b5f6; }
+  .cover-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 36px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    flex-wrap: wrap;
+  }
+  .cover-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* Container */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 32px;
+  }
+
+  /* Executive Summary */
+  .exec-summary {
+    background: linear-gradient(135deg, #1a2e4a, #1e3a5f);
+    color: white;
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 40px;
+  }
+  .exec-summary h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #64b5f6;
+  }
+  .exec-summary p {
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 16px;
+  }
+  .verdict-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .verdict-item {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .verdict-item .v-label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .verdict-item .v-value { font-size: 18px; font-weight: 700; }
+  .verdict-item .v-note { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+  .green { color: #4caf50; }
+  .orange { color: #ff9800; }
+  .red { color: #f44336; }
+  .blue { color: #64b5f6; }
+
+  /* Section */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* KPI Grid */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+  .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .kpi-value { font-size: 24px; font-weight: 800; color: var(--primary); }
+  .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .kpi-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+  .badge-up { background: #e8f5e9; color: #2e7d32; }
+  .badge-warn { background: #fff3e0; color: #e65100; }
+  .badge-info { background: #e3f2fd; color: #1565c0; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+
+  /* Pros/Cons */
+  .pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .pros-box {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .cons-box {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .pros-box h4 { color: #16a34a; font-size: 14px; margin-bottom: 12px; }
+  .cons-box h4 { color: #ea580c; font-size: 14px; margin-bottom: 12px; }
+  .pros-box li, .cons-box li {
+    font-size: 13px;
+    margin-bottom: 8px;
+    padding-left: 4px;
+    list-style: none;
+  }
+  .pros-box li::before { content: '✓ '; color: #16a34a; font-weight: bold; }
+  .cons-box li::before { content: '△ '; color: #ea580c; font-weight: bold; }
+
+  /* Alert boxes */
+  .alert {
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .alert-warning { background: #fffbeb; border-left: 4px solid #f59e0b; }
+  .alert-info { background: #eff6ff; border-left: 4px solid #3b82f6; }
+  .alert-success { background: #f0fdf4; border-left: 4px solid #22c55e; }
+  .alert-danger { background: #fef2f2; border-left: 4px solid #ef4444; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; }
+  .alert-content { font-size: 14px; line-height: 1.6; }
+  .alert-content strong { display: block; margin-bottom: 4px; }
+
+  /* Roadmap */
+  .roadmap {
+    position: relative;
+    padding-left: 32px;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .phase {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .phase::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid;
+    background: white;
+  }
+  .phase-1::before { border-color: #22c55e; }
+  .phase-2::before { border-color: #3b82f6; }
+  .phase-3::before { border-color: #8b5cf6; }
+  .phase-4::before { border-color: #f59e0b; }
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .phase-badge {
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .phase-1 .phase-badge { background: #dcfce7; color: #166534; }
+  .phase-2 .phase-badge { background: #dbeafe; color: #1d4ed8; }
+  .phase-3 .phase-badge { background: #ede9fe; color: #6d28d9; }
+  .phase-4 .phase-badge { background: #fef3c7; color: #92400e; }
+  .phase-title { font-size: 17px; font-weight: 700; color: var(--primary); }
+  .phase-content {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  /* Priority tag */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+  .tag-high { background: #fee2e2; color: #b91c1c; }
+  .tag-mid { background: #fef3c7; color: #92400e; }
+  .tag-low { background: #e0e7ff; color: #3730a3; }
+
+  /* ROI Table */
+  .roi-highlight {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 2px solid #86efac;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  .roi-highlight .roi-title { font-size: 13px; color: #166534; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .roi-highlight .roi-number { font-size: 42px; font-weight: 800; color: #15803d; }
+  .roi-highlight .roi-sub { font-size: 14px; color: #166534; margin-top: 6px; }
+
+  /* Comparison block */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 16px;
+  }
+  .compare-option {
+    border-radius: 12px;
+    padding: 24px;
+    border: 2px solid;
+  }
+  .option-raytech {
+    background: #fafafa;
+    border-color: var(--border);
+  }
+  .option-self {
+    background: #eff6ff;
+    border-color: #93c5fd;
+  }
+  .option-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .option-cost {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .option-cost-note { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+
+  /* Action items */
+  .action-list {
+    list-style: none;
+    padding: 0;
+  }
+  .action-list li {
+    padding: 10px 16px;
+    background: var(--bg);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .action-list li .action-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .action-list li .action-text strong { display: block; margin-bottom: 2px; }
+  .action-list li .action-text span { font-size: 12px; color: var(--muted); }
+
+  /* Footer */
+  .footer {
+    background: var(--primary);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 32px;
+    font-size: 13px;
+    margin-top: 60px;
+  }
+  .footer strong { color: white; }
+
+  /* Highlight text */
+  .highlight { color: var(--accent2); font-weight: 700; }
+  .big-number { font-size: 28px; font-weight: 800; color: var(--primary); }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  @media (max-width: 600px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .pros-cons { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .verdict-box { grid-template-columns: 1fr; }
+    .cover { padding: 48px 24px; }
+    .container { padding: 32px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="cover">
+  <p class="cover-label">Confidential · AI Consulting Report</p>
+  <h1>澤田株式会社<br><span>AI導入・DX戦略</span><br>コンサルティングレポート</h1>
+  <p class="cover-sub">外部コンサル評価 × 自社推進ロードマップ × 投資判断ガイド</p>
+  <div class="cover-meta">
+    <span>📅 2026年3月23日</span>
+    <span>📋 Version 1.0</span>
+    <span>🔒 機密書類 — 社内限り</span>
+    <span>👤 作成: 澤田一進（AI Parkレポート）</span>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+  <!-- Executive Summary -->
+  <div class="exec-summary">
+    <h2>📌 エグゼクティブサマリー</h2>
+    <p>
+      澤田株式会社は第57期上期に売上高<strong>20億5,800万円（予算比102%）</strong>・粗利率<strong>19.6%（史上最高）</strong>を記録。
+      財務面でのモメンタムは明確にある。一方、AI・DX活用は<strong>ChatGPT 1ライセンスのみ</strong>という現状で、
+      競合との格差が急速に拡大するリスクを抱えている。
+    </p>
+    <p>
+      レイテクソリューションズの提案（月額<strong>84〜88万円</strong>）は低リスクな入口として評価できるが、
+      汎用的なデスクワーク削減手法が澤田固有のOBIC7中心の業務システムに真に適合するかは未検証。
+      来週から始まる業務棚卸し（チェックリスト回収）フェーズを慎重に観察しながら、
+      <strong>自社主導のAI活用を並行して即開始する</strong>ことが最善手である。
+    </p>
+    <div class="verdict-box">
+      <div class="verdict-item">
+        <div class="v-label">レイテック提案</div>
+        <div class="v-value orange">条件付きGO</div>
+        <div class="v-note">初月パイロットのみ先行。継続は棚卸し結果次第</div>
+      </div>
+      <div class="verdict-item">
+        <div class="v-label">自社AI推進</div>
+        <div class="v-value green">即時GO</div>
+        <div class="v-note">EC・営業事務から今月スタート。ROI最速</div>
+      </div>
+      <div class="verdict-item">
+        <div class="v-label">2028年目標への寄与</div>
+        <div class="v-value blue">高</div>
+        <div class="v-note">AI活用なしでは粗利率25%超・利益率5%は困難</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1: Company Analysis -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>現状分析：澤田株式会社の「強み」と「死角」</h2>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">売上高（57期上期）</div>
+        <div class="kpi-value">20.6億</div>
+        <div class="kpi-sub">予算比 102%</div>
+        <span class="kpi-badge badge-up">▲ 順調</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">粗利率</div>
+        <div class="kpi-value">19.6%</div>
+        <div class="kpi-sub">史上最高水準</div>
+        <span class="kpi-badge badge-up">▲ 最高値</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">営業利益率</div>
+        <div class="kpi-value">1.79%</div>
+        <div class="kpi-sub">¥36.8M ／ 目標5%まで遠い</div>
+        <span class="kpi-badge badge-warn">▲ 要改善</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">借入金残高</div>
+        <div class="kpi-value">¥9.2億</div>
+        <div class="kpi-sub">月返済¥1,500万</div>
+        <span class="kpi-badge badge-warn">要管理</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🏆 事業別：隠れた「エンジン」を可視化する</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ブランド / 事業</th>
+            <th>売上高</th>
+            <th>粗利率</th>
+            <th>特記事項</th>
+            <th>AI活用余地</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>sawada itto</strong>（自社BtoB）</td>
+            <td>¥95.3M</td>
+            <td><span style="color:#16a34a;font-weight:700">25.2%</span></td>
+            <td>広告費ほぼゼロ。ブランド力で売れている</td>
+            <td><span class="tag tag-high">最高</span> デジタルカタログ・提案書AI自動化</td>
+          </tr>
+          <tr>
+            <td><strong>SAWADA MARCHE</strong>（EC）</td>
+            <td>¥35.3M</td>
+            <td>—</td>
+            <td>EC史上最高売上。Shopify+多数ツール</td>
+            <td><span class="tag tag-high">高</span> コンテンツ生成・メール自動化・CS</td>
+          </tr>
+          <tr>
+            <td><strong>ADAWAS</strong>（EC）</td>
+            <td>—</td>
+            <td>—</td>
+            <td>第二のECブランド。立ち上げフェーズ</td>
+            <td><span class="tag tag-high">高</span> 商品説明文・SNS投稿の量産</td>
+          </tr>
+          <tr>
+            <td><strong>SAWADA YARN</strong>（原糸BtoB）</td>
+            <td>—</td>
+            <td>—</td>
+            <td>素材企業への原糸卸。ルーティン業務が多い</td>
+            <td><span class="tag tag-mid">中</span> 受発注自動化・営業事務効率化</td>
+          </tr>
+          <tr>
+            <td><strong>OEM</strong>（製造受託）</td>
+            <td>—</td>
+            <td>—</td>
+            <td>生産管理・品質管理・原価管理が核</td>
+            <td><span class="tag tag-mid">中</span> 生産スケジュール最適化・品質記録</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">💡</span>
+      <div class="alert-content">
+        <strong>一進さんへの重要な視点：sawada itto は「隠れたキャッシュカウ」</strong>
+        粗利25.2%、広告費ほぼゼロでこの規模を維持している事業は珍しい。
+        AI活用でカタログ制作・提案書・顧客フォローを自動化すれば、追加の人員コストなく売上を1.5〜2倍にできる可能性がある。
+        入社後の最初の成果として最も狙い目が高い領域。
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>⚠️ 現状の「死角」：IT投資 vs AI活用のアンバランス</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>カテゴリ</th>
+            <th>月額コスト</th>
+            <th>年間コスト</th>
+            <th>AI活用状況</th>
+            <th>課題</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OBIC7（基幹ERP）</td>
+            <td>¥700,000</td>
+            <td>¥8.4M</td>
+            <td>❌ ゼロ</td>
+            <td>データはあるが分析・活用できていない</td>
+          </tr>
+          <tr>
+            <td>Shopify（BtoC全体）</td>
+            <td>~¥280,000</td>
+            <td>¥3.4M</td>
+            <td>△ 部分的</td>
+            <td>ツールが多すぎて連携不足。アプリ費高止まり</td>
+          </tr>
+          <tr>
+            <td>LINE（MARCHE+ADAWAS）</td>
+            <td>¥37,500</td>
+            <td>¥450K</td>
+            <td>❌ ほぼ手動</td>
+            <td>自動配信・セグメント活用が未整備</td>
+          </tr>
+          <tr>
+            <td>KLAVIYO（メール）</td>
+            <td>¥4,650</td>
+            <td>¥56K</td>
+            <td>△ 基本のみ</td>
+            <td>AIパーソナライズ機能を使えていない</td>
+          </tr>
+          <tr>
+            <td><strong>ChatGPT</strong></td>
+            <td>¥3,614</td>
+            <td>¥43K</td>
+            <td>🔴 1ライセンスのみ</td>
+            <td><strong>会社全体でAIを使っているのが実質1名</strong></td>
+          </tr>
+          <tr style="background:#fef9c3">
+            <td><strong>合計IT支出</strong></td>
+            <td><strong>~¥1,100,000</strong></td>
+            <td><strong>~¥13.2M</strong></td>
+            <td colspan="2">→ AI活用への転換が急務</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-warning">
+      <span class="alert-icon">⚠️</span>
+      <div class="alert-content">
+        <strong>最大のリスク：「データの孤島化」</strong>
+        OBIC7（基幹）とShopify（EC）はつながっていない。受注データは手動でダブル入力されている可能性が高い。
+        このデータサイロが、将来の需要予測・在庫最適化・顧客分析の全てを阻害している。
+        DX推進の前に、まずこの統合問題を優先して解決すべき。
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Raytech Evaluation -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>レイテクソリューションズ提案の独立評価</h2>
+    </div>
+
+    <div class="card">
+      <h3>📋 提案内容サマリー</h3>
+      <table>
+        <thead>
+          <tr><th>項目</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>会社規模</td><td>1997年設立・従業員3,185名・売上¥572億（大手コンサル会社）</td></tr>
+          <tr><td>サービス内容</td><td>業務改善余地検証 → 実装支援 → 内製化</td></tr>
+          <tr><td>初期費用</td><td><strong>¥400,000</strong>（効果なし判定時は全額返金）</td></tr>
+          <tr><td>月額費用</td><td><strong>¥840,000〜880,000/月</strong>（年間約¥1,000〜1,056万）</td></tr>
+          <tr><td>主な手法</td><td>ノーコードアプリ・生成AI・RPA・BIツール</td></tr>
+          <tr><td>実績数値</td><td>「平均22.6%のデスクワーク時間削減」</td></tr>
+          <tr><td>対象部門</td><td>原糸営業・OEM営業・企画技術・生産管理・営業事務・EC広報・経理・総務・人事・労務（計10部門）</td></tr>
+          <tr><td>現在の進捗</td><td><strong>業務効率化チェックリスト、本日（3/23）送付済み。まだ未記入</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros-box">
+        <h4>✅ この提案の「良い点」</h4>
+        <ul>
+          <li>初月¥40万は返金保証。入口リスクが低い</li>
+          <li>大手・実績あり。大企業での導入事例多数</li>
+          <li>方法論が体系化されている（棚卸し→実装→内製化）</li>
+          <li>ノーコード・RPA・AIを組み合わせたバランス型</li>
+          <li>10部門を横断する構造化された分析フレームワーク</li>
+          <li>澤田の業務内容を事前に丁寧にヒアリングしたチェックリスト設計</li>
+        </ul>
+      </div>
+      <div class="cons-box">
+        <h4>△ この提案の「懸念点」</h4>
+        <ul>
+          <li>月額¥84〜88万は年間¥1,000〜1,056万。現IT総支出の約77%</li>
+          <li>「22.6%削減」は平均値。澤田のOBIC7中心環境での実績は不明</li>
+          <li>チェックリストがまだ空白→実態把握前に月額費用が動く</li>
+          <li>汎用手法がOBIC7カスタム連携に対応できるか未検証</li>
+          <li>内製化フェーズ後も継続費用が発生する可能性</li>
+          <li>一進さんが入社後に主体性を発揮しにくくなるリスク（外部依存化）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <h3>💰 ROI試算：「22.6%削減」は澤田に何をもたらすか</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">※仮定：対象10部門の平均デスクワーカー 各3名、月デスクワーク80時間、時間単価¥3,500</p>
+      <table>
+        <thead>
+          <tr><th>前提</th><th>計算</th><th>結果</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>対象人員</td><td>10部門 × 3名 = 30名</td><td>—</td></tr>
+          <tr><td>削減時間（22.6%）</td><td>30名 × 80h × 22.6% = 542.4h/月</td><td>—</td></tr>
+          <tr><td>金銭換算</td><td>542h × ¥3,500</td><td>¥1,897,000/月</td></tr>
+          <tr><td>レイテック費用</td><td>—</td><td>▲ ¥880,000/月</td></tr>
+          <tr style="background:#f0fdf4;font-weight:700"><td>純利益相当</td><td>—</td><td style="color:#16a34a">+¥1,017,000/月（月次黒字）</td></tr>
+          <tr><td>年間換算</td><td>¥1,017,000 × 12</td><td style="font-weight:700">+¥12.2M/年の工数削減効果</td></tr>
+        </tbody>
+      </table>
+      <div class="alert alert-warning" style="margin-top:16px;">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-content">
+          <strong>この計算の落とし穴</strong>
+          工数削減は「人員削減」ではなく「残業削減」や「他業務への充当」として現れることが多い。
+          実際の現金回収（コスト削減）として計上できる部分は、上記試算の50〜70%程度が現実的。
+          また、対象人員・デスクワーク時間・時給は澤田の実態データでの再計算が必要。
+          <strong>→ チェックリスト回収後に必ず再計算すること。</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎯 投資判断の推奨：「2段階意思決定」</h3>
+      <div class="compare-grid">
+        <div class="compare-option option-raytech">
+          <div class="option-title">🔬 ステップ1：初月パイロットのみ契約</div>
+          <div class="option-cost">¥400,000</div>
+          <div class="option-cost-note">返金保証あり / リスク限定的</div>
+          <ul style="font-size:13px;padding-left:16px;">
+            <li>チェックリスト回収・分析を見届ける</li>
+            <li>レイテックの分析品質・提案精度を評価</li>
+            <li>OBIC7との実装可能性を確認</li>
+            <li>✅ この段階ではGOを推奨</li>
+          </ul>
+        </div>
+        <div class="compare-option option-self">
+          <div class="option-title">🚀 ステップ2：継続契約の判断基準</div>
+          <div class="option-cost" style="color:#1d4ed8">¥840K〜880K/月</div>
+          <div class="option-cost-note">初月終了後に以下を満たした場合のみ継続</div>
+          <ul style="font-size:13px;padding-left:16px;">
+            <li>✅ OBIC7との連携に具体的な提案がある</li>
+            <li>✅ 削減時間の根拠が部門別に明示されている</li>
+            <li>✅ 内製化後の独立タイムラインが明確</li>
+            <li>❌ 汎用的な提案のみなら契約見送り</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Self-Directed AI Roadmap -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>自社主導 AI活用ロードマップ（レイテックと並行して進める）</h2>
+    </div>
+
+    <div class="alert alert-success">
+      <span class="alert-icon">💡</span>
+      <div class="alert-content">
+        <strong>基本方針：レイテックに任せず「自分でも動く」</strong>
+        外部コンサルへの依存は内製力を奪う。レイテックが分析をしている間に、
+        コストをかけずに始められる施策を並行して実行する。
+        特に一進さんが入社後の「最初の成果」として見せられるクイックウィンを優先する。
+      </div>
+    </div>
+
+    <div class="roadmap">
+
+      <div class="phase phase-1">
+        <div class="phase-header">
+          <span class="phase-badge">Phase 1</span>
+          <span class="phase-title">今月〜3ヶ月以内：クイックウィン（コスト≤¥5万/月）</span>
+        </div>
+        <div class="phase-content">
+          <ul class="action-list">
+            <li>
+              <span class="action-icon">🤖</span>
+              <div class="action-text">
+                <strong>ChatGPT Teams ライセンス拡張（¥2,500/人/月）<span class="tag tag-high">最優先</span></strong>
+                <span>EC広報・営業事務・企画技術の各担当者に配布。現在の1ライセンスを最低5〜8人に。月¥12,500〜¥20,000の追加で組織全体のAI活用が変わる。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">📝</span>
+              <div class="action-text">
+                <strong>SAWADA MARCHE / ADAWAS：商品説明文・SNS投稿の AI量産化<span class="tag tag-high">最優先</span></strong>
+                <span>ChatGPT + 既存のvisumo・Shopify環境を使い、商品説明文・Instagram投稿・LINE配信文を今の3〜5倍のスピードで制作。広告費ゼロで認知拡大。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">📊</span>
+              <div class="action-text">
+                <strong>KLAVIYO 自動化シナリオ構築（既存ツールの活用）<span class="tag tag-high">優先</span></strong>
+                <span>購入後フォロー・休眠顧客掘り起こし・カゴ落ち回収の3シナリオをAI文章で整備。月¥4,650で使えるのに活用できていない。即ROI。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">💬</span>
+              <div class="action-text">
+                <strong>LINE公式アカウント リッチメニュー + AI回答テンプレート整備<span class="tag tag-mid">推奨</span></strong>
+                <span>SAWADA MARCHEのLINE（¥32,500/月）はまだ手動対応が多いはず。FAQ自動返信を整備するだけでCS時間が大幅削減。</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase phase-2">
+        <div class="phase-header">
+          <span class="phase-badge">Phase 2</span>
+          <span class="phase-title">3〜6ヶ月：業務統合・データ活用（月¥10〜20万の追加投資）</span>
+        </div>
+        <div class="phase-content">
+          <ul class="action-list">
+            <li>
+              <span class="action-icon">🔗</span>
+              <div class="action-text">
+                <strong>OBIC7 ↔ Shopify データ連携<span class="tag tag-high">重要度:高</span></strong>
+                <span>受注データの二重入力を解消。API連携またはMake/Zapierによる自動転記。月2〜3時間分の手作業を完全自動化。OBIC7のAPIドキュメントを入手して調査開始を推奨。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">📦</span>
+              <div class="action-text">
+                <strong>助ネコ（¥18,000/月）の機能をフル活用<span class="tag tag-mid">すぐできる</span></strong>
+                <span>すでに契約しているのに一部機能しか使えていない可能性が高い。受注取込み・自動返信・CSV出力の自動化を再設定。費用ゼロで改善できる。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">📈</span>
+              <div class="action-text">
+                <strong>Shopify + Google Analytics4 統合ダッシュボード<span class="tag tag-mid">推奨</span></strong>
+                <span>Looker Studio（無料）でSAWADA MARCHEとADAWASの売上・CVR・LTVを一元可視化。属人的な報告作業を廃止し、データドリブンな意思決定へ。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">🎨</span>
+              <div class="action-text">
+                <strong>sawada itto：AIデジタルカタログ × 提案書自動生成<span class="tag tag-high">成果インパクト大</span></strong>
+                <span>粗利25.2%・広告費ゼロのこのブランドに、AIによる提案資料自動生成を導入。営業1名が週1回手動で作っていた提案書を、30分→5分に短縮。</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase phase-3">
+        <div class="phase-header">
+          <span class="phase-badge">Phase 3</span>
+          <span class="phase-title">6〜12ヶ月：高度化・組織変革</span>
+        </div>
+        <div class="phase-content">
+          <ul class="action-list">
+            <li>
+              <span class="action-icon">🧠</span>
+              <div class="action-text">
+                <strong>需要予測AI：在庫最適化で資金繰り改善<span class="tag tag-high">財務インパクト大</span></strong>
+                <span>借入¥9.2億・月返済¥1,500万の現状では、在庫過多は即キャッシュフロー悪化。過去OBIC7データ+季節性を学習させた需要予測モデルで適正在庫を維持。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">📄</span>
+              <div class="action-text">
+                <strong>経理・総務のドキュメント処理AI化<span class="tag tag-mid">中長期</span></strong>
+                <span>請求書・発注書の自動読み取り（AI-OCR）、OBIC7への自動仕訳。経理部門のデスクワーク削減はレイテック依存ではなく、DocuWorks/freee連携で内製可能。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">🏭</span>
+              <div class="action-text">
+                <strong>生産管理AIアシスタント（生産スケジュール最適化）<span class="tag tag-low">長期目標</span></strong>
+                <span>OEM受託は納期・品質・原価の三角トレードオフ。AIによる生産スケジューリング支援で、人的ミスと残業を削減。TDB信用スコア改善への間接貢献も期待。</span>
+              </div>
+            </li>
+            <li>
+              <span class="action-icon">👑</span>
+              <div class="action-text">
+                <strong>「AI推進室」設立<span class="tag tag-high">全社展開の核心</span></strong>
+                <span>全社AIリテラシー向上・ツール評価・外部ベンダー窓口を一手に担う組織を作る。属人的な改善で終わらせず、会社全体のDX推進力として制度化する。</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase phase-4">
+        <div class="phase-header">
+          <span class="phase-badge">Phase 4</span>
+          <span class="phase-title">1年〜：2028年売上¥50億・利益率5%へのAI貢献</span>
+        </div>
+        <div class="phase-content">
+          <table>
+            <thead>
+              <tr><th>施策</th><th>KPI貢献</th><th>必要投資感</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>EC売上3倍化（AI広告×コンテンツ×CRM）</td><td>売上+¥50〜70M</td><td>中</td></tr>
+              <tr><td>sawada itto デジタル営業強化</td><td>粗利+2〜3pt向上</td><td>低</td></tr>
+              <tr><td>在庫最適化（需要予測）</td><td>運転資金¥100M改善</td><td>中</td></tr>
+              <tr><td>全社デスクワーク25%削減（Raytech or 内製）</td><td>人件費効率+¥20M相当</td><td>高</td></tr>
+              <tr><td>B2B受発注ポータル化（SAWADA YARN）</td><td>営業事務コスト50%削減</td><td>中</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 4: Tool Recommendations -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>部門別 AIツール活用提案</h2>
+    </div>
+
+    <div class="card">
+      <h3>🛒 EC・広報部門（最優先：SAWADA MARCHE / ADAWAS）</h3>
+      <table>
+        <thead>
+          <tr><th>課題</th><th>推奨ツール</th><th>月額目安</th><th>期待効果</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>商品説明文・LP文章作成</td>
+            <td>ChatGPT Teams + プロンプトテンプレート</td>
+            <td>¥2,500〜5,000/人</td>
+            <td>制作時間70%削減</td>
+          </tr>
+          <tr>
+            <td>SNS（Instagram/X）投稿生成</td>
+            <td>ChatGPT + Canva AI</td>
+            <td>既存費用内</td>
+            <td>投稿頻度3倍</td>
+          </tr>
+          <tr>
+            <td>メールマーケティング</td>
+            <td>KLAVIYO（既存）のAIシナリオ活用</td>
+            <td>現行費用のまま</td>
+            <td>LTV向上・復購率改善</td>
+          </tr>
+          <tr>
+            <td>カスタマーサポート</td>
+            <td>Shopify Inbox + FAQ自動返信</td>
+            <td>無料〜¥5,000</td>
+            <td>CS対応時間50%削減</td>
+          </tr>
+          <tr>
+            <td>商品画像（補助的生成）</td>
+            <td>Adobe Firefly / DALL-E 3</td>
+            <td>¥3,000〜5,000</td>
+            <td>バナー・LP素材の内製化</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📞 営業部門（原糸営業・OEM営業・sawada itto）</h3>
+      <table>
+        <thead>
+          <tr><th>課題</th><th>推奨ツール</th><th>月額目安</th><th>期待効果</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>提案書・見積書作成</td>
+            <td>ChatGPT + Notion AI テンプレート</td>
+            <td>¥3,000〜5,000</td>
+            <td>作業時間60%削減</td>
+          </tr>
+          <tr>
+            <td>商談記録・議事録</td>
+            <td>Otter.ai / Notta（日本語対応AI文字起こし）</td>
+            <td>¥2,000〜3,000/人</td>
+            <td>商談後の入力工数ほぼゼロ</td>
+          </tr>
+          <tr>
+            <td>顧客フォローメール</td>
+            <td>ChatGPT + メールテンプレートDB</td>
+            <td>既存費用内</td>
+            <td>フォロー品質の標準化</td>
+          </tr>
+          <tr>
+            <td>市場・トレンド調査</td>
+            <td>Perplexity Pro（AI検索）</td>
+            <td>¥2,500/人</td>
+            <td>調査時間70%削減</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📑 経理・総務・人事部門（内製化最優先）</h3>
+      <table>
+        <thead>
+          <tr><th>課題</th><th>推奨ツール</th><th>月額目安</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>請求書・発注書の読み取り</td>
+            <td>AI-OCR（invox / バクラク）</td>
+            <td>¥10,000〜30,000</td>
+            <td>インボイス制度対応にも活用</td>
+          </tr>
+          <tr>
+            <td>社内規程・マニュアル検索</td>
+            <td>Notion AI / ChatGPT（社内DB化）</td>
+            <td>¥3,000〜5,000</td>
+            <td>問い合わせ対応工数削減</td>
+          </tr>
+          <tr>
+            <td>採用・面接サポート</td>
+            <td>ChatGPT（求人文・面接設問生成）</td>
+            <td>既存費用内</td>
+            <td>採用コスト削減</td>
+          </tr>
+          <tr>
+            <td>勤怠・給与計算</td>
+            <td>マネーフォワード HR（既存確認）</td>
+            <td>—</td>
+            <td>まず現行ツールの自動化フルに使う</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 5: Investment Summary -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>投資サマリー：レイテック vs 自社推進の比較</h2>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-option option-raytech">
+        <div class="option-title">🏢 レイテックに全面依存した場合</div>
+        <div class="option-cost" style="color:#dc3545">¥12〜12.6M/年</div>
+        <div class="option-cost-note">（¥400K初期 + ¥880K×12ヶ月）</div>
+        <table style="font-size:13px;margin-top:12px;">
+          <tr><td>メリット</td><td>専門チームが仕切る。現場負担が低い</td></tr>
+          <tr><td>デメリット</td><td>内製力が育たない。費用が永続するリスク</td></tr>
+          <tr><td>ROI回収見込み</td><td>12〜18ヶ月（条件次第）</td></tr>
+          <tr><td>一進さんの主体性</td><td>△ 外部依存になりやすい</td></tr>
+        </table>
+      </div>
+      <div class="compare-option option-self">
+        <div class="option-title">💪 自社主導 + レイテック限定活用</div>
+        <div class="option-cost" style="color:#1d4ed8">¥2.4〜4.8M/年</div>
+        <div class="option-cost-note">（Phase1〜2の自社投資分。レイテック初月¥40万含む）</div>
+        <table style="font-size:13px;margin-top:12px;">
+          <tr><td>メリット</td><td>内製力が育つ。コスト1/3以下。主体性高</td></tr>
+          <tr><td>デメリット</td><td>学習コスト・推進者の時間が必要</td></tr>
+          <tr><td>ROI回収見込み</td><td>3〜6ヶ月（クイックウィン先行）</td></tr>
+          <tr><td>一進さんの主体性</td><td>◎ AI推進のリーダーシップを確立できる</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <h3>🎯 推奨シナリオ：「ハイブリッド戦略」</h3>
+      <table>
+        <thead>
+          <tr><th>タイミング</th><th>アクション</th><th>コスト</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>今週〜2週間以内</strong></td>
+            <td>ChatGPT Teams ライセンス拡張（5〜8人）を即決裁</td>
+            <td>¥12,500〜20,000/月</td>
+          </tr>
+          <tr>
+            <td><strong>今月中</strong></td>
+            <td>レイテック初月パイロット契約（¥40万）を承認</td>
+            <td>¥400,000（1回）</td>
+          </tr>
+          <tr>
+            <td><strong>1ヶ月後</strong></td>
+            <td>チェックリスト結果 + パイロット評価を基に継続可否を判断</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>来月〜</strong></td>
+            <td>KLAVIYO自動化・LINE施策・助ネコ最適化をEC担当者と自走</td>
+            <td>現行費用内</td>
+          </tr>
+          <tr>
+            <td><strong>3〜6ヶ月以内</strong></td>
+            <td>OBIC7↔Shopify連携の技術調査・PoC開始</td>
+            <td>¥100,000〜300,000（調査費）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 6: Business Succession Perspective -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <h2>AI推進体制の構築：社内リーダーシップについて</h2>
+    </div>
+
+    <div class="card">
+      <h3>🏆 推進開始6ヶ月で作る「実績3点セット」</h3>
+      <ul class="action-list">
+        <li>
+          <span class="action-icon">①</span>
+          <div class="action-text">
+            <strong>ECの売上・利益率の改善数値（データで見える成果）</strong>
+            <span>SAWADA MARCHEのLTV向上・KLAVIYO自動化による復購率改善を数字で示す。「AIで○○万円増収」という具体的な成果が最大の武器。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-icon">②</span>
+          <div class="action-text">
+            <strong>sawada itto の営業効率化（現場評価を得る）</strong>
+            <span>主力ブランドで成果を出す。AI提案書で商談数が増えた、担当者の残業が減ったという現場からの評価が信頼を作る。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-icon">③</span>
+          <div class="action-text">
+            <strong>全社AI推進の「仕組み」を作る（継続性の担保）</strong>
+            <span>自分が退席しても回る仕組み（プロンプト集・ツール選定基準・社内勉強会）を整備する。「属人的な仕事」ではなく「会社の財産」にする。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>⚡ レイテックとの付き合い方：「使われる側」にならないために</h3>
+      <p style="margin-bottom:12px;font-size:14px;">レイテックのコンサルが澤田に入ってくると、彼らが「改善の主役」になりがち。<br>以下の姿勢で社内側が主体的に関わることで、「DX推進のオーナー」としての存在感を確立できる：</p>
+      <ul style="padding-left:20px;font-size:14px;line-height:2.2;">
+        <li>📋 チェックリストの回収・集計に主体的に関わる（データオーナーになる）</li>
+        <li>🔍 レイテックの提案に対して「OBIC7との整合性」を毎回確認する</li>
+        <li>💡 レイテックが提案する前に「この施策は自社でできないか？」を検討する習慣をつける</li>
+        <li>📊 改善効果のKPIを自分で設計・測定する（外部任せにしない）</li>
+        <li>🎓 レイテックから学んだ手法を社内に展開する「内製化の加速役」になる</li>
+      </ul>
+    </div>
+
+    <div class="alert alert-success">
+      <span class="alert-icon">🌟</span>
+      <div class="alert-content">
+        <strong>最終的なビジョン</strong>
+        2028年の売上¥50億・利益率5%という目標は、コスト削減だけでは到達できない。
+        AI活用によるEC売上拡大・sawada ittoのデジタル営業強化・在庫最適化によるキャッシュフロー改善が三位一体で必要。
+        社内に「AI活用の設計者」を育て、全社で推進する体制を作ることが2028年目標達成への最短経路。
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 7: Next Actions -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <h2>すぐやること：今週〜来週のネクストアクション</h2>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>優先度</th>
+            <th>アクション</th>
+            <th>担当</th>
+            <th>期限</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-high">最高</span></td>
+            <td>レイテック業務効率化チェックリストを各部門に配布・回収</td>
+            <td>担当者主導</td>
+            <td>今週中</td>
+            <td>本日送付済み。各部署長へのリマインドを</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-high">最高</span></td>
+            <td>ChatGPT Teamsライセンス追加の社内稟議起案</td>
+            <td>担当者</td>
+            <td>今週中</td>
+            <td>¥12,500〜20,000/月。ROI試算を添付</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-high">高</span></td>
+            <td>レイテック初月パイロット（¥40万）の決裁を取る</td>
+            <td>澤田誠さんへ提案</td>
+            <td>来週</td>
+            <td>本レポートを添付して説明</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-mid">中</span></td>
+            <td>KLAVIYO自動化シナリオの設計（EC担当者と）</td>
+            <td>EC担当 + 担当者</td>
+            <td>2週間以内</td>
+            <td>購入後フォロー・カゴ落ちから着手</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-mid">中</span></td>
+            <td>助ネコ現行設定の見直し・自動化フル活用</td>
+            <td>営業事務部門</td>
+            <td>今月中</td>
+            <td>費用ゼロで改善できる余地あり</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-mid">中</span></td>
+            <td>OBIC7のAPI仕様・外部連携可否の確認（ベンダーへ問い合わせ）</td>
+            <td>担当者</td>
+            <td>今月中</td>
+            <td>Shopify連携の実現可能性を探る</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-low">低</span></td>
+            <td>sawada itto 用AIカタログ・提案書テンプレートのプロトタイプ作成</td>
+            <td>担当者</td>
+            <td>1ヶ月以内</td>
+            <td>ChatGPT + 既存PDFから試作</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="card" style="background:linear-gradient(135deg,#f8fafc,#f0f4ff);border-color:#c7d2fe;">
+    <h3 style="color:#4338ca;">📌 このレポートの使い方</h3>
+    <p style="font-size:14px;margin-top:8px;line-height:1.8;">
+      このレポートは、澤田一進さんが<strong>澤田誠さん（父）との経営会議</strong>および<strong>レイテックソリューションズとの打ち合わせ</strong>に持ち込む資料として設計されています。<br><br>
+      <strong>レイテック初回ミーティングでの活用ポイント：</strong>
+    </p>
+    <ul style="font-size:14px;padding-left:20px;margin-top:8px;line-height:2;">
+      <li>「OBIC7との具体的な連携方式を教えてください」→ 汎用提案かどうかを見極める質問</li>
+      <li>「22.6%削減の根拠を澤田の部門別にシミュレーションしてください」→ 具体性の確認</li>
+      <li>「内製化完了の想定タイムラインと、その後の月額費用はどうなりますか？」→ 出口戦略の確認</li>
+    </ul>
+    <p style="font-size:13px;color:var(--muted);margin-top:12px;">作成: AI Park（澤田一進さん用） · 機密 · 2026年3月23日</p>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <strong>澤田株式会社 AI導入コンサルティングレポート v1.0</strong><br>
+  作成: 澤田一進 × AI Park | 2026年3月23日 | 機密書類 — 社外秘
+</div>
+
+</body>
+</html>

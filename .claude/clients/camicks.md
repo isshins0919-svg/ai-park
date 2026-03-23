@@ -4,6 +4,7 @@
 
 ## データフォルダ
 - `/Users/ca01224/Desktop/Camicks読み込み用(Claude code)/` — PDF12件格納（商品情報・アンケート・競合・試験データ等）
+- `新marusawa_logo.png` — 最新ロゴ画像（画像生成時はこちらを使う）
 
 ## 基本情報
 - **ブランド**: Camicks（キャミックス）
