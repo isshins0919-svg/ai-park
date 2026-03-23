@@ -1,6 +1,7 @@
 # 記事LP Park ver.3.0 — 戦略翻訳型 × ベクトル品質ゲート × hookVector × KV哲学フィルター × PDFレポート
 
 strategy.json + Concept Park 完了前提。3つの魂 — **パラダイムシフトの教科書そのもの × キラーFVコピー × 別の仮説**。DPro KV哲学フィルター × ベクトル品質ゲート × Gemini 3 Pro Image × PDFマーケティングインテリジェンスレポート。
+このスキルはultrathinkを使用して読者の心理を深く読み解く。hookVectorの選定とコピーの最終判断に拡張思考を自動発動する。
 
 `/記事LP-park` で起動。
 

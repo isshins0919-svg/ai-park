@@ -1,0 +1,202 @@
+{
+  "title": "Short Ad v7.0: mauri MANUKA HONEY — 実素材 × デスマス調連続トーク",
+  "version": "7.0",
+  "slug": "mauri",
+  "strategy": "本物が守る / 60代女性×準顕在層 / 常識否定・恐怖・共感の3仮説",
+  "dnaElements": {
+    "talkStyle": "デスマス調話し言葉。全シーンが1本の連続トーク。",
+    "connectors": ["実はですね", "なんですよ", "しかも", "さらに", "これだけではないんです！"],
+    "bridgePattern": "「これだけではないんです！」",
+    "ctaPattern": "「〜だけでもチェックしてみてください」",
+    "offerRatio": "S09〜S12でOFFER系4シーン（約27%）"
+  },
+  "settings": {
+    "aspectRatio": "9:16",
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "totalDuration": 30.0,
+    "voice": {
+      "name": "ほしVer3.0",
+      "referenceId": "54fa0418415a4103885ec909023b0285",
+      "speed": 1.2
+    },
+    "assetBase": "/Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー"
+  },
+  "hooks": {
+    "A": {
+      "type": "常識否定型",
+      "narration": "マヌカハニー、味で選んでいませんか？",
+      "overlayText": "マヌカハニー\n味で選んでない？",
+      "asset": "ベネフィット（人）素材/5f73ced6-2992-4501-a4e1-f536be69ee72.webp",
+      "assetType": "image"
+    },
+    "B": {
+      "type": "恐怖訴求型",
+      "narration": "あなたのマヌカハニー、本当にMGO263+の実力がありますか？",
+      "overlayText": "そのマヌカハニー\nMGO本当にある？",
+      "asset": "実証素材／権威/a5f5c027-c50d-4c3e-8c33-06e8220cb8ff.webp",
+      "assetType": "image"
+    },
+    "C": {
+      "type": "共感型",
+      "narration": "毎日摂っているのに、なんとなく守られている感じがしない。",
+      "overlayText": "毎日摂っているのに\n守られてる感じがしない",
+      "asset": "ベネフィット（人）素材/6a9eb76b-4076-4f1c-9664-835d1647d860.mp4",
+      "assetType": "video"
+    }
+  },
+  "scenes": [
+    {
+      "id": "scene_01",
+      "role": "HOOK",
+      "duration": 2.0,
+      "narration": "{{HOOK_NARRATION}}",
+      "overlayText": "{{HOOK_OVERLAY}}",
+      "asset": "{{HOOK_ASSET}}",
+      "assetType": "{{HOOK_ASSET_TYPE}}"
+    },
+    {
+      "id": "scene_02",
+      "role": "PAIN",
+      "duration": 2.0,
+      "narration": "運動、野菜、サプリ。いろんなことしているのに、なんとなく不安ですよね。",
+      "overlayText": "運動・野菜・サプリ\nそれでも不安",
+      "asset": "既存否定/00b32e9d-7ad3-45d1-82cc-e5060b8a80c7.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_03",
+      "role": "PIVOT",
+      "duration": 1.5,
+      "narration": "実はですね。マヌカハニーの選び方、間違えているかもしれないんです。",
+      "overlayText": "選び方が\n間違ってた",
+      "asset": "既存否定/a3638ecd-c15f-4743-a721-dcb4d3972828.mp4",
+      "assetType": "video"
+    },
+    {
+      "id": "scene_04",
+      "role": "MECHANISM_HOW",
+      "duration": 2.0,
+      "narration": "市販のマヌカハニーは、表示のMGO値と実測値が全然違う商品が多いんですよ。",
+      "overlayText": "表示値≠実測値\nが多い",
+      "asset": "実証素材／権威/4fdd6241-d677-46fd-a339-2226c49a9ce0.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_05",
+      "role": "BRAND",
+      "duration": 2.0,
+      "narration": "そこで出会ったのが、mauriというニュージーランド直送のマヌカハニーなんですが。",
+      "overlayText": "mauri\nNZ直送",
+      "asset": "商品素材/b1443b9c-7b18-47eb-95ba-9560c2865067.mp4",
+      "assetType": "video"
+    },
+    {
+      "id": "scene_06",
+      "role": "MECHANISM_WHAT",
+      "duration": 2.0,
+      "narration": "MGO実測値345、農薬不検出。政府認定ラボの証明書つきなんです。",
+      "overlayText": "MGO実測345\n農薬不検出証明書つき",
+      "asset": "実証素材／権威/668cbf62-c4ba-4fcb-8312-6599fe56b2d7.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_07",
+      "role": "BENEFIT",
+      "duration": 2.0,
+      "narration": "毎朝1杯で、本物が静かに体を守ってくれます。",
+      "overlayText": "毎朝1杯\n本物が守る",
+      "asset": "ベネフィット（人）素材/4f9976a4-61f5-4462-be1c-3e4a685f36c4.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_08",
+      "role": "PROOF_NUMBER",
+      "duration": 2.0,
+      "narration": "現役薬剤師さんも毎日食べているほど、信頼されているマヌカハニーです。",
+      "overlayText": "現役薬剤師も\n毎日食べる",
+      "asset": "実証素材／権威/a5f5c027-c50d-4c3e-8c33-06e8220cb8ff.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_09",
+      "role": "OFFER_PRICE",
+      "duration": 2.0,
+      "narration": "しかも今だけ、通常7,200円が初回2,980円で試せるんですよ。",
+      "overlayText": "通常7,200円→\n初回2,980円",
+      "asset": "オファー/375b3966-c144-4cc7-81b7-25e4b7f03909.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_10",
+      "role": "OFFER",
+      "duration": 2.0,
+      "narration": "さらに定期縛りなし。合わなければいつでも解約できます。",
+      "overlayText": "定期縛りなし\nいつでも解約OK",
+      "asset": "オファー/36bb130d-4969-48a7-aa75-ce00420c692d.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_11",
+      "role": "BRIDGE",
+      "duration": 1.0,
+      "narration": "これだけではないんです！",
+      "overlayText": "さらに！",
+      "asset": "商品素材/dfdd45dd-4446-4dc3-b7ee-7e8d1999c14e.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_12",
+      "role": "OFFER_BARRIER",
+      "duration": 2.0,
+      "narration": "NZ産の木製スプーンも同梱で、届いたその日から始められます。",
+      "overlayText": "木製スプーン同梱\n届いた日から",
+      "asset": "商品素材/dfdd45dd-4446-4dc3-b7ee-7e8d1999c14e.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_13",
+      "role": "URGENCY",
+      "duration": 2.0,
+      "narration": "NZ直輸入のため在庫に限りがあります。欠品になると次の入荷まで2〜3ヶ月待ちになりますので。",
+      "overlayText": "在庫限り\n欠品→2〜3ヶ月待ち",
+      "asset": "実証素材／権威/4fdd6241-d677-46fd-a339-2226c49a9ce0.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_14",
+      "role": "CTA_ACTION",
+      "duration": 2.5,
+      "narration": "まずは概要欄のリンクから、本物かどうかだけでもチェックしてみてください。",
+      "overlayText": "概要欄から\nチェック↓",
+      "asset": "ベネフィット（人）素材/5f73ced6-2992-4501-a4e1-f536be69ee72.webp",
+      "assetType": "image"
+    },
+    {
+      "id": "scene_15",
+      "role": "CTA_FINAL",
+      "duration": 3.0,
+      "narration": "",
+      "overlayText": "mauri MANUKA HONEY\n↓概要欄からチェック↓",
+      "asset": "商品素材/dfdd45dd-4446-4dc3-b7ee-7e8d1999c14e.webp",
+      "assetType": "image"
+    }
+  ],
+  "flowCheck": {
+    "S01→S02": "ハニー選び方？→運動・野菜・サプリ（同じ不安軸）",
+    "S02→S03": "不安ですよね→実はですね（転換）",
+    "S03→S04": "間違いかも→表示値と実測値が違う（具体化）",
+    "S04→S05": "多いんですよ→そこで出会ったのが（解決提示）",
+    "S05→S06": "なんですが→MGO実測値（商品詳細）",
+    "S06→S07": "証明書つきなんです→毎朝1杯で（ベネフィット）",
+    "S07→S08": "体を守ってくれます→現役薬剤師も（権威強化）",
+    "S08→S09": "マヌカハニーです→しかも今だけ（オファー加速）",
+    "S09→S10": "試せるんですよ→さらに定期縛りなし（追加価値）",
+    "S10→S11": "解約できます→これだけではないんです（ブリッジ）",
+    "S11→S12": "これだけではないんです！→木製スプーン同梱（追加価値）",
+    "S12→S13": "始められます→在庫に限りが（緊急性）",
+    "S13→S14": "2〜3ヶ月待ちになりますので→まずは概要欄（CTA）",
+    "S14→S15": "チェックしてみてください→テロップCTA（締め）"
+  }
+}

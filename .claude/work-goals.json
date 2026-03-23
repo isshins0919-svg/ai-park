@@ -23,28 +23,28 @@
       "id": 3,
       "name": "記事LP → 記事1本作成",
       "goal": "記事LPアップデート後に記事を1本作成する",
-      "status": "active",
+      "status": "completed",
       "priority": "high",
       "created_at": "2026-03-23",
-      "notes": "10:30-12:30のブロック活用"
+      "notes": "2026-03-23完了！"
     },
     {
       "id": 4,
       "name": "AI動画作成（Sora活用）",
       "goal": "Soraを使って動画作成まで進める",
-      "status": "active",
+      "status": "completed",
       "priority": "medium",
       "created_at": "2026-03-23",
-      "notes": ""
+      "notes": "2026-03-23完了！"
     },
     {
       "id": 5,
       "name": "Claude codeエージェント活用イメージ整理",
       "goal": "AIエージェントの活用イメージを鮮明にして説明できる状態にする",
-      "status": "active",
+      "status": "completed",
       "priority": "medium",
       "created_at": "2026-03-23",
-      "notes": "claude合宿（18-21時）で使えるかも"
+      "notes": "2026-03-23完了！"
     }
   ]
 }
