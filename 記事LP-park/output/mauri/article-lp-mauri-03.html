@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>続けているのに、なんとなく守られている感じがしない。その理由、わかりますか？ | mauri MANUKA HONEY</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
+    background:#FDF8EF;color:#2C2C2C;
+    max-width:480px;margin:0 auto;padding-bottom:80px;
+  }
+  img{width:100%;display:block}
+  a{text-decoration:none;color:inherit}
+
+  /* フローティングCTA */
+  .floating-cta{
+    position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+    width:100%;max-width:480px;
+    background:rgba(45,80,22,.97);padding:10px 16px;z-index:999;
+    box-shadow:0 -2px 12px rgba(0,0,0,.2);
+  }
+  .floating-cta a{
+    display:block;background:#D4A017;color:#fff;
+    font-size:1rem;font-weight:700;text-align:center;
+    padding:13px 8px;border-radius:8px;
+    box-shadow:0 3px 8px rgba(212,160,23,.3);
+  }
+  .floating-cta .sub{font-size:.7rem;color:rgba(255,255,255,.8);text-align:center;margin-top:5px}
+
+  /* ヘッダー */
+  .site-header{
+    background:#1a3009;padding:10px 16px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .site-header .brand{color:#D4A017;font-size:.85rem;font-weight:700}
+  .site-header .tag{color:#fff;font-size:.7rem;background:rgba(255,255,255,.15);padding:3px 8px;border-radius:20px}
+
+  /* FV */
+  .fv-section{background:#0d1f06}
+  .fv-tabs{display:flex;background:#0d1f06;border-bottom:2px solid #D4A017}
+  .fv-tab{
+    flex:1;padding:10px 4px;font-size:.72rem;font-weight:600;color:#aaa;
+    background:transparent;border:none;cursor:pointer;transition:all .2s;
+  }
+  .fv-tab.active{color:#D4A017;border-bottom:2px solid #D4A017;margin-bottom:-2px}
+  .fv-panel{display:none;position:relative}
+  .fv-panel.active{display:block}
+  .fv-panel img{width:100%}
+  .fv-overlay{
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.65) 55%,transparent 100%);
+    padding:28px 18px 20px;
+  }
+  .fv-badge-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+  .fv-badge{background:#D4A017;color:#fff;font-size:.63rem;font-weight:700;padding:3px 8px;border-radius:20px}
+  .fv-badge.green{background:#2D5016}
+  .fv-main-copy{color:#fff;font-size:1.12rem;font-weight:700;line-height:1.6;margin-bottom:8px;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+  .fv-sub-copy{color:#F5D77A;font-size:.78rem;line-height:1.55;margin-bottom:14px}
+  .fv-cta-btn{
+    display:block;background:#D4A017;color:#fff;
+    font-size:.95rem;font-weight:700;text-align:center;
+    padding:13px;border-radius:8px;box-shadow:0 3px 10px rgba(212,160,23,.4);
+  }
+  .fv-cta-sub{color:rgba(255,255,255,.7);font-size:.68rem;text-align:center;margin-top:6px}
+  .fv-indicator{text-align:center;color:#888;font-size:.7rem;padding:8px;background:#0d1f06}
+
+  /* SP Bar */
+  .sp-bar{display:flex;background:#2D5016;padding:10px 0}
+  .sp-item{
+    flex:1;text-align:center;color:#fff;font-size:.67rem;line-height:1.4;
+    border-right:1px solid rgba(255,255,255,.2);padding:0 4px;
+  }
+  .sp-item:last-child{border-right:none}
+  .sp-num{display:block;font-size:1rem;font-weight:700;color:#D4A017}
+  .pr-notice{background:#f0ebe0;text-align:center;font-size:.65rem;color:#888;padding:6px}
+
+  /* 記事 */
+  .article-wrap{padding:0 16px}
+  .section-block{margin:28px 0}
+  h2.section-title{font-size:1.05rem;font-weight:700;color:#1a3009;margin-bottom:12px;line-height:1.55}
+  h3.sub-title{font-size:.9rem;font-weight:700;color:#2C2C2C;margin:16px 0 8px;line-height:1.5}
+  p.body-text{font-size:.88rem;line-height:1.85;color:#3C3C3C;margin-bottom:12px}
+  .full-img{margin:0 -16px;width:calc(100% + 32px)}
+
+  .lead-box{background:#F0F8F0;border-left:4px solid #2D5016;padding:14px 16px;margin:16px 0;border-radius:0 8px 8px 0}
+  .lead-box p{font-size:.88rem;line-height:1.8;color:#1a3009;font-weight:600}
+
+  .empathy-box{
+    background:#fff;border:1px solid #E8E0D0;border-radius:12px;
+    padding:16px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.06);
+  }
+  .empathy-box .q-icon{font-size:1.4rem;margin-bottom:8px}
+  .empathy-box p{font-size:.88rem;line-height:1.8;color:#3C3C3C}
+
+  /* ③対策共感 */
+  .taisaku-box{
+    background:#F5F0E8;border-radius:12px;padding:16px;margin:16px 0;
+    border:1px solid #D8C8A0;
+  }
+  .taisaku-box .t-title{font-size:.88rem;font-weight:700;color:#6B4C1E;margin-bottom:10px}
+  .taisaku-item{
+    display:flex;align-items:center;gap:10px;
+    background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:8px;
+    border:1px solid #E8E0D0;font-size:.85rem;color:#3C3C3C;
+  }
+  .taisaku-item:last-child{margin-bottom:0}
+  .taisaku-item .t-icon{font-size:1.2rem;flex-shrink:0}
+  .taisaku-check{
+    background:#FFF3CD;border:1px solid #F0C040;border-radius:8px;
+    padding:12px 14px;margin-top:12px;font-size:.85rem;color:#6c5610;line-height:1.7;
+  }
+
+  /* ④未来想像 */
+  .future-box{
+    background:linear-gradient(135deg,#F0F8F0,#FDF8EF);
+    border-radius:12px;padding:18px;margin:20px 0;
+    border:2px solid #2D5016;
+  }
+  .future-box .f-label{
+    font-size:.7rem;font-weight:700;color:#2D5016;letter-spacing:.12em;
+    text-transform:uppercase;margin-bottom:8px;
+  }
+  .future-box .f-title{font-size:1rem;font-weight:700;color:#1a3009;line-height:1.5;margin-bottom:8px}
+  .future-box p{font-size:.85rem;line-height:1.8;color:#3C3C3C}
+
+  /* ⑥ベネフィット視覚 */
+  .benefit-visual{
+    border-radius:12px;overflow:hidden;margin:16px 0;
+    position:relative;
+  }
+  .benefit-caption{
+    background:#1a3009;padding:12px 16px;
+    font-size:.85rem;color:#fff;line-height:1.6;
+    text-align:center;
+  }
+  .benefit-caption strong{color:#D4A017}
+
+  /* ⑦口コミプレースホルダー */
+  .review-placeholder{
+    background:#F8F4FF;border:2px dashed #B09FCC;border-radius:12px;
+    padding:18px;margin:16px 0;text-align:center;
+  }
+  .review-placeholder .rp-label{
+    font-size:.7rem;font-weight:700;color:#7B68AA;letter-spacing:.1em;
+    margin-bottom:8px;
+  }
+  .review-placeholder .rp-title{font-size:.92rem;color:#555;font-weight:600;margin-bottom:6px}
+  .review-placeholder p{font-size:.78rem;color:#888;line-height:1.7}
+  .review-placeholder .rp-stars{color:#D4A017;font-size:1rem;margin-bottom:6px}
+
+  /* ⑧新事実 */
+  .shinjijitsu-box{
+    background:#FFF5F0;border:2px solid #E06030;border-radius:12px;
+    padding:18px;margin:20px 0;
+  }
+  .shinjijitsu-box .sj-label{
+    font-size:.7rem;font-weight:700;color:#E06030;letter-spacing:.1em;margin-bottom:8px;
+  }
+  .shinjijitsu-box .sj-title{font-size:1rem;font-weight:700;color:#C04020;line-height:1.5;margin-bottom:10px}
+  .shinjijitsu-box p{font-size:.85rem;line-height:1.8;color:#5C3020}
+
+  ul.x-list{list-style:none;padding:0;margin:12px 0}
+  ul.x-list li{font-size:.88rem;line-height:1.7;color:#3C3C3C;padding:6px 0 6px 24px;position:relative;border-bottom:1px solid #f0ebe0}
+  ul.x-list li:last-child{border-bottom:none}
+  ul.x-list li::before{content:"×";color:#c0392b;font-weight:700;position:absolute;left:0}
+
+  ul.check-list{list-style:none;padding:0;margin:12px 0}
+  ul.check-list li{font-size:.88rem;line-height:1.7;color:#3C3C3C;padding:6px 0 6px 24px;position:relative;border-bottom:1px solid #f0ebe0}
+  ul.check-list li:last-child{border-bottom:none}
+  ul.check-list li::before{content:"✓";color:#2D5016;font-weight:700;position:absolute;left:0}
+
+  /* ⑩新パラダイム */
+  .paradigm-shift{
+    background:linear-gradient(135deg,#D4A017,#E8C04A);
+    border-radius:12px;padding:20px 18px;margin:24px 0;text-align:center;
+  }
+  .paradigm-shift .ps-label{font-size:.72rem;font-weight:700;color:#2D5016;letter-spacing:.1em;margin-bottom:10px}
+  .paradigm-shift .ps-title{font-size:1.1rem;font-weight:700;color:#1a3009;line-height:1.5;margin-bottom:10px}
+  .paradigm-shift p{font-size:.85rem;line-height:1.7;color:#3a2800}
+
+  /* ⑪商品導入 */
+  .product-intro{
+    background:linear-gradient(135deg,#1a3009,#2D5016);
+    border-radius:12px;padding:20px 18px;margin:24px 0;text-align:center;
+  }
+  .product-intro .pi-label{font-size:.7rem;font-weight:700;color:#D4A017;letter-spacing:.12em;margin-bottom:8px}
+  .product-intro .pi-title{font-size:1.1rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:10px}
+  .product-intro p{font-size:.85rem;line-height:1.7;color:rgba(255,255,255,.85)}
+
+  /* cert-block */
+  .cert-block{border:1px solid #D4A017;border-radius:8px;padding:14px;margin:8px 0;background:#FFFEF8}
+  .cert-issuer{font-size:.68rem;color:#888;margin-bottom:5px;display:flex;align-items:center;gap:4px}
+  .cert-issuer .cert-tag{background:#2D5016;color:#fff;font-size:.6rem;font-weight:700;padding:1px 5px;border-radius:2px}
+  .cert-data{font-size:.85rem;font-weight:700;color:#1a3009;line-height:1.8;margin:4px 0}
+  .cert-id{font-size:.65rem;color:#aaa;font-family:monospace;margin-top:4px}
+
+  /* ⑭権威 */
+  .authority-box{background:#fff;border:2px solid #D4A017;border-radius:12px;padding:18px;margin:20px 0}
+  .authority-box .auth-title{font-size:.9rem;font-weight:700;color:#D4A017;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .authority-box .auth-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f0ebe0}
+  .authority-box .auth-item:last-child{border-bottom:none}
+  .authority-box .auth-num{background:#D4A017;color:#fff;font-size:.7rem;font-weight:700;min-width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .authority-box .auth-text{font-size:.85rem;line-height:1.6;color:#3C3C3C}
+
+  /* ⑮使ってみた */
+  .tsukattemita{
+    background:#fff;border-radius:12px;padding:18px;margin:20px 0;
+    border:1px solid #E8E0D0;box-shadow:0 2px 10px rgba(0,0,0,.07);
+  }
+  .tsukattemita .tt-title{font-size:.9rem;font-weight:700;color:#1a3009;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .tsukattemita .tt-scene{
+    font-size:.88rem;line-height:1.9;color:#3C3C3C;
+    border-left:3px solid #D4A017;padding-left:12px;margin:10px 0;
+  }
+  .tsukattemita .tt-change{
+    background:#F0F8F0;border-radius:8px;padding:12px;
+    font-size:.85rem;line-height:1.75;color:#1a3009;margin-top:12px;
+  }
+
+  /* ⑯ベネフィット再 */
+  .benefit-after{
+    background:linear-gradient(135deg,#F0F8F0,#FDF8EF);
+    border-radius:12px;padding:16px;margin:16px 0;
+    border:1px solid #2D5016;text-align:center;
+  }
+  .benefit-after .ba-title{font-size:.9rem;font-weight:700;color:#1a3009;margin-bottom:8px}
+  .benefit-after p{font-size:.85rem;line-height:1.8;color:#3C3C3C}
+
+  /* ステップ */
+  .step-card{display:flex;align-items:flex-start;gap:14px;background:#fff;border-radius:10px;padding:14px;margin:10px 0;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+  .step-num{background:#2D5016;color:#fff;font-size:.9rem;font-weight:700;min-width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .step-content .step-title{font-size:.9rem;font-weight:700;margin-bottom:4px;color:#2C2C2C}
+  .step-content p{font-size:.82rem;line-height:1.6;color:#666}
+
+  /* ⑱オファー */
+  .urgency-box{
+    background:#FFF0E8;border:2px solid #E05020;border-radius:12px;
+    padding:16px 18px;margin:20px 0;
+  }
+  .urgency-box .ug-title{font-size:.95rem;font-weight:700;color:#C03010;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .urgency-box .ug-item{
+    display:flex;align-items:flex-start;gap:10px;
+    font-size:.85rem;line-height:1.7;color:#7B3010;padding:6px 0;
+    border-bottom:1px solid rgba(224,80,32,.15);
+  }
+  .urgency-box .ug-item:last-child{border-bottom:none}
+  .urgency-box .ug-icon{flex-shrink:0;font-size:1rem}
+  .urgency-count{
+    background:#C03010;color:#fff;border-radius:6px;
+    font-size:.82rem;font-weight:700;padding:3px 10px;
+    display:inline-block;margin-top:6px;
+  }
+
+  .coupon-note{
+    background:#FFFBE8;border:2px dashed #D4A017;border-radius:10px;
+    padding:14px 16px;margin:16px 0;text-align:center;
+  }
+  .coupon-note .cn-title{font-size:.88rem;font-weight:700;color:#8B5E00;margin-bottom:6px}
+  .coupon-note p{font-size:.82rem;line-height:1.7;color:#6c5610}
+
+  /* CTA */
+  .cta-section{background:linear-gradient(135deg,#1a3009,#2D5016);border-radius:12px;padding:22px 18px;margin:24px 0;text-align:center}
+  .cta-section .cta-headline{font-size:1rem;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.5}
+  .cta-section .cta-price{font-size:1.4rem;font-weight:700;color:#D4A017;margin-bottom:4px}
+  .cta-section .cta-price .regular{font-size:.8rem;color:#aaa;text-decoration:line-through;margin-right:8px}
+  .cta-section .cta-note{font-size:.72rem;color:rgba(255,255,255,.75);margin-bottom:14px}
+  .cta-btn{display:block;background:#D4A017;color:#fff;font-size:1rem;font-weight:700;text-align:center;padding:15px;border-radius:10px;box-shadow:0 4px 12px rgba(212,160,23,.4);letter-spacing:.05em}
+  .cta-btn-sub{color:rgba(255,255,255,.7);font-size:.7rem;text-align:center;margin-top:8px}
+
+  /* 保証 */
+  .guarantee-box{background:#F0F8F0;border:1px solid #2D5016;border-radius:10px;padding:16px;margin:16px 0;text-align:center}
+  .guarantee-box .g-title{font-size:.9rem;font-weight:700;color:#2D5016;margin-bottom:8px}
+  .guarantee-box p{font-size:.82rem;line-height:1.7;color:#3C3C3C}
+
+  /* 生産者ストーリー */
+  .story-box{background:linear-gradient(135deg,#F5F0E8,#FDF8EF);border-radius:12px;padding:18px;margin:20px 0;border:1px solid #D4A017}
+  .story-box .story-name{font-size:.85rem;font-weight:700;color:#D4A017;margin-bottom:10px}
+  .story-box p{font-size:.88rem;line-height:1.8;color:#3C3C3C}
+
+  /* 口コミ */
+  .testimonial{background:#fff;border-radius:10px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08);border-left:3px solid #D4A017}
+  .testimonial .stars{color:#D4A017;font-size:.9rem;margin-bottom:4px}
+  .testimonial .reviewer{font-size:.75rem;color:#888;margin-bottom:8px}
+  .testimonial p{font-size:.88rem;line-height:1.7;color:#3C3C3C}
+
+  /* 動画 */
+  .video-block{border-radius:10px;overflow:hidden;margin:10px 0;background:#000}
+  .video-block video{width:100%;display:block;aspect-ratio:auto;max-height:480px;object-fit:contain}
+  .video-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+  .video-grid .video-block{margin:0}
+
+  /* フッター */
+  .article-footer{background:#1a3009;padding:20px 16px;margin-top:32px;text-align:center}
+  .article-footer p{color:rgba(255,255,255,.7);font-size:.7rem;line-height:1.8}
+  .notice-text{font-size:.7rem;color:#888;line-height:1.8;padding:16px;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- フローティングCTA -->
+<div class="floating-cta">
+  <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test">▶ 在庫残りわずか｜初回58%OFF 3,310円で試してみる</a>
+  <p class="sub">定期縛りなし・いつでも解約OK ｜ 1歳未満の乳児には与えないでください</p>
+</div>
+
+<!-- ヘッダー -->
+<header class="site-header">
+  <div class="brand">mauri MANUKA HONEY</div>
+  <div class="tag">PR・広告</div>
+</header>
+
+<!-- ① FV 3パターン -->
+<section class="fv-section">
+  <div class="fv-tabs">
+    <button class="fv-tab active" data-fv="a">A: 続かない理由</button>
+    <button class="fv-tab" data-fv="b">B: 薬剤師の習慣</button>
+    <button class="fv-tab" data-fv="c">C: 本物の違い</button>
+  </div>
+  <div id="fv-swipe" style="overflow:hidden">
+
+    <!-- A: 続けられない問題型 -->
+    <div class="fv-panel active" id="fv-a">
+      <div style="position:relative">
+        <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/5f73ced6-2992-4501-a4e1-f536be69ee72.webp" alt="mauri を続けている女性" loading="eager">
+        <div class="fv-overlay">
+          <div class="fv-badge-row">
+            <span class="fv-badge">NZ直送</span><span class="fv-badge">農薬不使用</span><span class="fv-badge">非加熱</span>
+          </div>
+          <div class="fv-main-copy">マヌカハニーを毎朝続けているのに、<br>なんとなく守られている感じがしない。<br><br>その理由、<br>わかりますか？</div>
+          <div class="fv-sub-copy">「続けたくなる本物」と「続かない偽物」。その差は、1枚の証明書にあった。</div>
+          <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="fv-cta-btn">その理由を知る → 初回58%OFFで試す</a>
+          <div class="fv-cta-sub">定期縛りなし ｜ 通常7,200円 → 2,980円+送料330円</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B: 薬剤師毎日食べる型 -->
+    <div class="fv-panel" id="fv-b">
+      <div style="position:relative">
+        <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/実証素材／権威/a5f5c027-c50d-4c3e-8c33-06e8220cb8ff.webp" alt="現役薬剤師がmauriを推薦" loading="lazy">
+        <div class="fv-overlay">
+          <div class="fv-badge-row">
+            <span class="fv-badge">現役薬剤師</span><span class="fv-badge">毎日の習慣</span>
+          </div>
+          <div class="fv-main-copy">現役薬剤師が<br>「毎日欠かさず食べる」と言う<br>マヌカハニー。<br>何が違うのか。</div>
+          <div class="fv-sub-copy">薬のプロが選ぶ基準は、「美味しさ」でも「価格」でもなかった</div>
+          <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="fv-cta-btn">薬剤師が選ぶ理由を見る → 58%OFFで試す</a>
+          <div class="fv-cta-sub">定期縛りなし ｜ 通常7,200円 → 2,980円+送料330円</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C: 本物の味が違う型 -->
+    <div class="fv-panel" id="fv-c">
+      <div style="position:relative">
+        <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/商品素材/dfdd45dd-4446-4dc3-b7ee-7e8d1999c14e.webp" alt="mauri 木製スプーンから垂れるハチミツ" loading="lazy">
+        <div class="fv-overlay">
+          <div class="fv-badge-row">
+            <span class="fv-badge green">NZから直輸入</span><span class="fv-badge">実測MGO345</span>
+          </div>
+          <div class="fv-main-copy">「続けたくなる」マヌカハニーを<br>はじめて知った。<br>毎朝1杯が、<br>楽しみになる日が来るとは。</div>
+          <div class="fv-sub-copy">本物は、続けること自体が習慣になる。そういうものだった。</div>
+          <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="fv-cta-btn">本物を58%OFFで試してみる</a>
+          <div class="fv-cta-sub">定期縛りなし ｜ 通常7,200円 → 2,980円+送料330円</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fv-indicator" id="fv-indicator">1 / 3</div>
+</section>
+
+<!-- SP Bar -->
+<div class="sp-bar">
+  <div class="sp-item"><span class="sp-num">薬剤師</span>も毎日</div>
+  <div class="sp-item"><span class="sp-num">MGO345</span>実測証明</div>
+  <div class="sp-item"><span class="sp-num">農薬</span>不検出</div>
+  <div class="sp-item"><span class="sp-num">NZ</span>直輸入</div>
+</div>
+
+<p class="pr-notice">※ この記事はPR（広告）です</p>
+
+<!-- ブランドムービー -->
+<div style="max-width:420px;margin:0 auto;padding:0 12px 8px">
+  <div class="video-block">
+    <video autoplay muted playsinline loop>
+      <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/b1da8e2a-b8ae-4eee-baed-a7b971de41ae.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<div class="article-wrap">
+
+  <!-- ② 悩みへの共感 -->
+  <div class="section-block">
+    <p class="body-text" style="margin-top:16px">
+      「健康のために、毎朝マヌカハニーを続けています」という方が増えています。
+    </p>
+    <div class="empathy-box">
+      <div class="q-icon">💭</div>
+      <p>
+        「続けているのに、いまいち実感がわかない」<br>
+        「体に入れているのに、守られている感じがしない」<br>
+        「本当にこれで合っているのかな…と不安になる」
+      </p>
+    </div>
+    <p class="body-text">
+      こんなふうに、漠然とした不安を感じながら、それでも「きっと効いているはず」と続けている方、実はとても多いです。
+    </p>
+    <p class="body-text">
+      でもこれ、マヌカハニーを続けている<strong>あなたが悪いのではありません。</strong>
+    </p>
+  </div>
+
+  <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/2b45fe91-c1a8-4fd2-b962-2a828f36f4ba.webp" alt="mauri を毎朝食べる女性" loading="lazy">
+
+  <!-- ③ 対策への共感 -->
+  <div class="section-block">
+    <h2 class="section-title">毎日続けている健康管理、こんなことしていませんか？</h2>
+    <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/既存否定/00b32e9d-7ad3-45d1-82cc-e5060b8a80c7.webp" alt="運動・野菜・サプリ" loading="lazy" style="margin:0 -16px 16px;width:calc(100% + 32px)">
+
+    <div class="taisaku-box">
+      <div class="t-title">🤔 こんな選び方や対策、していませんか？</div>
+      <div class="taisaku-item">
+        <span class="t-icon">🛒</span>
+        <span>ドラッグストアで「人気ランキング」上位を選んだ</span>
+      </div>
+      <div class="taisaku-item">
+        <span class="t-icon">💰</span>
+        <span>値段が高いから、品質も高いはずと思った</span>
+      </div>
+      <div class="taisaku-item">
+        <span class="t-icon">⭐</span>
+        <span>Amazonや楽天のレビューを見て選んだ</span>
+      </div>
+      <div class="taisaku-item">
+        <span class="t-icon">🍯</span>
+        <span>「MGO〇〇+」という数字を信じて選んだ</span>
+      </div>
+      <div class="taisaku-check">
+        実は、これらの選び方では「本物かどうか」は一切わかりません。<br>
+        続けても実感がわかない理由は、<strong>ここにあるかもしれません。</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 未来の想像 -->
+  <div class="section-block">
+    <div class="future-box">
+      <div class="f-label">✨ 知っていましたか？</div>
+      <div class="f-title">「本物」を選んだだけで、<br>毎朝1杯が「習慣の楽しみ」に変わった方がいます</div>
+      <p>
+        同じようにマヌカハニーを続けていたのに、ずっと実感がなかった。でもある選び方を変えたら、「これは違う」と感じた——そんな声が届いています。
+      </p>
+    </div>
+  </div>
+
+  <!-- 動画（ベネフィット） -->
+  <div style="margin:0 0 16px">
+    <div class="video-block">
+      <video autoplay muted playsinline loop>
+        <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/6a9eb76b-4076-4f1c-9664-835d1647d860.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <!-- ⑤ キャッチーな方法の提示 -->
+  <div class="section-block">
+    <h2 class="section-title">実は「続けたくなるマヌカハニー」と<br>「続かないマヌカハニー」の差は<br>たった1枚の書類でわかります</h2>
+    <p class="body-text">
+      専門的な知識も、何かを我慢することも必要ありません。
+    </p>
+    <p class="body-text">
+      その書類を確認するだけで、あなたが毎朝口にするものが「本物かどうか」が一瞬でわかる。そんな選び方が存在します。
+    </p>
+  </div>
+
+  <!-- ⑥ ベネフィットの視覚的提示 -->
+  <div class="benefit-visual">
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/4f9976a4-61f5-4462-be1c-3e4a685f36c4.webp" alt="mauri を家族で続けている笑顔" loading="lazy">
+    <div class="benefit-caption">
+      「本物を選んでから、毎朝の1杯が<strong>楽しみになりました</strong>」<br>
+      続けることが苦にならない。それが本物の証拠。
+    </div>
+  </div>
+
+  <!-- ⑦ 前半口コミ（プレースホルダー） -->
+  <div class="review-placeholder">
+    <div class="rp-label">📝 口コミ — 入れる予定</div>
+    <div class="rp-stars">★★★★★</div>
+    <div class="rp-title">60代女性｜〇ヶ月継続</div>
+    <p>「以前は何となく続けていましたが、mauriに変えてから続けること自体が習慣になりました。——」<br><br>※実際のユーザー口コミをここに掲載予定</p>
+  </div>
+
+  <div style="border-top:2px dashed #D4A017;margin:28px 0"></div>
+
+  <!-- ⑧ 新事実パート（既存対策の否定） -->
+  <div class="section-block">
+    <div class="shinjijitsu-box">
+      <div class="sj-label">⚠️ 新事実</div>
+      <div class="sj-title">実は、マヌカハニーを選ぶとき「味」「価格」「ランキング」は<br>本物の証明に一切なりません</div>
+      <p>
+        マヌカハニーの有効成分MGOは、ほぼ<strong>無味無臭</strong>。つまり「美味しい」かどうかは、本物の有効成分の量とは全く無関係です。
+      </p>
+    </div>
+
+    <!-- 既存否定動画 -->
+    <div style="margin:16px 0">
+      <div class="video-block">
+        <video autoplay muted playsinline loop>
+          <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/既存否定/a3638ecd-c15f-4743-a721-dcb4d3972828.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <ul class="x-list">
+      <li>美味しさ・甘さで選んだマヌカハニー</li>
+      <li>「有名ブランドだから大丈夫」と思って選んだ商品</li>
+      <li>パッケージのMGO数値だけを信じて選んだ商品</li>
+      <li>第三者機関の証明書がない商品</li>
+    </ul>
+    <p class="body-text">
+      これらの選び方では、実際にどれほどのMGOが含まれているか、農薬が入っていないかを確かめる術がありません。
+    </p>
+  </div>
+
+  <!-- ⑨ 真の原因の教育 -->
+  <div class="section-block">
+    <h2 class="section-title">「守られている感じがしない」本当の原因</h2>
+    <p class="body-text">
+      市販されているマヌカハニーの中には、<strong>パッケージのMGO表示値と実際の含有量が乖離している商品</strong>があります。
+    </p>
+    <p class="body-text">
+      表示値はメーカーの自己申告であることも多く、<strong>独立した第三者機関による「実測証明書（CoA）」が存在しない商品</strong>も少なくありません。
+    </p>
+    <div class="lead-box">
+      <p>
+        いくら毎日続けても、有効成分が表示通りに含まれていないなら——「守られている感じがしない」のは当然です。<br>
+        あなたは悪くない。選び方を変えるだけでいい。
+      </p>
+    </div>
+  </div>
+
+  <!-- ⑩ 新パラダイムの教育 -->
+  <div class="section-block">
+    <div class="paradigm-shift">
+      <div class="ps-label">── 本物の見分け方 ──</div>
+      <div class="ps-title">「証明書」があるかどうか。<br>それだけを確認すればいい。</div>
+      <p>
+        美味しさでも、価格でも、ブランドでもない。<br>
+        第三者機関が実測した証明書がある——それが本物の唯一の条件です。
+      </p>
+    </div>
+    <ul class="check-list">
+      <li>NZ政府認定ラボが実測したMGO値の証明書（CoA）がある</li>
+      <li>農薬（グリホサート）の不検出証明がある</li>
+      <li>生産者・農場・バッチ番号で追跡できる</li>
+      <li>非加熱・100%天然・添加物不使用</li>
+    </ul>
+  </div>
+
+  <!-- ⑪ 商品導入（伏線回収） -->
+  <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/商品素材/dfdd45dd-4446-4dc3-b7ee-7e8d1999c14e.webp" alt="mauri MANUKA HONEY 木製スプーン" loading="lazy">
+
+  <div class="product-intro">
+    <div class="pi-label">── 伏線回収 ──</div>
+    <div class="pi-title">「続けたくなる本物」<br>それが、mauri MANUKA HONEY です</div>
+    <p>
+      NZ政府認定ラボが実測したMGO345の証明書あり。農薬不検出。非加熱。生産者直送。<br>
+      薬剤師も毎日続ける理由が、ここにあります。
+    </p>
+  </div>
+
+  <!-- ⑫ 実証パート -->
+  <div class="section-block">
+    <h2 class="section-title">mauri が示せる<br>「本物の3つの証明書」</h2>
+
+    <p class="body-text" style="font-size:.78rem;color:#888;margin-bottom:8px">▼ 実際の第三者機関発行書類から引用</p>
+
+    <div class="cert-block">
+      <div class="cert-issuer">
+        <span class="cert-tag">NZ政府公式</span> New Zealand Ministry for Primary Industries
+      </div>
+      <div class="cert-data">
+        「本製品はNZ法に基づく登録施設で製造され、人の食用として<br>規制要件を満たすことを証明する」
+      </div>
+      <div class="cert-id">証明書番号 NZL2025/BEENZ 1/25108 ｜ 発行 2025年10月8日 ｜ 署名：S R PALMER, BVSC（NZ政府公式獣医師）</div>
+    </div>
+
+    <div class="cert-block">
+      <div class="cert-issuer">
+        <span class="cert-tag">NZ政府承認ラボ</span> ALS Food &amp; Environmental NZ（MPI認定）
+      </div>
+      <div class="cert-data">
+        グリホサート &lt;0.010 mg/kg ／ グルホシネート &lt;0.010 mg/kg<br>
+        アミノメチルホスホン酸 &lt;0.010 mg/kg — 3種すべて検出限界以下
+      </div>
+      <div class="cert-id">Report ID: 25-16033 ｜ Sample: 25BZ25 ｜ 分析完了 2025年6月6日</div>
+    </div>
+
+    <div class="cert-block">
+      <div class="cert-issuer">
+        <span class="cert-tag">CoA実測証明</span> BeeNZ Ltd — NZ MPI認定ラボ実測
+      </div>
+      <div class="cert-data">
+        実測MGO値：<strong>345 mg/kg</strong>（表示263+を大幅に上回る実測値）<br>
+        バッチ番号25BZ25で生産から消費者まで追跡可能
+      </div>
+      <div class="cert-id">CoA ｜ Managing Director: Julie Hayes ｜ 製造2025年9月23日</div>
+    </div>
+
+    <div class="cert-block">
+      <div class="cert-issuer">
+        <span class="cert-tag">日本第三者機関</span> 一般財団法人 日本食品分析センター（JFRL）
+      </div>
+      <div class="cert-data">品質試験 実施済み ― 第25109059001-0101号</div>
+      <div class="cert-id">依頼者：株式会社ヨミテ ｜ 試験完了 2025年12月25日</div>
+    </div>
+  </div>
+
+  <!-- ⑬ ベネフィット（実証直後） -->
+  <div class="benefit-after">
+    <div class="ba-title">だから——<br>毎朝1杯が「楽しみ」になる</div>
+    <p>
+      証明書があるから安心して続けられる。<br>
+      安心して続けられるから、習慣になる。<br>
+      習慣になるから、体の内側が変わっていく。
+    </p>
+  </div>
+
+  <!-- 動画（実証後ベネフィット） -->
+  <div class="video-grid">
+    <div class="video-block">
+      <video autoplay muted playsinline loop>
+        <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/実証素材／権威/08317cbb-514c-4cab-96aa-111d2c592b71.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-block">
+      <video autoplay muted playsinline loop>
+        <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/0b5cdd3a-9dd7-4fa7-8621-3c60fb776c1f.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <!-- ⑭ 権威・信頼パート -->
+  <div class="section-block">
+    <h2 class="section-title">「これは違う」と感じる人が<br>続出している理由</h2>
+
+    <!-- 薬剤師画像（最強の権威） -->
+    <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/実証素材／権威/a5f5c027-c50d-4c3e-8c33-06e8220cb8ff.webp" alt="現役薬剤師がmauriを毎日の習慣に" loading="lazy">
+
+    <div class="authority-box" style="margin-top:16px">
+      <div class="auth-title">🏆 mauriを支える権威</div>
+      <div class="auth-item">
+        <div class="auth-num">1</div>
+        <div class="auth-text"><strong>現役薬剤師も毎日の習慣に</strong><br>薬のプロが選ぶのは、証明書がある本物だから。「毎日食べるのが日課です」</div>
+      </div>
+      <div class="auth-item">
+        <div class="auth-num">2</div>
+        <div class="auth-text"><strong>NZ国内3部門受賞</strong><br>NZのマヌカハニー業界で品質・製法・持続可能性の3部門を受賞。</div>
+      </div>
+      <div class="auth-item">
+        <div class="auth-num">3</div>
+        <div class="auth-text"><strong>11種の国際認証取得済み</strong><br>モノフローラル認証をはじめ、世界基準の品質認証を取得。</div>
+      </div>
+    </div>
+
+    <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/実証素材／権威/ce2bb070-098a-4822-9ab9-0c557b225b52.webp" alt="NZから直輸入の養蜂場" loading="lazy" style="margin:12px 0">
+    <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/実証素材／権威/8b8ab3b0-f6da-43ed-820c-c863bbbc8275.webp" alt="NZ 3部門受賞" loading="lazy" style="margin:8px 0">
+    <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/実証素材／権威/668cbf62-c4ba-4fcb-8312-6599fe56b2d7.webp" alt="11種の国際認証" loading="lazy" style="margin:8px 0">
+
+    <!-- 生産者ストーリー -->
+    <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/実証素材／権威/4fdd6241-d677-46fd-a339-2226c49a9ce0.webp" alt="NZ養蜂家Julie Hayes" loading="lazy" style="margin:12px 0">
+    <div class="story-box">
+      <div class="story-name">👩‍🌾 生産者：Julie Hayes（BeeNZ Ltd Managing Director）</div>
+      <p>「証明書のないものは出荷しません。消費者に信じてもらえるものだけを届けたい——それがBeeNZの原則です。NZの法律で農薬散布が禁じられたKatikati地方の大自然の中で、化学物質を一切使わずに育てたマヌカ花だけを使っています。」</p>
+    </div>
+  </div>
+
+  <!-- ⑮ 使ってみたパート -->
+  <div class="section-block">
+    <h2 class="section-title">実際に試してみたら……<br>「これが本物か」と思った</h2>
+
+    <div class="tsukattemita">
+      <div class="tt-title">📦 届いたときの話</div>
+
+      <div class="tt-scene">
+        黒くてずっしりとしたボトルが届いた。開けた瞬間、ふわっと香り立つ独特の深み。普通のはちみつとは全然違う、ほんのりとした薬草の香り。
+      </div>
+
+      <p class="body-text">木製のスプーンですくうと、ゆっくりと糸を引くように垂れてくる琥珀色。口に含むと最初は甘く、そのあとから独特のコクが広がる。「良薬口に苦し」という感覚に近い、しっかりとした存在感。</p>
+
+      <div class="tt-scene">
+        美味しいかどうかより、「体に入れていい」という安心感が先に来た。証明書を確認してから食べているから、続けることへの迷いがない。
+      </div>
+
+      <div class="tt-change">
+        <strong>続けて気づいたこと</strong><br>
+        毎朝起き抜けにスプーン1杯。それだけ。特別なことは何もしていないのに、季節の変わり目も「あ、今年はなんか違うかも」という感覚がある。体の内側が、静かに守られているような感じ。
+      </div>
+    </div>
+
+    <!-- 使用シーン画像・動画 -->
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/2b45fe91-c1a8-4fd2-b962-2a828f36f4ba.webp" alt="mauri をスプーンで食べる" loading="lazy" style="border-radius:12px;margin:12px 0">
+
+    <div class="video-grid">
+      <div class="video-block">
+        <video autoplay muted playsinline loop>
+          <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/美味しい素材/43ea98ca-c51d-482d-ba80-eaaeaa0bf2d5.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-block">
+        <video autoplay muted playsinline loop>
+          <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/美味しい素材/41cd63c8-833c-4b4b-b9f7-bfd25c6e07c8.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- 3ステップ -->
+    <h3 class="sub-title" style="margin-top:20px">続け方はシンプル。たった3ステップ。</h3>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">朝、起き抜けに</div>
+        <p>食前にスプーン1杯（約7g）。空腹時に摂ることで内側からのケアに。混ぜずにそのまま舐めるだけ。</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">同梱の木製スプーンで</div>
+        <p>初回は同梱のオリジナル木製スプーン付き。金属スプーンは使わずに。</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">毎日続けるだけ</div>
+        <p>1回7gで200gが約28日分。40日周期の定期便で切らさず続けられる。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑯ ベネフィット再（使ってみた後） -->
+  <img class="full-img" src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/1a2045e2-5ccf-4d14-a346-10bb9461d8be.webp" alt="mauri を続けて元気に過ごす女性と赤ちゃん" loading="lazy">
+
+  <div class="benefit-after" style="margin-top:8px">
+    <div class="ba-title">毎朝1杯の小さな習慣が<br>「守られている感覚」に変わる</div>
+    <p>
+      続けることが苦にならない。<br>
+      むしろ、毎朝1杯が1日のスタートになる。<br>
+      それが「本物」を選ぶということ。
+    </p>
+  </div>
+
+  <!-- 動画（ベネフィット再） -->
+  <div class="video-grid" style="margin-top:12px">
+    <div class="video-block">
+      <video autoplay muted playsinline loop>
+        <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/758cd94d-2f11-441d-9e42-df43c7ad6142.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-block">
+      <video autoplay muted playsinline loop>
+        <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/23d8d5f8-f317-4c60-a7f2-b66a88311588.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <!-- 中間CTA -->
+  <div class="cta-section" style="margin-top:24px">
+    <div class="cta-headline">薬剤師も続ける「本物」を<br>まず1ヶ月試してみる</div>
+    <div class="cta-price"><span class="regular">7,200円</span>2,980円<span style="font-size:.8rem">+送料330円</span></div>
+    <div class="cta-note">初回58%OFF ｜ 定期縛りなし ｜ いつでも解約OK</div>
+    <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="cta-btn">今すぐ58%OFFで始める →</a>
+    <div class="cta-btn-sub">1歳未満の乳児には与えないでください</div>
+  </div>
+
+  <!-- ⑰ 安心口コミ（多様な人 × プレースホルダー） -->
+  <div class="section-block">
+    <h2 class="section-title">続けている方々の声</h2>
+
+    <!-- プレースホルダー × 5件 -->
+    <div class="review-placeholder">
+      <div class="rp-label">📝 口コミ 1 — 入れる予定</div>
+      <div class="rp-stars">★★★★★</div>
+      <div class="rp-title">60代女性・〇〇県在住・〇ヶ月継続</div>
+      <p>「——」<br>※実際のユーザー口コミをここに掲載予定</p>
+    </div>
+
+    <div class="review-placeholder">
+      <div class="rp-label">📝 口コミ 2 — 入れる予定</div>
+      <div class="rp-stars">★★★★★</div>
+      <div class="rp-title">70代女性・〇〇県在住・〇ヶ月継続</div>
+      <p>「——」<br>※実際のユーザー口コミをここに掲載予定</p>
+    </div>
+
+    <div class="review-placeholder">
+      <div class="rp-label">📝 口コミ 3 — 入れる予定</div>
+      <div class="rp-stars">★★★★★</div>
+      <div class="rp-title">65歳女性・〇〇県在住・〇ヶ月継続</div>
+      <p>「——」<br>※実際のユーザー口コミをここに掲載予定</p>
+    </div>
+
+    <div class="review-placeholder">
+      <div class="rp-label">📝 口コミ 4 — 入れる予定</div>
+      <div class="rp-stars">★★★★☆</div>
+      <div class="rp-title">58歳女性・〇〇県在住・〇ヶ月継続</div>
+      <p>「——」<br>※実際のユーザー口コミをここに掲載予定</p>
+    </div>
+
+    <div class="review-placeholder">
+      <div class="rp-label">📝 口コミ 5 — 入れる予定</div>
+      <div class="rp-stars">★★★★★</div>
+      <div class="rp-title">72歳女性・〇〇県在住・〇ヶ月継続</div>
+      <p>「——」<br>※実際のユーザー口コミをここに掲載予定</p>
+    </div>
+
+    <!-- 動画口コミ -->
+    <h3 class="sub-title" style="margin-top:20px">動画でも確認できます</h3>
+    <div class="video-grid">
+      <div class="video-block">
+        <video autoplay muted playsinline loop>
+          <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/717e73c7-5df2-4627-9cf0-56eab3edd6c9.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-block">
+        <video autoplay muted playsinline loop>
+          <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/7f6e7243-1384-4f96-b3b6-acb39303dda7.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-block">
+        <video autoplay muted playsinline loop>
+          <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/a65a6a93-8dee-402e-b118-c67c5e8c9829.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-block">
+        <video autoplay muted playsinline loop>
+          <source src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/ベネフィット（人）素材/c11677fc-5269-446f-ae64-06915d44f3fb.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑱ オファーパート -->
+  <div class="section-block">
+    <h2 class="section-title">⚠️ 在庫残りわずかです</h2>
+
+    <!-- 緊急性：在庫 -->
+    <div class="urgency-box">
+      <div class="ug-title">🚨 今すぐ確認してほしいこと</div>
+      <div class="ug-item">
+        <span class="ug-icon">🌏</span>
+        <div>
+          <strong>NZからの直輸入のため、在庫が限られています。</strong><br>
+          海外から空輸・船便で届けているため、1回に入荷できる数に上限があります。現在の在庫が終わり次第、次の入荷まで<strong>2〜3ヶ月待ち</strong>になる場合があります。
+        </div>
+      </div>
+      <div class="ug-item">
+        <span class="ug-icon">🎟️</span>
+        <div>
+          <strong>この58%OFFクーポンは、この公式ページ限定です。</strong><br>
+          楽天・Amazon等の通販サイトでは通常価格（7,200円）での販売のみ。このページから申し込んだ方だけが、初回2,980円で試せます。
+          <span class="urgency-count">このページを閉じるとクーポンが消える可能性があります</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- クーポン -->
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/オファー/5695373e-f5f8-46b3-a517-32c4801716fd.webp" alt="Web発売記念 スペシャルクーポン 58%OFF" loading="lazy" style="border-radius:10px;margin:0 0 12px">
+
+    <!-- 58%OFFバナー -->
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/オファー/375b3966-c144-4cc7-81b7-25e4b7f03909.webp" alt="本日58%OFFで購入可能" loading="lazy" style="border-radius:10px;margin:0 0 12px">
+
+    <!-- 1日149円 -->
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/オファー/f3337bb2-9821-4956-af9c-6bc167506f3e.webp" alt="1日たった149円" loading="lazy" style="border-radius:10px;margin:0 0 12px">
+
+    <!-- 公式クーポンの補足 -->
+    <div class="coupon-note">
+      <div class="cn-title">💡 この価格で買えるのは、今このページだけ</div>
+      <p>
+        楽天市場：通常7,200円（送料無料）<br>
+        Amazon：通常価格のみ<br>
+        <strong>→ このページの定期申込：初回2,980円（58%OFF）+送料330円</strong>
+      </p>
+    </div>
+
+    <!-- 定期縛りなし -->
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/オファー/67439c8d-aee9-4690-b104-7686b58481d9.webp" alt="定期回数縛りなし" loading="lazy" style="border-radius:10px;margin:12px 0">
+
+    <!-- コンビニ後払い -->
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/オファー/823a87ca-a5e7-48b1-baab-8fd90954116c.webp" alt="コンビニ後払い クレジットカード不要" loading="lazy" style="border-radius:10px;margin:0 0 12px">
+
+    <!-- 安心バナー -->
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/オファー/36bb130d-4969-48a7-aa75-ce00420c692d.webp" alt="ご安心ください 解約簡単" loading="lazy" style="border-radius:10px;margin:0 0 16px">
+
+    <!-- 保証 -->
+    <div class="guarantee-box">
+      <div class="g-title">🔒 安心してお試しください</div>
+      <p>
+        定期コースですが、<strong>回数縛りなし</strong>。<br>
+        マイページまたはお電話で簡単に解約できます。<br>
+        わかりにくい解約手続きは一切ありません。
+      </p>
+    </div>
+  </div>
+
+  <!-- 最終CTA -->
+  <div class="cta-section">
+    <div class="cta-headline">在庫がある今、本物を試してみてください</div>
+    <div class="cta-price"><span class="regular">7,200円</span>2,980円<span style="font-size:.8rem">+送料330円</span></div>
+    <div class="cta-note">初回58%OFF ｜ 定期縛りなし ｜ いつでも解約OK ｜ コンビニ後払いOK</div>
+    <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test" class="cta-btn">在庫があるうちに58%OFFで申し込む →</a>
+    <div class="cta-btn-sub">1歳未満の乳児には与えないでください</div>
+  </div>
+
+  <!-- CTAバナー -->
+  <a href="https://shop.rmh.co.jp/lp?u=me_mauri_v2_test">
+    <img src="file:///Users/ca01224/Desktop/mauriのデータ/mauri素材フォルダー/オファー/412f58c2-9182-499b-a225-e4d1f906288a.webp" alt="今すぐお得に申し込む 2,980円" loading="lazy" style="border-radius:10px;margin:12px 0">
+  </a>
+
+</div><!-- /article-wrap -->
+
+<!-- フッター -->
+<footer class="article-footer">
+  <p>
+    mauri MANUKA HONEY ｜ 運営：株式会社ヨミテ<br>
+    〒 / 電話番号 ｜ 特定商取引法に基づく表記<br><br>
+    ※本記事はPR（広告）です<br>
+    ※本製品は食品です。疾病の診断・治療・予防を目的としたものではありません<br>
+    ※効果・効能には個人差があります<br>
+    ※1歳未満の乳児には与えないでください
+  </p>
+</footer>
+
+<p class="notice-text">
+  ※価格は税込表示です（送料別途）<br>
+  ※定期コースは2回目以降、2個セット12,640円（送料無料）でお届けします<br>
+  ※解約はマイページまたはお電話（平日9:00〜18:00）にて承ります
+</p>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.fv-tab');
+  var panels = document.querySelectorAll('.fv-panel');
+  var indicator = document.getElementById('fv-indicator');
+  var current = 0;
+
+  function switchTo(idx){
+    current = idx;
+    tabs.forEach(function(t){ t.classList.remove('active'); });
+    panels.forEach(function(p){ p.classList.remove('active'); });
+    tabs[idx].classList.add('active');
+    panels[idx].classList.add('active');
+    if(indicator) indicator.textContent = (idx+1) + ' / ' + panels.length;
+  }
+
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){ switchTo(i); });
+  });
+
+  var container = document.getElementById('fv-swipe');
+  var startX = 0;
+  if(container){
+    container.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+    container.addEventListener('touchend', function(e){
+      var diff = startX - e.changedTouches[0].clientX;
+      if(Math.abs(diff) > 50){
+        if(diff > 0 && current < panels.length - 1) switchTo(current + 1);
+        if(diff < 0 && current > 0) switchTo(current - 1);
+      }
+    }, {passive:true});
+  }
+})();
+</script>
+</body>
+</html>

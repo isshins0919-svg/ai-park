@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mauri LP 構成診断 × 次回LP素材設計</title>
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #161a22;
+    --surface2: #1e2330;
+    --border: #2a3040;
+    --text: #e8ecf4;
+    --muted: #7a8499;
+    --dim: #3a4255;
+    --ok: #4fc97e;
+    --ok-bg: #0e1f16;
+    --ok-border: #1d4d30;
+    --weak: #f7c44f;
+    --weak-bg: #1e1a0a;
+    --weak-border: #4a3d10;
+    --miss: #f7604f;
+    --miss-bg: #1e0e0a;
+    --miss-border: #4a2010;
+    --ai: #4f8ef7;
+    --ai-bg: #0a1225;
+    --ai-border: #1a3060;
+    --human: #c67ef7;
+    --human-bg: #16082a;
+    --human-border: #3a1560;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 40px 20px 80px;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* COVER */
+  .cover {
+    text-align: center;
+    padding: 50px 20px 44px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .cover .eyebrow { font-size: 11px; letter-spacing: 2px; color: var(--ai); text-transform: uppercase; margin-bottom: 14px; }
+  .cover h1 { font-size: 26px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; }
+  .cover h1 span { color: var(--weak); }
+  .cover .sub { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+  .chips { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .chip { font-size: 11px; padding: 3px 12px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
+  .chip.ok { border-color: var(--ok); color: var(--ok); }
+  .chip.weak { border-color: var(--weak); color: var(--weak); }
+  .chip.miss { border-color: var(--miss); color: var(--miss); }
+
+  /* SECTION */
+  .section { margin-bottom: 52px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .section-num { width: 32px; height: 32px; background: var(--ai); color: #fff; font-size: 14px; font-weight: 700; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-title { font-size: 18px; font-weight: 700; }
+  .section-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* SUMMARY BAR */
+  .summary-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .summary-card {
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .summary-card.ok { background: var(--ok-bg); border: 1px solid var(--ok-border); }
+  .summary-card.weak { background: var(--weak-bg); border: 1px solid var(--weak-border); }
+  .summary-card.miss { background: var(--miss-bg); border: 1px solid var(--miss-border); }
+  .summary-card .big { font-size: 32px; font-weight: 800; }
+  .summary-card.ok .big { color: var(--ok); }
+  .summary-card.weak .big { color: var(--weak); }
+  .summary-card.miss .big { color: var(--miss); }
+  .summary-card .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* FLOW TABLE */
+  .flow-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 24px; }
+  .flow-table thead tr { background: var(--surface2); }
+  .flow-table thead th { padding: 10px 12px; font-weight: 700; font-size: 11px; color: var(--muted); text-align: left; border-bottom: 1px solid var(--border); }
+  .flow-table tbody tr { border-bottom: 1px solid var(--border); }
+  .flow-table tbody tr:hover { background: rgba(255,255,255,.02); }
+  .flow-table td { padding: 11px 12px; vertical-align: top; }
+  .flow-table td:first-child { white-space: nowrap; }
+  .phase-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+  }
+  .phase-front { background: #0f1e30; color: var(--ai); border: 1px solid var(--ai-border); }
+  .phase-edu { background: #1e1a0a; color: var(--weak); border: 1px solid var(--weak-border); }
+  .phase-back { background: #0e1f16; color: var(--ok); border: 1px solid var(--ok-border); }
+  .step-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .step-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .badge.ok { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok-border); }
+  .badge.weak { background: var(--weak-bg); color: var(--weak); border: 1px solid var(--weak-border); }
+  .badge.miss { background: var(--miss-bg); color: var(--miss); border: 1px solid var(--miss-border); }
+
+  .diag-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .diag-text strong { color: var(--text); }
+  .diag-text .highlight { color: var(--miss); font-weight: 700; }
+  .diag-text .ok-text { color: var(--ok); }
+
+  /* BIG FINDING */
+  .finding-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .finding-item {
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .finding-item.critical { background: var(--miss-bg); border: 1px solid var(--miss-border); border-left: 4px solid var(--miss); }
+  .finding-item.important { background: var(--weak-bg); border: 1px solid var(--weak-border); border-left: 4px solid var(--weak); }
+  .finding-item .f-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .finding-item .f-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .finding-item.critical .f-title { color: var(--miss); }
+  .finding-item.important .f-title { color: var(--weak); }
+  .finding-item .f-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .finding-item .f-body strong { color: var(--text); }
+
+  /* CONTENT DESIGN TABLE */
+  .content-section { margin-bottom: 48px; }
+  .content-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 14px 18px;
+    border-radius: 10px;
+  }
+  .content-header.ai-header { background: var(--ai-bg); border: 1px solid var(--ai-border); }
+  .content-header.human-header { background: var(--human-bg); border: 1px solid var(--human-border); }
+  .content-header .ch-icon { font-size: 20px; }
+  .content-header .ch-title { font-size: 16px; font-weight: 700; }
+  .content-header.ai-header .ch-title { color: var(--ai); }
+  .content-header.human-header .ch-title { color: var(--human); }
+  .content-header .ch-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .content-items { display: flex; flex-direction: column; gap: 10px; }
+  .content-item {
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .content-item.ai { background: var(--ai-bg); border: 1px solid var(--ai-border); }
+  .content-item.human { background: var(--human-bg); border: 1px solid var(--human-border); }
+  .content-item .ci-num {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .content-item.ai .ci-num { background: var(--ai); color: #fff; }
+  .content-item.human .ci-num { background: var(--human); color: #fff; }
+  .content-item .ci-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .content-item.ai .ci-title { color: var(--ai); }
+  .content-item.human .ci-title { color: var(--human); }
+  .content-item .ci-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .content-item .ci-desc strong { color: var(--text); }
+  .content-item .ci-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-top: 6px;
+    font-weight: 700;
+  }
+  .content-item.ai .ci-tag { background: #0d1e3a; color: var(--ai); border: 1px solid var(--ai-border); }
+  .content-item.human .ci-tag { background: #1e0a35; color: var(--human); border: 1px solid var(--human-border); }
+
+  /* LP3 STRUCTURE PREVIEW */
+  .lp3-structure { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
+  .lp3-row {
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+  .lp3-row.keep { background: var(--ok-bg); border: 1px solid var(--ok-border); }
+  .lp3-row.new { background: var(--miss-bg); border: 1px solid var(--miss-border); }
+  .lp3-row.upgrade { background: var(--weak-bg); border: 1px solid var(--weak-border); }
+  .lp3-row .row-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .lp3-row.keep .row-badge { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok-border); }
+  .lp3-row.new .row-badge { background: var(--miss-bg); color: var(--miss); border: 1px solid var(--miss-border); }
+  .lp3-row.upgrade .row-badge { background: var(--weak-bg); color: var(--weak); border: 1px solid var(--weak-border); }
+  .lp3-row .row-text { color: var(--text); font-weight: 600; flex: 1; }
+  .lp3-row .row-note { font-size: 11px; color: var(--muted); }
+
+  /* QUESTION BOX */
+  .question-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    margin-top: 24px;
+  }
+  .question-box .qb-title { font-size: 14px; font-weight: 700; color: var(--weak); margin-bottom: 16px; }
+  .question-list { display: flex; flex-direction: column; gap: 10px; }
+  .question-list li {
+    list-style: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .question-list li .q-num {
+    background: var(--weak);
+    color: #1a1200;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 20px; height: 20px;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .question-list li strong { color: var(--text); }
+
+  .footer { text-align: center; padding-top: 40px; border-top: 1px solid var(--border); margin-top: 60px; font-size: 11px; color: var(--dim); }
+
+  @media (max-width: 600px) {
+    .summary-bar { grid-template-columns: 1fr; }
+    .flow-table thead { display: none; }
+    .flow-table td { display: block; padding: 4px 12px; }
+    .flow-table tr { display: block; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="eyebrow">Article LP Diagnosis Report</div>
+    <h1>mauri LP1・LP2<br><span>構成診断レポート</span></h1>
+    <div class="sub">澤田一進の記事LP哲学（18ステップ）対照 × LP3設計への素材整理 — 2026-03-23</div>
+    <div class="chips">
+      <span class="chip ok">✅ OK（充足）</span>
+      <span class="chip weak">△ 弱い（要強化）</span>
+      <span class="chip miss">❌ 不足（ほぼない）</span>
+    </div>
+  </div>
+
+
+  <!-- 1. サマリー -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">診断サマリー（LP1 基準）</div>
+        <div class="section-sub">18ステップ対照スコア</div>
+      </div>
+    </div>
+
+    <div class="summary-bar">
+      <div class="summary-card ok">
+        <div class="big">7</div>
+        <div class="label">✅ OK — 充足</div>
+      </div>
+      <div class="summary-card weak">
+        <div class="big">5</div>
+        <div class="label">△ 弱い — 要強化</div>
+      </div>
+      <div class="summary-card miss">
+        <div class="big">6</div>
+        <div class="label">❌ 不足 — ほぼない</div>
+      </div>
+    </div>
+
+    <div class="finding-list">
+      <div class="finding-item critical">
+        <div class="f-icon">🚨</div>
+        <div>
+          <div class="f-title">最大の問題：ベネフィットがほぼない</div>
+          <div class="f-body">哲学の核心「<strong>ベネフィットは何度でも入れる。心を動かすにはベネフィットが何より重要</strong>」に対して、現在のLPには「毎朝続けたらこんな未来が待っている」という感情的な未来描写がほぼゼロ。情報（証明・権威・認証）は豊富だが、感情（未来像・希望・ビジュアル）が圧倒的に不足している。読者が「確信」ではなく「理解」で終わっている。</div>
+        </div>
+      </div>
+      <div class="finding-item critical">
+        <div class="f-icon">🚨</div>
+        <div>
+          <div class="f-title">前半の温度感が上がりきっていない</div>
+          <div class="f-body">「<strong>対策への共感（③）」「未来の想像（④）」「キャッチーな方法の提示（⑤）</strong>」がほぼない。FVの次にいきなり教育に入っている。読者の温度感が上がる前に「本物の3基準」を説明しているため、信頼より「ふーん」で終わる可能性が高い。</div>
+        </div>
+      </div>
+      <div class="finding-item important">
+        <div class="f-icon">⚠️</div>
+        <div>
+          <div class="f-title">一期通感が弱い</div>
+          <div class="f-body">FVのフック「<strong>選び方が間違っているかもしれない</strong>」が、最終的な商品導入「だからmauriなんです」に伏線として回収されていない。FVのコピーが最後で回収される「これだったのか！」という瞬間が設計されていない。</div>
+        </div>
+      </div>
+      <div class="finding-item important">
+        <div class="f-icon">⚠️</div>
+        <div>
+          <div class="f-title">使ってみたパートがほぼない</div>
+          <div class="f-body">「<strong>自分が使ったらこんな感じ</strong>」のイメージ喚起が欠如。届いた時のワクワク、木製スプーンで舐める感触、ほんのり甘い独特の味、毎朝のルーティンに組み込んだ時の体験描写。これがあると「試してみたい」気持ちが高まる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 2. 18ステップ詳細診断 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">18ステップ 詳細診断</div>
+        <div class="section-sub">LP1（常識否定型）を主軸に診断</div>
+      </div>
+    </div>
+
+    <table class="flow-table">
+      <thead>
+        <tr>
+          <th>ステップ</th>
+          <th>フレームワーク</th>
+          <th>LP1</th>
+          <th>LP2</th>
+          <th>問題・コメント</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 前半 -->
+        <tr>
+          <td><span class="phase-tag phase-front">前半</span><br><div class="step-name">① FV</div></td>
+          <td><div class="step-sub">パンチ力×効きそう×好奇心ギャップ</div></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td class="diag-text">3パターン搭載、タブ切替UI、LP1は「続かない理由」「本物の違い」「NZ直送」と角度を変えられている。LP2は「実測値の疑問」で恐怖訴求が刺さる可能性あり。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-front">前半</span><br><div class="step-name">② 悩み共感</div></td>
+          <td><div class="step-sub">「これは私の記事だ」と感じさせる</div></td>
+          <td><span class="badge weak">△ 弱い</span></td>
+          <td><span class="badge weak">△ 弱い</span></td>
+          <td class="diag-text">「なんとなく不安を感じたことはありませんか？」はあるが、<strong>苦しみのシーン</strong>（例：冬の朝、喉がヒリヒリして病院に行く前に諦める感覚）が描けていない。画像も「悩みを直視させる」ビジュアルになっていない。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-front">前半</span><br><div class="step-name">③ 対策共感</div></td>
+          <td><div class="step-sub">「私これやってるわ」という感覚</div></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td class="diag-text"><span class="highlight">完全に欠落。</span>「ドラッグストアで有名ブランドを選んできた」「値段が高いから大丈夫と思っていた」「口コミ評価で選んでいた」——こういった<strong>読者が実際にやっている対策を当てる</strong>パートがない。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-front">前半</span><br><div class="step-name">④ 未来の想像</div></td>
+          <td><div class="step-sub">「私みたいな人でも解決できるんだ」という希望</div></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td class="diag-text"><span class="highlight">完全に欠落。</span>温度感を上げる「同じ悩みを持つ人が解決している例を見せる」パートがない。解決した未来像（季節の変わり目も元気に過ごせている60代女性）を見せてから教育に入る設計が必要。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-front">前半</span><br><div class="step-name">⑤ キャッチーな方法提示</div></td>
+          <td><div class="step-sub">「こんな方法があるんです（商品名は出さない）」</div></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td class="diag-text">「3つの証明書で選ぶ」はあるが、それは教育パートの話。その前に「実は知っている人だけが使っているマヌカハニーの選び方がある」という<strong>知的好奇心を刺激する引っかかり</strong>が設計されていない。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-front">前半</span><br><div class="step-name">⑥ ベネフィット視覚提示</div></td>
+          <td><div class="step-sub">「こんな状態になれます」を視覚で</div></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td class="diag-text"><span class="highlight">完全に欠落。</span>「本物を選んだ人はこんな状態です」という画像・映像が前半にない。ブランドムービーはFV直後にあるが、それが「ベネフィット」として機能しているかは疑問。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-front">前半</span><br><div class="step-name">⑦ 口コミ（前半）</div></td>
+          <td><div class="step-sub">「解決の希望がある」ことを示す</div></td>
+          <td><span class="badge miss">❌ 後半のみ</span></td>
+          <td><span class="badge miss">❌ 後半のみ</span></td>
+          <td class="diag-text">口コミは後半にしか存在しない。哲学では「前半の温度感を上げる」ために前半にも成功事例を置くことを推奨。前半口コミは「希望」を与えるために使う。</td>
+        </tr>
+
+        <!-- 教育 -->
+        <tr>
+          <td><span class="phase-tag phase-edu">教育</span><br><div class="step-name">⑧ 新事実（既存否定）</div></td>
+          <td><div class="step-sub">「あなたの対策、間違っています」</div></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td class="diag-text">LP1「美味しさで選ぶのは間違い」、LP2「表示値と実測値の乖離」。どちらも読者の常識を否定できている。LP2の方がより「怖さ」が明確でインパクトあり。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-edu">教育</span><br><div class="step-name">⑨ 真の原因の教育</div></td>
+          <td><div class="step-sub">なぜ対策が間違いか（商品はまだ出さない）</div></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td class="diag-text">LP1「MGOは無味無臭だから美味しさと無関係」、LP2「証明書なき自己申告の危険性」。根本理由の説明はできている。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-edu">教育</span><br><div class="step-name">⑩ 新パラダイムの教育</div></td>
+          <td><div class="step-sub">「本当はこういう方法をやるべき」</div></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td class="diag-text">「本物の3条件で選ぶ」というパラダイムシフトが設計されている。視覚的なパラダイムシフトボックスも実装済み。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-edu">教育</span><br><div class="step-name">⑪ 商品導入（伏線回収）</div></td>
+          <td><div class="step-sub">FVキャッチ→教育→商品が全て繋がる</div></td>
+          <td><span class="badge weak">△ 弱い</span></td>
+          <td><span class="badge weak">△ 弱い</span></td>
+          <td class="diag-text">「それがmauriなんです」的な商品導入はあるが、<strong>FVの伏線が回収される感覚が薄い</strong>。LP1のFVコピー「選び方が間違っているかもしれません」→中盤教育→「だから3条件を満たすmauriを選んでください」の流れを、もっと感情的に繋げる必要がある。</td>
+        </tr>
+
+        <!-- 後半 -->
+        <tr>
+          <td><span class="phase-tag phase-back">後半</span><br><div class="step-name">⑫ 実証パート</div></td>
+          <td><div class="step-sub">「なぜこの商品があなたの悩みに効くか」のロジック</div></td>
+          <td><span class="badge weak">△ 弱い</span></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td class="diag-text">LP2はMGOバーグラフ・エビデンスボックスがあり充実。LP1はcert-blockはあるが「なぜ体に効くか」のロジック説明（MGOが体の内側に作用するメカニズム）が弱い。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-back">後半</span><br><div class="step-name">⑬ ベネフィット（実証直後）</div></td>
+          <td><div class="step-sub">実証→即ベネフィット = 最強パターン</div></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td class="diag-text"><span class="highlight">完全に欠落。</span>cert-block・エビデンスボックスの直後に「だからこんな未来が描けるんです」という未来ビジュアルがない。実証で終わっており、感情への接続が切れている。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-back">後半</span><br><div class="step-name">⑭ 権威・信頼</div></td>
+          <td><div class="step-sub">「これはマジで効く」という確信強化</div></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td class="diag-text">cert-block（NZ政府MPI、ALS NZ、JFRL）、3部門受賞、11種国際認証、Julieストーリーと権威素材は豊富。強み領域。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-back">後半</span><br><div class="step-name">⑮ 使ってみたパート</div></td>
+          <td><div class="step-sub">「自分が使ったらこんな感じ」のイメージ</div></td>
+          <td><span class="badge weak">△ 薄い</span></td>
+          <td><span class="badge weak">△ 薄い</span></td>
+          <td class="diag-text">3ステップ（起き抜けに・木製スプーンで・毎日続ける）はあるが、<strong>体験の感覚描写がない</strong>。「箱を開けた時の蜂蜜の香り」「スプーンで舐めた時のちょっと独特な甘さ」「続けた先の変化」の描写が必要。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-back">後半</span><br><div class="step-name">⑯ ベネフィット再</div></td>
+          <td><div class="step-sub">何度でも入れる。心を動かす核</div></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td><span class="badge miss">❌ ない</span></td>
+          <td class="diag-text"><span class="highlight">完全に欠落。</span>権威・使ってみた後にもベネフィット（未来ビジュアル）を差し込む設計がない。「毎年繰り返していた季節の変わり目の不調が来なかった朝の感覚」のような感情的なシーン描写が0。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-back">後半</span><br><div class="step-name">⑰ 安心口コミ（多様な人）</div></td>
+          <td><div class="step-sub">年代・地域・境遇の多様性で「自分だけじゃない」</div></td>
+          <td><span class="badge weak">△ 弱い</span></td>
+          <td><span class="badge weak">△ 弱い</span></td>
+          <td class="diag-text">口コミはあるが3件で全員「60代・65歳・62歳」と年代が偏り多様性がない。<strong>70代・80代の声、異なる地域・境遇の人物</strong>が必要。「1人だけじゃなくいろんな人が使っている」という安心感が出ていない。</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-back">後半</span><br><div class="step-name">⑱ オファー</div></td>
+          <td><div class="step-sub">「今すぐ買わないと損」+ 懸念払拭</div></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td><span class="badge ok">✅ OK</span></td>
+          <td class="diag-text">58%OFF・送料込・定期縛りなし・解約自由が明示されている。懸念払拭は最低限クリア。ただし<strong>限定感・緊急性の設計がない</strong>（「今だけ」「〇個限り」等）のは弱め。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- 3. LP3のために必要なコンテンツ設計 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">LP3のために必要なコンテンツ</div>
+        <div class="section-sub">AIが用意できるもの × 人間が用意するもの</div>
+      </div>
+    </div>
+
+    <!-- AI側 -->
+    <div class="content-section">
+      <div class="content-header ai-header">
+        <div class="ch-icon">🤖</div>
+        <div>
+          <div class="ch-title">AIが用意できるもの</div>
+          <div class="ch-sub">コピー・構成・テキストベースのコンテンツ</div>
+        </div>
+      </div>
+      <div class="content-items">
+        <div class="content-item ai">
+          <div class="ci-num">1</div>
+          <div>
+            <div class="ci-title">ベネフィット描写コピー（複数バリエーション）</div>
+            <div class="ci-desc">「毎年繰り返していた季節の変わり目の不調が、今年は来なかった。あの朝の感覚を、文章にするのは難しい。ただ、体の内側が静かに守られている感じ、とでも言えばいいのだろうか。」——このような<strong>感情を動かすベネフィット描写</strong>を複数パターン用意できる。</div>
+            <div class="ci-tag">実証後・権威後・使ってみた後 × 3箇所分</div>
+          </div>
+        </div>
+        <div class="content-item ai">
+          <div class="ci-num">2</div>
+          <div>
+            <div class="ci-title">対策共感コピー（③ パート）</div>
+            <div class="ci-desc">「ドラッグストアで一番売れているものを選んだ」「有名ブランドだから間違いないと思っていた」「楽天のレビューを参考に選んだ」——<strong>読者が実際にやっている行動を当てるコピー</strong>を設計できる。</div>
+            <div class="ci-tag">N1インタビュー6件の対策行動から抽出</div>
+          </div>
+        </div>
+        <div class="content-item ai">
+          <div class="ci-num">3</div>
+          <div>
+            <div class="ci-title">未来の想像パート（④ パート）</div>
+            <div class="ci-desc">「実はあなたと同じように、長年マヌカハニーを続けていたのに確信が持てなかった人が、ある選び方を変えただけで〇〇になった話があります」——<strong>希望を植え付ける前フリ</strong>のコピーを用意できる。</div>
+            <div class="ci-tag">口コミ素材があれば実名で使える</div>
+          </div>
+        </div>
+        <div class="content-item ai">
+          <div class="ci-num">4</div>
+          <div>
+            <div class="ci-title">一期通感の構成設計（FV伏線→商品回収）</div>
+            <div class="ci-desc">「FVで『選び方が間違っていた』と引っかかる → 中盤で『美味しさ≠本物』の教育 → 商品導入で『だから証明書で選ぶ人だけが知っている本物、それがmauri』」——<strong>全体を貫く一本の糸</strong>を設計できる。</div>
+            <div class="ci-tag">構成の骨格 + つなぎコピー</div>
+          </div>
+        </div>
+        <div class="content-item ai">
+          <div class="ci-num">5</div>
+          <div>
+            <div class="ci-title">使ってみたパートの体験描写コピー</div>
+            <div class="ci-desc">「届いた時の箱を開けた瞬間」「木製スプーンで舐めた時の、ちょっと薬草っぽい独特の甘さ」「毎朝7gを続ける小さなルーティン」——<strong>体験のリアリティ</strong>をコピーで再現できる（実体験情報があればより精度UP）。</div>
+            <div class="ci-tag">一進さんか実ユーザーの体験情報をインプットすると精度UP</div>
+          </div>
+        </div>
+        <div class="content-item ai">
+          <div class="ci-num">6</div>
+          <div>
+            <div class="ci-title">FVキャッチコピー 新案（新しい仮説）</div>
+            <div class="ci-desc">LP1「選び方」、LP2「MGO実測値」に続く、LP3の新しいフック角度のFVキャッチコピーを複数案生成できる。N1の「守られている感覚」「本物への信頼」「継続できるか」のどの動機を軸にするかを決めてから展開。</div>
+            <div class="ci-tag">一進さんが仮説の方向性を決めてからAIが展開</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 人間側 -->
+    <div class="content-section">
+      <div class="content-header human-header">
+        <div class="ch-icon">👤</div>
+        <div>
+          <div class="ch-title">人間が用意するもの（一進さんが持ってくる素材）</div>
+          <div class="ch-sub">AIでは代替できないリアルな素材・判断</div>
+        </div>
+      </div>
+      <div class="content-items">
+        <div class="content-item human">
+          <div class="ci-num">A</div>
+          <div>
+            <div class="ci-title">【最重要】ベネフィットを表す実写画像・動画</div>
+            <div class="ci-desc"><strong>「本物を続けた後の60〜70代女性の活動的なシーン」</strong>——孫と散歩、旅行先での笑顔、庭仕事を楽しんでいる等。現在の素材には「守られている感覚」「元気に生きている」を表すビジュアルがほぼない。AI生成でも代替可能だが、<strong>実写の方が信頼性が高い</strong>。</div>
+            <div class="ci-tag">優先度：最高</div>
+          </div>
+        </div>
+        <div class="content-item human">
+          <div class="ci-num">B</div>
+          <div>
+            <div class="ci-title">多様な属性の口コミ（70代・80代・異なる地域・境遇）</div>
+            <div class="ci-desc">現在は60〜65歳・女性・継続2〜3ヶ月が3件。必要なのは<strong>「宮城県在住70代女性」「80代でも続けている」「息子に勧められて始めた65歳」</strong>等の多様な人物。「自分と似た誰かが使っている」という安心感のためにいろんな属性が必要。</div>
+            <div class="ci-tag">既存ユーザーにインタビューできると最強</div>
+          </div>
+        </div>
+        <div class="content-item human">
+          <div class="ci-num">C</div>
+          <div>
+            <div class="ci-title">LP3のフック角度・仮説の方向性（人が決める）</div>
+            <div class="ci-desc">LP1「選び方の間違い」LP2「MGO証明書」に続くLP3の「仮説」を一進さんが設定する。候補は：<strong>①「続ける理由」角度（継続動機）</strong>、<strong>②「守られる感覚」角度（内側からのケア）</strong>、<strong>③「誰が作っているか」角度（Julieストーリー）</strong>。どの仮説を検証したいかの判断は人間が行う。</div>
+            <div class="ci-tag">AIが候補を出すので一進さんが選ぶ</div>
+          </div>
+        </div>
+        <div class="content-item human">
+          <div class="ci-num">D</div>
+          <div>
+            <div class="ci-title">「使ってみた」体験の実情報</div>
+            <div class="ci-desc">「届いた時の箱のデザイン」「実際の蜂蜜の色・テクスチャー」「食べた時の味の正直な印象」「何ヶ月でどんな変化を感じたか」——一進さん自身かスタッフの実体験でもOK。<strong>具体的な数字・感覚・シーン</strong>があるとコピーのリアリティが格段に上がる。</div>
+            <div class="ci-tag">軽いインタビュー or メモ書きでOK</div>
+          </div>
+        </div>
+        <div class="content-item human">
+          <div class="ci-num">E</div>
+          <div>
+            <div class="ci-title">「冬の朝・季節の変わり目」等の具体的な悩みシーン画像</div>
+            <div class="ci-desc">②悩み共感パートを強化するための「苦しみのシーン」を視覚化する画像。<strong>喉が気になる朝、病院に行くか迷う場面、体が重い感じ</strong>等。NG表現に引っかからない範囲の素材。これがあると「私のことだ」と感じさせる力が大幅に上がる。</div>
+            <div class="ci-tag">ストックフォト購入 or 既存素材の中に使えるものがないか確認</div>
+          </div>
+        </div>
+        <div class="content-item human">
+          <div class="ci-num">F</div>
+          <div>
+            <div class="ci-title">限定性・緊急性の設計（オファーの強化）</div>
+            <div class="ci-desc">「今月限定〇〇円引き」「初回〇〇個限り」「期間限定キャンペーン」等の<strong>今すぐ買わないと損する理由</strong>。これはビジネス側で決まることなので一進さん側の判断が必要。ない場合はコピーで代替できるが弱くなる。</div>
+            <div class="ci-tag">キャンペーン設計をビジネス側で決める</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 4. LP3 構成アウトライン（提案） -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">LP3 構成アウトライン（提案）</div>
+        <div class="section-sub">診断を踏まえた18ステップ完全対応版</div>
+      </div>
+    </div>
+
+    <div class="lp3-structure">
+      <div class="lp3-row keep">
+        <span class="row-badge">✅ 継続</span>
+        <span class="row-text">① FV 3パターン（LP3の新仮説でフック角度を変える）</span>
+        <span class="row-note">一進さんが仮説を選ぶ</span>
+      </div>
+      <div class="lp3-row upgrade">
+        <span class="row-badge">↑ 強化</span>
+        <span class="row-text">② 悩みへの共感（苦しみのシーン画像 + 状況描写コピー強化）</span>
+        <span class="row-note">素材E があれば最強</span>
+      </div>
+      <div class="lp3-row new">
+        <span class="row-badge">🆕 新規</span>
+        <span class="row-text">③ 対策への共感（「こんな選び方してないですか？」パート追加）</span>
+        <span class="row-note">AIがコピー用意</span>
+      </div>
+      <div class="lp3-row new">
+        <span class="row-badge">🆕 新規</span>
+        <span class="row-text">④ 未来の想像（解決した人の希望を見せるミニストーリー）</span>
+        <span class="row-note">口コミ素材B があれば強い</span>
+      </div>
+      <div class="lp3-row new">
+        <span class="row-badge">🆕 新規</span>
+        <span class="row-text">⑤ キャッチーな方法の提示（「本物の見分け方」引っかかり）</span>
+        <span class="row-note">AIがコピー用意</span>
+      </div>
+      <div class="lp3-row new">
+        <span class="row-badge">🆕 新規</span>
+        <span class="row-text">⑥ ベネフィットの視覚的提示（「こんな状態になれます」画像 or 動画）</span>
+        <span class="row-note">素材A が必要</span>
+      </div>
+      <div class="lp3-row new">
+        <span class="row-badge">🆕 新規</span>
+        <span class="row-text">⑦ 口コミ（前半 — 希望を与える成功事例 1件）</span>
+        <span class="row-note">口コミ素材B から</span>
+      </div>
+      <div class="lp3-row keep">
+        <span class="row-badge">✅ 継続</span>
+        <span class="row-text">⑧ 新事実パート（既存対策の否定 — LP1・LP2の強みを再利用）</span>
+        <span class="row-note">LP3の仮説に合わせて調整</span>
+      </div>
+      <div class="lp3-row keep">
+        <span class="row-badge">✅ 継続</span>
+        <span class="row-text">⑨ 真の原因の教育（MGO無味無臭 or 証明書問題）</span>
+        <span class="row-note">LP3仮説に合わせ選択</span>
+      </div>
+      <div class="lp3-row keep">
+        <span class="row-badge">✅ 継続</span>
+        <span class="row-text">⑩ 新パラダイムの教育（3条件 or 継続できる本物）</span>
+        <span class="row-note">LP3仮説に合わせ選択</span>
+      </div>
+      <div class="lp3-row upgrade">
+        <span class="row-badge">↑ 強化</span>
+        <span class="row-text">⑪ 商品導入（一期通感 — FV伏線→商品回収を明確に設計）</span>
+        <span class="row-note">AIが構成設計</span>
+      </div>
+      <div class="lp3-row keep">
+        <span class="row-badge">✅ 継続</span>
+        <span class="row-text">⑫ 実証パート（cert-block × エビデンス）</span>
+        <span class="row-note">LP1・LP2から最良の素材転用</span>
+      </div>
+      <div class="lp3-row new">
+        <span class="row-badge">🆕 新規</span>
+        <span class="row-text">⑬ ベネフィット（実証直後 — 「だからこんな未来が」の感情接続）</span>
+        <span class="row-note">AIがコピー + 素材A</span>
+      </div>
+      <div class="lp3-row keep">
+        <span class="row-badge">✅ 継続</span>
+        <span class="row-text">⑭ 権威・信頼（受賞・認証・cert-block）</span>
+        <span class="row-note">LP1・LP2から転用</span>
+      </div>
+      <div class="lp3-row upgrade">
+        <span class="row-badge">↑ 強化</span>
+        <span class="row-text">⑮ 使ってみたパート（体験描写コピー + テクスチャー動画）</span>
+        <span class="row-note">素材D + 既存動画の活用</span>
+      </div>
+      <div class="lp3-row new">
+        <span class="row-badge">🆕 新規</span>
+        <span class="row-text">⑯ ベネフィット再（「使ったらこうなった」の未来シーン描写）</span>
+        <span class="row-note">AIがコピー + 素材A</span>
+      </div>
+      <div class="lp3-row upgrade">
+        <span class="row-badge">↑ 強化</span>
+        <span class="row-text">⑰ 安心口コミ（多様な属性 × 5〜7件 — 70代・80代・地域の多様性）</span>
+        <span class="row-note">素材B が必須</span>
+      </div>
+      <div class="lp3-row upgrade">
+        <span class="row-badge">↑ 強化</span>
+        <span class="row-text">⑱ オファー（限定感・緊急性の追加 + 懸念払拭の強化）</span>
+        <span class="row-note">素材F + AIがコピー</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 5. 一進さんへの確認事項 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">書き始める前に確認したいこと</div>
+        <div class="section-sub">一進さんに決めてもらう 6問</div>
+      </div>
+    </div>
+
+    <div class="question-box">
+      <div class="qb-title">📋 LP3を書く前に一進さんに聞きたいこと</div>
+      <ul class="question-list">
+        <li>
+          <span class="q-num">Q1</span>
+          <div>LP3の<strong>フック角度（仮説）</strong>をどれにする？ 候補：① 「続ける理由」（継続 × 本物）、② 「守られる感覚」（内側からのケア × 安心感）、③ 「Julieのストーリー」（生産者 × 信頼）</div>
+        </li>
+        <li>
+          <span class="q-num">Q2</span>
+          <div><strong>使ってみた体験</strong>のリアル情報を教えてほしい。「届いた時の印象」「香りや味の正直な感想」「続けてどんな変化を感じた（または感じなかった）か」——短いメモでOK</div>
+        </li>
+        <li>
+          <span class="q-num">Q3</span>
+          <div><strong>多様な口コミ素材</strong>は出せそう？ 70代・80代の声、地域が違う人の声など。なければAIが書いてもよいか（作った口コミはリスクがあるので確認したい）</div>
+        </li>
+        <li>
+          <span class="q-num">Q4</span>
+          <div><strong>「元気に活動している60代〜70代女性」の画像</strong>は手元にある？ ストックフォトでもOKかどうか、または既存素材の中に使えるものがあるか</div>
+        </li>
+        <li>
+          <span class="q-num">Q5</span>
+          <div><strong>限定感・緊急性</strong>の設計はある？「今月限定〇〇円引き」「初回〇〇個限り」等。なければコピーで代替するが、あった方が圧倒的に強い</div>
+        </li>
+        <li>
+          <span class="q-num">Q6</span>
+          <div><strong>「悩みのシーン」の素材</strong>はある？ 喉が気になる朝、体が重い感じを表すビジュアル。既存の動画の中にそういったシーンがあれば使いたい</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    mauri LP診断レポート — 2026-03-23<br>
+    澤田一進の記事LP哲学（18ステップ）× LP1・LP2 構成照合
+  </div>
+
+</div>
+</body>
+</html>
