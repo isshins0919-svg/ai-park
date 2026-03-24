@@ -1,0 +1,112 @@
+<!-- =====================================================================
+   アポバスタ-F v19s — LP高速化済みフッター
+   最適化日: 2026-03-24
+   変更内容:
+     [1] fade.js / popup.js に defer 追加
+     [2] html5shiv を削除（IE8/9向けレガシーコード。完全不要）
+     [3] カウントダウンタイマーのsetIntervalを 10ms → 100ms に変更
+     [4] 末尾の空 #fixed div（重複）を削除
+   ⚠️ EC-Force環境のため jQuery (2.2.4) は触らない
+   ===================================================================== -->
+
+<footer>
+{# footer #}
+</footer>
+
+<!-- ⚠️ EC-Force環境のためjQueryは変更しない -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<!-- [1] defer を追加: DOMパース完了後に実行されるため描画ブロックを解消 -->
+<script defer src="{{ file_root_path }}/javascript/fade.js"></script>
+<script defer src="{{ file_root_path }}/javascript/popup.js"></script>
+
+<!-- [2] html5shiv 削除: IE8/9向けポリフィル。現代ブラウザには完全不要 -->
+<!-- 削除: <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> -->
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "アポバスタ-F",
+  "description": "ドクターシリーズの『アポバスタ-F』公式ページがこちらです。",
+  "brand": {
+    "@type": "Thing",
+    "name": "アポバスタ-F"
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "JPY",
+    "price": "2980",
+    "itemCondition": "http://schema.org/UsedCondition",
+    "availability": "http://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "アポバスタ-F"
+    }
+  }
+}
+</script>
+<!-- End JSON-LD -->
+
+<!-- [4] 末尾の空 #fixed div を削除（ボディで定義済みのためDOMの重複） -->
+<!-- 削除: <div id="fixed"></div> -->
+
+<!-- [3] カウントダウンタイマー: setInterval 10ms → 100ms に変更
+         理由: 1秒100回のDOM操作はCPU負荷が高い。100msで視覚的に十分 -->
+<script>
+var countdownTimerSetMinutes = countdownTimerSetMinutes || {};
+(function(_) {
+    _.countdownTimerSetMinutes = function() {
+        let coutdownTime = 10;
+        let interval;
+        let currentTime = new Date();
+        let targetTime = new Date();
+        targetTime.setMinutes(currentTime.getMinutes() + coutdownTime);
+
+        function checkComplete() {
+            currentTime = new Date();
+            let campaignCountM = document.getElementsByClassName("countdownM");
+            let campaignCountS = document.getElementsByClassName("countdownS");
+            let campaignCountMS = document.getElementsByClassName("countdownMS");
+
+            if (currentTime <= targetTime) {
+                diffTime = targetTime - currentTime;
+            }
+
+            const m = Math.floor(diffTime / 1000 / 60) % 60;
+            const s = Math.floor(diffTime / 1000) % 60;
+            const ms = Math.floor((diffTime % 1000) / 10);
+
+            let toDoubleDigits = function(num) {
+                num += "";
+                if (num.length === 1) {
+                    num = "0" + num;
+                }
+                return num;
+            };
+
+            let l = campaignCountM.length;
+            for (let i = 0; i < l; i++) {
+                campaignCountM[i].textContent = toDoubleDigits(m);
+                campaignCountS[i].textContent = toDoubleDigits(s);
+                campaignCountMS[i].textContent = toDoubleDigits(ms);
+            }
+        }
+
+        document.addEventListener("beforeunload", function() {
+            checkComplete();
+        });
+
+        if (!checkComplete()) {
+            // [変更] 10 → 100: CPU負荷を1/10に削減
+            interval = setInterval(checkComplete, 100);
+        }
+    };
+    _.init = function() {
+        _.countdownTimerSetMinutes();
+    };
+})(countdownTimerSetMinutes);
+
+document.addEventListener("DOMContentLoaded", countdownTimerSetMinutes.init, false);
+</script>

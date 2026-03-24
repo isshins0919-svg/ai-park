@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-23",
+  "last_updated": "2026-03-24",
   "jobs": [
     {
       "id": 1,
@@ -45,6 +45,42 @@
       "priority": "medium",
       "created_at": "2026-03-23",
       "notes": "2026-03-23完了！"
+    },
+    {
+      "id": 6,
+      "name": "記事FB仕組みの一次完成",
+      "goal": "記事フィードバック仕組みを一次完成させる",
+      "status": "completed",
+      "priority": "high",
+      "created_at": "2026-03-24",
+      "notes": "2026-03-24完了！"
+    },
+    {
+      "id": 7,
+      "name": "camicksの提案完了",
+      "goal": "Camicks向けの提案書を完成させる",
+      "status": "completed",
+      "priority": "high",
+      "created_at": "2026-03-24",
+      "notes": "2026-03-24完了！"
+    },
+    {
+      "id": 8,
+      "name": "議事録集約システムの構築",
+      "goal": "Make × Notion × Google Meet 文字起こし連携の仕組みを構築する",
+      "status": "completed",
+      "priority": "high",
+      "created_at": "2026-03-24",
+      "notes": "2026-03-24完了！足で回して対応"
+    },
+    {
+      "id": 9,
+      "name": "LP高速化 1本",
+      "goal": "LP高速化診断・修正を1本完遂する",
+      "status": "completed",
+      "priority": "high",
+      "created_at": "2026-03-24",
+      "notes": "2026-03-24完了！"
     }
   ]
 }

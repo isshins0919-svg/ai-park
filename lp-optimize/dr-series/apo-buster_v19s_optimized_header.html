@@ -1,0 +1,35 @@
+<!-- =====================================================================
+   アポバスタ-F v19s — LP高速化済みヘッダー
+   最適化日: 2026-03-24
+   変更内容:
+     [1] preload: ヒーロー画像 (apo_1-2.webp) を事前読み込み
+     [2] preconnect: googleapis / cdnjs に事前接続
+     [3] NOTE: Slick CSS は __PAYMENT_FORM__ 内で使用中か確認後に判断
+   ===================================================================== -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+
+<!-- canonical: 削除済み（コピペミスでrmh.co.jp/proustが入っていたため） -->
+
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-32x32.png" sizes="16x16">
+<link rel="icon" href="{{ file_root_path }}/image/cropped-logo-192x192.png" sizes="32x32">
+
+<!-- GTM: 削除済み（未使用のため） -->
+
+<!-- [追加] preconnect: 外部リソースへの事前接続 -->
+<link rel="preconnect" href="https://ajax.googleapis.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://file.mysquadbeyond.com" crossorigin>
+
+<!-- [追加] preload: ヒーロー画像を最優先で読み込む
+     ※ file_root_path はテンプレート変数のため実際のパスに書き換えが必要な場合あり -->
+<link rel="preload" as="image" href="{{ file_root_path }}/image/apobuster/LP/v10/apo_1-2.webp">
+
+<!-- Slick CSS: __PAYMENT_FORM__内で使用中か確認後、不要なら削除でrender-blocking解消 -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
+
+<meta name="format-detection" content="telephone=no">

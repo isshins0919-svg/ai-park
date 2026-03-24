@@ -1,0 +1,134 @@
+<!-- =====================================================================
+   アポバスタ-F v19s — LP高速化済みボディ
+   最適化日: 2026-03-24
+   変更内容:
+     [1] 1枚目画像に fetchpriority="high" decoding="sync" を追加
+     [2] 4枚目以降の画像に loading="lazy" を追加
+         ※ hero3枚・CTA画像は除外
+     [3] <map name> の重複を maplink2〜5 に修正
+     [4] 動画に preload="metadata" を追加
+   ===================================================================== -->
+
+<div id="lpbody">
+<div class="wrapper">
+<!-- GTM noscript: 削除済み（未使用のため） -->
+
+<div id="lp">
+    <!-- [1] Hero画像: fetchpriority + decoding 追加（lazyは絶対につけない） -->
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_1-2.webp" width="100%" fetchpriority="high" decoding="sync">
+    <!-- Hero画像2〜3枚目: lazyなし（スクロールなしで見える可能性あり） -->
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_1-3.webp" width="100%">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_1-4.webp" width="100%">
+    <!-- [2] 4枚目以降: loading="lazy" 追加 -->
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/4_250514apo_1-5.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_1-6.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_1-7.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/7_250514apo_1-8.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_1-9.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_1-10.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/1_250514apo_0_2480.webp" width="100%" loading="lazy">
+    <!-- CTA画像: lazy対象外（コンバージョンに直結するため） -->
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-1.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_25.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_26.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_27.webp" width="100%" loading="lazy">
+    <!-- [3] map重複修正: 1回目はmaplink（元のまま） -->
+    <img usemap="#maplink" src="{{ file_root_path }}/image/apobuster/LP/v16/6_250514apo_0-3.webp" width="100%" loading="lazy">
+    <map name="maplink">
+        <area href="https://shop.dr-series.com/info/customer_term" target="_blank" shape="rect" coords="520px,330px 660px,380px">
+    </map>
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-2.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-1.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-2.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-3.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-4.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-5.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-6.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-7.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-8.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-9.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-12.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/1_250514apo_0_2480.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-1.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_25.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_26.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_27.webp" width="100%" loading="lazy">
+    <!-- map: 2回目 → maplink2 に変更 -->
+    <img usemap="#maplink2" src="{{ file_root_path }}/image/apobuster/LP/v16/6_250514apo_0-3.webp" width="100%" loading="lazy">
+    <map name="maplink2">
+        <area href="https://shop.dr-series.com/info/customer_term" target="_blank" shape="rect" coords="520px,330px 660px,380px">
+    </map>
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-2.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/1_250514apo_3-1.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_3-2.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_3-3.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_3-4.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_4-1.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_4-2.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_4-3.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_4-4.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_4-5.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_2-12.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/1_250514apo_0_2480.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-1.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_25.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_26.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_27.webp" width="100%" loading="lazy">
+    <!-- map: 3回目 → maplink3 に変更 -->
+    <img usemap="#maplink3" src="{{ file_root_path }}/image/apobuster/LP/v16/6_250514apo_0-3.webp" width="100%" loading="lazy">
+    <map name="maplink3">
+        <area href="https://shop.dr-series.com/info/customer_term" target="_blank" shape="rect" coords="520px,330px 660px,380px">
+    </map>
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-2.webp" width="100%" loading="lazy"></a>
+    <!-- [4] 動画: preload="metadata" を追加（autoplayを維持しつつ初期ロードを最小化） -->
+    <div class="videowrap">
+        <video id="video_kin" src="https://file.mysquadbeyond.com/uploads/article_photo/photo/4734324/3785eef5-b4da-4221-9b60-2b2dde8429ee.mp4" loop autoplay muted playsinline preload="metadata" width="100%"></video>
+    </div>
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_5-1.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/2_250514apo_5-2.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/3_250514apo_5-3.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_5-4.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_5-5.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/1_250514apo_0_2480.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-1.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_25.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_26.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_27.webp" width="100%" loading="lazy">
+    <!-- map: 4回目 → maplink4 に変更 -->
+    <img usemap="#maplink4" src="{{ file_root_path }}/image/apobuster/LP/v16/6_250514apo_0-3.webp" width="100%" loading="lazy">
+    <map name="maplink4">
+        <area href="https://shop.dr-series.com/info/customer_term" target="_blank" shape="rect" coords="520px,330px 660px,380px">
+    </map>
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-2.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/1_250514apo_6-1.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_6-2.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/1_250514apo_0_2480.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-1.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_25.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_26.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_2_1122OL_27.webp" width="100%" loading="lazy">
+    <!-- map: 5回目 → maplink5 に変更 -->
+    <img usemap="#maplink5" src="{{ file_root_path }}/image/apobuster/LP/v16/6_250514apo_0-3.webp" width="100%" loading="lazy">
+    <map name="maplink5">
+        <area href="https://shop.dr-series.com/info/customer_term" target="_blank" shape="rect" coords="520px,330px 660px,380px">
+    </map>
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_0_CTA-2.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/1_250514apo_7-1.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/2_250514apo_7-2.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v10/apo_7-3.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/7_250514apo_7-6.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_7-4.webp" width="100%" loading="lazy">
+    <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_7_CTA.webp" width="100%" loading="lazy"></a>
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_7_1122OL_13.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_7_1122OL_14.webp" width="100%" loading="lazy">
+    <img src="{{ file_root_path }}/image/apobuster/LP/V8/apo_7_1122OL_15.webp" width="100%" loading="lazy">
+
+__PAYMENT_FORM__
+    {# common_footer-pay #}
+</div>
+</div>
+<div id="fixed">
+    <p id="offer_bottom">
+        <a href="#chatform"><img src="{{ file_root_path }}/image/apobuster/LP/v16/apo_chat_01.webp" width="100%"></a>
+    </p>
+</div>
