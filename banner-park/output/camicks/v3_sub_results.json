@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-03-24T14:43:41.863365",
+  "results": [
+    {
+      "index": 2,
+      "filename": "amazon_02_structure_v3.png",
+      "status": "ok",
+      "size_kb": 504
+    },
+    {
+      "index": 3,
+      "filename": "amazon_03_material_v3.png",
+      "status": "ok",
+      "size_kb": 616
+    },
+    {
+      "index": 4,
+      "filename": "amazon_04_laundry_v3.png",
+      "status": "ok",
+      "size_kb": 543
+    },
+    {
+      "index": 5,
+      "filename": "amazon_05_scene_v3.png",
+      "status": "ok",
+      "size_kb": 607
+    },
+    {
+      "index": 6,
+      "filename": "amazon_06_brand_v3.png",
+      "status": "ok",
+      "size_kb": 429
+    }
+  ]
+}
