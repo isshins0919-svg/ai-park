@@ -99,6 +99,15 @@
       "priority": "high",
       "created_at": "2026-03-25",
       "notes": ""
+    },
+    {
+      "id": 13,
+      "name": "クリエイティブAgentチーム構築（週1体ペース）",
+      "goal": "記事LP・バナー・動画の専門Agent12体を今週中に全て完成させる",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-03-25",
+      "notes": "対象: hook-critic / cro-specialist / n1-validator / legal-checker / visual-director / typography-critic / brand-guardian / image-prompt-optimizer + 動画系4体 = 計12体。週1ペースで3ヶ月で完成"
     }
   ]
 }
