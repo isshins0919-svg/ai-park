@@ -1,0 +1,15 @@
+{
+  "bannerIndex": 5,
+  "hypothesis": "価格訴求型 × 中央集中型 — 58%OFFと定期縛りなしで価格敏感層を即獲得",
+  "hookAngle": "価格オファー型",
+  "hookSource": "offerAxis",
+  "gazeFlow": "中央集中型",
+  "gazeDescription": "中央: 58%OFF巨大数字 → 周辺: 商品写真+条件テキスト → 下部: CTA",
+  "headline": "初回 58%OFF",
+  "subHeadline": "通常7,200円 → 2,980円\nNZ直送 定期縛りなし",
+  "ctaText": "今すぐ試す →",
+  "aspectRatio": "1:1",
+  "templateId": "BN-D",
+  "kvPhilosophy": "金色を基調としたオファーバナー。商品のプレミアム感を保ちつつ価格メリットを最大強調。",
+  "testHypothesis": "価格訴求×低リスク訴求の組み合わせが直接購入層に有効か"
+}

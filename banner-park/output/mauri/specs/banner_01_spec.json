@@ -1,0 +1,15 @@
+{
+  "bannerIndex": 1,
+  "hypothesis": "常識否定型フック × Z型視線 — 「美味しさで選ぶ」常識を破壊し、本物の選び方を提示",
+  "hookAngle": "常識否定型",
+  "hookSource": "hook_01",
+  "gazeFlow": "Z型",
+  "gazeDescription": "左上: ヘッドライン → 右上: 商品ビジュアル → 左下: サブコピー → 右下: CTA",
+  "headline": "美味しさで\n選んでた。",
+  "subHeadline": "本当に守られていますか？",
+  "ctaText": "本物をチェック →",
+  "aspectRatio": "1:1",
+  "templateId": "BN-A",
+  "kvPhilosophy": "琥珀色の蜂蜜が木製スプーンから瓶へ垂れる瞬間。本物の天然感と高級感を1枚で体現。",
+  "testHypothesis": "常識否定フックは準顕在層60代女性のCTR向上に効くか"
+}

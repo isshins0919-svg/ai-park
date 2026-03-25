@@ -1,0 +1,15 @@
+{
+  "bannerIndex": 4,
+  "hypothesis": "権威型 × 対角線型 — 薬剤師が毎日選ぶ理由で信頼構築 × 購入障壁除去",
+  "hookAngle": "権威型（薬剤師軸）",
+  "hookSource": "薬剤師×錠剤疲れ新軸",
+  "gazeFlow": "対角線型",
+  "gazeDescription": "左上: 薬剤師ビジュアル → 右下: 商品+CTA （権威者の視線が商品に向く構図）",
+  "headline": "現役薬剤師が\n毎日食べているマヌカハニー",
+  "subHeadline": "選んだ理由は「本物の証明書」",
+  "ctaText": "その理由を見る →",
+  "aspectRatio": "1:1",
+  "templateId": "BN-F",
+  "kvPhilosophy": "白衣の薬剤師とmauri商品のツーショット。専門家の信頼を商品に転嫁するKVとして機能。",
+  "testHypothesis": "薬剤師権威フックは「薬より天然」志向の60代女性の信頼獲得に有効か"
+}
