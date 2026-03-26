@@ -195,10 +195,12 @@
 
 ## 関連ファイル
 
-- 商品資料: `/Users/ca01224/Desktop/mauriのデータ/mauri商品説明資料_広告表現集.pdf`
-- レギュレーション: `/Users/ca01224/Desktop/mauriのデータ/mauriレギュレーション.html`
-- 方針メモ: `/Users/ca01224/Desktop/mauriのデータ/mauri方針.html`
-- N1インタビュー: `/Users/ca01224/Desktop/mauriのデータ/類似商品インタビューデータ/`
-- 既存記事: `/Users/ca01224/Desktop/mauriのデータ/現在配信実績のある記事フォルダー（結果は良くない）/`
-- BeeNZ権威データ: `/Users/ca01224/Desktop/mauriのデータ/BeeNZ社調査：マーケティング権威性データ収集/`
-- LP素材: `/Users/ca01224/Desktop/mauriのデータ/LPフォルダ/`
+> ⚠️ 以下のパスは一進のMacのローカルパス。インターン生・他メンバーは一進から共有してもらうこと。
+
+- 商品資料: `mauriのデータ/mauri商品説明資料_広告表現集.pdf`
+- レギュレーション: `mauriのデータ/mauriレギュレーション.html`
+- 方針メモ: `mauriのデータ/mauri方針.html`
+- N1インタビュー: `mauriのデータ/類似商品インタビューデータ/`
+- 既存記事: `mauriのデータ/現在配信実績のある記事フォルダー（結果は良くない）/`
+- BeeNZ権威データ: `mauriのデータ/BeeNZ社調査：マーケティング権威性データ収集/`
+- LP素材: `mauriのデータ/LPフォルダ/`
