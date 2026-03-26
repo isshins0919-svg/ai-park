@@ -1,28 +1,30 @@
 #!/usr/bin/env python3
 """
-Slack 記事フィードバックBot v4
-- #yomite_ai-kiji_fb を2分おきにポーリング
+Slack 記事フィードバックBot v6
+- #yomite_ai-fb を2分おきにポーリング
 - 「フィードバック」+ URL を含む投稿を検知
-- Playwright でJS実行後の画像URLを取得（SquadBeyond対応）
-- オファー前まで テキスト＋画像(Claude Vision)＋動画(Gemini)を読み込み
-- フィードバック＋コンテンツ制作ブリーフを返信
+- Playwright でJS実行後にDOM順（テキスト＋画像・動画セット）で解析
+- 動画は全本のサムネイルをOpenCV並列取得 → Claude Visionに渡す
+- 18パート構造分析＋統計付きフィードバックをSlack Canvasで返信
 """
 
 import re
+import io
+import os
 import json
 import time
 import subprocess
 import logging
 import tempfile
-import os
+from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse
 
-import requests
+from PIL import Image
+
+import markdown as md_lib
 from bs4 import BeautifulSoup
 import anthropic
-import google.genai as genai
-from google.genai import types as genai_types
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from playwright.sync_api import sync_playwright
@@ -135,11 +137,13 @@ def fetch_article_with_images(url: str) -> dict:
         # オファー検知：最初に出現する位置でカット
         offer_pos = len(full_html)
         offer_detected = False
+        offer_trigger = None
         for trigger in OFFER_TRIGGERS:
             pos = full_html.find(trigger)
             if pos != -1 and pos < offer_pos:
                 offer_pos = pos
                 offer_detected = True
+                offer_trigger = trigger
 
         pre_offer_soup = BeautifulSoup(full_html[:offer_pos], "html.parser")
 
@@ -243,11 +247,12 @@ def fetch_article_with_images(url: str) -> dict:
             "videos": unique_videos,
             "stats": stats,
             "offer_detected": offer_detected,
+            "offer_trigger": offer_trigger,
         }
 
     except Exception as e:
         log.error(f"記事取得エラー(Playwright): {e}")
-        return {"sections": [], "videos": [], "stats": {"chars": 0, "images": 0, "videos": 0}, "offer_detected": False}
+        return {"sections": [], "videos": [], "stats": {"chars": 0, "images": 0, "videos": 0}, "offer_detected": False, "offer_trigger": None}
 
 
 # ─── 動画サムネイル抽出（OpenCV並列）────────────────────
@@ -414,64 +419,307 @@ def generate_feedback(article_data: dict, url: str, client: anthropic.Anthropic,
 - 【絶対禁止】CTAに関する改善提案は一切するな。記事LPの設計思想に反する。
 - ポジティブな指摘も入れる（良いところは良いと言う）
 
-## 出力フォーマット（Slack mrkdwn）
+## 出力フォーマット（Slack Canvas用 Markdown）
 
-*━━ 記事LPフィードバック ━━*
+必ず以下の構造・順番で出力してください。見出しは ## を使う。
 
-*📊 記事構成スコア*
-文字 {chars}字 ／ 画像 {images}枚 ／ 動画 {videos}本
-テキスト:ビジュアル比率 → （売れてるLPは3:7が目安。この記事は？）
+## 📊 記事構成
 
-*🗺 18パート マッピング*
-（各パートが「ある／弱い／ない」を一覧で。問題点があればコメント）
-① FV: ／ ② 悩み共感: ／ ③ 対策共感: ／ ④ 未来想像: ／ ⑤ 方法提示:
-⑥ ベネフィット視覚化: ／ ⑦ 口コミ前半: ／ ⑧ 新事実: ／ ⑨ 真の原因:
-⑩ 新パラダイム: ／ ⑪ 商品導入: ／ ⑫ 実証: ／ ⑬ ベネフィット:
-⑭ 権威信頼: ／ ⑮ 使ってみた: ／ ⑯ ベネフィット再: ／ ⑰ 口コミ多様: ／ ⑱ オファー:
+冒頭で受け取った文字数・画像枚数・動画本数を記載。
+テキスト:ビジュアル比率を計算して記載（売れてるLPは3:7が目安）。
 
-*🎯 一期通感: X/10*
-（1文で理由）
+## 🗺 18パート チェック
 
-*📝 パート別FB*
-（問題があるパートのみ。番号＋具体的な改善案をセットで）
+Markdownの表形式で出力してください：
 
-*🖼 ビジュアルFB*
-（テキスト＋画像/動画の対応を見て。「皆まで言わずに」の観点も）
+| パート | 判定 | コメント |
+|--------|------|---------|
+| ① FV | ✅/⚠️/❌ | （⚠️❌のみコメント） |
+...⑱まで全パートを書く。
 
-*📸 追加したい素材*
-📷 （どのパートに・何の画像を・どう撮るか）
-🎬 （どのパートに・何秒の動画を・どんなシーンか）
-✍️ （どんな属性・内容の口コミを何件）
+## 🎯 一期通感: X/10
 
-*💬 総評*
-（「真に偉大か？」視点から1〜2文。本音で）
+1文で理由を書く。
 
----
+## 📝 パート別FB
+
+問題があるパートのみ。各パートを ### 見出しにして：
+→ 指摘（口語・短く）
+→ 改善案（具体的なコピーまで）
+
+## 🖼 ビジュアルFB
+
+テキスト＋画像/動画のセットを見て気になる点と改善案。
+「皆まで言わずに」の観点（ビジュアルで問いを立てているか）を必ず評価。
+
+## 📸 追加したい素材
+
+📷 画像：どのパートに・何の画像を・どう撮るか
+🎬 動画：どのパートに・何秒の動画を・どんなシーンか
+✍️ 口コミ：どんな属性・内容を何件
+
+## 💬 総評
+
+「真に偉大か？」視点から1〜2文。本音で。
+
 各FBは現場が明日から動けるレベルで具体的に。評価より改善案を優先する。"""
     })
 
     # Vision対応でまず試みる。画像URLエラーが出たらテキストのみで再試行
+    # Rate limitは最大3回リトライ（60秒待機）
+    def _call_claude(msg_content):
+        for attempt in range(3):
+            try:
+                return client.messages.create(
+                    model="claude-sonnet-4-6",
+                    max_tokens=16000,
+                    system=SYSTEM_PROMPT,
+                    messages=[{"role": "user", "content": msg_content}],
+                )
+            except anthropic.RateLimitError:
+                if attempt < 2:
+                    wait = 60 * (attempt + 1)
+                    log.warning(f"Rate limit。{wait}秒待機してリトライします（{attempt + 1}/3）")
+                    time.sleep(wait)
+                else:
+                    raise
+        raise RuntimeError("リトライ上限に達しました")
+
+    def _call_with_continuation(msg_content):
+        """途中で切れた場合（stop_reason=max_tokens）は続きを取得して結合"""
+        response = _call_claude(msg_content)
+        result = response.content[0].text
+
+        # max_tokensで止まった場合は続きをリクエスト
+        if response.stop_reason == "max_tokens":
+            log.warning("FBがmax_tokensで途中終了。続きを取得します。")
+            continuation_messages = [
+                {"role": "user", "content": msg_content},
+                {"role": "assistant", "content": result},
+                {"role": "user", "content": "続きを書いてください。"},
+            ]
+            for attempt in range(3):
+                try:
+                    cont = client.messages.create(
+                        model="claude-sonnet-4-6",
+                        max_tokens=8000,
+                        system=SYSTEM_PROMPT,
+                        messages=continuation_messages,
+                    )
+                    result += cont.content[0].text
+                    log.info("FB続き取得完了")
+                    break
+                except anthropic.RateLimitError:
+                    if attempt < 2:
+                        time.sleep(60 * (attempt + 1))
+                    else:
+                        log.warning("続き取得のRate limit上限。部分FBで返します。")
+
+        return result
+
     try:
-        response = client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=4000,
-            system=SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": content}],
-        )
+        return _call_with_continuation(content)
     except anthropic.BadRequestError as e:
         if "Could not process image" in str(e) or "image" in str(e).lower():
             log.warning("画像URLエラー。テキストのみで再試行します。")
             text_only_content = [c for c in content if c["type"] == "text"]
-            response = client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=4000,
-                system=SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": text_only_content}],
-            )
+            return _call_with_continuation(text_only_content)
         else:
             raise
 
-    return response.content[0].text
+
+# ─── 記事スクリーンショット取得 ───────────────────────────
+SCREENSHOT_JPEG_QUALITY = 60   # 圧縮率（高さ制限なし・ファイルサイズを質で調整）
+
+def take_article_screenshot(url: str) -> str:
+    """Playwrightで記事全体をfull_page=Trueでスクショ → JPEG圧縮してbase64文字列を返す"""
+    try:
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(headless=True)
+            page = browser.new_page(
+                viewport={"width": 750, "height": 900},
+                user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+            )
+            page.goto(url, wait_until="networkidle", timeout=30000)
+            # lazyload展開のためページ末尾までスクロール
+            page.evaluate("""async () => {
+                await new Promise(resolve => {
+                    let last = 0;
+                    const timer = setInterval(() => {
+                        window.scrollBy(0, 800);
+                        const cur = window.scrollY;
+                        if (cur === last) { clearInterval(timer); resolve(); }
+                        last = cur;
+                    }, 100);
+                });
+                window.scrollTo(0, 0);
+            }""")
+            page.wait_for_timeout(1000)
+
+            # ページ全体をキャプチャ（高さ制限なし）
+            png_bytes = page.screenshot(full_page=True)
+            browser.close()
+
+        # JPEG圧縮のみ（クロップなし）
+        img = Image.open(io.BytesIO(png_bytes))
+        buf = io.BytesIO()
+        img.save(buf, format="JPEG", quality=SCREENSHOT_JPEG_QUALITY, optimize=True)
+        jpg_bytes = buf.getvalue()
+
+        b64 = base64.standard_b64encode(jpg_bytes).decode()
+        log.info(f"スクショ取得完了 — {len(jpg_bytes)//1024}KB (高さ:{img.height}px)")
+        return b64
+    except Exception as e:
+        log.warning(f"スクショ取得失敗: {e}")
+        return ""
+
+
+# ─── HTMLレポート生成 ──────────────────────────────────
+HTML_TEMPLATE = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{title}</title>
+<style>
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{ font-family: -apple-system, "Hiragino Sans", sans-serif; display: flex; height: 100vh; overflow: hidden; background: #f5f5f7; }}
+  .left {{ width: 48%; overflow-y: auto; background: #fff; border-right: 1px solid #ddd; }}
+  .left-header {{ position: sticky; top: 0; background: #1a1a2e; color: #fff; padding: 12px 16px; font-size: 13px; z-index: 10; }}
+  .left img {{ width: 100%; display: block; }}
+  .right {{ width: 52%; overflow-y: auto; padding: 24px 28px; }}
+  .right h1 {{ font-size: 18px; color: #1a1a2e; margin-bottom: 4px; }}
+  .meta {{ font-size: 12px; color: #888; margin-bottom: 24px; }}
+  .right h2 {{ font-size: 15px; color: #1a1a2e; margin: 24px 0 10px; padding-bottom: 6px; border-bottom: 2px solid #e8e8e8; }}
+  .right h3 {{ font-size: 14px; color: #333; margin: 16px 0 6px; }}
+  .right p {{ font-size: 14px; line-height: 1.8; color: #333; margin-bottom: 10px; }}
+  .right ul {{ padding-left: 20px; margin-bottom: 10px; }}
+  .right li {{ font-size: 14px; line-height: 1.8; color: #333; }}
+  table {{ border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 13px; }}
+  th {{ background: #1a1a2e; color: #fff; padding: 8px 10px; text-align: left; }}
+  td {{ border: 1px solid #e0e0e0; padding: 8px 10px; vertical-align: top; }}
+  tr:nth-child(even) td {{ background: #fafafa; }}
+  .stat-bar {{ display: flex; gap: 12px; margin: 12px 0; flex-wrap: wrap; }}
+  .stat {{ background: #1a1a2e; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; }}
+  blockquote {{ border-left: 3px solid #e8e8e8; padding-left: 12px; color: #555; margin: 8px 0; }}
+  code {{ background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 12px; }}
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="left-header">📄 記事プレビュー — {url_short}</div>
+    {screenshot_html}
+  </div>
+  <div class="right">
+    <h1>📋 記事LPフィードバック</h1>
+    <p class="meta">{date_str} ／ {url}</p>
+    <div class="stat-bar">
+      <span class="stat">文字 {chars:,}字</span>
+      <span class="stat">画像 {images}枚</span>
+      <span class="stat">動画 {videos}本</span>
+      <span class="stat">{offer_line}</span>
+    </div>
+    {feedback_html}
+  </div>
+</body>
+</html>"""
+
+
+def generate_html_report(feedback_md: str, screenshot_b64: str, url: str, stats: dict, offer_trigger: str) -> bytes:
+    """フィードバックMarkdown＋スクショ → 自己完結HTMLのバイト列を返す"""
+    date_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    url_short = url.split("/")[2] if "/" in url else url[:40]
+    offer_line = f"「{offer_trigger}」前まで" if offer_trigger else "全体"
+
+    # MarkdownをHTMLに変換（テーブル・コードブロック対応）
+    feedback_html = md_lib.markdown(
+        feedback_md,
+        extensions=["tables", "fenced_code"]
+    )
+
+    screenshot_html = (
+        f'<img src="data:image/jpeg;base64,{screenshot_b64}" alt="記事スクショ">'
+        if screenshot_b64
+        else '<p style="padding:20px;color:#888">スクリーンショット取得失敗</p>'
+    )
+
+    html = HTML_TEMPLATE.format(
+        title=f"記事LPフィードバック {date_str}",
+        url=url,
+        url_short=url_short,
+        date_str=date_str,
+        chars=stats.get("chars", 0),
+        images=stats.get("images", 0),
+        videos=stats.get("videos", 0),
+        offer_line=offer_line,
+        screenshot_html=screenshot_html,
+        feedback_html=feedback_html,
+    )
+    return html.encode("utf-8")
+
+
+# ─── Slack ファイル添付 ────────────────────────────────
+def upload_html_report(html_bytes: bytes, url: str, slack: WebClient, channel: str, thread_ts: str) -> bool:
+    """HTMLレポートをSlackスレッドにファイル添付"""
+    date_str = datetime.now().strftime("%Y%m%d_%H%M")
+    filename = f"fb_{date_str}.html"
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as f:
+            f.write(html_bytes)
+            tmp_path = f.name
+        slack.files_upload_v2(
+            channel=channel,
+            thread_ts=thread_ts,
+            file=tmp_path,
+            filename=filename,
+            title=f"記事LPフィードバック — {date_str}",
+        )
+        os.unlink(tmp_path)
+        log.info(f"HTMLレポートアップロード完了 — {filename} ({len(html_bytes)//1024}KB)")
+        return True
+    except Exception as e:
+        log.warning(f"HTMLアップロード失敗: {e}")
+        return False
+
+
+# ─── Slack Canvas作成 ─────────────────────────────────
+def post_as_canvas(feedback_md: str, url: str, stats: dict, slack: WebClient, channel: str, thread_ts: str):
+    """フィードバックをSlack Canvasとして作成しスレッドにリンク投稿"""
+    date_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    title = f"記事LPフィードバック — {date_str}"
+
+    try:
+        res = slack.canvases_create(
+            title=title,
+            document_content={"type": "markdown", "markdown": feedback_md},
+        )
+        canvas_id = res["canvas_id"]
+
+        # CanvasをチャンネルのメンバーがアクセスできるようACLを設定
+        slack.canvases_access_set(
+            canvas_id=canvas_id,
+            access_level="write",
+            channel_ids=[channel],
+        )
+
+        # Canvas URLを取得して組み立て
+        # slack_sdk はcanvas URLを返さないのでワークスペースドメインから組み立て
+        team_res = slack.team_info()
+        domain = team_res["team"]["domain"]
+        canvas_url = f"https://{domain}.slack.com/docs/{canvas_id}"
+
+        slack.chat_postMessage(
+            channel=channel,
+            thread_ts=thread_ts,
+            text=f"📋 *フィードバックCanvasを作成しました*\n👉 {canvas_url}",
+            mrkdwn=True,
+        )
+        log.info(f"Canvas作成完了 — {canvas_id}")
+        return True
+
+    except Exception as e:
+        log.warning(f"Canvas作成失敗（テキスト返信にフォールバック）: {e}")
+        return False
 
 
 # ─── メッセージ処理 ───────────────────────────────────
@@ -501,6 +749,8 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
     stats = article_data.get("stats", {})
 
     # 統計をSlackに通知
+    offer_trigger = article_data.get("offer_trigger")
+    offer_line = f"_「{offer_trigger}」の手前まで読み込みました_" if offer_trigger else "_記事全体を読み込みました_"
     try:
         slack.chat_postMessage(
             channel=CHANNEL_ID,
@@ -510,6 +760,7 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
                 f"文字 *{stats.get('chars', 0):,}字* ／ "
                 f"画像 *{stats.get('images', 0)}枚* ／ "
                 f"動画 *{stats.get('videos', 0)}本*\n"
+                f"{offer_line}\n"
                 f"フィードバック生成中です... 少々お待ちください ✍️"
             ),
             mrkdwn=True,
@@ -517,33 +768,70 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
     except SlackApiError as e:
         log.error(f"統計通知エラー: {e}")
 
-    # 動画サムネイル並列取得
+    # 動画サムネイル並列取得 ＆ 記事スクショを並列で実行
     video_thumbnails = []
-    if article_data.get("videos"):
+    screenshot_b64 = ""
+    from concurrent.futures import ThreadPoolExecutor as _TPE
+    with _TPE(max_workers=2) as ex:
+        thumb_future = ex.submit(
+            lambda: extract_video_thumbnails(article_data["videos"]) if article_data.get("videos") else []
+        )
+        shot_future = ex.submit(take_article_screenshot, url)
         try:
-            video_thumbnails = extract_video_thumbnails(article_data["videos"])
+            video_thumbnails = thumb_future.result()
             log.info(f"サムネイル取得完了: {len(video_thumbnails)}本")
         except Exception as e:
             log.warning(f"サムネイル取得スキップ: {e}")
+        try:
+            screenshot_b64 = shot_future.result()
+        except Exception as e:
+            log.warning(f"スクショ取得スキップ: {e}")
 
     # フィードバック生成
     feedback = generate_feedback(article_data, url, client, video_thumbnails)
 
-    # Slackへ返信（2000文字超の場合は分割）
-    chunks = [feedback[i:i+2900] for i in range(0, len(feedback), 2900)]
-    for i, chunk in enumerate(chunks):
-        prefix = "*📝 記事フィードバック*\n\n" if i == 0 else ""
+    # HTMLレポート生成 → Slackにファイル添付。失敗したらCanvas → テキストにフォールバック
+    html_bytes = generate_html_report(feedback, screenshot_b64, url, stats, offer_trigger)
+    uploaded = upload_html_report(html_bytes, url, slack, CHANNEL_ID, ts)
+
+    if uploaded:
+        # HTML開き方の案内
         try:
             slack.chat_postMessage(
                 channel=CHANNEL_ID,
                 thread_ts=ts,
-                text=f"{prefix}{chunk}",
+                text=(
+                    "📂 *HTMLレポートの開き方*\n"
+                    "1️⃣ 上のファイルをクリック\n"
+                    "2️⃣ 右上の「・・・」→「ダウンロード」\n"
+                    "3️⃣ ダウンロードしたファイルをダブルクリック → ブラウザで開く\n"
+                    "_左に記事スクショ、右にFBが表示されます👀_"
+                ),
                 mrkdwn=True,
             )
-        except SlackApiError as e:
-            log.error(f"返信エラー (chunk {i}): {e}")
+        except SlackApiError:
+            pass
 
-    log.info(f"フィードバック送信完了 — ts:{ts} {len(chunks)}分割")
+    if not uploaded:
+        # Canvas フォールバック
+        canvas_ok = post_as_canvas(feedback, url, stats, slack, CHANNEL_ID, ts)
+        if not canvas_ok:
+            # テキスト分割フォールバック
+            chunks = [feedback[i:i+2900] for i in range(0, len(feedback), 2900)]
+            for i, chunk in enumerate(chunks):
+                prefix = "📝 *記事フィードバック*\n\n" if i == 0 else ""
+                try:
+                    slack.chat_postMessage(
+                        channel=CHANNEL_ID, thread_ts=ts,
+                        text=f"{prefix}{chunk}", mrkdwn=True,
+                    )
+                except SlackApiError as e:
+                    log.error(f"返信エラー (chunk {i}): {e}")
+            log.info(f"テキスト返信完了 — ts:{ts}")
+        else:
+            log.info(f"Canvas返信完了 — ts:{ts}")
+    else:
+        log.info(f"HTMLレポート返信完了 — ts:{ts}")
 
 
 # ─── トリガー判定 ─────────────────────────────────────
@@ -553,7 +841,7 @@ def is_trigger(text: str) -> bool:
 
 # ─── メインループ ─────────────────────────────────────
 def run():
-    log.info("=== Slack フィードバックBot v5 起動（DOM順解析＋18パート＋サムネイル）===")
+    log.info("=== Slack フィードバックBot v6 起動（Canvas返信対応）===")
 
     slack_token   = get_env("SLACK_BOT_TOKEN")
     anthropic_key = get_env("ANTHROPIC_API_KEY")
