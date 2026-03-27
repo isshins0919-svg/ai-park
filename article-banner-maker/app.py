@@ -18,11 +18,10 @@ from PIL import Image
 
 # ─── 環境変数取得（Streamlit Secrets → 環境変数 → zshrc） ───────────
 def get_env(key: str) -> str:
-    # Streamlit Cloud Secrets
+    # Streamlit Cloud Secrets（辞書アクセス）
     try:
-        v = st.secrets.get(key, "").strip()
-        if v:
-            return v
+        if key in st.secrets:
+            return str(st.secrets[key]).strip()
     except Exception:
         pass
     # 環境変数
@@ -40,12 +39,14 @@ def get_env(key: str) -> str:
         pass
     return ""
 
-# ─── Gemini クライアント初期化 ────────────────────────────────────────
-@st.cache_resource
-def init_gemini():
+# ─── Gemini クライアント初期化（キャッシュなし） ──────────────────────
+def init_gemini(api_key_override: str = ""):
     from google import genai
-    keys = [get_env(f"GEMINI_API_KEY_{i}") for i in range(1, 4)]
-    keys = [k for k in keys if k]
+    if api_key_override:
+        keys = [api_key_override]
+    else:
+        keys = [get_env(f"GEMINI_API_KEY_{i}") for i in range(1, 4)]
+        keys = [k for k in keys if k]
     if not keys:
         return None, []
     clients = [genai.Client(api_key=k) for k in keys]
@@ -321,11 +322,20 @@ def main():
     st.title("🎨 記事内バナーメーカー v3")
     st.caption("Nano Banana Pro（Gemini）× パク哲学フル注入 → プロ品質バナーを自動生成")
 
+    # APIキー取得（自動 or 手動入力）
+    api_key_override = ""
     genai_module, clients = init_gemini()
     if not clients:
-        st.error("⚠️ GEMINI_API_KEY_1 が未設定です。Streamlit Cloud の Secrets に追加してください。")
-        st.code("GEMINI_API_KEY_1 = 'your-gemini-api-key'", language="toml")
-        return
+        st.warning("⚠️ GEMINI_API_KEY_1 が自動取得できませんでした。以下に直接入力してください。")
+        api_key_override = st.text_input(
+            "Gemini API Key", type="password",
+            placeholder="AIzaSy...",
+            help="Google AI Studio (aistudio.google.com) で取得できます"
+        )
+        if api_key_override:
+            genai_module, clients = init_gemini(api_key_override)
+        if not clients:
+            st.stop()
 
     st.success(f"✅ Gemini 接続済み（{len(clients)}キー）")
     st.divider()
