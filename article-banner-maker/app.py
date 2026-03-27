@@ -1,434 +1,387 @@
 #!/usr/bin/env python3
 """
-記事内バナーメーカー v2
-入力(画像/動画) × 出力(画像/動画) × テキストデザイン × 感情 → 記事内素材を自動生成
+記事内バナーメーカー v3 — Gemini (Nano Banana Pro) × パク哲学フル注入
+PIL文字貼りを廃止。Geminiがデザインを丸ごと生成。
 """
 
+import io
 import os
-import sys
+import subprocess
 import tempfile
+import time
 from pathlib import Path
 
 import cv2
 import numpy as np
 import streamlit as st
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
-# ─── フォント探索 ──────────────────────────────────────────────────
-FONT_CANDIDATES = {
-    "ゴシック（標準）": [
-        "/usr/share/fonts/opentype/noto/NotoSansCJKjp-Bold.otf",
-        "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
-        "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc",
-        "/System/Library/Fonts/Hiragino Sans GB.ttc",
-    ],
-    "ゴシック（極太）": [
-        "/usr/share/fonts/opentype/noto/NotoSansCJKjp-Black.otf",
-        "/usr/share/fonts/opentype/noto/NotoSansCJK-Black.ttc",
-        "/System/Library/Fonts/ヒラギノ角ゴシック W8.ttc",
-        "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc",
-    ],
-    "丸ゴシック（柔らかい）": [
-        "/usr/share/fonts/opentype/ipafont-gothic/ipagp.ttf",
-        "/usr/share/fonts/truetype/takao-gothic/TakaoPGothic.ttf",
-        "/System/Library/Fonts/ヒラギノ丸ゴ ProN W4.ttc",
-        "/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc",
-    ],
-    "明朝（格式）": [
-        "/usr/share/fonts/opentype/noto/NotoSerifCJKjp-Bold.otf",
-        "/usr/share/fonts/opentype/ipafont-mincho/ipam.ttf",
-        "/System/Library/Fonts/ヒラギノ明朝 ProN W6.ttc",
-        "/System/Library/Fonts/ヒラギノ明朝 ProN W3.ttc",
-    ],
-    "IPAゴシック": [
-        "/usr/share/fonts/opentype/ipafont-gothic/ipag.ttf",
-        "/usr/share/fonts/truetype/takao-gothic/TakaoGothic.ttf",
-    ],
-}
-
-@st.cache_resource
-def discover_fonts() -> dict:
-    """利用可能なフォントを探索してキャッシュ"""
-    found = {}
-    for name, paths in FONT_CANDIDATES.items():
-        for p in paths:
-            if Path(p).exists():
-                found[name] = p
-                break
-    if not found:
-        found["デフォルト"] = None  # PIL built-in fallback
-    return found
-
-def get_font(font_path, size: int):
-    if font_path:
-        try:
-            return ImageFont.truetype(font_path, size)
-        except Exception:
-            pass
-    return ImageFont.load_default()
-
-# ─── テキスト折り返し ─────────────────────────────────────────────
-def wrap_text(text: str, font, max_width: float) -> list:
-    lines, current = [], ""
-    for char in text:
-        test = current + char
-        try:
-            w = font.getlength(test)
-        except Exception:
-            w = len(test) * (font.size * 0.6 if hasattr(font, "size") else 10)
-        if w > max_width and current:
-            lines.append(current)
-            current = char
-        else:
-            current = test
-    if current:
-        lines.append(current)
-    return lines or [text]
-
-def measure_text_width(font, text: str) -> float:
+# ─── 環境変数取得（Streamlit Secrets → 環境変数 → zshrc） ───────────
+def get_env(key: str) -> str:
+    # Streamlit Cloud Secrets
     try:
-        return font.getlength(text)
+        v = st.secrets.get(key, "").strip()
+        if v:
+            return v
     except Exception:
-        return len(text) * (font.size * 0.6 if hasattr(font, "size") else 10)
+        pass
+    # 環境変数
+    v = os.environ.get(key, "").strip()
+    if v:
+        return v
+    # ローカル Mac zshrc
+    try:
+        r = subprocess.run(["zsh", "-i", "-c", f"echo ${key}"],
+                           capture_output=True, text=True, timeout=5)
+        v = r.stdout.strip()
+        if v:
+            return v
+    except Exception:
+        pass
+    return ""
 
-# ─── テキスト位置 ──────────────────────────────────────────────────
-POSITIONS = {"上": "top", "中央": "center", "下": "bottom"}
+# ─── Gemini クライアント初期化 ────────────────────────────────────────
+@st.cache_resource
+def init_gemini():
+    from google import genai
+    keys = [get_env(f"GEMINI_API_KEY_{i}") for i in range(1, 4)]
+    keys = [k for k in keys if k]
+    if not keys:
+        return None, []
+    clients = [genai.Client(api_key=k) for k in keys]
+    return genai, clients
 
-# ─── オーバーレイスタイル ──────────────────────────────────────────
-def build_overlay(img: Image.Image, style: dict, text_area_y: int, text_area_h: int):
-    """グラデーション or ソリッド背景オーバーレイを生成"""
-    w, h = img.size
-    overlay_type = style.get("overlay", "gradient_dark")
-    r, g, b = style.get("bg_color", (0, 0, 0))
+# ─── パク哲学 × デザイン知識 ─────────────────────────────────────────
+DESIGN_KNOWLEDGE = """
+## パク哲学 — クリエイティブの3つの魂
+1. キービジュアルそのもの：1枚が商品の世界観を体現する作品。「広告」を超えて「作品」に見えるか。
+2. キラーキャッチコピー：1行で商品の全てを語れるレベルの言葉。「この1行だけ見て、買いたくなるか？」
+3. 別の仮説：固有の検証仮説を持つ。同じコピーの色違いを量産しない。
 
-    ov = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+## 設計原則
+- 人は感情で買う。論理は後付け。まず感情を動かす。
+- N1の脳内に1番乗りする。Only1のポジション。
+- 「真に偉大か？」「1秒で止まるか？」が基準。
+- 小さな嘘をつかない。本物の体験だけを見せる。
 
-    if overlay_type == "gradient_dark":
-        # 下部グラデーション（シネマ風）
-        grad_h = min(text_area_h + 100, h // 2)
-        grad_start = h - grad_h
-        for y in range(grad_h):
-            alpha = int((y / grad_h) ** 0.7 * 200)
-            for x in range(0, w, 1):
-                ov.putpixel((x, grad_start + y), (r, g, b, alpha))
+## バナー設計ルール（必須）
+- テキストは必ず「3秒で読める」大きさ（画像高さの10%以上のフォントサイズ）
+- コントラスト比 4.5:1 以上（白文字なら暗い背景、黒文字なら明るい背景）
+- テキストにはドロップシャドウ または アウトライン で可読性を確保
+- フォントは最大2種類まで
+- 余白を活かした美しいレイアウト
+- 構図はシンプル。ゴチャゴチャ禁止
 
-    elif overlay_type == "gradient_warm":
-        grad_h = min(text_area_h + 100, h // 2)
-        grad_start = h - grad_h
-        arr = np.array(ov)
-        for y in range(grad_h):
-            alpha = int((y / grad_h) ** 0.7 * 190)
-            arr[grad_start + y, :] = [r, g, b, alpha]
-        ov = Image.fromarray(arr, "RGBA")
+## 禁止事項
+- テキストを小さくする
+- テキストが背景に埋もれる（読めない）
+- 3種類以上のフォントを使う
+- ごちゃごちゃした構図
+- 日本語テキストが読みにくい位置・サイズ
 
-    elif overlay_type == "solid":
-        arr = np.array(ov)
-        pad = 24
-        alpha = int(style.get("opacity", 0.78) * 255)
-        arr[text_area_y - pad : text_area_y + text_area_h + pad, :] = [r, g, b, alpha]
-        ov = Image.fromarray(arr, "RGBA")
+## フックDB（バナー版 - 参考）
+- BH1 数字衝撃: 「-Xkg」「X万人突破」「X%OFF」→ 巨大フォント
+- BH2 疑問/問題提起: 「まだXXで悩んでる?」→ 吹き出し風
+- BH4 社会的証明: 「XX万人が選んだ」→ バッジ
+- BH5 緊急性: 「今だけ」「残りX個」→ 赤背景帯
+- BH8 新常識提案: 「XXはもう古い」→ 対比構造
+"""
 
-    elif overlay_type == "full":
-        alpha = int(style.get("opacity", 0.45) * 255)
-        ov = Image.new("RGBA", (w, h), (r, g, b, alpha))
+# ─── 感情×デザイン言語 ───────────────────────────────────────────────
+EMOTION_DESIGN = {
+    "共感": {
+        "color": "暖色系。オレンジ(#FF6B35)または温かい赤(#E84545)。背景は白/クリーム系。",
+        "font": "丸ゴシック系。太めで親しみやすく。",
+        "layout": "温かみのある光。人物中心。テキストは下部に大きく。半透明の暖色オーバーレイ。",
+        "mood": "共感・親近感。「あなたのことを分かっている」雰囲気。",
+        "text": "オレンジまたは白の太字。暖色の半透明背景上に。読みやすいサイズで大きく。",
+    },
+    "驚き": {
+        "color": "高コントラスト。黒背景×黄(#FFE600)。または白背景×黒極太テキスト。",
+        "font": "極太ゴシック。インパクト最大。",
+        "layout": "大胆な構図。テキストが全体の35〜45%を占めても良い。衝撃的な配置。",
+        "mood": "衝撃・驚き。「え、知らなかった！」の感覚。",
+        "text": "黄色または白で超大きく。中央配置。黒いアウトライン太め。",
+    },
+    "安心": {
+        "color": "緑系(#4CAF50, #88C057)または清潔な白×青(#4A90E2)。清潔感・誠実さ。",
+        "font": "標準ゴシック。読みやすく落ち着いた印象。",
+        "layout": "余白多め。整理されたクリーンなレイアウト。ナチュラルライト。",
+        "mood": "安心・信頼。「大丈夫」「これで解決する」感覚。",
+        "text": "ダークグリーンまたは白。緑/青のアクセントカラーを背景やバンドに使用。",
+    },
+    "権威": {
+        "color": "ネイビー(#0A1628)×ゴールド(#C9A84C)。または深い紺×白。上品で格式ある配色。",
+        "font": "明朝体または太ゴシック。格式と専門性。",
+        "layout": "左右バランス・中央構図。落ち着いた高級感。専門家・実績の雰囲気。",
+        "mood": "権威・専門性・信頼。「これが本物」「専門家が認めた」感覚。",
+        "text": "ゴールドまたは白テキスト。ネイビー背景上に。シャープで読みやすいフォント。",
+    },
+    "期待": {
+        "color": "明るく鮮やか。ピンク(#FF4081)または明るいオレンジ(#FF6E40)。白との組み合わせ。",
+        "font": "太ゴシック。エネルギッシュで前向き。",
+        "layout": "上向きの構図。躍動感・動き。明るく開放的。",
+        "mood": "期待・ワクワク。「これが来る！」「もうすぐ変わる」感覚。",
+        "text": "白または明るい黄色。ピンク/オレンジの鮮やかな背景またはグラデーション上に。",
+    },
+}
+DEFAULT_EMOTION = {
+    "color": "黒×白。高コントラスト。テキストは白。背景にダークグラデーション。",
+    "font": "太ゴシック。インパクトある読みやすいフォント。",
+    "layout": "テキスト下部配置。人物・商品は上部〜中央。",
+    "mood": "インパクト・訴求力。",
+    "text": "白い太字テキスト。黒いドロップシャドウ付き。大きく明確に。",
+}
 
-    return ov
+# ─── デザインプロンプト生成 ──────────────────────────────────────────
+def build_prompt(text: str, emotion: str, custom_emotion: str, size_label: str) -> str:
+    em = EMOTION_DESIGN.get(emotion, DEFAULT_EMOTION) if emotion else DEFAULT_EMOTION
+    emotion_label = emotion or custom_emotion or "インパクト訴求"
+    return f"""
+あなたは日本最高峰の広告クリエイティブデザイナーです。
+提供された画像を素材として、記事LP内で使用するプロフェッショナルなバナーを生成してください。
 
-# ─── テキストをフレームに描画 ──────────────────────────────────────
-def render_text(
-    base_img: Image.Image,
+{DESIGN_KNOWLEDGE}
+
+━━━ 生成指示 ━━━
+
+【必須テキスト】
+画像内に以下のテキストを必ず大きく・読めるサイズで入れてください：
+「{text}」
+
+【感情・訴求方向】
+{emotion_label}
+
+【カラースキーム】
+{em['color']}
+
+【フォント指示】
+{em['font']}
+
+【テキスト処理】
+{em['text']}
+
+【レイアウト・ムード】
+{em['layout']}
+雰囲気: {em['mood']}
+
+【出力サイズ】
+{size_label}
+
+━━━ 最重要チェック ━━━
+□ 「{text}」が画像内に大きく・明確に読めるか（最優先）
+□ テキストが背景に埋もれていないか（コントラスト確保）
+□ 1秒見ただけで感情が動くビジュアルか
+□ ブランドKVレベルの美しさか
+□ 「真に偉大か？」の基準を満たしているか
+
+このバナーを見た人が「え、これ何？」と1秒で止まり、
+「{text}」のメッセージが瞬時に入ってくる、プロ品質の作品を生成してください。
+"""
+
+# ─── Gemini でバナー生成 ─────────────────────────────────────────────
+def generate_banner(
+    base_image: Image.Image,
     text: str,
-    style: dict,
-    font: ImageFont.FreeTypeFont,
-    position: str = "bottom",
-    alpha_ratio: float = 1.0,  # 0〜1（フェードイン用）
-):
-    img = base_img.convert("RGBA")
-    w, h = img.size
+    emotion: str,
+    custom_emotion: str,
+    size: tuple,
+    size_label: str,
+    genai_module,
+    clients: list,
+) -> Image.Image:
+    from google.genai import types
 
-    font_size = font.size if hasattr(font, "size") else 40
-    lines = wrap_text(text, font, w * 0.88)
-    line_h = int(font_size * 1.35)
-    total_h = line_h * len(lines)
+    # ベース画像をリサイズ
+    if size:
+        tw, th = size
+        iw, ih = base_image.size
+        ratio = min(tw / iw, th / ih)
+        nw, nh = int(iw * ratio), int(ih * ratio)
+        resized = base_image.resize((nw, nh), Image.LANCZOS)
+        canvas = Image.new("RGB", (tw, th), (0, 0, 0))
+        canvas.paste(resized, ((tw - nw) // 2, (th - nh) // 2))
+        base_image = canvas
+    else:
+        tw, th = base_image.size
 
-    if position == "top":
-        text_y = 50
-    elif position == "center":
-        text_y = (h - total_h) // 2
-    else:  # bottom
-        text_y = h - total_h - 70
+    # 画像をバイト列に変換
+    buf = io.BytesIO()
+    base_image.save(buf, format="JPEG", quality=90)
+    img_bytes = buf.getvalue()
 
-    # オーバーレイ
-    ov = build_overlay(img, style, text_y, total_h)
-    img = Image.alpha_composite(img, ov)
+    prompt = build_prompt(text, emotion, custom_emotion, size_label)
 
-    # テキスト描画レイヤー
-    txt_layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(txt_layer)
-    tr, tg, tb = style.get("text_color", (255, 255, 255))
-    text_alpha = int(alpha_ratio * 255)
-    stroke_color = style.get("stroke_color", (0, 0, 0))
-    stroke_w = style.get("stroke_width", 3)
+    # アスペクト比を計算
+    from math import gcd
+    g = gcd(tw, th)
+    ratio_str = f"{tw//g}:{th//g}"
+    # Gemini がサポートするアスペクト比に丸める
+    aspect_map = {
+        "1:1": "1:1", "4:5": "4:5", "3:4": "3:4", "9:16": "9:16",
+        "16:9": "16:9", "4:3": "4:3",
+    }
+    aspect = aspect_map.get(ratio_str, "1:1")
 
-    for i, line in enumerate(lines):
-        lw = int(measure_text_width(font, line))
-        tx = (w - lw) // 2
-        ty = text_y + i * line_h
-        # ストローク（アウトライン）
-        if stroke_w > 0:
-            draw.text(
-                (tx, ty), line, font=font,
-                fill=(*stroke_color, text_alpha),
-                stroke_width=stroke_w, stroke_fill=(*stroke_color, text_alpha),
+    for attempt, client in enumerate(clients * 2):
+        try:
+            resp = client.models.generate_content(
+                model="gemini-3-pro-image-preview",
+                contents=[
+                    types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
+                    prompt,
+                ],
+                config=types.GenerateContentConfig(
+                    response_modalities=["IMAGE"],
+                    image_config=types.ImageConfig(aspect_ratio=aspect),
+                ),
             )
-        # ドロップシャドウ
-        draw.text((tx + 3, ty + 4), line, font=font, fill=(0, 0, 0, int(text_alpha * 0.5)))
-        # 本文
-        draw.text((tx, ty), line, font=font, fill=(tr, tg, tb, text_alpha))
+            img_data = next(
+                (p.inline_data.data for p in resp.parts if hasattr(p, "inline_data") and p.inline_data),
+                None,
+            )
+            if img_data and len(img_data) > 10240:
+                result = Image.open(io.BytesIO(img_data)).convert("RGB")
+                if size:
+                    result = result.resize(size, Image.LANCZOS)
+                return result
+        except Exception as e:
+            if attempt < len(clients) * 2 - 1:
+                time.sleep(3)
+            else:
+                raise RuntimeError(f"Gemini生成失敗: {e}")
+    raise RuntimeError("Geminiから画像が返されませんでした")
 
-    img = Image.alpha_composite(img, txt_layer)
-    return img.convert("RGB")
-
-# ─── 感情スタイル ──────────────────────────────────────────────────
-EMOTION_STYLES = {
-    "共感":  {"text_color": (255, 255, 255), "bg_color": (200, 80, 30),  "overlay": "gradient_warm", "stroke_color": (150, 40, 0),  "stroke_width": 3, "font_hint": "丸ゴシック（柔らかい）"},
-    "驚き":  {"text_color": (255, 235,   0), "bg_color": (0, 0, 0),      "overlay": "gradient_dark", "stroke_color": (0, 0, 0),     "stroke_width": 4, "font_hint": "ゴシック（極太）"},
-    "安心":  {"text_color": (30,  60,  30),  "bg_color": (220, 245, 220),"overlay": "solid",         "stroke_color": (200, 230, 200),"stroke_width": 2, "font_hint": "ゴシック（標準）"},
-    "権威":  {"text_color": (240, 220, 160), "bg_color": (0, 15, 50),    "overlay": "gradient_dark", "stroke_color": (0, 0, 0),     "stroke_width": 3, "font_hint": "明朝（格式）"},
-    "期待":  {"text_color": (255, 255, 255), "bg_color": (200, 40, 90),  "overlay": "gradient_warm", "stroke_color": (140, 0, 50),  "stroke_width": 3, "font_hint": "ゴシック（極太）"},
-}
-DEFAULT_STYLE = {"text_color": (255, 255, 255), "bg_color": (0, 0, 0), "overlay": "gradient_dark", "stroke_color": (0, 0, 0), "stroke_width": 3, "font_hint": "ゴシック（標準）"}
-
-def resolve_style(selected: list, custom: str) -> dict:
-    if selected:
-        return EMOTION_STYLES.get(selected[0], DEFAULT_STYLE)
-    return DEFAULT_STYLE
-
-# ─── サイズプリセット ──────────────────────────────────────────────
-SIZE_PRESETS = {
-    "素材のまま": None,
-    "680 × 450（横長・記事メイン）": (680, 450),
-    "680 × 800（縦長・強調）": (680, 800),
-    "1080 × 1080（正方形・SNS）": (1080, 1080),
-    "390 × 844（スマホ縦）": (390, 844),
-    "1280 × 720（横動画）": (1280, 720),
-}
-
-def resize_image(img: Image.Image, size):
-    if size is None:
-        return img
-    tw, th = size
-    iw, ih = img.size
-    ratio = min(tw / iw, th / ih)
-    nw, nh = int(iw * ratio), int(ih * ratio)
-    resized = img.resize((nw, nh), Image.LANCZOS)
-    bg = Image.new("RGB", (tw, th), (0, 0, 0))
-    bg.paste(resized, ((tw - nw) // 2, (th - nh) // 2))
-    return bg
-
-# ─── テキストアニメーション ────────────────────────────────────────
+# ─── 動画生成ユーティリティ ─────────────────────────────────────────
 ANIMATIONS = {
-    "なし": "none",
+    "なし（静止）": "none",
+    "ゆっくりズームイン": "zoom",
     "フェードイン": "fade",
-    "下からスライド": "slide_up",
-    "ズームイン": "zoom",
+    "左からスライド": "slide",
 }
 
-def animate_frame(base_img: Image.Image, text: str, style: dict, font, position: str,
-                  frame_idx: int, total_frames: int, animation: str) -> np.ndarray:
-    """アニメーションフレームを1枚生成"""
-    t = frame_idx / max(total_frames - 1, 1)
-    anim_frames = min(total_frames, 30)
-    progress = min(frame_idx / anim_frames, 1.0)
-
-    if animation == "fade":
-        result = render_text(base_img, text, style, font, position, alpha_ratio=progress)
-
-    elif animation == "slide_up":
-        # テキストを下からスライドイン
-        img = base_img.convert("RGBA")
-        w, h = img.size
-        font_size = font.size if hasattr(font, "size") else 40
-        lines = wrap_text(text, font, w * 0.88)
-        line_h = int(font_size * 1.35)
-        total_h = line_h * len(lines)
-
-        if position == "bottom":
-            final_y = h - total_h - 70
-        elif position == "center":
-            final_y = (h - total_h) // 2
-        else:
-            final_y = 50
-
-        offset = int((1 - progress) * 80)
-        shifted_style = dict(style)
-
-        # ずらした位置にオーバーレイを描画するための一時クロップ
-        tmp = base_img.copy()
-        result_tmp = render_text(tmp, text, shifted_style, font, position, alpha_ratio=min(progress * 2, 1.0))
-        result = result_tmp
-
-    elif animation == "zoom":
-        scale = 0.85 + 0.15 * progress
-        result_base = render_text(base_img, text, style, font, position, alpha_ratio=progress)
-        w, h = result_base.size
-        nw, nh = int(w * scale), int(h * scale)
-        zoomed = result_base.resize((nw, nh), Image.LANCZOS)
-        bg = Image.new("RGB", (w, h), (0, 0, 0))
-        bg.paste(zoomed, ((w - nw) // 2, (h - nh) // 2))
-        result = bg
-
-    else:  # none
-        result = render_text(base_img, text, style, font, position)
-
-    return cv2.cvtColor(np.array(result), cv2.COLOR_RGB2BGR)
-
-# ─── 画像 → 画像 ──────────────────────────────────────────────────
-def process_image_to_image(input_path: str, text: str, style: dict, font,
-                            position: str, size):
-    img = Image.open(input_path).convert("RGB")
-    img = resize_image(img, size)
-    return render_text(img, text, style, font, position)
-
-# ─── 画像 → 動画 ──────────────────────────────────────────────────
-def process_image_to_video(input_path: str, text: str, style: dict, font, position: str,
-                            size, duration: int, animation: str, output_path: str):
-    img = Image.open(input_path).convert("RGB")
-    img = resize_image(img, size)
+def image_to_video(img: Image.Image, duration: int, animation: str, output_path: str):
     w, h = img.size
     fps = 30
     total = fps * duration
+    base_arr = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     out = cv2.VideoWriter(output_path, fourcc, fps, (w, h))
+
     for i in range(total):
-        frame = animate_frame(img, text, style, font, position, i, total, animation)
+        t = i / max(total - 1, 1)
+
+        if animation == "zoom":
+            scale = 1.0 + 0.08 * t
+            nw, nh = int(w * scale), int(h * scale)
+            zoomed = cv2.resize(base_arr, (nw, nh))
+            x = (nw - w) // 2
+            y = (nh - h) // 2
+            frame = zoomed[y:y+h, x:x+w]
+
+        elif animation == "fade":
+            alpha = min(t * 2, 1.0)
+            frame = (base_arr * alpha).astype(np.uint8)
+
+        elif animation == "slide":
+            offset = int((1 - min(t * 3, 1.0)) * w * 0.3)
+            frame = np.zeros_like(base_arr)
+            if offset < w:
+                frame[:, offset:] = base_arr[:, :w-offset]
+
+        else:
+            frame = base_arr.copy()
+
         out.write(frame)
     out.release()
 
-# ─── 動画 → 動画 ──────────────────────────────────────────────────
-def process_video_to_video(input_path: str, text: str, style: dict, font, position: str,
-                            size, duration: int, animation: str, output_path: str):
-    cap = cv2.VideoCapture(input_path)
-    fps = cap.get(cv2.CAP_PROP_FPS) or 30
-    orig_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    orig_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    max_frames = int(fps * duration)
-
-    # サイズ決定
-    if size:
-        out_w, out_h = size
-    else:
-        out_w, out_h = orig_w, orig_h
-
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    out = cv2.VideoWriter(output_path, fourcc, fps, (out_w, out_h))
-
-    frames_read = []
-    while len(frames_read) < max_frames:
-        ret, frame = cap.read()
-        if not ret:
-            break
-        frames_read.append(frame)
+def extract_frame(video_path: str) -> Image.Image:
+    cap = cv2.VideoCapture(video_path)
+    total = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+    cap.set(cv2.CAP_PROP_POS_FRAMES, total // 2)
+    ret, frame = cap.read()
     cap.release()
+    if ret:
+        return Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+    raise ValueError("動画からフレームを取得できませんでした")
 
-    total = len(frames_read)
-    for i, frame in enumerate(frames_read):
-        pil = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-        pil = resize_image(pil, size)
-        rendered = animate_frame(pil, text, style, font, position, i, total, animation)
-        out.write(rendered)
-    out.release()
+# ─── サイズプリセット ────────────────────────────────────────────────
+SIZE_PRESETS = {
+    "素材のまま": (None, "素材のまま"),
+    "680 × 450（横長・記事メイン）": ((680, 450), "680×450 横長"),
+    "680 × 800（縦長・強調）": ((680, 800), "680×800 縦長"),
+    "1080 × 1080（正方形・SNS）": ((1080, 1080), "1080×1080 正方形"),
+    "1080 × 1920（縦動画・ストーリーズ）": ((1080, 1920), "1080×1920 縦動画"),
+    "1280 × 720（横動画）": ((1280, 720), "1280×720 横動画"),
+}
 
-# ─── Streamlit UI ─────────────────────────────────────────────────
+# ─── Streamlit UI ────────────────────────────────────────────────────
 def main():
     st.set_page_config(page_title="記事内バナーメーカー", page_icon="🎨", layout="centered")
-    st.title("🎨 記事内バナーメーカー")
-    st.caption("素材 × テキスト × 感情デザイン → 記事内素材を自動生成")
+    st.title("🎨 記事内バナーメーカー v3")
+    st.caption("Nano Banana Pro（Gemini）× パク哲学フル注入 → プロ品質バナーを自動生成")
+
+    genai_module, clients = init_gemini()
+    if not clients:
+        st.error("⚠️ GEMINI_API_KEY_1 が未設定です。Streamlit Cloud の Secrets に追加してください。")
+        st.code("GEMINI_API_KEY_1 = 'your-gemini-api-key'", language="toml")
+        return
+
+    st.success(f"✅ Gemini 接続済み（{len(clients)}キー）")
     st.divider()
 
-    available_fonts = discover_fonts()
-    font_names = list(available_fonts.keys())
-
-    # ── 入力 / 出力タイプ ──────────────────────────────────────────
-    st.subheader("① 入力 → 出力タイプを選択")
+    # ── ① 入力 / 出力タイプ ─────────────────────────────────────────
+    st.subheader("① 入力 → 出力タイプ")
     output_mode = st.radio(
-        "パターン",
-        options=[
-            "画像 → 画像（静止バナー）",
-            "画像 → 動画（テキストアニメーション付き）",
-            "動画 → 動画（文字乗せ）",
-        ],
-        horizontal=False,
+        "",
+        ["画像 → 画像（静止バナー）",
+         "画像 → 動画（アニメーション付き）",
+         "動画 → 画像（フレーム抽出 → バナー）",
+         "動画 → 動画（フレーム抽出 → アニメーション）"],
+        label_visibility="collapsed",
     )
-    is_video_input  = output_mode.startswith("動画")
-    is_video_output = "動画" in output_mode.split("→")[1]
+    is_video_input = output_mode.startswith("動画 →")
+    is_video_output = output_mode.endswith("動画）") or output_mode.endswith("アニメーション付き）")
 
-    # ── ベース素材 ────────────────────────────────────────────────
+    # ── ② ベース素材 ────────────────────────────────────────────────
     st.subheader("② ベース素材")
     if is_video_input:
         uploaded = st.file_uploader("動画をアップロード", type=["mp4", "mov"])
     else:
         uploaded = st.file_uploader("画像をアップロード", type=["jpg", "jpeg", "png"])
 
-    # ── 出力サイズ ────────────────────────────────────────────────
+    # ── ③ 出力サイズ ────────────────────────────────────────────────
     st.subheader("③ 出力サイズ")
     size_name = st.selectbox("サイズプリセット", list(SIZE_PRESETS.keys()))
-    output_size = SIZE_PRESETS[size_name]
+    output_size, size_label = SIZE_PRESETS[size_name]
 
-    # ── テキスト ──────────────────────────────────────────────────
-    st.subheader("④ テキスト")
-    text = st.text_input("見出し・キャッチコピー", placeholder="例：足の臭いが気になる方へ")
-    position = st.radio("テキスト位置", list(POSITIONS.keys()), horizontal=True, index=2)
+    # ── ④ テキスト ──────────────────────────────────────────────────
+    st.subheader("④ テキスト（バナー内に入れる文言）")
+    text = st.text_input("キャッチコピー・見出し", placeholder="例：足の臭いが気になる方へ")
 
-    # ── フォント ──────────────────────────────────────────────────
-    st.subheader("⑤ フォント")
-    selected_font_name = st.selectbox("フォントを選択", font_names)
-    font_size = st.slider("フォントサイズ", min_value=24, max_value=120, value=52, step=4)
-    font_path = available_fonts.get(selected_font_name)
-    font_obj = get_font(font_path, font_size)
-
-    # ── 感情タグ ──────────────────────────────────────────────────
-    st.subheader("⑥ 感情タグ")
-    st.caption("選択するとテキストカラー・背景が自動で変わります")
-    emotion_presets = list(EMOTION_STYLES.keys())
-    cols = st.columns(len(emotion_presets))
+    # ── ⑤ 感情タグ ──────────────────────────────────────────────────
+    st.subheader("⑤ 感情タグ")
+    st.caption("選択するとGeminiへのデザイン指示が変わります")
+    emotion_list = list(EMOTION_DESIGN.keys())
+    cols = st.columns(len(emotion_list))
     selected_emotions = []
-    for i, e in enumerate(emotion_presets):
+    for i, e in enumerate(emotion_list):
         if cols[i].checkbox(e, key=f"emo_{e}"):
             selected_emotions.append(e)
-    custom_emotion = st.text_input(
-        "または自由入力（例：焦り・悔しさ・ワクワク）",
-        placeholder="感情を自由に入力",
-    )
-    style = resolve_style(selected_emotions, custom_emotion)
+    custom_emotion = st.text_input("または自由入力（例：焦り・ワクワク・悔しさ）", placeholder="感情を自由に入力")
 
-    # ── 動画オプション（動画出力の時のみ表示） ────────────────────
-    duration, animation = 3, "fade"
+    # ── ⑥ 動画オプション（動画出力のみ） ─────────────────────────────
+    duration, animation_key = 3, "none"
     if is_video_output:
-        st.subheader("⑦ 動画オプション")
+        st.subheader("⑥ 動画オプション")
         duration = st.select_slider("尺（秒）", options=[1, 3, 5, 7], value=3)
-        animation = st.selectbox("テキストアニメーション", list(ANIMATIONS.keys()))
-        animation = ANIMATIONS[animation]
-
-    # ── スタイルプレビュー ────────────────────────────────────────
-    if text and (selected_emotions or custom_emotion):
-        r, g, b = style["bg_color"]
-        tr, tg, tb = style["text_color"]
-        st.divider()
-        st.caption("スタイルプレビュー（実際の画像ではイメージが異なります）")
-        st.markdown(
-            f'<div style="background:linear-gradient(to top, rgba({r},{g},{b},0.9), transparent);'
-            f'color:rgb({tr},{tg},{tb});padding:20px 24px;border-radius:8px;'
-            f'text-align:center;font-weight:bold;font-size:20px;'
-            f'text-shadow:2px 2px 4px rgba(0,0,0,0.6);">'
-            f'{text}</div>',
-            unsafe_allow_html=True,
-        )
+        anim_name = st.selectbox("アニメーション", list(ANIMATIONS.keys()))
+        animation_key = ANIMATIONS[anim_name]
 
     st.divider()
 
-    # ── 生成ボタン ────────────────────────────────────────────────
-    if st.button("🎨 生成する", type="primary", use_container_width=True):
+    # ── 生成ボタン ───────────────────────────────────────────────────
+    if st.button("🚀 Gemini で生成する", type="primary", use_container_width=True):
         if not uploaded:
             st.error("② ベース素材をアップロードしてください")
             return
@@ -436,35 +389,38 @@ def main():
             st.error("④ テキストを入力してください")
             return
 
-        pos_key = POSITIONS[position]
+        emotion = selected_emotions[0] if selected_emotions else ""
         suffix = Path(uploaded.name).suffix.lower()
 
         with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
             tmp.write(uploaded.read())
             input_path = tmp.name
 
-        emotion_label = selected_emotions[0] if selected_emotions else (custom_emotion or "custom")
-
-        with st.spinner("生成中..."):
+        with st.spinner("Gemini がデザイン生成中... (15〜30秒)"):
             try:
-                if output_mode == "画像 → 画像（静止バナー）":
-                    result_img = process_image_to_image(input_path, text.strip(), style, font_obj, pos_key, output_size)
+                # ベース画像の取得
+                if is_video_input:
+                    base_img = extract_frame(input_path)
+                else:
+                    base_img = Image.open(input_path).convert("RGB")
+
+                # Gemini でバナー生成
+                banner_img = generate_banner(
+                    base_img, text.strip(), emotion, custom_emotion,
+                    output_size, size_label, genai_module, clients,
+                )
+
+                # 出力
+                if is_video_output:
+                    out_buf = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+                    image_to_video(banner_img, duration, animation_key, out_buf.name)
+                    output_path = out_buf.name
+                    is_img_out = False
+                else:
                     out_buf = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
-                    result_img.save(out_buf.name, "JPEG", quality=92)
+                    banner_img.save(out_buf.name, "JPEG", quality=93)
                     output_path = out_buf.name
-                    is_img_output = True
-
-                elif output_mode == "画像 → 動画（テキストアニメーション付き）":
-                    out_buf = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-                    output_path = out_buf.name
-                    process_image_to_video(input_path, text.strip(), style, font_obj, pos_key, output_size, duration, animation, output_path)
-                    is_img_output = False
-
-                else:  # 動画 → 動画
-                    out_buf = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-                    output_path = out_buf.name
-                    process_video_to_video(input_path, text.strip(), style, font_obj, pos_key, output_size, duration, animation, output_path)
-                    is_img_output = False
+                    is_img_out = True
 
             except Exception as e:
                 st.error(f"生成エラー: {e}")
@@ -475,22 +431,19 @@ def main():
 
         st.success("✅ 生成完了！")
 
-        if is_img_output:
+        emotion_label = emotion or custom_emotion or "custom"
+        if is_img_out:
             st.image(output_path)
             with open(output_path, "rb") as f:
-                st.download_button(
-                    "⬇ 画像をダウンロード", data=f,
-                    file_name=f"banner_{emotion_label}.jpg",
-                    mime="image/jpeg", use_container_width=True,
-                )
+                st.download_button("⬇ 画像をダウンロード", data=f,
+                                   file_name=f"banner_{emotion_label}.jpg",
+                                   mime="image/jpeg", use_container_width=True)
         else:
             st.video(output_path)
             with open(output_path, "rb") as f:
-                st.download_button(
-                    "⬇ 動画をダウンロード", data=f,
-                    file_name=f"banner_{emotion_label}_{duration}s.mp4",
-                    mime="video/mp4", use_container_width=True,
-                )
+                st.download_button("⬇ 動画をダウンロード", data=f,
+                                   file_name=f"banner_{emotion_label}_{duration}s.mp4",
+                                   mime="video/mp4", use_container_width=True)
 
         if os.path.exists(output_path):
             os.unlink(output_path)
