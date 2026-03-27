@@ -134,7 +134,48 @@ DEFAULT_EMOTION = {
     "text": "白い太字テキスト。黒いドロップシャドウ付き。大きく明確に。",
 }
 
-# ─── デザインプロンプト生成 ──────────────────────────────────────────
+# ─── Imagen-3 用プロンプト生成（英語）──────────────────────────────
+def build_imagen_prompt(text: str, emotion: str, custom_emotion: str,
+                        image_desc: str, size_label: str, comp_instruction: str) -> str:
+    em = EMOTION_DESIGN.get(emotion, DEFAULT_EMOTION)
+    emotion_label = emotion or custom_emotion or "impact"
+
+    # 感情→英語スタイル
+    style_map = {
+        "共感": "warm orange tones, friendly rounded font, soft glowing light, empathetic mood",
+        "驚き": "high contrast black and yellow, ultra bold impact font, shocking dramatic composition",
+        "安心": "clean green and white, clear readable layout, natural light, trustworthy calm mood",
+        "権威": "navy and gold, elegant serif font, prestigious authoritative composition",
+        "期待": "vibrant pink and orange gradient, energetic bold font, upward dynamic composition",
+    }
+    style = style_map.get(emotion, "high contrast, bold typography, professional advertising design")
+
+    return f"""Professional Japanese article LP banner advertisement.
+
+Base image description: {image_desc}
+
+Required Japanese text overlay (MUST be large and clearly readable): 「{text}」
+
+Design style: {style}
+Composition: {comp_instruction}
+Output size: {size_label}
+
+Design requirements:
+- The Japanese text 「{text}」 MUST appear prominently and be clearly readable
+- Large bold typography, minimum 10% of image height
+- Text contrast ratio 4.5:1 minimum (white text on dark overlay, or dark text on light)
+- Text must have drop shadow or outline for readability
+- Professional gradient or solid overlay behind text
+- Maximum 2 font styles
+- Clean, uncluttered layout with proper white space
+- Photographic quality, magazine-level production
+
+Quality standard: This banner must stop someone scrolling in 1 second. It should feel like a brand key visual, not just an advertisement.
+
+IMPORTANT: Include the exact Japanese text 「{text}」 visibly in the image."""
+
+
+# ─── Gemini multimodal 用プロンプト（フォールバック用）──────────────
 def build_prompt(text: str, emotion: str, custom_emotion: str, size_label: str) -> str:
     em = EMOTION_DESIGN.get(emotion, DEFAULT_EMOTION) if emotion else DEFAULT_EMOTION
     emotion_label = emotion or custom_emotion or "インパクト訴求"
@@ -181,89 +222,129 @@ def build_prompt(text: str, emotion: str, custom_emotion: str, size_label: str) 
 """
 
 # ─── Gemini でバナー生成 ─────────────────────────────────────────────
-def generate_banner(
+def analyze_image(base_image: Image.Image, clients: list) -> str:
+    """Gemini Flash で画像を分析して説明文を生成"""
+    from google.genai import types
+    buf = io.BytesIO()
+    base_image.save(buf, format="JPEG", quality=85)
+    img_bytes = buf.getvalue()
+    for client in clients:
+        try:
+            resp = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=[
+                    types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
+                    "この画像を詳細に説明してください。被写体・人物・商品・背景・色調・雰囲気・構図を具体的に日本語で。",
+                ],
+            )
+            return resp.text.strip()
+        except Exception:
+            continue
+    return "人物または商品の写真"
+
+
+def generate_banners(
     base_image: Image.Image,
     text: str,
     emotion: str,
     custom_emotion: str,
-    size: tuple,
+    composition: str,
+    size,
     size_label: str,
-    genai_module,
     clients: list,
-) -> Image.Image:
+    n: int = 3,
+) -> list:
+    """Imagen-3 で n 枚のバナー候補を生成して返す"""
     from google.genai import types
+    from math import gcd
 
-    # ベース画像をリサイズ
+    # ① 画像を言語化（Gemini Flash）
+    image_desc = analyze_image(base_image, clients)
+
+    # ② アスペクト比
     if size:
         tw, th = size
-        iw, ih = base_image.size
-        ratio = min(tw / iw, th / ih)
-        nw, nh = int(iw * ratio), int(ih * ratio)
-        resized = base_image.resize((nw, nh), Image.LANCZOS)
-        canvas = Image.new("RGB", (tw, th), (0, 0, 0))
-        canvas.paste(resized, ((tw - nw) // 2, (th - nh) // 2))
-        base_image = canvas
     else:
         tw, th = base_image.size
+    g = gcd(tw, th)
+    ratio_str = f"{tw//g}:{th//g}"
+    aspect_map = {"1:1": "1:1", "4:5": "4:5", "3:4": "3:4",
+                  "9:16": "9:16", "16:9": "16:9", "4:3": "4:3"}
+    aspect = aspect_map.get(ratio_str, "1:1")
 
-    # 画像をバイト列に変換
+    # ③ 構図指示
+    comp_map = {
+        "寄り（クローズアップ）": "Close-up shot. Subject fills the frame. Tight composition. Emotional intensity.",
+        "引き（ワイドショット）": "Wide shot. Show full environment and context. Subject is part of the scene. World-building.",
+        "バランス（標準）": "Balanced composition. Subject clearly visible with some context.",
+    }
+    comp_instruction = comp_map.get(composition, comp_map["バランス（標準）"])
+
+    # ④ フルプロンプト生成（日本語知識 + 英語生成指示）
+    prompt = build_imagen_prompt(text, emotion, custom_emotion, image_desc, size_label, comp_instruction)
+
+    # ⑤ Imagen-3 で生成
+    last_error = None
+    for client in clients * 2:
+        try:
+            resp = client.models.generate_images(
+                model="imagen-3.0-generate-002",
+                prompt=prompt,
+                config=types.GenerateImagesConfig(
+                    number_of_images=n,
+                    aspect_ratio=aspect,
+                    safety_filter_level="block_low_and_above",
+                    person_generation="allow_adult",
+                ),
+            )
+            images = []
+            for gi in resp.generated_images:
+                img = Image.open(io.BytesIO(gi.image.image_bytes)).convert("RGB")
+                if size:
+                    img = img.resize((tw, th), Image.LANCZOS)
+                images.append(img)
+            if images:
+                return images
+        except Exception as e:
+            last_error = e
+            time.sleep(4)
+
+    # Imagen-3 失敗時は gemini-2.0-flash-preview-image-generation にフォールバック
     buf = io.BytesIO()
     base_image.save(buf, format="JPEG", quality=90)
     img_bytes = buf.getvalue()
+    old_prompt = build_prompt(text, emotion, custom_emotion, size_label)
 
-    prompt = build_prompt(text, emotion, custom_emotion, size_label)
-
-    # アスペクト比を計算
-    from math import gcd
-    g = gcd(tw, th)
-    ratio_str = f"{tw//g}:{th//g}"
-    # Gemini がサポートするアスペクト比に丸める
-    aspect_map = {
-        "1:1": "1:1", "4:5": "4:5", "3:4": "3:4", "9:16": "9:16",
-        "16:9": "16:9", "4:3": "4:3",
-    }
-    aspect = aspect_map.get(ratio_str, "1:1")
-
-    MODELS = [
-        "gemini-2.0-flash-preview-image-generation",
-        "gemini-2.0-flash-exp",
-        "gemini-3-pro-image-preview",
-    ]
-
-    last_error = None
-    for model in MODELS:
-        for attempt, client in enumerate(clients):
-            try:
-                resp = client.models.generate_content(
-                    model=model,
-                    contents=[
-                        types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
-                        prompt,
-                    ],
-                    config=types.GenerateContentConfig(
-                        response_modalities=["IMAGE"],
-                        image_config=types.ImageConfig(aspect_ratio=aspect),
-                    ),
-                )
-                img_data = next(
-                    (p.inline_data.data for p in resp.parts if hasattr(p, "inline_data") and p.inline_data),
-                    None,
-                )
-                if img_data and len(img_data) > 10240:
-                    result = Image.open(io.BytesIO(img_data)).convert("RGB")
-                    if size:
-                        result = result.resize(size, Image.LANCZOS)
-                    return result
-            except Exception as e:
-                last_error = e
-                time.sleep(3)
-        time.sleep(5)
+    for client in clients * 2:
+        try:
+            resp = client.models.generate_content(
+                model="gemini-2.0-flash-preview-image-generation",
+                contents=[
+                    types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
+                    old_prompt,
+                ],
+                config=types.GenerateContentConfig(
+                    response_modalities=["IMAGE"],
+                    image_config=types.ImageConfig(aspect_ratio=aspect),
+                ),
+            )
+            img_data = next(
+                (p.inline_data.data for p in resp.parts if hasattr(p, "inline_data") and p.inline_data),
+                None,
+            )
+            if img_data and len(img_data) > 10240:
+                result = Image.open(io.BytesIO(img_data)).convert("RGB")
+                if size:
+                    result = result.resize((tw, th), Image.LANCZOS)
+                return [result]
+        except Exception as e:
+            last_error = e
+            time.sleep(4)
 
     raise RuntimeError(
-        f"Geminiが現在混雑しています。\n\n"
-        f"➡ 5〜10分待ってから「再試行」ボタンを押してください。\n"
-        f"（Gemini画像生成モデルは時間帯によって混雑します）\n\n"
-        f"詳細: {last_error}"
+        f"画像生成に失敗しました。\n\n"
+        f"Imagen-3 と Gemini Flash Image Generation の両方が応答しませんでした。\n"
+        f"数分後に再試行してください。\n\n詳細: {last_error}"
     )
 
 
@@ -385,7 +466,7 @@ def main():
 
     # ── ⑤ 感情タグ ──────────────────────────────────────────────────
     st.subheader("⑤ 感情タグ")
-    st.caption("選択するとGeminiへのデザイン指示が変わります")
+    st.caption("選択するとデザイン指示（カラー・フォント・構図）が変わります")
     emotion_list = list(EMOTION_DESIGN.keys())
     cols = st.columns(len(emotion_list))
     selected_emotions = []
@@ -394,10 +475,26 @@ def main():
             selected_emotions.append(e)
     custom_emotion = st.text_input("または自由入力（例：焦り・ワクワク・悔しさ）", placeholder="感情を自由に入力")
 
-    # ── ⑥ 動画オプション（動画出力のみ） ─────────────────────────────
+    # ── ⑥ 構図（寄り/引き） ────────────────────────────────────────
+    st.subheader("⑥ 構図")
+    composition = st.radio(
+        "",
+        ["寄り（クローズアップ）", "バランス（標準）", "引き（ワイドショット）"],
+        index=1,
+        horizontal=True,
+        label_visibility="collapsed",
+    )
+    comp_desc = {
+        "寄り（クローズアップ）": "被写体を大きく・感情の強度を上げる。顔・商品・細部にフォーカス。",
+        "バランス（標準）": "被写体と背景のバランス。記事LP標準構図。",
+        "引き（ワイドショット）": "環境・シーン全体を見せる。世界観・安心感・権威感に合う。",
+    }
+    st.caption(comp_desc[composition])
+
+    # ── ⑦ 動画オプション（動画出力のみ） ─────────────────────────────
     duration, animation_key = 3, "none"
     if is_video_output:
-        st.subheader("⑥ 動画オプション")
+        st.subheader("⑦ 動画オプション")
         duration = st.select_slider("尺（秒）", options=[1, 3, 5, 7], value=3)
         anim_name = st.selectbox("アニメーション", list(ANIMATIONS.keys()))
         animation_key = ANIMATIONS[anim_name]
@@ -405,7 +502,7 @@ def main():
     st.divider()
 
     # ── 生成ボタン ───────────────────────────────────────────────────
-    if st.button("🚀 Gemini で生成する", type="primary", use_container_width=True):
+    if st.button("🚀 Imagen-3 で3枚生成する", type="primary", use_container_width=True):
         if not uploaded:
             st.error("② ベース素材をアップロードしてください")
             return
@@ -414,38 +511,25 @@ def main():
             return
 
         emotion = selected_emotions[0] if selected_emotions else ""
+        emotion_label = emotion or custom_emotion or "custom"
         suffix = Path(uploaded.name).suffix.lower()
 
         with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
             tmp.write(uploaded.read())
             input_path = tmp.name
 
-        with st.spinner("Gemini がデザイン生成中... (15〜30秒)"):
+        with st.spinner("① 画像分析中... → ② Imagen-3 で3枚生成中... (30〜60秒)"):
             try:
-                # ベース画像の取得
                 if is_video_input:
                     base_img = extract_frame(input_path)
                 else:
                     base_img = Image.open(input_path).convert("RGB")
 
-                # Gemini でバナー生成
-                banner_img = generate_banner(
+                banner_imgs = generate_banners(
                     base_img, text.strip(), emotion, custom_emotion,
-                    output_size, size_label, genai_module, clients,
+                    composition, output_size, size_label, clients,
+                    n=3,
                 )
-
-                # 出力
-                if is_video_output:
-                    out_buf = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-                    image_to_video(banner_img, duration, animation_key, out_buf.name)
-                    output_path = out_buf.name
-                    is_img_out = False
-                else:
-                    out_buf = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
-                    banner_img.save(out_buf.name, "JPEG", quality=93)
-                    output_path = out_buf.name
-                    is_img_out = True
-
             except Exception as e:
                 st.error(f"生成エラー: {e}")
                 return
@@ -453,24 +537,37 @@ def main():
                 if os.path.exists(input_path):
                     os.unlink(input_path)
 
-        st.success("✅ 生成完了！")
+        st.success(f"✅ {len(banner_imgs)}枚 生成完了！")
+        st.divider()
 
-        emotion_label = emotion or custom_emotion or "custom"
-        if is_img_out:
-            st.image(output_path)
-            with open(output_path, "rb") as f:
-                st.download_button("⬇ 画像をダウンロード", data=f,
-                                   file_name=f"banner_{emotion_label}.jpg",
-                                   mime="image/jpeg", use_container_width=True)
-        else:
-            st.video(output_path)
-            with open(output_path, "rb") as f:
-                st.download_button("⬇ 動画をダウンロード", data=f,
-                                   file_name=f"banner_{emotion_label}_{duration}s.mp4",
-                                   mime="video/mp4", use_container_width=True)
+        # ── 候補を並べて表示・ダウンロード ─────────────────────────
+        cols_out = st.columns(len(banner_imgs))
+        for idx, img in enumerate(banner_imgs):
+            with cols_out[idx]:
+                st.image(img, caption=f"候補 {idx+1}", use_container_width=True)
 
-        if os.path.exists(output_path):
-            os.unlink(output_path)
+                if is_video_output:
+                    out_buf = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+                    image_to_video(img, duration, animation_key, out_buf.name)
+                    with open(out_buf.name, "rb") as f:
+                        st.download_button(
+                            f"⬇ 候補{idx+1} 動画",
+                            data=f,
+                            file_name=f"banner_{emotion_label}_{idx+1}_{duration}s.mp4",
+                            mime="video/mp4",
+                            key=f"dl_video_{idx}",
+                        )
+                    os.unlink(out_buf.name)
+                else:
+                    buf = io.BytesIO()
+                    img.save(buf, "JPEG", quality=93)
+                    st.download_button(
+                        f"⬇ 候補{idx+1} 画像",
+                        data=buf.getvalue(),
+                        file_name=f"banner_{emotion_label}_{idx+1}.jpg",
+                        mime="image/jpeg",
+                        key=f"dl_img_{idx}",
+                    )
 
 
 if __name__ == "__main__":
