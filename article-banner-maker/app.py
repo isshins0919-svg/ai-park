@@ -175,51 +175,57 @@ Quality standard: This banner must stop someone scrolling in 1 second. It should
 IMPORTANT: Include the exact Japanese text 「{text}」 visibly in the image."""
 
 
-# ─── Gemini multimodal 用プロンプト（フォールバック用）──────────────
-def build_prompt(text: str, emotion: str, custom_emotion: str, size_label: str) -> str:
+# ─── Gemini multimodal 用プロンプト ──────────────────────────────────
+VARIANT_HINTS = [
+    "Use bold typography with the text centered at the bottom third of the image.",
+    "Place the text at the top of the image with a gradient overlay behind it.",
+    "Use a strong semi-transparent band across the middle to highlight the text.",
+]
+
+def build_prompt(text: str, emotion: str, custom_emotion: str, size_label: str, variant: int = 0) -> str:
     em = EMOTION_DESIGN.get(emotion, DEFAULT_EMOTION) if emotion else DEFAULT_EMOTION
     emotion_label = emotion or custom_emotion or "インパクト訴求"
-    return f"""
-あなたは日本最高峰の広告クリエイティブデザイナーです。
-提供された画像を素材として、記事LP内で使用するプロフェッショナルなバナーを生成してください。
+    variant_hint = VARIANT_HINTS[variant % len(VARIANT_HINTS)]
 
-{DESIGN_KNOWLEDGE}
+    # 感情→英語スタイル
+    style_map = {
+        "共感": "warm orange tones, friendly rounded font, soft glowing light, empathetic mood",
+        "驚き": "high contrast black and yellow, ultra bold impact font, shocking dramatic composition",
+        "安心": "clean green and white, clear readable layout, natural light, trustworthy calm mood",
+        "権威": "navy and gold, elegant serif font, prestigious authoritative composition",
+        "期待": "vibrant pink and orange gradient, energetic bold font, upward dynamic composition",
+    }
+    style_en = style_map.get(emotion, "high contrast, bold typography, professional advertising design")
 
-━━━ 生成指示 ━━━
+    return f"""You are a world-class Japanese advertising creative director.
 
-【必須テキスト】
-画像内に以下のテキストを必ず大きく・読めるサイズで入れてください：
+Using the provided image as the base, create a professional article LP banner.
+
+MANDATORY TEXT (MUST appear large and clearly readable in the final image):
 「{text}」
 
-【感情・訴求方向】
-{emotion_label}
+Design style: {style_en}
+Color scheme: {em['color']}
+Font style: {em['font']}
+Text treatment: {em['text']}
+Layout & mood: {em['layout']} / {em['mood']}
+Output size: {size_label}
 
-【カラースキーム】
-{em['color']}
+Text placement rule: {variant_hint}
 
-【フォント指示】
-{em['font']}
+CRITICAL REQUIREMENTS:
+1. The Japanese text 「{text}」 MUST be visible, large (≥10% of image height), and clearly readable
+2. Text must have sufficient contrast (white on dark, or dark on light) — add drop shadow or outline
+3. Do NOT use more than 2 font styles
+4. Keep layout clean — no clutter
+5. The banner must stop a viewer in 1 second
 
-【テキスト処理】
-{em['text']}
+QUALITY STANDARD (from パク哲学):
+- "Is this truly great?" — it should feel like a brand key visual, not just an ad
+- Human emotion first, logic second
+- Only ONE message: 「{text}」
 
-【レイアウト・ムード】
-{em['layout']}
-雰囲気: {em['mood']}
-
-【出力サイズ】
-{size_label}
-
-━━━ 最重要チェック ━━━
-□ 「{text}」が画像内に大きく・明確に読めるか（最優先）
-□ テキストが背景に埋もれていないか（コントラスト確保）
-□ 1秒見ただけで感情が動くビジュアルか
-□ ブランドKVレベルの美しさか
-□ 「真に偉大か？」の基準を満たしているか
-
-このバナーを見た人が「え、これ何？」と1秒で止まり、
-「{text}」のメッセージが瞬時に入ってくる、プロ品質の作品を生成してください。
-"""
+Generate the banner now. Preserve the original image subject while adding the text overlay and design elements."""
 
 # ─── Gemini でバナー生成 ─────────────────────────────────────────────
 def analyze_image(base_image: Image.Image, clients: list) -> str:
@@ -283,7 +289,6 @@ def generate_banners(
         "バランス（標準）": "Keep original composition. Balanced framing.",
     }
     comp_instruction = comp_map.get(composition, comp_map["バランス（標準）"])
-    prompt = build_prompt(text, emotion, custom_emotion, size_label) + f"\n\nComposition: {comp_instruction}"
 
     # 画像入力→画像出力モデル（元素材を保持）
     MODELS = [
@@ -295,7 +300,8 @@ def generate_banners(
     images = []
     last_error = None
 
-    for _ in range(n):
+    for i in range(n):
+        prompt = build_prompt(text, emotion, custom_emotion, size_label, variant=i) + f"\n\nComposition: {comp_instruction}"
         generated = False
         for model in MODELS:
             for client in clients:
@@ -491,7 +497,7 @@ def main():
     st.divider()
 
     # ── 生成ボタン ───────────────────────────────────────────────────
-    if st.button("🚀 Imagen-3 で3枚生成する", type="primary", use_container_width=True):
+    if st.button("🚀 Gemini で3枚生成する（候補3パターン）", type="primary", use_container_width=True):
         if not uploaded:
             st.error("② ベース素材をアップロードしてください")
             return
@@ -507,7 +513,7 @@ def main():
             tmp.write(uploaded.read())
             input_path = tmp.name
 
-        with st.spinner("① 画像分析中... → ② Imagen-3 で3枚生成中... (30〜60秒)"):
+        with st.spinner("Gemini で3パターン生成中... （候補ごとにレイアウトを変えています・60〜90秒）"):
             try:
                 if is_video_input:
                     base_img = extract_frame(input_path)
