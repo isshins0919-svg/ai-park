@@ -256,9 +256,106 @@ def generate_banner(
             except Exception as e:
                 last_error = e
                 time.sleep(3)
-        time.sleep(5)  # モデル切り替え前に少し待つ
+        time.sleep(5)
 
-    raise RuntimeError(f"Gemini生成失敗（全モデル試行済み）: {last_error}")
+    # ── Gemini 全滅時 PIL フォールバック ──────────────────────────────
+    st.warning(f"⚠️ Gemini が混雑中（{last_error}）。PILフォールバックで生成します。")
+    return _pil_fallback(base_image, text, emotion, size)
+
+
+def _pil_fallback(img: Image.Image, text: str, emotion: str, size) -> Image.Image:
+    """Gemini が使えない時の PIL による簡易テキストオーバーレイ"""
+    from PIL import ImageDraw, ImageFont
+
+    if size:
+        tw, th = size
+        iw, ih = img.size
+        ratio = min(tw / iw, th / ih)
+        nw, nh = int(iw * ratio), int(ih * ratio)
+        resized = img.resize((nw, nh), Image.LANCZOS)
+        canvas = Image.new("RGB", (tw, th), (0, 0, 0))
+        canvas.paste(resized, ((tw - nw) // 2, (th - nh) // 2))
+        img = canvas
+
+    w, h = img.size
+    em = EMOTION_DESIGN.get(emotion, DEFAULT_EMOTION)
+
+    # 感情からカラー抽出（簡易）
+    color_map = {
+        "共感": ((255, 107, 53), (255, 255, 255)),
+        "驚き": ((0, 0, 0), (255, 235, 0)),
+        "安心": ((76, 175, 80), (255, 255, 255)),
+        "権威": ((0, 20, 60), (201, 168, 76)),
+        "期待": ((220, 50, 100), (255, 255, 255)),
+    }
+    bg_color, text_color = color_map.get(emotion, ((0, 0, 0), (255, 255, 255)))
+
+    result = img.convert("RGBA")
+    font_size = max(int(h * 0.10), 36)
+
+    # フォント
+    font_paths = [
+        "/usr/share/fonts/opentype/noto/NotoSansCJKjp-Bold.otf",
+        "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc",
+    ]
+    font = None
+    for fp in font_paths:
+        try:
+            font = ImageFont.truetype(fp, font_size)
+            break
+        except Exception:
+            pass
+    if font is None:
+        font = ImageFont.load_default()
+
+    # テキスト折り返し
+    lines, cur = [], ""
+    for ch in text:
+        test = cur + ch
+        try:
+            tw_ = font.getlength(test)
+        except Exception:
+            tw_ = len(test) * font_size * 0.6
+        if tw_ > w * 0.85 and cur:
+            lines.append(cur)
+            cur = ch
+        else:
+            cur = test
+    if cur:
+        lines.append(cur)
+
+    line_h = int(font_size * 1.4)
+    total_h = line_h * len(lines) + 48
+    grad_h = total_h + 80
+
+    # グラデーションオーバーレイ
+    ov = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    arr = np.array(ov)
+    r_, g_, b_ = bg_color
+    for y in range(grad_h):
+        alpha = int((y / grad_h) ** 0.6 * 210)
+        arr[h - grad_h + y, :] = [r_, g_, b_, alpha]
+    ov = Image.fromarray(arr.astype(np.uint8), "RGBA")
+    result = Image.alpha_composite(result, ov)
+
+    # テキスト描画
+    txt = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(txt)
+    tr, tg, tb = text_color
+    text_y = h - total_h - 30
+    for i, line in enumerate(lines):
+        try:
+            lw = int(font.getlength(line))
+        except Exception:
+            lw = len(line) * int(font_size * 0.6)
+        tx = (w - lw) // 2
+        ty = text_y + i * line_h
+        draw.text((tx+3, ty+3), line, font=font, fill=(0, 0, 0, 180))
+        draw.text((tx, ty), line, font=font,
+                  fill=(tr, tg, tb, 255),
+                  stroke_width=3, stroke_fill=(0, 0, 0, 255))
+    result = Image.alpha_composite(result, txt)
+    return result.convert("RGB")
 
 # ─── 動画生成ユーティリティ ─────────────────────────────────────────
 ANIMATIONS = {
