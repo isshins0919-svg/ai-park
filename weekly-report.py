@@ -7,6 +7,7 @@ import subprocess
 import sys
 import re
 import os
+import json
 from datetime import date, timedelta
 
 HTML_MODE = "--html" in sys.argv
@@ -38,6 +39,58 @@ def new_files(s, u, pattern):
 def match_commits(s, u, pattern):
     out = git(s, u, "--oneline")
     return sum(1 for l in out.splitlines() if re.search(pattern, l, re.I))
+
+def skill_new(s, u):
+    out = git(s, u, "--diff-filter=A", "--name-only", "--format=")
+    return sum(1 for l in out.splitlines() if ".claude/commands/" in l and l.endswith(".md"))
+
+def skill_updated(s, u):
+    out = git(s, u, "--diff-filter=M", "--name-only", "--format=")
+    return sum(1 for l in out.splitlines() if ".claude/commands/" in l and l.endswith(".md"))
+
+def goals_done_in_range(s, u):
+    """work-goals.jsonのnotesから完了日を読み取り、期間内の件数を返す"""
+    try:
+        root = os.path.dirname(os.path.abspath(__file__))
+        with open(os.path.join(root, ".claude/work-goals.json"), encoding="utf-8") as f:
+            data = json.load(f)
+        count = 0
+        for job in data.get("jobs", []):
+            if job.get("status") != "completed":
+                continue
+            notes = job.get("notes", "")
+            m = re.search(r"(\d{4}-\d{2}-\d{2})", notes)
+            if m:
+                d = date.fromisoformat(m.group(1))
+                if s <= d <= u:
+                    count += 1
+        return count
+    except Exception:
+        return 0
+
+def goals_active_count():
+    try:
+        root = os.path.dirname(os.path.abspath(__file__))
+        with open(os.path.join(root, ".claude/work-goals.json"), encoding="utf-8") as f:
+            data = json.load(f)
+        return sum(1 for j in data.get("jobs", []) if j.get("status") == "active")
+    except Exception:
+        return 0
+
+def goals_active_list():
+    try:
+        root = os.path.dirname(os.path.abspath(__file__))
+        with open(os.path.join(root, ".claude/work-goals.json"), encoding="utf-8") as f:
+            data = json.load(f)
+        return [j["name"] for j in data.get("jobs", []) if j.get("status") == "active"]
+    except Exception:
+        return []
+
+def feat_list(s, u):
+    """feat: コミットのタイトル一覧を返す（最大15件）"""
+    out = git(s, u, "--oneline")
+    lines = [l for l in out.splitlines() if re.search(r"feat", l, re.I)]
+    return lines[:15]
 
 def all_commits(s, u):
     out = git(s, u, "--oneline")
@@ -79,6 +132,9 @@ tw = {
     "mor": match_commits(START_DATE, END_DATE, MOR_PATTERN),
     "rev": match_commits(START_DATE, END_DATE, REV_PATTERN),
     "res": match_commits(START_DATE, END_DATE, RES_PATTERN),
+    "sk_new": skill_new(START_DATE, END_DATE),
+    "sk_upd": skill_updated(START_DATE, END_DATE),
+    "gl_done": goals_done_in_range(START_DATE, END_DATE),
 }
 
 pw = {
@@ -90,7 +146,13 @@ pw = {
     "mor": match_commits(PREV_START, PREV_END, MOR_PATTERN),
     "rev": match_commits(PREV_START, PREV_END, REV_PATTERN),
     "res": match_commits(PREV_START, PREV_END, RES_PATTERN),
+    "sk_new": skill_new(PREV_START, PREV_END),
+    "sk_upd": skill_updated(PREV_START, PREV_END),
+    "gl_done": goals_done_in_range(PREV_START, PREV_END),
 }
+
+active_goals = goals_active_list()
+feat_items = feat_list(START_DATE, END_DATE)
 
 # ---- 日別 ----
 days = []
@@ -120,6 +182,13 @@ row("✨", "feat件数",    tw["ft"],  pw["ft"])
 row("🔍", "リサーチ",    tw["res"], pw["res"])
 
 print()
+print(f"{BOLD}▌ スキル & ゴール{RESET}")
+row("🛠 ", "スキル新規",   tw["sk_new"], pw["sk_new"])
+row("🔧", "スキル更新",   tw["sk_upd"], pw["sk_upd"])
+row("✅", "ゴール完了",   tw["gl_done"], pw["gl_done"])
+print(f"  {'📌':<3}  {'進行中ゴール':<10}  {BOLD}{len(active_goals):>3}{RESET}   {DIM}active{RESET}")
+
+print()
 print(f"{BOLD}▌ 習慣・振り返り{RESET}")
 row("🌅", "Morning",     tw["mor"], pw["mor"])
 row("🔄", "週次レビュー", tw["rev"], pw["rev"])
@@ -135,6 +204,25 @@ for d, cnt in days:
         print(f"  {YELLOW}{label:<11}{RESET}  {YELLOW}{b:<22}{RESET}  {BOLD}{cnt:>2}件{RESET}")
     else:
         print(f"  {DIM}{label:<11}{RESET}  {CYAN}{b:<22}{RESET}  {cnt:>2}件")
+
+print()
+print(f"{BOLD}▌ 今週の実装リスト{RESET}")
+if feat_items:
+    for line in feat_items:
+        # コミットハッシュを除いて表示
+        title = re.sub(r"^[0-9a-f]{7,}\s+", "", line)
+        title = re.sub(r"^feat:\s*", "", title, flags=re.I)
+        print(f"  {CYAN}•{RESET} {title}")
+else:
+    print(f"  {DIM}feat コミットなし{RESET}")
+
+print()
+print(f"{BOLD}▌ 進行中ゴール{RESET}")
+if active_goals:
+    for g in active_goals:
+        print(f"  {YELLOW}→{RESET} {g}")
+else:
+    print(f"  {DIM}なし{RESET}")
 
 print()
 print(f"{DIM}先週: {PREV_START} 〜 {PREV_END}{RESET}")
