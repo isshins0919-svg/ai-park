@@ -86,6 +86,41 @@ DESIGN_KNOWLEDGE = """
 - BH4 社会的証明: 「XX万人が選んだ」→ バッジ
 - BH5 緊急性: 「今だけ」「残りX個」→ 赤背景帯
 - BH8 新常識提案: 「XXはもう古い」→ 対比構造
+
+## 記事内バナー 実例パターン（学習済み）
+
+### パターン1 — 問題訴求バナー（冒頭向け）
+- 配色: 黒背景 × 黄テキスト（最高コントラスト）
+- テキストが画像面積の40〜50%を占める（小さい文字ゼロ）
+- 実写の悩み部位・問題箇所を見せる（リアルさで共感）
+- 上部に衝撃コピー（大きく）、下部に赤帯で権威バッジ
+- 例: 「ごっそり殺菌破壊！」「国内正式承認の医薬品で」
+
+### パターン2 — 商品KVバナー（中盤向け・ブランド権威）
+- 配色: ゴールド × 黒背景 × キラキラ光エフェクト
+- 商品ボトルを中央に大きく配置
+- ブランド名を最上部に巨大表示（★マークや★×3など格式記号）
+- 光の筋・スポットライト効果で「本物感」「選ばれた感」を演出
+- 例: 「三ツ星★★★ クリアナチュラル」+ 商品写真 + 光放射
+
+### パターン3 — 成分・根拠バナー（中盤向け・科学的訴求）
+- 配色: 水色 × 白 × 青（清潔・科学・安心）
+- 数字フックを大きく（「8種の成分」「3つの効果」）
+- 商品 + 成分名が散りばめられた分解図スタイル
+- 円形・吹き出し・矢印などインフォグラフィック要素
+- 例: 「8種のボロボロ治療成分を配合！」+ 成分名リスト
+
+### パターン4 — CTA緊急バナー（末尾向け）
+- 配色: 赤 × 白（緊急性・行動促進）
+- 「見逃し厳禁」「今すぐチェック」など行動喚起コピー
+- 横帯スタイル（全幅に伸びる強調バー）
+- テキストのみ、シンプル
+
+### 普遍的ルール（全パターン共通）
+- テキストは必ず大きく（画像高さの15%以上）
+- 背景と文字のコントラストは最大限に
+- 1バナー1メッセージ（複数のことを言わない）
+- 日本語コピーは短く・強く（10文字以内が理想）
 """
 
 # ─── 感情×デザイン言語 ───────────────────────────────────────────────
@@ -177,15 +212,45 @@ IMPORTANT: Include the exact Japanese text 「{text}」 visibly in the image."""
 
 # ─── Gemini multimodal 用プロンプト ──────────────────────────────────
 VARIANT_HINTS = [
-    "Use bold typography with the text centered at the bottom third of the image.",
-    "Place the text at the top of the image with a gradient overlay behind it.",
-    "Use a strong semi-transparent band across the middle to highlight the text.",
+    "Place the text prominently at the BOTTOM third — bold typography on a dark gradient overlay band.",
+    "Place the text at the TOP — large text on a strong semi-transparent dark overlay at the top.",
+    "Place the text in the CENTER with a full-width colored band behind it (high contrast).",
 ]
 
-def build_prompt(text: str, emotion: str, custom_emotion: str, size_label: str, variant: int = 0) -> str:
+# バナーポジション別 デザイン指示（実LP解析から学習）
+POSITION_DESIGN = {
+    "冒頭（問題提起）": {
+        "style": "black background with yellow text, high contrast, shocking and bold. Show the problem visually.",
+        "text_size": "VERY LARGE — text occupies 40-50% of the image area",
+        "extra": "Add a red authority badge/band at the bottom (e.g. official certification, clinical proof). Aggressive, attention-grabbing.",
+    },
+    "中盤①（商品KV・権威）": {
+        "style": "gold and black background, sparkle/light ray effects, prestigious and luxurious brand visual",
+        "text_size": "Large brand name at top, product image centered, star symbols (★) for authority",
+        "extra": "Spotlight/godray lighting effect emanating from product. Premium brand key visual quality.",
+    },
+    "中盤②（成分・根拠）": {
+        "style": "light blue and white, clean scientific infographic style, trustworthy and clinical",
+        "text_size": "Large number hook (e.g. '8種') + ingredient names as callouts around product",
+        "extra": "Infographic layout: product center + ingredient bubbles/arrows around it. Scientific credibility.",
+    },
+    "末尾（CTA）": {
+        "style": "red and white, urgent, action-oriented horizontal band",
+        "text_size": "MAXIMUM SIZE — CTA text fills entire width",
+        "extra": "Bold CTA copy only. No product image needed. Urgency cues (限定/今すぐ/見逃し厳禁).",
+    },
+    "汎用": {
+        "style": "professional advertising design, high contrast",
+        "text_size": "Large and clear, minimum 15% of image height",
+        "extra": "Clean layout, one message, strong visual hierarchy.",
+    },
+}
+
+def build_prompt(text: str, emotion: str, custom_emotion: str, size_label: str,
+                 variant: int = 0, position: str = "汎用") -> str:
     em = EMOTION_DESIGN.get(emotion, DEFAULT_EMOTION) if emotion else DEFAULT_EMOTION
-    emotion_label = emotion or custom_emotion or "インパクト訴求"
     variant_hint = VARIANT_HINTS[variant % len(VARIANT_HINTS)]
+    pos = POSITION_DESIGN.get(position, POSITION_DESIGN["汎用"])
 
     # 感情→英語スタイル
     style_map = {
@@ -195,37 +260,41 @@ def build_prompt(text: str, emotion: str, custom_emotion: str, size_label: str, 
         "権威": "navy and gold, elegant serif font, prestigious authoritative composition",
         "期待": "vibrant pink and orange gradient, energetic bold font, upward dynamic composition",
     }
-    style_en = style_map.get(emotion, "high contrast, bold typography, professional advertising design")
+    style_en = style_map.get(emotion, pos["style"])
 
-    return f"""You are a world-class Japanese advertising creative director.
+    return f"""You are a world-class Japanese advertising creative director specializing in article LP banners.
 
-Using the provided image as the base, create a professional article LP banner.
+## REAL LP BANNER PATTERNS (learned from top-performing Japanese article LPs):
+- Problem banners: black bg + yellow text, 40-50% text area, red authority badge at bottom
+- Product KV banners: gold + black + sparkle/godray, large brand name, ★ symbols
+- Ingredient banners: light blue + white, scientific infographic, number hooks ("8種"), bubbles
+- CTA banners: red + white full-width band, maximum text size, urgency copy
 
-MANDATORY TEXT (MUST appear large and clearly readable in the final image):
+## THIS BANNER
+Position in article: {position}
+Design pattern to follow: {pos['style']}
+Text size rule: {pos['text_size']}
+Special instruction: {pos['extra']}
+
+## MANDATORY TEXT (MUST appear large and clearly readable):
 「{text}」
 
-Design style: {style_en}
+Emotion/mood: {emotion or custom_emotion or 'インパクト訴求'}
 Color scheme: {em['color']}
-Font style: {em['font']}
 Text treatment: {em['text']}
-Layout & mood: {em['layout']} / {em['mood']}
 Output size: {size_label}
 
-Text placement rule: {variant_hint}
+## LAYOUT VARIANT (for this candidate):
+{variant_hint}
 
-CRITICAL REQUIREMENTS:
-1. The Japanese text 「{text}」 MUST be visible, large (≥10% of image height), and clearly readable
-2. Text must have sufficient contrast (white on dark, or dark on light) — add drop shadow or outline
-3. Do NOT use more than 2 font styles
-4. Keep layout clean — no clutter
-5. The banner must stop a viewer in 1 second
+## NON-NEGOTIABLE RULES:
+1. 「{text}」 MUST be visible, LARGE (≥15% of image height), clearly readable
+2. Max contrast between text and background (use drop shadow + outline)
+3. Max 2 font styles
+4. ONE message only — 「{text}」
+5. Must stop a viewer in 1 second
 
-QUALITY STANDARD (from パク哲学):
-- "Is this truly great?" — it should feel like a brand key visual, not just an ad
-- Human emotion first, logic second
-- Only ONE message: 「{text}」
-
-Generate the banner now. Preserve the original image subject while adding the text overlay and design elements."""
+Preserve the original image subject. Add text overlay and design elements on top."""
 
 # ─── Gemini でバナー生成 ─────────────────────────────────────────────
 def analyze_image(base_image: Image.Image, clients: list) -> str:
@@ -258,6 +327,7 @@ def generate_banners(
     size,
     size_label: str,
     clients: list,
+    position: str = "汎用",
     n: int = 3,
 ) -> list:
     """
@@ -301,7 +371,7 @@ def generate_banners(
     last_error = None
 
     for i in range(n):
-        prompt = build_prompt(text, emotion, custom_emotion, size_label, variant=i) + f"\n\nComposition: {comp_instruction}"
+        prompt = build_prompt(text, emotion, custom_emotion, size_label, variant=i, position=position) + f"\n\nComposition: {comp_instruction}"
         generated = False
         for model in MODELS:
             for client in clients:
@@ -486,7 +556,23 @@ def main():
     }
     st.caption(comp_desc[composition])
 
-    # ── ⑦ 動画オプション（動画出力のみ） ─────────────────────────────
+    # ── ⑦ バナーポジション ──────────────────────────────────────────
+    st.subheader("⑦ 記事内の位置（デザインパターン自動切替）")
+    position_descs = {
+        "冒頭（問題提起）": "黒×黄・衝撃系。問題を直視させ、解決策への期待を作る",
+        "中盤①（商品KV・権威）": "ゴールド×黒・キラキラ。商品ブランドの権威感を演出",
+        "中盤②（成分・根拠）": "水色×白・科学的。数字フック＋成分根拠で信頼を積む",
+        "末尾（CTA）": "赤×白・緊急性。行動を促す横帯スタイル",
+        "汎用": "感情タグに合わせた標準スタイル",
+    }
+    position = st.selectbox(
+        "バナーポジション",
+        list(position_descs.keys()),
+        index=4,  # デフォルト: 汎用
+    )
+    st.caption(position_descs[position])
+
+    # ── ⑧ 動画オプション（動画出力のみ） ─────────────────────────────
     duration, animation_key = 3, "none"
     if is_video_output:
         st.subheader("⑦ 動画オプション")
@@ -523,7 +609,7 @@ def main():
                 banner_imgs = generate_banners(
                     base_img, text.strip(), emotion, custom_emotion,
                     composition, output_size, size_label, clients,
-                    n=3,
+                    position=position, n=3,
                 )
             except Exception as e:
                 st.error(f"生成エラー: {e}")
