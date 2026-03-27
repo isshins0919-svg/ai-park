@@ -1,0 +1,2 @@
+fonts-noto-cjk
+libgl1-mesa-glx
