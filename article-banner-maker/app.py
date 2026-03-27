@@ -254,103 +254,86 @@ def generate_banners(
     clients: list,
     n: int = 3,
 ) -> list:
-    """Imagen-3 で n 枚のバナー候補を生成して返す"""
+    """
+    素材画像を直接Geminiに渡してバナーを生成（画像入力→画像出力）。
+    元素材を活かしたまま、テキストとデザインを追加する。
+    """
     from google.genai import types
     from math import gcd
 
-    # ① 画像を言語化（Gemini Flash）
-    image_desc = analyze_image(base_image, clients)
-
-    # ② アスペクト比
+    # アスペクト比
     if size:
         tw, th = size
+        base_image = base_image.resize((tw, th), Image.LANCZOS)
     else:
         tw, th = base_image.size
     g = gcd(tw, th)
-    ratio_str = f"{tw//g}:{th//g}"
-    aspect_map = {"1:1": "1:1", "4:5": "4:5", "3:4": "3:4",
-                  "9:16": "9:16", "16:9": "16:9", "4:3": "4:3"}
-    aspect = aspect_map.get(ratio_str, "1:1")
+    aspect_map = {"1:1":"1:1","4:5":"4:5","3:4":"3:4","9:16":"9:16","16:9":"16:9","4:3":"4:3"}
+    aspect = aspect_map.get(f"{tw//g}:{th//g}", "1:1")
 
-    # ③ 構図指示
-    comp_map = {
-        "寄り（クローズアップ）": "Close-up shot. Subject fills the frame. Tight composition. Emotional intensity.",
-        "引き（ワイドショット）": "Wide shot. Show full environment and context. Subject is part of the scene. World-building.",
-        "バランス（標準）": "Balanced composition. Subject clearly visible with some context.",
-    }
-    comp_instruction = comp_map.get(composition, comp_map["バランス（標準）"])
-
-    # ④ フルプロンプト生成（日本語知識 + 英語生成指示）
-    prompt = build_imagen_prompt(text, emotion, custom_emotion, image_desc, size_label, comp_instruction)
-
-    # ⑤ Imagen-4 で生成（fast → standard → ultra の順で試す）
-    IMAGEN_MODELS = [
-        "imagen-4.0-fast-generate-001",
-        "imagen-4.0-generate-001",
-        "imagen-4.0-ultra-generate-001",
-    ]
-    last_error = None
-    for imagen_model in IMAGEN_MODELS:
-        for client in clients:
-            try:
-                resp = client.models.generate_images(
-                    model=imagen_model,
-                    prompt=prompt,
-                    config=types.GenerateImagesConfig(
-                        number_of_images=n,
-                        aspect_ratio=aspect,
-                        safety_filter_level="block_low_and_above",
-                        person_generation="allow_adult",
-                    ),
-                )
-                images = []
-                for gi in resp.generated_images:
-                    img = Image.open(io.BytesIO(gi.image.image_bytes)).convert("RGB")
-                    if size:
-                        img = img.resize((tw, th), Image.LANCZOS)
-                    images.append(img)
-                if images:
-                    return images
-            except Exception as e:
-                last_error = e
-                time.sleep(4)
-
-    # Imagen-4 失敗時は gemini-3.1-flash-image-preview にフォールバック
+    # 画像→バイト列
     buf = io.BytesIO()
     base_image.save(buf, format="JPEG", quality=90)
     img_bytes = buf.getvalue()
-    old_prompt = build_prompt(text, emotion, custom_emotion, size_label)
 
-    for client in clients * 2:
-        try:
-            resp = client.models.generate_content(
-                model="gemini-3.1-flash-image-preview",
-                contents=[
-                    types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
-                    old_prompt,
-                ],
-                config=types.GenerateContentConfig(
-                    response_modalities=["IMAGE"],
-                    image_config=types.ImageConfig(aspect_ratio=aspect),
-                ),
-            )
-            img_data = next(
-                (p.inline_data.data for p in resp.parts if hasattr(p, "inline_data") and p.inline_data),
-                None,
-            )
-            if img_data and len(img_data) > 10240:
-                result = Image.open(io.BytesIO(img_data)).convert("RGB")
-                if size:
-                    result = result.resize((tw, th), Image.LANCZOS)
-                return [result]
-        except Exception as e:
-            last_error = e
-            time.sleep(4)
+    # 構図指示
+    comp_map = {
+        "寄り（クローズアップ）": "Crop tighter. Subject fills more of the frame. Emphasize the key element.",
+        "引き（ワイドショット）": "Show more environment. Wider framing with context and atmosphere.",
+        "バランス（標準）": "Keep original composition. Balanced framing.",
+    }
+    comp_instruction = comp_map.get(composition, comp_map["バランス（標準）"])
+    prompt = build_prompt(text, emotion, custom_emotion, size_label) + f"\n\nComposition: {comp_instruction}"
+
+    # 画像入力→画像出力モデル（元素材を保持）
+    MODELS = [
+        "gemini-3.1-flash-image-preview",
+        "gemini-3-pro-image-preview",
+        "gemini-2.5-flash-image",
+    ]
+
+    images = []
+    last_error = None
+
+    for _ in range(n):
+        generated = False
+        for model in MODELS:
+            for client in clients:
+                try:
+                    resp = client.models.generate_content(
+                        model=model,
+                        contents=[
+                            types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
+                            prompt,
+                        ],
+                        config=types.GenerateContentConfig(
+                            response_modalities=["IMAGE"],
+                            image_config=types.ImageConfig(aspect_ratio=aspect),
+                        ),
+                    )
+                    img_data = next(
+                        (p.inline_data.data for p in resp.parts
+                         if hasattr(p, "inline_data") and p.inline_data),
+                        None,
+                    )
+                    if img_data and len(img_data) > 10240:
+                        result = Image.open(io.BytesIO(img_data)).convert("RGB")
+                        if size:
+                            result = result.resize((tw, th), Image.LANCZOS)
+                        images.append(result)
+                        generated = True
+                        break
+                except Exception as e:
+                    last_error = e
+                    time.sleep(3)
+            if generated:
+                break
+
+    if images:
+        return images
 
     raise RuntimeError(
-        f"画像生成に失敗しました。\n\n"
-        f"Imagen-3 と Gemini Flash Image Generation の両方が応答しませんでした。\n"
-        f"数分後に再試行してください。\n\n詳細: {last_error}"
+        f"画像生成に失敗しました。数分後に再試行してください。\n詳細: {last_error}"
     )
 
 
