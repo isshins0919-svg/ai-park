@@ -122,26 +122,35 @@ def img_to_bytes(img: Image.Image, quality: int = 90) -> bytes:
     return buf.getvalue()
 
 
+def get_aspect_ratio(tw: int, th: int) -> str:
+    """ターゲットサイズに最も近い Gemini サポート比率を返す"""
+    ratio = tw / th
+    candidates = {"1:1": 1.0, "4:3": 4/3, "3:4": 3/4,
+                  "16:9": 16/9, "9:16": 9/16, "4:5": 4/5}
+    return min(candidates, key=lambda k: abs(candidates[k] - ratio))
+
+
 # ─── プロンプト生成 ────────────────────────────────────────────────────
 def build_prompt(text: str, style_key: str, emotion_hint: str,
                  size_label: str, has_reference: bool) -> str:
     style = TEXT_STYLES[style_key]
     ref_line = (
-        "STYLE REFERENCE: A reference image has been provided. "
-        "Match its visual mood, color palette, and atmosphere closely."
+        "NOTE: A style reference image has been provided (2nd image). "
+        "Use it ONLY for visual mood/color palette — do NOT copy its subject or people."
         if has_reference else ""
     )
     return f"""You are a professional Japanese article LP banner designer.
 
-TASK: Create a banner with Japanese text added at the bottom.
+TASK: Add Japanese text to the bottom of the provided image. Do NOT change the image itself.
 
 ## MANDATORY TEXT:
 「{text}」
 
-## TEXT PLACEMENT (NON-NEGOTIABLE):
-- Position: BOTTOM of image, horizontal (straight)
-- Alignment: centered
-- Do NOT alter the main image composition
+## TEXT PLACEMENT (STRICT):
+- Horizontal, straight (never angled)
+- Centered horizontally
+- Bottom area — keep at least 5% margin from the bottom edge so text is NOT cut off
+- Do NOT move/crop/alter the image subject
 
 ## TEXT DESIGN:
 {style['prompt']}
@@ -151,41 +160,34 @@ Output size: {size_label}
 Emotional direction: {emotion_hint or 'professional and impactful'}
 {ref_line}
 
-## QUALITY CHECK:
-□ 「{text}」 clearly readable in 1 second? (if no → bigger/more contrast)
-□ Main image subject preserved?
-□ Text horizontal at bottom?"""
+## QUALITY CHECK (all must pass):
+□ 「{text}」 fully visible — NOT cut off at any edge
+□ Text size fills at least 60% of image width
+□ Clear contrast, readable instantly
+□ Image subject completely unchanged"""
 
 
-def build_ai_gen_prompt(description: str, text: str, style_key: str,
-                         emotion_hint: str, size_label: str, has_reference: bool) -> str:
-    style = TEXT_STYLES[style_key]
+def build_background_prompt(description: str, emotion_hint: str,
+                             size_label: str, has_reference: bool) -> str:
+    """AI生成モード用：テキストなしの背景画像だけ生成するプロンプト"""
     ref_line = (
-        "STYLE REFERENCE: Match the visual mood and color palette of the provided reference image."
+        "STYLE REFERENCE: A reference image has been provided. "
+        "Match its visual mood, atmosphere, and color palette ONLY — do not copy its subject."
         if has_reference else ""
     )
-    return f"""You are a professional Japanese article LP banner designer.
+    return f"""Generate a high-quality photographic background image for a Japanese article LP banner.
 
-TASK: Generate a complete banner image from scratch.
-
-## IMAGE TO GENERATE:
+## SCENE TO GENERATE:
 {description}
 
-## MANDATORY TEXT (add at the bottom of the generated image):
-「{text}」
-
-## TEXT DESIGN:
-{style['prompt']}
-
-## CONTEXT:
-Output size: {size_label}
-Emotional direction: {emotion_hint or 'professional and impactful'}
+## REQUIREMENTS:
+- Photorealistic, professional photography quality
+- Leave the bottom 25% of the image relatively uncluttered (space for text overlay)
+- Output size: {size_label}
+- Emotional direction: {emotion_hint or 'warm and professional'}
 {ref_line}
 
-## REQUIREMENTS:
-- Generate a high-quality photographic or illustrated background
-- Add 「{text}」 clearly at the bottom using the text style above
-- Professional article LP banner quality"""
+## DO NOT add any text, watermarks, or overlays. Background image only."""
 
 
 # ─── バナー生成（素材画像あり）──────────────────────────────────────────
@@ -200,7 +202,6 @@ def generate_from_image(
     clients: list,
 ) -> Image.Image:
     from google.genai import types
-    from math import gcd
 
     if target_size:
         tw, th = target_size
@@ -209,49 +210,40 @@ def generate_from_image(
         img = base_img
         tw, th = img.size
 
-    g = gcd(tw, th)
-    aspect_map = {"1:1":"1:1","4:5":"4:5","3:4":"3:4","9:16":"9:16","16:9":"16:9","4:3":"4:3"}
-    aspect = aspect_map.get(f"{tw//g}:{th//g}", "1:1")
-
+    aspect = get_aspect_ratio(tw, th)
     prompt = build_prompt(text, style_key, emotion_hint, size_label, ref_img is not None)
 
-    # コンテンツリスト（素材 → 参考 → プロンプト）
     contents = [types.Part.from_bytes(data=img_to_bytes(img), mime_type="image/jpeg")]
     if ref_img:
         ref_resized = ref_img.resize((400, 400), Image.LANCZOS)
         contents.append(types.Part.from_bytes(data=img_to_bytes(ref_resized), mime_type="image/jpeg"))
-        contents.append("The second image above is a STYLE REFERENCE only — match its mood/color palette.")
+        contents.append("The second image is a STYLE REFERENCE only — match mood/color, not the subject.")
     contents.append(prompt)
 
     return _call_gemini(contents, aspect, tw, th, target_size, clients)
 
 
-# ─── バナー生成（AI生成モード）──────────────────────────────────────────
-def generate_from_prompt(
+# ─── AI生成：背景画像のみ（テキストなし）を1枚だけ生成 ───────────────────
+def generate_background(
     description: str,
     ref_img,
-    text: str,
-    style_key: str,
     emotion_hint: str,
     target_size,
     size_label: str,
     clients: list,
 ) -> Image.Image:
+    """AI生成モード用。背景のみを1枚生成。その後 generate_from_image × 3 でスタイル分岐する。"""
     from google.genai import types
-    from math import gcd
 
     tw, th = target_size if target_size else (680, 450)
-    g = gcd(tw, th)
-    aspect_map = {"1:1":"1:1","4:5":"4:5","3:4":"3:4","9:16":"9:16","16:9":"16:9","4:3":"4:3"}
-    aspect = aspect_map.get(f"{tw//g}:{th//g}", "1:1")
-
-    prompt = build_ai_gen_prompt(description, text, style_key, emotion_hint, size_label, ref_img is not None)
+    aspect = get_aspect_ratio(tw, th)
+    prompt = build_background_prompt(description, emotion_hint, size_label, ref_img is not None)
 
     contents = []
     if ref_img:
         ref_resized = ref_img.resize((400, 400), Image.LANCZOS)
         contents.append(types.Part.from_bytes(data=img_to_bytes(ref_resized), mime_type="image/jpeg"))
-        contents.append("The image above is a STYLE REFERENCE — match its visual mood and color palette.")
+        contents.append("The image above is a STYLE REFERENCE — match its mood and color palette only.")
     contents.append(prompt)
 
     return _call_gemini(contents, aspect, tw, th, target_size, clients)
@@ -446,9 +438,19 @@ def main():
             st.error("③ テキストを入力してください")
             return
 
-        # ベース画像準備
+        # ── ベース画像準備 ───────────────────────────────────────────
         if use_ai_gen:
-            base_img = None
+            # AI生成: まず背景を1枚だけ生成（テキストなし）
+            # → 3スタイルは同じ背景からテキストだけ変えて生成（背景が統一される）
+            with st.spinner("背景画像を生成中... (1/4)"):
+                try:
+                    base_img = generate_background(
+                        ai_description.strip(), ref_img,
+                        emotion_hint, output_size, size_label, clients,
+                    )
+                except Exception as e:
+                    st.error(f"背景生成失敗: {e}")
+                    return
         else:
             suffix = Path(base_uploaded.name).suffix.lower()
             with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
@@ -461,23 +463,16 @@ def main():
                 if os.path.exists(tmp_path):
                     os.unlink(tmp_path)
 
-        # 3スタイル生成
+        # ── 3スタイル生成（同じ base_img に文字デザインだけ変えて追加）──
         st.session_state.results = {}
-        for style_key in TEXT_STYLES:
+        for i, style_key in enumerate(TEXT_STYLES, start=2):
             label = TEXT_STYLES[style_key]["label"]
-            with st.spinner(f"スタイル {label} 生成中..."):
+            with st.spinner(f"スタイル {label} 生成中... ({i}/4)"):
                 try:
-                    if use_ai_gen:
-                        img = generate_from_prompt(
-                            ai_description.strip(), ref_img, text.strip(),
-                            style_key, emotion_hint, output_size, size_label, clients,
-                        )
-                    else:
-                        img = generate_from_image(
-                            base_img, ref_img, text.strip(),
-                            style_key, emotion_hint, output_size, size_label, clients,
-                        )
-                    # JPEGバイトで保存（session_stateにImage直置きは重い）
+                    img = generate_from_image(
+                        base_img, ref_img, text.strip(),
+                        style_key, emotion_hint, output_size, size_label, clients,
+                    )
                     buf = io.BytesIO()
                     img.save(buf, "JPEG", quality=93)
                     st.session_state.results[style_key] = buf.getvalue()
