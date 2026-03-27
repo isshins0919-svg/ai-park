@@ -224,34 +224,41 @@ def generate_banner(
     }
     aspect = aspect_map.get(ratio_str, "1:1")
 
-    for attempt, client in enumerate(clients * 2):
-        try:
-            resp = client.models.generate_content(
-                model="gemini-3-pro-image-preview",
-                contents=[
-                    types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
-                    prompt,
-                ],
-                config=types.GenerateContentConfig(
-                    response_modalities=["IMAGE"],
-                    image_config=types.ImageConfig(aspect_ratio=aspect),
-                ),
-            )
-            img_data = next(
-                (p.inline_data.data for p in resp.parts if hasattr(p, "inline_data") and p.inline_data),
-                None,
-            )
-            if img_data and len(img_data) > 10240:
-                result = Image.open(io.BytesIO(img_data)).convert("RGB")
-                if size:
-                    result = result.resize(size, Image.LANCZOS)
-                return result
-        except Exception as e:
-            if attempt < len(clients) * 2 - 1:
+    MODELS = [
+        "gemini-2.0-flash-preview-image-generation",
+        "gemini-3-pro-image-preview",
+    ]
+
+    last_error = None
+    for model in MODELS:
+        for attempt, client in enumerate(clients):
+            try:
+                resp = client.models.generate_content(
+                    model=model,
+                    contents=[
+                        types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
+                        prompt,
+                    ],
+                    config=types.GenerateContentConfig(
+                        response_modalities=["IMAGE"],
+                        image_config=types.ImageConfig(aspect_ratio=aspect),
+                    ),
+                )
+                img_data = next(
+                    (p.inline_data.data for p in resp.parts if hasattr(p, "inline_data") and p.inline_data),
+                    None,
+                )
+                if img_data and len(img_data) > 10240:
+                    result = Image.open(io.BytesIO(img_data)).convert("RGB")
+                    if size:
+                        result = result.resize(size, Image.LANCZOS)
+                    return result
+            except Exception as e:
+                last_error = e
                 time.sleep(3)
-            else:
-                raise RuntimeError(f"Gemini生成失敗: {e}")
-    raise RuntimeError("Geminiから画像が返されませんでした")
+        time.sleep(5)  # モデル切り替え前に少し待つ
+
+    raise RuntimeError(f"Gemini生成失敗（全モデル試行済み）: {last_error}")
 
 # ─── 動画生成ユーティリティ ─────────────────────────────────────────
 ANIMATIONS = {
