@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-記事内バナーメーカー v7
-- 構図固定: 画像そのまま + テキストを下部に配置
-- 3候補 = テキスト装飾スタイルのみ変える（帯/アウトライン/カラー帯）
-- 記事LP好調データから学習した文字デザイン3パターン
+記事内バナーメーカー v8
+- 素材モード: 「そのまま」or「AI生成（テキストから）」
+- 参考テイスト画像: スタイル・雰囲気を参考画像で伝える
+- テキスト下部固定 × 3文字スタイル比較
+- session_state でダウンロード後も結果が消えない
+- resize_cover でアスペクト比を保ちながら正確にクロップ
 """
 
 import io
@@ -19,7 +21,7 @@ import streamlit as st
 from PIL import Image
 
 
-# ─── 環境変数取得 ───────────────────────────────────────────────────────
+# ─── 環境変数取得 ──────────────────────────────────────────────────────
 def get_env(key: str) -> str:
     try:
         if key in st.secrets:
@@ -40,102 +42,72 @@ def get_env(key: str) -> str:
     return ""
 
 
-# ─── Gemini クライアント初期化 ──────────────────────────────────────────
+# ─── Gemini クライアント初期化 ─────────────────────────────────────────
 def init_gemini(api_key_override: str = ""):
     from google import genai
-    if api_key_override:
-        keys = [api_key_override]
-    else:
-        keys = [get_env(f"GEMINI_API_KEY_{i}") for i in range(1, 4)]
-        keys = [k for k in keys if k]
+    keys = [api_key_override] if api_key_override else [
+        get_env(f"GEMINI_API_KEY_{i}") for i in range(1, 4)
+    ]
+    keys = [k for k in keys if k]
     if not keys:
         return None, []
-    clients = [genai.Client(api_key=k) for k in keys]
-    return genai, clients
+    return genai, [genai.Client(api_key=k) for k in keys]
 
 
-# ─── テキストスタイル 3パターン（記事LP好調データから） ────────────────
-#
-# 好調記事LP解析（三ツ星クリアナチュラル等）から抽出:
-# - 文字は常に下部に水平配置
-# - 1枚1メッセージ
-# - 構図は変えない、文字装飾だけ変える
-#
+# ─── リサイズ（アスペクト比保持クロップ / CSS object-fit:cover 相当） ──
+def resize_cover(img: Image.Image, target_w: int, target_h: int) -> Image.Image:
+    src_w, src_h = img.size
+    scale = max(target_w / src_w, target_h / src_h)
+    new_w, new_h = int(src_w * scale), int(src_h * scale)
+    resized = img.resize((new_w, new_h), Image.LANCZOS)
+    left = (new_w - target_w) // 2
+    top  = (new_h - target_h) // 2
+    return resized.crop((left, top, left + target_w, top + target_h))
+
+
+# ─── テキストスタイル 3パターン ────────────────────────────────────────
 TEXT_STYLES = {
-    "A: ダーク帯（最も汎用）": {
+    "A: ダーク帯": {
         "label": "A",
-        "desc": "画像下部に半透明〜不透明の黒グラデーション帯 + 白太ゴシック。読みやすさ最強。",
-        "prompt": """TEXT STYLE: Dark band
-- Add a semi-transparent to opaque dark gradient band covering the bottom 25-30% of the image
-- The band goes from fully transparent at top to 85% black opacity at bottom
-- Place the Japanese text centered horizontally on this dark band
-- Text color: pure white (#FFFFFF)
-- Font: ultra bold sans-serif (like Gothic Bold)
-- Text size: LARGE — fills 60-70% of the band width
-- Add subtle drop shadow to text (2-3px dark shadow)
-- NO changes to the image above the band""",
+        "desc": "半透明〜不透明の黒グラデ帯 + 白太字。最も汎用。",
+        "prompt": """TEXT STYLE A — Dark gradient band:
+- Semi-transparent to opaque dark gradient band at the bottom 25-30% of image
+- Transparent at top of band → 85% black at bottom edge
+- Japanese text centered horizontally on this band
+- Text: pure white, ultra bold sans-serif
+- Text size: large — fills 65% of band width
+- Subtle drop shadow (2px dark)
+- Image above the band: UNCHANGED""",
     },
-    "B: アウトライン（インパクト系）": {
+    "B: アウトライン": {
         "label": "B",
-        "desc": "背景帯なし。黄色テキスト + 極太黒縁取り + ドロップシャドウ。衝撃系バナーの定番。",
-        "prompt": """TEXT STYLE: Outline / Stroke
-- NO background band — text floats over the image
-- Place Japanese text in the bottom 20% of image, centered horizontally
-- Text color: bright yellow (#FFE600) or white — high visibility
-- Font: ultra bold / black weight sans-serif
-- THICK black outline/stroke around each character (3-5px stroke)
-- Strong drop shadow (4-6px, pure black, 60% opacity)
-- Text size: LARGE — commands attention immediately
-- DO NOT add any overlay or band — outline creates readability on its own""",
+        "desc": "帯なし。黄色テキスト + 極太黒縁取り。衝撃系定番。",
+        "prompt": """TEXT STYLE B — Outline / stroke text:
+- NO background band — text floats directly over image
+- Text at the bottom 20% of image, centered horizontally
+- Text color: bright yellow (#FFE600) or white
+- Ultra bold / black-weight sans-serif font
+- THICK black stroke outline around each character (4-5px)
+- Strong drop shadow (5px pure black, 60% opacity)
+- Text size: very large, commanding attention
+- Image: completely preserved behind text""",
     },
-    "C: カラー帯（ブランドカラー）": {
+    "C: カラー帯": {
         "label": "C",
-        "desc": "鮮やかなカラー塗り帯 + 白テキスト。ブランドカラーで感情を直接表現。",
-        "prompt": """TEXT STYLE: Solid color band
-- Add a SOLID (fully opaque) colored band at the very bottom of the image
-- Band height: 22-28% of total image height
-- Band color: choose a strong, vivid color that fits the mood — red (#E82222), orange (#FF6B35), navy (#0A1628), or green (#2E7D32)
-- Text color: pure white (#FFFFFF)
-- Font: bold sans-serif
-- Text centered horizontally and vertically within the band
-- Text size: fills 65-75% of the band width
-- Sharp clean edge between image and colored band (no gradient)""",
+        "desc": "べた塗りカラー帯 + 白字。ブランドカラーで感情直表現。",
+        "prompt": """TEXT STYLE C — Solid color band:
+- Fully opaque solid color band at the very bottom (22-28% of image height)
+- Band color: pick the most emotionally resonant color for the content
+  (e.g. red #E82222 for urgency, orange #FF6B35 for warmth, navy #0A1628 for authority)
+- Sharp clean edge between image and band (no gradient)
+- Text: pure white, bold sans-serif, centered in band
+- Text size: fills 65-75% of band width
+- Image above the band: completely unchanged""",
     },
 }
 
 
-# ─── プロンプト生成 ─────────────────────────────────────────────────────
-def build_prompt(text: str, style_key: str, emotion_hint: str, size_label: str) -> str:
-    style = TEXT_STYLES[style_key]
-    return f"""You are a professional Japanese article LP banner designer.
-
-TASK: Add a text overlay to the provided image. Keep the image composition EXACTLY as-is.
-
-## MANDATORY TEXT TO ADD:
-「{text}」
-
-## TEXT PLACEMENT RULE (NON-NEGOTIABLE):
-- Text position: BOTTOM of the image, horizontal (straight, not angled)
-- Text alignment: centered
-- Do NOT move, crop, or alter the main image subject/composition
-
-## TEXT DESIGN STYLE:
-{style['prompt']}
-
-## CONTEXT:
-- This is for a Japanese article LP (記事LP) banner
-- Output size: {size_label}
-- Emotional direction: {emotion_hint or 'professional and impactful'}
-
-## QUALITY CHECK:
-- Can you read 「{text}」 clearly in 1 second? → If no, increase text size/contrast
-- Is the main image subject preserved? → Must be yes
-- Is the text horizontal and at the bottom? → Must be yes
-
-Generate the banner with ONLY the text overlay added. Preserve everything else."""
-
-
-# ─── バナー生成 ─────────────────────────────────────────────────────────
+# ─── Gemini モデル優先順 ───────────────────────────────────────────────
 MODELS = [
     "gemini-3.1-flash-image-preview",
     "gemini-3-pro-image-preview",
@@ -143,35 +115,151 @@ MODELS = [
 ]
 
 
-def generate_banner(
-    base_image: Image.Image,
+# ─── 画像 → bytes ───────────────────────────────────────────────────────
+def img_to_bytes(img: Image.Image, quality: int = 90) -> bytes:
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG", quality=quality)
+    return buf.getvalue()
+
+
+# ─── プロンプト生成 ────────────────────────────────────────────────────
+def build_prompt(text: str, style_key: str, emotion_hint: str,
+                 size_label: str, has_reference: bool) -> str:
+    style = TEXT_STYLES[style_key]
+    ref_line = (
+        "STYLE REFERENCE: A reference image has been provided. "
+        "Match its visual mood, color palette, and atmosphere closely."
+        if has_reference else ""
+    )
+    return f"""You are a professional Japanese article LP banner designer.
+
+TASK: Create a banner with Japanese text added at the bottom.
+
+## MANDATORY TEXT:
+「{text}」
+
+## TEXT PLACEMENT (NON-NEGOTIABLE):
+- Position: BOTTOM of image, horizontal (straight)
+- Alignment: centered
+- Do NOT alter the main image composition
+
+## TEXT DESIGN:
+{style['prompt']}
+
+## CONTEXT:
+Output size: {size_label}
+Emotional direction: {emotion_hint or 'professional and impactful'}
+{ref_line}
+
+## QUALITY CHECK:
+□ 「{text}」 clearly readable in 1 second? (if no → bigger/more contrast)
+□ Main image subject preserved?
+□ Text horizontal at bottom?"""
+
+
+def build_ai_gen_prompt(description: str, text: str, style_key: str,
+                         emotion_hint: str, size_label: str, has_reference: bool) -> str:
+    style = TEXT_STYLES[style_key]
+    ref_line = (
+        "STYLE REFERENCE: Match the visual mood and color palette of the provided reference image."
+        if has_reference else ""
+    )
+    return f"""You are a professional Japanese article LP banner designer.
+
+TASK: Generate a complete banner image from scratch.
+
+## IMAGE TO GENERATE:
+{description}
+
+## MANDATORY TEXT (add at the bottom of the generated image):
+「{text}」
+
+## TEXT DESIGN:
+{style['prompt']}
+
+## CONTEXT:
+Output size: {size_label}
+Emotional direction: {emotion_hint or 'professional and impactful'}
+{ref_line}
+
+## REQUIREMENTS:
+- Generate a high-quality photographic or illustrated background
+- Add 「{text}」 clearly at the bottom using the text style above
+- Professional article LP banner quality"""
+
+
+# ─── バナー生成（素材画像あり）──────────────────────────────────────────
+def generate_from_image(
+    base_img: Image.Image,
+    ref_img,           # Image or None
     text: str,
     style_key: str,
     emotion_hint: str,
-    size,
+    target_size,
     size_label: str,
     clients: list,
 ) -> Image.Image:
     from google.genai import types
     from math import gcd
 
-    if size:
-        tw, th = size
-        img = base_image.resize((tw, th), Image.LANCZOS)
+    if target_size:
+        tw, th = target_size
+        img = resize_cover(base_img, tw, th)
     else:
-        img = base_image
+        img = base_img
         tw, th = img.size
 
-    buf = io.BytesIO()
-    img.save(buf, format="JPEG", quality=90)
-    img_bytes = buf.getvalue()
-
     g = gcd(tw, th)
-    aspect_map = {"1:1": "1:1", "4:5": "4:5", "3:4": "3:4",
-                  "9:16": "9:16", "16:9": "16:9", "4:3": "4:3"}
+    aspect_map = {"1:1":"1:1","4:5":"4:5","3:4":"3:4","9:16":"9:16","16:9":"16:9","4:3":"4:3"}
     aspect = aspect_map.get(f"{tw//g}:{th//g}", "1:1")
 
-    prompt = build_prompt(text, style_key, emotion_hint, size_label)
+    prompt = build_prompt(text, style_key, emotion_hint, size_label, ref_img is not None)
+
+    # コンテンツリスト（素材 → 参考 → プロンプト）
+    contents = [types.Part.from_bytes(data=img_to_bytes(img), mime_type="image/jpeg")]
+    if ref_img:
+        ref_resized = ref_img.resize((400, 400), Image.LANCZOS)
+        contents.append(types.Part.from_bytes(data=img_to_bytes(ref_resized), mime_type="image/jpeg"))
+        contents.append("The second image above is a STYLE REFERENCE only — match its mood/color palette.")
+    contents.append(prompt)
+
+    return _call_gemini(contents, aspect, tw, th, target_size, clients)
+
+
+# ─── バナー生成（AI生成モード）──────────────────────────────────────────
+def generate_from_prompt(
+    description: str,
+    ref_img,
+    text: str,
+    style_key: str,
+    emotion_hint: str,
+    target_size,
+    size_label: str,
+    clients: list,
+) -> Image.Image:
+    from google.genai import types
+    from math import gcd
+
+    tw, th = target_size if target_size else (680, 450)
+    g = gcd(tw, th)
+    aspect_map = {"1:1":"1:1","4:5":"4:5","3:4":"3:4","9:16":"9:16","16:9":"16:9","4:3":"4:3"}
+    aspect = aspect_map.get(f"{tw//g}:{th//g}", "1:1")
+
+    prompt = build_ai_gen_prompt(description, text, style_key, emotion_hint, size_label, ref_img is not None)
+
+    contents = []
+    if ref_img:
+        ref_resized = ref_img.resize((400, 400), Image.LANCZOS)
+        contents.append(types.Part.from_bytes(data=img_to_bytes(ref_resized), mime_type="image/jpeg"))
+        contents.append("The image above is a STYLE REFERENCE — match its visual mood and color palette.")
+    contents.append(prompt)
+
+    return _call_gemini(contents, aspect, tw, th, target_size, clients)
+
+
+# ─── Gemini 呼び出し共通処理 ──────────────────────────────────────────
+def _call_gemini(contents, aspect, tw, th, target_size, clients):
+    from google.genai import types
 
     last_error = None
     for model in MODELS:
@@ -179,10 +267,7 @@ def generate_banner(
             try:
                 resp = client.models.generate_content(
                     model=model,
-                    contents=[
-                        types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
-                        prompt,
-                    ],
+                    contents=contents,
                     config=types.GenerateContentConfig(
                         response_modalities=["IMAGE"],
                         image_config=types.ImageConfig(aspect_ratio=aspect),
@@ -195,8 +280,8 @@ def generate_banner(
                 )
                 if img_data and len(img_data) > 10240:
                     result = Image.open(io.BytesIO(img_data)).convert("RGB")
-                    if size:
-                        result = result.resize((tw, th), Image.LANCZOS)
+                    if target_size:
+                        result = resize_cover(result, tw, th)
                     return result
             except Exception as e:
                 last_error = e
@@ -205,47 +290,37 @@ def generate_banner(
     raise RuntimeError(f"生成失敗（全モデル試行済み）: {last_error}")
 
 
-# ─── 動画生成 ───────────────────────────────────────────────────────────
-ANIMATIONS = {
-    "なし（静止）": "none",
-    "ゆっくりズームイン": "zoom",
-    "フェードイン": "fade",
-    "左からスライド": "slide",
-}
-
+# ─── 動画生成 ──────────────────────────────────────────────────────────
+ANIMATIONS = {"なし（静止）": "none", "ゆっくりズームイン": "zoom",
+               "フェードイン": "fade", "左からスライド": "slide"}
 
 def image_to_video(img: Image.Image, duration: int, animation: str, output_path: str):
     w, h = img.size
-    fps = 30
-    total = fps * duration
+    fps, total = 30, 30 * duration
     base_arr = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    out = cv2.VideoWriter(output_path, fourcc, fps, (w, h))
+    out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
     for i in range(total):
         t = i / max(total - 1, 1)
         if animation == "zoom":
-            scale = 1.0 + 0.08 * t
-            nw, nh = int(w * scale), int(h * scale)
-            zoomed = cv2.resize(base_arr, (nw, nh))
-            x, y = (nw - w) // 2, (nh - h) // 2
-            frame = zoomed[y:y+h, x:x+w]
+            s = 1.0 + 0.08 * t
+            nw, nh = int(w*s), int(h*s)
+            z = cv2.resize(base_arr, (nw, nh))
+            frame = z[(nh-h)//2:(nh-h)//2+h, (nw-w)//2:(nw-w)//2+w]
         elif animation == "fade":
-            frame = (base_arr * min(t * 2, 1.0)).astype(np.uint8)
+            frame = (base_arr * min(t*2, 1.0)).astype(np.uint8)
         elif animation == "slide":
-            offset = int((1 - min(t * 3, 1.0)) * w * 0.3)
+            off = int((1-min(t*3,1.0))*w*0.3)
             frame = np.zeros_like(base_arr)
-            if offset < w:
-                frame[:, offset:] = base_arr[:, :w-offset]
+            if off < w:
+                frame[:, off:] = base_arr[:, :w-off]
         else:
             frame = base_arr.copy()
         out.write(frame)
     out.release()
 
-
 def extract_frame(video_path: str) -> Image.Image:
     cap = cv2.VideoCapture(video_path)
-    total = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-    cap.set(cv2.CAP_PROP_POS_FRAMES, total // 2)
+    cap.set(cv2.CAP_PROP_POS_FRAMES, cap.get(cv2.CAP_PROP_FRAME_COUNT) // 2)
     ret, frame = cap.read()
     cap.release()
     if ret:
@@ -253,181 +328,192 @@ def extract_frame(video_path: str) -> Image.Image:
     raise ValueError("動画からフレームを取得できませんでした")
 
 
-# ─── サイズプリセット（実LP解析から記事内で使われる4種類に絞る） ──────
-#
-# 解析元: foot.cosmedia.online（Cosmos Media CMS）
-# モバイル表示幅: 750px viewport → 570px表示（左右90px余白）
-# アップロード標準: 横680px（CMSが自動リサイズ）
-#
-# 記事内で実際に使われているサイズ:
-#   680×450 → 最多（表示570×377）比率1.51 … 標準横長・最も見慣れた比率
-#   680×350 → 商品KV・成分解説（表示570×293）比率1.94 … 少し横広
-#   680×300 → CTA帯・情報バナー（表示570×251）比率2.27 … 帯スタイル
-#   1080×1080 → 正方形KV（SNS兼用・権威バナー） 比率1:1
-#
+# ─── サイズプリセット（実LP解析ベース） ────────────────────────────────
 SIZE_PRESETS = {
-    "680 × 450 ★おすすめ（記事スタンダード・最多使用）": ((680, 450), "680×450"),
-    "680 × 350（商品KV・ワイド横長）": ((680, 350), "680×350"),
-    "680 × 300（情報帯・CTA）": ((680, 300), "680×300"),
-    "1080 × 1080（正方形・権威KV・SNS兼用）": ((1080, 1080), "1080×1080"),
-    "素材のまま": (None, "素材のまま"),
+    "680 × 450 ★おすすめ（記事スタンダード）": ((680, 450), "680×450"),
+    "680 × 350（商品KV・ワイド横長）":          ((680, 350), "680×350"),
+    "680 × 300（情報帯・CTA）":                 ((680, 300), "680×300"),
+    "1080 × 1080（正方形・権威KV・SNS兼用）":   ((1080, 1080), "1080×1080"),
+    "素材のまま":                               (None, "素材のまま"),
+}
+SIZE_TIPS = {
+    "680 × 450 ★おすすめ（記事スタンダード）": "モバイル表示 570×377。記事内で最多使用。冒頭・中盤どちらでも◎",
+    "680 × 350（商品KV・ワイド横長）":          "モバイル表示 570×293。商品紹介・成分解説に◎",
+    "680 × 300（情報帯・CTA）":                 "モバイル表示 570×251。帯スタイル。CTA・緊急性に◎",
+    "1080 × 1080（正方形・権威KV・SNS兼用）":   "正方形。ブランドKV・SNS転用に◎",
+    "素材のまま":                               "素材の元サイズをそのまま使用",
 }
 
 
-# ─── Streamlit UI ────────────────────────────────────────────────────────
+# ─── Streamlit UI ──────────────────────────────────────────────────────
 def main():
     st.set_page_config(page_title="記事内バナーメーカー", page_icon="🎨", layout="centered")
-    st.title("🎨 記事内バナーメーカー v7")
-    st.caption("画像そのまま × テキスト下部固定 × 文字デザイン3パターン比較")
+    st.title("🎨 記事内バナーメーカー v8")
+    st.caption("テキスト下部固定 × 3文字スタイル比較 × 参考テイスト画像対応")
 
-    # APIキー
-    api_key_override = ""
-    genai_module, clients = init_gemini()
+    # session_state 初期化
+    if "results" not in st.session_state:
+        st.session_state.results = {}   # {style_key: bytes}
+
+    # ── APIキー ──────────────────────────────────────────────────────
+    _, clients = init_gemini()
     if not clients:
         st.warning("⚠️ GEMINI_API_KEY が未設定。直接入力してください。")
-        api_key_override = st.text_input("Gemini API Key", type="password", placeholder="AIzaSy...")
-        if api_key_override:
-            genai_module, clients = init_gemini(api_key_override)
+        key_input = st.text_input("Gemini API Key", type="password", placeholder="AIzaSy...")
+        if key_input:
+            _, clients = init_gemini(key_input)
         if not clients:
             st.stop()
-
     st.success(f"✅ Gemini 接続済み（{len(clients)}キー）")
     st.divider()
 
-    # ── ① 入力タイプ ──────────────────────────────────────────────────
-    st.subheader("① 入力素材")
-    col1, col2 = st.columns(2)
-    with col1:
-        is_video_input = st.checkbox("動画素材（フレーム抽出）", value=False)
-    with col2:
-        is_video_output = st.checkbox("動画出力（アニメーション付き）", value=False)
-
-    if is_video_input:
-        uploaded = st.file_uploader("動画をアップロード", type=["mp4", "mov"])
-    else:
-        uploaded = st.file_uploader("画像をアップロード", type=["jpg", "jpeg", "png"])
-
-    if uploaded:
-        suffix = Path(uploaded.name).suffix.lower()
-        if not is_video_input:
-            preview = Image.open(uploaded)
-            st.image(preview, caption="素材プレビュー", use_container_width=True)
-            uploaded.seek(0)
-
-    # ── ② テキスト ────────────────────────────────────────────────────
-    st.subheader("② テキスト（バナー下部に入れる文言）")
-    text = st.text_input("キャッチコピー", placeholder="例：ボロボロ爪まわりの原因菌を殺菌破壊！")
-
-    # ── ③ 感情ヒント ──────────────────────────────────────────────────
-    st.subheader("③ 感情・訴求方向（任意）")
-    emotion_hint = st.text_input(
-        "感情・雰囲気を一言で",
-        placeholder="例：驚き・緊急・安心・権威・期待・共感",
+    # ── ① 素材モード ─────────────────────────────────────────────────
+    st.subheader("① 素材モード")
+    input_mode = st.radio(
+        "",
+        ["📁 画像をそのまま使う", "✨ AIで画像を生成する（テキスト説明から）"],
+        label_visibility="collapsed",
     )
+    use_ai_gen = input_mode.startswith("✨")
 
-    # ── ④ 出力サイズ ──────────────────────────────────────────────────
-    st.subheader("④ 出力サイズ")
-    size_name = st.selectbox("サイズプリセット", list(SIZE_PRESETS.keys()), index=0)
+    if use_ai_gen:
+        ai_description = st.text_area(
+            "生成したい画像の説明",
+            placeholder="例：白髪の60代女性が笑顔で座っている。明るい自然光。清潔感のある室内。",
+            height=80,
+        )
+        base_uploaded = None
+    else:
+        is_video = st.checkbox("動画素材（フレームを抽出して使用）", value=False)
+        if is_video:
+            base_uploaded = st.file_uploader("動画をアップロード", type=["mp4","mov"])
+        else:
+            base_uploaded = st.file_uploader("画像をアップロード", type=["jpg","jpeg","png"])
+        if base_uploaded and not is_video:
+            st.image(Image.open(base_uploaded), caption="素材プレビュー", use_container_width=True)
+            base_uploaded.seek(0)
+        ai_description = ""
+
+    # ── ② 参考テイスト画像（任意） ───────────────────────────────────
+    st.subheader("② 参考テイスト画像（任意）")
+    st.caption("「このバナーのような雰囲気で」と伝えたい場合にアップロード。可愛い系・高齢者向け・高級感など。")
+    ref_uploaded = st.file_uploader("参考バナー・画像", type=["jpg","jpeg","png"], key="ref")
+    ref_img = None
+    if ref_uploaded:
+        ref_img = Image.open(ref_uploaded).convert("RGB")
+        st.image(ref_img, caption="参考テイスト", use_container_width=True)
+
+    # ── ③ テキスト ────────────────────────────────────────────────────
+    st.subheader("③ テキスト（バナー下部に入れる文言）")
+    text = st.text_input("キャッチコピー", placeholder="例：ボロボロ爪まわりの原因菌をごっそり殺菌破壊！")
+
+    # ── ④ 感情ヒント ──────────────────────────────────────────────────
+    st.subheader("④ 感情・雰囲気（任意）")
+    emotion_hint = st.text_input("", placeholder="例：驚き・緊急・安心・可愛い・権威・高齢者向け温かみ",
+                                  label_visibility="collapsed")
+
+    # ── ⑤ 出力サイズ ──────────────────────────────────────────────────
+    st.subheader("⑤ 出力サイズ")
+    size_name = st.selectbox("", list(SIZE_PRESETS.keys()), index=0, label_visibility="collapsed")
     output_size, size_label = SIZE_PRESETS[size_name]
-    size_tips = {
-        "680 × 450 ★おすすめ（記事スタンダード・最多使用）": "モバイルで570×377表示。記事内で最も使われる比率。冒頭・中盤どちらにも◎",
-        "680 × 350（商品KV・ワイド横長）": "モバイルで570×293表示。横に広く商品が映えるワイド比率。商品紹介・成分解説に◎",
-        "680 × 300（情報帯・CTA）": "モバイルで570×251表示。帯スタイル。CTA・緊急性バナー・情報まとめに◎",
-        "1080 × 1080（正方形・権威KV・SNS兼用）": "正方形。商品KV・ブランド権威演出・SNS転用に◎",
-        "素材のまま": "素材の元サイズをそのまま使用",
-    }
-    if size_name in size_tips:
-        st.caption(size_tips[size_name])
+    st.caption(SIZE_TIPS.get(size_name, ""))
 
-    # ── ⑤ 動画オプション ──────────────────────────────────────────────
+    # ── ⑥ 動画オプション ──────────────────────────────────────────────
+    is_video_output = st.checkbox("動画出力（アニメーション付き）", value=False)
     duration, animation_key = 3, "none"
     if is_video_output:
-        st.subheader("⑤ 動画オプション")
         duration = st.select_slider("尺（秒）", options=[1, 3, 5, 7], value=3)
-        anim_name = st.selectbox("アニメーション", list(ANIMATIONS.keys()))
-        animation_key = ANIMATIONS[anim_name]
+        animation_key = ANIMATIONS[st.selectbox("アニメーション", list(ANIMATIONS.keys()))]
 
     st.divider()
 
-    # ── 文字スタイル説明 ──────────────────────────────────────────────
-    st.subheader("生成される3パターン")
+    # ── 3スタイル説明 ─────────────────────────────────────────────────
+    st.subheader("生成される3パターン（文字スタイルのみ違う）")
     for key, s in TEXT_STYLES.items():
         st.markdown(f"**{key}** — {s['desc']}")
-
     st.divider()
 
     # ── 生成ボタン ────────────────────────────────────────────────────
     if st.button("🚀 3スタイル同時生成", type="primary", use_container_width=True):
-        if not uploaded:
+        # バリデーション
+        if use_ai_gen and not ai_description.strip():
+            st.error("① 生成したい画像の説明を入力してください")
+            return
+        if not use_ai_gen and not base_uploaded:
             st.error("① 素材をアップロードしてください")
             return
         if not text.strip():
-            st.error("② テキストを入力してください")
+            st.error("③ テキストを入力してください")
             return
 
-        suffix = Path(uploaded.name).suffix.lower()
-        with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
-            tmp.write(uploaded.read())
-            input_path = tmp.name
+        # ベース画像準備
+        if use_ai_gen:
+            base_img = None
+        else:
+            suffix = Path(base_uploaded.name).suffix.lower()
+            with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+                tmp.write(base_uploaded.read())
+                tmp_path = tmp.name
+            try:
+                base_img = (extract_frame(tmp_path) if is_video
+                            else Image.open(tmp_path).convert("RGB"))
+            finally:
+                if os.path.exists(tmp_path):
+                    os.unlink(tmp_path)
 
-        results = {}  # style_key → Image
-
-        try:
-            if is_video_input:
-                base_img = extract_frame(input_path)
-            else:
-                base_img = Image.open(input_path).convert("RGB")
-        except Exception as e:
-            st.error(f"素材読み込みエラー: {e}")
-            os.unlink(input_path)
-            return
-        finally:
-            if os.path.exists(input_path):
-                os.unlink(input_path)
-
+        # 3スタイル生成
+        st.session_state.results = {}
         for style_key in TEXT_STYLES:
             label = TEXT_STYLES[style_key]["label"]
             with st.spinner(f"スタイル {label} 生成中..."):
                 try:
-                    img = generate_banner(
-                        base_img, text.strip(), style_key,
-                        emotion_hint, output_size, size_label, clients,
-                    )
-                    results[style_key] = img
+                    if use_ai_gen:
+                        img = generate_from_prompt(
+                            ai_description.strip(), ref_img, text.strip(),
+                            style_key, emotion_hint, output_size, size_label, clients,
+                        )
+                    else:
+                        img = generate_from_image(
+                            base_img, ref_img, text.strip(),
+                            style_key, emotion_hint, output_size, size_label, clients,
+                        )
+                    # JPEGバイトで保存（session_stateにImage直置きは重い）
+                    buf = io.BytesIO()
+                    img.save(buf, "JPEG", quality=93)
+                    st.session_state.results[style_key] = buf.getvalue()
                 except Exception as e:
                     st.warning(f"スタイル {label} 失敗: {e}")
 
-        if not results:
-            st.error("全スタイルの生成に失敗しました。しばらく待って再試行してください。")
-            return
+        if not st.session_state.results:
+            st.error("全スタイルの生成に失敗しました。しばらく待ってから再試行してください。")
 
-        st.success(f"✅ {len(results)}パターン 生成完了！")
+    # ── 結果表示（session_stateから → ダウンロードしても消えない） ────
+    if st.session_state.results:
+        st.success(f"✅ {len(st.session_state.results)}パターン 生成完了！")
         st.divider()
 
-        cols = st.columns(len(results))
-        for col, (style_key, img) in zip(cols, results.items()):
+        cols = st.columns(len(st.session_state.results))
+        for col, (style_key, img_bytes) in zip(cols, st.session_state.results.items()):
             s = TEXT_STYLES[style_key]
+            img = Image.open(io.BytesIO(img_bytes))
             with col:
                 st.image(img, caption=style_key, use_container_width=True)
-
                 if is_video_output:
-                    out_buf = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-                    image_to_video(img, duration, animation_key, out_buf.name)
-                    with open(out_buf.name, "rb") as f:
-                        st.download_button(
-                            f"⬇ {s['label']} 動画DL",
-                            data=f,
-                            file_name=f"banner_style{s['label']}_{duration}s.mp4",
-                            mime="video/mp4",
-                            key=f"dl_v_{s['label']}",
-                        )
-                    os.unlink(out_buf.name)
+                    with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as vf:
+                        image_to_video(img, duration, animation_key, vf.name)
+                        with open(vf.name, "rb") as f:
+                            st.download_button(
+                                f"⬇ {s['label']} 動画",
+                                data=f.read(),
+                                file_name=f"banner_{s['label']}_{duration}s.mp4",
+                                mime="video/mp4",
+                                key=f"dl_v_{s['label']}",
+                            )
+                    os.unlink(vf.name)
                 else:
-                    buf = io.BytesIO()
-                    img.save(buf, "JPEG", quality=93)
                     st.download_button(
                         f"⬇ {s['label']} 画像DL",
-                        data=buf.getvalue(),
+                        data=img_bytes,
                         file_name=f"banner_style{s['label']}.jpg",
                         mime="image/jpeg",
                         key=f"dl_i_{s['label']}",
