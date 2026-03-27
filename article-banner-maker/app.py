@@ -283,33 +283,39 @@ def generate_banners(
     # ④ フルプロンプト生成（日本語知識 + 英語生成指示）
     prompt = build_imagen_prompt(text, emotion, custom_emotion, image_desc, size_label, comp_instruction)
 
-    # ⑤ Imagen-3 で生成
+    # ⑤ Imagen-4 で生成（fast → standard → ultra の順で試す）
+    IMAGEN_MODELS = [
+        "imagen-4.0-fast-generate-001",
+        "imagen-4.0-generate-001",
+        "imagen-4.0-ultra-generate-001",
+    ]
     last_error = None
-    for client in clients * 2:
-        try:
-            resp = client.models.generate_images(
-                model="imagen-3.0-generate-002",
-                prompt=prompt,
-                config=types.GenerateImagesConfig(
-                    number_of_images=n,
-                    aspect_ratio=aspect,
-                    safety_filter_level="block_low_and_above",
-                    person_generation="allow_adult",
-                ),
-            )
-            images = []
-            for gi in resp.generated_images:
-                img = Image.open(io.BytesIO(gi.image.image_bytes)).convert("RGB")
-                if size:
-                    img = img.resize((tw, th), Image.LANCZOS)
-                images.append(img)
-            if images:
-                return images
-        except Exception as e:
-            last_error = e
-            time.sleep(4)
+    for imagen_model in IMAGEN_MODELS:
+        for client in clients:
+            try:
+                resp = client.models.generate_images(
+                    model=imagen_model,
+                    prompt=prompt,
+                    config=types.GenerateImagesConfig(
+                        number_of_images=n,
+                        aspect_ratio=aspect,
+                        safety_filter_level="block_low_and_above",
+                        person_generation="allow_adult",
+                    ),
+                )
+                images = []
+                for gi in resp.generated_images:
+                    img = Image.open(io.BytesIO(gi.image.image_bytes)).convert("RGB")
+                    if size:
+                        img = img.resize((tw, th), Image.LANCZOS)
+                    images.append(img)
+                if images:
+                    return images
+            except Exception as e:
+                last_error = e
+                time.sleep(4)
 
-    # Imagen-3 失敗時は gemini-2.0-flash-preview-image-generation にフォールバック
+    # Imagen-4 失敗時は gemini-3.1-flash-image-preview にフォールバック
     buf = io.BytesIO()
     base_image.save(buf, format="JPEG", quality=90)
     img_bytes = buf.getvalue()
@@ -318,7 +324,7 @@ def generate_banners(
     for client in clients * 2:
         try:
             resp = client.models.generate_content(
-                model="gemini-2.0-flash-preview-image-generation",
+                model="gemini-3.1-flash-image-preview",
                 contents=[
                     types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
                     old_prompt,
