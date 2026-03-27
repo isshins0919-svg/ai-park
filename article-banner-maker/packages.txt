@@ -1,2 +1,5 @@
 fonts-noto-cjk
+fonts-ipafont-gothic
+fonts-ipafont-mincho
+fonts-takao-gothic
 libgl1-mesa-glx
