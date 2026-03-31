@@ -488,6 +488,7 @@ def build_competitor_block(genre_info: dict, competitor: dict) -> str:
             f"【{item['rank']}位】{item['product_name']}（{item['advertiser']}）",
             f"  媒体: {item['media']} ／ 形式: {item['transition_type']}",
             f"  推定広告費増加: ¥{item['cost_difference']:,}" if item.get('cost_difference') else "",
+            f"  URL: {item['url']}" if item.get('url') else "",
             f"  広告文: {item['ad_sentence']}",
             f"  FVフック: {item['fv_hook']}",
             f"  勝ちタクティクス:",
