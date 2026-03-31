@@ -21,6 +21,23 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse
 
+# ── httpx 0.28+ で非ASCII文字がヘッダー値に入るとUnicodeEncodeErrorになる問題を回避 ──
+# httpx 0.28 から header値をASCIIでエンコードするようになったが、
+# 古いanthropic SDKの内部処理で非ASCII文字が混入するケースがある
+import httpx._models as _httpx_models
+_orig_normalize = _httpx_models._normalize_header_value
+def _patched_normalize_header_value(value, encoding=None):
+    if isinstance(value, str):
+        try:
+            return value.encode(encoding or "ascii")
+        except UnicodeEncodeError:
+            logging.getLogger(__name__).warning(
+                f"Non-ASCII header value detected (len={len(value)}): {repr(value[:50])}... — falling back to UTF-8"
+            )
+            return value.encode("utf-8")
+    return _orig_normalize(value, encoding)
+_httpx_models._normalize_header_value = _patched_normalize_header_value
+
 from PIL import Image
 
 import markdown as md_lib
@@ -64,8 +81,13 @@ log = logging.getLogger(__name__)
 
 # ─── 環境変数取得 ─────────────────────────────────────
 def get_env(key: str) -> str:
+    # まず現在のプロセス環境変数を確認（nohup経由で渡された場合）
+    val = os.environ.get(key, "")
+    if val:
+        return val
+    # 次に ~/.zshrc を source して取得（zsh -l は ~/.zshrc を読まないため明示的に source）
     val = subprocess.run(
-        ["zsh", "-i", "-c", f"echo ${key}"],
+        ["zsh", "-l", "-c", f"source ~/.zshrc 2>/dev/null; echo ${key}"],
         capture_output=True, text=True
     ).stdout.strip()
     if not val:
@@ -599,6 +621,18 @@ Markdownの表形式で出力してください：
 
 このセクションは競合インサイトがある場合のみ出力してください。
 
+## 📌 今週伸びてる競合記事3本（参考LP提案）
+
+競合インサイトから、このLPと同ジャンルで今伸びている好調記事を3本ピックアップして提案してください。
+各記事について以下を出力：
+- 【商品名】（運営社）
+- 📣 広告文（実際の配信コピー）
+- 🎯 FVフック（冒頭の掴み）
+- 🔗 URL（あれば）
+- 💡 「ここを盗むべき」ポイント1点（なぜ今伸びているか・何が効いているか）
+
+このセクションは競合インサイトがある場合のみ出力してください。
+
 ## 💬 総評
 
 「真に偉大か？」視点から1〜2文。本音で。
@@ -944,35 +978,58 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
     # ── ジャンル判定 ＆ 競合インサイト取得 ──────────────────
     genre_info = {}
     competitor = None
-    try:
-        slack.chat_postMessage(
-            channel=CHANNEL_ID, thread_ts=ts,
-            text="🔍 ジャンル判定中（DPro競合データ照合）...",
-        )
-    except SlackApiError:
-        pass
 
-    genre_info = detect_genre(article_data, client)
-    if genre_info:
-        competitor = get_competitor_insights(genre_info)
-        genre_label = f"{genre_info.get('genre','不明')} ／ ターゲット: {genre_info.get('target','不明')}"
-        comp_label = f"類似ジャンル: *{competitor['name']}* — TOP3競合を参照します" if competitor else "該当ジャンルなし（汎用評価軸で実施）"
+    if forced_genre:
+        # ジャンル手動指定 → Haiku スキップ
+        competitor = forced_genre
+        genre_info = {
+            "genre": forced_genre["name"],
+            "worry": forced_genre["worry"],
+            "target": forced_genre["target"],
+            "keywords": forced_genre["keywords"],
+        }
         try:
             slack.chat_postMessage(
                 channel=CHANNEL_ID, thread_ts=ts,
-                text=f"🎯 ジャンル判定完了\n→ {genre_label}\n→ {comp_label}\nフィードバック生成中... ✍️",
+                text=(
+                    f"🎯 ジャンル指定: *{forced_genre['name']}*\n"
+                    f"→ 競合TOP{len(forced_genre['top_items'])}本を参照します\n"
+                    "フィードバック生成中... ✍️"
+                ),
                 mrkdwn=True,
             )
         except SlackApiError:
             pass
     else:
+        # 自動判定
         try:
             slack.chat_postMessage(
                 channel=CHANNEL_ID, thread_ts=ts,
-                text="ジャンル判定スキップ。汎用評価軸でFB生成中... ✍️",
+                text="🔍 ジャンル自動判定中（DPro競合データ照合）...",
             )
         except SlackApiError:
             pass
+        genre_info = detect_genre(article_data, client)
+        if genre_info:
+            competitor = get_competitor_insights(genre_info)
+            genre_label = f"{genre_info.get('genre','不明')} ／ ターゲット: {genre_info.get('target','不明')}"
+            comp_label = f"類似ジャンル: *{competitor['name']}* — TOP{len(competitor['top_items'])}競合を参照します" if competitor else "該当ジャンルなし（汎用評価軸で実施）"
+            try:
+                slack.chat_postMessage(
+                    channel=CHANNEL_ID, thread_ts=ts,
+                    text=f"🎯 ジャンル判定完了\n→ {genre_label}\n→ {comp_label}\nフィードバック生成中... ✍️",
+                    mrkdwn=True,
+                )
+            except SlackApiError:
+                pass
+        else:
+            try:
+                slack.chat_postMessage(
+                    channel=CHANNEL_ID, thread_ts=ts,
+                    text="ジャンル判定スキップ。汎用評価軸でFB生成中... ✍️",
+                )
+            except SlackApiError:
+                pass
 
     # 動画サムネイル並列取得 ＆ 記事スクショを並列で実行
     video_thumbnails = []
