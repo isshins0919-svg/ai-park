@@ -1,0 +1,516 @@
+{
+  "total": 46,
+  "types": {
+    "語り": 14,
+    "ツボ君": 2,
+    "その他": 24,
+    "AI医者": 4,
+    "AI女性": 2
+  },
+  "fv_patterns": {
+    "インナーにワキガ臭": 7,
+    "ワキガなのにインナー着てる": 6,
+    "耳垢型": 2,
+    "お風呂入ってもワキ": 1,
+    "本棚前": 1,
+    "耳垢.mp4": 1,
+    "ワキガなのにインナー着てる": 1,
+    "ワキガなのにコート着てる人": 1,
+    "40,50代でワキガの方": 1,
+    "冬の籠りワキガ": 1,
+    "産後ワキガ増": 1,
+    "朝シャワー": 1,
+    "お母さん": 1,
+    "耳垢湿り": 1,
+    "遺伝": 1
+  },
+  "sv_patterns": {
+    "産後": 10,
+    "夏よりも冬": 4,
+    "お風呂入ってもワキ": 4,
+    "冬に暖房電車厚着汗籠": 3,
+    "職場で上着脱ぐの怖い": 2,
+    "ワキガの救世主.mp": 1,
+    "ワキガは遺伝だけでない": 1
+  },
+  "top_combos": {
+    "FV123_インナーにワキガ臭  ×  SV20_夏よりも冬": 4,
+    "FV90_ワキガなのにインナー着てる  ×  SV2_産後": 4,
+    "FV123_インナーにワキガ臭  ×  SV2_産後": 3,
+    "FV4_耳垢型  ×  SV1_お風呂入ってもワキ": 2,
+    "FV90_ワキガなのにインナー着てる  ×  SV21_職場で上着脱ぐの怖い": 2,
+    "FV4_本棚前  ×  SV4_ワキガの救世主.mp": 1,
+    "FV90_ワキガなのにインナー着てる  ×  SV16_冬に暖房電車厚着汗籠": 1,
+    "FV92_ワキガなのにコート着てる人  ×  SV16_冬に暖房電車厚着汗籠": 1,
+    "FV96_40,50代でワキガの方  ×  SV16_冬に暖房電車厚着汗籠": 1,
+    "FV27_冬の籠りワキガ  ×  SV2_産後": 1
+  },
+  "talents": {
+    "ちゃそ": 4,
+    "daigo": 1,
+    "北口": 2,
+    "シーナ": 2
+  },
+  "all_videos": [
+    {
+      "raw": "3_d4_語り_T1_本棚前_S5_ちゃそ_E2_ちゃそ_A2_耳垢型_FV4_お風呂入ってもワキ_ワキガの救世主.mp4",
+      "fv_num": 4,
+      "fv_text": "お風呂入ってもワキ",
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "4",
+      "type": "語り",
+      "talent": "ちゃそ"
+    },
+    {
+      "raw": "29_d4_ちゃそ_E2_語り_T1_耳掃除_F素7_耳垢型_FV4_本棚前_S5_ちゃそ_A2_お風呂入ってもワキ_SV4_ワキガの救世主.mp4",
+      "fv_num": 4,
+      "fv_text": "本棚前",
+      "sv_num": 4,
+      "sv_text": "ワキガの救世主.mp",
+      "d_num": "4",
+      "type": "語り",
+      "talent": "ちゃそ"
+    },
+    {
+      "raw": "55_d4_E2_ちゃそ_T1_語り_薬用ワキガ軟膏_F素16_ピクサー風AI（耳垢）_FV4_耳垢.mp4",
+      "fv_num": 4,
+      "fv_text": "耳垢.mp4",
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "4",
+      "type": "語り",
+      "talent": "ちゃそ"
+    },
+    {
+      "raw": "0213_プル_210円_ツボ語り_インナーワキガ臭_産後_ワキガの特攻ケア.mov",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "ツボ君",
+      "talent": null
+    },
+    {
+      "raw": "0220_ちゃそさん＿210円オファー変更_FV耳垢.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "その他",
+      "talent": "ちゃそ"
+    },
+    {
+      "raw": "【0201】AI医者_⑥.mov",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "AI医者",
+      "talent": null
+    },
+    {
+      "raw": "【0201】AI医者_③.mov",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "AI医者",
+      "talent": null
+    },
+    {
+      "raw": "【0201】AI医者_①.mov",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "AI医者",
+      "talent": null
+    },
+    {
+      "raw": "【0201】AI医者_⑩.mov",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "AI医者",
+      "talent": null
+    },
+    {
+      "raw": "【0201】AI女性_①.mov",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "AI女性",
+      "talent": null
+    },
+    {
+      "raw": "【0201】AI女性_⑦.mov",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "AI女性",
+      "talent": null
+    },
+    {
+      "raw": "FV123_インナーにワキガ臭_SV20_夏よりも冬_d30_台本4冬_ツボ君_診察.mp4",
+      "fv_num": 123,
+      "fv_text": "インナーにワキガ臭",
+      "sv_num": 20,
+      "sv_text": "夏よりも冬",
+      "d_num": "30",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV4_耳垢型_SV1_お風呂入ってもワキ_d1c_通常語り_.mp4",
+      "fv_num": 4,
+      "fv_text": "耳垢型",
+      "sv_num": 1,
+      "sv_text": "お風呂入ってもワキ",
+      "d_num": "1",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "0116_【daigo】ツボ×グレーニット.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "ツボ君",
+      "talent": "daigo"
+    },
+    {
+      "raw": "FV123_インナーにワキガ臭_SV20_夏よりも冬_d30_台本4冬_ツボ君_診察.mp4",
+      "fv_num": 123,
+      "fv_text": "インナーにワキガ臭",
+      "sv_num": 20,
+      "sv_text": "夏よりも冬",
+      "d_num": "30",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV4_耳垢型_SV1_お風呂入ってもワキ_d1c_通常語り_.mp4",
+      "fv_num": 4,
+      "fv_text": "耳垢型",
+      "sv_num": 1,
+      "sv_text": "お風呂入ってもワキ",
+      "d_num": "1",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "ID9.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": null,
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV90_ワキガなのにインナー着てる_SV2_産後_d4t_通常語り_ツボ君_診察.mp4 のコピー",
+      "fv_num": 90,
+      "fv_text": "ワキガなのにインナー着てる",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "FV123_インナーにワキガ臭_SV20_夏よりも冬_d30_台本4冬_ツボ君_診察.mp4 のコピー",
+      "fv_num": 123,
+      "fv_text": "インナーにワキガ臭",
+      "sv_num": 20,
+      "sv_text": "夏よりも冬",
+      "d_num": "30",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV90_ワキガなのにインナー着てる_SV2_産後_d4t_通常語り_北口さん.mp4 のコピー",
+      "fv_num": 90,
+      "fv_text": "ワキガなのにインナー着てる",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "語り",
+      "talent": "北口"
+    },
+    {
+      "raw": "FV90_ワキガなのにインナー着てる_SV21_職場で上着脱ぐの怖い_d30_台本4冬_ツボ君_診察.mp4 のコピー",
+      "fv_num": 90,
+      "fv_text": "ワキガなのにインナー着てる",
+      "sv_num": 21,
+      "sv_text": "職場で上着脱ぐの怖い",
+      "d_num": "30",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV123_インナーにワキガ臭_SV2_産後_d4t__.mp4 のコピー",
+      "fv_num": 123,
+      "fv_text": "インナーにワキガ臭",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV123_インナーにワキガ臭_SV2_産後_d4t__.mp4",
+      "fv_num": 123,
+      "fv_text": "インナーにワキガ臭",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV90_ワキガなのにインナー着てる_SV2_産後_d4t_通常語り_ツボ君_診察.mp4",
+      "fv_num": 90,
+      "fv_text": "ワキガなのにインナー着てる",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "FV90_ワキガなのにインナー着てる_SV21_職場で上着脱ぐの怖い_d30_台本4冬_ツボ君_診察.mp4",
+      "fv_num": 90,
+      "fv_text": "ワキガなのにインナー着てる",
+      "sv_num": 21,
+      "sv_text": "職場で上着脱ぐの怖い",
+      "d_num": "30",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV123_インナーにワキガ臭_SV20_夏よりも冬_d30_台本4冬_ツボ君_診察.mp4",
+      "fv_num": 123,
+      "fv_text": "インナーにワキガ臭",
+      "sv_num": 20,
+      "sv_text": "夏よりも冬",
+      "d_num": "30",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV90_ワキガなのにインナー着てる_SV2_産後_d4t_通常語り_北口さん.mp4",
+      "fv_num": 90,
+      "fv_text": "ワキガなのにインナー着てる",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "語り",
+      "talent": "北口"
+    },
+    {
+      "raw": "FV123_インナーにワキガ臭_SV2_産後_d4t__.mp4",
+      "fv_num": 123,
+      "fv_text": "インナーにワキガ臭",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV90_ワキガなのにインナー着てる_SV16_冬に暖房電車厚着汗籠_d24c_冬訴求_.mp4",
+      "fv_num": 90,
+      "fv_text": "ワキガなのにインナー着てる",
+      "sv_num": 16,
+      "sv_text": "冬に暖房電車厚着汗籠",
+      "d_num": "24",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV92_ワキガなのにコート着てる人_SV16_冬に暖房電車厚着汗籠_d25_冬訴求_シーナさん.mp4",
+      "fv_num": 92,
+      "fv_text": "ワキガなのにコート着てる人",
+      "sv_num": 16,
+      "sv_text": "冬に暖房電車厚着汗籠",
+      "d_num": "25",
+      "type": "その他",
+      "talent": "シーナ"
+    },
+    {
+      "raw": "FV96_40,50代でワキガの方_SV16_冬に暖房電車厚着汗籠_d25_冬訴求_シーナさん.mp4",
+      "fv_num": 96,
+      "fv_text": "40,50代でワキガの方",
+      "sv_num": 16,
+      "sv_text": "冬に暖房電車厚着汗籠",
+      "d_num": "25",
+      "type": "その他",
+      "talent": "シーナ"
+    },
+    {
+      "raw": "FV27_冬の籠りワキガ_SV2_産後_d4t_青手袋語り.mp4",
+      "fv_num": 27,
+      "fv_text": "冬の籠りワキガ",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "FV62_産後ワキガ増_SV13_ワキガは遺伝だけでない_d17z_雑学_.mp4",
+      "fv_num": 62,
+      "fv_text": "産後ワキガ増",
+      "sv_num": 13,
+      "sv_text": "ワキガは遺伝だけでない",
+      "d_num": "17",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "FV15_朝シャワー_SV2_産後_d4t_通常語り_.mp4",
+      "fv_num": 15,
+      "fv_text": "朝シャワー",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "4",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "FV3_お母さん_SV2_産後_d2t_通常語り_.mp4",
+      "fv_num": 3,
+      "fv_text": "お母さん",
+      "sv_num": 2,
+      "sv_text": "産後",
+      "d_num": "2",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "FV22_耳垢湿り_SV1_お風呂入ってもワキ_d1c_通常語り_.mp4",
+      "fv_num": 22,
+      "fv_text": "耳垢湿り",
+      "sv_num": 1,
+      "sv_text": "お風呂入ってもワキ",
+      "d_num": "1",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "FV1_遺伝_SV1_お風呂入ってもワキ_d1c_通常語り_.mp4",
+      "fv_num": 1,
+      "fv_text": "遺伝",
+      "sv_num": 1,
+      "sv_text": "お風呂入ってもワキ",
+      "d_num": "1",
+      "type": "語り",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d2_3.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "2",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d4_6.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "4",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d2_6.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "2",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d4.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "4",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d1_1.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "1",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d4_2.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "4",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d1_2.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "1",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d1_7.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "1",
+      "type": "その他",
+      "talent": null
+    },
+    {
+      "raw": "プル2_d2_3.mp4",
+      "fv_num": null,
+      "fv_text": null,
+      "sv_num": null,
+      "sv_text": null,
+      "d_num": "2",
+      "type": "その他",
+      "talent": null
+    }
+  ]
+}

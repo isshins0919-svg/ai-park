@@ -1,0 +1,44 @@
+# rough-cut 縦型動画設定 (9:16)
+# TikTok / Instagram Reels / YouTube Shorts 向け
+
+project:
+  name: ""
+  speaker: ""
+  description: ""
+
+text_rules:
+  enumeration_style: "as_is"
+  known_terms: []
+  corrections: {}
+
+telop:
+  max_chars_per_line: 12
+  max_lines_per_page: 2
+  animation_in: "none"
+  animation_out: "none"
+  y_position: 0.75
+  font_size: 52
+
+render:
+  fps: 30
+  width: 1080
+  height: 1920
+  video_fit: "cover"
+  framing:
+    scale: 1.0
+    offset_y: 0
+
+edit:
+  max_gap_ms: 600
+  segment_padding_ms: 50
+  filler_confidence_threshold: 0.6
+
+# BudouX DP ペナルティ (縦型最適化)
+dp:
+  widow: 2.5
+  kinsoku: 15.0
+  anchor_bonus: 2.0
+  page_lone: 3.0
+  page_end: 1.5
+  line_max_ratio: 1.4
+  page_max_ratio: 1.4
