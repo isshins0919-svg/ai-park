@@ -32,7 +32,7 @@ import cv2
 import numpy as np
 import requests
 from bs4 import BeautifulSoup
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 from moviepy.editor import (
     VideoFileClip, ImageClip, AudioFileClip, CompositeVideoClip,
     concatenate_videoclips,
@@ -44,14 +44,66 @@ TARGET_DURATION = 60.0          # 目標動画尺（秒）
 CHARS_PER_SEC  = 4.0            # テロップ読速（文字/秒）
 MIN_DURATION   = 1.5            # シーン最短秒
 MAX_DURATION   = 10.0           # シーン最長秒（長すぎ防止）
-FONT_SIZE      = 68             # 通常テロップ
-FONT_EMPH_SIZE = 88             # 強調テロップ
-CHARS_PER_LINE = 14             # 1行最大文字数
-TELOP_Y_RATIO  = 0.72           # 画面の何%の高さにテロップを置くか
+FONT_SIZE           = 76         # 通常テロップ（68→76に拡大）
+FONT_EMPH_SIZE      = 84         # 強調テロップ
+CHARS_PER_LINE      = 14         # 通常テロップ 1行最大文字数
+CHARS_PER_LINE_EMPH = 11         # 強調テロップ 1行最大文字数（大きいフォント対応）
+TELOP_Y_RATIO       = 0.72       # 画面の何%の高さにテロップを置くか
 FFMPEG = "/opt/homebrew/bin/ffmpeg"
 
 # 横長素材のレターボックス閾値（この比率より横長ならletterbox）
 LETTERBOX_THRESHOLD = 1.2       # w/h がこれ以上なら黒枠追加
+
+# ─── ffmpegで向き正規化（回転メタデータを焼き込み） ────────────
+_FFPROBE = "/opt/homebrew/bin/ffprobe"
+_NORMALIZED_CACHE: dict[str, str] = {}   # path → normalized tmp path
+
+def normalize_video_orientation(clip_path: str) -> str:
+    """
+    ffmpegでクリップを再エンコードして回転メタデータを消去・焼き込む。
+    ffmpegはデフォルトで回転タグを適用するので、出力は常に正しい向き。
+    キャッシュ済みなら再利用。
+    """
+    if clip_path in _NORMALIZED_CACHE:
+        return _NORMALIZED_CACHE[clip_path]
+
+    # 回転メタデータがなければそのまま返す
+    has_rotation = False
+    try:
+        r = subprocess.run(
+            [_FFPROBE, "-v", "quiet", "-select_streams", "v:0",
+             "-show_entries", "stream_side_data=rotation",
+             "-of", "default=noprint_wrappers=1", clip_path],
+            capture_output=True, text=True
+        )
+        has_rotation = "rotation" in r.stdout
+    except Exception:
+        pass
+
+    if not has_rotation:
+        _NORMALIZED_CACHE[clip_path] = clip_path
+        return clip_path
+
+    # ffmpegで回転を焼き込んだtmpファイルを生成
+    tmp = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+    tmp.close()
+    try:
+        subprocess.run(
+            [FFMPEG, "-y", "-i", clip_path,
+             "-c:v", "libx264", "-preset", "fast", "-crf", "23",
+             "-an",                  # 音声なし
+             "-metadata:s:v", "rotate=0",   # メタデータのrotateをリセット
+             tmp.name],
+            capture_output=True, check=True
+        )
+        print(f"      🔄 向き正規化: {Path(clip_path).name}")
+        _NORMALIZED_CACHE[clip_path] = tmp.name
+        return tmp.name
+    except Exception as e:
+        print(f"      ⚠️  向き正規化失敗 ({e})、元ファイルを使用")
+        _NORMALIZED_CACHE[clip_path] = clip_path
+        return clip_path
+
 
 # OpenCV 顔検出モデル
 _FACE_CASCADE = None
@@ -163,9 +215,24 @@ def parse_script(html_path: str) -> list[Scene]:
     rows = soup.find_all("tr")
     scenes: list[Scene] = []
 
+    # ヘッダ行から「差し込み画像/動画」列インデックスを自動検出
+    clip_col = 6  # デフォルト（ver1）
     for row in rows:
         cells = [td.get_text(strip=True) for td in row.find_all(["td", "th"])]
         if len(cells) < 7:
+            continue
+        for i, c in enumerate(cells):
+            if "差し込み" in c or "画像" in c:
+                clip_col = i
+                print(f"  [台本] 素材列を自動検出: 列{clip_col}（{c}）")
+                break
+        else:
+            continue
+        break
+
+    for row in rows:
+        cells = [td.get_text(strip=True) for td in row.find_all(["td", "th"])]
+        if len(cells) < clip_col + 1:
             continue
         # ヘッダ行スキップ
         if cells[1] in ("NO", "A", "") or not cells[1].isdigit():
@@ -173,7 +240,7 @@ def parse_script(html_path: str) -> list[Scene]:
 
         no   = int(cells[1])
         text = cells[2].strip()
-        clip_ref_raw = cells[6].strip()   # "1-11-2" → ["1-1","1-2"]
+        clip_ref_raw = cells[clip_col].strip()
         notes = cells[3].strip()
 
         # クリップ参照を分割（"1-11-2" は "1-1" + "1-2"）
@@ -206,6 +273,41 @@ def _parse_clip_refs(raw: str) -> list[str]:
 
 # ── クリップ検索 ──────────────────────────────────────────
 EXTS = [".mp4", ".MP4", ".mov", ".MOV", ".HEIC", ".heic", ".jpeg", ".jpg", ".JPG", ".PNG"]
+
+def expand_clip_refs(refs: list[str], clips_dir: str) -> list[str]:
+    """
+    台本のrefs=['5-1'] → 5-2, 5-3... も自動発見して ['5-1','5-2'] を返す。
+    '5-1' のような X-N 形式のみ展開。単体番号('3'等)は展開しない。
+    既に複数指定済み(e.g. ['1-1','1-2'])はそのまま使う。
+    """
+    expanded: list[str] = []
+    seen: set[str] = set()
+
+    for ref in refs:
+        if ref in seen:
+            continue
+        seen.add(ref)
+        expanded.append(ref)
+
+        # X-1 形式なら X-2, X-3 ... を自動探索
+        m = re.match(r'^(\d{1,2})-(\d)$', ref)
+        if m:
+            base, variant = m.group(1), int(m.group(2))
+            # variantの次から順に見つかる限り追加
+            nxt = variant + 1
+            while True:
+                candidate = f"{base}-{nxt}"
+                if candidate in seen:
+                    break
+                if find_clip(clips_dir, candidate):
+                    seen.add(candidate)
+                    expanded.append(candidate)
+                    nxt += 1
+                else:
+                    break
+
+    return expanded
+
 
 def find_clip(clips_dir: str, ref: str) -> str | None:
     """
@@ -245,16 +347,17 @@ def make_telop(text: str, size: tuple, emphasis: bool = False) -> np.ndarray:
     img  = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
-    fs   = FONT_EMPH_SIZE if emphasis else FONT_SIZE
-    font = load_font(fs)
+    fs      = FONT_EMPH_SIZE if emphasis else FONT_SIZE
+    cpl     = CHARS_PER_LINE_EMPH if emphasis else CHARS_PER_LINE
+    font    = load_font(fs)
 
     # テキスト折り返し
     lines = []
     for raw_line in text.split("\n"):
-        if len(raw_line) <= CHARS_PER_LINE:
+        if len(raw_line) <= cpl:
             lines.append(raw_line)
         else:
-            lines.extend(textwrap.wrap(raw_line, width=CHARS_PER_LINE, break_long_words=True))
+            lines.extend(textwrap.wrap(raw_line, width=cpl, break_long_words=True))
 
     line_h = fs + 10
     total_h = line_h * len(lines)
@@ -266,7 +369,7 @@ def make_telop(text: str, size: tuple, emphasis: bool = False) -> np.ndarray:
     for i, line in enumerate(lines):
         bbox = font.getbbox(line)
         tw = bbox[2] - bbox[0]
-        x = (w - tw) // 2
+        x = max(pad_x, (w - tw) // 2)   # 左端クランプ（はみ出し防止）
         y = base_y + i * line_h
 
         if emphasis:
@@ -299,7 +402,9 @@ def image_to_clip(path: str, duration: float) -> VideoFileClip | ImageClip:
             )
             path = tmp.name
 
-        img = Image.open(path).convert("RGB")
+        img = Image.open(path)
+        img = ImageOps.exif_transpose(img)  # EXIF回転情報を適用
+        img = img.convert("RGB")
         img = fit_to_vertical(img)
         arr = np.array(img)
         clip = ImageClip(arr, duration=duration)
@@ -324,117 +429,139 @@ def detect_face_center(img_arr: np.ndarray) -> tuple[int, int] | None:
 
 
 def fit_to_vertical(img: Image.Image) -> Image.Image:
-    """
-    PIL画像を OUTPUT_SIZE(1080×1920) に収める。
-    - ほぼ縦型(9:16): そのままリサイズ
-    - 横長: レターボックス（黒枠上下）で幅1080に収める
-    - 顔検出可能: 顔中心でクロップ
-    """
+    """PIL画像を OUTPUT_SIZE(1080×1920) に変換。全アスペクト比に対応。"""
     w, h = img.size
     ratio = w / h
     target_ratio = OUTPUT_SIZE[0] / OUTPUT_SIZE[1]   # 0.5625
+    ow, oh = OUTPUT_SIZE
 
-    # ほぼ縦型
-    if abs(ratio - target_ratio) < 0.1:
-        return img.resize(OUTPUT_SIZE, Image.LANCZOS)
+    if abs(ratio - target_ratio) < 0.08:
+        return img.resize((ow, oh), Image.LANCZOS)
 
-    # 横長 → レターボックス or 顔中心クロップ
-    if ratio > LETTERBOX_THRESHOLD:
-        # まず顔検出でクロップできるか試みる
-        arr = np.array(img.convert("RGB"))
-        arr_bgr = arr[:, :, ::-1]
-        face_c = detect_face_center(arr_bgr)
-
-        if face_c:
-            # 顔中心でクロップ
-            cx, cy = face_c
-            new_w = int(h * target_ratio)
-            x = max(0, min(cx - new_w // 2, w - new_w))
-            img = img.crop((x, 0, x + new_w, h))
-            return img.resize(OUTPUT_SIZE, Image.LANCZOS)
+    if ratio > target_ratio:
+        # 9:16より横広い（3:4〜16:9など）
+        if ratio > LETTERBOX_THRESHOLD:
+            # かなり横長 → 顔検出 or レターボックス
+            arr = np.array(img.convert("RGB"))[:, :, ::-1]
+            face_c = detect_face_center(arr)
+            if face_c:
+                cx, _ = face_c
+                new_w = int(h * target_ratio)
+                x = max(0, min(cx - new_w // 2, w - new_w))
+                img = img.crop((x, 0, x + new_w, h))
+            else:
+                scale = ow / w
+                new_h = int(h * scale)
+                resized = img.resize((ow, new_h), Image.LANCZOS)
+                canvas = Image.new("RGB", (ow, oh), (0, 0, 0))
+                canvas.paste(resized, (0, (oh - new_h) // 2))
+                return canvas
         else:
-            # 顔なし → レターボックス（幅1080に合わせ、上下黒帯）
-            ow, oh = OUTPUT_SIZE
-            scale = ow / w
-            new_h = int(h * scale)
-            resized = img.resize((ow, new_h), Image.LANCZOS)
-            canvas = Image.new("RGB", (ow, oh), (0, 0, 0))
-            y_offset = (oh - new_h) // 2
-            canvas.paste(resized, (0, y_offset))
-            return canvas
+            # やや横広（3:4など）→ 幅を9:16に合わせてセンタークロップ
+            new_w = int(h * target_ratio)
+            x = (w - new_w) // 2
+            img = img.crop((x, 0, x + new_w, h))
+    else:
+        # 9:16より縦長 → 高さを1920に合わせてスケール、幅が足りなければピラーボックス
+        scale = oh / h
+        new_w = int(w * scale)
+        resized = img.resize((new_w, oh), Image.LANCZOS)
+        if new_w >= ow:
+            x = (new_w - ow) // 2
+            return resized.crop((x, 0, x + ow, oh))
+        canvas = Image.new("RGB", (ow, oh), (0, 0, 0))
+        canvas.paste(resized, ((ow - new_w) // 2, 0))
+        return canvas
 
-    # 縦長すぎ → センタークロップ
-    new_h = int(w / target_ratio)
-    y = (h - new_h) // 2
-    img = img.crop((0, y, w, y + new_h))
-    return img.resize(OUTPUT_SIZE, Image.LANCZOS)
+    return img.resize((ow, oh), Image.LANCZOS)
 
 
 def crop_clip_to_vertical(clip: VideoFileClip, crop_hint: str = "center") -> VideoFileClip:
-    """
-    動画クリップを OUTPUT_SIZE に変換。
-    - 横長: 先頭フレームで顔検出 → 顔中心クロップ or レターボックス
-    - 縦型: そのままリサイズ
-    """
+    """動画クリップを OUTPUT_SIZE に変換。全アスペクト比に対応。"""
     w, h = clip.size
     ratio = w / h
     target_ratio = OUTPUT_SIZE[0] / OUTPUT_SIZE[1]
+    ow, oh = OUTPUT_SIZE
 
-    # ほぼ縦型
-    if abs(ratio - target_ratio) < 0.1:
-        return clip.resize(OUTPUT_SIZE)
+    if abs(ratio - target_ratio) < 0.08:
+        return clip.resize((ow, oh))
 
-    if ratio > LETTERBOX_THRESHOLD:
-        # 先頭フレームで顔検出
-        try:
-            frame = clip.get_frame(min(0.5, clip.duration * 0.1))
-            frame_bgr = frame[:, :, ::-1].astype(np.uint8)
-            face_c = detect_face_center(frame_bgr)
-        except Exception:
-            face_c = None
+    if ratio > target_ratio:
+        # 9:16より横広い
+        if ratio > LETTERBOX_THRESHOLD:
+            # かなり横長 → 顔検出 → Gemini hint → レターボックス の優先順
+            try:
+                frame = clip.get_frame(min(0.5, clip.duration * 0.1))
+                face_c = detect_face_center(frame[:, :, ::-1].astype(np.uint8))
+            except Exception:
+                face_c = None
 
-        if face_c:
-            # 顔中心クロップ（顔検出優先）
-            cx, _ = face_c
+            if face_c:
+                cx, _ = face_c
+                new_w = int(h * target_ratio)
+                x1 = max(0, min(cx - new_w // 2, w - new_w))
+                return clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h).resize((ow, oh))
+
+            # Gemini hint でクロップ
             new_w = int(h * target_ratio)
-            x1 = max(0, min(cx - new_w // 2, w - new_w))
-            clip = clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h)
-            return clip.resize(OUTPUT_SIZE)
-        elif crop_hint in ("left", "right", "center"):
-            # Geminiのcrop_hintを使う
-            new_w = int(h * target_ratio)
-            if crop_hint == "left":
-                x1 = 0
-            elif crop_hint == "right":
-                x1 = w - new_w
-            else:
-                x1 = (w - new_w) // 2
+            if crop_hint == "left":   x1 = 0
+            elif crop_hint == "right": x1 = w - new_w
+            else:                      x1 = (w - new_w) // 2
             x1 = max(0, min(x1, w - new_w))
-            clip = clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h)
-            return clip.resize(OUTPUT_SIZE)
+            return clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h).resize((ow, oh))
         else:
-            # レターボックス: 幅1080にスケールし上下黒帯
-            ow, oh = OUTPUT_SIZE
-            scale = ow / w
-            new_h = int(h * scale)
-            y_offset = (oh - new_h) // 2
+            # やや横広（3:4など）→ 幅センタークロップ
+            new_w = int(h * target_ratio)
+            x1 = (w - new_w) // 2
+            return clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h).resize((ow, oh))
+    else:
+        # 9:16より縦長 → 高さ1920にスケール、幅が足りなければピラーボックス
+        scale = oh / h
+        new_w = int(w * scale)
+        resized = clip.resize((new_w, oh))
+        if new_w >= ow:
+            x1 = (new_w - ow) // 2
+            return resized.crop(x1=x1, y1=0, x2=x1+ow, y2=oh)
+        x_off = (ow - new_w) // 2
 
-            def add_letterbox(frame):
-                resized = cv2.resize(frame, (ow, new_h))
-                canvas = np.zeros((oh, ow, 3), dtype=np.uint8)
-                canvas[y_offset:y_offset+new_h] = resized
-                return canvas
+        def add_pillarbox(frame):
+            canvas = np.zeros((oh, ow, 3), dtype=np.uint8)
+            canvas[:, x_off:x_off+new_w] = frame
+            return canvas
 
-            return clip.fl_image(add_letterbox).set_duration(clip.duration)
-
-    # 縦長すぎ → センタークロップ
-    new_h = int(w / target_ratio)
-    y1 = (h - new_h) // 2
-    clip = clip.crop(x1=0, y1=y1, x2=w, y2=y1+new_h)
-    return clip.resize(OUTPUT_SIZE)
+        return resized.fl_image(add_pillarbox).set_duration(clip.duration)
 
 
 # ── シーン1本分のVideoClipを生成 ──────────────────────────────
+def _load_single_clip(clip_path: str, duration: float,
+                      gemini_key: str | None) -> VideoFileClip | ImageClip:
+    """1つのクリップファイルを読み込み、縦型クロップ・尺カットして返す。"""
+    ext = Path(clip_path).suffix.lower()
+    if ext in (".heic", ".jpeg", ".jpg", ".png"):
+        return image_to_clip(clip_path, duration)
+
+    try:
+        # ffmpegで向きを正規化してから読み込む（回転メタデータを焼き込み）
+        normalized_path = normalize_video_orientation(clip_path)
+        raw = VideoFileClip(normalized_path)
+        raw = raw.set_audio(None)
+
+        crop_hint = "center"
+        if gemini_key:
+            analysis = analyze_clip_with_gemini(clip_path, gemini_key)
+            crop_hint = analysis.get("crop_hint", "center")
+            print(f"      🤖 Gemini: {analysis.get('subject','')} → {crop_hint}")
+
+        raw = crop_clip_to_vertical(raw, crop_hint=crop_hint)
+        if raw.duration > duration:
+            raw = raw.subclip(0, duration)
+        return raw
+    except Exception as e:
+        print(f"      ⚠️  動画読み込みエラー {Path(clip_path).name}: {e}")
+        black = np.zeros((OUTPUT_SIZE[1], OUTPUT_SIZE[0], 3), dtype=np.uint8)
+        return ImageClip(black, duration=duration)
+
+
 def build_scene_clip(scene: Scene, clips_dir: str,
                      override_duration: float | None = None,
                      gemini_key: str | None = None) -> CompositeVideoClip | None:
@@ -445,46 +572,37 @@ def build_scene_clip(scene: Scene, clips_dir: str,
 
     print(f"  シーン{scene.no}: 「{scene.text[:20]}...」 → {duration:.1f}s refs={scene.clip_refs}")
 
-    # クリップ検索（-1優先、なければ-2、なければ番号のみ）
-    clip_path = None
-    for ref in scene.clip_refs:
-        found = find_clip(clips_dir, ref)
-        if found:
-            clip_path = found
-            break
+    # 台本のrefs を自動展開（5-1 → 5-1, 5-2 など）してから全クリップ収集
+    expanded_refs = expand_clip_refs(scene.clip_refs, clips_dir)
+    if expanded_refs != scene.clip_refs:
+        print(f"    🔍 自動展開: {scene.clip_refs} → {expanded_refs}")
 
-    if not clip_path:
+    found_clips: list[str] = []
+    for ref in expanded_refs:
+        p = find_clip(clips_dir, ref)
+        if p:
+            found_clips.append(p)
+
+    if not found_clips:
         print(f"    ⚠️  シーン{scene.no}: クリップが見つかりません（refs={scene.clip_refs}）→ 黒フレームで代替")
         black = np.zeros((OUTPUT_SIZE[1], OUTPUT_SIZE[0], 3), dtype=np.uint8)
-        base = ImageClip(black, duration=duration)
+        base: VideoFileClip | ImageClip | CompositeVideoClip = ImageClip(black, duration=duration)
+    elif len(found_clips) == 1:
+        # 1クリップ: 従来通り
+        print(f"    ✅ {Path(found_clips[0]).name}")
+        base = _load_single_clip(found_clips[0], duration, gemini_key)
+        duration = base.duration
     else:
-        ext = Path(clip_path).suffix.lower()
-        print(f"    ✅ {Path(clip_path).name}")
-
-        if ext in (".heic", ".jpeg", ".jpg", ".png"):
-            base = image_to_clip(clip_path, duration)
-        else:
-            try:
-                raw = VideoFileClip(clip_path)
-                raw = raw.set_audio(None)          # ① 音声削除
-
-                # ② Gemini Visionでクロップ方向を判断
-                crop_hint = "center"
-                if gemini_key:
-                    analysis = analyze_clip_with_gemini(clip_path, gemini_key)
-                    crop_hint = analysis.get("crop_hint", "center")
-                    print(f"    🤖 Gemini: {analysis.get('subject','')} → {crop_hint}")
-
-                raw = crop_clip_to_vertical(raw, crop_hint=crop_hint)
-                if raw.duration > duration:
-                    raw = raw.subclip(0, duration)
-                else:
-                    duration = raw.duration
-                base = raw
-            except Exception as e:
-                print(f"    ⚠️  動画読み込みエラー: {e}")
-                black = np.zeros((OUTPUT_SIZE[1], OUTPUT_SIZE[0], 3), dtype=np.uint8)
-                base = ImageClip(black, duration=duration)
+        # 複数クリップ: 等分して結合
+        per_dur = duration / len(found_clips)
+        print(f"    ✅ {len(found_clips)}クリップを等分 ({per_dur:.1f}s×{len(found_clips)})")
+        sub_clips = []
+        for cp in found_clips:
+            print(f"      • {Path(cp).name}")
+            sc = _load_single_clip(cp, per_dur, gemini_key)
+            sub_clips.append(sc)
+        base = concatenate_videoclips(sub_clips, method="compose")
+        duration = base.duration
 
     # テキストなしシーン（CTAなど）はテロップなし
     if not scene.text:
