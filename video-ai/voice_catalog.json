@@ -1,0 +1,49 @@
+{
+  "_comment": "Fish Audio reference_id マッピング。fish.audio/models で実際のIDを確認して更新する。",
+  "_update_guide": "1. https://fish.audio にアクセス → 日本語ボイスを検索 → モデルページのURLからIDを取得 例: fish.audio/m/7f92f8af... → reference_id = 7f92f8af...",
+
+  "voices": {
+    "女性・クール": {
+      "reference_id": "FILL_FROM_FISH_AUDIO",
+      "description": "落ち着いた女性。健康食品・サプリ・医療系に最適。プルーストの鉄板。",
+      "best_for": ["健康食品", "サプリ", "体臭ケア", "医療系"],
+      "speed": 1.0,
+      "tested": false
+    },
+    "女性・柔らか": {
+      "reference_id": "FILL_FROM_FISH_AUDIO",
+      "description": "優しく親しみやすい女性。美容・スキンケア系に最適。",
+      "best_for": ["美容", "スキンケア", "ダイエット"],
+      "speed": 1.0,
+      "tested": false
+    },
+    "女性・明るい": {
+      "reference_id": "FILL_FROM_FISH_AUDIO",
+      "description": "元気で若い女性。コスメ・ライフスタイル系に最適。",
+      "best_for": ["コスメ", "ライフスタイル", "若年層向け"],
+      "speed": 1.05,
+      "tested": false
+    },
+    "男性・権威": {
+      "reference_id": "FILL_FROM_FISH_AUDIO",
+      "description": "重みと確信がある男性。健康食品・D2C・金融に最適。",
+      "best_for": ["健康食品", "D2C", "金融", "法律"],
+      "speed": 0.95,
+      "tested": false
+    },
+    "男性・親しみ": {
+      "reference_id": "FILL_FROM_FISH_AUDIO",
+      "description": "ナチュラルで中性的な男性。アプリ・通信・BtoBに最適。",
+      "best_for": ["アプリ", "通信", "BtoB", "サービス系"],
+      "speed": 1.0,
+      "tested": false
+    }
+  },
+
+  "defaults": {
+    "fallback_category": "女性・クール",
+    "fallback_behavior": "reference_idなしでFish Audioデフォルト音声を使用",
+    "format": "mp3",
+    "latency": "normal"
+  }
+}

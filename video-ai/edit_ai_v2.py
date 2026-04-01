@@ -158,25 +158,76 @@ def analyze_clip_with_gemini(clip_path: str, gemini_key: str) -> dict:
         return {"subject": "不明", "crop_hint": "center", "reason": f"分析失敗: {e}"}
 
 
+# ─── Fish Audio: 声カタログ読み込み ──────────────────────────
+def load_voice_catalog() -> dict:
+    catalog_path = Path(__file__).parent / "voice_catalog.json"
+    if catalog_path.exists():
+        with open(catalog_path, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+def resolve_voice(category: str | None, catalog: dict) -> tuple[str | None, float]:
+    """
+    声カテゴリー名 → (reference_id, speed) を返す。
+    IDが未設定("FILL_FROM_FISH_AUDIO")の場合は None を返し、Fish Audioデフォルトにフォールバック。
+    """
+    voices = catalog.get("voices", {})
+    defaults = catalog.get("defaults", {})
+
+    # カテゴリー未指定 → デフォルトカテゴリーを使う
+    if not category:
+        category = defaults.get("fallback_category", "女性・クール")
+
+    voice = voices.get(category)
+    if not voice:
+        print(f"  ⚠️  声カテゴリー '{category}' が voice_catalog.json に見つかりません。デフォルト音声を使用。")
+        return None, 1.0
+
+    ref_id = voice.get("reference_id", "")
+    if not ref_id or ref_id == "FILL_FROM_FISH_AUDIO":
+        print(f"  ⚠️  '{category}' の reference_id が未設定です。voice_catalog.json を更新してください。")
+        print(f"      → fish.audio でモデルを探してIDを設定: https://fish.audio/models")
+        return None, voice.get("speed", 1.0)
+
+    print(f"  🎙  声: {category} (reference_id: {ref_id[:8]}...)")
+    return ref_id, voice.get("speed", 1.0)
+
+
 # ─── Fish Audio: ナレーション生成 ────────────────────────────
-def generate_narration(scenes: list, fish_key: str, output_path: str) -> str | None:
+def generate_narration(
+    scenes: list,
+    fish_key: str,
+    output_path: str,
+    voice_category: str | None = None,
+) -> str | None:
     """
     全シーンのテキストを結合してFish AudioでMP3生成。
+    voice_category: voice_catalog.json のキー名（例: "女性・クール"）
     返値: 生成したmp3パス（失敗時None）
     """
     full_text = "。".join(s.text for s in scenes if s.text).strip()
     if not full_text:
         return None
+
+    catalog = load_voice_catalog()
+    reference_id, speed = resolve_voice(voice_category, catalog)
+
+    payload: dict = {"text": full_text, "format": "mp3", "latency": "normal"}
+    if reference_id:
+        payload["reference_id"] = reference_id
+    if speed != 1.0:
+        payload["prosody"] = {"speed": speed}
+
     try:
         resp = requests.post(
             "https://api.fish.audio/v1/tts",
             headers={"Authorization": f"Bearer {fish_key}", "Content-Type": "application/json"},
-            json={"text": full_text, "format": "mp3", "latency": "normal"},
+            json=payload,
             stream=True,
             timeout=60
         )
         if resp.status_code != 200:
-            print(f"  ⚠️  Fish Audio エラー: {resp.status_code}")
+            print(f"  ⚠️  Fish Audio エラー: {resp.status_code} / {resp.text[:100]}")
             return None
         with open(output_path, "wb") as f:
             for chunk in resp.iter_content(1024):
@@ -703,6 +754,8 @@ def main():
     parser.add_argument("--output",  default="video-ai/output/output_v2.mp4", help="出力mp4パス")
     parser.add_argument("--no-ai",   action="store_true", help="AI API（Gemini/Fish Audio）を使わない")
     parser.add_argument("--remotion", action="store_true", help="Remotion用 composition.json も出力する")
+    parser.add_argument("--voice",   default=None,
+                        help="声カテゴリー（例: '女性・クール' '男性・権威'）。未指定時はvoice_catalog.jsonのデフォルトを使用")
     args = parser.parse_args()
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
@@ -734,7 +787,8 @@ def main():
         print("\n🎙  Fish Audio: ナレーション生成中...")
         narration_path = generate_narration(
             valid_scenes, fish_key,
-            str(Path(args.output).parent / "narration.mp3")
+            str(Path(args.output).parent / "narration.mp3"),
+            voice_category=args.voice,
         )
 
     print(f"\n🎬 シーンクリップ生成中（{len(valid_scenes)}シーン）...")
