@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """
-Slack 記事フィードバックBot v6
-- #yomite_ai-fb を2分おきにポーリング
+Slack 記事フィードバックBot v7
+- #yomite_ai-kiji_fb を2分おきにポーリング
 - 「フィードバック」+ URL を含む投稿を検知
 - Playwright でJS実行後にDOM順（テキスト＋画像・動画セット）で解析
-- 動画は全本のサムネイルをOpenCV並列取得 → Claude Visionに渡す
-- 18パート構造分析＋統計付きフィードバックをSlack Canvasで返信
+- 動画は全本のサムネイルをOpenCV並列取得
+- 7エージェントCMOシステム（Group A/B/C 並列 + CMO逐次）でスコアカード出力
+  Group A: フック君 + アーク君（Haiku×2）
+  Group B: 信頼君 + CTA君 + オファー君（Haiku×3）
+  Group C: 競合君（benchmark.jsonルックアップ）
+  CMO:     6スコア統合 → GO/REVISE/BLOCK判定（Sonnet）
 """
 from __future__ import annotations
 
@@ -317,7 +321,510 @@ def extract_video_thumbnails(videos: list) -> list[dict]:
     return results
 
 
-# ─── システムプロンプト ────────────────────────────────
+# ─── 7エージェント CMOパイプライン ──────────────────────────
+HAIKU_MODEL  = "claude-haiku-4-5-20251001"
+SONNET_MODEL = "claude-sonnet-4-6"
+
+
+def call_haiku_agent(system: str, user_content: str, client: anthropic.Anthropic, max_tokens: int = 1500) -> str:
+    """Haikuエージェント共通呼び出し。JSON文字列を返す。"""
+    for attempt in range(3):
+        try:
+            resp = client.messages.create(
+                model=HAIKU_MODEL,
+                max_tokens=max_tokens,
+                system=system,
+                messages=[{"role": "user", "content": user_content}]
+            )
+            raw = resp.content[0].text.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            return raw.strip()
+        except anthropic.RateLimitError:
+            if attempt < 2:
+                time.sleep(60 * (attempt + 1))
+            else:
+                raise
+    raise RuntimeError("Haiku agent retry exceeded")
+
+
+def parse_json_safe(raw: str, default: dict) -> dict:
+    try:
+        return json.loads(raw)
+    except Exception:
+        log.warning(f"JSON parse error: {raw[:100]}")
+        return default
+
+
+# ── Agent 01: 記事フック君 ──────────────────────────────
+HOOK_SYSTEM = """あなたは記事LPの冒頭フック専門評価AIです。
+信条: 「冒頭200文字が読まれなければ、残りの5,000文字は存在しないのと同じだ。」
+読者モデル: FBをスクロールしている40〜60代女性。0.8秒で止まるか流れるかを判断する。
+
+4軸でスコアリングしてJSONのみで返してください:
+hook_score = 悩み解像度×0.35 + N1投影度×0.35 + 感情温度×0.20 + 数字パワー×0.10
+数字ボーナス: 具体的数字が1個以上あれば+5点
+
+JSON形式のみ:
+{
+  "agent": "記事フック君",
+  "hook_score": 0-100の整数,
+  "score_breakdown": {"resolution_score": 整数, "self_relevance_score": 整数, "emotion_score": 整数, "number_bonus": 0か5},
+  "weak_axis": "最も弱い軸名（点数）",
+  "weak_reason": "なぜ弱いか1文",
+  "rewrite": "具体的な書き換えテキスト（コメントだけはNG）"
+}"""
+
+
+def run_agent_hook(text: str, client: anthropic.Anthropic) -> dict:
+    user = f"以下の記事LP冒頭テキストを評価してください。JSONのみ返してください。\n\n{text[:600]}"
+    raw = call_haiku_agent(HOOK_SYSTEM, user, client)
+    return parse_json_safe(raw, {"agent": "記事フック君", "hook_score": 50, "error": "parse_failed"})
+
+
+# ── Agent 02: 記事アーク君 ──────────────────────────────
+NARRATIVE_SYSTEM = """あなたは記事LPの感情アーク専門評価AIです。
+信条: 「読者が商品を買う決断は、感情が最高点に達した直後3秒以内に起きる。その感情地形を設計するのが私の仕事だ。」
+
+アーク型: V字（理想）/ 平坦型 / 下降型 / 過剰ピーク型
+narrative_score = アーク型×0.40 + 離脱ゾーン評価×0.30 + 新認識フック数×0.20 + 感情温度変化×0.10
+V字ボーナス: 谷が記事30-50%地点なら+10点
+
+JSONのみで返してください:
+{
+  "agent": "記事アーク君",
+  "narrative_score": 0-100の整数,
+  "arc_type": "V字/平坦型/下降型/過剰ピーク型",
+  "score_breakdown": {"arc_score": 整数, "dropoff_score": 整数, "insight_hook_score": 整数, "emotion_change_score": 整数},
+  "dropoff_point": "記事XX%付近（説明）",
+  "insight_hook_count": 整数,
+  "weak_point": "最も弱い問題を1文",
+  "improvement": "仕込む場所と内容を明記した具体的改善案",
+  "arc_v_shape_bonus": true/false
+}"""
+
+
+def run_agent_narrative(text: str, client: anthropic.Anthropic) -> dict:
+    user = f"以下の記事LPの感情アークを評価してください。JSONのみ返してください。\n\n{text[:3500]}"
+    raw = call_haiku_agent(NARRATIVE_SYSTEM, user, client, max_tokens=1500)
+    return parse_json_safe(raw, {"agent": "記事アーク君", "narrative_score": 50, "error": "parse_failed"})
+
+
+# ── Agent 03: 記事信頼君 ──────────────────────────────
+TRUST_SYSTEM = """あなたは記事LPの信頼設計専門評価AIです。
+信条: 「私は埼玉在住の52歳主婦として読む。その目を騙せないなら、信頼スコアは低い。」
+
+3層評価:
+- 権威層: TV出演+専門医=100 / 専門医肩書きあり=75 / 権威なし=30
+- 証拠層: 第三者機関+出典=100 / 自社調査出典なし=40 / 数値なし=20
+- 口コミ層: 属性具体+感情変化=100 / 年代+悩みのみ=60 / 属性なし=30
+trust_score = 権威×0.35 + 証拠×0.35 + 口コミ×0.30
+早期権威ボーナス: 記事1/3以内に登場で+10点
+
+JSONのみで返してください:
+{
+  "agent": "記事信頼君",
+  "trust_score": 0-100の整数,
+  "score_breakdown": {
+    "authority_score": 整数, "authority_type": "説明", "authority_timing": "記事XX%地点",
+    "evidence_score": 整数, "evidence_type": "説明",
+    "review_score": 整数, "review_quality": "説明"
+  },
+  "early_authority_bonus": 0か10,
+  "weak_point": "最も弱い層を1文",
+  "improvement": "具体的な改善案1文"
+}"""
+
+
+def run_agent_trust(text: str, client: anthropic.Anthropic) -> dict:
+    user = f"以下の記事LP全文の信頼設計を評価してください。JSONのみ返してください。\n\n{text[:3500]}"
+    raw = call_haiku_agent(TRUST_SYSTEM, user, client, max_tokens=1500)
+    return parse_json_safe(raw, {"agent": "記事信頼君", "trust_score": 50, "error": "parse_failed"})
+
+
+# ── Agent 04: 記事CTA君 ──────────────────────────────
+CTA_SYSTEM = """あなたは記事LPのCTA専門評価AIです。
+信条: 「読者が『詳しくはこちら』を押す理由は何もない。読者が『残り◯個を今すぐ確認する』を押すのは、自分のためだ。」
+
+CTAタイプ強度: アンケート型>クーポン型>限定緊急型>行動コスト低型>汎用型
+cta_score = 本数×0.25 + 配置×0.25 + 文言強度×0.30 + 必然性×0.20
+アンケート/クーポン型ボーナス: +5点
+理想配置: 冒頭5%・中盤40-60%・末尾90%で3-5本
+
+JSONのみで返してください:
+{
+  "agent": "記事CTA君",
+  "cta_score": 0-100の整数,
+  "cta_list": [{"position": "記事XX%", "text": "CTA文言", "type": "タイプ", "necessity": 整数}],
+  "cta_count": 整数,
+  "score_breakdown": {"count_score": 整数, "placement_score": 整数, "copy_score": 整数, "necessity_score": 整数},
+  "survey_bonus": true/false,
+  "weak_cta": "最も弱いCTAを1文",
+  "improvement": "具体的な書き換えテキスト"
+}"""
+
+
+def run_agent_cta(text: str, client: anthropic.Anthropic) -> dict:
+    user = f"以下の記事LPのCTA設計を評価してください（CTAを全本リストアップ）。JSONのみ返してください。\n\n{text[:3500]}"
+    raw = call_haiku_agent(CTA_SYSTEM, user, client, max_tokens=2000)
+    return parse_json_safe(raw, {"agent": "記事CTA君", "cta_score": 50, "error": "parse_failed"})
+
+
+# ── Agent 05: 記事オファー君 ──────────────────────────────
+OFFER_SYSTEM = """あなたは記事LPのオファー設計専門評価AIです。
+信条: 「最高のオファーとは、買わない理由を全部消した状態のことだ。」
+
+offer_score = 価格魅力度×0.40 + 緊急性×0.25 + 特典×0.20 + 縛りなし設計×0.15
+縛りなし明記ボーナス: +15点
+価格評価: 98%OFF=100 / 70%以上OFF=80 / 50-70%OFF=60 / 割引なし=20
+
+JSONのみで返してください:
+{
+  "agent": "記事オファー君",
+  "offer_score": 0-100の整数,
+  "price_info": {"regular_price": "金額or不明", "first_price": "金額or不明", "discount_rate": "XX%OFFor不明"},
+  "score_breakdown": {"price_score": 整数, "urgency_score": 整数, "benefit_score": 整数, "binding_score": 整数},
+  "urgency_detected": true/false,
+  "binding_free_detected": true/false,
+  "binding_free_bonus": 0か15,
+  "weak_point": "最も弱い問題を1文",
+  "improvement": "具体的な追加テキスト"
+}"""
+
+
+def run_agent_offer(text: str, client: anthropic.Anthropic) -> dict:
+    offer_text = text[-2500:] if len(text) > 2500 else text
+    user = f"以下の記事LPのオファー設計（価格・割引・緊急性・特典・縛りなし）を評価してください。JSONのみ返してください。\n\n{offer_text}"
+    raw = call_haiku_agent(OFFER_SYSTEM, user, client, max_tokens=1500)
+    return parse_json_safe(raw, {"agent": "記事オファー君", "offer_score": 50, "error": "parse_failed"})
+
+
+# ── Agent 06: 記事競合君（API不使用・JSONルックアップのみ）──────
+def run_agent_competitive(text: str, genre_info: dict, competitor: dict | None) -> dict:
+    if not competitor:
+        return {
+            "agent": "記事競合君",
+            "competitive_score": 50,
+            "benchmark_found": False,
+            "competitive_gaps": ["benchmark.jsonにジャンルデータなし"],
+        }
+
+    winning_pattern = competitor.get("winning_pattern", "")
+    top_items = competitor.get("top_items", [])
+
+    # 勝ちパターンをキーワードリストに分解
+    pattern_elements = [p.strip() for p in
+                        winning_pattern.replace("×", "/").replace("＋", "/").replace("×", "/").split("/")
+                        if p.strip()]
+
+    # パターン実装チェック（テキスト内キーワード検索）
+    keyword_map = {
+        "専門医命令型": ["専門医", "医師が", "博士", "先生が言"],
+        "アンケートCTA": ["アンケート", "5問", "クーポン取得"],
+        "プロテオグリカン": ["プロテオグリカン"],
+        "産地ブランド": ["産地", "北海道", "九州", "製造地"],
+        "医薬部外品": ["医薬部外品", "厚生労働省"],
+        "TV出演": ["テレビ", "TV", "放送"],
+    }
+
+    implemented = []
+    not_implemented = []
+    for elem in pattern_elements:
+        matched = False
+        for key, kws in keyword_map.items():
+            if key in elem and any(kw in text for kw in kws):
+                matched = True
+                break
+        if not matched:
+            if any(kw in text for kw in elem.replace("型", "").replace("訴求", "").split()):
+                matched = True
+        (implemented if matched else not_implemented).append(elem)
+
+    total = len(pattern_elements)
+    impl_rate = int(len(implemented) / total * 100) if total > 0 else 50
+    gap_score = max(20, 100 - len(not_implemented) * 25)
+    competitive_score = int(impl_rate * 0.60 + gap_score * 0.40)
+
+    return {
+        "agent": "記事競合君",
+        "competitive_score": competitive_score,
+        "benchmark_found": True,
+        "genre": competitor.get("name", ""),
+        "benchmark_rank1": {
+            "product": top_items[0].get("product_name", "") if top_items else "",
+            "winning_pattern": winning_pattern,
+        },
+        "pattern_check": {
+            "implemented": implemented,
+            "not_implemented": not_implemented,
+            "implementation_rate": f"{impl_rate}%",
+        },
+        "competitive_gaps": [f"{p}がない（競合TOP1のパターン）" for p in not_implemented[:3]],
+        "reference_articles": [
+            {
+                "rank": item.get("rank", i + 1),
+                "product": item.get("product_name", ""),
+                "url": item.get("url", ""),
+                "fv_hook": item.get("fv_hook", ""),
+                "steal_point": " / ".join(item.get("key_tactics", [])[:2]),
+            }
+            for i, item in enumerate(top_items[:3])
+        ],
+    }
+
+
+# ── Agent 07 (CMO): 記事CMO君 ──────────────────────────────
+CMO_SYSTEM = """あなたは記事LP CMO（最高マーケティング責任者）です。
+信条: 「6人の専門家の数字を読んで、この記事の"構造上の病因"を1文で言える。それが私の仕事だ。スコアを転記するだけなら私は要らない。」
+
+受け取った6エージェントのスコアを統合して最終判定を出してください。
+
+スコア計算:
+mCVR_score = hook_score×0.40 + narrative_score×0.35 + cta_score×0.25
+landing_cvr_score = offer_score×0.40 + trust_score×0.35 + competitive_score×0.25
+total_score = mCVR_score×0.50 + landing_cvr_score×0.50
+
+ボーナス加算:
++2点: フックに具体的数字あり（number_bonus > 0）
++2点: アンケート/クーポン型CTAを実装（survey_bonus = true）
++3点: V字アーク（arc_v_shape_bonus = true）
++2点: 権威が記事1/3以内に登場（early_authority_bonus > 0）
+
+GO条件: total_score≥80 AND mCVR_score≥75 AND landing_cvr_score≥70
+BLOCK条件: 薬機法NG（「治る」「必ず」「効果あり」等の医療効果断定）が1件でも → BLOCK固定
+must_fixは最大3点（CVR影響度の大きい順）
+
+JSONのみで返してください:
+{
+  "final_verdict": "GO/REVISE/BLOCK",
+  "loop_count": 1,
+  "score_summary": {
+    "hook_score": 数値, "narrative_score": 数値, "trust_score": 数値,
+    "cta_score": 数値, "offer_score": 数値, "competitive_score": 数値,
+    "mCVR_score": 小数1桁, "landing_cvr_score": 小数1桁, "total_score": 小数1桁,
+    "legal_check": "PASS/NG", "legal_issues": [],
+    "bonus_points": 数値, "adjusted_total": 小数1桁
+  },
+  "go_conditions": {"total_score_ok": bool, "mCVR_ok": bool, "landing_cvr_ok": bool, "legal_ok": bool},
+  "structural_diagnosis": "この記事の構造上の病因を1文で",
+  "must_fix": ["[mCVR+X%推定] 具体的改善内容", "[mCVR+X%推定] 具体的改善内容", "[着地CVR+X%推定] 具体的改善内容"],
+  "nice_to_fix": ["改善できればなお良い点1〜2点"],
+  "next_action": "次のアクション1文"
+}"""
+
+
+def run_cmo(agent_results: dict, client: anthropic.Anthropic) -> dict:
+    user = (
+        "以下の6エージェントのスコアを統合して最終CMO判定を出してください。JSONのみ返してください。\n\n"
+        + json.dumps(agent_results, ensure_ascii=False, indent=2)
+    )
+    for attempt in range(3):
+        try:
+            resp = client.messages.create(
+                model=SONNET_MODEL,
+                max_tokens=3000,
+                system=CMO_SYSTEM,
+                messages=[{"role": "user", "content": user}]
+            )
+            raw = resp.content[0].text.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            return parse_json_safe(raw.strip(), {"final_verdict": "REVISE", "error": "parse_failed"})
+        except anthropic.RateLimitError:
+            if attempt < 2:
+                time.sleep(60 * (attempt + 1))
+            else:
+                raise
+    raise RuntimeError("CMO agent retry exceeded")
+
+
+def format_cmo_output(agents: dict, cmo: dict) -> str:
+    """CMOパイプライン結果をSlack Canvas用Markdownに変換"""
+    hook        = agents.get("hook", {})
+    narrative   = agents.get("narrative", {})
+    trust       = agents.get("trust", {})
+    cta         = agents.get("cta", {})
+    offer       = agents.get("offer", {})
+    competitive = agents.get("competitive", {})
+    scores      = cmo.get("score_summary", {})
+    verdict     = cmo.get("final_verdict", "REVISE")
+
+    verdict_emoji = {"GO": "✅", "REVISE": "🔄", "BLOCK": "🚫"}.get(verdict, "🔄")
+
+    def s(key, fallback_agent, fallback_key):
+        return scores.get(key, fallback_agent.get(fallback_key, "—"))
+
+    def mark(score, thr):
+        return "✅" if isinstance(score, (int, float)) and score >= thr else "❌"
+
+    lines = []
+
+    # CMOスコアカード
+    lines += [
+        f"## {verdict_emoji} CMO最終判定: **{verdict}**（ループ{cmo.get('loop_count', 1)}回目）",
+        "",
+        f"> {cmo.get('structural_diagnosis', '')}",
+        "",
+        "### 📊 スコアカード",
+        "",
+        "| エージェント | スコア | 基準 | 判定 |",
+        "|---|---|---|---|",
+        f"| 記事フック君 | {s('hook_score', hook, 'hook_score')}点 | ≥75 | {mark(s('hook_score', hook, 'hook_score'), 75)} |",
+        f"| 記事アーク君 | {s('narrative_score', narrative, 'narrative_score')}点 | ≥70 | {mark(s('narrative_score', narrative, 'narrative_score'), 70)} |",
+        f"| 記事信頼君 | {s('trust_score', trust, 'trust_score')}点 | ≥70 | {mark(s('trust_score', trust, 'trust_score'), 70)} |",
+        f"| 記事CTA君 | {s('cta_score', cta, 'cta_score')}点 | ≥80 | {mark(s('cta_score', cta, 'cta_score'), 80)} |",
+        f"| 記事オファー君 | {s('offer_score', offer, 'offer_score')}点 | ≥70 | {mark(s('offer_score', offer, 'offer_score'), 70)} |",
+        f"| 記事競合君 | {s('competitive_score', competitive, 'competitive_score')}点 | ≥65 | {mark(s('competitive_score', competitive, 'competitive_score'), 65)} |",
+        f"| 薬機法 | {scores.get('legal_check', 'PASS')} | PASS | {'✅' if scores.get('legal_check', 'PASS') == 'PASS' else '🚫'} |",
+        "",
+        f"**mCVR_score**: {scores.get('mCVR_score', '—')}点　"
+        f"**着地CVR_score**: {scores.get('landing_cvr_score', '—')}点　"
+        f"**総合**: {scores.get('adjusted_total', scores.get('total_score', '—'))}点（ボーナス+{scores.get('bonus_points', 0)}含む）",
+        "",
+    ]
+
+    # Must Fix
+    must_fix = cmo.get("must_fix", [])
+    if must_fix:
+        lines += ["## 🔥 Must Fix（優先改善TOP3）", ""]
+        for i, fix in enumerate(must_fix[:3], 1):
+            lines.append(f"{i}. {fix}")
+        lines.append("")
+
+    nice_fix = cmo.get("nice_to_fix", [])
+    if nice_fix:
+        lines += ["### Nice to Fix"]
+        for fix in nice_fix[:2]:
+            lines.append(f"- {fix}")
+        lines.append("")
+
+    lines += ["---", ""]
+
+    # フック君詳細
+    lines += [f"## 📌 記事フック君 — {hook.get('hook_score', '—')}点", ""]
+    if hook.get("weak_axis"):
+        lines.append(f"**弱点**: {hook.get('weak_axis')} — {hook.get('weak_reason', '')}")
+    if hook.get("rewrite"):
+        lines.append(f"**書き換え案**: {hook.get('rewrite')}")
+    lines.append("")
+
+    # アーク君詳細
+    lines += [f"## 📈 記事アーク君 — {narrative.get('narrative_score', '—')}点", ""]
+    if narrative.get("arc_type"):
+        lines.append(f"**アーク型**: {narrative.get('arc_type')}")
+    if narrative.get("dropoff_point"):
+        lines.append(f"**離脱ポイント**: {narrative.get('dropoff_point')}")
+    if narrative.get("insight_hook_count") is not None:
+        lines.append(f"**新認識フック数**: {narrative.get('insight_hook_count')}回")
+    if narrative.get("improvement"):
+        lines.append(f"**改善案**: {narrative.get('improvement')}")
+    lines.append("")
+
+    # 信頼君詳細
+    lines += [f"## 🔒 記事信頼君 — {trust.get('trust_score', '—')}点", ""]
+    bd = trust.get("score_breakdown", {})
+    if bd:
+        lines.append(
+            f"権威: {bd.get('authority_score', '—')}点（{bd.get('authority_type', '')}）"
+            f" / 証拠: {bd.get('evidence_score', '—')}点（{bd.get('evidence_type', '')}）"
+            f" / 口コミ: {bd.get('review_score', '—')}点"
+        )
+    if trust.get("improvement"):
+        lines.append(f"**改善案**: {trust.get('improvement')}")
+    lines.append("")
+
+    # CTA君詳細
+    lines += [f"## 🎯 記事CTA君 — {cta.get('cta_score', '—')}点", ""]
+    cta_list = cta.get("cta_list", [])
+    if cta_list:
+        lines.append(f"**CTA一覧**（{len(cta_list)}本）:")
+        for c in cta_list[:6]:
+            lines.append(f"- {c.get('position', '')}: 「{c.get('text', '')}」（{c.get('type', '')}・必然性{c.get('necessity', '—')}点）")
+    if cta.get("improvement"):
+        lines.append(f"**改善案**: {cta.get('improvement')}")
+    lines.append("")
+
+    # オファー君詳細
+    lines += [f"## 💰 記事オファー君 — {offer.get('offer_score', '—')}点", ""]
+    price = offer.get("price_info", {})
+    if price:
+        lines.append(f"**価格**: 通常{price.get('regular_price', '—')} → 初回{price.get('first_price', '—')}（{price.get('discount_rate', '—')}）")
+    urgency = "あり ✅" if offer.get("urgency_detected") else "なし ❌"
+    binding = "明記 ✅（+15点）" if offer.get("binding_free_detected") else "未記載"
+    lines.append(f"緊急性: {urgency}　縛りなし設計: {binding}")
+    if offer.get("improvement"):
+        lines.append(f"**改善案**: {offer.get('improvement')}")
+    lines.append("")
+
+    # 競合君詳細
+    lines += [f"## 🏆 記事競合君 — {competitive.get('competitive_score', '—')}点", ""]
+    if competitive.get("benchmark_found"):
+        rank1 = competitive.get("benchmark_rank1", {})
+        if rank1:
+            lines.append(f"**競合rank1**: {rank1.get('product', '')} — 勝ちパターン: {rank1.get('winning_pattern', '')}")
+        pattern = competitive.get("pattern_check", {})
+        if pattern:
+            lines.append(f"**実装率**: {pattern.get('implementation_rate', '—')}")
+        for g in competitive.get("competitive_gaps", [])[:3]:
+            lines.append(f"- {g}")
+        refs = competitive.get("reference_articles", [])
+        if refs:
+            lines += ["", "**参考競合記事**:"]
+            for r in refs[:3]:
+                lines.append(f"- 【{r.get('rank', '')}位】{r.get('product', '')} — {r.get('steal_point', '')}")
+                if r.get("url"):
+                    lines.append(f"  {r.get('url')}")
+    else:
+        lines.append("benchmark.jsonにジャンルデータなし（デフォルト50点）")
+    lines.append("")
+
+    next_action = cmo.get("next_action", "")
+    if next_action:
+        lines.append(f"**→ 次のアクション**: {next_action}")
+
+    return "\n".join(lines)
+
+
+def run_cmo_pipeline(article_data: dict, genre_info: dict, competitor: dict | None, client: anthropic.Anthropic) -> str:
+    """7エージェントCMOパイプラインを実行してMarkdown出力を返す（Group A/B/C 並列 + CMO 逐次）"""
+    sections  = article_data.get("sections", [])
+    full_text = "\n".join(s["content"] for s in sections if s["type"] == "text")
+
+    log.info("CMOパイプライン開始 — Group A/B/C 6エージェント並列実行")
+
+    agent_results: dict = {}
+
+    tasks = {
+        "hook":        lambda: run_agent_hook(full_text, client),
+        "narrative":   lambda: run_agent_narrative(full_text, client),
+        "trust":       lambda: run_agent_trust(full_text, client),
+        "cta":         lambda: run_agent_cta(full_text, client),
+        "offer":       lambda: run_agent_offer(full_text, client),
+        "competitive": lambda: run_agent_competitive(full_text, genre_info or {}, competitor),
+    }
+
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        futures = {ex.submit(fn): key for key, fn in tasks.items()}
+        for future in as_completed(futures):
+            key = futures[future]
+            try:
+                agent_results[key] = future.result()
+                log.info(f"エージェント完了: {key} — score: {agent_results[key].get(key + '_score', agent_results[key].get('competitive_score', '?'))}")
+            except Exception as e:
+                log.error(f"エージェントエラー: {key} — {e}")
+                agent_results[key] = {"error": str(e)}
+
+    log.info("CMO統合エージェント実行中...")
+    cmo_result = run_cmo(agent_results, client)
+
+    return format_cmo_output(agent_results, cmo_result)
+
+
+# ─── 旧 SYSTEM_PROMPT（参照用に残す・使用しない）──────────────
 SYSTEM_PROMPT = """あなたは澤田一進のマーケティング哲学を完全に内在化した、記事LPレビュー専門のAIです。
 
 ## あなたの判断基準（パクの哲学）
@@ -1051,9 +1558,17 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
         except Exception as e:
             log.warning(f"スクショ取得スキップ: {e}")
 
-    # フィードバック生成（競合インサイト付き）
-    feedback = generate_feedback(article_data, url, client, video_thumbnails,
-                                  competitor=competitor, genre_info=genre_info)
+    # ── 7エージェントCMOパイプライン実行 ──────────────────────
+    try:
+        slack.chat_postMessage(
+            channel=CHANNEL_ID, thread_ts=ts,
+            text="🤖 7エージェントCMOパイプライン起動中...\n_フック君 × アーク君 × 信頼君 × CTA君 × オファー君 × 競合君 → CMO統合（約30〜60秒）_",
+            mrkdwn=True,
+        )
+    except SlackApiError:
+        pass
+
+    feedback = run_cmo_pipeline(article_data, genre_info, competitor, client)
 
     # HTMLレポート生成 → Slackにファイル添付。失敗したらCanvas → テキストにフォールバック
     html_bytes = generate_html_report(feedback, screenshot_b64, url, stats, offer_trigger)
@@ -1106,7 +1621,7 @@ def is_trigger(text: str) -> bool:
 
 # ─── メインループ ─────────────────────────────────────
 def run():
-    log.info("=== Slack フィードバックBot v6 起動（Canvas返信対応）===")
+    log.info("=== Slack フィードバックBot v7 起動（7エージェントCMOシステム）===")
 
     slack_token   = get_env("SLACK_BOT_TOKEN")
     anthropic_key = get_env("ANTHROPIC_API_KEY")
