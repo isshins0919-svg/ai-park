@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>記事FB CMO — マルチエージェント設計書 v1.0</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131c;
+    --surface2: #1a1a28;
+    --border: #2a2a40;
+    --accent: #7c6af7;
+    --accent2: #f7706a;
+    --accent3: #6af7c8;
+    --text: #e8e8f0;
+    --muted: #888899;
+    --yellow: #f7d06a;
+    --green: #6af7a0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  .header {
+    background: linear-gradient(135deg, #1a0d2e 0%, #0d1a2e 60%, #2e1a0d 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 72px 40px 64px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(247,208,106,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .badge { display: inline-block; background: rgba(247,208,106,0.15); border: 1px solid rgba(247,208,106,0.4); color: var(--yellow); font-size: 11px; font-weight: 700; letter-spacing: 3px; padding: 5px 18px; border-radius: 20px; margin-bottom: 24px; text-transform: uppercase; }
+  .header h1 { font-size: clamp(26px, 4vw, 48px); font-weight: 900; line-height: 1.2; margin-bottom: 12px; background: linear-gradient(135deg, #e8e8f0, #f7d06a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .header .sub { font-size: 17px; color: var(--muted); max-width: 640px; margin: 0 auto 28px; }
+  .header-kpi { display: inline-flex; gap: 32px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 16px 32px; border-radius: 14px; }
+  .kpi-item { text-align: center; }
+  .kpi-num { font-size: 28px; font-weight: 900; color: var(--yellow); }
+  .kpi-label { font-size: 11px; color: var(--muted); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: 60px 0; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent3); margin-bottom: 10px; }
+  .section-title { font-size: clamp(20px, 3vw, 32px); font-weight: 800; margin-bottom: 36px; line-height: 1.3; }
+  hr { border: none; border-top: 1px solid var(--border); }
+
+  /* ── CMO BOX ── */
+  .cmo-box {
+    background: linear-gradient(135deg, #1a1228, #281a12);
+    border: 2px solid rgba(247,208,106,0.4);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .cmo-box::before { content: '👑 CMO'; position: absolute; top: -14px; left: 32px; background: var(--yellow); color: #1a1200; font-size: 11px; font-weight: 900; padding: 3px 12px; border-radius: 4px; letter-spacing: 2px; }
+  .cmo-title { font-size: 22px; font-weight: 900; color: var(--yellow); margin-bottom: 8px; }
+  .cmo-mission { font-size: 15px; color: var(--text); margin-bottom: 24px; line-height: 1.7; }
+  .cmo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .cmo-grid { grid-template-columns: 1fr; } }
+  .cmo-item { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .cmo-item-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .cmo-item-value { font-size: 14px; color: var(--text); }
+  .cmo-item-value strong { color: var(--yellow); }
+
+  /* ── AGENT CARDS ── */
+  .agent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .agent-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .agent-grid { grid-template-columns: 1fr; } }
+  .agent-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: border-color 0.2s; }
+  .agent-card:hover { border-color: var(--accent); }
+  .agent-num { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; }
+  .agent-name { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+  .agent-kpi { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .kpi-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+  .kpi-mcvr { background: rgba(124,106,247,0.2); color: #a99ff8; }
+  .kpi-cvr  { background: rgba(247,112,106,0.2); color: #f7706a; }
+  .kpi-both { background: rgba(247,208,106,0.2); color: var(--yellow); }
+  .agent-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .agent-score-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-top: 12px; margin-bottom: 4px; }
+  .agent-go { font-size: 12px; color: var(--green); font-weight: 600; }
+
+  /* ── SCORE FORMULA ── */
+  .formula-box { background: #0e0e18; border: 1px solid var(--border); border-radius: 16px; padding: 32px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 2.0; }
+  .formula-box .comment { color: var(--muted); }
+  .formula-box .var { color: var(--accent3); }
+  .formula-box .op { color: var(--yellow); }
+  .formula-box .num { color: var(--accent); }
+  .formula-box .label { color: var(--text); }
+
+  /* ── FLOW ── */
+  .flow-box { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px; overflow-x: auto; }
+  .flow { display: flex; align-items: flex-start; gap: 0; min-width: 800px; }
+  .flow-step { flex: 1; text-align: center; position: relative; }
+  .flow-step:not(:last-child)::after { content: '→'; position: absolute; right: -10px; top: 28px; font-size: 20px; color: var(--muted); }
+  .flow-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 12px; border: 1px solid var(--border); }
+  .flow-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .flow-sub { font-size: 10px; color: var(--muted); }
+  .bg-purple { background: rgba(124,106,247,0.15); }
+  .bg-teal   { background: rgba(106,247,200,0.12); }
+  .bg-yellow { background: rgba(247,208,106,0.12); }
+  .bg-red    { background: rgba(247,112,106,0.12); }
+  .bg-green  { background: rgba(106,247,160,0.12); }
+
+  /* ── SPEC TABLE ── */
+  .spec-section { margin-bottom: 48px; }
+  .spec-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .spec-num { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: white; flex-shrink: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--surface2); color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; line-height: 1.6; }
+  tr:last-child td { border-bottom: none; }
+  td code { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 11px; color: var(--accent3); font-family: monospace; }
+  .td-label { color: var(--muted); font-size: 12px; font-weight: 600; }
+  .td-req { background: rgba(247,112,106,0.08); }
+  .td-must { color: var(--accent2); font-weight: 700; font-size: 11px; }
+  .td-should { color: var(--yellow); font-size: 11px; }
+
+  /* ── OUTPUT FORMAT ── */
+  .output-box { background: #0e0e18; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .output-header { background: var(--surface2); padding: 10px 18px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-r { background: #f7706a; } .dot-y { background: #f7d06a; } .dot-g { background: #6af7a0; }
+  .output-body { padding: 24px; font-family: 'SF Mono', monospace; font-size: 12px; line-height: 1.8; }
+  .j-key { color: var(--accent3); }
+  .j-str { color: #f7d06a; }
+  .j-num { color: var(--accent); }
+  .j-go { color: var(--green); font-weight: 700; }
+  .j-rev { color: var(--yellow); font-weight: 700; }
+  .j-blk { color: var(--accent2); font-weight: 700; }
+  .j-comment { color: var(--muted); }
+
+  /* ── TEST SPEC ── */
+  .test-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 700px) { .test-grid { grid-template-columns: 1fr; } }
+  .test-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+  .test-agent { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent3); margin-bottom: 8px; }
+  .test-case { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+  .test-input { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .test-expect { font-size: 12px; color: var(--green); }
+  .test-fail { font-size: 12px; color: var(--accent2); }
+
+  /* ── PERF BLOCK ── */
+  .perf-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .perf-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .perf-row:last-child { border-bottom: none; }
+  .perf-label { font-size: 13px; color: var(--muted); width: 180px; flex-shrink: 0; }
+  .perf-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
+  .perf-bar { height: 100%; border-radius: 4px; }
+  .perf-time { font-size: 13px; font-weight: 700; color: var(--text); width: 60px; text-align: right; }
+  .bar-current { background: var(--accent); width: 45%; }
+  .bar-v7seq   { background: var(--accent2); width: 100%; }
+  .bar-v7par   { background: var(--green); width: 50%; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="badge">Design Spec v1.0 — 記事FB CMO</div>
+  <h1>記事FB CMO<br>マルチエージェント設計書</h1>
+  <p class="sub">「フィードバックのすべてはmCVRと着地CVRを上げるためだけに存在する」CMO思想をシステムに実装する</p>
+  <div class="header-kpi">
+    <div class="kpi-item"><div class="kpi-num">6</div><div class="kpi-label">専門エージェント</div></div>
+    <div class="kpi-item"><div class="kpi-num">2KPI</div><div class="kpi-label">mCVR × 着地CVR</div></div>
+    <div class="kpi-item"><div class="kpi-num">3分</div><div class="kpi-label">処理時間目標</div></div>
+    <div class="kpi-item"><div class="kpi-num">GO/REVISE</div><div class="kpi-label">最終判定</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ── CMO DEFINITION ── -->
+  <div class="section">
+    <div class="section-label">CMO Definition</div>
+    <div class="section-title">記事CVRディレクター（CMO）の定義</div>
+
+    <div class="cmo-box">
+      <div class="cmo-title">記事CVRディレクター</div>
+      <div class="cmo-mission">
+        このFBの唯一の目的は、<strong style="color:var(--yellow)">mCVR（記事内遷移率）と着地CVR（遷移後購入率）を上げること</strong>だけである。
+        デザインの美しさ・文章の上手さ・情報の網羅性は一切関係ない。
+        数字が動かないFBは出力しない。
+      </div>
+      <div class="cmo-grid">
+        <div class="cmo-item">
+          <div class="cmo-item-label">担当KPI</div>
+          <div class="cmo-item-value"><strong>mCVR</strong>（記事→LP遷移率）<br><strong>着地CVR</strong>（LP→購入率）</div>
+        </div>
+        <div class="cmo-item">
+          <div class="cmo-item-label">GO条件</div>
+          <div class="cmo-item-value">total_score <strong>≥ 80</strong><br>mCVR_score <strong>≥ 75</strong> AND 着地CVR_score <strong>≥ 70</strong></div>
+        </div>
+        <div class="cmo-item">
+          <div class="cmo-item-label">判定の種類</div>
+          <div class="cmo-item-value"><strong>GO</strong>（リリース可）<br><strong>REVISE</strong>（改善後再提出）<br><strong>BLOCK</strong>（薬機法NG）</div>
+        </div>
+        <div class="cmo-item">
+          <div class="cmo-item-label">FBの最大数</div>
+          <div class="cmo-item-value">must_fix: <strong>最大3点</strong><br>nice_to_fix: <strong>最大2点</strong><br>「全部言うな」</div>
+        </div>
+        <div class="cmo-item">
+          <div class="cmo-item-label">優先順位の基準</div>
+          <div class="cmo-item-value">CVR影響度の大きい順<br>（影響度が不明な改善案はnice_to_fix）</div>
+        </div>
+        <div class="cmo-item">
+          <div class="cmo-item-label">禁止事項</div>
+          <div class="cmo-item-value">「全体的によくできています」<br>「〜を検討してもいいかもしれません」<br>等の曖昧・保留表現は一切禁止</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ── AGENT LINEUP ── -->
+  <div class="section">
+    <div class="section-label">Agent Lineup</div>
+    <div class="section-title">6つの専門エージェント</div>
+
+    <div class="agent-grid">
+      <div class="agent-card">
+        <div class="agent-num">AGENT 01</div>
+        <div class="agent-name">記事フック診断士</div>
+        <div class="agent-kpi">
+          <span class="kpi-tag kpi-mcvr">mCVR 直結</span>
+        </div>
+        <div class="agent-desc">冒頭3行で読者が止まるかを判定。悩みの解像度・N1自己投影度・感情温度を評価。「反応確率スコア」を0-100で算出。</div>
+        <div class="agent-score-label">GO基準</div>
+        <div class="agent-go">hook_score ≥ 75点</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-num">AGENT 02</div>
+        <div class="agent-name">記事ナラティブ診断士</div>
+        <div class="agent-kpi">
+          <span class="kpi-tag kpi-both">mCVR + 着地CVR</span>
+        </div>
+        <div class="agent-desc">共感→問題→新認識→解決→希望の感情アーク設計を評価。読了率予測と離脱ポイントを検出。中だるみゾーンを特定。</div>
+        <div class="agent-score-label">GO基準</div>
+        <div class="agent-go">narrative_score ≥ 70点</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-num">AGENT 03</div>
+        <div class="agent-name">記事信頼設計士</div>
+        <div class="agent-kpi">
+          <span class="kpi-tag kpi-cvr">着地CVR 直結</span>
+        </div>
+        <div class="agent-desc">権威（医師・TV・専門家）・数値証拠（データ・実績）・口コミ（属性具体性・感情変化）の3層で信頼スコアを算出。</div>
+        <div class="agent-score-label">GO基準</div>
+        <div class="agent-go">trust_score ≥ 70点</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-num">AGENT 04</div>
+        <div class="agent-name">記事CTA診断士</div>
+        <div class="agent-kpi">
+          <span class="kpi-tag kpi-mcvr">mCVR 直結</span>
+        </div>
+        <div class="agent-desc">CTAの数・配置密度・文言強度・アンケート/クーポン型活用を評価。「CTAが必然に感じるか」の必然性スコアを算出。</div>
+        <div class="agent-score-label">GO基準</div>
+        <div class="agent-go">cta_score ≥ 80点</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-num">AGENT 05</div>
+        <div class="agent-name">記事オファー診断士</div>
+        <div class="agent-kpi">
+          <span class="kpi-tag kpi-cvr">着地CVR 直結</span>
+        </div>
+        <div class="agent-desc">初回価格の魅力度・割引幅演出・緊急性/希少性・特典設計を評価。「このオファーで今すぐ買いたいか」の購買衝動スコアを算出。</div>
+        <div class="agent-score-label">GO基準</div>
+        <div class="agent-go">offer_score ≥ 70点</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-num">AGENT 06</div>
+        <div class="agent-name">記事競合診断士</div>
+        <div class="agent-kpi">
+          <span class="kpi-tag kpi-both">mCVR + 着地CVR</span>
+        </div>
+        <div class="agent-desc">DPro benchmark.jsonから同ジャンルの勝ちパターン実装率を評価。今週伸びている競合との差分を定量化。</div>
+        <div class="agent-score-label">GO基準</div>
+        <div class="agent-go">competitive_score ≥ 65点</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ── SCORE FORMULA ── -->
+  <div class="section">
+    <div class="section-label">Score Design</div>
+    <div class="section-title">スコア設計 × CMO重み付け</div>
+
+    <div class="formula-box">
+      <div class="comment"># ── mCVR スコア（記事内で遷移ボタンを押す率に直結）──</div>
+      <div><span class="var">mCVR_score</span> <span class="op">=</span>
+        <span class="var">hook_score</span> <span class="op">×</span> <span class="num">0.40</span>  <span class="comment"># 止まるか？が最重要</span>
+      </div>
+      <div>              <span class="op">+</span> <span class="var">narrative_score</span> <span class="op">×</span> <span class="num">0.35</span>  <span class="comment"># 読み続けるか？</span></div>
+      <div>              <span class="op">+</span> <span class="var">cta_score</span> <span class="op">×</span> <span class="num">0.25</span>  <span class="comment"># 必然的に押すか？</span></div>
+      <br>
+      <div class="comment"># ── 着地CVR スコア（LP遷移後に購入する率に直結）──</div>
+      <div><span class="var">landing_cvr_score</span> <span class="op">=</span>
+        <span class="var">offer_score</span> <span class="op">×</span> <span class="num">0.40</span>  <span class="comment"># 今すぐ買いたいか？</span>
+      </div>
+      <div>                    <span class="op">+</span> <span class="var">trust_score</span> <span class="op">×</span> <span class="num">0.35</span>  <span class="comment"># 信頼できるか？</span></div>
+      <div>                    <span class="op">+</span> <span class="var">competitive_score</span> <span class="op">×</span> <span class="num">0.25</span>  <span class="comment"># 勝ちパターン実装率</span></div>
+      <br>
+      <div class="comment"># ── 総合スコア ──</div>
+      <div><span class="var">total_score</span> <span class="op">=</span> <span class="var">mCVR_score</span> <span class="op">×</span> <span class="num">0.50</span> <span class="op">+</span> <span class="var">landing_cvr_score</span> <span class="op">×</span> <span class="num">0.50</span></div>
+      <br>
+      <div class="comment"># ── ボーナス加算 ──</div>
+      <div><span class="comment"># + 2点: フックに具体的数字あり（「1日3秒」「82歳」等）</span></div>
+      <div><span class="comment"># + 2点: アンケート/クーポン型CTAを実装している</span></div>
+      <div><span class="comment"># + 3点: 感情アークがV字（共感の谷 → 希望のピーク）</span></div>
+      <div><span class="comment"># + 2点: 専門医/TV出演の権威が最初の1/3以内に登場</span></div>
+      <br>
+      <div class="comment"># ── GO判定 ──</div>
+      <div><span class="label">GO条件:</span> <span class="var">total_score</span> <span class="op">≥</span> <span class="num">80</span> <span class="op">AND</span> <span class="var">mCVR_score</span> <span class="op">≥</span> <span class="num">75</span> <span class="op">AND</span> <span class="var">landing_cvr_score</span> <span class="op">≥</span> <span class="num">70</span></div>
+      <div><span class="label">BLOCK条件:</span> <span class="comment">薬機法NGが1件でもあれば固定（スコアに関わらず）</span></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ── PROCESS FLOW ── -->
+  <div class="section">
+    <div class="section-label">Process Flow</div>
+    <div class="section-title">並列処理設計（3分以内を担保）</div>
+
+    <div class="flow-box" style="margin-bottom:24px;">
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-icon bg-purple">💬</div>
+          <div class="flow-title">Slack受信</div>
+          <div class="flow-sub">URL + ジャンル指定<br>（任意）</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-teal">🕷️</div>
+          <div class="flow-title">LP解析</div>
+          <div class="flow-sub">Playwright +<br>OpenCV並列</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-yellow">⚡</div>
+          <div class="flow-title">3並列実行</div>
+          <div class="flow-sub">Group A / B / C<br>同時起動</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-red">👑</div>
+          <div class="flow-title">CMO統合</div>
+          <div class="flow-sub">6スコア集約 →<br>GO/REVISE判定</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-green">📋</div>
+          <div class="flow-title">Slack返信</div>
+          <div class="flow-sub">HTML報告書 +<br>スコアカード</div>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>処理グループ</th>
+        <th>含まれるエージェント</th>
+        <th>使用モデル</th>
+        <th>推定時間</th>
+        <th>並列可否</th>
+      </tr>
+      <tr>
+        <td><strong>Group A</strong></td>
+        <td>フック診断士 + ナラティブ診断士</td>
+        <td><code>haiku-4-5</code></td>
+        <td>〜15秒</td>
+        <td style="color:var(--green)">✅ 並列</td>
+      </tr>
+      <tr>
+        <td><strong>Group B</strong></td>
+        <td>信頼設計士 + CTA診断士 + オファー診断士</td>
+        <td><code>haiku-4-5</code></td>
+        <td>〜20秒</td>
+        <td style="color:var(--green)">✅ 並列</td>
+      </tr>
+      <tr>
+        <td><strong>Group C</strong></td>
+        <td>競合診断士（benchmark.json参照）</td>
+        <td>JSONルックアップ</td>
+        <td>〜1秒</td>
+        <td style="color:var(--green)">✅ 並列</td>
+      </tr>
+      <tr>
+        <td><strong>CMO統合</strong></td>
+        <td>6スコア集約 + GO判定 + TOP3 must_fix生成</td>
+        <td><code>sonnet-4-6</code></td>
+        <td>〜2〜3分</td>
+        <td style="color:var(--muted)">逐次（集約後）</td>
+      </tr>
+      <tr>
+        <td><strong>合計</strong></td>
+        <td colspan="2">A+B+C並列（最大20秒）→ CMO（2-3分）</td>
+        <td><strong style="color:var(--green)">〜3分</strong></td>
+        <td style="color:var(--green)">✅ 現状と同等</td>
+      </tr>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- ── REQUIREMENTS ── -->
+  <div class="section">
+    <div class="section-label">Requirements Spec</div>
+    <div class="section-title">要件定義書 × エージェント別</div>
+
+    <!-- Agent 01 -->
+    <div class="spec-section">
+      <div class="spec-title"><span class="spec-num">01</span>記事フック診断士 — 要件定義</div>
+      <table>
+        <tr><th>分類</th><th>要件</th><th>優先度</th></tr>
+        <tr class="td-req">
+          <td class="td-label">機能</td>
+          <td>冒頭3行（または冒頭200文字）を読んで「この読者が次の行を読む確率」をスコア化する</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>悩みの解像度を評価する（「疲れやすい」は低解像度 / 「40代 膝が内側から痛む」は高解像度）</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>N1自己投影度を評価する（「私のことだ」と感じる具体性があるか）</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>感情温度を評価する（恐怖・罪悪感・希望・怒りのどれが使われているか）</td>
+          <td class="td-should">SHOULD</td>
+        </tr>
+        <tr>
+          <td class="td-label">出力</td>
+          <td><code>hook_score</code>（0-100）+ 改善案（MAX1文）+ 競合との比較コメント1行</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">制約</td>
+          <td>出力は JSON + 人間向け1文のみ。長文解説は禁止。</td>
+          <td class="td-must">MUST</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Agent 02 -->
+    <div class="spec-section">
+      <div class="spec-title"><span class="spec-num">02</span>記事ナラティブ診断士 — 要件定義</div>
+      <table>
+        <tr><th>分類</th><th>要件</th><th>優先度</th></tr>
+        <tr class="td-req">
+          <td class="td-label">機能</td>
+          <td>感情アーク（共感→問題→新認識→解決→希望）の流れが正しく設計されているか判定</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>「中だるみゾーン」を記事の何%地点かで特定する（例: 35-50%地点で感情温度が下がっている）</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>読者が「なるほど」と感じる「新認識フック」が何回仕込まれているか数える</td>
+          <td class="td-should">SHOULD</td>
+        </tr>
+        <tr>
+          <td class="td-label">出力</td>
+          <td><code>narrative_score</code>（0-100）+ 離脱予測ポイント + アーク評価（V字/平坦/下降）</td>
+          <td class="td-must">MUST</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Agent 03 -->
+    <div class="spec-section">
+      <div class="spec-title"><span class="spec-num">03</span>記事信頼設計士 — 要件定義</div>
+      <table>
+        <tr><th>分類</th><th>要件</th><th>優先度</th></tr>
+        <tr class="td-req">
+          <td class="td-label">機能</td>
+          <td>権威の種類（医師/専門家/TV出演/資格）と登場タイミング（記事の何%地点か）を記録</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>数値証拠の質を評価（出典あり/なし、数字の具体性、社内調査 vs 第三者機関）</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>口コミの属性具体性を評価（「30代 膝が悪い 孫と遊べなかった」 vs「使ってよかった」）</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">出力</td>
+          <td><code>trust_score</code>（0-100）+ 三層スコア内訳（権威/証拠/口コミ）+ 最優先改善1点</td>
+          <td class="td-must">MUST</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Agent 04 -->
+    <div class="spec-section">
+      <div class="spec-title"><span class="spec-num">04</span>記事CTA診断士 — 要件定義</div>
+      <table>
+        <tr><th>分類</th><th>要件</th><th>優先度</th></tr>
+        <tr class="td-req">
+          <td class="td-label">機能</td>
+          <td>CTA の数・配置位置（記事の何%地点）・文言を全部リストアップする</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>「CTAが必然に感じるか」を評価。直前の感情温度との連動性をチェック。</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>アンケート型/クーポン型/限定型 の有無をチェック。使われていれば加点。</td>
+          <td class="td-should">SHOULD</td>
+        </tr>
+        <tr>
+          <td class="td-label">出力</td>
+          <td><code>cta_score</code>（0-100）+ CTAリスト + 最も弱いCTAへの改善案1点</td>
+          <td class="td-must">MUST</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Agent 05 -->
+    <div class="spec-section">
+      <div class="spec-title"><span class="spec-num">05</span>記事オファー診断士 — 要件定義</div>
+      <table>
+        <tr><th>分類</th><th>要件</th><th>優先度</th></tr>
+        <tr class="td-req">
+          <td class="td-label">機能</td>
+          <td>初回価格・通常価格・割引率を抽出し「価格の魅力度」をスコア化</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>緊急性（期間限定・在庫わずか）と希少性（限定〇名・今だけ）の実装状況を評価</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>特典・ボーナス・縛りなし設計の存在と訴求強度を評価</td>
+          <td class="td-should">SHOULD</td>
+        </tr>
+        <tr>
+          <td class="td-label">出力</td>
+          <td><code>offer_score</code>（0-100）+ 価格情報サマリ + 最優先改善1点</td>
+          <td class="td-must">MUST</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Agent 06 -->
+    <div class="spec-section">
+      <div class="spec-title"><span class="spec-num">06</span>記事競合診断士 — 要件定義</div>
+      <table>
+        <tr><th>分類</th><th>要件</th><th>優先度</th></tr>
+        <tr class="td-req">
+          <td class="td-label">機能</td>
+          <td>benchmark.json から同ジャンルの勝ちパターンを読み込み、実装率を%で算出する</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>今週伸びているTOP競合との差分を「このLPにないもの」として最大3点リストアップ</td>
+          <td class="td-must">MUST</td>
+        </tr>
+        <tr>
+          <td class="td-label">機能</td>
+          <td>好調競合記事3本のURL・広告文・FVフックを提示する</td>
+          <td class="td-should">SHOULD</td>
+        </tr>
+        <tr>
+          <td class="td-label">出力</td>
+          <td><code>competitive_score</code>（0-100）+ 勝ちパターン実装率 + 競合差分TOP3 + 参考URL</td>
+          <td class="td-must">MUST</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ── OUTPUT FORMAT ── -->
+  <div class="section">
+    <div class="section-label">Output Format</div>
+    <div class="section-title">CMO 最終出力フォーマット</div>
+
+    <div class="output-box">
+      <div class="output-header">
+        <div style="display:flex;gap:6px">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        </div>
+        <span>cmo_verdict.json — CMO最終判定出力</span>
+      </div>
+      <div class="output-body">
+<span class="j-key">{</span><br>
+&nbsp;&nbsp;<span class="j-key">"final_verdict"</span>: <span class="j-rev">"REVISE"</span>,<br>
+&nbsp;&nbsp;<span class="j-key">"loop_count"</span>: <span class="j-num">1</span>,<br>
+<br>
+&nbsp;&nbsp;<span class="j-comment">// ─ スコアカード ─</span><br>
+&nbsp;&nbsp;<span class="j-key">"score_summary"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"hook_score"</span>: <span class="j-num">68</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-comment">// ❌ 基準75未満</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"narrative_score"</span>: <span class="j-num">74</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-comment">// ✅</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"trust_score"</span>: <span class="j-num">71</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-comment">// ✅</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"cta_score"</span>: <span class="j-num">76</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-comment">// ❌ 基準80未満</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"offer_score"</span>: <span class="j-num">82</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-comment">// ✅</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"competitive_score"</span>: <span class="j-num">60</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-comment">// ❌ 基準65未満</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"mCVR_score"</span>: <span class="j-num">71.6</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-comment">// ❌ 基準75未満</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"landing_cvr_score"</span>: <span class="j-num">71.5</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-comment">// ✅</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"total_score"</span>: <span class="j-num">71.6</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"bonus_points"</span>: <span class="j-num">2</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-key">"adjusted_total"</span>: <span class="j-num">73.6</span><br>
+&nbsp;&nbsp;},<br>
+<br>
+&nbsp;&nbsp;<span class="j-comment">// ─ 必達改善（最大3点、CVR影響度順）─</span><br>
+&nbsp;&nbsp;<span class="j-key">"must_fix"</span>: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-str">"[mCVR+8%推定] フックの悩み解像度が低い。「最近疲れやすい40代」→「夜中に3回目が覚めて翌朝ぼんやりする更年期世代」に変える。数字と状況とターゲットの三点セット必須。"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-str">"[mCVR+4%推定] CTA文言が弱い。「詳しくはこちら」→「今すぐ残り〇個を確認する」に変える。アンケート型を検討。"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-str">"[着地CVR+3%推定] 競合TOPが使っている「産地ブランド」訴求がゼロ。富山常備薬は「薬の都・富山」を冒頭で使い着地CVRを高めている。製造地・開発年数を入れる。"</span><br>
+&nbsp;&nbsp;],<br>
+<br>
+&nbsp;&nbsp;<span class="j-comment">// ─ 余裕があれば修正（最大2点）─</span><br>
+&nbsp;&nbsp;<span class="j-key">"nice_to_fix"</span>: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="j-str">"口コミの属性が「女性・40代」のみ。悩み歴・具体的改善シーンを追加すると信頼スコアが上がる。"</span><br>
+&nbsp;&nbsp;],<br>
+<br>
+&nbsp;&nbsp;<span class="j-comment">// ─ 競合参考URL ─</span><br>
+&nbsp;&nbsp;<span class="j-key">"reference_articles"</span>: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="j-key">"rank"</span>: <span class="j-num">1</span>, <span class="j-key">"product"</span>: <span class="j-str">"富山常備薬 キミエリンクルホワイト"</span>, <span class="j-key">"url"</span>: <span class="j-str">"https://xxx..."</span>, <span class="j-key">"steal_point"</span>: <span class="j-str">"産地ブランド×医薬部外品×ダブル悩み解決の3点セット"</span> }<br>
+&nbsp;&nbsp;],<br>
+<br>
+&nbsp;&nbsp;<span class="j-key">"next_action"</span>: <span class="j-str">"must_fix 3点を修正してループ2回目へ。修正後スコア予測: 82点（GO圏内）"</span><br>
+<span class="j-key">}</span>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ── TEST SPEC ── -->
+  <div class="section">
+    <div class="section-label">Test Spec</div>
+    <div class="section-title">テスト指示書</div>
+
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-agent">フック診断士</div>
+        <div class="test-case">テスト1: 高解像度フックに高スコアを出すか</div>
+        <div class="test-input">入力: 「ひざ関節症専門医『膝が悪い人は絶対やって！』1日3秒の裏ワザで激変」</div>
+        <div class="test-expect">期待: hook_score ≥ 85（数字・専門家・行動コスト低さ）</div>
+        <div class="test-case" style="margin-top:12px;">テスト2: 低解像度フックに低スコアを出すか</div>
+        <div class="test-input">入力: 「最近お体の調子はいかがですか？」</div>
+        <div class="test-fail">期待: hook_score ≤ 40</div>
+      </div>
+      <div class="test-card">
+        <div class="test-agent">ナラティブ診断士</div>
+        <div class="test-case">テスト1: V字アークに高スコア</div>
+        <div class="test-input">入力: 共感FV → 問題深堀り → 新認識 → 解決 → 感動口コミ → CTA の構成</div>
+        <div class="test-expect">期待: arc_type="V字" / narrative_score ≥ 80</div>
+        <div class="test-case" style="margin-top:12px;">テスト2: 中だるみを検出できるか</div>
+        <div class="test-input">入力: FV後に商品成分の説明が3,000字続くLP</div>
+        <div class="test-fail">期待: dropoff_point "30-60%付近" / narrative_score ≤ 55</div>
+      </div>
+      <div class="test-card">
+        <div class="test-agent">信頼設計士</div>
+        <div class="test-case">テスト1: 権威トリプルを正しく検出するか</div>
+        <div class="test-input">入力: 「NHK出演・東大院卒医師監修 + 医師94%推奨 + 口コミ50件（属性あり）」</div>
+        <div class="test-expect">期待: trust_score ≥ 85 / 権威・証拠・口コミ全て高評価</div>
+        <div class="test-case" style="margin-top:12px;">テスト2: 権威なしを正しく低評価するか</div>
+        <div class="test-input">入力: 自社比のみ / 口コミ「よかったです」のみ</div>
+        <div class="test-fail">期待: trust_score ≤ 50</div>
+      </div>
+      <div class="test-card">
+        <div class="test-agent">CTA診断士</div>
+        <div class="test-case">テスト1: アンケート型CTAに加点するか</div>
+        <div class="test-input">入力: 「5問のアンケートに答えると98%OFFクーポン」型CTA</div>
+        <div class="test-expect">期待: cta_score ≥ 85 + bonus_survey=true</div>
+        <div class="test-case" style="margin-top:12px;">テスト2: CTA0本のLPを低評価</div>
+        <div class="test-input">入力: 商品説明のみ、遷移ボタンなし</div>
+        <div class="test-fail">期待: cta_score ≤ 30</div>
+      </div>
+      <div class="test-card">
+        <div class="test-agent">オファー診断士</div>
+        <div class="test-case">テスト1: 高割引率を正しく評価するか</div>
+        <div class="test-input">入力: 「通常11,810円 → 初回210円（98%OFF）定期縛りなし」</div>
+        <div class="test-expect">期待: offer_score ≥ 90 / urgency=true / binding=false</div>
+        <div class="test-case" style="margin-top:12px;">テスト2: 定価のみのLPを低評価</div>
+        <div class="test-input">入力: 「定価5,000円（税込）」のみ</div>
+        <div class="test-fail">期待: offer_score ≤ 40</div>
+      </div>
+      <div class="test-card">
+        <div class="test-agent">CMO（統合）</div>
+        <div class="test-case">テスト1: GOを正しく出力するか</div>
+        <div class="test-input">入力: 全エージェント基準クリア（全スコア≥75）</div>
+        <div class="test-expect">期待: final_verdict="GO" / must_fix=[]</div>
+        <div class="test-case" style="margin-top:12px;">テスト2: BLOCKが最優先か</div>
+        <div class="test-input">入力: total_score=90 AND 薬機法NG1件</div>
+        <div class="test-fail">期待: final_verdict="BLOCK"（スコアに関わらず）</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ── PERF ── -->
+  <div class="section">
+    <div class="section-label">Performance</div>
+    <div class="section-title">処理時間の比較</div>
+    <div class="perf-box">
+      <div class="perf-row">
+        <div class="perf-label">現状 v6（単一Sonnet）</div>
+        <div class="perf-bar-wrap"><div class="perf-bar bar-current"></div></div>
+        <div class="perf-time">2-3 min</div>
+      </div>
+      <div class="perf-row">
+        <div class="perf-label">v7 逐次（全エージェント）</div>
+        <div class="perf-bar-wrap"><div class="perf-bar bar-v7seq"></div></div>
+        <div class="perf-time">15-17 min ❌</div>
+      </div>
+      <div class="perf-row">
+        <div class="perf-label" style="color:var(--green)">✅ v7 並列（推奨設計）</div>
+        <div class="perf-bar-wrap"><div class="perf-bar bar-v7par"></div></div>
+        <div class="perf-time" style="color:var(--green)">〜3 min ✅</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:16px;">
+      Group A/B/C（Haiku×5）を <code>ThreadPoolExecutor</code> で並列実行 → 20秒以内で完了 → CMO（Sonnet）が集約して判定。
+      APIコストは現状比 +Haiku×5分（約5円/回）の増加のみ。
+    </p>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div style="background:var(--surface);border-top:1px solid var(--border);padding:40px;text-align:center;margin-top:64px;">
+    <div style="font-size:18px;font-weight:800;margin-bottom:8px;">記事FB CMO — マルチエージェント設計書 v1.0</div>
+    <div style="font-size:13px;color:var(--muted);">一進AI — 2026年4月 設計 / 実装フェーズへ</div>
+  </div>
+
+</div>
+</body>
+</html>
