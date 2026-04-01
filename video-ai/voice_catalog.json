@@ -1,42 +1,47 @@
 {
-  "_comment": "Fish Audio reference_id マッピング。fish.audio/models で実際のIDを確認して更新する。",
-  "_update_guide": "1. https://fish.audio にアクセス → 日本語ボイスを検索 → モデルページのURLからIDを取得 例: fish.audio/m/7f92f8af... → reference_id = 7f92f8af...",
+  "_comment": "Fish Audio reference_id マッピング。fetch_fish_voices.py で最新一覧を取得できる。",
+  "_last_updated": "2026-04-02",
 
   "voices": {
     "女性・クール": {
-      "reference_id": "FILL_FROM_FISH_AUDIO",
-      "description": "落ち着いた女性。健康食品・サプリ・医療系に最適。プルーストの鉄板。",
+      "reference_id": "0089dce5fefb4c6ba9b9f2f0debe1ddc",
+      "fish_audio_name": "落ち着いた女性",
+      "description": "落ち着いた・柔らかい・温かみのある女性。健康食品・サプリ・医療系に最適。プルーストの鉄板。",
       "best_for": ["健康食品", "サプリ", "体臭ケア", "医療系"],
       "speed": 1.0,
-      "tested": false
+      "tested": true
     },
     "女性・柔らか": {
-      "reference_id": "FILL_FROM_FISH_AUDIO",
-      "description": "優しく親しみやすい女性。美容・スキンケア系に最適。",
+      "reference_id": "fbea303b64374bffb8843569404b095e",
+      "fish_audio_name": "まな",
+      "description": "プロフェッショナルで温かみのある女性。美容・スキンケア向き。",
       "best_for": ["美容", "スキンケア", "ダイエット"],
       "speed": 1.0,
-      "tested": false
+      "tested": true
     },
     "女性・明るい": {
-      "reference_id": "FILL_FROM_FISH_AUDIO",
-      "description": "元気で若い女性。コスメ・ライフスタイル系に最適。",
+      "reference_id": "63bc41e652214372b15d9416a30a60b4",
+      "fish_audio_name": "元気な女性v2",
+      "description": "エネルギッシュ・明るい・元気な女性。コスメ・ライフスタイル向き。",
       "best_for": ["コスメ", "ライフスタイル", "若年層向け"],
       "speed": 1.05,
-      "tested": false
+      "tested": true
     },
     "男性・権威": {
-      "reference_id": "FILL_FROM_FISH_AUDIO",
-      "description": "重みと確信がある男性。健康食品・D2C・金融に最適。",
+      "reference_id": "a365c3050dd04026a81291145e017d6f",
+      "fish_audio_name": "つの",
+      "description": "深み・落ち着き・プロフェッショナル感のある男性。健康食品・D2C・金融向き。",
       "best_for": ["健康食品", "D2C", "金融", "法律"],
       "speed": 0.95,
-      "tested": false
+      "tested": true
     },
     "男性・親しみ": {
-      "reference_id": "FILL_FROM_FISH_AUDIO",
-      "description": "ナチュラルで中性的な男性。アプリ・通信・BtoBに最適。",
+      "reference_id": "45c5d3723c9c42f598e4776dcfd5f02d",
+      "fish_audio_name": "落ち着いた男性",
+      "description": "落ち着いた・プロフェッショナル・自信のある男性。アプリ・通信・BtoB向き。",
       "best_for": ["アプリ", "通信", "BtoB", "サービス系"],
       "speed": 1.0,
-      "tested": false
+      "tested": true
     }
   },
 
