@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>記事LP フィードバックAI — 開発ポートフォリオ</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131c;
+    --surface2: #1a1a28;
+    --border: #2a2a40;
+    --accent: #7c6af7;
+    --accent2: #f7706a;
+    --accent3: #6af7c8;
+    --text: #e8e8f0;
+    --muted: #888899;
+    --yellow: #f7d06a;
+    --green: #6af7a0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #0d1a2e 0%, #1a0d2e 50%, #0d2020 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 40px 70px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(106,247,200,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(106,247,200,0.15);
+    border: 1px solid rgba(106,247,200,0.4);
+    color: #6af7c8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 5px 18px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #e8e8f0 0%, #6af7c8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header .sub {
+    font-size: 18px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .status-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(106,247,160,0.1);
+    border: 1px solid rgba(106,247,160,0.3);
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 600;
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: 64px 0; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 800;
+    margin-bottom: 40px;
+    line-height: 1.3;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── WHAT IT IS ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 700px) { .overview-grid { grid-template-columns: 1fr; } }
+  .overview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .overview-card .oc-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .overview-card .oc-value {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .overview-card .oc-value strong { color: var(--accent3); }
+
+  /* ── FLOW ── */
+  .flow-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    overflow-x: auto;
+  }
+  .flow {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    min-width: 720px;
+  }
+  .flow-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .flow-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 28px;
+    font-size: 20px;
+    color: var(--muted);
+  }
+  .flow-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 12px;
+    border: 1px solid var(--border);
+  }
+  .flow-step-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .flow-step-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .bg-purple { background: rgba(124,106,247,0.15); }
+  .bg-teal   { background: rgba(106,247,200,0.12); }
+  .bg-red    { background: rgba(247,112,106,0.12); }
+  .bg-yellow { background: rgba(247,208,106,0.12); }
+  .bg-green  { background: rgba(106,247,160,0.12); }
+  .bg-blue   { background: rgba(106,160,247,0.12); }
+
+  /* ── FEATURES ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .feature-card:hover { border-color: var(--accent); }
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .feature-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .feature-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .feature-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+  .tag-core { background: rgba(124,106,247,0.2); color: #a99ff8; }
+  .tag-ai   { background: rgba(106,247,200,0.15); color: #6af7c8; }
+  .tag-data { background: rgba(247,208,106,0.15); color: #f7d06a; }
+  .tag-ux   { background: rgba(247,112,106,0.15); color: #f7706a; }
+
+  /* ── TECH STACK ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 800px) { .stack-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stack-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stack-item .si-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .stack-item .si-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .stack-item .si-desc {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent3));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -25px; top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .tl-item.highlight::before { background: var(--accent3); box-shadow: 0 0 0 2px var(--accent3); }
+  .tl-version {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .tl-item.highlight .tl-version { color: var(--accent3); }
+  .tl-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .tl-body {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .tl-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .tl-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* ── CHALLENGES ── */
+  .challenge-list { display: flex; flex-direction: column; gap: 16px; }
+  .challenge-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: start;
+  }
+  .ch-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .ch-problem { font-size: 13px; color: var(--accent2); margin-bottom: 6px; font-weight: 600; }
+  .ch-solution { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .ch-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    background: rgba(106,247,160,0.15);
+    color: var(--green);
+    border: 1px solid rgba(106,247,160,0.3);
+  }
+
+  /* ── BENCHMARK ── */
+  .bench-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 800px) { .bench-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .bench-grid { grid-template-columns: 1fr; } }
+  .bench-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .bench-genre {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 8px;
+  }
+  .bench-product {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .bench-cost {
+    font-size: 13px;
+    color: var(--yellow);
+    font-weight: 600;
+  }
+  .bench-hook {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 2px solid var(--border);
+    padding-left: 10px;
+  }
+
+  /* ── OUTPUT EXAMPLE ── */
+  .output-wrap {
+    background: #0e0e18;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .output-header {
+    background: var(--surface2);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .output-dots { display: flex; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-r { background: #f7706a; }
+  .dot-y { background: #f7d06a; }
+  .dot-g { background: #6af7a0; }
+  .output-title { font-size: 12px; color: var(--muted); margin-left: 4px; }
+  .output-body {
+    padding: 28px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .out-section { margin-bottom: 20px; }
+  .out-h { color: var(--accent3); font-weight: 700; font-size: 13px; margin-bottom: 8px; }
+  .out-text { color: #c8c8d8; }
+  .out-tag { color: var(--yellow); }
+  .out-good { color: var(--green); }
+  .out-bad  { color: var(--accent2); }
+  .out-num  { color: var(--accent); font-weight: 700; }
+
+  /* ── STAT ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 700px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 36px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #e8e8f0, #6af7c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    text-align: center;
+  }
+  .footer-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .footer-sub { font-size: 14px; color: var(--muted); }
+
+  code {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 12px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--accent3);
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="badge">Portfolio — AI Product Development</div>
+  <h1>記事LP フィードバックAI</h1>
+  <p class="sub">Slack に記事LP の URL を投げるだけで、競合比較付きの18パート構造分析レポートが返ってくるシステム</p>
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    稼働中 — #yomite_ai-kiji_fb をポーリング中
+  </div>
+</div>
+
+<!-- ── OVERVIEW ── -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Overview</div>
+    <div class="section-title">これは何か</div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">18</div>
+        <div class="stat-label">パート構造分析</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">6</div>
+        <div class="stat-label">ジャンル競合データ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">v6</div>
+        <div class="stat-label">現在のバージョン</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2分</div>
+        <div class="stat-label">Slackポーリング間隔</div>
+      </div>
+    </div>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="oc-label">なぜ作ったか</div>
+        <div class="oc-value">
+          記事LPのフィードバックは <strong>属人化・時間コスト・品質ムラ</strong> が課題だった。
+          マーケターが「フィードバックください」とURLを貼るだけで、競合データ付きの本格的なLPレビューが即時返ってくる仕組みが必要だった。
+        </div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">誰が使うか</div>
+        <div class="oc-value">
+          ヨミテ社のマーケターが <strong>Slack の #yomite_ai-kiji_fb チャンネル</strong> に記事LP のURLを投稿すると自動でフィードバックが返ってくる。
+          人手不要・24時間対応。
+        </div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">何が返ってくるか</div>
+        <div class="oc-value">
+          HTML レポート（記事スクショ＋FB の左右2カラム）、または Slack Canvas。
+          <strong>フック評価・構成分析・画像診断・競合比較・今週伸びてる記事3本URL提案</strong> まで含む。
+        </div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">競合インサイトの源泉</div>
+        <div class="oc-value">
+          <strong>DPro MCP</strong>（広告費増加ランキングデータ）から4ジャンルのTOP記事LPを取得・Playwright解析し、
+          <code>dpro_benchmark.json</code> として蓄積。FB生成時に自動参照。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── FLOW ── -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Architecture</div>
+    <div class="section-title">処理フロー</div>
+
+    <div class="flow-wrap">
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-icon bg-purple">💬</div>
+          <div class="flow-step-title">Slack検知</div>
+          <div class="flow-step-desc">「フィードバック」<br>+ URL を2分おきに<br>ポーリング</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-teal">🕷️</div>
+          <div class="flow-step-title">Playwright解析</div>
+          <div class="flow-step-desc">JSレンダリング後に<br>DOM順でテキスト・<br>画像・動画抽出</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-yellow">🎬</div>
+          <div class="flow-step-title">動画サムネイル</div>
+          <div class="flow-step-desc">OpenCV×8スレッド並列で<br>全動画の1秒目を<br>取得</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-red">🔍</div>
+          <div class="flow-step-title">ジャンル判定</div>
+          <div class="flow-step-desc">Haiku で記事を読み<br>benchmark.json から<br>最適ジャンルをマッチ</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-blue">🤖</div>
+          <div class="flow-step-title">FB生成</div>
+          <div class="flow-step-desc">Sonnet 4.6 で<br>Vision込みの<br>18パート分析</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon bg-green">📋</div>
+          <div class="flow-step-title">Slack返信</div>
+          <div class="flow-step-desc">HTMLレポート →<br>Canvas →<br>テキストの順にFB</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── FEATURES ── -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Features</div>
+    <div class="section-title">主な機能</div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">👁️</div>
+        <div class="feature-title">Vision 対応マルチモーダル解析</div>
+        <div class="feature-desc">
+          画像最大10枚＋動画サムネイル最大36本をClaudeに渡す。
+          「皆まで言わずに」の観点（ビジュアルで問いを立てているか）を含む素材評価。
+        </div>
+        <span class="feature-tag tag-ai">Claude Vision</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏗️</div>
+        <div class="feature-title">18パート構造分析</div>
+        <div class="feature-desc">
+          FV・共感・問題提起・新常識・証拠・権威・口コミ・CTA など各セクションを
+          DOM順に沿って個別評価。現場が翌日から動ける具体的な改善案を出力。
+        </div>
+        <span class="feature-tag tag-core">Core Analysis</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">DPro 競合インサイト連携</div>
+        <div class="feature-desc">
+          6ジャンルの勝ちパターン・今伸びてるLP・FVフック・タクティクスを
+          <code>benchmark.json</code> に蓄積し、FB生成時に自動参照。
+        </div>
+        <span class="feature-tag tag-data">DPro MCP</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <div class="feature-title">好調競合記事3本URL提案</div>
+        <div class="feature-desc">
+          同ジャンルで今週広告費が伸びている競合記事を3本ピックアップし、
+          広告文・FVフック・URL・「盗むべきポイント」をセットで提案。
+        </div>
+        <span class="feature-tag tag-data">New</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">ジャンル自動判定</div>
+        <div class="feature-desc">
+          Claude Haiku が記事テキストを読んで悩み・ターゲット・キーワードを抽出し、
+          benchmark.json の6ジャンルから最も近いものを自動マッチング。
+        </div>
+        <span class="feature-tag tag-ai">Auto Classify</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <div class="feature-title">HTMLレポート自動生成</div>
+        <div class="feature-desc">
+          記事LPのスクリーンショットとFBを左右2カラムで並べたHTMLを自動生成し、
+          Slackにファイル添付。Canvas・テキスト分割のフォールバック付き。
+        </div>
+        <span class="feature-tag tag-ux">UX</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">動画サムネイル並列取得</div>
+        <div class="feature-desc">
+          OpenCV + <code>ThreadPoolExecutor</code>（8スレッド）で動画サムネイルを並列取得。
+          動画36本でも処理がブロックしない設計。
+        </div>
+        <span class="feature-tag tag-core">Performance</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-title">続き取得（Continuation）</div>
+        <div class="feature-desc">
+          <code>stop_reason=max_tokens</code> を検知して自動で続きをリクエスト。
+          16,000トークンを超える長文FBも途中で途切れない。
+        </div>
+        <span class="feature-tag tag-core">Reliability</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">nohup デーモン稼働</div>
+        <div class="feature-desc">
+          <code>nohup</code> でターミナルを閉じてもSIGHUPで死なない。
+          PIDファイル管理・Rate Limitリトライ（最大3回・60秒待機）付き。
+        </div>
+        <span class="feature-tag tag-core">Ops</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── OUTPUT EXAMPLE ── -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Output Example</div>
+    <div class="section-title">実際のFB出力イメージ</div>
+
+    <div class="output-wrap">
+      <div class="output-header">
+        <div class="output-dots">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+        </div>
+        <div class="output-title">article-fb-report.html — 記事LP フィードバック</div>
+      </div>
+      <div class="output-body">
+        <div class="out-section">
+          <div class="out-h">📊 記事統計</div>
+          <div class="out-text">
+            文字数: <span class="out-num">3,842文字</span> ／ 画像: <span class="out-num">12枚</span> ／ 動画: <span class="out-num">4本</span> ／ CTA: <span class="out-num">3箇所</span>
+          </div>
+        </div>
+        <div class="out-section">
+          <div class="out-h">🎯 FV評価</div>
+          <div class="out-text">
+            <span class="out-bad">✗ 惜しい：</span>「最近疲れやすい」は40代女性全員に刺さる広すぎるフック。競合（キミエリンクルホワイト）は「82歳も衝撃の自信肌」という具体的ビジュアルで止めている。<br>
+            <span class="out-good">→ 改善案：</span>読者が「あ、私のことだ」と感じる悩みの解像度を上げる。年齢・状況・シーンを絞って入れる。
+          </div>
+        </div>
+        <div class="out-section">
+          <div class="out-h">🏆 競合比較（DProトレンド）</div>
+          <div class="out-text">
+            <span class="out-bad">負けている点：</span>権威設計が弱い。競合TOP（cost_diff ¥36.4M）は「薬の都・富山」「7年開発」「18秒に1個売れる」を3連打している。<br>
+            <span class="out-good">盗むべきタクティクス：</span>産地・開発期間・売れている速度を数値化する「信頼の3点セット」を冒頭に入れる。
+          </div>
+        </div>
+        <div class="out-section">
+          <div class="out-h">📌 今週伸びてる競合記事3本</div>
+          <div class="out-text">
+            <span class="out-tag">【1位】富山常備薬 キミエリンクルホワイト</span><br>
+            📣 富山の"寝る前クリーム"すご！シミとシワ一度で…82歳も衝撃の自信肌<br>
+            🔗 <span style="color:#6890f7;">https://xxx.xxx.co.jp/ab/kimie-lp</span><br>
+            💡 産地ブランド×医薬部外品×ダブル悩み解決の3点セットが最強。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── BENCHMARK ── -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Benchmark Data</div>
+    <div class="section-title">蓄積済み競合インサイト（6ジャンル）</div>
+
+    <div class="bench-grid">
+      <div class="bench-card">
+        <div class="bench-genre">成長期サポートサプリ</div>
+        <div class="bench-product">セノッピー / GPCワン / アストリション</div>
+        <div class="bench-cost">TOP cost_diff ¥1.26M〜</div>
+        <div class="bench-hook">「イライラ息子に疲れたママは絶対にこれやって」新型栄養失調×グミ感覚</div>
+      </div>
+      <div class="bench-card">
+        <div class="bench-genre">膝・関節サプリ（ひざ×高齢者）</div>
+        <div class="bench-product">さくらフォレスト あゆみ</div>
+        <div class="bench-cost">TOP cost_diff ¥3.65M</div>
+        <div class="bench-hook">「ひざ関節症専門医『膝が悪い人は絶対やって！』1日3秒の裏ワザで激変」</div>
+      </div>
+      <div class="bench-card">
+        <div class="bench-genre">スキンケア（毛穴×40-50代）</div>
+        <div class="bench-product">富山常備薬 キミエリンクルホワイト</div>
+        <div class="bench-cost">TOP cost_diff ¥36.35M</div>
+        <div class="bench-hook">「富山の"寝る前クリーム"すご！シミとシワ一度で…82歳も衝撃の自信肌」</div>
+      </div>
+      <div class="bench-card">
+        <div class="bench-genre">体臭ケア（体臭×40-50代）</div>
+        <div class="bench-product">ヨミテ プルーストクリーム2</div>
+        <div class="bench-cost">TOP cost_diff ¥2.15M</div>
+        <div class="bench-hook">「とにかく人の目が怖い...」汗ではなくワキガ菌が真の原因</div>
+      </div>
+      <div class="bench-card">
+        <div class="bench-genre">腸活サプリ</div>
+        <div class="bench-product">腸活サプリ上位（一般パターン）</div>
+        <div class="bench-cost">—</div>
+        <div class="bench-hook">腸→美肌・免疫・メンタルへの連鎖教育 × 動画14本ビジュアルファースト設計</div>
+      </div>
+      <div class="bench-card">
+        <div class="bench-genre">睡眠サポートサプリ</div>
+        <div class="bench-product">睡眠サプリ上位（一般パターン）</div>
+        <div class="bench-cost">—</div>
+        <div class="bench-hook">「夜中に何度も目が覚める。これ、歳のせいじゃなかった。」諦め認識の転換</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── TIMELINE ── -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Development Journey</div>
+    <div class="section-title">開発の歩み</div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-version">v1 — 起点</div>
+        <div class="tl-title">Slack ポーリング × テキスト抽出の原型</div>
+        <div class="tl-body">
+          Slack の特定チャンネルを2分おきにポーリングし、URLを含む「フィードバック」投稿を検知してPlaywrightでテキスト抽出。
+          Claude Sonnet にLP本文を渡してテキストベースのFBを返す最初の原型。
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">Slack SDK</span>
+          <span class="tl-tag">Playwright</span>
+          <span class="tl-tag">Claude API</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-version">v2〜v3</div>
+        <div class="tl-title">画像Vision対応 × DOM順セクション解析</div>
+        <div class="tl-body">
+          テキストのみから Claude Vision 対応へ。DOM順に画像をテキストとセットで渡すことで
+          「ビジュアル×コピーのセット評価」が可能に。18パートの構造分析プロンプトに昇華。
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">Claude Vision</span>
+          <span class="tl-tag">DOM順解析</span>
+          <span class="tl-tag">18パート分析</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-version">v4〜v5</div>
+        <div class="tl-title">HTMLレポート生成 × Slack Canvas 対応</div>
+        <div class="tl-body">
+          フィードバックをSlackテキストとして返すだけでなく、
+          記事LPのスクリーンショットとFBを左右に並べたHTMLレポートを自動生成してファイル添付。
+          アップロード失敗時の Canvas → テキストフォールバック設計。
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">HTML報告書</span>
+          <span class="tl-tag">Slack Canvas</span>
+          <span class="tl-tag">フォールバック設計</span>
+        </div>
+      </div>
+
+      <div class="tl-item highlight">
+        <div class="tl-version">v6 — 現在</div>
+        <div class="tl-title">動画並列取得 × DPro競合インサイト × 好調記事URL提案</div>
+        <div class="tl-body">
+          OpenCV+ThreadPoolExecutor で動画サムネイルを8並列取得。
+          DPro MCP から4ジャンルTOP記事LPを取得・Playwright分析してbenchmark.jsonに蓄積。
+          FB末尾に「今週伸びてる競合記事3本URL＋盗むべきポイント」提案セクションを追加。
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">OpenCV並列</span>
+          <span class="tl-tag">DPro MCP</span>
+          <span class="tl-tag">好調記事URL提案</span>
+          <span class="tl-tag">benchmark.json</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── CHALLENGES ── -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Technical Challenges</div>
+    <div class="section-title">解決した技術的課題</div>
+
+    <div class="challenge-list">
+      <div class="challenge-card">
+        <div class="ch-num">01</div>
+        <div>
+          <div class="ch-problem">UnicodeEncodeError — APIキーに日本語が混入する謎のバグ</div>
+          <div class="ch-solution">
+            <code>zsh -i</code>（インタラクティブシェル）で環境変数を取得していたため、
+            ターミナルの「Restored session: 2026年 3月31日…」という復元メッセージがAPIキーのstdoutに混入。
+            <code>zsh -l</code>（ログインシェル）＋<code>source ~/.zshrc</code>の明示実行に変更して根本解決。
+            副次的にhttpxのASCIIヘッダーパッチも追加。
+          </div>
+        </div>
+        <div class="ch-tag">Root Cause Found</div>
+      </div>
+      <div class="challenge-card">
+        <div class="ch-num">02</div>
+        <div>
+          <div class="ch-problem">ターミナルを閉じるとプロセスがSIGHUPで死ぬ</div>
+          <div class="ch-solution">
+            <code>nohup zsh -l -c "..."</code> でSIGHUPを無視してバックグラウンド実行。
+            PIDを<code>/tmp/fb_bot.pid</code>に書いて再起動・停止を管理可能に。
+          </div>
+        </div>
+        <div class="ch-tag">Ops Fixed</div>
+      </div>
+      <div class="challenge-card">
+        <div class="ch-num">03</div>
+        <div>
+          <div class="ch-problem">DPro MCPはClaudeセッション内でしか使えない（Pythonから直接呼べない）</div>
+          <div class="ch-solution">
+            MCPツールはClaudeセッション内でのみ使用可能。
+            「セッション内でDPro → LP解析 → benchmark.json更新」を手動で実施しておき、
+            Pythonボットはファイルを読み込むだけの設計に分離。
+          </div>
+        </div>
+        <div class="ch-tag">Architecture Decision</div>
+      </div>
+      <div class="challenge-card">
+        <div class="ch-num">04</div>
+        <div>
+          <div class="ch-problem">動画サムネイル取得がシリアル処理でボトルネック</div>
+          <div class="ch-solution">
+            <code>ThreadPoolExecutor(max_workers=8)</code> で全動画のサムネイル取得を並列化。
+            失敗した動画はスキップして続行する設計で安定性を担保。
+          </div>
+        </div>
+        <div class="ch-tag">Performance</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── TECH STACK ── -->
+<div class="container">
+  <div class="section">
+    <div class="section-label">Tech Stack</div>
+    <div class="section-title">使用技術</div>
+
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="si-label">AI Model</div>
+        <div class="si-name">Claude Sonnet 4.6</div>
+        <div class="si-desc">メイン分析・Vision・16k tokens</div>
+      </div>
+      <div class="stack-item">
+        <div class="si-label">AI Model</div>
+        <div class="si-name">Claude Haiku 4.5</div>
+        <div class="si-desc">ジャンル自動判定（軽量）</div>
+      </div>
+      <div class="stack-item">
+        <div class="si-label">Scraping</div>
+        <div class="si-name">Playwright</div>
+        <div class="si-desc">JSレンダリング後DOM抽出</div>
+      </div>
+      <div class="stack-item">
+        <div class="si-label">Video</div>
+        <div class="si-name">OpenCV</div>
+        <div class="si-desc">動画サムネイル並列取得</div>
+      </div>
+      <div class="stack-item">
+        <div class="si-label">Messaging</div>
+        <div class="si-name">Slack SDK</div>
+        <div class="si-desc">Canvas / ファイル返信</div>
+      </div>
+      <div class="stack-item">
+        <div class="si-label">Data</div>
+        <div class="si-name">DPro MCP</div>
+        <div class="si-desc">広告費増加ランキングAPI</div>
+      </div>
+      <div class="stack-item">
+        <div class="si-label">HTTP</div>
+        <div class="si-name">httpx 0.28+</div>
+        <div class="si-desc">Anthropic SDK内部。ASCII問題パッチ済み</div>
+      </div>
+      <div class="stack-item">
+        <div class="si-label">Runtime</div>
+        <div class="si-name">Python 3 / nohup</div>
+        <div class="si-desc">デーモン稼働・SIGHUP対応</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <div class="footer-title">記事LP フィードバックAI — v6</div>
+  <div class="footer-sub">一進AI × ヨミテ — 2026年3月 完成 / 継続稼働中</div>
+</div>
+
+</body>
+</html>
