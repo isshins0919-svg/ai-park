@@ -19,6 +19,8 @@ from __future__ import annotations
 import os
 import re
 import sys
+import json
+import base64
 import argparse
 import subprocess
 import tempfile
@@ -28,10 +30,11 @@ from dataclasses import dataclass, field
 
 import cv2
 import numpy as np
+import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 from moviepy.editor import (
-    VideoFileClip, ImageClip, CompositeVideoClip,
+    VideoFileClip, ImageClip, AudioFileClip, CompositeVideoClip,
     concatenate_videoclips,
 )
 
@@ -58,6 +61,80 @@ def _get_face_cascade():
         xml = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
         _FACE_CASCADE = cv2.CascadeClassifier(xml)
     return _FACE_CASCADE
+
+
+# ─── Gemini Vision: クリップ内容分析 ──────────────────────────
+def analyze_clip_with_gemini(clip_path: str, gemini_key: str) -> dict:
+    """
+    クリップの先頭フレームをGemini 2.0 Flashに送り、
+    被写体と最適クロップ方向を返す。
+    返値例: {"subject":"白衣の医師が話している", "crop_hint":"center", "reason":"..."}
+    """
+    try:
+        frame_tmp = tempfile.mktemp(suffix=".jpg")
+        subprocess.run(
+            [FFMPEG, "-y", "-i", clip_path, "-vframes", "1", "-ss", "0.5", frame_tmp],
+            capture_output=True, check=True
+        )
+        with open(frame_tmp, "rb") as f:
+            img_b64 = base64.b64encode(f.read()).decode()
+        os.unlink(frame_tmp)
+
+        resp = requests.post(
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}",
+            json={"contents": [{"parts": [
+                {"inline_data": {"mime_type": "image/jpeg", "data": img_b64}},
+                {"text": (
+                    "この動画フレームについてJSONのみで答えて。\n"
+                    "fields:\n"
+                    "  subject: 何が映っているか（日本語・具体的に）\n"
+                    "  crop_hint: 縦型9:16クロップ時に被写体が見切れないよう\n"
+                    "             左右どちらに寄せるべきか（left/center/right）\n"
+                    "  reason: 理由（日本語・1文）\n"
+                    "JSON only。余計な説明不要。"
+                )}
+            ]}]},
+            timeout=15
+        )
+        raw = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
+        raw = re.sub(r"```json|```", "", raw).strip()
+        # 閉じ括弧が欠けることがあるので補完
+        if not raw.endswith("}"):
+            raw += "}"
+        return json.loads(raw)
+    except Exception as e:
+        return {"subject": "不明", "crop_hint": "center", "reason": f"分析失敗: {e}"}
+
+
+# ─── Fish Audio: ナレーション生成 ────────────────────────────
+def generate_narration(scenes: list, fish_key: str, output_path: str) -> str | None:
+    """
+    全シーンのテキストを結合してFish AudioでMP3生成。
+    返値: 生成したmp3パス（失敗時None）
+    """
+    full_text = "。".join(s.text for s in scenes if s.text).strip()
+    if not full_text:
+        return None
+    try:
+        resp = requests.post(
+            "https://api.fish.audio/v1/tts",
+            headers={"Authorization": f"Bearer {fish_key}", "Content-Type": "application/json"},
+            json={"text": full_text, "format": "mp3", "latency": "normal"},
+            stream=True,
+            timeout=60
+        )
+        if resp.status_code != 200:
+            print(f"  ⚠️  Fish Audio エラー: {resp.status_code}")
+            return None
+        with open(output_path, "wb") as f:
+            for chunk in resp.iter_content(1024):
+                f.write(chunk)
+        size_kb = os.path.getsize(output_path) // 1024
+        print(f"  ✅ ナレーション生成完了: {output_path} ({size_kb}KB)")
+        return output_path
+    except Exception as e:
+        print(f"  ⚠️  Fish Audio 失敗: {e}")
+        return None
 
 FONT_CANDIDATES = [
     "/System/Library/Fonts/ヒラギノ角ゴシック W8.ttc",
@@ -293,7 +370,7 @@ def fit_to_vertical(img: Image.Image) -> Image.Image:
     return img.resize(OUTPUT_SIZE, Image.LANCZOS)
 
 
-def crop_clip_to_vertical(clip: VideoFileClip) -> VideoFileClip:
+def crop_clip_to_vertical(clip: VideoFileClip, crop_hint: str = "center") -> VideoFileClip:
     """
     動画クリップを OUTPUT_SIZE に変換。
     - 横長: 先頭フレームで顔検出 → 顔中心クロップ or レターボックス
@@ -317,10 +394,22 @@ def crop_clip_to_vertical(clip: VideoFileClip) -> VideoFileClip:
             face_c = None
 
         if face_c:
-            # 顔中心クロップ
+            # 顔中心クロップ（顔検出優先）
             cx, _ = face_c
             new_w = int(h * target_ratio)
             x1 = max(0, min(cx - new_w // 2, w - new_w))
+            clip = clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h)
+            return clip.resize(OUTPUT_SIZE)
+        elif crop_hint in ("left", "right", "center"):
+            # Geminiのcrop_hintを使う
+            new_w = int(h * target_ratio)
+            if crop_hint == "left":
+                x1 = 0
+            elif crop_hint == "right":
+                x1 = w - new_w
+            else:
+                x1 = (w - new_w) // 2
+            x1 = max(0, min(x1, w - new_w))
             clip = clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h)
             return clip.resize(OUTPUT_SIZE)
         else:
@@ -347,7 +436,8 @@ def crop_clip_to_vertical(clip: VideoFileClip) -> VideoFileClip:
 
 # ── シーン1本分のVideoClipを生成 ──────────────────────────────
 def build_scene_clip(scene: Scene, clips_dir: str,
-                     override_duration: float | None = None) -> CompositeVideoClip | None:
+                     override_duration: float | None = None,
+                     gemini_key: str | None = None) -> CompositeVideoClip | None:
     # 尺計算（mainでスケール済みの値を優先）
     text_len = len(scene.text)
     duration = override_duration if override_duration else \
@@ -377,7 +467,15 @@ def build_scene_clip(scene: Scene, clips_dir: str,
             try:
                 raw = VideoFileClip(clip_path)
                 raw = raw.set_audio(None)          # ① 音声削除
-                raw = crop_clip_to_vertical(raw)   # ② 顔検出クロップ or レターボックス
+
+                # ② Gemini Visionでクロップ方向を判断
+                crop_hint = "center"
+                if gemini_key:
+                    analysis = analyze_clip_with_gemini(clip_path, gemini_key)
+                    crop_hint = analysis.get("crop_hint", "center")
+                    print(f"    🤖 Gemini: {analysis.get('subject','')} → {crop_hint}")
+
+                raw = crop_clip_to_vertical(raw, crop_hint=crop_hint)
                 if raw.duration > duration:
                     raw = raw.subclip(0, duration)
                 else:
@@ -405,9 +503,18 @@ def main():
     parser.add_argument("--script",  required=True, help="台本HTMLファイルパス")
     parser.add_argument("--clips",   required=True, help="素材フォルダパス")
     parser.add_argument("--output",  default="video-ai/output/output_v2.mp4", help="出力mp4パス")
+    parser.add_argument("--no-ai",   action="store_true", help="AI API（Gemini/Fish Audio）を使わない")
+    parser.add_argument("--remotion", action="store_true", help="Remotion用 composition.json も出力する")
     args = parser.parse_args()
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+
+    # APIキー取得
+    def _get_env(key):
+        return subprocess.run(["zsh", "-i", "-c", f"echo ${key}"],
+                              capture_output=True, text=True).stdout.strip()
+    gemini_key = _get_env("GEMINI_API_KEY_1") if not args.no_ai else None
+    fish_key   = _get_env("FISH_AUDIO_API_KEY") if not args.no_ai else None
 
     print("\n📄 台本パース中...")
     scenes = parse_script(args.script)
@@ -423,11 +530,22 @@ def main():
     if scale < 1.0:
         print(f"  ⏱  尺スケール: {total_raw:.1f}s → {TARGET_DURATION}s（×{scale:.2f}）")
 
+    # ① Fish Audio: ナレーション先行生成
+    narration_path = None
+    if fish_key:
+        print("\n🎙  Fish Audio: ナレーション生成中...")
+        narration_path = generate_narration(
+            valid_scenes, fish_key,
+            str(Path(args.output).parent / "narration.mp3")
+        )
+
     print(f"\n🎬 シーンクリップ生成中（{len(valid_scenes)}シーン）...")
     clips = []
     for scene, base_dur in zip(valid_scenes, raw_durations):
         adjusted_dur = max(MIN_DURATION, base_dur * scale)
-        c = build_scene_clip(scene, args.clips, override_duration=adjusted_dur)
+        c = build_scene_clip(scene, args.clips,
+                             override_duration=adjusted_dur,
+                             gemini_key=gemini_key)   # ② Gemini Vision
         if c is not None:
             clips.append(c)
 
@@ -438,6 +556,23 @@ def main():
     print(f"\n✂️  {len(clips)}シーンを結合中...")
     final = concatenate_videoclips(clips, method="compose")
     total_sec = final.duration
+
+    # ③ ナレーション合成
+    if narration_path and Path(narration_path).exists():
+        print(f"\n🎙  ナレーションを動画に合成中...")
+        try:
+            narr = AudioFileClip(narration_path)
+            # ナレーションの尺に合わせて動画全体をスピード調整
+            if narr.duration > total_sec * 1.15:
+                speed = narr.duration / total_sec
+                print(f"  ⏩ ナレーションが長いため動画を×{speed:.2f}倍速に調整")
+                final = final.speedx(speed)
+                total_sec = final.duration
+            # ナレーションが短ければそのまま（動画の余りは無音）
+            narr_cut = narr.subclip(0, min(narr.duration, total_sec))
+            final = final.set_audio(narr_cut)
+        except Exception as e:
+            print(f"  ⚠️  ナレーション合成失敗: {e}")
 
     print(f"\n💾 出力中: {args.output} （{total_sec:.1f}秒）")
     final.write_videofile(
@@ -451,6 +586,50 @@ def main():
 
     print(f"\n✅ 完成！ {args.output}")
     print(f"   総尺: {total_sec:.1f}秒 / {len(clips)}シーン")
+    if narration_path:
+        print(f"   ナレーション: {narration_path}")
+
+    # Remotion用 composition.json を出力（--remotion オプション時）
+    if args.remotion:
+        _export_composition_json(valid_scenes, raw_durations, scale, narration_path, args)
+
+
+def _export_composition_json(scenes, raw_durations, scale, narration_path, args):
+    """Remotionが読み込む composition.json を生成"""
+    fps = 30
+    comp_scenes = []
+    clips_dir = args.clips
+
+    for scene, base_dur in zip(scenes, raw_durations):
+        adjusted_dur = max(MIN_DURATION, base_dur * scale)
+        frames = int(adjusted_dur * fps)
+
+        clip_path = ""
+        for ref in scene.clip_refs:
+            found = find_clip(clips_dir, ref)
+            if found:
+                clip_path = str(Path(found).resolve())
+                break
+
+        comp_scenes.append({
+            "clip": clip_path,
+            "text": scene.text,
+            "emphasis": scene.emphasis,
+            "durationFrames": frames,
+        })
+
+    comp = {
+        "fps": fps,
+        "width": OUTPUT_SIZE[0],
+        "height": OUTPUT_SIZE[1],
+        "scenes": comp_scenes,
+        "narration": str(Path(narration_path).resolve()) if narration_path else None,
+    }
+
+    out_path = Path(args.output).parent / "composition.json"
+    out_path.write_text(json.dumps(comp, ensure_ascii=False, indent=2))
+    print(f"\n📋 Remotion用 composition.json → {out_path}")
+    print(f"   レンダリング: cd video-ai/remotion && npx remotion render src/Root.tsx VideoAI ../output/remotion_out.mp4")
 
 
 if __name__ == "__main__":
