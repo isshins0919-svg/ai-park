@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>動画自動編集AI — 開発ポートフォリオ</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --card: #1a1a24;
+      --border: #2a2a3a;
+      --accent: #6c63ff;
+      --accent2: #ff6b6b;
+      --accent3: #43e97b;
+      --text: #e8e8f0;
+      --muted: #7a7a9a;
+      --yellow: #ffd700;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── ヒーロー ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, #1a1040 0%, var(--bg) 70%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border: 1px solid rgba(108,99,255,0.4);
+      border-radius: 100px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      background: rgba(108,99,255,0.08);
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 72px);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 30%, #a89cf7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(15px, 2vw, 20px);
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--accent);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ─── セクション共通 ─── */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 4vw, 42px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #fff;
+    }
+
+    /* ─── 課題セクション ─── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .problem-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .problem-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .problem-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .problem-card p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ─── アーキテクチャ ─── */
+    .arch-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .arch-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .arch-step:last-child { border-bottom: none; }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(108,99,255,0.15);
+      border: 1px solid rgba(108,99,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    .step-content h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .step-content p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .step-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-purple { background: rgba(108,99,255,0.15); color: #a89cf7; border: 1px solid rgba(108,99,255,0.25); }
+    .tag-green  { background: rgba(67,233,123,0.1);  color: #43e97b; border: 1px solid rgba(67,233,123,0.2); }
+    .tag-red    { background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); }
+    .tag-yellow { background: rgba(255,215,0,0.1);   color: #ffd700; border: 1px solid rgba(255,215,0,0.2); }
+    .tag-blue   { background: rgba(56,189,248,0.1);  color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); }
+
+    /* ─── 解決した課題 ─── */
+    .fix-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .fix-item {
+      display: grid;
+      grid-template-columns: 1fr 48px 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fix-item:last-child { border-bottom: none; }
+
+    .fix-before {
+      text-align: right;
+      padding: 14px 18px;
+      background: rgba(255,107,107,0.06);
+      border: 1px solid rgba(255,107,107,0.15);
+      border-radius: 12px;
+    }
+
+    .fix-after {
+      text-align: left;
+      padding: 14px 18px;
+      background: rgba(67,233,123,0.06);
+      border: 1px solid rgba(67,233,123,0.15);
+      border-radius: 12px;
+    }
+
+    .fix-label {
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .fix-before .fix-label { color: var(--accent2); }
+    .fix-after  .fix-label { color: var(--accent3); }
+
+    .fix-before h4, .fix-after h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .fix-before p, .fix-after p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .fix-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 20px;
+    }
+
+    /* ─── テックスタック ─── */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .tech-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .tech-card:hover {
+      border-color: rgba(108,99,255,0.4);
+      transform: translateY(-2px);
+    }
+
+    .tech-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .tech-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .tech-role {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ─── バージョン履歴 ─── */
+    .versions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .version-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 26px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .version-badge {
+      flex-shrink: 0;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .v-current { background: rgba(108,99,255,0.2); color: var(--accent); border: 1px solid rgba(108,99,255,0.3); }
+    .v-mid     { background: rgba(67,233,123,0.12); color: var(--accent3); border: 1px solid rgba(67,233,123,0.2); }
+    .v-early   { background: rgba(255,215,0,0.1); color: var(--yellow); border: 1px solid rgba(255,215,0,0.2); }
+    .v-start   { background: rgba(255,107,107,0.1); color: var(--accent2); border: 1px solid rgba(255,107,107,0.2); }
+
+    .version-content h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .version-content p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ─── 成果 ─── */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .result-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .result-num {
+      font-size: 52px;
+      font-weight: 900;
+      display: block;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .result-label {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .result-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      opacity: 0.6;
+    }
+
+    /* ─── コードスニペット ─── */
+    .code-block {
+      background: #0d0d14;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    .code-block .keyword  { color: #a89cf7; }
+    .code-block .func     { color: #43e97b; }
+    .code-block .string   { color: #ffd47e; }
+    .code-block .comment  { color: #5a5a7a; }
+    .code-block .type     { color: #38bdf8; }
+
+    /* ─── フッター ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer strong { color: var(--accent); }
+
+    /* ─── セパレーター ─── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 640px) {
+      .fix-item {
+        grid-template-columns: 1fr;
+      }
+      .fix-before { text-align: left; }
+      .fix-arrow  { display: none; }
+      .hero-stats { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-badge">AI × Video Engineering</div>
+  <h1>動画自動編集AI<br>開発記録</h1>
+  <p class="subtitle">
+    台本HTMLと素材フォルダを渡すだけで<br>
+    縦型1分動画が自動生成されるシステムの設計・実装全記録
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">25</span>
+      <span class="stat-label">素材を自動処理</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">60s</span>
+      <span class="stat-label">自動尺調整</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">v8</span>
+      <span class="stat-label">現行バージョン</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">AI統合</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 解決した課題 ─── -->
+<section>
+  <div class="section-label">Problem → Solution</div>
+  <div class="section-title">解決してきた課題</div>
+
+  <div class="fix-timeline">
+
+    <div class="fix-item">
+      <div class="fix-before">
+        <div class="fix-label">Before</div>
+        <h4>縦横比がグチャグチャ</h4>
+        <p>iPhoneのMOVが横向きで出力される</p>
+      </div>
+      <div class="fix-arrow">→</div>
+      <div class="fix-after">
+        <div class="fix-label">After</div>
+        <h4>ffmpegで回転メタデータを焼き込み</h4>
+        <p>rotation=-90タグを検出し自動正規化</p>
+      </div>
+    </div>
+
+    <div class="fix-item">
+      <div class="fix-before">
+        <div class="fix-label">Before</div>
+        <h4>3:4クリップでクラッシュ</h4>
+        <p>縦横比の分岐ロジックが不完全でy1=-166に</p>
+      </div>
+      <div class="fix-arrow">→</div>
+      <div class="fix-after">
+        <div class="fix-label">After</div>
+        <h4>全アスペクト比対応のクロップ設計</h4>
+        <p>ratio > target_ratio を正確に分岐。ピラーボックスも実装</p>
+      </div>
+    </div>
+
+    <div class="fix-item">
+      <div class="fix-before">
+        <div class="fix-label">Before</div>
+        <h4>台本の続き行がスキップされる</h4>
+        <p>NO=空白の行を無視して16シーンしか取れない</p>
+      </div>
+      <div class="fix-arrow">→</div>
+      <div class="fix-after">
+        <div class="fix-label">After</div>
+        <h4>全行パース・25シーン完全取得</h4>
+        <p>last_noを継承して続き行も正確に処理</p>
+      </div>
+    </div>
+
+    <div class="fix-item">
+      <div class="fix-before">
+        <div class="fix-label">Before</div>
+        <h4>黄色テロップが画面外にはみ出す</h4>
+        <p>日本語88pxで14文字=1232px &gt; 1080px</p>
+      </div>
+      <div class="fix-arrow">→</div>
+      <div class="fix-after">
+        <div class="fix-label">After</div>
+        <h4>強調用CHARS_PER_LINE_EMPH=11 + x clamp</h4>
+        <p>フォントサイズ別の折り返し幅設計</p>
+      </div>
+    </div>
+
+    <div class="fix-item">
+      <div class="fix-before">
+        <div class="fix-label">Before</div>
+        <h4>台本フォーマット変更に対応不可</h4>
+        <p>列インデックスがハードコードされていた</p>
+      </div>
+      <div class="fix-arrow">→</div>
+      <div class="fix-after">
+        <div class="fix-label">After</div>
+        <h4>ヘッダ行から列を自動検出</h4>
+        <p>「差し込み画像」列を動的に特定。ver1/ver2両対応</p>
+      </div>
+    </div>
+
+    <div class="fix-item">
+      <div class="fix-before">
+        <div class="fix-label">Before</div>
+        <h4>クリップ参照「1-11-2」の誤パース</h4>
+        <p>["1-11", "2"] に分割されてしまう</p>
+      </div>
+      <div class="fix-arrow">→</div>
+      <div class="fix-after">
+        <div class="fix-label">After</div>
+        <h4>正規表現 \d{1,2}-\d で正確に分割</h4>
+        <p>["1-1", "1-2"] を正しく取得</p>
+      </div>
+    </div>
+
+    <div class="fix-item">
+      <div class="fix-before">
+        <div class="fix-label">Before</div>
+        <h4>全角ファイル名「４.mov」が見つからない</h4>
+        <p>ref="4"では検索できない</p>
+      </div>
+      <div class="fix-arrow">→</div>
+      <div class="fix-after">
+        <div class="fix-label">After</div>
+        <h4>半角↔全角の双方向変換で探索</h4>
+        <p>candidates = [ref, ref_full, ref_half]</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── パイプライン設計 ─── -->
+<section>
+  <div class="section-label">Architecture</div>
+  <div class="section-title">処理パイプライン</div>
+
+  <div class="arch-flow">
+
+    <div class="arch-step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>台本HTMLパース</h3>
+        <p>HTMLテーブルを解析してシーンリストを生成。NO=空白の続き行も全取得。通し注釈・カット別注釈も自動検出。</p>
+        <div class="step-tags">
+          <span class="tag tag-blue">BeautifulSoup</span>
+          <span class="tag tag-purple">正規表現</span>
+          <span class="tag tag-green">25シーン対応</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>尺スケーリング（60秒自動調整）</h3>
+        <p>文字数ベースで各シーンの尺を計算し、合計が60秒を超える場合は全シーン比例スケール。</p>
+        <div class="step-tags">
+          <span class="tag tag-yellow">scale = TARGET / total_raw</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Fish Audio ナレーション生成</h3>
+        <p>全シーンのテキストを結合してTTSでMP3生成。先行生成することで処理時間を短縮。</p>
+        <div class="step-tags">
+          <span class="tag tag-purple">Fish Audio API</span>
+          <span class="tag tag-blue">HTTP Stream</span>
+          <span class="tag tag-green">先行生成</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>クリップ読み込み・向き正規化</h3>
+        <p>ffmpegで回転メタデータを焼き込みテンポラリファイルを生成。iPhoneのMOVも常に正しい向きで読み込み。キャッシュ機構で重複処理を回避。</p>
+        <div class="step-tags">
+          <span class="tag tag-red">ffmpeg normalize</span>
+          <span class="tag tag-blue">MoviePy</span>
+          <span class="tag tag-green">LRUキャッシュ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Gemini Vision スマートクロップ</h3>
+        <p>クリップ先頭フレームをGemini 2.0 Flashに送信し、被写体の位置（left/center/right）を判断。OpenCV顔検出も併用。</p>
+        <div class="step-tags">
+          <span class="tag tag-purple">Gemini 2.0 Flash</span>
+          <span class="tag tag-red">OpenCV haarcascade</span>
+          <span class="tag tag-blue">Base64 Vision API</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h3>縦型クロップ（全アスペクト比対応）</h3>
+        <p>9:16/3:4/16:9/1:1など全アスペクト比に対応。横長はクロップ、縦長はピラーボックス、9:16はリサイズのみ。</p>
+        <div class="step-tags">
+          <span class="tag tag-yellow">ratio分岐設計</span>
+          <span class="tag tag-green">ピラーボックス</span>
+          <span class="tag tag-blue">LETTERBOX_THRESHOLD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-step">
+      <div class="step-num">7</div>
+      <div class="step-content">
+        <h3>テロップ描画</h3>
+        <p>PIL + ヒラギノで日本語テロップを描画。通常は白縁取り白文字、強調は黄色背景黒文字。「※」以降は自動的に小フォント。</p>
+        <div class="step-tags">
+          <span class="tag tag-purple">PIL ImageDraw</span>
+          <span class="tag tag-yellow">ヒラギノ角ゴシック</span>
+          <span class="tag tag-green">※自動小文字化</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-step">
+      <div class="step-num">8</div>
+      <div class="step-content">
+        <h3>注釈オーバーレイ</h3>
+        <p>通し注釈（全カット上部に常時表示）+ カット専用注釈（特定カットのみ表示）を2レイヤーで合成。</p>
+        <div class="step-tags">
+          <span class="tag tag-blue">CompositeVideoClip</span>
+          <span class="tag tag-green">2段積みレイヤー</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-step">
+      <div class="step-num">9</div>
+      <div class="step-content">
+        <h3>結合 → ナレーション合成 → mp4出力</h3>
+        <p>全シーンをconcatenate→ナレーションのBGMを合成。ナレーションが長い場合は動画をspeedxで自動調整。</p>
+        <div class="step-tags">
+          <span class="tag tag-red">libx264 / aac</span>
+          <span class="tag tag-purple">speedx自動調整</span>
+          <span class="tag tag-blue">CRF=23</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── テックスタック ─── -->
+<section>
+  <div class="section-label">Tech Stack</div>
+  <div class="section-title">使用技術</div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <span class="tech-icon">🎬</span>
+      <div>
+        <div class="tech-name">MoviePy</div>
+        <div class="tech-role">動画編集・合成エンジン</div>
+      </div>
+    </div>
+    <div class="tech-card">
+      <span class="tech-icon">⚡</span>
+      <div>
+        <div class="tech-name">ffmpeg</div>
+        <div class="tech-role">回転正規化・フレーム抽出</div>
+      </div>
+    </div>
+    <div class="tech-card">
+      <span class="tech-icon">🤖</span>
+      <div>
+        <div class="tech-name">Gemini 2.0 Flash</div>
+        <div class="tech-role">Vision クロップ方向判定</div>
+      </div>
+    </div>
+    <div class="tech-card">
+      <span class="tech-icon">🎙️</span>
+      <div>
+        <div class="tech-name">Fish Audio</div>
+        <div class="tech-role">日本語ナレーション TTS</div>
+      </div>
+    </div>
+    <div class="tech-card">
+      <span class="tech-icon">👁️</span>
+      <div>
+        <div class="tech-name">OpenCV</div>
+        <div class="tech-role">顔検出・スマートクロップ</div>
+      </div>
+    </div>
+    <div class="tech-card">
+      <span class="tech-icon">🖼️</span>
+      <div>
+        <div class="tech-name">PIL / Pillow</div>
+        <div class="tech-role">テロップ・注釈描画</div>
+      </div>
+    </div>
+    <div class="tech-card">
+      <span class="tech-icon">📄</span>
+      <div>
+        <div class="tech-name">BeautifulSoup</div>
+        <div class="tech-role">台本HTMLパース</div>
+      </div>
+    </div>
+    <div class="tech-card">
+      <span class="tech-icon">⚛️</span>
+      <div>
+        <div class="tech-name">Remotion</div>
+        <div class="tech-role">React製アニメーションテロップ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── バージョン履歴 ─── -->
+<section>
+  <div class="section-label">Release History</div>
+  <div class="section-title">バージョン履歴</div>
+
+  <div class="versions">
+
+    <div class="version-card">
+      <div class="version-badge v-current">v8</div>
+      <div class="version-content">
+        <h3>台本全行パース・注釈システム・Fish Audio</h3>
+        <p>続き行を全取得（16→25シーン）。通し注釈＋カット注釈の2層オーバーレイ。※以降の自動小文字化。ナレーション音声合成。</p>
+      </div>
+    </div>
+
+    <div class="version-card">
+      <div class="version-badge v-mid">v7</div>
+      <div class="version-content">
+        <h3>ffmpeg回転正規化・素材自動発見</h3>
+        <p>MoviePy rotate廃止→ffmpegで向き焼き込み。5-1のみ指定で5-2を自動発見。テロップフォントサイズ拡大。</p>
+      </div>
+    </div>
+
+    <div class="version-card">
+      <div class="version-badge v-mid">v5–6</div>
+      <div class="version-content">
+        <h3>回転メタデータ検出・台本フォーマット自動対応</h3>
+        <p>ffprobeでrotation検出。差し込み画像列をヘッダから自動特定（ver1/ver2両対応）。EXIFによる画像回転補正。</p>
+      </div>
+    </div>
+
+    <div class="version-card">
+      <div class="version-badge v-early">v4</div>
+      <div class="version-content">
+        <h3>アスペクト比クラッシュ修正・2クリップ等分</h3>
+        <p>3:4クリップのy1=-166クラッシュを修正。1シーンに複数クリップを等分配置。60秒スケーリング実装。</p>
+      </div>
+    </div>
+
+    <div class="version-card">
+      <div class="version-badge v-early">v3</div>
+      <div class="version-content">
+        <h3>Gemini Vision・Fish Audio・Remotion統合</h3>
+        <p>Gemini 2.0 Flashでスマートクロップ方向を判定。Fish AudioでTTS（SDK非対応のためHTTP直接実装）。Remotionアニメーションテロップ対応。</p>
+      </div>
+    </div>
+
+    <div class="version-card">
+      <div class="version-badge v-start">v1–2</div>
+      <div class="version-content">
+        <h3>基本パイプライン構築</h3>
+        <p>台本HTMLパース。クリップ検索（全角/半角対応）。PIL日本語テロップ。OpenCV顔検出。縦型クロップ基本実装。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── キーコード ─── -->
+<section>
+  <div class="section-label">Key Code</div>
+  <div class="section-title">設計のポイント</div>
+
+  <p style="color: var(--muted); margin-bottom: 24px; font-size: 14px;">全アスペクト比対応クロップロジック（抜粋）</p>
+  <div class="code-block">
+<span class="keyword">def</span> <span class="func">crop_clip_to_vertical</span>(clip, crop_hint=<span class="string">"center"</span>):
+    w, h = clip.size
+    ratio = w / h
+    target_ratio = <span class="type">1080</span> / <span class="type">1920</span>  <span class="comment"># 0.5625</span>
+
+    <span class="keyword">if</span> ratio &gt; target_ratio:
+        <span class="keyword">if</span> ratio &gt; <span class="type">LETTERBOX_THRESHOLD</span>:  <span class="comment"># 16:9など横長</span>
+            face_c = <span class="func">detect_face_center</span>(frame)
+            <span class="keyword">if</span> face_c:
+                cx, _ = face_c
+                x1 = <span class="func">max</span>(<span class="type">0</span>, cx - new_w // <span class="type">2</span>)  <span class="comment"># 顔中心にクロップ</span>
+            <span class="keyword">else</span>:
+                x1 = crop_hint_to_x(crop_hint)  <span class="comment"># Geminiヒント使用</span>
+        <span class="keyword">else</span>:  <span class="comment"># 3:4など少し横広</span>
+            x1 = (w - new_w) // <span class="type">2</span>  <span class="comment"># センタークロップ</span>
+    <span class="keyword">else</span>:  <span class="comment"># 縦長（9:16より細い）→ ピラーボックス</span>
+        <span class="keyword">def</span> <span class="func">add_pillarbox</span>(frame):
+            canvas = np.zeros((oh, ow, <span class="type">3</span>), dtype=np.uint8)
+            canvas[:, x_off:x_off+new_w] = frame
+            <span class="keyword">return</span> canvas
+  </div>
+
+  <p style="color: var(--muted); margin: 32px 0 24px; font-size: 14px;">台本続き行パーサ（last_no継承）</p>
+  <div class="code-block">
+<span class="comment"># NO列が数字なら更新、空白なら前のNOを継続（続き行）</span>
+<span class="keyword">if</span> no_cell.isdigit():
+    last_no = <span class="func">int</span>(no_cell)
+<span class="keyword">elif</span> last_no == <span class="type">0</span>:
+    <span class="keyword">continue</span>  <span class="comment"># 最初のNO確定前はスキップ</span>
+
+clip_ref_raw = cells[clip_col].strip()
+note         = cells[notes_col].strip()
+scenes.append(<span class="func">Scene</span>(no=last_no, text=text,
+              clip_refs=<span class="func">_parse_clip_refs</span>(clip_ref_raw), note=note))
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── 成果 ─── -->
+<section>
+  <div class="section-label">Results</div>
+  <div class="section-title">実現できたこと</div>
+
+  <div class="result-grid">
+    <div class="result-card">
+      <span class="result-num" style="color: var(--accent);">25</span>
+      <div class="result-label">素材の自動処理</div>
+      <div class="result-sub">動画・静止画・HEIC全対応</div>
+    </div>
+    <div class="result-card">
+      <span class="result-num" style="color: var(--accent3);">60s</span>
+      <div class="result-label">ぴったり自動調整</div>
+      <div class="result-sub">文字数ベースで比例スケール</div>
+    </div>
+    <div class="result-card">
+      <span class="result-num" style="color: var(--yellow);">0</span>
+      <div class="result-label">手動編集工数</div>
+      <div class="result-sub">台本＋素材を渡すだけ</div>
+    </div>
+    <div class="result-card">
+      <span class="result-num" style="color: var(--accent2);">5</span>
+      <div class="result-label">AI統合数</div>
+      <div class="result-sub">Gemini / Fish / OpenCV / ffmpeg / PIL</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── フッター ─── -->
+<footer>
+  <p>Built by <strong>一進 × Claude Code</strong> — 2026</p>
+  <p style="margin-top: 8px; font-size: 11px; opacity: 0.5;">Python 3.9 · MoviePy · ffmpeg · Gemini 2.0 Flash · Fish Audio · OpenCV · PIL</p>
+</footer>
+
+</body>
+</html>
