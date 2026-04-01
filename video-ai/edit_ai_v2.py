@@ -201,57 +201,91 @@ class Scene:
     no: int
     text: str
     clip_refs: list[str]          # ["1-1", "1-2"] など
-    notes: str = ""
+    note: str = ""                # このカット専用の注釈（上部に小さく表示）
     emphasis: bool = False        # 強調テロップ（感情ワード検知）
 
 EMPHASIS_WORDS = ["臭い", "臭く", "ツーン", "病気", "悩む", "97%OFF", "無料", "卒業"]
 
 
 # ── 台本パーサ ─────────────────────────────────────────────
-def parse_script(html_path: str) -> list[Scene]:
+def parse_script(html_path: str) -> tuple[list[Scene], str]:
+    """
+    返値: (scenes, global_annotation)
+    - scenes: 全シーンリスト（NO空白の続き行も含む）
+    - global_annotation: 全カット共通の上部注釈テキスト
+    """
     with open(html_path, encoding="utf-8") as f:
         soup = BeautifulSoup(f.read(), "html.parser")
 
     rows = soup.find_all("tr")
     scenes: list[Scene] = []
+    global_annotation = ""
 
-    # ヘッダ行から「差し込み画像/動画」列インデックスを自動検出
-    clip_col = 6  # デフォルト（ver1）
+    # ① 列インデックスを自動検出（テキスト列=2, 注釈列=3, 素材列を探す）
+    clip_col  = 6   # デフォルト（ver1）
+    notes_col = 3   # デフォルト
     for row in rows:
         cells = [td.get_text(strip=True) for td in row.find_all(["td", "th"])]
         if len(cells) < 7:
             continue
         for i, c in enumerate(cells):
-            if "差し込み" in c or "画像" in c:
+            if "差し込み" in c or ("画像" in c and "動画" in c):
                 clip_col = i
-                print(f"  [台本] 素材列を自動検出: 列{clip_col}（{c}）")
+                print(f"  [台本] 素材列: 列{clip_col}（{c}）")
                 break
         else:
             continue
         break
 
+    # ② 全行スキャン前に global_annotation を取得（NO=空 かつ cells[2]に「注釈」指示）
+    for row in rows:
+        cells = [td.get_text(strip=True) for td in row.find_all(["td", "th"])]
+        if len(cells) < 4:
+            continue
+        # "右の注釈は常に" のような指示行 → cells[3] が通し注釈テキスト
+        if "注釈" in cells[2] and "常に" in cells[2]:
+            raw = cells[3].strip()
+            # 括弧内の説明部分（指示文）を除去
+            raw = re.sub(r'（[^）]*提示[^）]*）', '', raw).strip()
+            global_annotation = raw
+            print(f"  [台本] 通し注釈を検出: {global_annotation[:40]}...")
+            break
+
+    # ③ シーン行をパース（NO=空白の続き行も全て取得）
+    last_no = 0
     for row in rows:
         cells = [td.get_text(strip=True) for td in row.find_all(["td", "th"])]
         if len(cells) < clip_col + 1:
             continue
-        # ヘッダ行スキップ
-        if cells[1] in ("NO", "A", "") or not cells[1].isdigit():
+
+        # ヘッダ行・空行スキップ
+        no_cell = cells[1].strip()
+        if no_cell in ("NO", "A"):
             continue
 
-        no   = int(cells[1])
+        # テキストが空なら無視
         text = cells[2].strip()
-        clip_ref_raw = cells[clip_col].strip()
-        notes = cells[3].strip()
+        if not text:
+            continue
+
+        # NO列が数字なら更新、空白なら前のNOを継続（続き行）
+        if no_cell.isdigit():
+            last_no = int(no_cell)
+        elif last_no == 0:
+            continue  # 最初のNO確定前の行はスキップ
+
+        clip_ref_raw = cells[clip_col].strip() if clip_col < len(cells) else ""
+        note = cells[notes_col].strip() if notes_col < len(cells) else ""
 
         # クリップ参照を分割（"1-11-2" は "1-1" + "1-2"）
         clip_refs = _parse_clip_refs(clip_ref_raw)
 
         emphasis = any(w in text for w in EMPHASIS_WORDS)
-        scenes.append(Scene(no=no, text=text, clip_refs=clip_refs,
-                            notes=notes, emphasis=emphasis))
+        scenes.append(Scene(no=last_no, text=text, clip_refs=clip_refs,
+                            note=note, emphasis=emphasis))
 
-    print(f"台本パース完了: {len(scenes)} シーン")
-    return scenes
+    print(f"台本パース完了: {len(scenes)} シーン（通し注釈: {'あり' if global_annotation else 'なし'}）")
+    return scenes, global_annotation
 
 
 def _parse_clip_refs(raw: str) -> list[str]:
@@ -340,50 +374,92 @@ def load_font(size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.load_default()
 
 
+# ── 注釈オーバーレイ生成（上部小テキスト） ──────────────────────
+ANNOT_FONT_SIZE  = 26
+ANNOT_CHARS_LINE = 28
+
+def make_annotation_overlay(text: str, size: tuple, y_start: int = 30) -> np.ndarray:
+    """上部に小さく注釈テキストを描画したRGBAオーバーレイを返す。"""
+    w, h = size
+    img  = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+    font = load_font(ANNOT_FONT_SIZE)
+    lines: list[str] = []
+    for raw in text.split("\n"):
+        lines.extend(textwrap.wrap(raw, width=ANNOT_CHARS_LINE, break_long_words=True) or [raw])
+    line_h = ANNOT_FONT_SIZE + 6
+    for i, line in enumerate(lines):
+        y = y_start + i * line_h
+        for dx, dy in [(-1,0),(1,0),(0,-1),(0,1)]:
+            draw.text((20+dx, y+dy), line, font=font, fill=(0, 0, 0, 200))
+        draw.text((20, y), line, font=font, fill=(255, 255, 255, 220))
+    return np.array(img)
+
+
 # ── テロップ画像生成 ──────────────────────────────────────
 def make_telop(text: str, size: tuple, emphasis: bool = False) -> np.ndarray:
-    """テキスト → RGBA numpy配列"""
+    """
+    テキスト → RGBA numpy配列。
+    「※」以降は自動的に小フォントで描画。
+    """
     w, h = size
     img  = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
-    fs      = FONT_EMPH_SIZE if emphasis else FONT_SIZE
-    cpl     = CHARS_PER_LINE_EMPH if emphasis else CHARS_PER_LINE
-    font    = load_font(fs)
+    # ※ でメインテキストと注釈テキストに分割
+    if "※" in text:
+        idx       = text.index("※")
+        main_text = text[:idx].strip()
+        sub_text  = text[idx:].strip()
+    else:
+        main_text = text
+        sub_text  = ""
 
-    # テキスト折り返し
-    lines = []
-    for raw_line in text.split("\n"):
-        if len(raw_line) <= cpl:
-            lines.append(raw_line)
-        else:
-            lines.extend(textwrap.wrap(raw_line, width=cpl, break_long_words=True))
+    fs       = FONT_EMPH_SIZE if emphasis else FONT_SIZE
+    cpl      = CHARS_PER_LINE_EMPH if emphasis else CHARS_PER_LINE
+    font     = load_font(fs)
+    sub_fs   = max(32, fs // 2)
+    sub_font = load_font(sub_fs)
 
-    line_h = fs + 10
-    total_h = line_h * len(lines)
+    def _wrap(t, width):
+        lines: list[str] = []
+        for raw in (t or "").split("\n"):
+            lines.extend(textwrap.wrap(raw, width=width, break_long_words=True) or [raw])
+        return lines
+
+    main_lines = _wrap(main_text or text, cpl)
+    sub_lines  = _wrap(sub_text, cpl + 4) if sub_text else []
+
+    line_h     = fs + 10
+    sub_line_h = sub_fs + 6
+    total_h    = line_h * len(main_lines) + (sub_line_h * len(sub_lines) + 4 if sub_lines else 0)
     pad_x, pad_y = 24, 14
-
-    # Y位置（画面の TELOP_Y_RATIO 位置を基準に上揃え）
     base_y = int(h * TELOP_Y_RATIO) - total_h // 2
 
-    for i, line in enumerate(lines):
-        bbox = font.getbbox(line)
-        tw = bbox[2] - bbox[0]
-        x = max(pad_x, (w - tw) // 2)   # 左端クランプ（はみ出し防止）
-        y = base_y + i * line_h
-
-        if emphasis:
-            # 黄色背景 × 黒文字
+    def _draw_line(line, fnt, fsize, y, emph):
+        bbox = fnt.getbbox(line)
+        tw   = bbox[2] - bbox[0]
+        x    = max(pad_x, (w - tw) // 2)
+        if emph:
             draw.rectangle(
-                [x - pad_x, y - pad_y, x + tw + pad_x, y + fs + pad_y],
+                [x - pad_x, y - pad_y, x + tw + pad_x, y + fsize + pad_y],
                 fill=(255, 215, 0, 230)
             )
-            draw.text((x, y), line, font=font, fill=(0, 0, 0, 255))
+            draw.text((x, y), line, font=fnt, fill=(0, 0, 0, 255))
         else:
-            # 白縁取り × 白文字
             for dx, dy in [(-3,0),(3,0),(0,-3),(0,3),(-2,-2),(2,-2),(-2,2),(2,2)]:
-                draw.text((x+dx, y+dy), line, font=font, fill=(0, 0, 0, 200))
-            draw.text((x, y), line, font=font, fill=(255, 255, 255, 255))
+                draw.text((x+dx, y+dy), line, font=fnt, fill=(0, 0, 0, 200))
+            draw.text((x, y), line, font=fnt, fill=(255, 255, 255, 255))
+
+    cur_y = base_y
+    for line in main_lines:
+        _draw_line(line, font, fs, cur_y, emphasis)
+        cur_y += line_h
+    if sub_lines:
+        cur_y += 4
+        for line in sub_lines:
+            _draw_line(line, sub_font, sub_fs, cur_y, False)
+            cur_y += sub_line_h
 
     return np.array(img)
 
@@ -564,7 +640,8 @@ def _load_single_clip(clip_path: str, duration: float,
 
 def build_scene_clip(scene: Scene, clips_dir: str,
                      override_duration: float | None = None,
-                     gemini_key: str | None = None) -> CompositeVideoClip | None:
+                     gemini_key: str | None = None,
+                     global_annotation: str = "") -> CompositeVideoClip | None:
     # 尺計算（mainでスケール済みの値を優先）
     text_len = len(scene.text)
     duration = override_duration if override_duration else \
@@ -572,13 +649,8 @@ def build_scene_clip(scene: Scene, clips_dir: str,
 
     print(f"  シーン{scene.no}: 「{scene.text[:20]}...」 → {duration:.1f}s refs={scene.clip_refs}")
 
-    # 台本のrefs を自動展開（5-1 → 5-1, 5-2 など）してから全クリップ収集
-    expanded_refs = expand_clip_refs(scene.clip_refs, clips_dir)
-    if expanded_refs != scene.clip_refs:
-        print(f"    🔍 自動展開: {scene.clip_refs} → {expanded_refs}")
-
     found_clips: list[str] = []
-    for ref in expanded_refs:
+    for ref in scene.clip_refs:
         p = find_clip(clips_dir, ref)
         if p:
             found_clips.append(p)
@@ -588,12 +660,10 @@ def build_scene_clip(scene: Scene, clips_dir: str,
         black = np.zeros((OUTPUT_SIZE[1], OUTPUT_SIZE[0], 3), dtype=np.uint8)
         base: VideoFileClip | ImageClip | CompositeVideoClip = ImageClip(black, duration=duration)
     elif len(found_clips) == 1:
-        # 1クリップ: 従来通り
         print(f"    ✅ {Path(found_clips[0]).name}")
         base = _load_single_clip(found_clips[0], duration, gemini_key)
         duration = base.duration
     else:
-        # 複数クリップ: 等分して結合
         per_dur = duration / len(found_clips)
         print(f"    ✅ {len(found_clips)}クリップを等分 ({per_dur:.1f}s×{len(found_clips)})")
         sub_clips = []
@@ -604,15 +674,25 @@ def build_scene_clip(scene: Scene, clips_dir: str,
         base = concatenate_videoclips(sub_clips, method="compose")
         duration = base.duration
 
-    # テキストなしシーン（CTAなど）はテロップなし
-    if not scene.text:
-        return base if hasattr(base, 'duration') else None
+    layers = [base]
 
-    # テロップ画像 → ImageClip
-    telop_arr  = make_telop(scene.text, OUTPUT_SIZE, emphasis=scene.emphasis)
-    telop_clip = ImageClip(telop_arr, duration=base.duration).set_opacity(1.0)
+    # テロップ（テキストありのみ）
+    if scene.text:
+        telop_arr  = make_telop(scene.text, OUTPUT_SIZE, emphasis=scene.emphasis)
+        layers.append(ImageClip(telop_arr, duration=base.duration).set_opacity(1.0))
 
-    return CompositeVideoClip([base, telop_clip], size=OUTPUT_SIZE)
+    # 通し注釈（全カット共通）
+    if global_annotation:
+        ann_arr = make_annotation_overlay(global_annotation, OUTPUT_SIZE, y_start=24)
+        layers.append(ImageClip(ann_arr, duration=base.duration).set_opacity(1.0))
+
+    # カット専用注釈（注釈欄あり）
+    if scene.note:
+        note_y = 24 + (ANNOT_FONT_SIZE + 6) * (global_annotation.count("\n") + 1) + 10
+        note_arr = make_annotation_overlay(scene.note, OUTPUT_SIZE, y_start=note_y)
+        layers.append(ImageClip(note_arr, duration=base.duration).set_opacity(1.0))
+
+    return CompositeVideoClip(layers, size=OUTPUT_SIZE)
 
 
 # ── メイン ────────────────────────────────────────────────
@@ -635,7 +715,7 @@ def main():
     fish_key   = _get_env("FISH_AUDIO_API_KEY") if not args.no_ai else None
 
     print("\n📄 台本パース中...")
-    scenes = parse_script(args.script)
+    scenes, global_annotation = parse_script(args.script)
 
     # ③ 60秒に収まるようにシーン尺をスケール
     valid_scenes = [s for s in scenes if s.text or s.clip_refs]
@@ -663,7 +743,8 @@ def main():
         adjusted_dur = max(MIN_DURATION, base_dur * scale)
         c = build_scene_clip(scene, args.clips,
                              override_duration=adjusted_dur,
-                             gemini_key=gemini_key)   # ② Gemini Vision
+                             gemini_key=gemini_key,
+                             global_annotation=global_annotation)
         if c is not None:
             clips.append(c)
 
