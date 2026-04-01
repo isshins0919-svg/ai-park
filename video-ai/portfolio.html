@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>動画自動編集AI — 開発ポートフォリオ</title>
+  <title>動画AIエージェント設計書 — 一進AI</title>
   <style>
     :root {
       --bg: #0a0a0f;
@@ -13,443 +13,398 @@
       --accent: #6c63ff;
       --accent2: #ff6b6b;
       --accent3: #43e97b;
+      --yellow: #ffd700;
+      --orange: #ff9500;
+      --blue: #4fc3f7;
       --text: #e8e8f0;
       --muted: #7a7a9a;
-      --yellow: #ffd700;
+      --opus: #a855f7;
+      --haiku: #22c55e;
+      --sonnet: #6c63ff;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
       line-height: 1.7;
-      overflow-x: hidden;
     }
 
-    /* ─── ヒーロー ─── */
+    /* ─── HERO ─── */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, #1a1040 0%, var(--bg) 70%);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -200px; left: 50%;
-      transform: translateX(-50%);
-      width: 800px; height: 800px;
-      background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      padding: 6px 18px;
-      border: 1px solid rgba(108,99,255,0.4);
-      border-radius: 100px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
-      background: rgba(108,99,255,0.08);
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 6vw, 72px);
-      font-weight: 900;
-      line-height: 1.15;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #fff 30%, #a89cf7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero .subtitle {
-      font-size: clamp(15px, 2vw, 20px);
-      color: var(--muted);
-      max-width: 600px;
-      margin-bottom: 40px;
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .stat {
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 50%, #0a1a2e 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 24px 48px;
       text-align: center;
     }
-
-    .stat-num {
-      font-size: 40px;
-      font-weight: 900;
-      color: var(--accent);
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    /* ─── セクション共通 ─── */
-    section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 80px 24px;
-    }
-
-    .section-label {
+    .hero-label {
       font-size: 11px;
       letter-spacing: 3px;
-      text-transform: uppercase;
       color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .hero-mission {
+      font-size: 18px;
+      color: var(--yellow);
+      font-weight: 600;
       margin-bottom: 12px;
     }
-
-    .section-title {
-      font-size: clamp(24px, 4vw, 42px);
-      font-weight: 800;
-      margin-bottom: 48px;
-      color: #fff;
-    }
-
-    /* ─── 課題セクション ─── */
-    .problem-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .problem-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-    }
-
-    .problem-icon {
-      font-size: 32px;
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    .problem-card h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-
-    .problem-card p {
-      font-size: 14px;
+    .hero-sub {
       color: var(--muted);
+      font-size: 14px;
+      max-width: 600px;
+      margin: 0 auto 32px;
     }
-
-    /* ─── アーキテクチャ ─── */
-    .arch-flow {
+    .hero-stats {
       display: flex;
-      flex-direction: column;
-      gap: 0;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
     }
+    .stat { text-align: center; }
+    .stat-num { font-size: 32px; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
 
-    .arch-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 24px;
-      padding: 28px 0;
+    /* ─── GRID DEFINITION ─── */
+    .grid-section {
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
-      position: relative;
+      padding: 40px 24px;
     }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .grid-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .phase-block {
+      padding: 16px;
+      text-align: center;
+    }
+    .phase-stop { background: linear-gradient(135deg, #1a0a2e, #2a0a3e); border: 1px solid #6c63ff44; }
+    .phase-qualify { background: linear-gradient(135deg, #0a1a2e, #0a2a2e); border: 1px solid #4fc3f744; }
+    .phase-build { background: linear-gradient(135deg, #0a1a0a, #0a2a1a); border: 1px solid #43e97b44; }
+    .phase-drive { background: linear-gradient(135deg, #2e1a0a, #3e1a0a); border: 1px solid #ff950044; }
+    .phase-name { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+    .phase-stop .phase-name { color: #a78bfa; }
+    .phase-qualify .phase-name { color: var(--blue); }
+    .phase-build .phase-name { color: var(--accent3); }
+    .phase-drive .phase-name { color: var(--orange); }
+    .phase-slots { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+    .phase-purpose { font-size: 12px; color: var(--text); }
+    .phase-intensity { font-size: 11px; margin-top: 4px; }
+    .phase-stop .phase-intensity { color: #a78bfa; }
+    .phase-qualify .phase-intensity { color: var(--blue); }
+    .phase-build .phase-intensity { color: var(--accent3); }
+    .phase-drive .phase-intensity { color: var(--orange); }
 
-    .arch-step:last-child { border-bottom: none; }
-
-    .step-num {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: rgba(108,99,255,0.15);
-      border: 1px solid rgba(108,99,255,0.3);
+    /* ─── PIPELINE ─── */
+    .pipeline-section { padding: 48px 24px; }
+    .pipeline {
       display: flex;
       align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      flex-wrap: wrap;
       justify-content: center;
-      font-weight: 900;
-      font-size: 18px;
-      color: var(--accent);
     }
+    .pipe-node {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      text-align: center;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+    .pipe-node.human { border-color: var(--yellow); color: var(--yellow); }
+    .pipe-node.director { border-color: var(--opus); color: var(--opus); font-weight: 700; }
+    .pipe-node.agent { border-color: var(--haiku); color: var(--haiku); }
+    .pipe-node.judge { border-color: var(--opus); color: var(--opus); font-weight: 700; }
+    .pipe-node.engine { border-color: var(--blue); color: var(--blue); }
+    .pipe-arrow { color: var(--muted); font-size: 18px; flex-shrink: 0; }
 
-    .step-content h3 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
+    /* ─── AGENTS GRID ─── */
+    .agents-section { padding: 48px 24px; }
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .agent-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .agent-card:hover { transform: translateY(-2px); }
+    .agent-card.opus { border-color: #a855f733; }
+    .agent-card.opus:hover { border-color: var(--opus); }
+    .agent-card.haiku { border-color: #22c55e33; }
+    .agent-card.haiku:hover { border-color: var(--haiku); }
+    .agent-card.sonnet { border-color: #6c63ff33; }
+    .agent-card.sonnet:hover { border-color: var(--sonnet); }
+    .agent-card.full { grid-column: 1 / -1; }
+
+    .agent-header {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .agent-header-left { flex: 1; }
+    .agent-name { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+    .agent-card.opus .agent-name { color: var(--opus); }
+    .agent-card.haiku .agent-name { color: var(--haiku); }
+    .agent-card.sonnet .agent-name { color: var(--accent); }
+    .agent-tagline { font-size: 12px; color: var(--muted); }
+    .agent-badges { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+    .badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-opus { background: #a855f722; color: var(--opus); border: 1px solid #a855f733; }
+    .badge-haiku { background: #22c55e22; color: var(--haiku); border: 1px solid #22c55e33; }
+    .badge-sonnet { background: #6c63ff22; color: #a78bfa; border: 1px solid #6c63ff33; }
+    .badge-slots { background: #ffd70022; color: var(--yellow); border: 1px solid #ffd70033; }
+    .badge-go { background: #43e97b22; color: var(--accent3); border: 1px solid #43e97b33; }
+
+    .agent-body { padding: 20px; }
+    .agent-section-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      margin-top: 16px;
+    }
+    .agent-section-label:first-child { margin-top: 0; }
+
+    .why-box {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .agent-card.opus .why-box { border-left-color: var(--opus); }
+    .agent-card.haiku .why-box { border-left-color: var(--haiku); }
+    .agent-card.sonnet .why-box { border-left-color: var(--accent); }
+
+    .io-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .io-box {
+      background: var(--surface);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+    .io-label { font-size: 10px; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px; }
+    .io-items { font-size: 12px; color: var(--text); line-height: 1.8; }
+
+    .rules-list {
+      list-style: none;
+      font-size: 13px;
+    }
+    .rules-list li {
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+      color: var(--text);
+    }
+    .rules-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .rules-list li .ok { color: var(--accent3); }
+    .rules-list li .ng { color: var(--accent2); }
+
+    .score-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       margin-bottom: 6px;
     }
+    .score-label { font-size: 12px; width: 80px; flex-shrink: 0; color: var(--muted); }
+    .score-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; }
+    .score-fill { height: 100%; border-radius: 3px; background: var(--accent3); }
+    .score-num { font-size: 12px; width: 40px; text-align: right; color: var(--text); }
 
-    .step-content p {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .step-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      padding: 4px 12px;
-      border-radius: 100px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .tag-purple { background: rgba(108,99,255,0.15); color: #a89cf7; border: 1px solid rgba(108,99,255,0.25); }
-    .tag-green  { background: rgba(67,233,123,0.1);  color: #43e97b; border: 1px solid rgba(67,233,123,0.2); }
-    .tag-red    { background: rgba(255,107,107,0.1); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); }
-    .tag-yellow { background: rgba(255,215,0,0.1);   color: #ffd700; border: 1px solid rgba(255,215,0,0.2); }
-    .tag-blue   { background: rgba(56,189,248,0.1);  color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); }
-
-    /* ─── 解決した課題 ─── */
-    .fix-timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .fix-item {
-      display: grid;
-      grid-template-columns: 1fr 48px 1fr;
+    .model-badge-large {
+      display: inline-flex;
       align-items: center;
-      gap: 16px;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 12px;
     }
+    .model-opus { background: #a855f722; color: var(--opus); border: 1px solid #a855f755; }
+    .model-haiku { background: #22c55e22; color: var(--haiku); border: 1px solid #22c55e55; }
+    .model-sonnet { background: #6c63ff22; color: #a78bfa; border: 1px solid #6c63ff55; }
 
-    .fix-item:last-child { border-bottom: none; }
-
-    .fix-before {
-      text-align: right;
-      padding: 14px 18px;
-      background: rgba(255,107,107,0.06);
-      border: 1px solid rgba(255,107,107,0.15);
-      border-radius: 12px;
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
-
-    .fix-after {
-      text-align: left;
-      padding: 14px 18px;
-      background: rgba(67,233,123,0.06);
-      border: 1px solid rgba(67,233,123,0.15);
-      border-radius: 12px;
+    .do-box, .dont-box {
+      background: var(--surface);
+      border-radius: 6px;
+      padding: 10px 12px;
     }
+    .do-box { border-top: 2px solid var(--accent3); }
+    .dont-box { border-top: 2px solid var(--accent2); }
+    .do-box .io-label { color: var(--accent3); }
+    .dont-box .io-label { color: var(--accent2); }
 
-    .fix-label {
+    .phase-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .phase-tag {
       font-size: 10px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
     }
+    .tag-stop { background: #a78bfa22; color: #a78bfa; }
+    .tag-qualify { background: #4fc3f722; color: var(--blue); }
+    .tag-build { background: #43e97b22; color: var(--accent3); }
+    .tag-drive { background: #ff950022; color: var(--orange); }
+    .tag-all { background: #ffffff11; color: var(--muted); }
 
-    .fix-before .fix-label { color: var(--accent2); }
-    .fix-after  .fix-label { color: var(--accent3); }
-
-    .fix-before h4, .fix-after h4 {
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 4px;
+    /* ─── GO CONDITIONS ─── */
+    .go-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 48px 24px;
     }
-
-    .fix-before p, .fix-after p {
-      font-size: 12px;
-      color: var(--muted);
+    .go-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
     }
-
-    .fix-arrow {
+    @media (max-width: 768px) {
+      .go-grid { grid-template-columns: 1fr; }
+      .agents-grid { grid-template-columns: 1fr; }
+      .grid-row { grid-template-columns: repeat(2, 1fr); }
+      .io-grid { grid-template-columns: 1fr; }
+      .do-dont { grid-template-columns: 1fr; }
+    }
+    .go-card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .go-card:nth-child(1) { border-top: 3px solid #a78bfa; }
+    .go-card:nth-child(2) { border-top: 3px solid var(--blue); }
+    .go-card:nth-child(3) { border-top: 3px solid var(--orange); }
+    .go-card-title { font-weight: 700; margin-bottom: 12px; font-size: 14px; }
+    .go-card:nth-child(1) .go-card-title { color: #a78bfa; }
+    .go-card:nth-child(2) .go-card-title { color: var(--blue); }
+    .go-card:nth-child(3) .go-card-title { color: var(--orange); }
+    .go-item {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: var(--accent);
-      font-size: 20px;
-    }
-
-    /* ─── テックスタック ─── */
-    .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
-    .tech-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .tech-card:hover {
-      border-color: rgba(108,99,255,0.4);
-      transform: translateY(-2px);
-    }
-
-    .tech-icon {
-      font-size: 28px;
-      flex-shrink: 0;
-    }
-
-    .tech-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .tech-role {
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
       font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
     }
-
-    /* ─── バージョン履歴 ─── */
-    .versions {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .version-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px 26px;
-      display: flex;
-      align-items: flex-start;
-      gap: 20px;
-    }
-
-    .version-badge {
-      flex-shrink: 0;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 800;
-      min-width: 60px;
-      text-align: center;
-    }
-
-    .v-current { background: rgba(108,99,255,0.2); color: var(--accent); border: 1px solid rgba(108,99,255,0.3); }
-    .v-mid     { background: rgba(67,233,123,0.12); color: var(--accent3); border: 1px solid rgba(67,233,123,0.2); }
-    .v-early   { background: rgba(255,215,0,0.1); color: var(--yellow); border: 1px solid rgba(255,215,0,0.2); }
-    .v-start   { background: rgba(255,107,107,0.1); color: var(--accent2); border: 1px solid rgba(255,107,107,0.2); }
-
-    .version-content h3 {
-      font-size: 16px;
+    .go-item:last-child { border-bottom: none; }
+    .go-threshold {
       font-weight: 700;
-      color: #fff;
-      margin-bottom: 4px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
     }
+    .go-card:nth-child(1) .go-threshold { background: #a78bfa22; color: #a78bfa; }
+    .go-card:nth-child(2) .go-threshold { background: #4fc3f722; color: var(--blue); }
+    .go-card:nth-child(3) .go-threshold { background: #ff950022; color: var(--orange); }
 
-    .version-content p {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    /* ─── 成果 ─── */
-    .result-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .result-card {
+    /* ─── FORMULA ─── */
+    .formula-box {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 24px;
-      text-align: center;
-    }
-
-    .result-num {
-      font-size: 52px;
-      font-weight: 900;
-      display: block;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .result-label {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .result-sub {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
-      opacity: 0.6;
-    }
-
-    /* ─── コードスニペット ─── */
-    .code-block {
-      background: #0d0d14;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 24px;
+      margin-top: 24px;
       font-family: 'SF Mono', 'Fira Code', monospace;
       font-size: 13px;
-      overflow-x: auto;
-      margin: 16px 0;
+      line-height: 2;
     }
+    .formula-line { color: var(--muted); }
+    .formula-line .weight { color: var(--accent); }
+    .formula-line .agent-ref { color: var(--text); }
+    .formula-go { color: var(--accent3); font-weight: 700; margin-top: 8px; }
 
-    .code-block .keyword  { color: #a89cf7; }
-    .code-block .func     { color: #43e97b; }
-    .code-block .string   { color: #ffd47e; }
-    .code-block .comment  { color: #5a5a7a; }
-    .code-block .type     { color: #38bdf8; }
-
-    /* ─── フッター ─── */
+    /* ─── FOOTER ─── */
     footer {
-      border-top: 1px solid var(--border);
       text-align: center;
-      padding: 40px 20px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    footer strong { color: var(--accent); }
-
-    /* ─── セパレーター ─── */
-    .divider {
-      border: none;
+      padding: 32px;
       border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
     }
 
-    @media (max-width: 640px) {
-      .fix-item {
-        grid-template-columns: 1fr;
-      }
-      .fix-before { text-align: left; }
-      .fix-arrow  { display: none; }
-      .hero-stats { gap: 24px; }
+    h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+    .highlight { color: var(--yellow); font-weight: 600; }
+    .tag-new {
+      background: var(--accent2);
+      color: white;
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
   </style>
 </head>
@@ -457,474 +412,537 @@
 
 <!-- ─── HERO ─── -->
 <div class="hero">
-  <div class="hero-badge">AI × Video Engineering</div>
-  <h1>動画自動編集AI<br>開発記録</h1>
-  <p class="subtitle">
-    台本HTMLと素材フォルダを渡すだけで<br>
-    縦型1分動画が自動生成されるシステムの設計・実装全記録
-  </p>
+  <div class="hero-label">一進AI — 動画AIエージェント設計書 v3.0</div>
+  <h1>動画AIエージェント群<br>設計・役割定義書</h1>
+  <div class="hero-mission">「正しい人を、正しい状態で、LPへ送り込む」</div>
+  <div class="hero-sub">視聴維持率が高くても遷移率が低ければGOを出さない。<br>10のエージェントが1つの目的のために動く。</div>
   <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-num">25</span>
-      <span class="stat-label">素材を自動処理</span>
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label">エージェント</div></div>
+    <div class="stat"><div class="stat-num">30</div><div class="stat-label">スロット管理</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">GO条件</div></div>
+    <div class="stat"><div class="stat-num">60s</div><div class="stat-label">動画の基準尺</div></div>
+  </div>
+</div>
+
+<!-- ─── 30スロット定義 ─── -->
+<div class="grid-section">
+  <div class="container">
+    <div class="section-title">動画の基本定義 — 全エージェント共通グリッド</div>
+    <div class="grid-row">
+      <div class="phase-block phase-stop">
+        <div class="phase-name">STOP</div>
+        <div class="phase-slots">S1〜2 / 0〜4秒</div>
+        <div class="phase-purpose">スクロールを止める</div>
+        <div class="phase-intensity">強度 9〜10 必須</div>
+      </div>
+      <div class="phase-block phase-qualify">
+        <div class="phase-name">QUALIFY</div>
+        <div class="phase-slots">S3〜10 / 4〜20秒</div>
+        <div class="phase-purpose">正しい人だけを残す<br><small>（意図的離脱 = OK）</small></div>
+        <div class="phase-intensity">強度 7〜8</div>
+      </div>
+      <div class="phase-block phase-build">
+        <div class="phase-name">BUILD</div>
+        <div class="phase-slots">S11〜25 / 20〜50秒</div>
+        <div class="phase-purpose">問題×解決を積み上げる<br><small>（答えはLPに残す）</small></div>
+        <div class="phase-intensity">強度 6〜9</div>
+      </div>
+      <div class="phase-block phase-drive">
+        <div class="phase-name">DRIVE</div>
+        <div class="phase-slots">S26〜30 / 50〜60秒</div>
+        <div class="phase-purpose">LP遷移への衝動を<br>最大化する</div>
+        <div class="phase-intensity">強度 9〜10 必須</div>
+      </div>
     </div>
-    <div class="stat">
-      <span class="stat-num">60s</span>
-      <span class="stat-label">自動尺調整</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">v8</span>
-      <span class="stat-label">現行バージョン</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">5</span>
-      <span class="stat-label">AI統合</span>
+    <div style="font-size:12px; color: var(--muted); text-align:center;">60秒 = 30スロット × 2秒固定グリッド。全エージェントがこのグリッド単位で動く。</div>
+  </div>
+</div>
+
+<!-- ─── PIPELINE ─── -->
+<div class="pipeline-section">
+  <div class="container">
+    <div class="section-title">処理フロー</div>
+    <div class="pipeline">
+      <div class="pipe-node human">👤 人間<br>台本記入</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node director">🎬 カントク君<br>方針決定・指名</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node agent">フック君<br>Haiku</div>
+      <div class="pipe-arrow">+</div>
+      <div class="pipe-node agent">アーク君<br>Haiku</div>
+      <div class="pipe-arrow">+</div>
+      <div class="pipe-node agent">テンポ君<br>Haiku</div>
+      <div class="pipe-arrow">+</div>
+      <div class="pipe-node agent">スタイル君<br>Haiku</div>
+      <div class="pipe-arrow">+</div>
+      <div class="pipe-node agent">CTA君<br>Haiku</div>
+      <div class="pipe-arrow">+</div>
+      <div class="pipe-node agent">マッチ君<br>Sonnet</div>
+      <div class="pipe-arrow">+</div>
+      <div class="pipe-node agent">リテンション君<br>Sonnet</div>
+      <div class="pipe-arrow">+</div>
+      <div class="pipe-node agent">LP連携君<br>Sonnet</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node judge">⚖️ ジャッジ君<br>GO/REVISE/BLOCK</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node engine">⚙️ edit_ai_v2.py<br>動画生成</div>
     </div>
   </div>
 </div>
 
-<!-- ─── 解決した課題 ─── -->
-<section>
-  <div class="section-label">Problem → Solution</div>
-  <div class="section-title">解決してきた課題</div>
+<!-- ─── AGENTS ─── -->
+<div class="agents-section">
+  <div class="container">
+    <div class="section-title">エージェント定義</div>
+    <h2>10のエージェント — 役割・入出力・ルール</h2>
+    <div class="section-desc">抽象的な存在意義と、具体的な入出力・判断基準をセットで定義する。ここがブレると良い仕事はできない。</div>
 
-  <div class="fix-timeline">
+    <div class="agents-grid">
 
-    <div class="fix-item">
-      <div class="fix-before">
-        <div class="fix-label">Before</div>
-        <h4>縦横比がグチャグチャ</h4>
-        <p>iPhoneのMOVが横向きで出力される</p>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-after">
-        <div class="fix-label">After</div>
-        <h4>ffmpegで回転メタデータを焼き込み</h4>
-        <p>rotation=-90タグを検出し自動正規化</p>
-      </div>
-    </div>
+      <!-- ─ カントク君 ─ -->
+      <div class="agent-card opus full">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">🎬 動画カントク君</div>
+            <div class="agent-tagline">編集ディレクター — Layer 0 / オーケストレーター</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-all">全体監督</span>
+              <span class="phase-tag tag-all">判断と指名のみ</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-opus">Opus 4.6</span>
+            <span class="badge badge-slots">全スロット</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義（なぜいるか）</div>
+          <div class="why-box">
+            動画制作において「何を作るか」の判断を誰かが統一しなければ、各エージェントがバラバラに動いて「視聴維持率は高いけどCVRが低い動画」を生み出してしまう。カントク君は全体の目的（正しい人を、正しい状態で、LPへ送り込む）を守り続ける唯一の存在。手は動かさない。判断と指名だけする。
+          </div>
 
-    <div class="fix-item">
-      <div class="fix-before">
-        <div class="fix-label">Before</div>
-        <h4>3:4クリップでクラッシュ</h4>
-        <p>縦横比の分岐ロジックが不完全でy1=-166に</p>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-after">
-        <div class="fix-label">After</div>
-        <h4>全アスペクト比対応のクロップ設計</h4>
-        <p>ratio > target_ratio を正確に分岐。ピラーボックスも実装</p>
-      </div>
-    </div>
+          <div class="agent-section-label">具体的な仕事（5ステップ）</div>
+          <div style="font-size:13px; line-height:2; background:var(--surface); border-radius:6px; padding:14px;">
+            <strong style="color:var(--opus)">Step 1</strong> — 台本 + 素材一覧 + 商品情報を受け取り、フック型・ターゲット・QUALIFY絞り込みワード・BUILDで言わないことを決定する<br>
+            <strong style="color:var(--opus)">Step 2</strong> — 各エージェントに「何を・どんな基準で出してほしいか」を <code>success_criteria</code> 付きで指示する<br>
+            <strong style="color:var(--opus)">Step 3</strong> — 全レポートを動画ジャッジ君に渡す<br>
+            <strong style="color:var(--opus)">Step 4</strong> — REVISE判定時は修正エージェントを最大3点に絞って指名する<br>
+            <strong style="color:var(--opus)">Step 5</strong> — GO宣言時に production_spec.json を確定させ edit_ai_v2.py へ渡す
+          </div>
 
-    <div class="fix-item">
-      <div class="fix-before">
-        <div class="fix-label">Before</div>
-        <h4>台本の続き行がスキップされる</h4>
-        <p>NO=空白の行を無視して16シーンしか取れない</p>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-after">
-        <div class="fix-label">After</div>
-        <h4>全行パース・25シーン完全取得</h4>
-        <p>last_noを継承して続き行も正確に処理</p>
-      </div>
-    </div>
-
-    <div class="fix-item">
-      <div class="fix-before">
-        <div class="fix-label">Before</div>
-        <h4>黄色テロップが画面外にはみ出す</h4>
-        <p>日本語88pxで14文字=1232px &gt; 1080px</p>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-after">
-        <div class="fix-label">After</div>
-        <h4>強調用CHARS_PER_LINE_EMPH=11 + x clamp</h4>
-        <p>フォントサイズ別の折り返し幅設計</p>
-      </div>
-    </div>
-
-    <div class="fix-item">
-      <div class="fix-before">
-        <div class="fix-label">Before</div>
-        <h4>台本フォーマット変更に対応不可</h4>
-        <p>列インデックスがハードコードされていた</p>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-after">
-        <div class="fix-label">After</div>
-        <h4>ヘッダ行から列を自動検出</h4>
-        <p>「差し込み画像」列を動的に特定。ver1/ver2両対応</p>
-      </div>
-    </div>
-
-    <div class="fix-item">
-      <div class="fix-before">
-        <div class="fix-label">Before</div>
-        <h4>クリップ参照「1-11-2」の誤パース</h4>
-        <p>["1-11", "2"] に分割されてしまう</p>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-after">
-        <div class="fix-label">After</div>
-        <h4>正規表現 \d{1,2}-\d で正確に分割</h4>
-        <p>["1-1", "1-2"] を正しく取得</p>
-      </div>
-    </div>
-
-    <div class="fix-item">
-      <div class="fix-before">
-        <div class="fix-label">Before</div>
-        <h4>全角ファイル名「４.mov」が見つからない</h4>
-        <p>ref="4"では検索できない</p>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-after">
-        <div class="fix-label">After</div>
-        <h4>半角↔全角の双方向変換で探索</h4>
-        <p>candidates = [ref, ref_full, ref_half]</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- ─── パイプライン設計 ─── -->
-<section>
-  <div class="section-label">Architecture</div>
-  <div class="section-title">処理パイプライン</div>
-
-  <div class="arch-flow">
-
-    <div class="arch-step">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <h3>台本HTMLパース</h3>
-        <p>HTMLテーブルを解析してシーンリストを生成。NO=空白の続き行も全取得。通し注釈・カット別注釈も自動検出。</p>
-        <div class="step-tags">
-          <span class="tag tag-blue">BeautifulSoup</span>
-          <span class="tag tag-purple">正規表現</span>
-          <span class="tag tag-green">25シーン対応</span>
+          <div class="agent-section-label">やること / やらないこと</div>
+          <div class="do-dont">
+            <div class="do-box">
+              <div class="io-label">✅ やること</div>
+              <ul class="rules-list">
+                <li>フック型（A/B/C/D）を毎回明示して指示する</li>
+                <li>QUALIFY絞り込みワードを台本受け取り時に確認する</li>
+                <li>BUILDで言いすぎないよう事前にルールを伝える</li>
+                <li>GO/REVISE/BLOCK/EXITを宣言する</li>
+                <li>3ループでGO出なければEXITを宣言する</li>
+              </ul>
+            </div>
+            <div class="dont-box">
+              <div class="io-label">❌ やらないこと</div>
+              <ul class="rules-list">
+                <li>テロップを自分で書く</li>
+                <li>感情強度を自分で決める</li>
+                <li>素材を自分で選ぶ</li>
+                <li>スコアを自分で計算する</li>
+                <li>「全部直して」と言う（最大3点に絞る）</li>
+              </ul>
+            </div>
+          </div>
+          <div class="model-badge-large model-opus">🧠 claude-opus-4-6 — 多条件統合・最終判断</div>
         </div>
       </div>
-    </div>
 
-    <div class="arch-step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <h3>尺スケーリング（60秒自動調整）</h3>
-        <p>文字数ベースで各シーンの尺を計算し、合計が60秒を超える場合は全シーン比例スケール。</p>
-        <div class="step-tags">
-          <span class="tag tag-yellow">scale = TARGET / total_raw</span>
+      <!-- ─ フック君 ─ -->
+      <div class="agent-card haiku">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">⚡ 動画フック君</div>
+            <div class="agent-tagline">フック強度アナリスト v2.0</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-stop">STOP</span>
+              <span class="phase-tag tag-all">S1〜2 / 0〜4s</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-haiku">Haiku 4.5</span>
+            <span class="badge badge-go">≥75点でOK</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義</div>
+          <div class="why-box">冒頭4秒でスクロールが止まらなければ、残りの56秒は存在しない。CTRの差はほぼフックで決まる。フック君はA/B/C/D型のどれが最も効くかを判定し、スコアと改善案を出す。</div>
+
+          <div class="agent-section-label">入力 / 出力</div>
+          <div class="io-grid">
+            <div class="io-box">
+              <div class="io-label">INPUT</div>
+              <div class="io-items">S1〜2のテキスト<br>商品カテゴリ<br>ターゲットペルソナ<br>フック型ヒント</div>
+            </div>
+            <div class="io-box">
+              <div class="io-label">OUTPUT</div>
+              <div class="io-items">hook_score（100点）<br>フック型判定（A/B/C/D）<br>HOOK-3スコア内訳<br>改善案2パターン以上</div>
+            </div>
+          </div>
+
+          <div class="agent-section-label">HOOK-3評価軸</div>
+          <div class="score-bar"><div class="score-label">驚き</div><div class="score-track"><div class="score-fill" style="width:80%"></div></div><div class="score-num">Surprise</div></div>
+          <div class="score-bar"><div class="score-label">自分ごと</div><div class="score-track"><div class="score-fill" style="width:70%"></div></div><div class="score-num">Relevance</div></div>
+          <div class="score-bar"><div class="score-label">知識ギャップ</div><div class="score-track"><div class="score-fill" style="width:75%"></div></div><div class="score-num">Curiosity</div></div>
+          <div class="model-badge-large model-haiku">⚡ claude-haiku-4-5 — 高速評価</div>
         </div>
       </div>
-    </div>
 
-    <div class="arch-step">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <h3>Fish Audio ナレーション生成</h3>
-        <p>全シーンのテキストを結合してTTSでMP3生成。先行生成することで処理時間を短縮。</p>
-        <div class="step-tags">
-          <span class="tag tag-purple">Fish Audio API</span>
-          <span class="tag tag-blue">HTTP Stream</span>
-          <span class="tag tag-green">先行生成</span>
+      <!-- ─ アーク君 ─ -->
+      <div class="agent-card haiku">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">🌊 動画アーク君</div>
+            <div class="agent-tagline">感情アーク設計士 v3.0</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-stop">STOP</span>
+              <span class="phase-tag tag-qualify">QUALIFY</span>
+              <span class="phase-tag tag-build">BUILD</span>
+              <span class="phase-tag tag-drive">DRIVE</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-haiku">Haiku 4.5</span>
+            <span class="badge badge-go">≥70点でOK</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義</div>
+          <div class="why-box">「全員を最後まで見せる」は間違い。正しい人がQUALIFYで残り、BUILDで確信し、DRIVEで飛ぶ感情設計が必要。アーク君は30スロットの感情の流れを設計し、QUALIFYの絞り込みとBUILDの言いすぎを同時にチェックする。</div>
+
+          <div class="agent-section-label">入力 / 出力</div>
+          <div class="io-grid">
+            <div class="io-box">
+              <div class="io-label">INPUT</div>
+              <div class="io-items">全30スロットのテキスト<br>ターゲットペルソナ<br>絞り込みワード候補</div>
+            </div>
+            <div class="io-box">
+              <div class="io-label">OUTPUT</div>
+              <div class="io-items">arc_score（100点）<br>intensity_sequence[30]<br>qualify_verdict（OK/NG）<br>build_over_answer_slots</div>
+            </div>
+          </div>
+
+          <div class="agent-section-label">最重要チェック2点</div>
+          <ul class="rules-list">
+            <li><span class="ok">QUALIFY</span>: S3-10に絞り込みワードがあるか。なければNG。意図的離脱はOK。</li>
+            <li><span class="ng">BUILD言いすぎ</span>: 成分詳細・使い方・価格をS11-25で言ってないか。言ったらLP CVRが落ちる。</li>
+          </ul>
+          <div class="model-badge-large model-haiku">⚡ claude-haiku-4-5 — 高速評価</div>
         </div>
       </div>
-    </div>
 
-    <div class="arch-step">
-      <div class="step-num">4</div>
-      <div class="step-content">
-        <h3>クリップ読み込み・向き正規化</h3>
-        <p>ffmpegで回転メタデータを焼き込みテンポラリファイルを生成。iPhoneのMOVも常に正しい向きで読み込み。キャッシュ機構で重複処理を回避。</p>
-        <div class="step-tags">
-          <span class="tag tag-red">ffmpeg normalize</span>
-          <span class="tag tag-blue">MoviePy</span>
-          <span class="tag tag-green">LRUキャッシュ</span>
+      <!-- ─ テンポ君 ─ -->
+      <div class="agent-card haiku">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">🎯 動画テンポ君</div>
+            <div class="agent-tagline">スロットジョブ設計士 v2.0</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-all">全30スロット</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-haiku">Haiku 4.5</span>
+            <span class="badge badge-go">≥70点でOK</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義</div>
+          <div class="why-box">2秒ごとに「この瞬間の視聴者に何をしてほしいか」が決まっている。ジョブのない2秒は離脱の穴になる。テンポ君は各スロットに明確なジョブを割り当て、無駄な2秒をなくす。</div>
+
+          <div class="agent-section-label">ジョブ一覧</div>
+          <div style="font-size:12px; color:var(--text); line-height:2;">
+            ⚡ フック　😟 問題提起　🤝 共感　🔥 問題深掘り<br>
+            💡 解決策登場　📖 解決策説明（方向性のみ）　✅ 証拠・実績<br>
+            🚀 期待・高揚　🎯 CTA前振り　📣 CTA
+          </div>
+
+          <div class="agent-section-label">入力 / 出力</div>
+          <div class="io-grid">
+            <div class="io-box">
+              <div class="io-label">INPUT</div>
+              <div class="io-items">全30スロットのテキスト<br>感情アークスコア（アーク君）</div>
+            </div>
+            <div class="io-box">
+              <div class="io-label">OUTPUT</div>
+              <div class="io-items">tempo_score（100点）<br>全30スロットへのジョブ割り当て<br>ジョブなしスロットの警告</div>
+            </div>
+          </div>
+          <div class="model-badge-large model-haiku">⚡ claude-haiku-4-5 — 高速評価</div>
         </div>
       </div>
-    </div>
 
-    <div class="arch-step">
-      <div class="step-num">5</div>
-      <div class="step-content">
-        <h3>Gemini Vision スマートクロップ</h3>
-        <p>クリップ先頭フレームをGemini 2.0 Flashに送信し、被写体の位置（left/center/right）を判断。OpenCV顔検出も併用。</p>
-        <div class="step-tags">
-          <span class="tag tag-purple">Gemini 2.0 Flash</span>
-          <span class="tag tag-red">OpenCV haarcascade</span>
-          <span class="tag tag-blue">Base64 Vision API</span>
+      <!-- ─ スタイル君 ─ -->
+      <div class="agent-card haiku">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">✨ 動画スタイル君</div>
+            <div class="agent-tagline">テロップスタイリスト v2.0</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-all">全30スロット</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-haiku">Haiku 4.5</span>
+            <span class="badge badge-go">≥70点でOK</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義</div>
+          <div class="why-box">テキストが良くても、全部同じサイズで表示したら視聴者の目線が動かない。emphasis/normal/smallのメリハリが「見てほしいところを見させる」視覚的誘導を作る。全部emphasisはただのうるさい動画。</div>
+
+          <div class="agent-section-label">3つのスタイル</div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; font-size:12px;">
+            <div style="background:var(--surface); padding:10px; border-radius:6px; border-top:2px solid var(--yellow);">
+              <strong style="color:var(--yellow)">emphasis</strong><br>
+              大・太・強調色<br>推奨: 30〜40%<br>（9〜12スロット）
+            </div>
+            <div style="background:var(--surface); padding:10px; border-radius:6px; border-top:2px solid var(--text);">
+              <strong>normal</strong><br>
+              標準サイズ<br>推奨: 50〜60%<br>（15〜18スロット）
+            </div>
+            <div style="background:var(--surface); padding:10px; border-radius:6px; border-top:2px solid var(--muted);">
+              <strong style="color:var(--muted)">small</strong><br>
+              小・補足・注記<br>推奨: 〜15%<br>（〜4スロット）
+            </div>
+          </div>
+          <div class="model-badge-large model-haiku">⚡ claude-haiku-4-5 — 高速評価</div>
         </div>
       </div>
-    </div>
 
-    <div class="arch-step">
-      <div class="step-num">6</div>
-      <div class="step-content">
-        <h3>縦型クロップ（全アスペクト比対応）</h3>
-        <p>9:16/3:4/16:9/1:1など全アスペクト比に対応。横長はクロップ、縦長はピラーボックス、9:16はリサイズのみ。</p>
-        <div class="step-tags">
-          <span class="tag tag-yellow">ratio分岐設計</span>
-          <span class="tag tag-green">ピラーボックス</span>
-          <span class="tag tag-blue">LETTERBOX_THRESHOLD</span>
+      <!-- ─ CTA君 ─ -->
+      <div class="agent-card haiku">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">📣 動画CTA君</div>
+            <div class="agent-tagline">CTA最適化士 v2.0</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-drive">DRIVE / S26〜30</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-haiku">Haiku 4.5</span>
+            <span class="badge badge-go">≥80点でOK</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義</div>
+          <div class="why-box">56秒間完璧な動画でも、最後の4秒（S27-30）が「詳しくはリンクから」だけなら誰も踏まない。CTAスコアの差がそのまま遷移率の差になる。CTA君は最後の10秒（S26-30）を4つのパターンで最適化する。</div>
+
+          <div class="agent-section-label">4型CTAパターン</div>
+          <div style="font-size:12px; line-height:2; background:var(--surface); border-radius:6px; padding:12px;">
+            <strong style="color:var(--accent3)">① 無料×アクション型</strong>: 「[アクション]で[商品]が無料！」<br>
+            <strong style="color:var(--yellow)">② 今だけ限定型</strong>: 「今だけ[条件]公開中↓」<br>
+            <strong style="color:var(--blue)">③ 障壁除去型</strong>: 「[苦手な手段]なら[簡単な手段]でチェック！」<br>
+            <strong style="color:var(--orange)">④ 数字オファー型</strong>: 「今なら初回[X]円。リンクから今すぐGET」
+          </div>
+          <div class="model-badge-large model-haiku">⚡ claude-haiku-4-5 — 高速評価</div>
         </div>
       </div>
-    </div>
 
-    <div class="arch-step">
-      <div class="step-num">7</div>
-      <div class="step-content">
-        <h3>テロップ描画</h3>
-        <p>PIL + ヒラギノで日本語テロップを描画。通常は白縁取り白文字、強調は黄色背景黒文字。「※」以降は自動的に小フォント。</p>
-        <div class="step-tags">
-          <span class="tag tag-purple">PIL ImageDraw</span>
-          <span class="tag tag-yellow">ヒラギノ角ゴシック</span>
-          <span class="tag tag-green">※自動小文字化</span>
+      <!-- ─ マッチ君 ─ -->
+      <div class="agent-card sonnet">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">🎞️ 動画マッチ君</div>
+            <div class="agent-tagline">素材マッチャー v1.0</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-all">全30スロット</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-sonnet">Sonnet 4.6</span>
+            <span class="badge badge-go">≥70点でOK</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義</div>
+          <div class="why-box">どんなに良いコピーも、映像がズレていたら刺さらない。「皮脂が増える」というテキストに笑顔の女性映像が流れたら信頼は崩れる。マッチ君はテキスト × 映像のシナジーを最大化し、全30スロットにclip_refを割り当てる。</div>
+
+          <div class="agent-section-label">マッチング優先順位</div>
+          <ul class="rules-list">
+            <li>テキストの内容と映像が一致している（最優先）</li>
+            <li>ジョブと映像のトーンが合っている</li>
+            <li>同じクリップを3スロット以上連続させない</li>
+            <li>confidence 0.6未満は必ず代替案を出す</li>
+          </ul>
+          <div class="model-badge-large model-sonnet">🔮 claude-sonnet-4-6</div>
         </div>
       </div>
-    </div>
 
-    <div class="arch-step">
-      <div class="step-num">8</div>
-      <div class="step-content">
-        <h3>注釈オーバーレイ</h3>
-        <p>通し注釈（全カット上部に常時表示）+ カット専用注釈（特定カットのみ表示）を2レイヤーで合成。</p>
-        <div class="step-tags">
-          <span class="tag tag-blue">CompositeVideoClip</span>
-          <span class="tag tag-green">2段積みレイヤー</span>
+      <!-- ─ リテンション君 ─ -->
+      <div class="agent-card sonnet">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">📉 動画リテンション君</div>
+            <div class="agent-tagline">視聴維持率予測士 v1.0</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-all">全30スロット</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-sonnet">Sonnet 4.6</span>
+            <span class="badge badge-slots">出す前に予測</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義</div>
+          <div class="why-box">出してから「12秒で70%が離脱しています」とわかっても遅い。アーク君・テンポ君の出力から離脱曲線を事前予測し、ボトルネックスロットを出す前に特定して潰す。</div>
+
+          <div class="agent-section-label">目標視聴維持率</div>
+          <div style="font-size:12px; line-height:2; background:var(--surface); border-radius:6px; padding:12px;">
+            S2後: <strong style="color:var(--accent3)">≥70%</strong>
+            S8後: <strong style="color:var(--accent3)">≥55%</strong>
+            S15後: <strong style="color:var(--yellow)">≥45%</strong><br>
+            S22後: <strong style="color:var(--yellow)">≥35%</strong>
+            S30後: <strong style="color:var(--orange)">≥25%</strong>（CTA到達 = 購買チャンス）<br>
+            <small style="color:var(--muted)">TikTok縦型業界平均: 45%。目標: 60%</small>
+          </div>
+          <div class="model-badge-large model-sonnet">🔮 claude-sonnet-4-6</div>
         </div>
       </div>
-    </div>
 
-    <div class="arch-step">
-      <div class="step-num">9</div>
-      <div class="step-content">
-        <h3>結合 → ナレーション合成 → mp4出力</h3>
-        <p>全シーンをconcatenate→ナレーションのBGMを合成。ナレーションが長い場合は動画をspeedxで自動調整。</p>
-        <div class="step-tags">
-          <span class="tag tag-red">libx264 / aac</span>
-          <span class="tag tag-purple">speedx自動調整</span>
-          <span class="tag tag-blue">CRF=23</span>
+      <!-- ─ LP連携君 ─ -->
+      <div class="agent-card sonnet">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">🔗 動画LP連携君 <span class="tag-new">KEY</span></div>
+            <div class="agent-tagline">動画→LP ストーリー連続性チェック v1.0</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-drive">DRIVE S26〜30</span>
+              <span class="phase-tag tag-all">× LP冒頭</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-sonnet">Sonnet 4.6</span>
+            <span class="badge badge-go">≥75点でOK</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義（最重要エージェントの1つ）</div>
+          <div class="why-box">
+            視聴者は動画で感情が高まった状態でLPに入る。その2秒後にLPが別のトーンで始まったら「あれ、違う」と感じて離脱する。<strong style="color:var(--accent2)">bridge_score &lt; 75はジャッジ君のブロッカー条件</strong>。視聴継続スコアより優先される。
+          </div>
+
+          <div class="agent-section-label">4軸チェック（各0〜100点）</div>
+          <div style="font-size:12px; line-height:2; background:var(--surface); border-radius:6px; padding:12px;">
+            <strong style="color:var(--text)">① テーマ連続性 × 0.30</strong>: DRIVEのテーマがLP冒頭で受け継がれているか<br>
+            <strong style="color:var(--text)">② トーン連続性 × 0.25</strong>: 動画の緊急感・感情温度がLPに引き継がれているか<br>
+            <strong style="color:var(--text)">③ ペルソナ一致 × 0.25</strong>: QUALIFYのターゲットとLPの読者が一致しているか<br>
+            <strong style="color:var(--text)">④ ギャップ引き継ぎ × 0.20</strong>: BUILDで意図的に作ったギャップをLPが答えているか
+          </div>
+
+          <div class="agent-section-label">修正の原則</div>
+          <ul class="rules-list">
+            <li>LP側で直せる場合はLP側修正を優先（動画再生成コストを避ける）</li>
+            <li>「全部繋がってます」は言わない。必ず改善余地を1点以上出す</li>
+          </ul>
+          <div class="model-badge-large model-sonnet">🔮 claude-sonnet-4-6</div>
         </div>
       </div>
-    </div>
 
-  </div>
-</section>
+      <!-- ─ ジャッジ君 ─ -->
+      <div class="agent-card opus full">
+        <div class="agent-header">
+          <div class="agent-header-left">
+            <div class="agent-name">⚖️ 動画ジャッジ君</div>
+            <div class="agent-tagline">品質審査官 v2.0 — GOを出せる唯一のエージェント</div>
+            <div class="phase-tags">
+              <span class="phase-tag tag-all">全スコア統合</span>
+              <span class="phase-tag tag-all">GO/REVISE/BLOCK/EXIT</span>
+            </div>
+          </div>
+          <div class="agent-badges">
+            <span class="badge badge-opus">Opus 4.6</span>
+            <span class="badge badge-go">3条件ALL必須</span>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-section-label">存在意義</div>
+          <div class="why-box">
+            各エージェントは自分の担当スロットしか見ていない。全体を俯瞰して「これは本当にCVRが上がる動画か？」を判定できるのはジャッジ君だけ。GOを出すのはここだけ。<strong style="color:var(--yellow)">視聴維持率が高くても遷移率が低ければGOは出さない。</strong>
+          </div>
 
-<hr class="divider">
-
-<!-- ─── テックスタック ─── -->
-<section>
-  <div class="section-label">Tech Stack</div>
-  <div class="section-title">使用技術</div>
-
-  <div class="tech-grid">
-    <div class="tech-card">
-      <span class="tech-icon">🎬</span>
-      <div>
-        <div class="tech-name">MoviePy</div>
-        <div class="tech-role">動画編集・合成エンジン</div>
+          <div class="agent-section-label">4つの判定と次のアクション</div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; font-size:12px;">
+            <div style="background:var(--surface); padding:10px; border-radius:6px; border-top:2px solid var(--accent3);">
+              <strong style="color:var(--accent3)">GO</strong><br>全3条件クリア<br>→ production_spec.json確定
+            </div>
+            <div style="background:var(--surface); padding:10px; border-radius:6px; border-top:2px solid var(--yellow);">
+              <strong style="color:var(--yellow)">REVISE</strong><br>改善が必要<br>→ must_fix TOP3を指名
+            </div>
+            <div style="background:var(--surface); padding:10px; border-radius:6px; border-top:2px solid var(--accent2);">
+              <strong style="color:var(--accent2)">BLOCK</strong><br>薬機法NG<br>→ 全テキスト再確認
+            </div>
+            <div style="background:var(--surface); padding:10px; border-radius:6px; border-top:2px solid var(--muted);">
+              <strong style="color:var(--muted)">EXIT</strong><br>3ループでGO出ず<br>→ 台本レベルから再設計
+            </div>
+          </div>
+          <div class="model-badge-large model-opus">🧠 claude-opus-4-6 — 多条件統合・最終判断</div>
+        </div>
       </div>
-    </div>
-    <div class="tech-card">
-      <span class="tech-icon">⚡</span>
-      <div>
-        <div class="tech-name">ffmpeg</div>
-        <div class="tech-role">回転正規化・フレーム抽出</div>
-      </div>
-    </div>
-    <div class="tech-card">
-      <span class="tech-icon">🤖</span>
-      <div>
-        <div class="tech-name">Gemini 2.0 Flash</div>
-        <div class="tech-role">Vision クロップ方向判定</div>
-      </div>
-    </div>
-    <div class="tech-card">
-      <span class="tech-icon">🎙️</span>
-      <div>
-        <div class="tech-name">Fish Audio</div>
-        <div class="tech-role">日本語ナレーション TTS</div>
-      </div>
-    </div>
-    <div class="tech-card">
-      <span class="tech-icon">👁️</span>
-      <div>
-        <div class="tech-name">OpenCV</div>
-        <div class="tech-role">顔検出・スマートクロップ</div>
-      </div>
-    </div>
-    <div class="tech-card">
-      <span class="tech-icon">🖼️</span>
-      <div>
-        <div class="tech-name">PIL / Pillow</div>
-        <div class="tech-role">テロップ・注釈描画</div>
-      </div>
-    </div>
-    <div class="tech-card">
-      <span class="tech-icon">📄</span>
-      <div>
-        <div class="tech-name">BeautifulSoup</div>
-        <div class="tech-role">台本HTMLパース</div>
-      </div>
-    </div>
-    <div class="tech-card">
-      <span class="tech-icon">⚛️</span>
-      <div>
-        <div class="tech-name">Remotion</div>
-        <div class="tech-role">React製アニメーションテロップ</div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<hr class="divider">
-
-<!-- ─── バージョン履歴 ─── -->
-<section>
-  <div class="section-label">Release History</div>
-  <div class="section-title">バージョン履歴</div>
-
-  <div class="versions">
-
-    <div class="version-card">
-      <div class="version-badge v-current">v8</div>
-      <div class="version-content">
-        <h3>台本全行パース・注釈システム・Fish Audio</h3>
-        <p>続き行を全取得（16→25シーン）。通し注釈＋カット注釈の2層オーバーレイ。※以降の自動小文字化。ナレーション音声合成。</p>
-      </div>
-    </div>
-
-    <div class="version-card">
-      <div class="version-badge v-mid">v7</div>
-      <div class="version-content">
-        <h3>ffmpeg回転正規化・素材自動発見</h3>
-        <p>MoviePy rotate廃止→ffmpegで向き焼き込み。5-1のみ指定で5-2を自動発見。テロップフォントサイズ拡大。</p>
-      </div>
-    </div>
-
-    <div class="version-card">
-      <div class="version-badge v-mid">v5–6</div>
-      <div class="version-content">
-        <h3>回転メタデータ検出・台本フォーマット自動対応</h3>
-        <p>ffprobeでrotation検出。差し込み画像列をヘッダから自動特定（ver1/ver2両対応）。EXIFによる画像回転補正。</p>
-      </div>
-    </div>
-
-    <div class="version-card">
-      <div class="version-badge v-early">v4</div>
-      <div class="version-content">
-        <h3>アスペクト比クラッシュ修正・2クリップ等分</h3>
-        <p>3:4クリップのy1=-166クラッシュを修正。1シーンに複数クリップを等分配置。60秒スケーリング実装。</p>
-      </div>
-    </div>
-
-    <div class="version-card">
-      <div class="version-badge v-early">v3</div>
-      <div class="version-content">
-        <h3>Gemini Vision・Fish Audio・Remotion統合</h3>
-        <p>Gemini 2.0 Flashでスマートクロップ方向を判定。Fish AudioでTTS（SDK非対応のためHTTP直接実装）。Remotionアニメーションテロップ対応。</p>
-      </div>
-    </div>
-
-    <div class="version-card">
-      <div class="version-badge v-start">v1–2</div>
-      <div class="version-content">
-        <h3>基本パイプライン構築</h3>
-        <p>台本HTMLパース。クリップ検索（全角/半角対応）。PIL日本語テロップ。OpenCV顔検出。縦型クロップ基本実装。</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- ─── キーコード ─── -->
-<section>
-  <div class="section-label">Key Code</div>
-  <div class="section-title">設計のポイント</div>
-
-  <p style="color: var(--muted); margin-bottom: 24px; font-size: 14px;">全アスペクト比対応クロップロジック（抜粋）</p>
-  <div class="code-block">
-<span class="keyword">def</span> <span class="func">crop_clip_to_vertical</span>(clip, crop_hint=<span class="string">"center"</span>):
-    w, h = clip.size
-    ratio = w / h
-    target_ratio = <span class="type">1080</span> / <span class="type">1920</span>  <span class="comment"># 0.5625</span>
-
-    <span class="keyword">if</span> ratio &gt; target_ratio:
-        <span class="keyword">if</span> ratio &gt; <span class="type">LETTERBOX_THRESHOLD</span>:  <span class="comment"># 16:9など横長</span>
-            face_c = <span class="func">detect_face_center</span>(frame)
-            <span class="keyword">if</span> face_c:
-                cx, _ = face_c
-                x1 = <span class="func">max</span>(<span class="type">0</span>, cx - new_w // <span class="type">2</span>)  <span class="comment"># 顔中心にクロップ</span>
-            <span class="keyword">else</span>:
-                x1 = crop_hint_to_x(crop_hint)  <span class="comment"># Geminiヒント使用</span>
-        <span class="keyword">else</span>:  <span class="comment"># 3:4など少し横広</span>
-            x1 = (w - new_w) // <span class="type">2</span>  <span class="comment"># センタークロップ</span>
-    <span class="keyword">else</span>:  <span class="comment"># 縦長（9:16より細い）→ ピラーボックス</span>
-        <span class="keyword">def</span> <span class="func">add_pillarbox</span>(frame):
-            canvas = np.zeros((oh, ow, <span class="type">3</span>), dtype=np.uint8)
-            canvas[:, x_off:x_off+new_w] = frame
-            <span class="keyword">return</span> canvas
-  </div>
-
-  <p style="color: var(--muted); margin: 32px 0 24px; font-size: 14px;">台本続き行パーサ（last_no継承）</p>
-  <div class="code-block">
-<span class="comment"># NO列が数字なら更新、空白なら前のNOを継続（続き行）</span>
-<span class="keyword">if</span> no_cell.isdigit():
-    last_no = <span class="func">int</span>(no_cell)
-<span class="keyword">elif</span> last_no == <span class="type">0</span>:
-    <span class="keyword">continue</span>  <span class="comment"># 最初のNO確定前はスキップ</span>
-
-clip_ref_raw = cells[clip_col].strip()
-note         = cells[notes_col].strip()
-scenes.append(<span class="func">Scene</span>(no=last_no, text=text,
-              clip_refs=<span class="func">_parse_clip_refs</span>(clip_ref_raw), note=note))
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- ─── 成果 ─── -->
-<section>
-  <div class="section-label">Results</div>
-  <div class="section-title">実現できたこと</div>
-
-  <div class="result-grid">
-    <div class="result-card">
-      <span class="result-num" style="color: var(--accent);">25</span>
-      <div class="result-label">素材の自動処理</div>
-      <div class="result-sub">動画・静止画・HEIC全対応</div>
-    </div>
-    <div class="result-card">
-      <span class="result-num" style="color: var(--accent3);">60s</span>
-      <div class="result-label">ぴったり自動調整</div>
-      <div class="result-sub">文字数ベースで比例スケール</div>
-    </div>
-    <div class="result-card">
-      <span class="result-num" style="color: var(--yellow);">0</span>
-      <div class="result-label">手動編集工数</div>
-      <div class="result-sub">台本＋素材を渡すだけ</div>
-    </div>
-    <div class="result-card">
-      <span class="result-num" style="color: var(--accent2);">5</span>
-      <div class="result-label">AI統合数</div>
-      <div class="result-sub">Gemini / Fish / OpenCV / ffmpeg / PIL</div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ─── フッター ─── -->
+<!-- ─── GO CONDITIONS ─── -->
+<div class="go-section">
+  <div class="container">
+    <div class="section-title">最終判定基準</div>
+    <h2>GOの3条件 — すべて満たさないとGOは出ない</h2>
+    <div class="section-desc">視聴継続だけ良くてもダメ。遷移率だけ良くてもダメ。3つ全部揃って初めてGO。</div>
+
+    <div class="go-grid">
+      <div class="go-card">
+        <div class="go-card-title">条件1: 視聴継続<br><small style="font-size:11px;font-weight:400;color:var(--muted)">ターゲットが最後まで見るか</small></div>
+        <div class="go-item"><span>フックスコア（フック君）</span><span class="go-threshold">≥ 75点</span></div>
+        <div class="go-item"><span>感情アークスコア（アーク君）</span><span class="go-threshold">≥ 70点</span></div>
+        <div class="go-item"><span>テンポスコア（テンポ君）</span><span class="go-threshold">≥ 70点</span></div>
+        <div class="go-item"><span>スタイルスコア（スタイル君）</span><span class="go-threshold">≥ 70点</span></div>
+      </div>
+      <div class="go-card">
+        <div class="go-card-title">条件2: 遷移率<br><small style="font-size:11px;font-weight:400;color:var(--muted)">LPへ送り込めるか</small></div>
+        <div class="go-item"><span>CTAスコア（CTA君）</span><span class="go-threshold">≥ 80点</span></div>
+        <div class="go-item"><span>QUALIFYフェーズ（アーク君）</span><span class="go-threshold">OK必須</span></div>
+        <div class="go-item"><span>DRIVEフェーズ強度（アーク君）</span><span class="go-threshold">≥ 9</span></div>
+      </div>
+      <div class="go-card">
+        <div class="go-card-title">条件3: LP CVR<br><small style="font-size:11px;font-weight:400;color:var(--muted)">正しい人が正しい状態で来るか</small></div>
+        <div class="go-item"><span>bridge_score（LP連携君）</span><span class="go-threshold">≥ 75点 ★ブロッカー</span></div>
+        <div class="go-item"><span>BUILDの言いすぎなし（アーク君）</span><span class="go-threshold">CLEAR必須</span></div>
+        <div class="go-item"><span>マッチスコア（マッチ君）</span><span class="go-threshold">≥ 70点</span></div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-line">total_score =</div>
+      <div class="formula-line">&nbsp;&nbsp;<span class="agent-ref">hook_score</span>   × <span class="weight">0.25</span>  +  <span style="color:var(--muted)">// フック君（CTRの入口）</span></div>
+      <div class="formula-line">&nbsp;&nbsp;<span class="agent-ref">arc_score</span>    × <span class="weight">0.20</span>  +  <span style="color:var(--muted)">// アーク君（感情設計）</span></div>
+      <div class="formula-line">&nbsp;&nbsp;<span class="agent-ref">cta_score</span>    × <span class="weight">0.20</span>  +  <span style="color:var(--muted)">// CTA君（遷移の決め手）</span></div>
+      <div class="formula-line">&nbsp;&nbsp;<span class="agent-ref">bridge_score</span> × <span class="weight">0.15</span>  +  <span style="color:var(--accent2)">// LP連携君（ブロッカー条件）</span></div>
+      <div class="formula-line">&nbsp;&nbsp;<span class="agent-ref">tempo_score</span>  × <span class="weight">0.10</span>  +  <span style="color:var(--muted)">// テンポ君</span></div>
+      <div class="formula-line">&nbsp;&nbsp;<span class="agent-ref">style_score</span>  × <span class="weight">0.05</span>  +  <span style="color:var(--muted)">// スタイル君</span></div>
+      <div class="formula-line">&nbsp;&nbsp;<span class="agent-ref">match_score</span>  × <span class="weight">0.05</span></div>
+      <div class="formula-line">&nbsp;</div>
+      <div class="formula-line">ボーナス: QUALIFYに絞り込みワードあり <span class="weight">+3</span> / BUILDの言いすぎゼロ <span class="weight">+3</span> / フックに数字あり <span class="weight">+2</span> / bridge≥85 <span class="weight">+2</span></div>
+      <div class="formula-line">&nbsp;</div>
+      <div class="formula-go">GO = total_score ≥ 80 AND bridge_score ≥ 75 AND QUALIFY = OK AND legal = PASS</div>
+    </div>
+  </div>
+</div>
+
 <footer>
-  <p>Built by <strong>一進 × Claude Code</strong> — 2026</p>
-  <p style="margin-top: 8px; font-size: 11px; opacity: 0.5;">Python 3.9 · MoviePy · ffmpeg · Gemini 2.0 Flash · Fish Audio · OpenCV · PIL</p>
+  一進AI — 動画AIエージェント設計書 v3.0 &nbsp;|&nbsp; 2026-04-02 更新 &nbsp;|&nbsp; カントク君起点 10エージェント体制
 </footer>
 
 </body>
