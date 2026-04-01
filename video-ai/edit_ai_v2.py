@@ -19,12 +19,14 @@ from __future__ import annotations
 import os
 import re
 import sys
+import csv
 import json
 import base64
 import argparse
 import subprocess
 import tempfile
 import textwrap
+import unicodedata
 from pathlib import Path
 from dataclasses import dataclass, field
 
@@ -37,6 +39,7 @@ from moviepy.editor import (
     VideoFileClip, ImageClip, AudioFileClip, CompositeVideoClip,
     concatenate_videoclips,
 )
+import moviepy.video.fx.all as vfx
 
 # ── 定数 ──────────────────────────────────────────────────
 OUTPUT_SIZE    = (1080, 1920)   # 縦型 9:16
@@ -193,31 +196,32 @@ def resolve_voice(category: str | None, catalog: dict) -> tuple[str | None, floa
     return ref_id, voice.get("speed", 1.0)
 
 
-# ─── Fish Audio: ナレーション生成 ────────────────────────────
-def generate_narration(
-    scenes: list,
-    fish_key: str,
-    output_path: str,
-    voice_category: str | None = None,
-) -> str | None:
-    """
-    全シーンのテキストを結合してFish AudioでMP3生成。
-    voice_category: voice_catalog.json のキー名（例: "女性・クール"）
-    返値: 生成したmp3パス（失敗時None）
-    """
-    full_text = "。".join(s.text for s in scenes if s.text).strip()
-    if not full_text:
-        return None
+# ─── Fish Audio: 音声時間取得 ─────────────────────────────────
+def get_audio_duration(path: str) -> float:
+    """ffprobeで音声ファイルの長さ（秒）を取得"""
+    try:
+        r = subprocess.run(
+            [_FFPROBE, "-v", "quiet", "-show_entries", "format=duration",
+             "-of", "default=noprint_wrappers=1:nokey=1", path],
+            capture_output=True, text=True
+        )
+        return float(r.stdout.strip())
+    except Exception:
+        try:
+            return AudioFileClip(path).duration
+        except Exception:
+            return 0.0
 
-    catalog = load_voice_catalog()
-    reference_id, speed = resolve_voice(voice_category, catalog)
 
-    payload: dict = {"text": full_text, "format": "mp3", "latency": "normal"}
+# ─── Fish Audio: シーン単位TTS（同期方式の核心） ──────────────
+def _fish_tts_single(text: str, fish_key: str, output_path: str,
+                     reference_id: str | None, speed: float) -> bool:
+    """1シーン分のテキストをFish AudioでTTS生成。成功でTrue。"""
+    payload: dict = {"text": text, "format": "mp3", "latency": "normal"}
     if reference_id:
         payload["reference_id"] = reference_id
     if speed != 1.0:
         payload["prosody"] = {"speed": speed}
-
     try:
         resp = requests.post(
             "https://api.fish.audio/v1/tts",
@@ -227,16 +231,105 @@ def generate_narration(
             timeout=60
         )
         if resp.status_code != 200:
-            print(f"  ⚠️  Fish Audio エラー: {resp.status_code} / {resp.text[:100]}")
+            print(f"      ⚠️  Fish Audio エラー: {resp.status_code}")
+            return False
+        with open(output_path, "wb") as f:
+            for chunk in resp.iter_content(1024):
+                f.write(chunk)
+        return True
+    except Exception as e:
+        print(f"      ⚠️  Fish Audio 失敗: {e}")
+        return False
+
+
+def generate_scene_narrations(
+    scenes: list,
+    fish_key: str,
+    output_dir: str,
+    voice_category: str | None = None,
+    tts_speed: float = 1.0,
+) -> list[tuple[str | None, float]]:
+    """
+    【コアロジック】シーンごとに個別TTSを生成し、音声の実尺を返す。
+    返値: [(mp3_path_or_None, duration_sec), ...]  ← scenesと同順
+
+    音声尺が映像尺を決定する。映像を音声に合わせる（逆は不可）。
+    """
+    catalog = load_voice_catalog()
+    reference_id, voice_speed = resolve_voice(voice_category, catalog)
+    # voice_catalog の speed は音質調整用。tts_speed は全体テンポ調整用。
+    # 両方掛け合わせて Fish Audio に渡す（上限2.0、下限0.5でクリップ）
+    effective_speed = max(0.5, min(2.0, voice_speed * tts_speed))
+    if effective_speed != 1.0:
+        print(f"  🎚  TTS速度: {effective_speed:.2f}x（voice={voice_speed}, target={tts_speed:.2f}）")
+
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    results: list[tuple[str | None, float]] = []
+
+    for i, scene in enumerate(scenes):
+        if not scene.text:
+            results.append((None, MIN_DURATION))
+            continue
+        mp3_path = str(Path(output_dir) / f"scene_{scene.no:02d}.mp3")
+        ok = _fish_tts_single(scene.text, fish_key, mp3_path, reference_id, effective_speed)
+        if ok:
+            dur = get_audio_duration(mp3_path)
+            print(f"      🎙  S{scene.no:02d} → {dur:.2f}s")
+            results.append((mp3_path, max(dur, MIN_DURATION)))
+        else:
+            results.append((None, max(MIN_DURATION, len(scene.text) / CHARS_PER_SEC)))
+
+    total = sum(d for _, d in results)
+    print(f"  ✅ シーン別TTS完了 合計: {total:.1f}s ({len(results)}シーン)")
+    return results
+
+
+def estimate_tts_speed(scenes: list, target_sec: float = TARGET_DURATION * 0.92) -> float:
+    """
+    テキスト文字数から自然な読み上げ時間を推定し、
+    target_secに収まる最小速度（1.0以上）を返す。
+    """
+    total_chars = sum(len(s.text) for s in scenes if s.text)
+    natural_sec = total_chars / CHARS_PER_SEC
+    if natural_sec <= target_sec:
+        return 1.0
+    speed = natural_sec / target_sec
+    speed = round(min(speed, 2.0), 2)
+    print(f"  📊 推定読み上げ時間: {natural_sec:.1f}s → 目標{target_sec:.0f}s → TTS速度: {speed}x")
+    return speed
+
+
+# ─── Fish Audio: 全文結合方式（後方互換・非推奨） ─────────────
+def generate_narration(
+    scenes: list,
+    fish_key: str,
+    output_path: str,
+    voice_category: str | None = None,
+) -> str | None:
+    """非推奨。generate_scene_narrations()を使うこと。後方互換のため残す。"""
+    full_text = "。".join(s.text for s in scenes if s.text).strip()
+    if not full_text:
+        return None
+    catalog = load_voice_catalog()
+    reference_id, speed = resolve_voice(voice_category, catalog)
+    payload: dict = {"text": full_text, "format": "mp3", "latency": "normal"}
+    if reference_id:
+        payload["reference_id"] = reference_id
+    if speed != 1.0:
+        payload["prosody"] = {"speed": speed}
+    try:
+        resp = requests.post(
+            "https://api.fish.audio/v1/tts",
+            headers={"Authorization": f"Bearer {fish_key}", "Content-Type": "application/json"},
+            json=payload, stream=True, timeout=60
+        )
+        if resp.status_code != 200:
             return None
         with open(output_path, "wb") as f:
             for chunk in resp.iter_content(1024):
                 f.write(chunk)
-        size_kb = os.path.getsize(output_path) // 1024
-        print(f"  ✅ ナレーション生成完了: {output_path} ({size_kb}KB)")
         return output_path
-    except Exception as e:
-        print(f"  ⚠️  Fish Audio 失敗: {e}")
+    except Exception:
         return None
 
 FONT_CANDIDATES = [
@@ -258,7 +351,120 @@ class Scene:
 EMPHASIS_WORDS = ["臭い", "臭く", "ツーン", "病気", "悩む", "97%OFF", "無料", "卒業"]
 
 
-# ── 台本パーサ ─────────────────────────────────────────────
+# ── 台本パーサ（CSV） ──────────────────────────────────────
+def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None]:
+    """
+    新フォーマットCSV台本をパース。
+    返値: (scenes, global_annotation, voice_category)
+    """
+    scenes: list[Scene] = []
+    global_annotation = ""
+    voice_category: str | None = None
+
+    with open(csv_path, encoding="utf-8-sig", newline="") as f:
+        rows = list(csv.reader(f))
+
+    mode = None
+    for row in rows:
+        if not row:
+            continue
+        col0 = row[0].strip()
+
+        # セクション検出
+        if "■ 動画の基本情報" in col0:
+            mode = "base"
+        elif "■ ナレーション設定" in col0:
+            mode = "narr"
+        elif "■ 固定注釈" in col0:
+            mode = "anno"
+        elif "■素材フォルダー" in col0 or "■ BGM" in col0 or "■ スタイル" in col0:
+            mode = "other"
+        elif "■ 台本" in col0:
+            mode = "script"
+        elif "■ 素材リスト" in col0:
+            mode = "end"
+            break
+
+        elif mode == "narr":
+            key = col0
+            val = row[1].strip() if len(row) > 1 else ""
+            if key == "声のカテゴリー" and val:
+                # "女性・クール（健康食品・サプリ向き" → "女性・クール" に正規化
+                voice_category = val.split("（")[0].strip()
+
+        elif mode == "anno":
+            # 注釈テキストが入っている行（col0が空 or "固定注釈⇨"でない）
+            text = row[1].strip() if len(row) > 1 else ""
+            if text and "【例" not in text and "【必要" not in text and "注釈テキスト" not in text:
+                if global_annotation:
+                    global_annotation += "　" + text
+                else:
+                    global_annotation = text
+
+        elif mode == "script":
+            # ヘッダ行スキップ
+            if col0 in ("No.", ""):
+                continue
+            if not col0.isdigit():
+                continue
+
+            no = int(col0)
+            text = row[1].strip() if len(row) > 1 else ""
+            sozai_raw = row[2].strip() if len(row) > 2 else ""
+            note = row[3].strip() if len(row) > 3 else ""
+
+            # テキスト空・テンプレートプレースホルダーはスキップ
+            if not text or text in ("【ここに書く】",) or text == "【ここに書く】":
+                continue
+            # 完全に【...】で囲まれたテンプレート行はスキップ（実コンテンツは除外しない）
+            if re.match(r"^【[^】]*】$", text):
+                continue
+
+            # 素材IDパース（改行・スペース区切りに対応）
+            clip_refs = _parse_clip_refs_csv(sozai_raw)
+
+            emphasis = any(w in text for w in EMPHASIS_WORDS)
+            scenes.append(Scene(no=no, text=text, clip_refs=clip_refs,
+                                note=note, emphasis=emphasis))
+
+    # ─── 注釈バリデーション（サイレントスルー禁止） ─────────────────
+    print(f"\n  📋 注釈チェック:")
+    if global_annotation:
+        print(f"  ✅ 固定注釈: 「{global_annotation[:30]}...」")
+    else:
+        print(f"  ⚠️  固定注釈: 未設定 — CSVの「■ 固定注釈」セクションに薬機法テキストを入力してください")
+    scene_notes = [(s.no, s.note) for s in scenes if s.note]
+    if scene_notes:
+        print(f"  ✅ カット注釈: {len(scene_notes)}シーンに設定あり")
+        for no, note in scene_notes:
+            print(f"     S{no:02d}: {note[:40]}")
+    else:
+        print(f"  ℹ️  カット注釈: なし（各シーンの注釈欄は空）")
+
+    print(f"\n台本パース完了 (CSV): {len(scenes)} シーン / 声: {voice_category or 'デフォルト'}")
+    return scenes, global_annotation, voice_category
+
+
+def _parse_clip_refs_csv(raw: str) -> list[str]:
+    """CSV素材フィールド: 改行・スペース区切りのIDリストをパース。全角数字→半角変換。"""
+    if not raw:
+        return []
+    # 全角→半角正規化
+    raw = unicodedata.normalize("NFKC", raw)
+    # 改行・スペースで分割
+    tokens = [t.strip() for t in re.split(r"[\s\n]+", raw) if t.strip()]
+    refs = []
+    for t in tokens:
+        # "1-1", "12-2" などの X-N 形式
+        if re.match(r"^\d{1,2}-\d$", t):
+            refs.append(t)
+        # 単体番号 "3", "11", "15" など
+        elif re.match(r"^\d+$", t):
+            refs.append(t)
+    return refs
+
+
+# ── 台本パーサ（HTML） ─────────────────────────────────────
 def parse_script(html_path: str) -> tuple[list[Scene], str]:
     """
     返値: (scenes, global_annotation)
@@ -448,7 +654,10 @@ def make_annotation_overlay(text: str, size: tuple, y_start: int = 30) -> np.nda
 
 
 # ── テロップ画像生成 ──────────────────────────────────────
-def make_telop(text: str, size: tuple, emphasis: bool = False) -> np.ndarray:
+def make_telop(text: str, size: tuple, emphasis: bool = False,
+               telop_y_ratio: float = TELOP_Y_RATIO,
+               font_size: int = FONT_SIZE,
+               font_emph_size: int = FONT_EMPH_SIZE) -> np.ndarray:
     """
     テキスト → RGBA numpy配列。
     「※」以降は自動的に小フォントで描画。
@@ -466,7 +675,7 @@ def make_telop(text: str, size: tuple, emphasis: bool = False) -> np.ndarray:
         main_text = text
         sub_text  = ""
 
-    fs       = FONT_EMPH_SIZE if emphasis else FONT_SIZE
+    fs       = font_emph_size if emphasis else font_size
     cpl      = CHARS_PER_LINE_EMPH if emphasis else CHARS_PER_LINE
     font     = load_font(fs)
     sub_fs   = max(32, fs // 2)
@@ -485,7 +694,7 @@ def make_telop(text: str, size: tuple, emphasis: bool = False) -> np.ndarray:
     sub_line_h = sub_fs + 6
     total_h    = line_h * len(main_lines) + (sub_line_h * len(sub_lines) + 4 if sub_lines else 0)
     pad_x, pad_y = 24, 14
-    base_y = int(h * TELOP_Y_RATIO) - total_h // 2
+    base_y = int(h * telop_y_ratio) - total_h // 2
 
     def _draw_line(line, fnt, fsize, y, emph):
         bbox = fnt.getbbox(line)
@@ -689,14 +898,125 @@ def _load_single_clip(clip_path: str, duration: float,
         return ImageClip(black, duration=duration)
 
 
+def _fit_video_to_duration(base, target_duration: float):
+    """
+    映像クリップを target_duration に合わせる。
+    - 映像が長ければ先頭からトリム
+    - 映像が短ければループ（音声に映像を合わせる核心処理）
+    """
+    if base.duration >= target_duration:
+        return base.subclip(0, target_duration)
+    # 映像が短い → ループして目標尺に合わせる
+    return vfx.loop(base, duration=target_duration)
+
+
+def build_continuous_group_clip(
+    group_scenes: list, group_audios: list, clips_dir: str,
+    gemini_key: str | None = None,
+    global_annotation: str = "",
+    style: dict | None = None,
+) -> CompositeVideoClip | None:
+    """
+    連続同一素材グループを1本のクリップとして生成。
+    - 1つの映像を流し続け、テロップだけ各シーンのタイミングで切り替わる
+    - 各シーンの音声は時系列順に結合して映像に乗せる
+    """
+    total_dur = sum(d for _, d in group_audios)
+    refs = group_scenes[0].clip_refs  # 先頭シーンの素材を使用（継続シーンは空のため）
+    nos = [s.no for s in group_scenes]
+    print(f"  🔗 グループ S{nos[0]:02d}〜S{nos[-1]:02d}: {total_dur:.1f}s 継続 refs={refs}")
+
+    # 映像を総尺に合わせて読み込む
+    found_clips: list[str] = []
+    for ref in refs:
+        p = find_clip(clips_dir, ref)
+        if p:
+            found_clips.append(p)
+
+    if not found_clips:
+        print(f"    ⚠️  グループ: クリップなし → 黒フレーム")
+        black = np.zeros((OUTPUT_SIZE[1], OUTPUT_SIZE[0], 3), dtype=np.uint8)
+        base = ImageClip(black, duration=total_dur)
+    elif len(found_clips) == 1:
+        print(f"    ✅ {Path(found_clips[0]).name}")
+        raw = _load_single_clip(found_clips[0], total_dur, gemini_key)
+        base = _fit_video_to_duration(raw, total_dur)
+    else:
+        per_dur = total_dur / len(found_clips)
+        sub_clips = []
+        for cp in found_clips:
+            sc = _load_single_clip(cp, per_dur, gemini_key)
+            sub_clips.append(_fit_video_to_duration(sc, per_dur))
+        base = concatenate_videoclips(sub_clips, method="compose")
+
+    # 音声をシーン順に結合して映像に乗せる
+    narration_dir = Path(group_audios[0][0]).parent if group_audios[0][0] else None
+    if narration_dir:
+        audio_clips = []
+        for audio_path, _ in group_audios:
+            if audio_path and Path(audio_path).exists():
+                audio_clips.append(AudioFileClip(audio_path))
+        if audio_clips:
+            from moviepy.editor import concatenate_audioclips
+            combined_audio = concatenate_audioclips(audio_clips)
+            base = base.set_audio(combined_audio)
+
+    s = style or {}
+    telop_y = s.get("telop_y_ratio", TELOP_Y_RATIO)
+    font_size = s.get("font_size", FONT_SIZE)
+    font_emph = s.get("font_emph_size", FONT_EMPH_SIZE)
+
+    layers = [base]
+
+    # テロップを各シーンの開始時刻に合わせてタイムラインに配置
+    t_offset = 0.0
+    for scene, (_, audio_dur) in zip(group_scenes, group_audios):
+        if scene.text:
+            telop_arr = make_telop(scene.text, OUTPUT_SIZE, emphasis=scene.emphasis,
+                                   telop_y_ratio=telop_y, font_size=font_size,
+                                   font_emph_size=font_emph)
+            telop_clip = (ImageClip(telop_arr, duration=audio_dur)
+                         .set_opacity(1.0)
+                         .set_start(t_offset))
+            layers.append(telop_clip)
+        if scene.note:
+            note_y = 24 + (ANNOT_FONT_SIZE + 6) * (global_annotation.count("\n") + 1) + 10
+            note_arr = make_annotation_overlay(scene.note, OUTPUT_SIZE, y_start=note_y)
+            note_clip = (ImageClip(note_arr, duration=audio_dur)
+                        .set_opacity(1.0)
+                        .set_start(t_offset))
+            layers.append(note_clip)
+        t_offset += audio_dur
+
+    if global_annotation:
+        ann_arr = make_annotation_overlay(global_annotation, OUTPUT_SIZE, y_start=24)
+        layers.append(ImageClip(ann_arr, duration=total_dur).set_opacity(1.0))
+
+    return CompositeVideoClip(layers, size=OUTPUT_SIZE)
+
+
 def build_scene_clip(scene: Scene, clips_dir: str,
+                     audio_path: str | None = None,
+                     audio_duration: float | None = None,
                      override_duration: float | None = None,
                      gemini_key: str | None = None,
-                     global_annotation: str = "") -> CompositeVideoClip | None:
-    # 尺計算（mainでスケール済みの値を優先）
-    text_len = len(scene.text)
-    duration = override_duration if override_duration else \
-               max(MIN_DURATION, min(MAX_DURATION, text_len / CHARS_PER_SEC))
+                     global_annotation: str = "",
+                     style: dict | None = None) -> CompositeVideoClip | None:
+    """
+    1シーンのCompositeVideoClipを生成。
+    audio_path/audio_duration が渡された場合（シーン単位TTS方式）:
+      - 映像尺 = 音声尺（完全同期）
+      - 音声をクリップに埋め込む
+    渡されない場合（フォールバック）:
+      - 文字数から尺を推定
+    """
+    # 尺の決定順: 音声実尺 > override_duration > 文字数推定
+    if audio_duration is not None:
+        duration = audio_duration
+    elif override_duration is not None:
+        duration = override_duration
+    else:
+        duration = max(MIN_DURATION, min(MAX_DURATION, len(scene.text) / CHARS_PER_SEC))
 
     print(f"  シーン{scene.no}: 「{scene.text[:20]}...」 → {duration:.1f}s refs={scene.clip_refs}")
 
@@ -707,13 +1027,13 @@ def build_scene_clip(scene: Scene, clips_dir: str,
             found_clips.append(p)
 
     if not found_clips:
-        print(f"    ⚠️  シーン{scene.no}: クリップが見つかりません（refs={scene.clip_refs}）→ 黒フレームで代替")
+        print(f"    ⚠️  シーン{scene.no}: クリップなし → 黒フレーム")
         black = np.zeros((OUTPUT_SIZE[1], OUTPUT_SIZE[0], 3), dtype=np.uint8)
-        base: VideoFileClip | ImageClip | CompositeVideoClip = ImageClip(black, duration=duration)
+        base = ImageClip(black, duration=duration)
     elif len(found_clips) == 1:
         print(f"    ✅ {Path(found_clips[0]).name}")
-        base = _load_single_clip(found_clips[0], duration, gemini_key)
-        duration = base.duration
+        raw = _load_single_clip(found_clips[0], duration, gemini_key)
+        base = _fit_video_to_duration(raw, duration)
     else:
         per_dur = duration / len(found_clips)
         print(f"    ✅ {len(found_clips)}クリップを等分 ({per_dur:.1f}s×{len(found_clips)})")
@@ -721,23 +1041,35 @@ def build_scene_clip(scene: Scene, clips_dir: str,
         for cp in found_clips:
             print(f"      • {Path(cp).name}")
             sc = _load_single_clip(cp, per_dur, gemini_key)
-            sub_clips.append(sc)
+            sub_clips.append(_fit_video_to_duration(sc, per_dur))
         base = concatenate_videoclips(sub_clips, method="compose")
-        duration = base.duration
+
+    # 音声を映像に直接埋め込む（シーン単位TTS方式）
+    if audio_path and Path(audio_path).exists():
+        try:
+            audio_clip = AudioFileClip(audio_path)
+            base = base.set_audio(audio_clip)
+        except Exception as e:
+            print(f"    ⚠️  音声埋め込み失敗: {e}")
 
     layers = [base]
 
-    # テロップ（テキストありのみ）
+    # スタイル設定（参考動画から抽出 or デフォルト）
+    s = style or {}
+    telop_y = s.get("telop_y_ratio", TELOP_Y_RATIO)
+    font_size = s.get("font_size", FONT_SIZE)
+    font_emph = s.get("font_emph_size", FONT_EMPH_SIZE)
+
     if scene.text:
-        telop_arr  = make_telop(scene.text, OUTPUT_SIZE, emphasis=scene.emphasis)
+        telop_arr = make_telop(scene.text, OUTPUT_SIZE, emphasis=scene.emphasis,
+                               telop_y_ratio=telop_y, font_size=font_size,
+                               font_emph_size=font_emph)
         layers.append(ImageClip(telop_arr, duration=base.duration).set_opacity(1.0))
 
-    # 通し注釈（全カット共通）
     if global_annotation:
         ann_arr = make_annotation_overlay(global_annotation, OUTPUT_SIZE, y_start=24)
         layers.append(ImageClip(ann_arr, duration=base.duration).set_opacity(1.0))
 
-    # カット専用注釈（注釈欄あり）
     if scene.note:
         note_y = 24 + (ANNOT_FONT_SIZE + 6) * (global_annotation.count("\n") + 1) + 10
         note_arr = make_annotation_overlay(scene.note, OUTPUT_SIZE, y_start=note_y)
@@ -747,18 +1079,84 @@ def build_scene_clip(scene: Scene, clips_dir: str,
 
 
 # ── メイン ────────────────────────────────────────────────
+def analyze_reference_video(ref_path: str, gemini_key: str) -> dict:
+    """
+    参考動画からテロップスタイル（フォントサイズ・位置・カラー）を抽出。
+    返値例: {"font_size": 72, "font_emph_size": 82, "telop_y_ratio": 0.75}
+    """
+    print(f"\n🎬 参考動画スタイル解析中: {Path(ref_path).name}")
+    style = {}
+    # フレームを数点サンプリング（5s, 15s, 30s）
+    sample_frames = []
+    for t in [5, 15, 30]:
+        try:
+            tmp = tempfile.mktemp(suffix=".jpg")
+            subprocess.run(
+                [FFMPEG, "-y", "-i", ref_path, "-ss", str(t), "-vframes", "1", tmp],
+                capture_output=True, check=True
+            )
+            if os.path.exists(tmp):
+                with open(tmp, "rb") as f:
+                    sample_frames.append(base64.b64encode(f.read()).decode())
+                os.unlink(tmp)
+        except Exception:
+            pass
+
+    if not sample_frames:
+        print("  ⚠️  参考動画フレーム取得失敗 → デフォルトスタイルを使用")
+        return style
+
+    # 最初のフレームでスタイル解析
+    try:
+        resp = requests.post(
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}",
+            json={"contents": [{"parts": [
+                {"inline_data": {"mime_type": "image/jpeg", "data": sample_frames[0]}},
+                {"text": (
+                    "この縦型動画のテロップスタイルをJSONで答えて。\n"
+                    "fields:\n"
+                    "  font_size: テロップの推定フォントサイズ（px、9:16の1920px高さ基準）\n"
+                    "  font_emph_size: 強調テロップのフォントサイズ（px）\n"
+                    "  telop_y_ratio: テロップ中心のY位置比率（0.0=上端、1.0=下端）\n"
+                    "  telop_color: テキスト色（例: '#FFFFFF'）\n"
+                    "  outline_color: 縁取り色（例: '#000000'）\n"
+                    "テロップが見当たらない場合はnullを返して。\n"
+                    "JSON only。"
+                )}
+            ]}]},
+            timeout=15
+        )
+        raw = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
+        raw = re.sub(r"```json|```", "", raw).strip()
+        parsed = json.loads(raw)
+        if parsed:
+            for k in ["font_size", "font_emph_size", "telop_y_ratio"]:
+                if parsed.get(k) is not None:
+                    style[k] = parsed[k]
+            print(f"  ✅ スタイル抽出: {style}")
+        else:
+            print("  ℹ️  テロップ未検出 → デフォルトスタイル")
+    except Exception as e:
+        print(f"  ⚠️  スタイル解析失敗: {e}")
+
+    return style
+
+
 def main():
     parser = argparse.ArgumentParser(description="編集AI v2")
-    parser.add_argument("--script",  required=True, help="台本HTMLファイルパス")
-    parser.add_argument("--clips",   required=True, help="素材フォルダパス")
-    parser.add_argument("--output",  default="video-ai/output/output_v2.mp4", help="出力mp4パス")
-    parser.add_argument("--no-ai",   action="store_true", help="AI API（Gemini/Fish Audio）を使わない")
+    parser.add_argument("--script",   required=True, help="台本CSVまたはHTMLファイルパス")
+    parser.add_argument("--clips",    required=True, help="素材フォルダパス")
+    parser.add_argument("--output",   default="video-ai/output/output_v2.mp4", help="出力mp4パス")
+    parser.add_argument("--no-ai",    action="store_true", help="AI API（Gemini/Fish Audio）を使わない")
     parser.add_argument("--remotion", action="store_true", help="Remotion用 composition.json も出力する")
-    parser.add_argument("--voice",   default=None,
-                        help="声カテゴリー（例: '女性・クール' '男性・権威'）。未指定時はvoice_catalog.jsonのデフォルトを使用")
+    parser.add_argument("--voice",    default=None,
+                        help="声カテゴリー（例: '女性・クール'）。未指定時はCSVまたはvoice_catalog.jsonのデフォルト")
+    parser.add_argument("--ref-video", default=None,
+                        help="参考動画パス。テロップスタイル（フォント・位置）を自動抽出して適用")
     args = parser.parse_args()
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+    narration_dir = str(Path(args.output).parent / "narrations")
 
     # APIキー取得
     def _get_env(key):
@@ -767,38 +1165,95 @@ def main():
     gemini_key = _get_env("GEMINI_API_KEY_1") if not args.no_ai else None
     fish_key   = _get_env("FISH_AUDIO_API_KEY") if not args.no_ai else None
 
+    # 台本パース
     print("\n📄 台本パース中...")
-    scenes, global_annotation = parse_script(args.script)
+    csv_voice_category = None
+    if args.script.lower().endswith(".csv"):
+        scenes, global_annotation, csv_voice_category = parse_script_csv(args.script)
+    else:
+        scenes, global_annotation = parse_script(args.script)
 
-    # ③ 60秒に収まるようにシーン尺をスケール
     valid_scenes = [s for s in scenes if s.text or s.clip_refs]
-    raw_durations = []
-    for s in valid_scenes:
-        tl = len(s.text)
-        raw_durations.append(max(MIN_DURATION, min(MAX_DURATION, tl / CHARS_PER_SEC)))
-    total_raw = sum(raw_durations)
-    scale = min(1.0, TARGET_DURATION / total_raw) if total_raw > TARGET_DURATION else 1.0
-    if scale < 1.0:
-        print(f"  ⏱  尺スケール: {total_raw:.1f}s → {TARGET_DURATION}s（×{scale:.2f}）")
 
-    # ① Fish Audio: ナレーション先行生成
-    narration_path = None
+    # 参考動画スタイル抽出
+    style = {}
+    if args.ref_video and gemini_key:
+        style = analyze_reference_video(args.ref_video, gemini_key)
+
+    # 声カテゴリー決定（CLI > CSV > デフォルト）
+    effective_voice = args.voice or csv_voice_category
+
+    # ─── シーン単位TTS（音声が映像尺を決定する） ─────────────────
+    scene_audio: list[tuple[str | None, float]] = []
     if fish_key:
-        print("\n🎙  Fish Audio: ナレーション生成中...")
-        narration_path = generate_narration(
-            valid_scenes, fish_key,
-            str(Path(args.output).parent / "narration.mp3"),
-            voice_category=args.voice,
+        print("\n🎙  Fish Audio: シーン別ナレーション生成中...")
+        # 速度推定: テキスト文字数から60秒に収まる速度を計算
+        tts_speed = estimate_tts_speed(valid_scenes)
+        scene_audio = generate_scene_narrations(
+            valid_scenes, fish_key, narration_dir,
+            voice_category=effective_voice,
+            tts_speed=tts_speed,
         )
+    else:
+        # AI無効時: 文字数から推定尺を使用
+        for s in valid_scenes:
+            dur = max(MIN_DURATION, min(MAX_DURATION, len(s.text) / CHARS_PER_SEC))
+            scene_audio.append((None, dur))
 
-    print(f"\n🎬 シーンクリップ生成中（{len(valid_scenes)}シーン）...")
+    # ─── 連続同一素材シーンをグループ化 ──────────────────────────
+    # 素材なし or 同じ素材IDの連続シーンは「1クリップを流し続ける」
+    def group_continuous_scenes(scenes, scene_audio):
+        groups = []  # [(scene_list, audio_list)]
+        i = 0
+        while i < len(scenes):
+            group_s = [scenes[i]]
+            group_a = [scene_audio[i]]
+            j = i + 1
+            while j < len(scenes):
+                prev_refs = scenes[j-1].clip_refs
+                curr_refs = scenes[j].clip_refs
+                # 次が素材なし → 前の素材を継続
+                # 次が前と同じ素材 → 継続
+                if not curr_refs or curr_refs == prev_refs:
+                    group_s.append(scenes[j])
+                    group_a.append(scene_audio[j])
+                    j += 1
+                else:
+                    break
+            groups.append((group_s, group_a))
+            i = j
+        return groups
+
+    scene_groups = group_continuous_scenes(valid_scenes, scene_audio)
+    cont_count = sum(len(g[0]) - 1 for g in scene_groups if len(g[0]) > 1)
+    if cont_count:
+        print(f"\n  🔗 連続素材グループ: {cont_count}シーンを継続使用に統合")
+
+    # ─── シーンクリップ生成（音声尺に映像を合わせる） ──────────────
+    print(f"\n🎬 シーンクリップ生成中（{len(scene_groups)}グループ / {len(valid_scenes)}シーン）...")
     clips = []
-    for scene, base_dur in zip(valid_scenes, raw_durations):
-        adjusted_dur = max(MIN_DURATION, base_dur * scale)
-        c = build_scene_clip(scene, args.clips,
-                             override_duration=adjusted_dur,
-                             gemini_key=gemini_key,
-                             global_annotation=global_annotation)
+    for group_scenes, group_audios in scene_groups:
+        if len(group_scenes) == 1:
+            # 通常: 1シーン1クリップ
+            scene, (audio_path, audio_dur) = group_scenes[0], group_audios[0]
+            c = build_scene_clip(
+                scene, args.clips,
+                audio_path=audio_path,
+                audio_duration=audio_dur,
+                gemini_key=gemini_key,
+                global_annotation=global_annotation,
+                style=style,
+            )
+        else:
+            # 継続グループ: 複数シーンを1クリップで処理
+            c = build_continuous_group_clip(
+                group_scenes, group_audios, args.clips,
+                gemini_key=gemini_key,
+                global_annotation=global_annotation,
+                style=style,
+            )
+        for scene, (audio_path, audio_dur) in zip([group_scenes[0]], [group_audios[0]]):
+            pass  # dummy loop for structure (actual processing above)
         if c is not None:
             clips.append(c)
 
@@ -806,26 +1261,9 @@ def main():
         print("❌ 有効なシーンがありません")
         sys.exit(1)
 
-    print(f"\n✂️  {len(clips)}シーンを結合中...")
+    total_sec = sum(c.duration for c in clips)
+    print(f"\n✂️  {len(clips)}シーンを結合中... 総尺: {total_sec:.1f}s")
     final = concatenate_videoclips(clips, method="compose")
-    total_sec = final.duration
-
-    # ③ ナレーション合成
-    if narration_path and Path(narration_path).exists():
-        print(f"\n🎙  ナレーションを動画に合成中...")
-        try:
-            narr = AudioFileClip(narration_path)
-            # ナレーションの尺に合わせて動画全体をスピード調整
-            if narr.duration > total_sec * 1.15:
-                speed = narr.duration / total_sec
-                print(f"  ⏩ ナレーションが長いため動画を×{speed:.2f}倍速に調整")
-                final = final.speedx(speed)
-                total_sec = final.duration
-            # ナレーションが短ければそのまま（動画の余りは無音）
-            narr_cut = narr.subclip(0, min(narr.duration, total_sec))
-            final = final.set_audio(narr_cut)
-        except Exception as e:
-            print(f"  ⚠️  ナレーション合成失敗: {e}")
 
     print(f"\n💾 出力中: {args.output} （{total_sec:.1f}秒）")
     final.write_videofile(
@@ -839,12 +1277,12 @@ def main():
 
     print(f"\n✅ 完成！ {args.output}")
     print(f"   総尺: {total_sec:.1f}秒 / {len(clips)}シーン")
-    if narration_path:
-        print(f"   ナレーション: {narration_path}")
+    print(f"   ナレーション: シーン単位TTS同期方式（{narration_dir}/scene_XX.mp3）")
 
     # Remotion用 composition.json を出力（--remotion オプション時）
     if args.remotion:
-        _export_composition_json(valid_scenes, raw_durations, scale, narration_path, args)
+        audio_durations = [d for _, d in scene_audio]
+        _export_composition_json(valid_scenes, audio_durations, 1.0, None, args)
 
 
 def _export_composition_json(scenes, raw_durations, scale, narration_path, args):
