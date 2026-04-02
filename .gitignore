@@ -28,3 +28,7 @@ node_modules/
 # Python
 __pycache__/
 *.pyc
+
+# LP分析の一時画像
+.claude/scripts/lp_analysis/*.png
+.claude/scripts/lp_analysis/*.jpg
