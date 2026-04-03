@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>さくら — コンテンツアイデア設計書</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    color: #f0ede8;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.8;
+  }
+
+  .page {
+    min-height: 100vh;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid #1a1a22;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-num {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-size: 11px;
+    color: #444;
+    letter-spacing: 2px;
+  }
+
+  .deco-line {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, #c9a96e, transparent);
+    margin-bottom: 24px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #c9a96e;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: #f5f0ea;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #c9a96e;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .card-body {
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.9;
+  }
+
+  .highlight {
+    background: linear-gradient(135deg, rgba(201,169,110,0.07), rgba(201,169,110,0.02));
+    border-left: 3px solid #c9a96e;
+    padding: 20px 24px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 16px;
+  }
+
+  .highlight-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 17px;
+    color: #f0ede8;
+    line-height: 1.8;
+  }
+
+  /* ギャップ図 */
+  .gap-diagram {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+
+  .gap-box {
+    flex: 1;
+    padding: 24px 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .gap-box.serious {
+    background: rgba(100,130,200,0.08);
+    border: 1px solid rgba(100,130,200,0.25);
+  }
+
+  .gap-box.erotic {
+    background: rgba(200,100,120,0.08);
+    border: 1px solid rgba(200,100,120,0.25);
+  }
+
+  .gap-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .gap-label.s { color: #90a8e0; }
+  .gap-label.e { color: #e090a0; }
+
+  .gap-main {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    color: #f0ede8;
+    margin-bottom: 8px;
+  }
+
+  .gap-desc {
+    font-size: 11px;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  .gap-arrow {
+    font-size: 24px;
+    color: #c9a96e;
+    padding: 0 16px;
+    flex-shrink: 0;
+  }
+
+  /* キャラ設定 */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .persona-card {
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .persona-card.day {
+    background: rgba(100,130,200,0.06);
+    border: 1px solid rgba(100,130,200,0.2);
+  }
+
+  .persona-card.night {
+    background: rgba(200,100,120,0.06);
+    border: 1px solid rgba(200,100,120,0.2);
+  }
+
+  .persona-time {
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .persona-time.d { color: #90a8e0; }
+  .persona-time.n { color: #e090a0; }
+
+  .persona-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    color: #f0ede8;
+    margin-bottom: 8px;
+  }
+
+  .persona-desc {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.7;
+  }
+
+  /* 撮影フロー */
+  .flow-step {
+    display: flex;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    align-items: flex-start;
+  }
+
+  .flow-num {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #c9a96e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #c9a96e;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .flow-content {}
+
+  .flow-title {
+    font-size: 15px;
+    color: #f0ede8;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  .flow-desc {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.7;
+  }
+
+  /* 台本軸 */
+  .script-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+
+  .script-tag {
+    min-width: 72px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .script-tag.tsubo {
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    color: #c9a96e;
+  }
+
+  .script-tag.ng {
+    background: rgba(200,80,80,0.1);
+    border: 1px solid rgba(200,80,80,0.25);
+    color: #e09090;
+  }
+
+  .script-text {
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.8;
+  }
+
+  /* 投稿計画 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th {
+    background: rgba(201,169,110,0.1);
+    color: #c9a96e;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+  }
+
+  td {
+    padding: 13px 16px;
+    font-size: 13px;
+    color: #ccc;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.6;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-block;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.25);
+    color: #c9a96e;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  /* タイトルページ */
+  .title-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #c9a96e;
+    margin-bottom: 32px;
+  }
+
+  .title-main {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 1.4;
+    color: #f5f0ea;
+    margin-bottom: 8px;
+  }
+
+  .title-en {
+    font-size: 11px;
+    color: #444;
+    letter-spacing: 3px;
+    margin-bottom: 48px;
+  }
+
+  .title-core {
+    font-size: 14px;
+    color: #888;
+    line-height: 2.1;
+    border-left: 2px solid #333;
+    padding-left: 20px;
+  }
+
+  .title-core strong { color: #c9a96e; }
+
+  @media print {
+    .page { page-break-after: always; min-height: 100vh; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- P1: タイトル -->
+<div class="page">
+  <span class="page-num">01 / 06</span>
+  <p class="title-label">CONTENT IDEA — SAKURA</p>
+  <h1 class="title-main">ウグイス嬢の<br>裏アカ（さくら）</h1>
+  <p class="title-en">TIKTOK CONTENT DESIGN</p>
+  <p class="title-core">
+    コアコンセプト：<strong>「昼は球場で真面目に声を張る。夜はベッドで一人で練習してる。」</strong><br><br>
+    真面目なウグイス嬢という職業的文脈 × ビジュアルのセクシーさ。<br>
+    このギャップをコンテンツの核に据え、TikTokで伸ばす。<br>
+    台本・編集・投稿はすべて澤田が担当。演者は撮影だけ。
+  </p>
+</div>
+
+<!-- P2: キャラ設定 -->
+<div class="page">
+  <span class="page-num">02 / 06</span>
+  <span class="tag">Character Design</span>
+  <div class="deco-line"></div>
+  <h2>さくらのキャラクター設計</h2>
+  <p class="subtitle">「昼の顔」と「夜の顔」の両方が見えることが重要。この二面性がファンを作る。</p>
+
+  <div class="persona-grid">
+    <div class="persona-card day">
+      <p class="persona-time d">DAYTIME — 表の顔</p>
+      <p class="persona-title">プロのウグイス嬢</p>
+      <p class="persona-desc">
+        野球場で毎日声を張る。<br>
+        選手名コール、試合実況。<br>
+        清潔感があって、真面目で、<br>
+        プロとしての矜持がある。<br>
+        <br>
+        → <strong style="color:#90a8e0">この文脈をTikTokで匂わせ続ける</strong>
+      </p>
+    </div>
+    <div class="persona-card night">
+      <p class="persona-time n">NIGHTTIME — 裏の顔</p>
+      <p class="persona-title">深夜の裏アカ</p>
+      <p class="persona-desc">
+        ベッドで一人、発声練習。<br>
+        部屋着で、谷間が見えて、<br>
+        誰にも見せない素の声が漏れる。<br>
+        このTikTokだけが「本音の場所」。<br>
+        <br>
+        → <strong style="color:#e090a0">このギャップがバズを生む</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="highlight-text">
+      視聴者が感じること：<br>
+      「昼はあんなに真面目なのに、夜はこんな顔してるんだ。」
+    </p>
+  </div>
+</div>
+
+<!-- P3: コンテンツのギャップ設計 -->
+<div class="page">
+  <span class="page-num">03 / 06</span>
+  <span class="tag">Content Core</span>
+  <div class="deco-line"></div>
+  <h2>コンテンツの核心：ギャップの設計</h2>
+  <p class="subtitle">この2軸の掛け合わせが、他のASMR・エロ系コンテンツと完全に差別化できる理由。</p>
+
+  <div class="gap-diagram">
+    <div class="gap-box serious">
+      <p class="gap-label s">AXIS A</p>
+      <p class="gap-main">真面目な声</p>
+      <p class="gap-desc">
+        ウグイス嬢という職業<br>
+        プロの発声・アナウンス技術<br>
+        真剣に練習している姿勢<br>
+        台本の内容は「仕事の延長」
+      </p>
+    </div>
+    <div class="gap-arrow">×</div>
+    <div class="gap-box erotic">
+      <p class="gap-label e">AXIS B</p>
+      <p class="gap-main">ビジュアルのエロさ</p>
+      <p class="gap-desc">
+        深夜のベッドという場所<br>
+        谷間が見える部屋着<br>
+        顔は映さない（想像力を刺激）<br>
+        素の無防備さが漏れる
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">なぜこのギャップが強いか</p>
+    <p class="card-body">
+      エロいだけのコンテンツは星の数ほどある。<br>
+      真面目なだけのコンテンツも無数にある。<br>
+      <strong style="color:#f0ede8">「真面目な文脈の中にエロさが滲み出る」</strong>という体験は、視聴者の脳に焼き付く。<br>
+      スクロールが止まり、保存され、シェアされる。
+    </p>
+  </div>
+
+  <div class="card">
+    <p class="card-title">台本設計の原則</p>
+    <p class="card-body">
+      内容は<strong style="color:#f0ede8">あくまで真面目なウグイス嬢の発声練習</strong>として成立させる。<br>
+      その中に、言葉の選び方・間の取り方・声のトーンで「エロさ」を忍ばせる。<br>
+      直接的なエロを狙わない。<strong style="color:#c9a96e">滲み出させる</strong>のが正解。
+    </p>
+  </div>
+</div>
+
+<!-- P4: 撮影の進め方 -->
+<div class="page">
+  <span class="page-num">04 / 06</span>
+  <span class="tag">Shooting Method</span>
+  <div class="deco-line"></div>
+  <h2>撮影の進め方</h2>
+  <p class="subtitle">1日の撮影で大量のコンテンツ素材を確保。後は澤田が編集して切り出す。</p>
+
+  <div class="flow-step">
+    <div class="flow-num">1</div>
+    <div class="flow-content">
+      <p class="flow-title">台本を複数パターン用意して撮りまくる</p>
+      <p class="flow-desc">
+        澤田が事前に5〜10本分の台本を用意。<br>
+        同じ台本でも角度・距離・トーンを変えて複数テイク撮影。<br>
+        1回の撮影セッションで30〜50クリップ確保が目標。
+      </p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="flow-num">2</div>
+    <div class="flow-content">
+      <p class="flow-title">画角バリエーションを意識する</p>
+      <p class="flow-desc">
+        ① 後ろ姿 × 部屋全体（世界観を見せる）<br>
+        ② 首から下のバストショット（声 × ビジュアルの核心）<br>
+        ③ 手元・口元（発声している感を出す）<br>
+        ④ 横から / 斜めから（深夜感・孤独感を演出）
+      </p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="flow-num">3</div>
+    <div class="flow-content">
+      <p class="flow-title">撮影データを澤田に渡す</p>
+      <p class="flow-desc">
+        演者の仕事はここで終わり。<br>
+        クリップをLINEやドライブで共有するだけ。
+      </p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="flow-num">4</div>
+    <div class="flow-content">
+      <p class="flow-title">澤田が編集 → TikTok・X・Fanboxに投稿</p>
+      <p class="flow-desc">
+        1回の撮影素材から複数本のTikTokを切り出す。<br>
+        編集・テロップ・BGM・投稿・CS対応・管理まで全部澤田担当。
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:8px">
+    <p class="card-title">撮影環境のポイント</p>
+    <p class="card-body" style="font-size:13px">
+      場所：ベッドのある薄暗い部屋 / 間接照明推奨<br>
+      衣装：谷間が見える部屋着（寝る前感）<br>
+      顔：映さない。首から下 or 後ろ姿で統一<br>
+      マイク：iPhoneの有線イヤホンマイクで十分（後でAdobe Podcastで音質補正）
+    </p>
+  </div>
+</div>
+
+<!-- P5: 台本の型 -->
+<div class="page">
+  <span class="page-num">05 / 06</span>
+  <span class="tag">Script Pattern</span>
+  <div class="deco-line"></div>
+  <h2>台本の型とギャップの仕込み方</h2>
+  <p class="subtitle">澤田が台本を作る際の設計ルール。</p>
+
+  <div class="card">
+    <p class="card-title">型① 発声練習型（基本）</p>
+    <p class="card-body">
+      ウグイス嬢として「今日の練習をしている」という体裁で進む。<br>
+      「バッターボックスに入りましたのは——」から始め、<br>
+      途中で素の独り言が漏れる構成にする。<br>
+      <span style="color:#c9a96e">▶ ギャップの仕込み：声はプロ / 場所は深夜のベッド / 画は部屋着</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <p class="card-title">型② 本音漏れ型</p>
+    <p class="card-body">
+      「球場では言えないこと」を深夜に一人でつぶやく。<br>
+      4番選手への感情、試合前の緊張、声が震えた瞬間…<br>
+      真面目な仕事の裏にある人間っぽさを出す。<br>
+      <span style="color:#c9a96e">▶ ギャップの仕込み：内容は感情的 / 声はウグイス嬢口調のまま</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <p class="card-title">型③ ASMR練習型</p>
+    <p class="card-body">
+      「明日の試合に向けて囁き練習」という設定。<br>
+      ウグイス嬢のセリフを極限まで小さな声で繰り返す。<br>
+      耳元に語りかけてくるような体験を作る。<br>
+      <span style="color:#c9a96e">▶ ギャップの仕込み：プロの声 × 囁き × 深夜のベッド</span>
+    </p>
+  </div>
+
+  <div class="script-row">
+    <span class="script-tag tsubo">壺ポイント</span>
+    <p class="script-text">「真面目な内容 + 意味深な間」が最もバズる。セリフの後に2〜3秒の無音を入れる。</p>
+  </div>
+  <div class="script-row">
+    <span class="script-tag tsubo">壺ポイント</span>
+    <p class="script-text">最後の一言だけ、急にウグイス嬢口調に戻す。このギャップで「保存・フォロー」が起きる。</p>
+  </div>
+  <div class="script-row">
+    <span class="script-tag ng">NG</span>
+    <p class="script-text">直接的なエロ表現は入れない。TikTokのBAN対象になるし、ミステリアス感が壊れる。</p>
+  </div>
+</div>
+
+<!-- P6: 投稿計画 -->
+<div class="page">
+  <span class="page-num">06 / 06</span>
+  <span class="tag">Posting Plan</span>
+  <div class="deco-line"></div>
+  <h2>投稿プランと役割分担</h2>
+  <p class="subtitle">演者は撮影だけ。残りは全部澤田が回す。</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>媒体</th>
+        <th>頻度</th>
+        <th>月本数</th>
+        <th>目的</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>TikTok</strong></td>
+        <td>週3本</td>
+        <td><span class="badge">月12本</span></td>
+        <td>FYPで新規認知。1本バズれば一気に数千フォロワー</td>
+      </tr>
+      <tr>
+        <td><strong>X（旧Twitter）</strong></td>
+        <td>週2本</td>
+        <td><span class="badge">月8本</span></td>
+        <td>TikTok転載＋コメント返信でファン化・固定化</td>
+      </tr>
+      <tr>
+        <td><strong>Fanbox</strong></td>
+        <td>週1本</td>
+        <td><span class="badge">月4本</span></td>
+        <td>月額500〜1,000円の限定動画・ボイスで課金回収</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <p class="card-title">役割分担</p>
+    <p class="card-body">
+      <strong style="color:#e090a0">演者（さくら）</strong>：撮影のみ。台本を読んで撮って送る。それだけ。<br>
+      <strong style="color:#90b0e0">澤田</strong>：台本制作 / 撮影ディレクション / 編集 / テロップ / 投稿 / CS対応 / 会計管理 / 戦略改善
+    </p>
+  </div>
+
+  <div class="highlight">
+    <p class="highlight-text" style="font-size:15px">
+      1回の撮影セッション（2〜3時間）で<br>
+      1ヶ月分のTikTok素材を確保できる設計にする。<br>
+      まず1回、撮りに行くだけでいい。
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
