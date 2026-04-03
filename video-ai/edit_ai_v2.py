@@ -277,6 +277,39 @@ def get_audio_duration(path: str) -> float:
             return 0.0
 
 
+def trim_silence(audio_path: str, threshold_db: float = -40.0,
+                 min_silence_ms: int = 50) -> str:
+    """ナレーションmp3の先頭・末尾の無音をトリムしたファイルを返す。
+    ffmpegのsilenceremoveフィルタで先頭・末尾を処理。元ファイルを上書き。
+    """
+    import shutil
+    trimmed = audio_path + ".trimmed.mp3"
+    try:
+        # ffmpeg silenceremove: start_periods=1で先頭無音除去、stop_periods=1で末尾無音除去
+        threshold_amp = 10 ** (threshold_db / 20)  # dB → 振幅比
+        cmd = [
+            _FFMPEG, "-y", "-i", audio_path,
+            "-af", (
+                f"silenceremove=start_periods=1:start_threshold={threshold_amp}"
+                f",areverse"
+                f",silenceremove=start_periods=1:start_threshold={threshold_amp}"
+                f",areverse"
+            ),
+            "-q:a", "2", trimmed
+        ]
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        if r.returncode == 0 and Path(trimmed).exists() and Path(trimmed).stat().st_size > 0:
+            shutil.move(trimmed, audio_path)
+        else:
+            # トリム失敗 → 元ファイルのまま
+            if Path(trimmed).exists():
+                Path(trimmed).unlink()
+    except Exception:
+        if Path(trimmed).exists():
+            Path(trimmed).unlink()
+    return audio_path
+
+
 # ─── Fish Audio: シーン単位TTS（同期方式の核心） ──────────────
 def _fish_tts_single(text: str, fish_key: str, output_path: str,
                      reference_id: str | None, speed: float) -> bool:
@@ -338,6 +371,7 @@ def generate_scene_narrations(
         tts_text = normalize_text_for_tts(scene.text)
         ok = _fish_tts_single(tts_text, fish_key, mp3_path, reference_id, effective_speed)
         if ok:
+            trim_silence(mp3_path)  # v13: 先頭・末尾の無音をカット
             dur = get_audio_duration(mp3_path)
             print(f"      🎙  S{scene.no:02d} → {dur:.2f}s")
             results.append((mp3_path, max(dur, MIN_DURATION)))
@@ -439,15 +473,17 @@ EMPHASIS_WORDS = ["臭い", "臭く", "ツーン", "病気", "悩む", "97%OFF",
 
 
 # ── 台本パーサ（CSV） ──────────────────────────────────────
-def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str | None]:
+def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str | None, int]:
     """
     新フォーマットCSV台本をパース。
-    返値: (scenes, global_annotation, voice_category, bgm_filename)
+    返値: (scenes, global_annotation, voice_category, bgm_filename, ref_level)
+    ref_level: 参考動画の反映レベル (1=エッセンス, 2=スタイル踏襲, 3=完全トレース)
     """
     scenes: list[Scene] = []
     global_annotation = ""
     voice_category: str | None = None
     bgm_filename: str | None = None
+    ref_level: int = 2  # デフォルト: スタイル踏襲（現状の動作）
 
     with open(csv_path, encoding="utf-8-sig", newline="") as f:
         rows = list(csv.reader(f))
@@ -467,6 +503,8 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str |
             mode = "anno"
         elif "■ BGM設定" in col0 or "■ BGM" in col0:
             mode = "bgm"
+        elif "■ 参考動画設定" in col0 or "■ 参考動画" in col0:
+            mode = "ref"
         elif "■素材フォルダー" in col0 or "■ スタイル" in col0:
             mode = "other"
         elif "■ 台本" in col0:
@@ -481,6 +519,15 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str |
             if key == "声のカテゴリー" and val:
                 # "女性・クール（健康食品・サプリ向き" → "女性・クール" に正規化
                 voice_category = val.split("（")[0].strip()
+
+        elif mode == "ref":
+            key = col0
+            val = row[1].strip() if len(row) > 1 else ""
+            if "反映レベル" in key and val:
+                # "1", "2", "3" or "1（エッセンス）" → 先頭数字を抽出
+                m = re.match(r"(\d)", val)
+                if m:
+                    ref_level = max(1, min(3, int(m.group(1))))
 
         elif mode == "bgm":
             key = col0
@@ -540,7 +587,7 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str |
     if bgm_filename:
         print(f"  🎵 BGM: {bgm_filename}")
     print(f"\n台本パース完了 (CSV): {len(scenes)} シーン / 声: {voice_category or 'デフォルト'}")
-    return scenes, global_annotation, voice_category, bgm_filename
+    return scenes, global_annotation, voice_category, bgm_filename, ref_level
 
 
 def _parse_clip_refs_csv(raw: str) -> list[str]:
@@ -751,6 +798,26 @@ def make_annotation_overlay(text: str, size: tuple, y_start: int = 30) -> np.nda
     return np.array(img)
 
 
+# ── テロップ テキストクリーニング ──────────────────────────────
+def clean_telop_text(text: str) -> str:
+    """テロップ用テキストクリーニング。ショート動画に不要な句読点・引用符を除去。
+    削除: 、。「」
+    残す: …！？※（感情・余韻・注釈の演出意図）
+    """
+    # ※以降は注釈なので分離して保持
+    if "※" in text:
+        idx = text.index("※")
+        main = text[:idx]
+        sub = text[idx:]  # ※以降はそのまま保持
+    else:
+        main = text
+        sub = ""
+    # 句読点・引用符を除去
+    for ch in "、。「」":
+        main = main.replace(ch, "")
+    return (main + sub).strip()
+
+
 # ── テロップ画像生成 ──────────────────────────────────────
 def _hex_to_rgba(hex_color: str, alpha: int = 255) -> tuple:
     """'#RRGGBB' → (R, G, B, A)"""
@@ -770,7 +837,7 @@ def calc_dynamic_font_size(text: str, emphasis: bool,
     → 文字数が少ないほど大きく、多いほど小さく。自由度を最大化する。
     出力範囲: 40px〜100px（参考動画の30〜80pxを9:16全画面用にスケール）
     """
-    clean = text.split("※")[0].strip().replace("\n", "")
+    clean = clean_telop_text(text).split("※")[0].strip().replace("\n", "")
     char_count = len(clean)
 
     # 文字数→フォントサイズ: 線形補間（参考動画のパターンを再現）
@@ -816,6 +883,9 @@ def make_telop(text: str, size: tuple, emphasis: bool = False,
     w, h = size
     img  = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
+
+    # 句読点フィルタ（v13: ショート動画に不要な、。「」を除去）
+    text = clean_telop_text(text)
 
     # ※ でメインテキストと注釈テキストに分割
     if "※" in text:
@@ -1290,12 +1360,14 @@ def build_scene_clip(scene: Scene, clips_dir: str,
 
 
 # ── メイン ────────────────────────────────────────────────
-def analyze_reference_video(ref_path: str, gemini_key: str) -> dict:
+def analyze_reference_video(ref_path: str, gemini_key: str, ref_level: int = 2) -> dict:
     """
     参考動画からテロップスタイル + カットテンポを抽出。
+    ref_level: 1=エッセンス（テロップ感だけ）, 2=スタイル踏襲（現状）, 3=完全トレース（カット秒数まで）
     返値例: {"font_size": 72, "telop_y_ratio": 0.75, "avg_cut_sec": 1.8, "tempo": "fast"}
     """
-    print(f"\n🎬 参考動画解析中: {Path(ref_path).name}")
+    level_names = {1: "エッセンス", 2: "スタイル踏襲", 3: "完全トレース"}
+    print(f"\n🎬 参考動画解析中: {Path(ref_path).name} [反映Lv.{ref_level}: {level_names.get(ref_level, '?')}]")
     style = {}
 
     # === ① カットテンポ（ffmpeg scene detection）===
@@ -1462,11 +1534,25 @@ def analyze_reference_video(ref_path: str, gemini_key: str) -> dict:
         style["telop_y_ratio"] = round((OUT_H - 40 - total_telop_h // 2) / OUT_H, 2)
         style["_layout_note"] += " | ⚠下はみ出し補正"
 
-    # カラーはレイアウトを問わず転用
+    # レベル1（エッセンス）: テロップスタイル詳細は使わない。カットテンポ + デフォルトスタイル
+    if ref_level == 1:
+        style["font_size"]      = FONT_SIZE
+        style["font_emph_size"] = FONT_EMPH_SIZE
+        style["telop_y_ratio"]  = TELOP_Y_RATIO
+        style["_layout_note"]   = "Lv.1 エッセンス: テンポのみ参考、スタイルは独自"
+        print(f"  ✅ Lv.1 エッセンス: テンポ情報のみ使用、テロップスタイルは独自デフォルト")
+        return style
+
+    # カラーはレイアウトを問わず転用（レベル2以上）
     if layout_info.get("telop_color"):
         style["telop_color"]  = layout_info["telop_color"]
     if layout_info.get("outline_color"):
         style["outline_color"] = layout_info["outline_color"]
+
+    # レベル3（完全トレース）: 各カットの秒数リストを返す
+    if ref_level == 3 and "cut_count" in style:
+        style["_trace_mode"] = True
+        print(f"  🎯 Lv.3 完全トレース: カット秒数まで再現")
 
     print(f"  ✅ スタイル変換完了: font={style.get('font_size')}px "
           f"y={style.get('telop_y_ratio')} | {style.get('_layout_note','')}")
@@ -1500,8 +1586,9 @@ def main():
     print("\n📄 台本パース中...")
     csv_voice_category = None
     bgm_filename = None
+    ref_level = 2  # デフォルト: スタイル踏襲
     if args.script.lower().endswith(".csv"):
-        scenes, global_annotation, csv_voice_category, bgm_filename = parse_script_csv(args.script)
+        scenes, global_annotation, csv_voice_category, bgm_filename, ref_level = parse_script_csv(args.script)
     else:
         scenes, global_annotation = parse_script(args.script)
 
@@ -1510,7 +1597,7 @@ def main():
     # 参考動画スタイル抽出
     style = {}
     if args.ref_video and gemini_key:
-        style = analyze_reference_video(args.ref_video, gemini_key)
+        style = analyze_reference_video(args.ref_video, gemini_key, ref_level=ref_level)
 
     # 声カテゴリー決定（CLI > CSV > デフォルト）
     effective_voice = args.voice or csv_voice_category

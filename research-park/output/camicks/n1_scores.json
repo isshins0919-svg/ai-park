@@ -1,0 +1,23 @@
+{
+  "潜在層": {
+    "only1Gap": 0.211,
+    "uspMatch": 0.69,
+    "demandReality": 0.803,
+    "competitorWeakness": 0.651,
+    "totalScore": 0.569
+  },
+  "準顕在層": {
+    "only1Gap": 0.252,
+    "uspMatch": 0.747,
+    "demandReality": 0.78,
+    "competitorWeakness": 0.651,
+    "totalScore": 0.592
+  },
+  "顕在層": {
+    "only1Gap": 0.281,
+    "uspMatch": 0.771,
+    "demandReality": 0.8,
+    "competitorWeakness": 0.651,
+    "totalScore": 0.613
+  }
+}
