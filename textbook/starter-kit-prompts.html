@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>07 AI Park 体験プロンプト集 — AI教科書</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Kaisei+Decol&family=Zen+Maru+Gothic:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Zen Maru Gothic", -apple-system, "Hiragino Sans", sans-serif;
+    background: #0f0f13;
+    color: #e8e8f0;
+    line-height: 1.8;
+  }
+
+  /* ===== Nav ===== */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #1a1a24;
+    position: sticky;
+    top: 0;
+    background: rgba(15,15,19,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .nav a { color: #7c7c9a; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .nav a:hover { color: #D97706; }
+  .nav .title-link { font-weight: 700; color: #D97706; }
+
+  /* ===== Hero ===== */
+  .hero {
+    text-align: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(170deg, #1a2840 0%, #0f1828 50%, #1a1a24 100%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(217,119,6,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(217,119,6,0.15);
+    color: #D97706;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 20px;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: "Kaisei Decol", serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, #D97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    color: #7c7c9a;
+    font-size: 15px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ===== How to Use ===== */
+  .howto {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 0;
+  }
+  .howto-title {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    color: #e8e8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .howto-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .howto-step {
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+  .howto-step .step-num {
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background: #D97706;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .howto-step h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: #e8e8f0; }
+  .howto-step p { font-size: 13px; color: #7c7c9a; line-height: 1.6; }
+  .howto-step code {
+    font-family: "JetBrains Mono", monospace;
+    background: rgba(217,119,6,0.15);
+    color: #F59E0B;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  /* ===== Section ===== */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 24px 0;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .section-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #e8e8f0;
+  }
+  .section-desc {
+    color: #7c7c9a;
+    font-size: 14px;
+    margin-bottom: 28px;
+    padding-left: 52px;
+  }
+
+  /* ===== Prompt Card ===== */
+  .prompt-card {
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .prompt-card:hover { border-color: #3a3a5a; }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #2a2a3a;
+    cursor: pointer;
+    user-select: none;
+  }
+  .prompt-header:hover { background: rgba(255,255,255,0.02); }
+
+  .prompt-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #D97706;
+    background: rgba(217,119,6,0.15);
+    padding: 3px 10px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .prompt-title-area { flex: 1; }
+  .prompt-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e8e8f0;
+    line-height: 1.4;
+  }
+  .prompt-subtitle {
+    font-size: 12px;
+    color: #5a5a7a;
+    margin-top: 2px;
+  }
+  .prompt-tags {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .tag-skill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+  .tag-beginner { background: rgba(16,185,129,0.15); color: #10b981; }
+  .tag-practical { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .tag-wow { background: rgba(217,119,6,0.15); color: #D97706; }
+  .expand-icon {
+    color: #5a5a7a;
+    font-size: 18px;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .prompt-card.open .expand-icon { transform: rotate(180deg); }
+
+  .prompt-detail {
+    display: none;
+    padding: 0 20px 20px;
+  }
+  .prompt-card.open .prompt-detail { display: block; }
+
+  /* What & Output */
+  .what-output {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 640px) { .what-output { grid-template-columns: 1fr; } }
+  .what-box, .output-box {
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .what-box {
+    background: rgba(96,165,250,0.08);
+    border: 1px solid rgba(96,165,250,0.15);
+  }
+  .what-box .box-label { font-size: 11px; font-weight: 700; color: #60a5fa; margin-bottom: 6px; letter-spacing: 0.1em; }
+  .output-box {
+    background: rgba(16,185,129,0.08);
+    border: 1px solid rgba(16,185,129,0.15);
+  }
+  .output-box .box-label { font-size: 11px; font-weight: 700; color: #10b981; margin-bottom: 6px; letter-spacing: 0.1em; }
+  .output-box ul, .what-box ul { padding-left: 18px; }
+  .output-box li, .what-box li { margin-bottom: 4px; color: #b0b0c8; }
+
+  /* Code Block */
+  .prompt-code-wrap {
+    position: relative;
+    margin-bottom: 12px;
+  }
+  .prompt-code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    background: #12121a;
+    border: 1px solid #2a2a3a;
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: #e8e8f0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow-x: auto;
+  }
+  .prompt-code .comment { color: #5a5a7a; }
+  .prompt-code .command { color: #D97706; font-weight: 600; }
+  .prompt-code .highlight { color: #10b981; }
+  .prompt-code .user-edit { color: #f472b6; background: rgba(244,114,182,0.1); padding: 0 4px; border-radius: 3px; }
+
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(217,119,6,0.2);
+    color: #D97706;
+    border: none;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover { background: rgba(217,119,6,0.4); }
+  .copy-btn.copied { background: rgba(16,185,129,0.3); color: #10b981; }
+
+  /* Tip */
+  .prompt-tip {
+    background: rgba(167,139,250,0.08);
+    border: 1px solid rgba(167,139,250,0.15);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #a78bfa;
+    line-height: 1.7;
+  }
+  .prompt-tip strong { color: #c4b5fd; }
+
+  /* ===== Skill Map ===== */
+  .skill-map {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 24px 0;
+  }
+  .skill-map h2 {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    color: #e8e8f0;
+    text-align: center;
+  }
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .map-item {
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    border-radius: 12px;
+    padding: 16px;
+    transition: border-color 0.2s;
+  }
+  .map-item:hover { border-color: #D97706; }
+  .map-item .map-cmd {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: #D97706;
+    margin-bottom: 4px;
+  }
+  .map-item .map-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #e8e8f0;
+    margin-bottom: 4px;
+  }
+  .map-item .map-desc {
+    font-size: 12px;
+    color: #7c7c9a;
+    line-height: 1.6;
+  }
+  .map-category {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    font-weight: 700;
+    color: #5a5a7a;
+    padding: 12px 0 4px;
+    border-bottom: 1px solid #2a2a3a;
+    letter-spacing: 0.1em;
+  }
+
+  /* ===== Flow Diagram ===== */
+  .flow-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 24px 0;
+  }
+  .flow-section h2 { font-size: 22px; font-weight: 900; margin-bottom: 8px; color: #e8e8f0; text-align: center; }
+  .flow-section .flow-sub { color: #7c7c9a; font-size: 14px; text-align: center; margin-bottom: 28px; }
+  .flow-pipe {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .flow-node {
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+    padding: 20px 12px;
+    border: 1px solid #2a2a3a;
+    position: relative;
+  }
+  .flow-node:first-child { border-radius: 12px 0 0 12px; }
+  .flow-node:last-child { border-radius: 0 12px 12px 0; }
+  .flow-node:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #2a2a3a;
+    z-index: 2;
+  }
+  .flow-node .node-icon { font-size: 28px; margin-bottom: 6px; }
+  .flow-node .node-title { font-size: 13px; font-weight: 700; color: #e8e8f0; margin-bottom: 4px; }
+  .flow-node .node-cmd {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: #D97706;
+  }
+  .flow-node .node-desc { font-size: 11px; color: #5a5a7a; margin-top: 4px; }
+  .flow-node:nth-child(1) { background: rgba(167,139,250,0.06); }
+  .flow-node:nth-child(2) { background: rgba(96,165,250,0.06); }
+  .flow-node:nth-child(3) { background: rgba(16,185,129,0.06); }
+  .flow-node:nth-child(4) { background: rgba(217,119,6,0.06); }
+
+  /* ===== CTA ===== */
+  .cta-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 24px;
+    text-align: center;
+  }
+  .cta-box {
+    background: linear-gradient(135deg, rgba(217,119,6,0.1), rgba(96,165,250,0.05));
+    border: 1px solid rgba(217,119,6,0.2);
+    border-radius: 20px;
+    padding: 40px;
+  }
+  .cta-box h2 { font-size: 24px; font-weight: 900; margin-bottom: 12px; }
+  .cta-box p { color: #7c7c9a; font-size: 14px; margin-bottom: 20px; line-height: 1.8; }
+  .cta-box .cta-steps {
+    display: inline-block;
+    text-align: left;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    line-height: 2.2;
+    color: #D97706;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid #1a1a24;
+  }
+  .footer p { color: #3a3a4a; font-size: 12px; }
+
+  @media (max-width: 640px) {
+    .prompt-tags { display: none; }
+    .map-grid { grid-template-columns: 1fr; }
+    .flow-pipe { flex-direction: column; }
+    .flow-node { border-radius: 12px !important; min-width: auto; }
+    .flow-node:not(:last-child)::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Nav ===== -->
+<div class="nav">
+  <a href="index.html">&larr; 教科書一覧</a>
+  <a class="title-link" href="index.html">AI 教科書</a>
+  <a href="agent-evolution.html">前の教材 &rarr;</a>
+</div>
+
+<!-- ===== Hero ===== -->
+<div class="hero">
+  <div class="hero-badge">TEXTBOOK 07 &mdash; HANDS-ON</div>
+  <h1>AI Park 体験プロンプト集</h1>
+  <p>スターターキットをインストールしたら、<br>このプロンプトをコピペするだけ。<br>AIエージェントの力を30秒で体験できます。</p>
+</div>
+
+<!-- ===== How to Use ===== -->
+<div class="howto">
+  <div class="howto-title">&#x1F3AF; 使い方（3ステップ）</div>
+  <div class="howto-steps">
+    <div class="howto-step">
+      <div class="step-num">1</div>
+      <h3>ZIPを解凍して配置</h3>
+      <p><code>.claude/</code> フォルダと <code>CLAUDE.md</code> を<br>あなたの作業フォルダにコピー</p>
+    </div>
+    <div class="howto-step">
+      <div class="step-num">2</div>
+      <h3>Claude Code を起動</h3>
+      <p>ターミナルで <code>claude</code> と入力。<br>スキルが自動的に読み込まれます</p>
+    </div>
+    <div class="howto-step">
+      <div class="step-num">3</div>
+      <h3>プロンプトをコピペ！</h3>
+      <p>下のプロンプトをそのまま貼り付け。<br><span style="color:#D97706;font-weight:700;">ピンク文字</span>の部分だけ自分用に変更</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- SECTION 1: 初めの一歩 -->
+<!-- ===================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(16,185,129,0.15);">&#x1F331;</div>
+    <h2>初めの一歩 &#x2014; まずはこれを試そう</h2>
+  </div>
+  <p class="section-desc">Claude Code自体をまだ触ったことがない人向け。AIとの会話の基本を体験しよう。</p>
+
+  <!-- P01 -->
+  <div class="prompt-card open">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">01</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">自己紹介してもらおう</div>
+        <div class="prompt-subtitle">Claude Codeの基本的な対話を体験</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-beginner">30秒</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          AIに自己紹介してもらう。Claude Codeがただのチャットボットではなく、ファイル操作やコード実行ができる「作業者」であることがわかる。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>AIが自分の能力を説明してくれる</li>
+            <li>何ができるか・できないかが明確に</li>
+            <li>会話のキャッチボールの感覚がつかめる</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code">あなたはどんなAIですか？
+普通のChatGPTと何が違うのか、
+初心者にもわかるように教えてください。</div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 返答が来たら「もっと具体的に」「例を出して」と深掘りしてみよう。AIは会話を重ねるほど的確になる。</div>
+    </div>
+  </div>
+
+  <!-- P02 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">02</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">議事録を3秒で要約する</div>
+        <div class="prompt-subtitle">テキスト処理の圧倒的な速さを体験</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-beginner">1分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          長い文章をAIに読ませて一瞬で要約してもらう。人間なら10分かかる作業がたった3秒。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>要約 + 決定事項 + TODO一覧</li>
+            <li>構造化された分かりやすいまとめ</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code">以下の議事録を要約してください。
+フォーマット:
+1. 要約（3行以内）
+2. 決定事項（箇条書き）
+3. 次回までのTODO（担当者つき）
+
+---
+<span class="user-edit">（ここに議事録のテキストを貼り付け）</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 議事録がなければ、最近のメールやSlackの長文を貼ってもOK。「AIにテキストを食わせる」感覚をつかもう。</div>
+    </div>
+  </div>
+
+  <!-- P03 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">03</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">ブレスト相手になってもらう</div>
+        <div class="prompt-subtitle">AIを「壁打ち相手」として使う感覚を体験</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-beginner">3分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          お題を投げると、AIがアイデアをバンバン出してくれる。一人で悩む時間がゼロに。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>10個のアイデア候補</li>
+            <li>それぞれの長所・短所</li>
+            <li>おすすめTOP3の理由</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code">あなたはブレインストーミングの達人です。
+
+テーマ: <span class="user-edit">新商品のキャッチコピーを考えたい</span>
+
+## 商品情報
+- 商品名: <span class="user-edit">（あなたの商品名）</span>
+- ターゲット: <span class="user-edit">（誰に売りたいか）</span>
+- 特徴: <span class="user-edit">（一番の売りポイント）</span>
+
+これに対してアイデアを10個出してください。
+それぞれ一行のコピー + 狙いの解説つきで。
+最後にTOP3を選んで理由も教えてください。</div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 「もっと攻めたやつ」「女性向けに振って」など、追加指示でどんどん方向を変えられる。AIは何回やり直しても嫌な顔しない。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- SECTION 2: スキルを呼び出す -->
+<!-- ========================= -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(96,165,250,0.15);">&#x26A1;</div>
+    <h2>スキルを呼び出す &#x2014; AI Parkの本領発揮</h2>
+  </div>
+  <p class="section-desc">スターターキットに入っている専門スキルを <code>/コマンド名</code> で起動する。1つのプロンプトで、プロ品質のアウトプットが出る。</p>
+
+  <!-- P04 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">04</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">提案書を一瞬で作る</div>
+        <div class="prompt-subtitle">/proposal-park &mdash; ミーティング前に5分で完成</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-practical">5分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          「誰に」「何を提案するか」だけ伝えれば、AIが構造化された提案書を自動生成。問題分析・インサイト・解決策・ROI試算まで入る。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>構造化された提案書（マークダウン）</li>
+            <li>問題→インサイト→解決策→ROIの流れ</li>
+            <li>そのまま使える品質</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code"><span class="command">/proposal-park</span>
+
+提案先: <span class="user-edit">株式会社〇〇のマーケティング部長</span>
+課題: <span class="user-edit">Web広告のCPAが高騰していて、新規獲得が厳しい</span>
+予算感: <span class="user-edit">月50万円</span>
+提案の方向性: <span class="user-edit">記事LPを活用した指名検索狙いの施策</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 提案先の情報を詳しく書くほど、提案の精度が上がる。業界・会社規模・過去施策なども入れてみよう。</div>
+    </div>
+  </div>
+
+  <!-- P05 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">05</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">ミーティングの事前準備を自動化</div>
+        <div class="prompt-subtitle">/meeting-prep &mdash; アジェンダ・想定Q&A・地雷ポイントまで</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-practical">3分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          ミーティングの概要を伝えるだけで、アジェンダ・想定質問・回答方針・要注意ポイントを整理してくれる。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>タイムライン付きアジェンダ</li>
+            <li>想定される質問と回答戦略</li>
+            <li>避けるべき地雷トピック</li>
+            <li>ミーティング後のフォローアップ案</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code"><span class="command">/meeting-prep</span>
+
+ミーティング名: <span class="user-edit">〇〇社 月次レビュー</span>
+目的: <span class="user-edit">先月の広告実績報告 + 来月の施策提案</span>
+参加者: <span class="user-edit">先方のマーケ部長・広報担当 / こちらは営業 + 自分</span>
+懸念事項: <span class="user-edit">先月のCVRが下がっているので突っ込まれるかも</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 「懸念事項」を正直に書くのがコツ。AIが先回りして対策を考えてくれる。</div>
+    </div>
+  </div>
+
+  <!-- P06 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">06</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">コンセプトを対話で磨き上げる</div>
+        <div class="prompt-subtitle">/concept-park &mdash; マーケの師匠AIと壁打ち</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-wow">10分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          商品のコンセプト設計を対話形式で進める。AIが「それ本質ちゃうくない？」と突っ込みながら、一緒にコンセプトを磨いてくれる。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>コアコンセプト文</li>
+            <li>ターゲット像（N1ペルソナ）</li>
+            <li>キービジュアルの方向性</li>
+            <li>キャッチコピー候補</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code"><span class="command">/concept-park</span>
+
+商品名: <span class="user-edit">（あなたの商品名）</span>
+カテゴリ: <span class="user-edit">（例: 美容サプリ / SaaS / アパレル）</span>
+ターゲット: <span class="user-edit">（例: 30代女性・乾燥肌に悩んでいる）</span>
+競合との違い: <span class="user-edit">（一番のUSPを一文で）</span>
+現状の課題: <span class="user-edit">（例: LP作ったけどCVRが低い）</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> AIが質問を返してくるので対話を続けよう。3-4往復するとコンセプトが一気に研ぎ澄まされる。</div>
+    </div>
+  </div>
+
+  <!-- P07 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">07</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">バナー広告を量産する</div>
+        <div class="prompt-subtitle">/banner-park &mdash; コンセプトからバナー群を一気に生成</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-wow">15分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          商品情報を渡すと、コンセプト設計→コピーライティング→画像生成を一気通貫で実行。N1に刺さるバナーが量産される。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>5〜20枚のバナー画像</li>
+            <li>各バナーのコンセプト・コピー解説</li>
+            <li>HTMLレポート（一覧で比較可能）</li>
+            <li>品質ゲート通過済みの実用レベル</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code"><span class="command">/banner-park</span>
+
+商品名: <span class="user-edit">（あなたの商品名）</span>
+ターゲット: <span class="user-edit">（例: 40代男性・薄毛を気にし始めた）</span>
+商品の特徴: <span class="user-edit">（例: 医薬部外品の育毛剤。臨床試験で92%が実感）</span>
+媒体: <span class="user-edit">（例: Meta広告 / Google Display / LINE）</span>
+サイズ: <span class="user-edit">（例: 1200x628 / 1080x1080）</span>
+枚数: <span class="user-edit">5枚</span>
+参考にしたい方向性: <span class="user-edit">（あれば。例: 権威型 / 体験談型 / 比較型）</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 「参考にしたい方向性」を書くとAIの提案が絞られる。最初は書かずに出して、AIの提案を見てから方向を指定するのもアリ。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================ -->
+<!-- SECTION 3: マルチエージェントを体験 -->
+<!-- ================================ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(217,119,6,0.15);">&#x1F525;</div>
+    <h2>マルチエージェント体験 &#x2014; AIチームが動く</h2>
+  </div>
+  <p class="section-desc">1つのコマンドで、複数のAI専門家が並列で動く。スコアリング、診断、改善提案まで全自動。これがAI Parkの真骨頂。</p>
+
+  <!-- P08 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">08</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">記事LPを8人のAI専門家が診断</div>
+        <div class="prompt-subtitle">/article-fb-cmo &mdash; フック・信頼・CTA・競合…8軸同時分析</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-wow">5分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          記事LPのHTMLを渡すと、8人のAI専門家が並列で分析。フック強度・感情アーク・信頼構造・CTA・オファー・競合比較の全方位診断。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>8軸のスコア（100点満点）</li>
+            <li>総合判定: GO / REVISE / BLOCK</li>
+            <li>最優先の修正ポイント3つ</li>
+            <li>具体的な修正案（書き換え例つき）</li>
+            <li>A/Bテスト設計案</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code"><span class="command">/article-fb-cmo</span>
+
+<span class="user-edit">（記事LPのHTMLファイルパスを貼り付け）
+例: /Users/自分の名前/Desktop/my-article.html</span>
+
+<span class="comment">※ HTMLファイルがない場合は、記事LPのテキストをそのまま貼り付けてもOK</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> これが「マルチエージェント」の威力。人間1人で同じ分析をやったら丸1日。AIチームなら5分。診断結果が出たら「一番スコアが低い項目を改善して」と追加指示もできる。</div>
+    </div>
+  </div>
+
+  <!-- P09 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">09</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">市場調査から戦略を自動設計</div>
+        <div class="prompt-subtitle">/research-park &mdash; 競合・市場・N1を一気に分析</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-wow">10分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          商品情報を伝えるだけで、市場の需要構造・競合ポジション・ターゲット心理を分析し、マーケティング戦略を設計してくれる。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>市場需要の3層分析（顕在/準顕在/潜在）</li>
+            <li>競合ポジショニングマップ</li>
+            <li>N1ペルソナ（超具体的なターゲット像）</li>
+            <li>メッセージング戦略（刺さる訴求軸）</li>
+            <li>strategy.json（他スキルと連携するデータ）</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code"><span class="command">/research-park</span>
+
+商品名: <span class="user-edit">（あなたの商品名）</span>
+カテゴリ: <span class="user-edit">（例: オーガニックシャンプー）</span>
+ターゲット層: <span class="user-edit">（例: 30代女性・髪のパサつきが気になる）</span>
+競合: <span class="user-edit">（例: ボタニスト、YOLU、&honey）</span>
+価格帯: <span class="user-edit">（例: 2,980円/本）</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> Research Parkの結果は、そのあとの /concept-park や /banner-park に自動で引き継がれる。つまり「調査→コンセプト→バナー」が全部つながる。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- SECTION 4: 日常業務を楽にする -->
+<!-- ========================= -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(167,139,250,0.15);">&#x2728;</div>
+    <h2>日常業務を楽にする &#x2014; 地味だけど毎日効く</h2>
+  </div>
+  <p class="section-desc">派手さはないけど、毎日の仕事で「これ楽になったわ…」と実感するプロンプトたち。</p>
+
+  <!-- P10 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">10</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">メール文面を3パターン作る</div>
+        <div class="prompt-subtitle">トーン別に一気出し &mdash; 選ぶだけでOK</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-beginner">1分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          送りたいメールの要件を伝えると、フォーマル・カジュアル・簡潔の3パターンを出してくれる。あとは好みを選ぶだけ。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>3パターンの完成メール文面</li>
+            <li>件名の候補もセット</li>
+            <li>コピペしてすぐ送れる品質</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code">以下の内容でメールを3パターン書いてください。
+A: フォーマル（初めての相手向け）
+B: カジュアル（関係性のある相手向け）
+C: 簡潔版（忙しい相手向け・5行以内）
+
+## メールの要件
+- 宛先: <span class="user-edit">〇〇株式会社 田中様</span>
+- 目的: <span class="user-edit">来週の打ち合わせの日程調整</span>
+- 伝えたいこと: <span class="user-edit">水曜か木曜の午後で1時間いただきたい</span>
+- 補足: <span class="user-edit">前回のミーティングのお礼も入れたい</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 「Bをベースにもう少し丁寧にして」のように、パターンを混ぜることもできる。</div>
+    </div>
+  </div>
+
+  <!-- P11 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">11</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">週次振り返りを構造化する</div>
+        <div class="prompt-subtitle">/weekly-review &mdash; 今週の学び×来週の計画</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-practical">5分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          今週やったことを箇条書きで渡すだけで、振り返り＋来週の優先順位を構造化してくれる。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>今週の成果まとめ</li>
+            <li>達成/未達の整理</li>
+            <li>学びと改善ポイント</li>
+            <li>来週のTOP5優先タスク</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code"><span class="command">/weekly-review</span>
+
+## 今週やったこと
+- <span class="user-edit">〇〇クライアントのバナー5本制作</span>
+- <span class="user-edit">記事LPのABテスト結果分析</span>
+- <span class="user-edit">新規クライアントとの初回MTG</span>
+- <span class="user-edit">社内勉強会の資料作成</span>
+
+## うまくいったこと
+- <span class="user-edit">バナーのCTR前回比1.5倍</span>
+
+## 課題
+- <span class="user-edit">記事LPのCVRが目標未達</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 毎週金曜に5分だけAIと振り返る習慣がつくと、自分の成長パターンが見えてくる。</div>
+    </div>
+  </div>
+
+  <!-- P12 -->
+  <div class="prompt-card">
+    <div class="prompt-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="prompt-num">12</span>
+      <div class="prompt-title-area">
+        <div class="prompt-title">コーチングで思考を整理する</div>
+        <div class="prompt-subtitle">/coach &mdash; AIコーチが問いかけてくれる</div>
+      </div>
+      <div class="prompt-tags"><span class="tag-skill tag-practical">5分</span></div>
+      <span class="expand-icon">&#x25BC;</span>
+    </div>
+    <div class="prompt-detail">
+      <div class="what-output">
+        <div class="what-box">
+          <div class="box-label">&#x1F4A1; なにをするの？</div>
+          モヤモヤ・悩み・迷いをAIに話すと、コーチングの手法で思考を整理してくれる。答えを教えるんじゃなく「気づかせてくれる」。
+        </div>
+        <div class="output-box">
+          <div class="box-label">&#x1F381; なにが出てくる？</div>
+          <ul>
+            <li>状況の客観的な整理</li>
+            <li>パターン・傾向の指摘</li>
+            <li>1つの具体的なアクション提案</li>
+            <li>深掘りの問いかけ</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prompt-code-wrap">
+        <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+        <div class="prompt-code"><span class="command">/coach</span>
+
+最近の状況:
+<span class="user-edit">仕事は忙しいけど、成長してる実感がない。
+タスクをこなすだけで終わってる気がする。
+もっとクリエイティブな仕事がしたいけど、時間がない。</span></div>
+      </div>
+      <div class="prompt-tip"><strong>&#x1F4AC; ポイント:</strong> 正解がない悩みこそAIコーチの出番。「もう少し深掘りして」と言えば、さらに核心に迫ってくれる。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Flow Diagram ===== -->
+<div class="flow-section">
+  <h2>&#x1F504; スキルのつながり（パイプライン）</h2>
+  <p class="flow-sub">スキル同士がデータを受け渡す。調査→設計→制作→評価が全自動で流れる。</p>
+  <div class="flow-pipe">
+    <div class="flow-node">
+      <div class="node-icon">&#x1F50D;</div>
+      <div class="node-title">リサーチ</div>
+      <div class="node-cmd">/research-park</div>
+      <div class="node-desc">市場・競合・N1を分析</div>
+    </div>
+    <div class="flow-node">
+      <div class="node-icon">&#x1F4A1;</div>
+      <div class="node-title">コンセプト設計</div>
+      <div class="node-cmd">/concept-park</div>
+      <div class="node-desc">戦略をコンセプトに変換</div>
+    </div>
+    <div class="flow-node">
+      <div class="node-icon">&#x1F3A8;</div>
+      <div class="node-title">クリエイティブ制作</div>
+      <div class="node-cmd">/banner-park 等</div>
+      <div class="node-desc">バナー・動画・記事LP</div>
+    </div>
+    <div class="flow-node">
+      <div class="node-icon">&#x2705;</div>
+      <div class="node-title">品質評価</div>
+      <div class="node-cmd">/article-fb-cmo 等</div>
+      <div class="node-desc">8エージェント診断</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Full Skill Map ===== -->
+<div class="skill-map">
+  <h2>&#x1F5FA; 全スキル一覧</h2>
+
+  <div class="map-grid">
+    <div class="map-category">&#x1F3A8; クリエイティブ制作</div>
+    <div class="map-item">
+      <div class="map-cmd">/banner-park</div>
+      <div class="map-name">バナー制作</div>
+      <div class="map-desc">N1&times;コンセプトからバナー群を一気に生成。画像生成AI連携。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/shortad-park</div>
+      <div class="map-name">ショート動画広告</div>
+      <div class="map-desc">動画台本→素材生成→ナレーション→編集まで全自動。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/&#35352;&#20107;LP-park</div>
+      <div class="map-name">記事LP制作</div>
+      <div class="map-desc">戦略翻訳型。リサーチ結果からLP全体を構築。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/concept-park</div>
+      <div class="map-name">コンセプト設計</div>
+      <div class="map-desc">対話でコンセプトを磨き上げる。全クリエイティブの起点。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/research-park</div>
+      <div class="map-name">市場調査</div>
+      <div class="map-desc">市場需要・競合・N1を分析し戦略JSONを出力。</div>
+    </div>
+
+    <div class="map-category">&#x1F4CB; 記事LP診断（マルチエージェント）</div>
+    <div class="map-item">
+      <div class="map-cmd">/article-fb-cmo</div>
+      <div class="map-name">統合診断リーダー</div>
+      <div class="map-desc">8エージェント統合。GO/REVISE/BLOCK判定。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/article-fb-hook</div>
+      <div class="map-name">フック分析</div>
+      <div class="map-desc">冒頭200文字のフック強度をスコアリング。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/article-fb-narrative</div>
+      <div class="map-name">感情アーク分析</div>
+      <div class="map-desc">共感→問題→発見→解決→希望のV字アーク評価。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/article-fb-trust</div>
+      <div class="map-name">信頼構造分析</div>
+      <div class="map-desc">権威&times;数値&times;口コミの3層で信頼性を評価。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/article-fb-cta</div>
+      <div class="map-name">CTA分析</div>
+      <div class="map-desc">CTA数・配置・文言・購買必然性をスコアリング。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/article-fb-offer</div>
+      <div class="map-name">オファー分析</div>
+      <div class="map-desc">価格&times;割引率&times;緊急性&times;特典の購買衝動評価。</div>
+    </div>
+
+    <div class="map-category">&#x1F4BC; ビジネス・ユーティリティ</div>
+    <div class="map-item">
+      <div class="map-cmd">/proposal-park</div>
+      <div class="map-name">提案書作成</div>
+      <div class="map-desc">問題分析→インサイト→解決策→ROIを自動構成。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/meeting-prep</div>
+      <div class="map-name">MTG準備</div>
+      <div class="map-desc">アジェンダ・想定Q&A・地雷ポイントを事前整理。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/weekly-review</div>
+      <div class="map-name">週次振り返り</div>
+      <div class="map-desc">今週の成果と来週の優先順位を構造化。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/coach</div>
+      <div class="map-name">AIコーチング</div>
+      <div class="map-desc">思考整理&times;パターン発見&times;問いかけ型コーチング。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/lp-speed</div>
+      <div class="map-name">LP高速化</div>
+      <div class="map-desc">LP表示速度の診断＆自動修正。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/anonymize</div>
+      <div class="map-name">匿名化</div>
+      <div class="map-desc">個人情報を自動検出・匿名化してから出力。</div>
+    </div>
+
+    <div class="map-category">&#x1F3AC; 動画制作（上級）</div>
+    <div class="map-item">
+      <div class="map-cmd">/director</div>
+      <div class="map-name">動画カントク</div>
+      <div class="map-desc">動画制作の全工程をオーケストレーション。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/arc-designer</div>
+      <div class="map-name">感情アーク設計</div>
+      <div class="map-desc">30スロット&times;感情アーク&times;離脱ゼロ設計。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/hook-analyst</div>
+      <div class="map-name">動画フック分析</div>
+      <div class="map-desc">冒頭3秒のフック強度をデータ検証で判定。</div>
+    </div>
+
+    <div class="map-category">&#x1F6D2; Amazon（上級）</div>
+    <div class="map-item">
+      <div class="map-cmd">/amazon-park</div>
+      <div class="map-name">Amazon出店</div>
+      <div class="map-desc">商品ページ&times;画像生成の一気通貫スキル。</div>
+    </div>
+    <div class="map-item">
+      <div class="map-cmd">/amazon-cmo</div>
+      <div class="map-name">Amazon部長</div>
+      <div class="map-desc">Amazon戦略の統合マネジメント。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CTA ===== -->
+<div class="cta-section">
+  <div class="cta-box">
+    <h2>さあ、始めよう</h2>
+    <p>スターターキットを配置して、上のプロンプトをコピペするだけ。<br>AIがあなたの仕事を変える瞬間を体験してください。</p>
+    <div class="cta-steps">
+      $ cd あなたの作業フォルダ<br>
+      $ claude<br>
+      &gt; /proposal-park<br>
+      <span style="color:#10b981;">&nbsp;&nbsp;...AIが提案書を生成中... &#x2728;</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>AI Park Starter Kit &mdash; Textbook 07 ｜ Powered by Claude &times; AI Park</p>
+</div>
+
+<script>
+  // Toggle cards
+  // (handled by inline onclick)
+
+  // Copy prompt
+  function copyPrompt(btn) {
+    const code = btn.parentElement.querySelector('.prompt-code');
+    const text = code.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'コピー完了!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'コピー';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
