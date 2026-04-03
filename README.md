@@ -98,13 +98,46 @@ Claude Code内でスキルをスラッシュコマンドで呼び出す:
 | `google-slides-recipe.md` | Googleスライド制作レシピ |
 | `slack-error-notification.md` | エラー通知テンプレート |
 
-### エージェント（`.claude/agents/`）
-| ファイル | 説明 |
-|---------|------|
-| `ai-pak.md` | AIアシスタントのベースエージェント |
-| `brand-collector.md` | ブランド素材収集エージェント |
-| `quality-gate.md` | 品質ゲートエージェント |
-| `research-dive.md` | リサーチDIVEエージェント |
+### エージェント（`.claude/agents/`）— 一進VOYAGE号クルー
+
+**見張り台（Gate部門）**
+| ファイル | アイコン | 説明 |
+|---------|---------|------|
+| `gate-legal-crew.md` | ⚖️ | 法規クルー |
+| `gate-brand-crew.md` | 🛡️ | ブランドクルー |
+| `gate-quality-crew.md` | 🚦 | 品質クルー |
+| `gate-n1-crew.md` | 🎯 | N1クルー |
+| `cvr-crew.md` | 📈 | CVRクルー |
+| `gate-hook-crew.md` | 🪝 | フック監査クルー |
+| `gate-marketing-crew.md` | 📊 | マーケ監査クルー |
+| `gate-typography-crew.md` | 🔤 | 文字クルー |
+| `gate-visual-crew.md` | 👁️ | ビジュアルクルー |
+| `gate-image-prompt-crew.md` | 🎨 | 画像プロンプトクルー |
+
+**記事甲板（Kiji部門）**
+| ファイル | アイコン | 説明 |
+|---------|---------|------|
+| `kiji-hook-crew.md` | 🎣 | 記事フッククルー |
+| `kiji-arc-crew.md` | 🌊 | 記事アーククルー |
+| `kiji-trust-crew.md` | ⚓ | 記事トラストクルー |
+| `kiji-cta-crew.md` | 🔔 | 記事CTAクルー |
+| `kiji-offer-crew.md` | 💎 | 記事オファークルー |
+| `kiji-compass-crew.md` | 🧭 | 記事コンパスクルー |
+
+**動画甲板（Movie部門）**
+| ファイル | アイコン | 説明 |
+|---------|---------|------|
+| `movie-cta-crew.md` | 📣 | 動画CTAクルー |
+| `movie-hook-crew.md` | ⚡ | 動画フッククルー |
+| `movie-script-crew.md` | 📜 | 動画スクリプトクルー |
+| `movie-visual-crew.md` | 🎨 | 動画ビジュアルクルー |
+
+**その他**
+| ファイル | アイコン | 説明 |
+|---------|---------|------|
+| `pak-sensei.md` | 🧙‍♂️ | パク師匠（航海哲学者） |
+| `brand-collector.md` | — | ブランド素材収集 |
+| `research-dive.md` | — | リサーチDIVE |
 
 ### その他
 | ファイル | 説明 |
