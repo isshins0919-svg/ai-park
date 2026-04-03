@@ -11,7 +11,7 @@ Slack 記事フィードバックBot v9
   Gate 3 FEEL: アーククルー（Haiku）
   Gate 4 TRUST: トラストクルー（Haiku）
   Gate 5 ACT: CTAクルー + オファークルー（Haiku×2）
-  補助: コンパスクルー（benchmark.json）+ パート君（Haiku）+ 視覚君（Sonnet）
+  補助: コンパスクルー（benchmark.json）+ パートクルー（Haiku）+ 視覚クルー（Sonnet）
   CKO:  統合 → GO/REVISE/BLOCK判定（Sonnet）
   出力: スコアカード + Must Fix + 18パートチェック + 一期通感 + コピー提案
 """
@@ -594,7 +594,7 @@ def run_agent_competitive(text: str, genre_info: dict, competitor: dict | None) 
     }
 
 
-# ── Agent 07: 記事パート君 ──────────────────────────────
+# ── Agent 07: 記事パートクルー ──────────────────────────────
 PART_CHECK_SYSTEM = """あなたは記事LP 18パート構成評価AIです。
 信条: 「18のパートを通じて読者の感情温度が上がり続けているか。それだけを見る。」
 
@@ -611,7 +611,7 @@ PART_CHECK_SYSTEM = """あなたは記事LP 18パート構成評価AIです。
 
 JSONのみで返してください:
 {
-  "agent": "記事パート君",
+  "agent": "記事パートクルー",
   "ikki_tsukan_score": 整数（1-10）,
   "ikki_tsukan_reason": "一期通感の診断を1文で",
   "part_check": [
@@ -642,10 +642,10 @@ def run_agent_part_check(text: str, client: anthropic.Anthropic, cko_directive: 
     directive_str = f"\n\n【CKO指示】{directive}" if directive else ""
     user = f"以下の記事LP全文の18パート構成を評価してください。❌と⚠️のパートは必ず具体的な改善コピーを rewrite に入れてください。JSONのみ返してください。{directive_str}\n\n{text[:4000]}"
     raw = call_haiku_agent(PART_CHECK_SYSTEM, user, client, max_tokens=3500)
-    return parse_json_safe(raw, {"agent": "記事パート君", "ikki_tsukan_score": 5, "part_check": [], "error": "parse_failed"})
+    return parse_json_safe(raw, {"agent": "記事パートクルー", "ikki_tsukan_score": 5, "part_check": [], "error": "parse_failed"})
 
 
-# ── Agent 08: 視覚設計評価君（Sonnet multimodal）──────────────────────────────
+# ── Agent 08: 視覚設計評価クルー（Sonnet multimodal）──────────────────────────────
 VISUAL_SYSTEM = """あなたは記事LPのビジュアル設計専門評価AIです。
 信条: 「売れる記事LPはテキストを読まなくても画像・動画だけで感情が動く。それを設計できているか。」
 
@@ -660,7 +660,7 @@ visual_score = FV感情動線 + 問い設計 + Before/After + 役割分担 + 感
 
 JSONのみで返してください:
 {
-  "agent": "視覚設計評価君",
+  "agent": "視覚設計評価クルー",
   "visual_score": 整数（0-100）,
   "score_breakdown": {
     "fv_emotion": 整数（0-30）,
@@ -717,7 +717,7 @@ def run_agent_visual(article_data: dict, video_thumbnails: list, client: anthrop
 
     if len(content) == 1:
         # 画像が1枚もなければデフォルト
-        return {"agent": "視覚設計評価君", "visual_score": 40, "error": "no_images"}
+        return {"agent": "視覚設計評価クルー", "visual_score": 40, "error": "no_images"}
 
     try:
         resp = client.messages.create(
@@ -731,10 +731,10 @@ def run_agent_visual(article_data: dict, video_thumbnails: list, client: anthrop
             raw = raw.split("```")[1]
             if raw.startswith("json"):
                 raw = raw[4:]
-        return parse_json_safe(raw.strip(), {"agent": "視覚設計評価君", "visual_score": 40, "error": "parse_failed"})
+        return parse_json_safe(raw.strip(), {"agent": "視覚設計評価クルー", "visual_score": 40, "error": "parse_failed"})
     except Exception as e:
         log.warning(f"視覚評価エラー: {e}")
-        return {"agent": "視覚設計評価君", "visual_score": 40, "error": str(e)}
+        return {"agent": "視覚設計評価クルー", "visual_score": 40, "error": str(e)}
 
 
 # ── Agent 13 (Gate 2: FLOW): 記事フロークルー — 認知負荷ゼロ評価 ──────────────────
@@ -863,8 +863,8 @@ JSONのみで返してください:
     "trust": "トラストクルーへ: 特に見てほしいポイントを1文で",
     "cta": "CTAクルーへ: 特に見てほしいポイントを1文で",
     "offer": "オファークルーへ: 特に見てほしいポイントを1文で",
-    "visual": "視覚設計評価君へ: 特に見てほしいポイントを1文で",
-    "part_check": "パート君へ: 特に見てほしいポイントを1文で"
+    "visual": "視覚設計評価クルーへ: 特に見てほしいポイントを1文で",
+    "part_check": "パートクルーへ: 特に見てほしいポイントを1文で"
   },
   "cko_hypothesis": "このN1に対してこの記事が刺さっているかどうかの仮説を1文で"
 }"""
@@ -942,7 +942,7 @@ total_score = mCVR_score×0.55 + landing_cvr_score×0.45
 
 ※flow_scoreは記事フロークルーのスコア。「酔っ払いでも中学生でもわかるか」の認知負荷評価。脳死で読めなければ訴求が届かない。
 
-※visual_scoreはビジュアル設計評価君のスコア。記事LPはビジュアルが情報の主役のためmCVRに大きく影響する。
+※visual_scoreはビジュアル設計評価クルーのスコア。記事LPはビジュアルが情報の主役のためmCVRに大きく影響する。
 
 ボーナス加算:
 +2点: フックに具体的数字あり（number_bonus > 0）
@@ -1300,7 +1300,7 @@ def format_cko_output(agents: dict, cko: dict) -> str:
         f"| 記事CTAクルー | {s('cta_score', cta, 'cta_score')}点 | ≥80 | {mark(s('cta_score', cta, 'cta_score'), 80)} |",
         f"| 記事オファークルー | {s('offer_score', offer, 'offer_score')}点 | ≥70 | {mark(s('offer_score', offer, 'offer_score'), 70)} |",
         f"| 記事コンパスクルー | {s('competitive_score', competitive, 'competitive_score')}点 | ≥65 | {mark(s('competitive_score', competitive, 'competitive_score'), 65)} |",
-        f"| 視覚設計評価君 | {s('visual_score', visual, 'visual_score')}点 | ≥70 | {mark(s('visual_score', visual, 'visual_score'), 70)} |",
+        f"| 視覚設計評価クルー | {s('visual_score', visual, 'visual_score')}点 | ≥70 | {mark(s('visual_score', visual, 'visual_score'), 70)} |",
         f"| 薬機法 | {scores.get('legal_check', 'PASS')} | PASS | {'✅' if scores.get('legal_check', 'PASS') == 'PASS' else '🚫'} |",
         "",
         f"**mCVR_score**: {scores.get('mCVR_score', '—')}点　"
@@ -1454,10 +1454,10 @@ def format_cko_output(agents: dict, cko: dict) -> str:
 
     lines += ["", "---", ""]
 
-    # 視覚設計評価君詳細
+    # 視覚設計評価クルー詳細
     if visual and not visual.get("error"):
         vbd = visual.get("score_breakdown", {})
-        lines += [f"## 🖼 視覚設計評価君 — {visual.get('visual_score', '—')}点", ""]
+        lines += [f"## 🖼 視覚設計評価クルー — {visual.get('visual_score', '—')}点", ""]
         if vbd:
             lines.append(
                 f"FV感情動線: {vbd.get('fv_emotion', '—')}/30点　"
@@ -2514,7 +2514,7 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
     try:
         slack.chat_postMessage(
             channel=CHANNEL_ID, thread_ts=ts,
-            text="🤖 8エージェントCKOパイプライン起動中...\n_フッククルー × アーククルー × トラストクルー × CTAクルー × オファークルー × コンパスクルー × 視覚設計君 → CKO後処理（約30〜60秒）_",
+            text="🤖 8エージェントCKOパイプライン起動中...\n_フッククルー × アーククルー × トラストクルー × CTAクルー × オファークルー × コンパスクルー × 視覚設計クルー → CKO後処理（約30〜60秒）_",
             mrkdwn=True,
         )
     except SlackApiError:
@@ -2573,7 +2573,7 @@ def is_trigger(text: str) -> bool:
 
 # ─── メインループ ─────────────────────────────────────
 def run():
-    log.info("=== Slack フィードバックBot v9 起動（8エージェントCKOシステム + 視覚設計評価君）===")
+    log.info("=== Slack フィードバックBot v9 起動（8エージェントCKOシステム + 視覚設計評価クルー）===")
 
     slack_token   = get_env("SLACK_BOT_TOKEN")
     anthropic_key = get_env("ANTHROPIC_API_KEY")
