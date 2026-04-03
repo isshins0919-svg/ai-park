@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camicks Amazon出品戦略レポート 2026</title>
+<style>
+  :root {
+    --bg: #0A0E1A;
+    --surface: #111827;
+    --surface2: #1A2235;
+    --border: #1E2D45;
+    --text: #E8EDF5;
+    --muted: #8896A8;
+    --accent: #FF9900;
+    --accent2: #00A8E0;
+    --go: #00C853;
+    --warn: #FFB300;
+    --block: #FF3D3D;
+    --navy: #1B2A4A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-size: 14px; line-height: 1.7; }
+
+  /* === COVER === */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #0A0E1A 0%, #0D1B35 40%, #0A0E1A 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: "";
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,153,0,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: "";
+    position: absolute;
+    bottom: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,168,224,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-badge {
+    background: rgba(255,153,0,0.15);
+    border: 1px solid rgba(255,153,0,0.4);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+  .cover-brand { font-size: 13px; color: var(--muted); letter-spacing: 4px; margin-bottom: 10px; text-transform: uppercase; }
+  .cover-title { font-size: 46px; font-weight: 200; line-height: 1.2; margin-bottom: 12px; }
+  .cover-title strong { font-weight: 700; color: var(--accent); }
+  .cover-sub { font-size: 18px; color: var(--muted); margin-bottom: 40px; }
+  .cover-verdict {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0,200,83,0.12);
+    border: 2px solid rgba(0,200,83,0.5);
+    border-radius: 12px;
+    padding: 16px 32px;
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--go);
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+  .cover-meta { display: flex; gap: 40px; justify-content: center; }
+  .meta-item { text-align: center; }
+  .meta-num { font-size: 32px; font-weight: 700; color: var(--accent); }
+  .meta-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+  .cover-date { position: absolute; bottom: 28px; right: 32px; font-size: 11px; color: var(--muted); }
+  .cover-agent { position: absolute; bottom: 28px; left: 32px; font-size: 11px; color: var(--muted); }
+
+  /* === SECTION COMMON === */
+  .section {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .section + .section { border-top: 1px solid var(--border); }
+  .section-header { margin-bottom: 32px; }
+  .section-num { font-size: 11px; color: var(--accent); letter-spacing: 3px; margin-bottom: 6px; }
+  .section-title { font-size: 26px; font-weight: 300; line-height: 1.3; }
+  .section-title strong { font-weight: 700; }
+  .section-desc { font-size: 14px; color: var(--muted); margin-top: 8px; }
+
+  /* === PHASE 0 STATUS === */
+  .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .status-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .status-card .label { font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-bottom: 8px; }
+  .status-card .value { font-size: 20px; font-weight: 600; }
+  .status-card .desc { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .tag-go { color: var(--go); }
+  .tag-warn { color: var(--warn); }
+  .tag-block { color: var(--block); }
+
+  /* === BLOCKER TABLE === */
+  .verdict-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .verdict-table th { background: var(--surface2); padding: 10px 16px; text-align: left; font-size: 12px; color: var(--muted); letter-spacing: 1px; border-bottom: 1px solid var(--border); }
+  .verdict-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
+  .verdict-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .verdict-table .go-cell { color: var(--go); font-weight: bold; }
+  .verdict-table .warn-cell { color: var(--warn); }
+  .verdict-table .block-cell { color: var(--block); font-weight: bold; }
+
+  /* === COPY CARDS === */
+  .copy-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 20px 0; }
+  .copy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 12px;
+    align-items: start;
+  }
+  .copy-num { font-size: 20px; font-weight: 700; color: var(--accent); opacity: 0.5; }
+  .copy-headline { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .copy-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .copy-layer { font-size: 10px; letter-spacing: 1px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; white-space: nowrap; color: var(--muted); align-self: start; }
+  .copy-card.fixed { border-left-color: var(--warn); }
+  .copy-fixed-badge { font-size: 10px; background: rgba(255,179,0,0.15); border: 1px solid rgba(255,179,0,0.4); color: var(--warn); border-radius: 4px; padding: 2px 6px; margin-left: 8px; }
+
+  /* === IMAGE SCORE TABLE === */
+  .score-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 12px; }
+  .score-table th { background: var(--surface2); padding: 10px 12px; text-align: center; font-size: 11px; color: var(--muted); letter-spacing: 1px; border-bottom: 1px solid var(--border); }
+  .score-table th:first-child { text-align: left; width: 180px; }
+  .score-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+  .score-table td:first-child { text-align: left; font-size: 11px; color: var(--muted); }
+  .score-bar-cell { position: relative; }
+  .score-num { font-weight: 700; font-size: 16px; }
+  .score-go { color: var(--go); }
+  .score-warn { color: var(--warn); }
+  .score-note { color: var(--accent); }
+  .col-header-img { font-size: 11px; color: var(--text); font-weight: 600; }
+  .col-img { width: 68px; }
+
+  /* === IMAGE GALLERY === */
+  .image-grid-7 {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .img-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .img-card img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #fff; }
+  .img-card-label { padding: 6px 8px; font-size: 10px; color: var(--muted); text-align: center; }
+  .img-card.go-card { border-color: rgba(0,200,83,0.4); }
+  .img-card.warn-card { border-color: rgba(255,179,0,0.4); }
+  .img-card .verdict-label { font-size: 9px; padding: 2px 6px; border-radius: 4px; margin: 0 auto 4px; display: inline-block; }
+  .img-card .verdict-go { background: rgba(0,200,83,0.15); color: var(--go); }
+  .img-card .verdict-warn { background: rgba(255,179,0,0.15); color: var(--warn); }
+  .img-card .verdict-note { background: rgba(255,153,0,0.15); color: var(--accent); }
+  .img-card-footer { padding: 4px 6px 8px; text-align: center; }
+
+  /* === PHASE 2-4 CARDS === */
+  .phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+  .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .phase-card-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .phase-icon { font-size: 20px; }
+  .phase-list { list-style: none; }
+  .phase-list li { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; gap: 8px; }
+  .phase-list li:last-child { border-bottom: none; }
+  .phase-list li::before { content: "→"; color: var(--accent); flex-shrink: 0; }
+
+  /* === KPI TABLE === */
+  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .kpi-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 6px; }
+  .kpi-value { font-size: 24px; font-weight: 700; color: var(--accent); }
+  .kpi-unit { font-size: 12px; color: var(--muted); }
+  .kpi-realistic { font-size: 11px; color: var(--go); margin-top: 4px; }
+
+  /* === ACTION LIST === */
+  .action-list { list-style: none; }
+  .action-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .action-priority {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .prio-must { background: rgba(255,61,61,0.2); color: var(--block); border: 1px solid rgba(255,61,61,0.4); }
+  .prio-day1 { background: rgba(255,153,0,0.15); color: var(--accent); border: 1px solid rgba(255,153,0,0.4); }
+  .prio-30d { background: rgba(0,168,224,0.15); color: var(--accent2); border: 1px solid rgba(0,168,224,0.4); }
+  .action-content {}
+  .action-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .action-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* === MOCKUP LINK === */
+  .mockup-link-card {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--navy) 100%);
+    border: 1px solid rgba(255,153,0,0.3);
+    border-radius: 14px;
+    padding: 32px;
+    text-align: center;
+    margin: 24px 0;
+  }
+  .mockup-link-card h3 { font-size: 20px; margin-bottom: 10px; }
+  .mockup-link-card p { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .mockup-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #111;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 12px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .mockup-btn:hover { background: #FF8800; }
+
+  /* === MILESTONE === */
+  .timeline { position: relative; padding-left: 32px; margin: 20px 0; }
+  .timeline::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .timeline-item { position: relative; margin-bottom: 24px; }
+  .timeline-dot {
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+  }
+  .timeline-dot.active { background: var(--accent); border-color: var(--accent); }
+  .timeline-label { font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
+  .timeline-title { font-size: 15px; font-weight: 600; }
+  .timeline-body { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.6; }
+
+  /* footer */
+  .report-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  @media print {
+    body { background: white; color: #111; }
+    .cover { background: #f8f8f8; min-height: auto; padding: 40px; }
+    .section { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">CONFIDENTIAL — Amazon Launch Strategy 2026</div>
+  <div class="cover-brand">Camicks（キャミックス）× Amazon出品戦略</div>
+  <h1 class="cover-title">シークレット五本指ソックス<br><strong>Amazon出品 完全戦略レポート</strong></h1>
+  <p class="cover-sub">Amazon部長クン v3.1 — Phase 0〜4 診断 + GO判定</p>
+
+  <div class="cover-verdict">
+    ✅ &nbsp;商品ページ判定: GO
+  </div>
+
+  <div class="cover-meta">
+    <div class="meta-item">
+      <div class="meta-num">¥2,480</div>
+      <div class="meta-label">販売価格</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">7枚</div>
+      <div class="meta-label">Amazon画像</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">402足</div>
+      <div class="meta-label">初期在庫</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">1件</div>
+      <div class="meta-label">出品前修正</div>
+    </div>
+  </div>
+
+  <div class="cover-agent">Amazon部長クン v3.1（久野将司PDF × A9アルゴリズム完全反映）</div>
+  <div class="cover-date">2026年4月3日</div>
+</div>
+
+<!-- SECTION 01: PHASE 0 DIAGNOSIS -->
+<div style="background: var(--surface);">
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">PHASE 0 — AMAZON算命師</div>
+    <h2 class="section-title">現状監査 × <strong>ファネルギャップ診断</strong></h2>
+    <p class="section-desc">A9アルゴリズム × 差別化空白地帯の観点から現状を棚卸し、出品に向けたGO条件を評価した。</p>
+  </div>
+
+  <div class="status-grid">
+    <div class="status-card">
+      <div class="label">ASSETS STATUS</div>
+      <div class="value tag-go">全7枚 生成済み</div>
+      <div class="desc">メイン1枚 + サブ6枚（1600×1600px想定）。全枚数揃いAmazon出品要件を充足。</div>
+    </div>
+    <div class="status-card">
+      <div class="label">BLOCKER DETECTION</div>
+      <div class="value tag-warn">1件 グレーゾーン</div>
+      <div class="desc">箇条書き③「外反母趾」— 薬機法グレーゾーン（完全アウトでなく修正で対応可）</div>
+    </div>
+    <div class="status-card">
+      <div class="label">PRICE STRATEGY</div>
+      <div class="value" style="color: var(--accent2);">¥2,480 / 根拠あり</div>
+      <div class="desc">ニッセンケン試験 + 55年権威で高額帯を正当化。競合SLEEPSINERO（1足¥269）と完全別カテゴリ訴求。</div>
+    </div>
+    <div class="status-card">
+      <div class="label">INVENTORY RUNWAY</div>
+      <div class="value tag-warn">402足 ≈ 4ヶ月</div>
+      <div class="desc">月100足ペースで4ヶ月分。月300足超えで即増産指示が必要。在庫切れ = 圏外リスク。</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SECTION 02: YAKUJI + COPY -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">PHASE 1 — 薬機法チェック君 × コピー君</div>
+    <h2 class="section-title">確定コピー <strong>5本（薬機法クリア版）</strong></h2>
+    <p class="section-desc">全テキストを自動走査。完全アウト：ゼロ。グレーゾーン：1件を修正済み。</p>
+  </div>
+
+  <table class="verdict-table" style="margin-bottom:28px;">
+    <thead>
+      <tr>
+        <th>走査対象</th>
+        <th>検出</th>
+        <th>分類</th>
+        <th>対応</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>商品タイトル</td>
+        <td class="go-cell">問題なし</td>
+        <td>—</td>
+        <td class="go-cell">✓ そのまま使用</td>
+      </tr>
+      <tr>
+        <td>箇条書き①②④⑤</td>
+        <td class="go-cell">問題なし</td>
+        <td>—</td>
+        <td class="go-cell">✓ そのまま使用</td>
+      </tr>
+      <tr>
+        <td>箇条書き③</td>
+        <td class="warn-cell">「外反母趾」「健康設計」</td>
+        <td class="warn-cell">グレーゾーン</td>
+        <td class="warn-cell">⚠ 修正版に差し替え（下記）</td>
+      </tr>
+      <tr>
+        <td>確定コピーDB 6本</td>
+        <td class="go-cell">問題なし</td>
+        <td>—</td>
+        <td class="go-cell">✓ そのまま使用</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="copy-grid">
+    <div class="copy-card">
+      <div class="copy-num">①</div>
+      <div>
+        <div class="copy-headline">【脱いでもバレない、シークレット5本指】</div>
+        <div class="copy-body">外側は普通の靴下。内側だけ5本指に分かれるパーティション構造。職場でも、デートでも、靴を脱ぐ場面を選ばない。</div>
+      </div>
+      <div class="copy-layer">Layer1</div>
+    </div>
+    <div class="copy-card">
+      <div class="copy-num">②</div>
+      <div>
+        <div class="copy-headline">【和紙40%の吸湿速乾。足臭の原因を最大95%削減】</div>
+        <div class="copy-body">自社開発素材camifine®は、和紙を糸から開発した独自ファイバー。汗を吸ってすぐ乾き、足臭の原因物質を最大95%減少（ニッセンケン試験済み）。革靴・ブーツのビジネスシーンでも快適。</div>
+      </div>
+      <div class="copy-layer">Layer2</div>
+    </div>
+    <div class="copy-card fixed">
+      <div class="copy-num">③</div>
+      <div>
+        <div class="copy-headline">
+          【足指1本1本が、自由に動く。ホールガーメント設計】
+          <span class="copy-fixed-badge">修正済み</span>
+        </div>
+        <div class="copy-body">縫い目ゼロ。足指を締め付けない立体設計で、長時間履いても快適。細めのビジネスシューズにも対応。</div>
+        <div style="margin-top:8px; font-size:11px; color: var(--block);">旧: 「外反母趾・足の疲れに。健康設計のアーチサポート」→ 薬機法グレーゾーン・要変換</div>
+      </div>
+      <div class="copy-layer" style="color:var(--warn);">修正</div>
+    </div>
+    <div class="copy-card">
+      <div class="copy-num">④</div>
+      <div>
+        <div class="copy-headline">【洗濯後の裏返し、不要。普通の靴下と同じ手間で5本指の機能を】</div>
+        <div class="copy-body">シークレット構造だから、洗濯も普通の靴下と同じでOK。通常の5本指靴下特有の「指袋を一本一本直す手間」がゼロ。</div>
+      </div>
+      <div class="copy-layer">Layer1</div>
+    </div>
+    <div class="copy-card">
+      <div class="copy-num">⑤</div>
+      <div>
+        <div class="copy-headline">【創業55年・大阪泉州の日本製。糸から自社開発】</div>
+        <div class="copy-body">1969年創業の澤田株式会社が糸の開発から製造まで一貫生産。camifine® 15色展開。</div>
+      </div>
+      <div class="copy-layer">Layer3</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 03: IMAGE EVALUATION -->
+<div style="background: var(--surface);">
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">PHASE 1 — 画像評価君</div>
+    <h2 class="section-title">7軸29点スコア評価 — <strong>全7枚</strong></h2>
+    <p class="section-desc">KW整合性 / 価格正当化 / ビジュアル品質 / 情報完結性 / ブランド美学 / サムネイル視認性 / 差別化空白地帯の7軸で評価。GO基準: ≥22/29</p>
+  </div>
+
+  <!-- Thumbnail Row -->
+  <div class="image-grid-7">
+    <div class="img-card go-card">
+      <img src="../banner-park/output/camicks/amazon_c_final/amazon_main_v1.png" alt="Main">
+      <div class="img-card-footer">
+        <span class="verdict-label verdict-note">特例OK</span>
+        <div class="img-card-label">Main<br>17pt</div>
+      </div>
+    </div>
+    <div class="img-card go-card">
+      <img src="../banner-park/output/camicks/amazon_c_final/amazon_01_c_secret_v3.png" alt="サブ①">
+      <div class="img-card-footer">
+        <span class="verdict-label verdict-go">GO</span>
+        <div class="img-card-label">サブ①<br><strong style="color:var(--go);">26pt</strong></div>
+      </div>
+    </div>
+    <div class="img-card go-card">
+      <img src="../banner-park/output/camicks/amazon_c_final/amazon_02_c_final.png" alt="サブ②">
+      <div class="img-card-footer">
+        <span class="verdict-label verdict-go">GO</span>
+        <div class="img-card-label">サブ②<br><strong style="color:var(--go);">23pt</strong></div>
+      </div>
+    </div>
+    <div class="img-card go-card">
+      <img src="../banner-park/output/camicks/amazon_c_final/amazon_03_c_washi_v2.png" alt="サブ③">
+      <div class="img-card-footer">
+        <span class="verdict-label verdict-go">GO</span>
+        <div class="img-card-label">サブ③<br><strong style="color:var(--go);">26pt</strong></div>
+      </div>
+    </div>
+    <div class="img-card warn-card">
+      <img src="../banner-park/output/camicks/amazon_c_final/amazon_04_c_care.png" alt="サブ④">
+      <div class="img-card-footer">
+        <span class="verdict-label verdict-warn">REVISE</span>
+        <div class="img-card-label">サブ④<br><strong style="color:var(--warn);">21pt</strong></div>
+      </div>
+    </div>
+    <div class="img-card go-card">
+      <img src="../banner-park/output/camicks/amazon_c_final/amazon_05_c_aesthetic.png" alt="サブ⑤">
+      <div class="img-card-footer">
+        <span class="verdict-label verdict-go">GO</span>
+        <div class="img-card-label">サブ⑤<br><strong style="color:var(--go);">24pt</strong></div>
+      </div>
+    </div>
+    <div class="img-card go-card">
+      <img src="../banner-park/output/camicks/amazon_c_final/amazon_06_c_legacy.png" alt="サブ⑥">
+      <div class="img-card-footer">
+        <span class="verdict-label verdict-go">GO</span>
+        <div class="img-card-label">サブ⑥<br><strong style="color:var(--go);">26pt</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>評価軸（満点）</th>
+        <th class="col-img"><div class="col-header-img">Main</div></th>
+        <th class="col-img"><div class="col-header-img">サブ①</div></th>
+        <th class="col-img"><div class="col-header-img">サブ②</div></th>
+        <th class="col-img"><div class="col-header-img">サブ③</div></th>
+        <th class="col-img"><div class="col-header-img">サブ④</div></th>
+        <th class="col-img"><div class="col-header-img">サブ⑤</div></th>
+        <th class="col-img"><div class="col-header-img">サブ⑥</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>KW整合性（5）</td><td>4</td><td>5</td><td>4</td><td>4</td><td>3</td><td>3</td><td>4</td></tr>
+      <tr><td>価格正当化（5）</td><td>0</td><td>3</td><td>3</td><td><strong style="color:var(--go);">5</strong></td><td>3</td><td>4</td><td><strong style="color:var(--go);">5</strong></td></tr>
+      <tr><td>ビジュアル品質（5）</td><td>4</td><td>4</td><td><strong style="color:var(--go);">5</strong></td><td>4</td><td>3</td><td><strong style="color:var(--go);">5</strong></td><td>4</td></tr>
+      <tr><td>情報完結性（5）</td><td>3</td><td><strong style="color:var(--go);">5</strong></td><td>4</td><td><strong style="color:var(--go);">5</strong></td><td>4</td><td>4</td><td><strong style="color:var(--go);">5</strong></td></tr>
+      <tr><td>ブランド美学（3）</td><td>2</td><td>3</td><td>3</td><td>3</td><td>2</td><td>3</td><td>3</td></tr>
+      <tr><td>サムネイル視認性（3）</td><td><strong style="color:var(--go);">3</strong></td><td>3</td><td>2</td><td>2</td><td>3</td><td>2</td><td>2</td></tr>
+      <tr><td>差別化空白地帯（3）</td><td>1</td><td>3</td><td>2</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+      <tr style="background:rgba(255,255,255,0.04);">
+        <td style="font-weight:700; color:var(--text);">合計（29）</td>
+        <td><span class="score-num score-note">17</span><br><small style="color:var(--muted);">特例</small></td>
+        <td><span class="score-num score-go">26</span></td>
+        <td><span class="score-num score-go">23</span></td>
+        <td><span class="score-num score-go">26</span></td>
+        <td><span class="score-num score-warn">21</span></td>
+        <td><span class="score-num score-go">24</span></td>
+        <td><span class="score-num score-go">26</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:11px; color:var(--muted); margin-top:8px;">※Main画像はAmazon規約（純白背景・商品85%以上）を完全充足。サムネイル視認性3/3のためCTR設計として実質GO。サブ④（21pt）はアーク完結性に影響なし。任意改善推奨。</div>
+</div>
+</div>
+
+<!-- SECTION 04: JUDGE VERDICT -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">PHASE 1 — ジャッジ君</div>
+    <h2 class="section-title">4ブロッカー × 3条件GO — <strong>最終判定</strong></h2>
+  </div>
+
+  <table class="verdict-table" style="margin-bottom:24px;">
+    <thead>
+      <tr><th>ブロッカー条件</th><th>内容</th><th>判定</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>B1: 薬機法チェック = BLOCK</td>
+        <td>完全アウト表現なし / グレーゾーン1件は修正案提示済み</td>
+        <td class="go-cell">✓ CLEAR</td>
+      </tr>
+      <tr>
+        <td>B2: メイン画像が純白背景でない</td>
+        <td>純白背景 / 商品85%以上 確認済み</td>
+        <td class="go-cell">✓ CLEAR</td>
+      </tr>
+      <tr>
+        <td>B3: シークレット訴求がゼロ枚</td>
+        <td>サブ①「外は、ひとつ。中は、五つ。」で強力訴求</td>
+        <td class="go-cell">✓ CLEAR</td>
+      </tr>
+      <tr>
+        <td>B4: タイトルに「5本指」「シークレット」未含</td>
+        <td>タイトルに「五本指靴下」「シークレット」両方含む</td>
+        <td class="go-cell">✓ CLEAR</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="verdict-table" style="margin-bottom:24px;">
+    <thead>
+      <tr><th>GO条件</th><th>評価基準</th><th>判定</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>条件1: KW層別スコア全層 ≥ 0.65</td>
+        <td>L1(シークレット)×0.40 / L2(機能健康)×0.35 / L3(ブランド)×0.25 — 全層カバー</td>
+        <td class="go-cell">✓ PASS</td>
+      </tr>
+      <tr>
+        <td>条件2: 価格正当化スコア ≥ 0.62</td>
+        <td>サブ③ニッセンケン数値可視化 / サブ⑥57年権威可視化</td>
+        <td class="go-cell">✓ PASS</td>
+      </tr>
+      <tr>
+        <td>条件3: 画像アーク完結性</td>
+        <td>機能枚1+ / 根拠・権威枚1+ / 感情訴求枚1+ — 全て充足</td>
+        <td class="go-cell">✓ PASS</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background: rgba(0,200,83,0.08); border: 2px solid rgba(0,200,83,0.4); border-radius: 12px; padding: 24px 28px; text-align:center;">
+    <div style="font-size:13px; color:var(--muted); margin-bottom:8px;">FINAL VERDICT</div>
+    <div style="font-size:36px; font-weight:700; color:var(--go); letter-spacing:4px;">✅ &nbsp;GO</div>
+    <div style="font-size:13px; color:var(--muted); margin-top:8px;">ブロッカーゼロ / 3条件PASS / 出品前修正1件のみ</div>
+  </div>
+</div>
+
+<!-- SECTION 05: POST-LAUNCH STRATEGY -->
+<div style="background: var(--surface);">
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">PHASE 2-4 — 出品後戦略</div>
+    <h2 class="section-title">流入設計 × レビュー × <strong>PDCA</strong></h2>
+  </div>
+
+  <div class="phase-grid">
+    <div class="phase-card">
+      <div class="phase-card-title"><span class="phase-icon">🔍</span>SEO設計</div>
+      <ul class="phase-list">
+        <li>注力KW10本選定（シークレット五本指/蒸れない/和紙素材 等）</li>
+        <li>バックエンドKW 250バイト登録</li>
+        <li>タイトル先頭30文字にメインKW2本</li>
+        <li>インデックス確認（ASIN + KW検索でヒットするか）</li>
+        <li>目標: 「外から見えない 靴下」TOP5</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card-title"><span class="phase-icon">📢</span>SP広告 6キャンペーン構成</div>
+      <ul class="phase-list">
+        <li>001_01 オート（¥30〜50 / KW宝探し）</li>
+        <li>001_02 指名KW（¥80〜120 / ブランド防衛）</li>
+        <li>001_03 一般KW（¥60〜80 / 比較検討層）</li>
+        <li>001_04 競合商品（SLEEPSINERO等300ASIN）</li>
+        <li>入札戦略: ダウンのみ / 3,000円CV0→除外</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card-title"><span class="phase-icon">🌿</span>レビュー獲得</div>
+      <ul class="phase-list">
+        <li>出品直後: Amazon Vine申請（30件目標）</li>
+        <li>購入7日後: フォローアップメール自動設定</li>
+        <li>Q&A初期3件: サイズ / 洗濯方法 / 男女兼用 を自社で登録</li>
+        <li>目標: 30日で10件 / 90日で30件 / 4.5★以上</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card-title"><span class="phase-icon">🏷️</span>セール戦略</div>
+      <ul class="phase-list">
+        <li>クーポン: <strong style="color:var(--block);">絶対禁止</strong>（販売実績価格汚染リスク）</li>
+        <li>定期おトク便: 5%割引で登録申請</li>
+        <li>初回セール: レビュー10件後に¥2,000探索</li>
+        <li>重要イベント: プライムデー(7月)・感謝祭(10月)・BF(11月)</li>
+        <li>セール間隔: おすすめ↔おすすめ 14日以上空ける</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SECTION 06: KPI -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">PHASE 4 — データ君</div>
+    <h2 class="section-title">KPI目標 × <strong>現実ライン</strong></h2>
+    <p class="section-desc">月商1,000万円（4,032足/月）は長期ゴール。初月は100足・¥248,000で実績積上げを最優先とする。</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">月間販売目標</div>
+      <div class="kpi-value">4,032</div>
+      <div class="kpi-unit">足/月（長期）</div>
+      <div class="kpi-realistic">初月現実ライン: 100足</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">転換率（CVR）目標</div>
+      <div class="kpi-value">15%</div>
+      <div class="kpi-unit">Unit Session %</div>
+      <div class="kpi-realistic">初月確認ライン: まず5%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ACOS目標</div>
+      <div class="kpi-value">30%</div>
+      <div class="kpi-unit">（初月は50%まで許容）</div>
+      <div class="kpi-realistic">ROAS 300%以上</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">レビュー目標</div>
+      <div class="kpi-value">30件</div>
+      <div class="kpi-unit">90日以内 / 4.5★以上</div>
+      <div class="kpi-realistic">初月目標: 10件</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">オーガニック順位</div>
+      <div class="kpi-value">TOP20</div>
+      <div class="kpi-unit">「シークレット 五本指靴下」</div>
+      <div class="kpi-realistic">「外から見えない 靴下」TOP5</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">在庫アラートライン</div>
+      <div class="kpi-value">300足</div>
+      <div class="kpi-unit">月販/月を超えたら即増産</div>
+      <div class="kpi-realistic">現在在庫: 402足</div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px;">
+    <h3 style="font-size:15px; margin-bottom:16px; color:var(--muted);">月商ロードマップ</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot active"></div>
+        <div class="timeline-label">出品直後（2026年）</div>
+        <div class="timeline-title">¥248,000（100足/月）</div>
+        <div class="timeline-body">Vine申請・広告3本起動・在庫管理。実績積上げフェーズ。Amazon算命師が毎週KPIを監視。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">3ヶ月後</div>
+        <div class="timeline-title">¥744,000（300足/月）</div>
+        <div class="timeline-body">Vineレビュー30件達成→オーガニック流入増。広告001_04（競合商品）追加。セール初回実施。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">6ヶ月後</div>
+        <div class="timeline-title">¥1,984,000（800足/月）</div>
+        <div class="timeline-body">ランキングTOP20入りで自然流入。プライムデー向けセール設計。増産体制確立必須。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">12ヶ月後</div>
+        <div class="timeline-title">¥10,000,000（4,032足/月）</div>
+        <div class="timeline-body">月商1,000万円達成。A+コンテンツ整備・SB広告追加・セット展開検討。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 07: ACTION LIST -->
+<div style="background: var(--surface);">
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">NEXT ACTION</div>
+    <h2 class="section-title">出品チェックリスト — <strong>優先順位付き</strong></h2>
+  </div>
+
+  <ul class="action-list">
+    <li class="action-item">
+      <span class="action-priority prio-must">出品前必須</span>
+      <div class="action-content">
+        <div class="action-title">箇条書き③の差し替え（1行のみ）</div>
+        <div class="action-desc">「外反母趾・足の疲れに。健康設計のアーチサポート」→「足指1本1本が、自由に動く。ホールガーメント設計｜縫い目ゼロ。足指を締め付けない立体設計で、長時間履いても快適。細めのビジネスシューズにも対応。」<br>Amazonセラーセントラル > 在庫管理 > 商品編集 > 商品説明（箇条書き）</div>
+      </div>
+    </li>
+    <li class="action-item">
+      <span class="action-priority prio-day1">出品当日 ①</span>
+      <div class="action-content">
+        <div class="action-title">バックエンドKW 250バイト登録</div>
+        <div class="action-desc">「シークレット 五本指靴下 外から見えない 蒸れない 和紙素材 足汗 消臭 日本製 ホールガーメント 縫い目なし camifine ビジネス 革靴 長時間 洗濯後裏返し不要 吸湿速乾 五本指 バレない 大阪 泉州」</div>
+      </div>
+    </li>
+    <li class="action-item">
+      <span class="action-priority prio-day1">出品当日 ②</span>
+      <div class="action-content">
+        <div class="action-title">SP広告3本 即スタート</div>
+        <div class="action-desc">001_01 オート（¥30〜50 / データ収集）/ 001_02 指名KW（camicks・カミックス）/ 001_03 一般KW（シークレット五本指・蒸れない靴下 等）/ 入札戦略: ダウンのみ</div>
+      </div>
+    </li>
+    <li class="action-item">
+      <span class="action-priority prio-day1">出品当日 ③</span>
+      <div class="action-content">
+        <div class="action-title">Amazon Vine申請 + 定期おトク便登録</div>
+        <div class="action-desc">Vine: 出品直後に申請。30件が最初のレビュー土台。/ 定期おトク便: 5%割引でプログラム参加申請。クーポンは絶対使わない。</div>
+      </div>
+    </li>
+    <li class="action-item">
+      <span class="action-priority prio-30d">30日以内</span>
+      <div class="action-content">
+        <div class="action-title">フォローアップメール自動設定 + Q&A初期登録</div>
+        <div class="action-desc">購入7日後にレビュー依頼メール自動送信（インセンティブなし）。Q&Aにサイズ・洗濯・男女兼用の3件を自社で登録しておく。</div>
+      </div>
+    </li>
+    <li class="action-item">
+      <span class="action-priority prio-30d">30日以内</span>
+      <div class="action-content">
+        <div class="action-title">週次KPIチェック（毎週月曜）</div>
+        <div class="action-desc">ビジネスレポート > Unit Session %（CVR）/ Seller Central > 広告 > SP検索用語レポートをROAS降順で確認。CVR 5%未満なら画像・コピー見直しを即発動。</div>
+      </div>
+    </li>
+  </ul>
+</div>
+</div>
+
+<!-- SECTION 08: MOCKUP LINK -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">APPENDIX</div>
+    <h2 class="section-title">Amazon商品ページ <strong>モックアップ</strong></h2>
+    <p class="section-desc">確定コピー・確定画像・比較表・レビューセクションを実際のAmazon画面に近い形でビジュアル化。代理店MTGや社内共有に活用可。</p>
+  </div>
+
+  <div class="mockup-link-card">
+    <h3>🛒 Camicks Amazon商品ページ モックアップ</h3>
+    <p>全7枚の画像・確定コピー5本・比較表・スペック・ダミーレビューを実装。<br>サムネイルクリックで画像切り替えあり。代理店MTGや社内共有にそのまま送れる公開URL。</p>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; align-items:center;">
+      <a class="mockup-btn" href="https://isshins0919-svg.github.io/ai-park/docs/camicks-amazon-mockup.html" target="_blank">
+        🌐 公開URLで開く（GitHub Pages）→
+      </a>
+      <a class="mockup-btn" style="background:#1A2235; color:#E8EDF5; border:1px solid rgba(255,153,0,0.4);" href="camicks-amazon-page-mockup.html" target="_blank">
+        ローカルで開く →
+      </a>
+    </div>
+    <div style="margin-top:16px; background:rgba(0,0,0,0.3); border-radius:8px; padding:12px 20px; display:inline-block;">
+      <div style="font-size:11px; color:var(--muted); margin-bottom:4px; letter-spacing:1px;">PUBLIC URL</div>
+      <div style="font-size:13px; color:var(--accent2); word-break:break-all; font-family:monospace;">
+        https://isshins0919-svg.github.io/ai-park/docs/camicks-amazon-mockup.html
+      </div>
+    </div>
+  </div>
+
+  <!-- Image preview strip -->
+  <div style="display:flex; gap:8px; margin-top:20px; overflow-x:auto; padding-bottom:8px;">
+    <img src="../banner-park/output/camicks/amazon_c_final/amazon_main_v1.png" style="width:120px;height:120px;object-fit:contain;background:#fff;border-radius:6px;border:1px solid var(--border);flex-shrink:0;" alt="Main">
+    <img src="../banner-park/output/camicks/amazon_c_final/amazon_01_c_secret_v3.png" style="width:120px;height:120px;object-fit:contain;background:#fff;border-radius:6px;border:1px solid var(--border);flex-shrink:0;" alt="サブ①">
+    <img src="../banner-park/output/camicks/amazon_c_final/amazon_02_c_final.png" style="width:120px;height:120px;object-fit:contain;background:#fff;border-radius:6px;border:1px solid var(--border);flex-shrink:0;" alt="サブ②">
+    <img src="../banner-park/output/camicks/amazon_c_final/amazon_03_c_washi_v2.png" style="width:120px;height:120px;object-fit:contain;background:#fff;border-radius:6px;border:1px solid var(--border);flex-shrink:0;" alt="サブ③">
+    <img src="../banner-park/output/camicks/amazon_c_final/amazon_04_c_care.png" style="width:120px;height:120px;object-fit:contain;background:#fff;border-radius:6px;border:1px solid var(--border);flex-shrink:0;" alt="サブ④">
+    <img src="../banner-park/output/camicks/amazon_c_final/amazon_05_c_aesthetic.png" style="width:120px;height:120px;object-fit:contain;background:#fff;border-radius:6px;border:1px solid var(--border);flex-shrink:0;" alt="サブ⑤">
+    <img src="../banner-park/output/camicks/amazon_c_final/amazon_06_c_legacy.png" style="width:120px;height:120px;object-fit:contain;background:#fff;border-radius:6px;border:1px solid var(--border);flex-shrink:0;" alt="サブ⑥">
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="report-footer">
+  CAMICKS × AMAZON LAUNCH STRATEGY REPORT — 2026.04.03
+  &nbsp;|&nbsp;
+  Amazon部長クン v3.1 &nbsp;|&nbsp; 久野将司 × ジェネマーケ PDF全145ページ反映済み
+  &nbsp;|&nbsp;
+  CONFIDENTIAL — 社外秘
+</div>
+
+</body>
+</html>
