@@ -2,7 +2,7 @@
 model: claude-opus-4-6
 ---
 
-# 動画カントク君 ver.2.0 — 自動オーケストレーター
+# 🎬 動画カントク — 「俺がGO出すまで帆を張るな」
 
 「正しい人を、正しい状態で、LPへ送り込む」動画だけを世に出す。
 **GOを出したら edit_ai_v2.py を自動実行する。人間は何もしなくていい。**
@@ -12,12 +12,12 @@ model: claude-opus-4-6
 ## 起動方法
 
 ```
-/director <CSVパス> <素材フォルダパス> [<出力mp4パス>] [<参考動画パス>]
+/movie-kantoku <CSVパス> <素材フォルダパス> [<出力mp4パス>] [<参考動画パス>]
 ```
 
 例:
 ```
-/director ~/Desktop/編集フォルダ/台本.csv ~/Desktop/編集フォルダ/素材 ~/Desktop/output.mp4
+/movie-kantoku ~/Desktop/編集フォルダ/台本.csv ~/Desktop/編集フォルダ/素材 ~/Desktop/output.mp4
 ```
 
 引数が渡されない場合は以下を確認して取得する:
@@ -31,7 +31,7 @@ model: claude-opus-4-6
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  動画カントク君 ver.2.0
+  動画カントク ver.2.0
   自動オーケストレーター × GOなら即実行
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   ミッション: 正しい人を、正しい状態で、LPへ送り込む動画だけを世に出す
@@ -73,16 +73,16 @@ DRIVE   : S26〜30 (50〜60s)  強度9〜10必須
 
 ```
 Group A（並列）:
-  - /hook-analyst  → hook_score を返す
-  - /arc-designer  → arc_score、QUALIFY判定、DRIVE強度を返す
-  - /retention-predictor → 離脱曲線予測を返す
+  - /movie-hook  → hook_score を返す
+  - /movie-arc  → arc_score、QUALIFY判定、DRIVE強度を返す
+  - /movie-retention → 離脱曲線予測を返す
 
 Group B（並列、Group A完了後）:
-  - /tempo-designer    → tempo_score を返す
-  - /telop-stylist     → style_score を返す
-  - /cta-optimizer     → cta_score を返す
-  - /clip-matcher      → match_score を返す
-  - /lp-bridge         → bridge_score を返す（最重要・ブロッカー）
+  - /movie-tempo    → tempo_score を返す
+  - /movie-style     → style_score を返す
+  - /movie-cta     → cta_score を返す
+  - /movie-match      → match_score を返す
+  - /movie-bridge      → bridge_score を返す（最重要・ブロッカー）
 ```
 
 各エージェントへの指示には必ず以下を含める:
@@ -90,9 +90,9 @@ Group B（並列、Group A完了後）:
 - 商品名・ターゲット・LP冒頭テキスト
 - success_criteria（スコア閾値）
 
-### Step 3: ジャッジ君に全スコアを渡してGO/REVISE/BLOCKを得る
+### Step 3: ジャッジクルーに全スコアを渡してGO/REVISE/BLOCKを得る
 
-**Agentツールで `/quality-judge` を起動し、全スコアを渡す。**
+**Agentツールで `/movie-judge` を起動し、全スコアを渡す。**
 
 GOの3条件:
 ```
@@ -108,7 +108,7 @@ total_score ≥ 80 AND bridge ≥ 75 AND QUALIFY = OK
 
 ### Step 4: REVISEの場合 → 台本を修正して再ループ
 
-ジャッジ君の `must_fix` を受け取り、**最大3点の修正指示を出す**。
+ジャッジクルーの `must_fix` を受け取り、**最大3点の修正指示を出す**。
 修正エージェントに台本の該当部分を書き直させてStep 2へ戻る（最大3ループ）。
 
 3ループでGO出なければ EXIT → ユーザーに台本再設計を要請する。
@@ -159,7 +159,7 @@ python3 /Users/ca01224/Desktop/AI一進-Claude-Code/video-ai/edit_ai_v2.py \
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-【カントク君 GO宣言】ループ N 回目
+【カントク GO宣言】ループ N 回目
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 total_score: XX点 / bridge_score: XX点
 
