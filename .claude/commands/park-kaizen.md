@@ -228,8 +228,9 @@ AIパク/
 │   │   ├── shortad-dna-templates.md  # ショート広告勝ちDNA A〜F + 鉄則
 │   │   └── article-lp-rules.md       # 記事LPの鉄則10原則
 │   └── agents/             # 共有エージェント定義（Agent tool で自動起動）
-│       ├── ai-pak.md            # AIパクくん
-│       └── quality-gate.md      # 品質ゲートくん
+│       ├── pak-sensei.md         # 🧙‍♂️ パク師匠
+│       └── gate-quality-crew.md # 🚦 品質クルー
+│       └── gate-*.md            # 🛡️ 見張り台クルー群
 ├── .env.example            # APIキーテンプレート
 ├── .mcp.json.example       # DPro MCP設定テンプレート
 ├── README.md               # 概要
