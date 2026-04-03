@@ -119,46 +119,110 @@ def _get_face_cascade():
 
 
 # ─── Gemini Vision: クリップ内容分析 ──────────────────────────
-def analyze_clip_with_gemini(clip_path: str, gemini_key: str) -> dict:
+def analyze_clip_with_gemini(clip_path: str, gemini_key: str,
+                             scene_text: str = "") -> dict:
     """
-    クリップの先頭フレームをGemini 2.0 Flashに送り、
-    被写体と最適クロップ方向を返す。
-    返値例: {"subject":"白衣の医師が話している", "crop_hint":"center", "reason":"..."}
+    クリップの複数フレームをGemini 2.0 Flashに送り、
+    被写体・最適クロップ方向・ベスト開始秒を返す。
+    返値例: {"subject":"白衣の医師が話している", "crop_x_percent":35,
+             "best_start_sec": 1.5, "reason":"..."}
     """
     try:
-        frame_tmp = tempfile.mktemp(suffix=".jpg")
-        subprocess.run(
-            [FFMPEG, "-y", "-i", clip_path, "-vframes", "1", "-ss", "0.5", frame_tmp],
-            capture_output=True, check=True
+        # クリップ尺を取得
+        probe = subprocess.run(
+            [_FFPROBE, "-v", "quiet", "-show_entries", "format=duration",
+             "-of", "default=noprint_wrappers=1:nokey=1", clip_path],
+            capture_output=True, text=True
         )
-        with open(frame_tmp, "rb") as f:
-            img_b64 = base64.b64encode(f.read()).decode()
-        os.unlink(frame_tmp)
+        try:
+            clip_dur = float(probe.stdout.strip())
+        except Exception:
+            clip_dur = 3.0
+
+        # 複数フレームを抽出（素材全体から均等に3枚）
+        sample_times = []
+        if clip_dur <= 2.0:
+            sample_times = [clip_dur * 0.3]
+        else:
+            sample_times = [clip_dur * p for p in [0.15, 0.5, 0.85]]
+
+        parts = []
+        for i, st in enumerate(sample_times):
+            frame_tmp = tempfile.mktemp(suffix=".jpg")
+            subprocess.run(
+                [FFMPEG, "-y", "-i", clip_path, "-ss", str(st), "-vframes", "1", frame_tmp],
+                capture_output=True, check=True
+            )
+            if os.path.exists(frame_tmp):
+                with open(frame_tmp, "rb") as f:
+                    parts.append({"inline_data": {"mime_type": "image/jpeg",
+                                                  "data": base64.b64encode(f.read()).decode()}})
+                os.unlink(frame_tmp)
+
+        if not parts:
+            return {"subject": "不明", "crop_x_percent": 50, "best_start_sec": 0}
+
+        scene_hint = f"\nこの素材に合わせるテロップ: 「{scene_text[:30]}」" if scene_text else ""
+        parts.append({"text": (
+            f"この動画素材の{len(parts)}枚のフレーム（前半・中間・後半）を見て、JSONのみで答えて。\n"
+            f"素材の総尺: {clip_dur:.1f}秒{scene_hint}\n\n"
+            "fields:\n"
+            "  subject: 何が映っているか（日本語・具体的に）\n"
+            "  crop_x_percent: 縦型9:16にクロップする際、最も重要な被写体の中心が\n"
+            "                  画像横幅の何%の位置にあるか（0=左端 50=中央 100=右端）整数\n"
+            "  best_start_sec: この素材の中で視聴者の感情を最も動かす瞬間は何秒目から始まるか。\n"
+            "                  判断基準: 表情の変化、動きの開始、商品が見える瞬間、インパクトのある構図。\n"
+            "                  0.0〜素材尺の範囲で小数点1桁で返す。\n"
+            "  reason: なぜその瞬間がベストか（日本語・1文）\n"
+            "JSON only。余計な説明不要。"
+        )})
 
         resp = requests.post(
             f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}",
-            json={"contents": [{"parts": [
-                {"inline_data": {"mime_type": "image/jpeg", "data": img_b64}},
-                {"text": (
-                    "この動画フレームについてJSONのみで答えて。\n"
-                    "fields:\n"
-                    "  subject: 何が映っているか（日本語・具体的に）\n"
-                    "  crop_hint: 縦型9:16クロップ時に被写体が見切れないよう\n"
-                    "             左右どちらに寄せるべきか（left/center/right）\n"
-                    "  reason: 理由（日本語・1文）\n"
-                    "JSON only。余計な説明不要。"
-                )}
-            ]}]},
-            timeout=15
+            json={"contents": [{"parts": parts}]},
+            timeout=20
         )
         raw = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
         raw = re.sub(r"```json|```", "", raw).strip()
-        # 閉じ括弧が欠けることがあるので補完
-        if not raw.endswith("}"):
+        # Geminiが複数JSONオブジェクトやトレイリングカンマを返すことがあるので堅牢にパース
+        # Step1: 最初の{}ブロックだけ抽出
+        brace_depth = 0
+        json_end = 0
+        for i, ch in enumerate(raw):
+            if ch == '{':
+                brace_depth += 1
+            elif ch == '}':
+                brace_depth -= 1
+                if brace_depth == 0:
+                    json_end = i + 1
+                    break
+        if json_end > 0:
+            raw = raw[:json_end]
+        elif not raw.endswith("}"):
             raw += "}"
-        return json.loads(raw)
+        # Step2: トレイリングカンマ除去（JSON非準拠だがGeminiが頻繁に出す）
+        raw = re.sub(r",\s*}", "}", raw)
+        raw = re.sub(r",\s*]", "]", raw)
+        try:
+            result = json.loads(raw)
+        except json.JSONDecodeError:
+            # Step3: 正規表現で各フィールドを個別抽出（最終フォールバック）
+            result = {}
+            m = re.search(r'"subject"\s*:\s*"([^"]*)"', raw)
+            result["subject"] = m.group(1) if m else "不明"
+            m = re.search(r'"crop_x_percent"\s*:\s*(\d+)', raw)
+            result["crop_x_percent"] = int(m.group(1)) if m else 50
+            m = re.search(r'"best_start_sec"\s*:\s*([\d.]+)', raw)
+            result["best_start_sec"] = float(m.group(1)) if m else 0
+            m = re.search(r'"reason"\s*:\s*"([^"]*)"', raw)
+            result["reason"] = m.group(1) if m else ""
+        # best_start_sec を安全クリップ
+        best_start = float(result.get("best_start_sec", 0))
+        result["best_start_sec"] = round(max(0, min(clip_dur - 0.5, best_start)), 1)
+        return result
     except Exception as e:
-        return {"subject": "不明", "crop_hint": "center", "reason": f"分析失敗: {e}"}
+        return {"subject": "不明", "crop_x_percent": 50, "best_start_sec": 0,
+                "reason": f"分析失敗: {e}"}
 
 
 # ─── Fish Audio: 声カタログ読み込み ──────────────────────────
@@ -271,7 +335,8 @@ def generate_scene_narrations(
             results.append((None, MIN_DURATION))
             continue
         mp3_path = str(Path(output_dir) / f"scene_{scene.no:02d}.mp3")
-        ok = _fish_tts_single(scene.text, fish_key, mp3_path, reference_id, effective_speed)
+        tts_text = normalize_text_for_tts(scene.text)
+        ok = _fish_tts_single(tts_text, fish_key, mp3_path, reference_id, effective_speed)
         if ok:
             dur = get_audio_duration(mp3_path)
             print(f"      🎙  S{scene.no:02d} → {dur:.2f}s")
@@ -289,7 +354,7 @@ def estimate_tts_speed(scenes: list, target_sec: float = TARGET_DURATION * 0.92)
     テキスト文字数から自然な読み上げ時間を推定し、
     target_secに収まる最小速度（1.0以上）を返す。
     """
-    total_chars = sum(len(s.text) for s in scenes if s.text)
+    total_chars = sum(len(normalize_text_for_tts(s.text)) for s in scenes if s.text)
     natural_sec = total_chars / CHARS_PER_SEC
     if natural_sec <= target_sec:
         return 1.0
@@ -297,6 +362,28 @@ def estimate_tts_speed(scenes: list, target_sec: float = TARGET_DURATION * 0.92)
     speed = round(min(speed, 2.0), 2)
     print(f"  📊 推定読み上げ時間: {natural_sec:.1f}s → 目標{target_sec:.0f}s → TTS速度: {speed}x")
     return speed
+
+
+# ─── TTS用テキスト正規化 ─────────────────────────────────────
+def normalize_text_for_tts(text: str) -> str:
+    """
+    Fish Audio TTS に送る前にテキストを正規化する。
+    ・【〇〇】→ 〇〇！ に変換（括弧は読まれないため除去）
+    ・「だから」「そこで」「しかし」などの転換ワードの前に間（、）を追加
+    ・改行は読点に変換
+    """
+    # 改行 → 読点（自然な区切り）
+    text = text.replace('\n', '、')
+    # 【〇〇】 → 〇〇！（STOPフェーズのフックワードを確実に読ませる）
+    text = re.sub(r'【([^】]+)】', r'\1！', text)
+    # 転換ワードの前に間を追加（先頭にある場合も含む）
+    TRANSITION_WORDS = ['だから', 'そこで', 'しかし', 'でも', 'だが', 'だって']
+    for word in TRANSITION_WORDS:
+        # 文中・先頭を問わず「、」がなければ追加
+        text = re.sub(r'(?<!、)(' + word + r')', r'、\1', text)
+    # 先頭の余分な読点を除去
+    text = text.lstrip('、').strip()
+    return text
 
 
 # ─── Fish Audio: 全文結合方式（後方互換・非推奨） ─────────────
@@ -352,14 +439,15 @@ EMPHASIS_WORDS = ["臭い", "臭く", "ツーン", "病気", "悩む", "97%OFF",
 
 
 # ── 台本パーサ（CSV） ──────────────────────────────────────
-def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None]:
+def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str | None]:
     """
     新フォーマットCSV台本をパース。
-    返値: (scenes, global_annotation, voice_category)
+    返値: (scenes, global_annotation, voice_category, bgm_filename)
     """
     scenes: list[Scene] = []
     global_annotation = ""
     voice_category: str | None = None
+    bgm_filename: str | None = None
 
     with open(csv_path, encoding="utf-8-sig", newline="") as f:
         rows = list(csv.reader(f))
@@ -377,7 +465,9 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None]:
             mode = "narr"
         elif "■ 固定注釈" in col0:
             mode = "anno"
-        elif "■素材フォルダー" in col0 or "■ BGM" in col0 or "■ スタイル" in col0:
+        elif "■ BGM設定" in col0 or "■ BGM" in col0:
+            mode = "bgm"
+        elif "■素材フォルダー" in col0 or "■ スタイル" in col0:
             mode = "other"
         elif "■ 台本" in col0:
             mode = "script"
@@ -391,6 +481,12 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None]:
             if key == "声のカテゴリー" and val:
                 # "女性・クール（健康食品・サプリ向き" → "女性・クール" に正規化
                 voice_category = val.split("（")[0].strip()
+
+        elif mode == "bgm":
+            key = col0
+            val = row[1].strip() if len(row) > 1 else ""
+            if key == "BGMファイル" and val:
+                bgm_filename = val
 
         elif mode == "anno":
             # 注釈テキストが入っている行（col0が空 or "固定注釈⇨"でない）
@@ -441,8 +537,10 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None]:
     else:
         print(f"  ℹ️  カット注釈: なし（各シーンの注釈欄は空）")
 
+    if bgm_filename:
+        print(f"  🎵 BGM: {bgm_filename}")
     print(f"\n台本パース完了 (CSV): {len(scenes)} シーン / 声: {voice_category or 'デフォルト'}")
-    return scenes, global_annotation, voice_category
+    return scenes, global_annotation, voice_category, bgm_filename
 
 
 def _parse_clip_refs_csv(raw: str) -> list[str]:
@@ -654,13 +752,66 @@ def make_annotation_overlay(text: str, size: tuple, y_start: int = 30) -> np.nda
 
 
 # ── テロップ画像生成 ──────────────────────────────────────
+def _hex_to_rgba(hex_color: str, alpha: int = 255) -> tuple:
+    """'#RRGGBB' → (R, G, B, A)"""
+    h = hex_color.lstrip("#")
+    if len(h) != 6:
+        return (255, 255, 255, alpha)
+    return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16), alpha)
+
+
+def calc_dynamic_font_size(text: str, emphasis: bool,
+                           scene_no: int, total_scenes: int,
+                           base_size: int = FONT_SIZE,
+                           emph_size: int = FONT_EMPH_SIZE) -> int:
+    """
+    参考動画のエッセンス: フォントサイズ = 文字数の反比例関数。
+    参考動画実測値: 8文字→70px / 10文字→70px / 15文字→50px / 16文字→50px
+    → 文字数が少ないほど大きく、多いほど小さく。自由度を最大化する。
+    出力範囲: 40px〜100px（参考動画の30〜80pxを9:16全画面用にスケール）
+    """
+    clean = text.split("※")[0].strip().replace("\n", "")
+    char_count = len(clean)
+
+    # 文字数→フォントサイズ: 線形補間（参考動画のパターンを再現）
+    # 4文字以下 → 100px（最大インパクト）
+    # 8文字   → 85px
+    # 12文字  → 72px
+    # 16文字  → 60px
+    # 20文字+ → 48px（読ませるモード）
+    if char_count <= 4:
+        fs = 100
+    elif char_count <= 20:
+        # 4→100, 20→48 の線形補間
+        fs = int(100 - (char_count - 4) * (100 - 48) / 16)
+    else:
+        fs = 48
+
+    # emphasis ワード → さらに10%ブースト
+    if emphasis:
+        fs = int(fs * 1.12)
+
+    # 冒頭フック(S1-2) / ラストCTA(最後3シーン) → 最低でも72px
+    if scene_no <= 2 or scene_no >= total_scenes - 2:
+        fs = max(fs, 72)
+
+    # 安全クリップ: 40px〜100px
+    return max(40, min(100, fs))
+
+
 def make_telop(text: str, size: tuple, emphasis: bool = False,
                telop_y_ratio: float = TELOP_Y_RATIO,
                font_size: int = FONT_SIZE,
-               font_emph_size: int = FONT_EMPH_SIZE) -> np.ndarray:
+               font_emph_size: int = FONT_EMPH_SIZE,
+               text_color: str | None = None,
+               stroke_color: str | None = None,
+               scene_no: int = 0,
+               total_scenes: int = 1) -> np.ndarray:
     """
     テキスト → RGBA numpy配列。
-    「※」以降は自動的に小フォントで描画。
+    - 全テロップに半透明背景帯を描画（視認性確保）
+    - フォントサイズはシーン役割×テキスト量で動的決定
+    - 「※」以降は自動的に小フォントで描画。
     """
     w, h = size
     img  = Image.new("RGBA", (w, h), (0, 0, 0, 0))
@@ -675,9 +826,11 @@ def make_telop(text: str, size: tuple, emphasis: bool = False,
         main_text = text
         sub_text  = ""
 
-    fs       = font_emph_size if emphasis else font_size
-    cpl      = CHARS_PER_LINE_EMPH if emphasis else CHARS_PER_LINE
-    font     = load_font(fs)
+    # 動的フォントサイズ決定
+    fs = calc_dynamic_font_size(text, emphasis, scene_no, total_scenes,
+                                font_size, font_emph_size)
+    cpl    = max(8, int(CHARS_PER_LINE * (FONT_SIZE / fs)))  # フォントに応じて折り返し調整
+    font   = load_font(fs)
     sub_fs   = max(32, fs // 2)
     sub_font = load_font(sub_fs)
 
@@ -694,31 +847,60 @@ def make_telop(text: str, size: tuple, emphasis: bool = False,
     sub_line_h = sub_fs + 6
     total_h    = line_h * len(main_lines) + (sub_line_h * len(sub_lines) + 4 if sub_lines else 0)
     pad_x, pad_y = 24, 14
-    base_y = int(h * telop_y_ratio) - total_h // 2
 
-    def _draw_line(line, fnt, fsize, y, emph):
+    # 動的Y位置: 参考動画は基本「上部」配置（y=0.15〜0.25）
+    # テロップが大きいほど上、小さいほどやや下に（映像を活かす）
+    if fs >= 80:
+        dynamic_y = 0.18   # 大きいテロップ → 上部に大胆に配置
+    elif fs >= 65:
+        dynamic_y = 0.22   # 中くらい → やや上
+    else:
+        dynamic_y = 0.28   # 小さいテロップ → 少し下げて映像スペース確保
+
+    # telop_y_ratio が明示的に設定されていない場合は動的Y、設定済みなら尊重
+    effective_y = dynamic_y if telop_y_ratio == TELOP_Y_RATIO else telop_y_ratio
+    base_y = int(h * effective_y) - total_h // 2
+    # 上端・下端はみ出し防止
+    base_y = max(20, min(h - total_h - 40, base_y))
+
+    # --- 半透明背景帯（視認性の要） ---
+    # 参考動画の本質: 白背景×黒文字 = コントラスト最大化
+    # 全テロップに白半透明帯を敷き、黒文字で読ませる
+    band_margin = 20  # 帯の上下余白
+    band_top = base_y - band_margin
+    band_btm = base_y + total_h + band_margin
+    # 画面内にクリップ
+    band_top = max(0, band_top)
+    band_btm = min(h, band_btm)
+    if emphasis:
+        # 強調: 黄色帯 × 黒文字（目を引く）
+        draw.rectangle([0, band_top, w, band_btm], fill=(255, 215, 0, 210))
+    else:
+        # 通常: 白半透明帯 × 黒文字（参考動画と同じ高コントラスト設計）
+        draw.rectangle([0, band_top, w, band_btm], fill=(255, 255, 255, 200))
+
+    # テキスト色: 白帯/黄色帯 → 常に黒文字（コントラスト最大）
+    t_rgba  = (0, 0, 0, 255)
+    st_rgba = None  # 白帯の上なので縁取り不要
+
+    def _draw_line(line, fnt, fsize, y):
         bbox = fnt.getbbox(line)
         tw   = bbox[2] - bbox[0]
-        x    = max(pad_x, (w - tw) // 2)
-        if emph:
-            draw.rectangle(
-                [x - pad_x, y - pad_y, x + tw + pad_x, y + fsize + pad_y],
-                fill=(255, 215, 0, 230)
-            )
-            draw.text((x, y), line, font=fnt, fill=(0, 0, 0, 255))
-        else:
-            for dx, dy in [(-3,0),(3,0),(0,-3),(0,3),(-2,-2),(2,-2),(-2,2),(2,2)]:
-                draw.text((x+dx, y+dy), line, font=fnt, fill=(0, 0, 0, 200))
-            draw.text((x, y), line, font=fnt, fill=(255, 255, 255, 255))
+        x_offset = bbox[0]  # フォントの左端オフセット補正
+        x    = max(pad_x, (w - tw) // 2 - x_offset)
+        if st_rgba:
+            for dx, dy in [(-2,0),(2,0),(0,-2),(0,2)]:
+                draw.text((x+dx, y+dy), line, font=fnt, fill=st_rgba)
+        draw.text((x, y), line, font=fnt, fill=t_rgba)
 
     cur_y = base_y
     for line in main_lines:
-        _draw_line(line, font, fs, cur_y, emphasis)
+        _draw_line(line, font, fs, cur_y)
         cur_y += line_h
     if sub_lines:
         cur_y += 4
         for line in sub_lines:
-            _draw_line(line, sub_font, sub_fs, cur_y, False)
+            _draw_line(line, sub_font, sub_fs, cur_y)
             cur_y += sub_line_h
 
     return np.array(img)
@@ -812,8 +994,11 @@ def fit_to_vertical(img: Image.Image) -> Image.Image:
     return img.resize((ow, oh), Image.LANCZOS)
 
 
-def crop_clip_to_vertical(clip: VideoFileClip, crop_hint: str = "center") -> VideoFileClip:
-    """動画クリップを OUTPUT_SIZE に変換。全アスペクト比に対応。"""
+def crop_clip_to_vertical(clip: VideoFileClip, crop_x_percent: int = 50) -> VideoFileClip:
+    """
+    動画クリップを OUTPUT_SIZE(1080×1920) に変換。全アスペクト比に対応。
+    crop_x_percent: Geminiが返す被写体中心のX位置（0=左端 50=中央 100=右端）
+    """
     w, h = clip.size
     ratio = w / h
     target_ratio = OUTPUT_SIZE[0] / OUTPUT_SIZE[1]
@@ -825,7 +1010,7 @@ def crop_clip_to_vertical(clip: VideoFileClip, crop_hint: str = "center") -> Vid
     if ratio > target_ratio:
         # 9:16より横広い
         if ratio > LETTERBOX_THRESHOLD:
-            # かなり横長 → 顔検出 → Gemini hint → レターボックス の優先順
+            # かなり横長 → 顔検出優先 → Gemini x% クロップ → レターボックス
             try:
                 frame = clip.get_frame(min(0.5, clip.duration * 0.1))
                 face_c = detect_face_center(frame[:, :, ::-1].astype(np.uint8))
@@ -838,17 +1023,16 @@ def crop_clip_to_vertical(clip: VideoFileClip, crop_hint: str = "center") -> Vid
                 x1 = max(0, min(cx - new_w // 2, w - new_w))
                 return clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h).resize((ow, oh))
 
-            # Gemini hint でクロップ
+            # Gemini の crop_x_percent で正確なX座標を計算
             new_w = int(h * target_ratio)
-            if crop_hint == "left":   x1 = 0
-            elif crop_hint == "right": x1 = w - new_w
-            else:                      x1 = (w - new_w) // 2
-            x1 = max(0, min(x1, w - new_w))
+            subject_x = int(w * crop_x_percent / 100)  # 被写体の中心X座標
+            x1 = max(0, min(subject_x - new_w // 2, w - new_w))
             return clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h).resize((ow, oh))
         else:
-            # やや横広（3:4など）→ 幅センタークロップ
+            # やや横広（3:4など）→ Geminiのx%でクロップ
             new_w = int(h * target_ratio)
-            x1 = (w - new_w) // 2
+            subject_x = int(w * crop_x_percent / 100)
+            x1 = max(0, min(subject_x - new_w // 2, w - new_w))
             return clip.crop(x1=x1, y1=0, x2=x1+new_w, y2=h).resize((ow, oh))
     else:
         # 9:16より縦長 → 高さ1920にスケール、幅が足りなければピラーボックス
@@ -870,8 +1054,9 @@ def crop_clip_to_vertical(clip: VideoFileClip, crop_hint: str = "center") -> Vid
 
 # ── シーン1本分のVideoClipを生成 ──────────────────────────────
 def _load_single_clip(clip_path: str, duration: float,
-                      gemini_key: str | None) -> VideoFileClip | ImageClip:
-    """1つのクリップファイルを読み込み、縦型クロップ・尺カットして返す。"""
+                      gemini_key: str | None,
+                      scene_text: str = "") -> VideoFileClip | ImageClip:
+    """1つのクリップファイルを読み込み、縦型クロップ・ベストモーメント選定して返す。"""
     ext = Path(clip_path).suffix.lower()
     if ext in (".heic", ".jpeg", ".jpg", ".png"):
         return image_to_clip(clip_path, duration)
@@ -882,14 +1067,26 @@ def _load_single_clip(clip_path: str, duration: float,
         raw = VideoFileClip(normalized_path)
         raw = raw.set_audio(None)
 
-        crop_hint = "center"
+        crop_x_percent = 50  # デフォルト: 中央
+        best_start = 0.0
         if gemini_key:
-            analysis = analyze_clip_with_gemini(clip_path, gemini_key)
-            crop_hint = analysis.get("crop_hint", "center")
-            print(f"      🤖 Gemini: {analysis.get('subject','')} → {crop_hint}")
+            analysis = analyze_clip_with_gemini(clip_path, gemini_key,
+                                               scene_text=scene_text)
+            crop_x_percent = int(analysis.get("crop_x_percent", 50))
+            crop_x_percent = max(0, min(100, crop_x_percent))
+            best_start = float(analysis.get("best_start_sec", 0))
+            reason = analysis.get("reason", '')
+            print(f"      🤖 Gemini: {analysis.get('subject','')} → x={crop_x_percent}% "
+                  f"| 開始={best_start}s ({reason})")
 
-        raw = crop_clip_to_vertical(raw, crop_hint=crop_hint)
-        if raw.duration > duration:
+        raw = crop_clip_to_vertical(raw, crop_x_percent=crop_x_percent)
+
+        # ベストモーメントから切り出し（先頭から使うのではなく感情的に最も訴える瞬間から）
+        if best_start > 0 and raw.duration > duration:
+            end_t = min(best_start + duration, raw.duration)
+            start_t = max(0, end_t - duration)
+            raw = raw.subclip(start_t, end_t)
+        elif raw.duration > duration:
             raw = raw.subclip(0, duration)
         return raw
     except Exception as e:
@@ -915,6 +1112,7 @@ def build_continuous_group_clip(
     gemini_key: str | None = None,
     global_annotation: str = "",
     style: dict | None = None,
+    total_scenes: int = 1,
 ) -> CompositeVideoClip | None:
     """
     連続同一素材グループを1本のクリップとして生成。
@@ -939,13 +1137,16 @@ def build_continuous_group_clip(
         base = ImageClip(black, duration=total_dur)
     elif len(found_clips) == 1:
         print(f"    ✅ {Path(found_clips[0]).name}")
-        raw = _load_single_clip(found_clips[0], total_dur, gemini_key)
+        group_text = " ".join(s.text for s in group_scenes if s.text)
+        raw = _load_single_clip(found_clips[0], total_dur, gemini_key,
+                                scene_text=group_text)
         base = _fit_video_to_duration(raw, total_dur)
     else:
         per_dur = total_dur / len(found_clips)
+        group_text = " ".join(s.text for s in group_scenes if s.text)
         sub_clips = []
         for cp in found_clips:
-            sc = _load_single_clip(cp, per_dur, gemini_key)
+            sc = _load_single_clip(cp, per_dur, gemini_key, scene_text=group_text)
             sub_clips.append(_fit_video_to_duration(sc, per_dur))
         base = concatenate_videoclips(sub_clips, method="compose")
 
@@ -962,9 +1163,11 @@ def build_continuous_group_clip(
             base = base.set_audio(combined_audio)
 
     s = style or {}
-    telop_y = s.get("telop_y_ratio", TELOP_Y_RATIO)
-    font_size = s.get("font_size", FONT_SIZE)
-    font_emph = s.get("font_emph_size", FONT_EMPH_SIZE)
+    telop_y      = s.get("telop_y_ratio", TELOP_Y_RATIO)
+    font_size    = s.get("font_size", FONT_SIZE)
+    font_emph    = s.get("font_emph_size", FONT_EMPH_SIZE)
+    text_color   = s.get("telop_color")
+    stroke_color = s.get("outline_color")
 
     layers = [base]
 
@@ -974,7 +1177,9 @@ def build_continuous_group_clip(
         if scene.text:
             telop_arr = make_telop(scene.text, OUTPUT_SIZE, emphasis=scene.emphasis,
                                    telop_y_ratio=telop_y, font_size=font_size,
-                                   font_emph_size=font_emph)
+                                   font_emph_size=font_emph,
+                                   text_color=text_color, stroke_color=stroke_color,
+                                   scene_no=scene.no, total_scenes=total_scenes)
             telop_clip = (ImageClip(telop_arr, duration=audio_dur)
                          .set_opacity(1.0)
                          .set_start(t_offset))
@@ -1001,7 +1206,8 @@ def build_scene_clip(scene: Scene, clips_dir: str,
                      override_duration: float | None = None,
                      gemini_key: str | None = None,
                      global_annotation: str = "",
-                     style: dict | None = None) -> CompositeVideoClip | None:
+                     style: dict | None = None,
+                     total_scenes: int = 1) -> CompositeVideoClip | None:
     """
     1シーンのCompositeVideoClipを生成。
     audio_path/audio_duration が渡された場合（シーン単位TTS方式）:
@@ -1032,7 +1238,8 @@ def build_scene_clip(scene: Scene, clips_dir: str,
         base = ImageClip(black, duration=duration)
     elif len(found_clips) == 1:
         print(f"    ✅ {Path(found_clips[0]).name}")
-        raw = _load_single_clip(found_clips[0], duration, gemini_key)
+        raw = _load_single_clip(found_clips[0], duration, gemini_key,
+                                scene_text=scene.text)
         base = _fit_video_to_duration(raw, duration)
     else:
         per_dur = duration / len(found_clips)
@@ -1040,7 +1247,7 @@ def build_scene_clip(scene: Scene, clips_dir: str,
         sub_clips = []
         for cp in found_clips:
             print(f"      • {Path(cp).name}")
-            sc = _load_single_clip(cp, per_dur, gemini_key)
+            sc = _load_single_clip(cp, per_dur, gemini_key, scene_text=scene.text)
             sub_clips.append(_fit_video_to_duration(sc, per_dur))
         base = concatenate_videoclips(sub_clips, method="compose")
 
@@ -1056,14 +1263,18 @@ def build_scene_clip(scene: Scene, clips_dir: str,
 
     # スタイル設定（参考動画から抽出 or デフォルト）
     s = style or {}
-    telop_y = s.get("telop_y_ratio", TELOP_Y_RATIO)
-    font_size = s.get("font_size", FONT_SIZE)
-    font_emph = s.get("font_emph_size", FONT_EMPH_SIZE)
+    telop_y      = s.get("telop_y_ratio", TELOP_Y_RATIO)
+    font_size    = s.get("font_size", FONT_SIZE)
+    font_emph    = s.get("font_emph_size", FONT_EMPH_SIZE)
+    text_color   = s.get("telop_color")
+    stroke_color = s.get("outline_color")
 
     if scene.text:
         telop_arr = make_telop(scene.text, OUTPUT_SIZE, emphasis=scene.emphasis,
                                telop_y_ratio=telop_y, font_size=font_size,
-                               font_emph_size=font_emph)
+                               font_emph_size=font_emph,
+                               text_color=text_color, stroke_color=stroke_color,
+                               scene_no=scene.no, total_scenes=total_scenes)
         layers.append(ImageClip(telop_arr, duration=base.duration).set_opacity(1.0))
 
     if global_annotation:
@@ -1081,14 +1292,46 @@ def build_scene_clip(scene: Scene, clips_dir: str,
 # ── メイン ────────────────────────────────────────────────
 def analyze_reference_video(ref_path: str, gemini_key: str) -> dict:
     """
-    参考動画からテロップスタイル（フォントサイズ・位置・カラー）を抽出。
-    返値例: {"font_size": 72, "font_emph_size": 82, "telop_y_ratio": 0.75}
+    参考動画からテロップスタイル + カットテンポを抽出。
+    返値例: {"font_size": 72, "telop_y_ratio": 0.75, "avg_cut_sec": 1.8, "tempo": "fast"}
     """
-    print(f"\n🎬 参考動画スタイル解析中: {Path(ref_path).name}")
+    print(f"\n🎬 参考動画解析中: {Path(ref_path).name}")
     style = {}
-    # フレームを数点サンプリング（5s, 15s, 30s）
+
+    # === ① カットテンポ（ffmpeg scene detection）===
+    try:
+        result = subprocess.run(
+            [FFMPEG, "-i", ref_path,
+             "-vf", "select=gt(scene,0.3),showinfo",
+             "-f", "null", "-"],
+            capture_output=True, text=True, timeout=60
+        )
+        times = [float(m) for m in re.findall(r"pts_time:([\d.]+)", result.stderr)]
+        dur_r = subprocess.run(
+            [_FFPROBE, "-v", "quiet", "-show_entries", "format=duration",
+             "-of", "default=noprint_wrappers=1:nokey=1", ref_path],
+            capture_output=True, text=True
+        )
+        ref_dur = float(dur_r.stdout.strip()) if dur_r.stdout.strip() else None
+        if len(times) >= 2 and ref_dur:
+            all_points = [0.0] + sorted(times) + [ref_dur]
+            intervals  = [all_points[i+1] - all_points[i] for i in range(len(all_points)-1)]
+            avg_cut    = sum(intervals) / len(intervals)
+            tempo      = "fast" if avg_cut < 2.0 else "medium" if avg_cut < 3.5 else "slow"
+            style["avg_cut_sec"]  = round(avg_cut, 2)
+            style["cut_count"]    = len(times) + 1
+            style["ref_duration"] = round(ref_dur, 1)
+            style["tempo"]        = tempo
+            print(f"  ✂️  カットテンポ: 平均{avg_cut:.1f}s ({tempo}) / {len(times)+1}カット / 総尺{ref_dur:.1f}s")
+        elif ref_dur:
+            style["ref_duration"] = round(ref_dur, 1)
+            print(f"  ℹ️  カット検出なし / 総尺: {ref_dur:.1f}s")
+    except Exception as e:
+        print(f"  ⚠️  カットテンポ解析失敗: {e}")
+
+    # === ② 2段階Gemini分析：レイアウト構造 → スタイル変換 ===
     sample_frames = []
-    for t in [5, 15, 30]:
+    for t in [5, 15, 25]:
         try:
             tmp = tempfile.mktemp(suffix=".jpg")
             subprocess.run(
@@ -1106,39 +1349,127 @@ def analyze_reference_video(ref_path: str, gemini_key: str) -> dict:
         print("  ⚠️  参考動画フレーム取得失敗 → デフォルトスタイルを使用")
         return style
 
-    # 最初のフレームでスタイル解析
+    # --- Step A: レイアウト構造 + テロップスタイルを意味的に解釈 ---
+    # Geminiにピクセル単位で直接返させ、OUTPUT_SIZEに比例変換する
+    layout_info = {}
     try:
+        # 参考動画フレームの実寸を取得（比例変換用）
+        ref_frame_h = 1920  # デフォルト
+        try:
+            probe = subprocess.run(
+                [_FFPROBE, "-v", "quiet", "-select_streams", "v:0",
+                 "-show_entries", "stream=width,height",
+                 "-of", "csv=p=0", ref_path],
+                capture_output=True, text=True
+            )
+            parts = probe.stdout.strip().split(",")
+            if len(parts) == 2:
+                ref_frame_h = int(parts[1])
+        except Exception:
+            pass
+
+        layout_prompt = (
+            "この縦型動画のスクリーンショットを分析して、レイアウト構造とテロップスタイルをJSONで返して。\n\n"
+            "===== fields =====\n"
+            "layout_type: 以下から1つ選ぶ\n"
+            "  'white_bars'      : 上下に白い（または色付きの）バーがあり映像と区切られている\n"
+            "  'full_bleed'      : 映像が画面全体を占め、バーなし\n"
+            "  'overlay'         : 映像上に半透明オーバーレイがある\n"
+            "top_bar_percent     : 上部バーの高さ（全画面高さに対する%）。なしは0\n"
+            "bottom_bar_percent  : 下部バーの高さ（%）。なしは0\n"
+            "text_zone           : テロップがある領域\n"
+            "  'top_bar' / 'bottom_bar' / 'upper_area' / 'center' / 'lower_third'\n\n"
+            "telop_font_size_px  : テロップの文字の高さ（ピクセル推定値）。画像全体の高さを基準に推定\n"
+            "telop_y_center_px   : テロップ中心のY座標（ピクセル推定値。画像上端=0）\n"
+            "telop_color         : テキスト色（'#FFFFFF'形式）。不明はnull\n"
+            "outline_color       : 縁取り色（'#000000'形式）。なしはnull\n"
+            "has_text_bg         : テロップ背景（半透明帯やボックス）があるか (true/false)\n\n"
+            "重要:\n"
+            "- telop_font_size_pxとtelop_y_center_pxは、この画像の実ピクセルサイズに基づいて推定すること\n"
+            "- white_barsの場合、テロップはバー内にあるので、バーの中でのY位置を返すこと\n"
+            "JSON only。"
+        )
         resp = requests.post(
             f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}",
             json={"contents": [{"parts": [
                 {"inline_data": {"mime_type": "image/jpeg", "data": sample_frames[0]}},
-                {"text": (
-                    "この縦型動画のテロップスタイルをJSONで答えて。\n"
-                    "fields:\n"
-                    "  font_size: テロップの推定フォントサイズ（px、9:16の1920px高さ基準）\n"
-                    "  font_emph_size: 強調テロップのフォントサイズ（px）\n"
-                    "  telop_y_ratio: テロップ中心のY位置比率（0.0=上端、1.0=下端）\n"
-                    "  telop_color: テキスト色（例: '#FFFFFF'）\n"
-                    "  outline_color: 縁取り色（例: '#000000'）\n"
-                    "テロップが見当たらない場合はnullを返して。\n"
-                    "JSON only。"
-                )}
+                {"text": layout_prompt}
             ]}]},
             timeout=15
         )
         raw = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
         raw = re.sub(r"```json|```", "", raw).strip()
-        parsed = json.loads(raw)
-        if parsed:
-            for k in ["font_size", "font_emph_size", "telop_y_ratio"]:
-                if parsed.get(k) is not None:
-                    style[k] = parsed[k]
-            print(f"  ✅ スタイル抽出: {style}")
-        else:
-            print("  ℹ️  テロップ未検出 → デフォルトスタイル")
+        layout_info = json.loads(raw) or {}
+        print(f"  🔍 レイアウト解析: {layout_info.get('layout_type','不明')} "
+              f"| text_zone={layout_info.get('text_zone','?')} "
+              f"| font={layout_info.get('telop_font_size_px','?')}px "
+              f"| y={layout_info.get('telop_y_center_px','?')}px")
     except Exception as e:
-        print(f"  ⚠️  スタイル解析失敗: {e}")
+        print(f"  ⚠️  レイアウト解析失敗: {e}")
 
+    # --- Step B: レイアウト構造を考慮して OUTPUT_SIZE(1080x1920) 用スタイルに変換 ---
+    OUT_W, OUT_H = OUTPUT_SIZE  # 1080, 1920
+    layout_type = layout_info.get("layout_type", "full_bleed")
+
+    # Geminiから返されたピクセル値を OUTPUT_SIZE に比例変換
+    gemini_font_px = layout_info.get("telop_font_size_px")
+    gemini_y_px    = layout_info.get("telop_y_center_px")
+    scale_factor   = OUT_H / max(ref_frame_h, 1)
+
+    if gemini_font_px and gemini_y_px:
+        # 比例変換
+        scaled_font = int(gemini_font_px * scale_factor)
+        scaled_y    = gemini_y_px * scale_factor
+
+        if layout_type == "white_bars":
+            # 参考動画はバー内にテロップ → うちはfull_bleed
+            # フォントサイズはそのまま使えるが、Y位置はバー位置を直接転用しない
+            fs = max(50, min(90, scaled_font))
+            style["font_size"]      = fs
+            style["font_emph_size"] = max(60, min(100, int(fs * 1.15)))
+            style["telop_y_ratio"]  = TELOP_Y_RATIO  # デフォルト安全域
+            style["_layout_note"]   = (f"white_bars→full_bleed: font {gemini_font_px}px"
+                                       f"×{scale_factor:.2f}={fs}px, Y=デフォルト{TELOP_Y_RATIO}")
+        else:
+            # full_bleed / overlay → 比例変換してそのまま使う
+            fs = max(50, min(100, scaled_font))
+            y_ratio = scaled_y / OUT_H
+            style["font_size"]      = fs
+            style["font_emph_size"] = max(60, min(120, int(fs * 1.15)))
+            style["telop_y_ratio"]  = round(max(0.55, min(0.88, y_ratio)), 2)
+            style["_layout_note"]   = (f"{layout_type}: font {gemini_font_px}px"
+                                       f"×{scale_factor:.2f}={fs}px, "
+                                       f"Y {gemini_y_px}px→{style['telop_y_ratio']}")
+    else:
+        # Geminiからピクセル値が取れなかった → デフォルト
+        style["font_size"]      = FONT_SIZE
+        style["font_emph_size"] = FONT_EMPH_SIZE
+        style["telop_y_ratio"]  = TELOP_Y_RATIO
+        style["_layout_note"]   = "Geminiピクセル値なし→デフォルト"
+
+    # はみ出し安全チェック: テロップが画面外に出ないことを検証
+    max_lines = 3  # 最大3行想定
+    line_h = style["font_size"] + 10
+    total_telop_h = line_h * max_lines
+    telop_top = int(OUT_H * style["telop_y_ratio"]) - total_telop_h // 2
+    telop_btm = telop_top + total_telop_h
+    if telop_top < 20:
+        # 上にはみ出る → Y位置を下げる
+        style["telop_y_ratio"] = round((total_telop_h // 2 + 40) / OUT_H, 2)
+        style["_layout_note"] += " | ⚠上はみ出し補正"
+    if telop_btm > OUT_H - 40:
+        # 下にはみ出る → Y位置を上げる
+        style["telop_y_ratio"] = round((OUT_H - 40 - total_telop_h // 2) / OUT_H, 2)
+        style["_layout_note"] += " | ⚠下はみ出し補正"
+
+    # カラーはレイアウトを問わず転用
+    if layout_info.get("telop_color"):
+        style["telop_color"]  = layout_info["telop_color"]
+    if layout_info.get("outline_color"):
+        style["outline_color"] = layout_info["outline_color"]
+
+    print(f"  ✅ スタイル変換完了: font={style.get('font_size')}px "
+          f"y={style.get('telop_y_ratio')} | {style.get('_layout_note','')}")
     return style
 
 
@@ -1168,8 +1499,9 @@ def main():
     # 台本パース
     print("\n📄 台本パース中...")
     csv_voice_category = None
+    bgm_filename = None
     if args.script.lower().endswith(".csv"):
-        scenes, global_annotation, csv_voice_category = parse_script_csv(args.script)
+        scenes, global_annotation, csv_voice_category, bgm_filename = parse_script_csv(args.script)
     else:
         scenes, global_annotation = parse_script(args.script)
 
@@ -1243,6 +1575,7 @@ def main():
                 gemini_key=gemini_key,
                 global_annotation=global_annotation,
                 style=style,
+                total_scenes=len(valid_scenes),
             )
         else:
             # 継続グループ: 複数シーンを1クリップで処理
@@ -1251,6 +1584,7 @@ def main():
                 gemini_key=gemini_key,
                 global_annotation=global_annotation,
                 style=style,
+                total_scenes=len(valid_scenes),
             )
         for scene, (audio_path, audio_dur) in zip([group_scenes[0]], [group_audios[0]]):
             pass  # dummy loop for structure (actual processing above)
@@ -1265,6 +1599,38 @@ def main():
     print(f"\n✂️  {len(clips)}シーンを結合中... 総尺: {total_sec:.1f}s")
     final = concatenate_videoclips(clips, method="compose")
 
+    # ─── BGMミックス ─────────────────────────────────────────
+    if bgm_filename:
+        # BGMファイルを素材フォルダまたはCSVと同じディレクトリから検索
+        bgm_path = None
+        for search_dir in [Path(args.clips), Path(args.script).parent]:
+            candidate = search_dir / bgm_filename
+            if candidate.exists():
+                bgm_path = str(candidate)
+                break
+        if bgm_path:
+            try:
+                bgm_audio = AudioFileClip(bgm_path)
+                # BGMを動画尺に合わせてループまたはトリム
+                if bgm_audio.duration < total_sec:
+                    bgm_audio = vfx.loop(bgm_audio, duration=total_sec)
+                else:
+                    bgm_audio = bgm_audio.subclip(0, total_sec)
+                # BGM音量: ナレーションの邪魔にならないよう20%に抑える
+                bgm_audio = bgm_audio.volumex(0.15)
+                # 既存音声（ナレーション）とBGMを合成
+                if final.audio:
+                    from moviepy.editor import CompositeAudioClip
+                    mixed = CompositeAudioClip([final.audio, bgm_audio])
+                    final = final.set_audio(mixed)
+                else:
+                    final = final.set_audio(bgm_audio)
+                print(f"  🎵 BGMミックス: {bgm_filename} (vol=15%)")
+            except Exception as e:
+                print(f"  ⚠️  BGMミックス失敗: {e}")
+        else:
+            print(f"  ⚠️  BGMファイルが見つかりません: {bgm_filename}")
+
     print(f"\n💾 出力中: {args.output} （{total_sec:.1f}秒）")
     final.write_videofile(
         args.output,
@@ -1278,6 +1644,8 @@ def main():
     print(f"\n✅ 完成！ {args.output}")
     print(f"   総尺: {total_sec:.1f}秒 / {len(clips)}シーン")
     print(f"   ナレーション: シーン単位TTS同期方式（{narration_dir}/scene_XX.mp3）")
+    if bgm_filename:
+        print(f"   BGM: {bgm_filename}")
 
     # Remotion用 composition.json を出力（--remotion オプション時）
     if args.remotion:

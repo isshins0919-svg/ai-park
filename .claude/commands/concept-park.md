@@ -501,36 +501,8 @@ strategy.json の以下を材料に:
 
 確定コンセプト・KV・セールスコピーを前提に、各フォーマットの役割とメッセージを整理する。
 
-```
-━━━ フォーマット別戦略マトリクス ━━━
-
-■ バナー — 1秒で新認知のフックを刺す（興味の入口）
-  伝えるもの: フック1本（新認知の断片）
-  N1の脳内変化: 「え、何それ？」
-  コンセプトの使い方: そのままヘッドライン
-  セールスコピーの使い方: メインコピー
-  KVの使い方: ビジュアル全体
-  メッセージ: {バナー用に研ぎ澄ましたメッセージ}
-
-■ ショート動画広告 — 30秒で感情体験させる（Before→新認知→After）
-  伝えるもの: 新認知の感情体験
-  N1の脳内変化: 「あ、自分のことだ…」→「え、そうだったの？」→「これ欲しい」
-  コンセプトの使い方: ストーリーの軸
-  セールスコピーの使い方: 冒頭テロップ or ラストメッセージ
-  KVの使い方: トーン&ムード
-  ストーリーアーク: {Before→新認知→After の感情曲線}
-  冒頭フック方針: {冒頭3秒のフック方針}
-
-■ 記事LP — 5分で論理的に納得させる（問題深掘り→新基準→商品証明→購買決定）
-  伝えるもの: 新認知の論証
-  N1の脳内変化: 「なるほど、だからこれか」
-  コンセプトの使い方: 記事全体の論理の核
-  セールスコピーの使い方: FVヘッドライン
-  KVの使い方: FV画像 + 記事内ビジュアル
-  認知変化フロー: {問題提起→常識の否定→新基準→商品証明→購買決定}
-  FVメッセージ: {FVヘッドラインの方針}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+→ `.claude/knowledge/creative-reference.md`「フォーマット別戦略マトリクス」参照。
+各フォーマットの{メッセージ}{ストーリーアーク}{認知変化フロー}等はこのセッションで生成・表示する。
 
 → 「修正したいところある？フォーマットごとの攻め方、これでいい？」
 
@@ -557,7 +529,7 @@ strategy.json の以下を材料に:
 
 ### 5-C: メッセージ体系
 
-コンセプト・セールスコピー・フック角度を束ねた、全クリエイティブ共通のメッセージ体系を定義。
+コンセプト・セールスコピー・フック角度を束ねた、全クリエイティブ共���のメッセージ体系を定義。
 
 ```json
 {
@@ -602,33 +574,12 @@ KV: 「{visualConcept}」 ✅確定済み
 
 ### 6-A: 確定要素のベクトル検証
 
+**共通関数（embed / cosine_sim）→ `.claude/knowledge/vector-utils.md` を参照。**
+
+Concept Park固有の6検証:
+
 ```python
-from google import genai
-import os, subprocess, json, numpy as np
-
-def _load_env(var):
-    if not os.environ.get(var):
-        try:
-            r = subprocess.run(['zsh','-i','-c',f'echo ${var}'], capture_output=True, text=True, timeout=5)
-            v = r.stdout.strip()
-            if v: os.environ[var] = v
-        except: pass
-_load_env('GEMINI_API_KEY_1')
-
-client = genai.Client(api_key=os.environ['GEMINI_API_KEY_1'])
-
-def embed(text):
-    r = client.models.embed_content(model='gemini-embedding-001', contents=text)
-    return r.embeddings[0].values
-
-def cosine_sim(a, b):
-    a, b = np.array(a), np.array(b)
-    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
-
-# all_vectors.json 読み込み
-all_vectors = json.load(open(f'research-park/output/{slug}/all_vectors.json'))
-comp_vecs = [np.array(v['vector']) for v in all_vectors if v['category'] == 'competitor_message']
-n1_demand_vec = np.array([v['vector'] for v in all_vectors if v['category'] == 'layer_demand' and v['layer'] == primary_layer][0])
+# 共通関数は vector-utils.md から。以下はConcept固有ロジックのみ
 
 # 確定3要素をベクトル化
 concept_vec = embed(confirmed_concept)
@@ -636,42 +587,21 @@ visual_vec = embed(confirmed_visual_concept)
 copy_vec = embed(confirmed_sales_copy)
 copy_b_vec = embed(confirmed_sales_copy_b)
 
-# === 検証1: 競合との距離（Only1度）===
-for label, vec in [('コンセプト', concept_vec), ('セールスコピーA', copy_vec), ('セールスコピーB', copy_b_vec)]:
-    avg = np.mean([cosine_sim(vec, c) for c in comp_vecs])
-    print(f"{label} × 競合平均: sim={avg:.3f} {'⚠️近い' if avg > 0.60 else '✅Only1'}")
-
-# === 検証2: N1需要との距離（刺さり度）===
-for label, vec in [('コンセプト', concept_vec), ('セールスコピーA', copy_vec), ('セールスコピーB', copy_b_vec)]:
-    sim = cosine_sim(vec, n1_demand_vec)
-    print(f"{label} × N1需要: sim={sim:.3f}")
-
-# === 検証3: 3要素の一貫性 ===
-pairs = [('コンセプト×コピーA', concept_vec, copy_vec),
-         ('コンセプト×コピーB', concept_vec, copy_b_vec),
-         ('コンセプト×ビジュアル', concept_vec, visual_vec)]
-for label, a, b in pairs:
-    sim = cosine_sim(a, b)
-    print(f"{label}: sim={sim:.3f} {'⚠️乖離' if sim < 0.45 else '✅一貫'}")
-
-# === 検証4: A/Bの差異 ===
-ab_sim = cosine_sim(copy_vec, copy_b_vec)
-print(f"コピーA × コピーB: sim={ab_sim:.3f} {'⚠️似すぎ' if ab_sim > 0.80 else '✅差異あり'}")
-
-# === 検証5: フック角度の多様性 ===
-hook_vecs = [embed(h['text']) for h in confirmed_hooks]
-hook_sims = []
-for i in range(len(hook_vecs)):
-    for j in range(i+1, len(hook_vecs)):
-        hook_sims.append(cosine_sim(hook_vecs[i], hook_vecs[j]))
-avg_hook_sim = np.mean(hook_sims)
-print(f"フック間平均sim: {avg_hook_sim:.3f} {'⚠️似すぎ' if avg_hook_sim > 0.75 else '✅多様'}")
-
-# === 検証6: フック × N1需要 ===
-for h, hv in zip(confirmed_hooks, hook_vecs):
-    sim = cosine_sim(hv, n1_demand_vec)
-    print(f"  フック「{h['text'][:15]}」× N1需要: sim={sim:.3f}")
+# 検証1: 競合との距離（Only1度） — sim > 0.60 なら ⚠️
+# 検証2: N1需要との距離（刺さり度）
+# 検証3: 3要素の一貫性（コンセプト×コピー×ビジュアル） — sim < 0.45 なら ⚠️乖離
+# 検証4: A/Bの差異 — sim > 0.80 なら ⚠️似すぎ
+# 検証5: フック角度の多様性 — 平均sim > 0.75 なら ⚠️
+# 検証6: フック × N1需要
 ```
+
+**閾値基準**:
+| 検証 | OK基準 | NG時 |
+|---|---|---|
+| 競合距離 | sim <= 0.60 | Only1度が足りない → コンセプト差別化 |
+| 3要素一貫性 | sim >= 0.45 | コンセプト⇔コピー⇔ビジュアルが乖離 |
+| A/B差異 | sim <= 0.80 | テスト意味なし → 片方のフック角度変更 |
+| フック多様性 | 平均sim <= 0.75 | 似たフックが多い → 角度追加 |
 
 ### 6-B: strategy.json 更新
 

@@ -2,7 +2,6 @@
   "version": "1.1",
   "productSlug": "camicks",
   "createdAt": "2026-03-26",
-
   "productIntel": {
     "name": "Camicks シークレット五本指ソックス",
     "category": "機能性靴下 / Amazon EC",
@@ -52,23 +51,32 @@
       "offer": "¥1,540/足・日本製・1足から購入可"
     }
   },
-
   "competitorIntel": {
     "SLEEPSINERO": {
       "price": "¥1,343〜 5足セット",
       "material": "コットン80〜90%",
       "usp": "高品質コットン × 機能性",
-      "appealAngles": ["蒸れない", "抗菌防臭", "コスパ5足セット", "外反母趾対策"],
+      "appealAngles": [
+        "蒸れない",
+        "抗菌防臭",
+        "コスパ5足セット",
+        "外反母趾対策"
+      ],
       "weakness": "外から5本指と分かるデザイン / 化繊・コットンでも蒸れ問題 / 見た目がカジュアル寄り",
       "monthlyVolume": "1000点以上/月（推定）"
     },
     "一般5本指市場": {
-      "commonAppeals": ["蒸れない", "防臭", "外反母趾対策", "コットン素材", "コスパ"],
+      "commonAppeals": [
+        "蒸れない",
+        "防臭",
+        "外反母趾対策",
+        "コットン素材",
+        "コスパ"
+      ],
       "sharedWeakness": "全員が機能訴求に密集（sim>0.80）/ デザイン・見た目・バレない視点は皆無",
       "vectorDensity": "蒸れ・防臭・コットン・機能性の4訴求で完全密集（ベクトル分析で確認済み）"
     }
   },
-
   "lpIntel": {
     "note": "Amazon商品ページが主戦場。メイン画像+サブ6枚の計7枚で完結する必要あり",
     "amazonKW": {
@@ -77,12 +85,10 @@
       "longTail": "五本指靴下 バレない / 5本指靴下 おしゃれ / 和紙靴下"
     }
   },
-
   "dproIntel": {
     "available": false,
     "note": "DPro掲載確認なし。WebリサーチとPDFデータで分析"
   },
-
   "layers": {
     "潜在層": {
       "persona": {
@@ -95,7 +101,10 @@
       },
       "rootDesire": "足元まで気を使えるおしゃれな自分でいたい",
       "parameters": [],
-      "brainCompetitors": ["消臭スプレー", "何もしない"],
+      "brainCompetitors": [
+        "消臭スプレー",
+        "何もしない"
+      ],
       "instinct": "5本指ソックスはダサい・健康オタク向けというイメージで検討外",
       "estimatedVolume": "多",
       "estimatedCPA": "高",
@@ -180,11 +189,10 @@
         "uspMatch": 0.783,
         "demandReality": 0.834,
         "only1Score": 0.275,
-        "totalScore": 0.590
+        "totalScore": 0.59
       }
     }
   },
-
   "primaryN1": {
     "layer": "準顕在層〜顕在層（二軸戦略）",
     "primaryVector": "顕在層（ベクトルスコア1位: 0.590）",
@@ -204,7 +212,6 @@
       "competitorWeakness": 0.672
     }
   },
-
   "vectorIntelligence": {
     "competitorDensityClusters": [
       "蒸れ防止訴求（全競合密集、sim>0.87）",
@@ -226,47 +233,64 @@
       "overlapScore": 0.672,
       "insight": "競合ユーザーの主要不満（見た目・バレる・デザイン）を自社が直接解決している"
     },
-    "uspLayerMatch": {"潜在層": 0.679, "準顕在層": 0.759, "顕在層": 0.783},
+    "uspLayerMatch": {
+      "潜在層": 0.679,
+      "準顕在層": 0.759,
+      "顕在層": 0.783
+    },
     "newCognitionOnly1Scores": {
       "note": "文章レベルのコサイン類似度では0.725〜0.763だが、実際の訴求軸=シークレット構造・和紙の歴史・糸屋57年は競合に存在しない（競合ゼロ確認済み）",
       "潜在層": 0.763,
       "準顕在層": 0.755,
       "顕在層": 0.725
     },
-    "demandRealityScores": {"潜在層": 0.798, "準顕在層": 0.836, "顕在層": 0.834}
+    "demandRealityScores": {
+      "潜在層": 0.798,
+      "準顕在層": 0.836,
+      "顕在層": 0.834
+    }
   },
-
   "layerCommunication": {
     "潜在層": {
       "goal": "「5本指=ダサい」パラメータを解体し、シークレット構造の存在を知らせる",
       "approach": "教育型。ビジュアルショック（外から普通に見える）→ 原因気づき",
       "hookAngle": "「え、これ5本指ソックスなの？」という驚き・発見",
       "keyMessage": "外は、ひとつ。中は、五つ。",
-      "expressionElements": ["シークレット構造の対比", "外から見ると普通", "靴を脱ぐ場面での安心感"]
+      "expressionElements": [
+        "シークレット構造の対比",
+        "外から見ると普通",
+        "靴を脱ぐ場面での安心感"
+      ]
     },
     "準顕在層": {
       "goal": "「バレない5本指が存在する」という新パラメータを付与し、即決させる",
       "approach": "発見・共感型。「あなたが探していたのはこれ」という運命的な出会い感",
       "hookAngle": "「今まで諦めてた理由がなくなった」共感から入る",
       "keyMessage": "外は、ひとつ。中は、五つ。／靴の中にも、美意識を。",
-      "expressionElements": ["外から普通=革命", "シークレット構造の断面", "おしゃれシーン着用"]
+      "expressionElements": [
+        "外から普通=革命",
+        "シークレット構造の断面",
+        "おしゃれシーン着用"
+      ]
     },
     "顕在層": {
       "goal": "「構造が違う」という根本差別化で、長年の妥協サイクルを終わらせる",
       "approach": "直球型。素材から違う・糸屋が作った・ニッセンケン認証の権威で即決",
       "hookAngle": "「あなたが探し続けていたスペックが、ここに全部ある」",
       "keyMessage": "素材に、57年。／和紙は、もともと呼吸している。／表に出ない仕事ほど、本物だ。",
-      "expressionElements": ["創業1969シール", "ニッセンケン認証スタンプ", "糸屋のアトリエ世界観"]
+      "expressionElements": [
+        "創業1969シール",
+        "ニッセンケン認証スタンプ",
+        "糸屋のアトリエ世界観"
+      ]
     }
   },
-
   "concept": {
     "mainConcept": "外は、ひとつ。中は、五つ。",
     "subConcept": "表に出ない仕事ほど、本物だ。",
     "brandEssence": "素材から、靴下を作る。糸屋57年のCamicks。",
     "only1Position": "外から見えない五本指 × 和紙40%素材 × 57年糸屋 — 見た目も機能も妥協しない唯一の靴下"
   },
-
   "keyVisual": {
     "direction": "Luxury Japanese Editorial — Vogue Japan × Casa BRUTUS × 和の美意識",
     "mood": "高級感×職人哲学×シンプルな驚き",
@@ -277,18 +301,57 @@
     },
     "typography": "大きな明朝体 — 宣言するような重さと余白",
     "productPresentation": "シークレット構造を示す対比（外=普通 / 内=五指）",
-    "prohibitions": ["丸バッジ", "グラデーション権威マーク", "情報パネル過多", "白バック商品写真", "Amazon的プロモビジュアル"],
+    "prohibitions": [
+      "丸バッジ",
+      "グラデーション権威マーク",
+      "情報パネル過多",
+      "白バック商品写真",
+      "Amazon的プロモビジュアル"
+    ],
     "authorityMarkStyle": "細線四角枠・明朝体・角丸なし・老舗焼印・ウイスキーエイジステートメント風"
   },
-
   "salesCopy": {
     "amazon6images": [
-      {"index": 1, "headline": "外は、ひとつ。中は、五つ。", "sub": "外から見えない、シークレット五本指構造。縫い目ゼロ。", "angle": "発見・驚き"},
-      {"index": 2, "headline": "表に出ない仕事ほど、本物だ。", "sub": "5本の指それぞれを、個別に包む内側構造。", "angle": "職人哲学・権威"},
-      {"index": 3, "headline": "和紙は、もともと呼吸している。", "sub": "camifine® — 和紙40%の自社開発素材", "authority": "ニッセンケン認証マーク", "angle": "素材権威"},
-      {"index": 4, "headline": "余計なことをさせない、という設計。", "sub": "洗濯後の裏返し不要。普通の靴下と同じでいい。", "authority": "EASY CAREラベル", "angle": "機能・設計哲学"},
-      {"index": 5, "headline": "靴の中にも、美意識を。", "sub": "23cm〜27cm対応 / メンズ・レディース兼用", "angle": "ライフスタイル・おしゃれ"},
-      {"index": 6, "headline": "素材に、57年。", "sub": "糸の開発から製造まで、一貫生産", "authority": "創業1969澤田株式会社大阪・泉州", "angle": "歴史的権威・コアコンピタンス"}
+      {
+        "index": 1,
+        "headline": "外は、ひとつ。中は、五つ。",
+        "sub": "外から見えない、シークレット五本指構造。縫い目ゼロ。",
+        "angle": "発見・驚き"
+      },
+      {
+        "index": 2,
+        "headline": "蒸れない足は、臭わない。",
+        "sub": "camifine® 和紙の調湿力で、足を乾いた状態に保つ。",
+        "angle": "職人哲学・権威",
+        "note": "薬機法クリア版。水虫直接訴求→蒸れ×臭いの因果訴求に転換 (2026-04-02)"
+      },
+      {
+        "index": 3,
+        "headline": "和紙は、もともと呼吸している。",
+        "sub": "camifine® — 和紙40%の自社開発素材",
+        "authority": "ニッセンケン認証マーク",
+        "angle": "素材権威"
+      },
+      {
+        "index": 4,
+        "headline": "余計なことをさせない、という設計。",
+        "sub": "洗濯後の裏返し不要。普通の靴下と同じでいい。",
+        "authority": "EASY CAREラベル",
+        "angle": "機能・設計哲学"
+      },
+      {
+        "index": 5,
+        "headline": "靴の中にも、美意識を。",
+        "sub": "23cm〜27cm対応 / メンズ・レディース兼用",
+        "angle": "ライフスタイル・おしゃれ"
+      },
+      {
+        "index": 6,
+        "headline": "素材に、57年。",
+        "sub": "糸の開発から製造まで、一貫生産",
+        "authority": "創業1969澤田株式会社大阪・泉州",
+        "angle": "歴史的権威・コアコンピタンス"
+      }
     ],
     "copyRules": {
       "rule1": "語尾〜していた/〜た/〜なった/〜てきたNG。名詞止め・断言系・現在形で",
@@ -296,16 +359,38 @@
       "rule3": "権威マークは細線四角枠・明朝体・老舗シールスタイル。丸バッジ/グラデーションNG"
     }
   },
-
   "hookVectors": [
-    {"angle": "発見・驚き", "text": "外から見えない構造が存在することへの驚き", "targetLayer": "準顕在層"},
-    {"angle": "共感・解放", "text": "バレたくないから諦めていた人への解放感", "targetLayer": "準顕在層"},
-    {"angle": "職人権威", "text": "57年糸屋が素材から作ったという構造的な違い", "targetLayer": "顕在層"},
-    {"angle": "素材真実", "text": "和紙の千年の呼吸性という自然の真実", "targetLayer": "顕在層"},
-    {"angle": "設計哲学", "text": "余計なことをさせないという洗練された思想", "targetLayer": "準顕在〜顕在"},
-    {"angle": "美意識訴求", "text": "見えない場所にこそ美意識を持つライフスタイル", "targetLayer": "潜在〜準顕在"}
+    {
+      "angle": "発見・驚き",
+      "text": "外から見えない構造が存在することへの驚き",
+      "targetLayer": "準顕在層"
+    },
+    {
+      "angle": "共感・解放",
+      "text": "バレたくないから諦めていた人への解放感",
+      "targetLayer": "準顕在層"
+    },
+    {
+      "angle": "職人権威",
+      "text": "57年糸屋が素材から作ったという構造的な違い",
+      "targetLayer": "顕在層"
+    },
+    {
+      "angle": "素材真実",
+      "text": "和紙の千年の呼吸性という自然の真実",
+      "targetLayer": "顕在層"
+    },
+    {
+      "angle": "設計哲学",
+      "text": "余計なことをさせないという洗練された思想",
+      "targetLayer": "準顕在〜顕在"
+    },
+    {
+      "angle": "美意識訴求",
+      "text": "見えない場所にこそ美意識を持つライフスタイル",
+      "targetLayer": "潜在〜準顕在"
+    }
   ],
-
   "assets": {
     "brandAssets": {
       "brandName": "Camicks",
@@ -347,6 +432,301 @@
       "founding": "創業 1969 / 澤田株式会社 / 大阪・泉州"
     }
   },
-
-  "vectorFile": "all_vectors.json"
+  "vectorFile": "all_vectors.json",
+  "competitorCreativeIntel": {
+    "updatedAt": "2026-04-02",
+    "source": "Amazon JP 競合リサーチ（5本指靴下カテゴリ）",
+    "topCompetitors": [
+      {
+        "brand": "SLEEPSINERO",
+        "price": "¥1,343（5足）",
+        "position": "BSR1位 / コスパ×機能"
+      },
+      {
+        "brand": "グンゼ BODYWILD",
+        "price": "¥1,320（3足）",
+        "position": "ブランド権威"
+      },
+      {
+        "brand": "SUGATA LABO",
+        "price": "¥1,980〜2,200",
+        "position": "和紙×シークレット直接競合"
+      },
+      {
+        "brand": "ラポスカ",
+        "price": "¥1,380（3足）",
+        "position": "日本製×無縫製"
+      }
+    ],
+    "saturatedAngles": [
+      "脱げない訴求（三重脱げ防止・シリコン・構造説明）",
+      "コスパ×セット訴求",
+      "抗菌防臭機能（一般的）",
+      "カラーバリエーション展示",
+      "スポーツ×運動用途"
+    ],
+    "emptyZones": [
+      "シークレット性の感情訴求",
+      "製造ストーリー×糸屋権威",
+      "洗濯後の利便性",
+      "おしゃれ×ファッション着用シーン",
+      "和紙素材の具体的な数値証拠"
+    ],
+    "copyAnalysis": [
+      {
+        "index": 1,
+        "text": "外は、ひとつ。中は、五つ。外から見えない",
+        "comp_avg": 0.713,
+        "empty_avg": 0.714,
+        "status": "⚠️ 空白狙いOK"
+      },
+      {
+        "index": 2,
+        "text": "蒸れない足は、臭わない。camifine",
+        "comp_avg": 0.696,
+        "empty_avg": 0.646,
+        "status": "⚠️ 空白狙いOK"
+      },
+      {
+        "index": 3,
+        "text": "和紙は、もともと呼吸している。camif",
+        "comp_avg": 0.606,
+        "empty_avg": 0.607,
+        "status": "⚠️ 空白狙いOK"
+      },
+      {
+        "index": 4,
+        "text": "余計なことをさせない、という設計。洗濯後",
+        "comp_avg": 0.69,
+        "empty_avg": 0.714,
+        "status": "⚠️ 空白狙いOK"
+      },
+      {
+        "index": 5,
+        "text": "靴の中にも、美意識を。23cm〜27cm",
+        "comp_avg": 0.684,
+        "empty_avg": 0.678,
+        "status": "⚠️ 空白狙いOK"
+      },
+      {
+        "index": 6,
+        "text": "素材に、57年。糸の開発から製造まで、一",
+        "comp_avg": 0.613,
+        "empty_avg": 0.653,
+        "status": "⚠️ 空白狙いOK"
+      }
+    ]
+  },
+  "kwLayerProfiles": {
+    "updatedAt": "2026-04-02",
+    "layers": {
+      "Layer1_シークレット追求層": {
+        "description": "外から5本指と分からない靴下を探している層。人前で靴を脱ぐシーンで恥ずかしくない靴下が欲しい",
+        "weight": 0.4,
+        "target_images": [
+          1,
+          5
+        ],
+        "kw_intents": [
+          "シークレット 5本指",
+          "普通に見える 5本指靴下",
+          "外から見えない 靴下",
+          "足指靴下 バレない",
+          "5本指靴下 見た目普通"
+        ]
+      },
+      "Layer2_機能健康層": {
+        "description": "足の蒸れ・臭いを機能的に解決したい層。和紙素材など素材の機能性に関心がある",
+        "weight": 0.35,
+        "target_images": [
+          2,
+          3
+        ],
+        "kw_intents": [
+          "靴下 消臭 蒸れない",
+          "和紙 靴下 機能性",
+          "5本指靴下 消臭",
+          "足 蒸れ対策 靴下",
+          "camifine 和紙素材"
+        ]
+      },
+      "Layer3_ブランド信頼層": {
+        "description": "品質・製造背景・ブランドへの信頼を重視する層。日本製・老舗・職人への共感がある",
+        "weight": 0.25,
+        "target_images": [
+          4,
+          6
+        ],
+        "kw_intents": [
+          "日本製 靴下 高品質",
+          "職人 靴下 本物",
+          "靴下 メーカー 老舗",
+          "五本指靴下 おしゃれ",
+          "糸屋 靴下 こだわり"
+        ]
+      }
+    },
+    "copyAnalysis": [
+      {
+        "index": "メイン",
+        "text": "Amazon商品ページメイン画像 白背景 商品単体 シンプル",
+        "layer_scores": {
+          "Layer1_シークレット追求層": 0.586,
+          "Layer2_機能健康層": 0.575,
+          "Layer3_ブランド信頼層": 0.59
+        },
+        "weighted_score": 0.583,
+        "best_layer": "Layer3_ブランド信頼層"
+      },
+      {
+        "index": "サブ①",
+        "text": "外は、ひとつ。中は、五つ。外から見えない、シークレット五本指",
+        "layer_scores": {
+          "Layer1_シークレット追求層": 0.795,
+          "Layer2_機能健康層": 0.652,
+          "Layer3_ブランド信頼層": 0.598
+        },
+        "weighted_score": 0.696,
+        "best_layer": "Layer1_シークレット追求層"
+      },
+      {
+        "index": "サブ②",
+        "text": "蒸れない足は、臭わない。camifine® 和紙の調湿力で、",
+        "layer_scores": {
+          "Layer1_シークレット追求層": 0.679,
+          "Layer2_機能健康層": 0.798,
+          "Layer3_ブランド信頼層": 0.581
+        },
+        "weighted_score": 0.696,
+        "best_layer": "Layer2_機能健康層"
+      },
+      {
+        "index": "サブ③",
+        "text": "和紙は、もともと呼吸している。camifine® 和紙40%",
+        "layer_scores": {
+          "Layer1_シークレット追求層": 0.558,
+          "Layer2_機能健康層": 0.698,
+          "Layer3_ブランド信頼層": 0.593
+        },
+        "weighted_score": 0.615,
+        "best_layer": "Layer2_機能健康層"
+      },
+      {
+        "index": "サブ④",
+        "text": "余計なことをさせない、という設計。洗濯後の裏返し不要。普通の",
+        "layer_scores": {
+          "Layer1_シークレット追求層": 0.739,
+          "Layer2_機能健康層": 0.675,
+          "Layer3_ブランド信頼層": 0.574
+        },
+        "weighted_score": 0.675,
+        "best_layer": "Layer1_シークレット追求層"
+      },
+      {
+        "index": "サブ⑤",
+        "text": "靴の中にも、美意識を。23cm〜27cm対応。メンズ・レディ",
+        "layer_scores": {
+          "Layer1_シークレット追求層": 0.711,
+          "Layer2_機能健康層": 0.725,
+          "Layer3_ブランド信頼層": 0.625
+        },
+        "weighted_score": 0.694,
+        "best_layer": "Layer2_機能健康層"
+      },
+      {
+        "index": "サブ⑥",
+        "text": "素材に、57年。糸の開発から製造まで、一貫生産。",
+        "layer_scores": {
+          "Layer1_シークレット追求層": 0.589,
+          "Layer2_機能健康層": 0.619,
+          "Layer3_ブランド信頼層": 0.657
+        },
+        "weighted_score": 0.616,
+        "best_layer": "Layer3_ブランド信頼層"
+      }
+    ]
+  },
+  "competitorRealPerformance": {
+    "updatedAt": "2026-04-02",
+    "source": "Amazon JP 手動リサーチ + 公開情報（推定値）",
+    "note": "月販数・CVR・CTRは公開情報と推計ロジックによる推定値。Amazon Seller Central APIへの接続なし",
+    "competitors": [
+      {
+        "brand": "SLEEPSINERO",
+        "price_per_unit": 269,
+        "monthly_sales_estimate": 3000,
+        "estimated_cvr": 0.18,
+        "main_appeal": "コスパ×機能×セット",
+        "weakness": "ブランド力なし・差別化不足・低価格帯（単価¥269）"
+      },
+      {
+        "brand": "グンゼ BODYWILD",
+        "price_per_unit": 440,
+        "monthly_sales_estimate": 1500,
+        "estimated_cvr": 0.15,
+        "main_appeal": "ブランド権威×機能",
+        "weakness": "高額帯でない・差別化が機能のみ・シークレット性なし"
+      },
+      {
+        "brand": "SUGATA LABO",
+        "price_per_unit": 2090,
+        "monthly_sales_estimate": 400,
+        "estimated_cvr": 0.12,
+        "main_appeal": "和紙×シークレット×数値証拠×カラーバリエーション",
+        "weakness": "感情訴求弱い・「シークレット」の感動体験を伝えていない・製造ストーリーなし"
+      },
+      {
+        "brand": "ラポスカ",
+        "price_per_unit": 460,
+        "monthly_sales_estimate": 350,
+        "estimated_cvr": 0.11,
+        "main_appeal": "日本製×無縫製×デザイン",
+        "weakness": "価格帯が中途半端・ブランドストーリーなし・証拠データなし"
+      }
+    ],
+    "copyAnalysis": [
+      {
+        "index": "サブ①",
+        "comp_perf_avg": 0.748,
+        "pain_solve_sim": 0.759,
+        "status": "⚠️ ペイン解決（差別化弱め）"
+      },
+      {
+        "index": "サブ②",
+        "comp_perf_avg": 0.703,
+        "pain_solve_sim": 0.657,
+        "status": "⚠️ ペイン解決（差別化弱め）"
+      },
+      {
+        "index": "サブ③",
+        "comp_perf_avg": 0.605,
+        "pain_solve_sim": 0.547,
+        "status": "⚠️ 要見直し"
+      },
+      {
+        "index": "サブ④",
+        "comp_perf_avg": 0.688,
+        "pain_solve_sim": 0.768,
+        "status": "⚠️ ペイン解決（差別化弱め）"
+      },
+      {
+        "index": "サブ⑤",
+        "comp_perf_avg": 0.681,
+        "pain_solve_sim": 0.665,
+        "status": "⚠️ ペイン解決（差別化弱め）"
+      },
+      {
+        "index": "サブ⑥",
+        "comp_perf_avg": 0.605,
+        "pain_solve_sim": 0.563,
+        "status": "⚠️ ペイン解決（差別化弱め）"
+      }
+    ],
+    "camicksAdvantage": {
+      "vs_SLEEPSINERO": "単価10倍だが差別化は明確。シークレット×証拠×ストーリーで正当化可能",
+      "vs_グンゼ": "ブランド力は劣るが価格同等帯で差別化可能。57年権威で対抗",
+      "vs_SUGATA_LABO": "最直接競合。感情訴求×洗濯利便性×製造ストーリーで差別化",
+      "vs_ラポスカ": "価格帯で上回る。証拠データ（ニッセンケン）が決定的差別化"
+    }
+  }
 }

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Slack 記事フィードバックBot v7
+Slack 記事フィードバックBot v9
 - #yomite_ai-kiji_fb を2分おきにポーリング
 - 「フィードバック」+ URL を含む投稿を検知
 - Playwright でJS実行後にDOM順（テキスト＋画像・動画セット）で解析
 - 動画は全本のサムネイルをOpenCV並列取得
-- 8エージェントCMOシステム（Group A/B/C 並列 + CMO逐次）でスコアカード出力
+- 8エージェントCMOシステム（Group A/B/C 並列 + CMO逐次）でスコアカード出力（v9: 視覚設計評価君 追加）
   Group A: フック君 + アーク君（Haiku×2）
   Group B: 信頼君 + CTA君 + オファー君（Haiku×3）
   Group C: 競合君（benchmark.jsonルックアップ）+ パート君（Haiku×1）
@@ -206,6 +206,7 @@ def fetch_article_with_images(url: str) -> dict:
 
         sections = []
         text_buf = []
+        html_buf = []  # Phase 2治療用: 各テキストセクションの生HTMLを保持
         img_count = 0
         vid_count = 0
         all_video_urls = []
@@ -213,8 +214,10 @@ def fetch_article_with_images(url: str) -> dict:
         def flush_text():
             t = "\n".join(text_buf).strip()
             if t and len(t) > 10:
-                sections.append({"type": "text", "content": t[:600]})
+                raw_html = "\n".join(html_buf)
+                sections.append({"type": "text", "content": t[:600], "html": raw_html[:2000]})
             text_buf.clear()
+            html_buf.clear()
 
         for elem in iter_dom(pre_offer_soup):
             if elem.name == "img":
@@ -250,6 +253,7 @@ def fetch_article_with_images(url: str) -> dict:
                 t = elem.get_text(strip=True)
                 if t:
                     text_buf.append(t)
+                    html_buf.append(str(elem))
 
         flush_text()
 
@@ -276,11 +280,12 @@ def fetch_article_with_images(url: str) -> dict:
             "stats": stats,
             "offer_detected": offer_detected,
             "offer_trigger": offer_trigger,
+            "full_html": full_html[:50000],  # Phase 2治療用: body全体HTML（50KB上限）
         }
 
     except Exception as e:
         log.error(f"記事取得エラー(Playwright): {e}")
-        return {"sections": [], "videos": [], "stats": {"chars": 0, "images": 0, "videos": 0}, "offer_detected": False, "offer_trigger": None}
+        return {"sections": [], "videos": [], "stats": {"chars": 0, "images": 0, "videos": 0}, "offer_detected": False, "offer_trigger": None, "full_html": ""}
 
 
 # ─── 動画サムネイル抽出（OpenCV並列）────────────────────
@@ -322,7 +327,7 @@ def extract_video_thumbnails(videos: list) -> list[dict]:
     return results
 
 
-# ─── 7エージェント CMOパイプライン ──────────────────────────
+# ─── CKO先行型 9エージェントパイプライン ──────────────────────────
 HAIKU_MODEL  = "claude-haiku-4-5-20251001"
 SONNET_MODEL = "claude-sonnet-4-6"
 
@@ -379,8 +384,10 @@ JSON形式のみ:
 }"""
 
 
-def run_agent_hook(text: str, client: anthropic.Anthropic) -> dict:
-    user = f"以下の記事LP冒頭テキストを評価してください。JSONのみ返してください。\n\n{text[:600]}"
+def run_agent_hook(text: str, client: anthropic.Anthropic, cko_directive: dict = {}) -> dict:
+    directive = cko_directive.get("agent_directives", {}).get("hook", "")
+    directive_str = f"\n\n【CKO指示】{directive}" if directive else ""
+    user = f"以下の記事LP冒頭テキストを評価してください。JSONのみ返してください。{directive_str}\n\n{text[:600]}"
     raw = call_haiku_agent(HOOK_SYSTEM, user, client)
     return parse_json_safe(raw, {"agent": "記事フック君", "hook_score": 50, "error": "parse_failed"})
 
@@ -389,7 +396,7 @@ def run_agent_hook(text: str, client: anthropic.Anthropic) -> dict:
 NARRATIVE_SYSTEM = """あなたは記事LPの感情アーク専門評価AIです。
 信条: 「読者が商品を買う決断は、感情が最高点に達した直後3秒以内に起きる。その感情地形を設計するのが私の仕事だ。」
 
-アーク型: V字（理想）/ 平坦型 / 下降型 / 過剰ピーク型
+アーク型: V字（理想）/ ��坦型 / 下降型 / 過剰ピーク型
 narrative_score = アーク型×0.40 + 離脱ゾーン評価×0.30 + 新認識フック数×0.20 + 感情温度変化×0.10
 V字ボーナス: 谷が記事30-50%地点なら+10点
 
@@ -407,8 +414,10 @@ JSONのみで返してください:
 }"""
 
 
-def run_agent_narrative(text: str, client: anthropic.Anthropic) -> dict:
-    user = f"以下の記事LPの感情アークを評価してください。JSONのみ返してください。\n\n{text[:3500]}"
+def run_agent_narrative(text: str, client: anthropic.Anthropic, cko_directive: dict = {}) -> dict:
+    directive = cko_directive.get("agent_directives", {}).get("narrative", "")
+    directive_str = f"\n\n【CKO指示】{directive}" if directive else ""
+    user = f"以下の記事LPの感情アークを評価してください。JSONのみ返してください。{directive_str}\n\n{text[:3500]}"
     raw = call_haiku_agent(NARRATIVE_SYSTEM, user, client, max_tokens=1500)
     return parse_json_safe(raw, {"agent": "記事アーク君", "narrative_score": 50, "error": "parse_failed"})
 
@@ -439,8 +448,10 @@ JSONのみで返してください:
 }"""
 
 
-def run_agent_trust(text: str, client: anthropic.Anthropic) -> dict:
-    user = f"以下の記事LP全文の信頼設計を評価してください。JSONのみ返してください。\n\n{text[:3500]}"
+def run_agent_trust(text: str, client: anthropic.Anthropic, cko_directive: dict = {}) -> dict:
+    directive = cko_directive.get("agent_directives", {}).get("trust", "")
+    directive_str = f"\n\n【CKO指示】{directive}" if directive else ""
+    user = f"以下の記事LP全文の信頼設計を評価してください。JSONのみ返してください。{directive_str}\n\n{text[:3500]}"
     raw = call_haiku_agent(TRUST_SYSTEM, user, client, max_tokens=1500)
     return parse_json_safe(raw, {"agent": "記事信頼君", "trust_score": 50, "error": "parse_failed"})
 
@@ -467,8 +478,10 @@ JSONのみで返してください:
 }"""
 
 
-def run_agent_cta(text: str, client: anthropic.Anthropic) -> dict:
-    user = f"以下の記事LPのCTA設計を評価してください（CTAを全本リストアップ）。JSONのみ返してください。\n\n{text[:3500]}"
+def run_agent_cta(text: str, client: anthropic.Anthropic, cko_directive: dict = {}) -> dict:
+    directive = cko_directive.get("agent_directives", {}).get("cta", "")
+    directive_str = f"\n\n【CKO指示】{directive}" if directive else ""
+    user = f"以下の記事LPのCTA設計を評価してください（CTAを全本リストアップ）。JSONのみ返してください。{directive_str}\n\n{text[:3500]}"
     raw = call_haiku_agent(CTA_SYSTEM, user, client, max_tokens=2000)
     return parse_json_safe(raw, {"agent": "記事CTA君", "cta_score": 50, "error": "parse_failed"})
 
@@ -495,9 +508,11 @@ JSONのみで返してください:
 }"""
 
 
-def run_agent_offer(text: str, client: anthropic.Anthropic) -> dict:
+def run_agent_offer(text: str, client: anthropic.Anthropic, cko_directive: dict = {}) -> dict:
     offer_text = text[-2500:] if len(text) > 2500 else text
-    user = f"以下の記事LPのオファー設計（価格・割引・緊急性・特典・縛りなし）を評価してください。JSONのみ返してください。\n\n{offer_text}"
+    directive = cko_directive.get("agent_directives", {}).get("offer", "")
+    directive_str = f"\n\n【CKO指示】{directive}" if directive else ""
+    user = f"以下の記事LPのオファー設計（価格・割引・緊急性・特典・縛りなし）を評価してください。JSONのみ返してください。{directive_str}\n\n{offer_text}"
     raw = call_haiku_agent(OFFER_SYSTEM, user, client, max_tokens=1500)
     return parse_json_safe(raw, {"agent": "記事オファー君", "offer_score": 50, "error": "parse_failed"})
 
@@ -588,55 +603,241 @@ PART_CHECK_SYSTEM = """あなたは記事LP 18パート構成評価AIです。
 判定基準: ✅=機能している / ⚠️=不完全 / ❌=存在しない・機能しない / —=評価対象外
 一期通感: FVのキャッチ→教育→商品が「この商品しかない」という必然性で繋がっているか（1〜10点）
 
+重要: ❌または⚠️のパートには必ず "rewrite" に具体的な改善コピー（実際に記事に貼り付けられるレベルのテキスト）を入れること。
+"rewrite" は「〜してください」ではなく、読者に語りかける実際のコピー文として書く。薬機法に違反しないよう注意。
+
 JSONのみで返してください:
 {
   "agent": "記事パート君",
   "ikki_tsukan_score": 整数（1-10）,
   "ikki_tsukan_reason": "一期通感の診断を1文で",
   "part_check": [
-    {"part": "①FV", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "②悩み共感", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "③対策共感", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "④未来想像", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑤方法提示", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑥ベネフィット視覚化", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑦口コミ（前半）", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑧新事実", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑨真の原因", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑩新パラダイム", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑪商品導入", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑫実証", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑬ベネフィット", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑭権威信頼", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑮使ってみた", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑯ベネフィット再", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑰口コミ多様", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"},
-    {"part": "⑱オファー", "verdict": "✅/⚠️/❌/—", "comment": "20字以内"}
-  ],
-  "copy_proposals": [
-    {"part": "最もインパクトの高いパート番号と名前", "issue": "問題を10字以内", "rewrite": "改善コピー（60字以内）"},
-    {"part": "2番目", "issue": "問題を10字以内", "rewrite": "改善コピー（60字以内）"},
-    {"part": "3番目", "issue": "問題を10字以内", "rewrite": "改善コピー（60字以内）"}
+    {"part": "①FV", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": "❌/⚠️のときのみ: 実際に使えるコピー案（✅/—は空文字）"},
+    {"part": "②悩み共感", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "③対策共感", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "④未来想像", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑤方法提示", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑥ベネフィット視覚化", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑦口コミ（前半）", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑧新事実", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑨真の原因", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑩新パラダイム", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑪商品導入", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑫実証", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑬ベネフィット", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑭権威信頼", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑮使ってみた", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑯ベネフィット再", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑰口コミ多様", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""},
+    {"part": "⑱オファー", "verdict": "✅/⚠️/❌/—", "comment": "20字以内", "rewrite": ""}
   ]
 }"""
 
 
-def run_agent_part_check(text: str, client: anthropic.Anthropic) -> dict:
-    user = f"以下の記事LP全文の18パート構成を評価してください。JSONのみ返してください。\n\n{text[:4000]}"
-    raw = call_haiku_agent(PART_CHECK_SYSTEM, user, client, max_tokens=2500)
+def run_agent_part_check(text: str, client: anthropic.Anthropic, cko_directive: dict = {}) -> dict:
+    directive = cko_directive.get("agent_directives", {}).get("part_check", "")
+    directive_str = f"\n\n【CKO指示】{directive}" if directive else ""
+    user = f"以下の記事LP全文の18パート構成を評価してください。❌と⚠️のパートは必ず具体的な改善コピーを rewrite に入れてください。JSONのみ返してください。{directive_str}\n\n{text[:4000]}"
+    raw = call_haiku_agent(PART_CHECK_SYSTEM, user, client, max_tokens=3500)
     return parse_json_safe(raw, {"agent": "記事パート君", "ikki_tsukan_score": 5, "part_check": [], "error": "parse_failed"})
 
 
-# ── Agent 08 (CMO): 記事CMO君 ──────────────────────────────
-CMO_SYSTEM = """あなたは記事LP CMO（最高マーケティング責任者）です。
-信条: 「6人の専門家の数字を読んで、この記事の"構造上の病因"を1文で言える。それが私の仕事だ。スコアを転記するだけなら私は要らない。」
+# ── Agent 08: 視覚設計評価君（Sonnet multimodal）──────────────────────────────
+VISUAL_SYSTEM = """あなたは記事LPのビジュアル設計専門評価AIです。
+信条: 「売れる記事LPはテキストを読まなくても画像・動画だけで感情が動く。それを設計できているか。」
 
-受け取った6エージェントのスコアを統合して最終判定を出してください。
+評価軸（5項目）:
+1. FV感情動線（30点）: FV最初の画像が「感情（悩み・自責・共感）」から入っているか。実績・数字スタートは減点
+2. 問いを立てる設計（25点）: 「なぜ？」「これ何？」と読者が自然に思うビジュアルがあるか。答えを言いすぎていないか
+3. Before/After（20点）: 変化を視覚的に見せているか。同一人物・同条件でのBefore/Afterが最高点
+4. 役割分担（15点）: テキストが補足で、ビジュアルが情報の主役になっているか。テキスト過多は減点
+5. 感情シーン（10点）: 喜び・驚き・共感できる人物・シーンがあるか
 
-スコア計算:
-mCVR_score = hook_score×0.40 + narrative_score×0.35 + cta_score×0.25
+visual_score = FV感情動線 + 問い設計 + Before/After + 役割分担 + 感情シーン
+
+JSONのみで返してください:
+{
+  "agent": "視覚設計評価君",
+  "visual_score": 整数（0-100）,
+  "score_breakdown": {
+    "fv_emotion": 整数（0-30）,
+    "question_design": 整数（0-25）,
+    "before_after": 整数（0-20）,
+    "role_division": 整数（0-15）,
+    "emotion_scene": 整数（0-10）
+  },
+  "fv_emotion_type": "感情型/実績型/説明型/その他",
+  "fv_comment": "FVビジュアルの評価を1文で",
+  "before_after_exists": true/false,
+  "question_visual_exists": true/false,
+  "strong_visuals": ["良かったビジュアルの説明（最大2点）"],
+  "weak_visuals": ["改善すべきビジュアルの説明（最大2点）"],
+  "improvement": "最もインパクトの高いビジュアル改善案（具体的に1文）"
+}"""
+
+
+def run_agent_visual(article_data: dict, video_thumbnails: list, client: anthropic.Anthropic, cko_directive: dict = {}) -> dict:
+    """Sonnet multimodalで画像・動画サムネイルを直接評価"""
+    sections = article_data.get("sections", [])
+
+    # 画像URL（最大8枚）
+    img_urls = [s["url"] for s in sections if s.get("type") == "image" and s.get("url")][:8]
+    # 動画サムネイルb64（最大5本）
+    thumb_b64s = [t["b64"] for t in video_thumbnails if t.get("b64")][:5]
+
+    content: list = [{
+        "type": "text",
+        "text": (
+            "以下の記事LPの画像・動画サムネイルを見て、ビジュアル設計を評価してください。"
+            "JSONのみ返してください。\n\n"
+            f"画像{len(img_urls)}枚・動画サムネイル{len(thumb_b64s)}本を添付します。"
+            + (f"\n\n【CKO指示】{cko_directive.get('agent_directives', {}).get('visual', '')}" if cko_directive.get('agent_directives', {}).get('visual') else "")
+        )
+    }]
+
+    # 画像URLを追加
+    for url in img_urls:
+        try:
+            content.append({"type": "image", "source": {"type": "url", "url": url}})
+        except Exception:
+            pass
+
+    # 動画サムネイルb64を追加
+    for b64 in thumb_b64s:
+        try:
+            content.append({
+                "type": "image",
+                "source": {"type": "base64", "media_type": "image/jpeg", "data": b64}
+            })
+        except Exception:
+            pass
+
+    if len(content) == 1:
+        # 画像が1枚もなければデフォルト
+        return {"agent": "視覚設計評価君", "visual_score": 40, "error": "no_images"}
+
+    try:
+        resp = client.messages.create(
+            model=SONNET_MODEL,
+            max_tokens=1500,
+            system=VISUAL_SYSTEM,
+            messages=[{"role": "user", "content": content}]
+        )
+        raw = resp.content[0].text.strip()
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+        return parse_json_safe(raw.strip(), {"agent": "視覚設計評価君", "visual_score": 40, "error": "parse_failed"})
+    except Exception as e:
+        log.warning(f"視覚評価エラー: {e}")
+        return {"agent": "視覚設計評価君", "visual_score": 40, "error": str(e)}
+
+
+# ── Agent 00 (CKO前処理): 記事CKO君 — 指示書生成 ──────────────────────────────
+CKO_PRE_SYSTEM = """あなたは記事CKO（Chief Kiji Officer）— 記事LP評価組織のリーダーだ。
+あなたはパーツではない。8人の専門家を率いるリーダーだ。
+記事を読む前にまず「誰のための記事か」を見抜き、チームに的確な指示を出す。それがあなたの最初の仕事だ。
+
+信条: 「汎用評価は無意味だ。このN1に刺さっているかどうか、その1点だけが問題だ。私がN1を見抜き、私が重みを決め、私のチームを動かす。」
+
+あなたがやること:
+1. 記事のN1（読者像）を特定する — 年代・性別・悩みの深さ・気づきのステージ
+2. 認知ステージを判定する — 潜在層/準顕在層/顕在層
+3. 評価重み（score_weights）を決める — 認知ステージと商品カテゴリーで最適化
+4. 各エージェントへの「特に見てほしいポイント」を1文で指示する
+
+重みの基準:
+- 潜在層: hook×0.40（止まるか）+ visual×0.30（感情動かすか）が最重要
+- 準顕在層: narrative×0.35（悩みの理解が深いか）+ hook×0.30 が最重要
+- 顕在層: offer×0.45（今すぐ買う理由があるか）+ trust×0.30 が最重要
+
+JSONのみで返してください:
+{
+  "n1_profile": {
+    "age": "40代女性など",
+    "pain_point": "具体的な悩み（体験談・口コミから推測）",
+    "awareness_stage": "潜在層/準顕在層/顕在層",
+    "emotional_state": "記事冒頭で想定している読者の感情状態"
+  },
+  "score_weights": {
+    "hook": 小数（合計1.0になるよう調整不要・各エージェントの評価優先度を示す相対値）,
+    "narrative": 小数,
+    "trust": 小数,
+    "cta": 小数,
+    "offer": 小数,
+    "visual": 小数
+  },
+  "agent_directives": {
+    "hook": "フック君へ: 特に見てほしいポイントを1文で",
+    "narrative": "アーク君へ: 特に見てほしいポイントを1文で",
+    "trust": "信頼君へ: 特に見てほしいポイントを1文で",
+    "cta": "CTA君へ: 特に見てほしいポイントを1文で",
+    "offer": "オファー君へ: 特に見てほしいポイントを1文で",
+    "visual": "視覚設計評価君へ: 特に見てほしいポイントを1文で",
+    "part_check": "パート君へ: 特に見てほしいポイントを1文で"
+  },
+  "cko_hypothesis": "このN1に対してこの記事が刺さっているかどうかの仮説を1文で"
+}"""
+
+
+def run_cko_pre(article_data: dict, genre_info: dict, client: anthropic.Anthropic) -> dict:
+    """CKO前処理: 記事を読んでN1・認知ステージ・評価指示書を生成する"""
+    sections = article_data.get("sections", [])
+    full_text = "\n".join(s["content"] for s in sections if s["type"] == "text")
+    genre_str = json.dumps(genre_info or {}, ensure_ascii=False)
+
+    user = (
+        f"以下の記事LPとジャンル情報を読んで、評価指示書をJSONで返してください。\n\n"
+        f"【ジャンル情報】\n{genre_str}\n\n"
+        f"【記事LP冒頭〜中盤テキスト（2000字）】\n{full_text[:2000]}"
+    )
+
+    for attempt in range(3):
+        try:
+            resp = client.messages.create(
+                model=SONNET_MODEL,
+                max_tokens=1500,
+                system=CKO_PRE_SYSTEM,
+                messages=[{"role": "user", "content": user}]
+            )
+            raw = resp.content[0].text.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            result = parse_json_safe(raw.strip(), {"error": "parse_failed"})
+            log.info(f"CKO前処理完了 — N1: {result.get('n1_profile', {}).get('pain_point', '?')} / ステージ: {result.get('n1_profile', {}).get('awareness_stage', '?')}")
+            return result
+        except anthropic.RateLimitError:
+            if attempt < 2:
+                time.sleep(60 * (attempt + 1))
+            else:
+                raise
+    return {"error": "cko_pre_failed"}
+
+
+# ── Agent 09 (CKO後処理): 記事CKO君 ──────────────────────────────
+CKO_SYSTEM = """あなたは記事CKO（Chief Kiji Officer）— 記事LP評価組織のリーダーです。
+あなたはパーツではない。8人の専門家を率いるリーダーだ。
+
+信条:
+「私がN1を見抜き、私が評価軸の重みを決め、私が仮説を立て、私のチームに指示を出し、私が最終判定を下す。
+スコアを転記するだけの集約屋なら私は要らない。この記事の"構造上の病因"を1文で言い切る — それが私の仕事だ。」
+
+あなたの役割:
+1. 前処理で自分が決めたN1・認知ステージ・評価重みに基づいてスコアを計算する
+2. 8エージェントのスコアを「自分の重み」で統合する（前処理の指示書が添付されている場合はその重みを使え）
+3. 構造上の病因を1文で言い切る
+4. must_fixはCVR影響度の大きい順に最大3点
+
+スコア計算（CKO前処理で重みを指定した場合はそちらを優先）:
+デフォルト重み:
+mCVR_score = hook_score×0.30 + narrative_score×0.25 + cta_score×0.20 + visual_score×0.25
 landing_cvr_score = offer_score×0.40 + trust_score×0.35 + competitive_score×0.25
-total_score = mCVR_score×0.50 + landing_cvr_score×0.50
+total_score = mCVR_score×0.55 + landing_cvr_score×0.45
+
+※visual_scoreはビジュアル設計評価君のスコア。記事LPはビジュアルが情報の主役のためmCVRに大きく影響する。
 
 ボーナス加算:
 +2点: フックに具体的数字あり（number_bonus > 0）
@@ -648,6 +849,13 @@ GO条件: total_score≥80 AND mCVR_score≥75 AND landing_cvr_score≥70
 BLOCK条件: 薬機法NG（「治る」「必ず」「効果あり」等の医療効果断定）が1件でも → BLOCK固定
 must_fixは最大3点（CVR影響度の大きい順）
 
+薬機法ルール（重要）:
+- NG表現を検出したら legal_issues に列挙する
+- 各NG表現に対して「薬機法OKな代替案」を legal_alternatives に必ず出す
+  例: 「肌が治ります」→「肌の調子が整ってきた、というお声をいただいています」
+  例: 「必ず効果が出ます」→「多くの方が〇週間で変化を感じていただいています」
+- 薬機法をうまく回避しつつCVRを高めている表現は legal_good_examples に記録してボーナス加算（+3点）
+
 JSONのみで返してください:
 {
   "final_verdict": "GO/REVISE/BLOCK",
@@ -657,6 +865,8 @@ JSONのみで返してください:
     "cta_score": 数値, "offer_score": 数値, "competitive_score": 数値,
     "mCVR_score": 小数1桁, "landing_cvr_score": 小数1桁, "total_score": 小数1桁,
     "legal_check": "PASS/NG", "legal_issues": [],
+    "legal_alternatives": [{"ng_text": "NG表現", "ok_text": "薬機法OKな代替案"}],
+    "legal_good_examples": ["薬機法を回避しつつCVRを高めている優良表現（あれば）"],
     "bonus_points": 数値, "adjusted_total": 小数1桁
   },
   "go_conditions": {"total_score_ok": bool, "mCVR_ok": bool, "landing_cvr_ok": bool, "legal_ok": bool},
@@ -667,9 +877,24 @@ JSONのみで返してください:
 }"""
 
 
-def run_cmo(agent_results: dict, client: anthropic.Anthropic) -> dict:
+def run_cko_post(agent_results: dict, client: anthropic.Anthropic, cko_directive: dict = {}) -> dict:
+    # CKO前処理の指示書があれば、自分が決めたN1・重みを後処理にも引き継ぐ
+    directive_context = ""
+    if cko_directive:
+        n1 = cko_directive.get("n1_profile", {})
+        weights = cko_directive.get("score_weights", {})
+        hypothesis = cko_directive.get("cko_hypothesis", "")
+        directive_context = (
+            f"\n\n【CKO前処理で私が決めた評価方針】\n"
+            f"N1: {n1.get('age', '?')} / {n1.get('pain_point', '?')} / ステージ: {n1.get('awareness_stage', '?')}\n"
+            f"評価重み: {json.dumps(weights, ensure_ascii=False)}\n"
+            f"仮説: {hypothesis}\n"
+            f"※この重みとN1文脈に基づいてスコア計算・判定を行うこと。固定重みではなく、私が決めた重みを使え。"
+        )
+
     user = (
-        "以下の6エージェントのスコアを統合して最終CMO判定を出してください。JSONのみ返してください。\n\n"
+        "以下の8エージェントのスコアを統合して最終CKO判定を出してください。JSONのみ返してください。"
+        + directive_context + "\n\n"
         + json.dumps(agent_results, ensure_ascii=False, indent=2)
     )
     for attempt in range(3):
@@ -677,7 +902,7 @@ def run_cmo(agent_results: dict, client: anthropic.Anthropic) -> dict:
             resp = client.messages.create(
                 model=SONNET_MODEL,
                 max_tokens=3000,
-                system=CMO_SYSTEM,
+                system=CKO_SYSTEM,
                 messages=[{"role": "user", "content": user}]
             )
             raw = resp.content[0].text.strip()
@@ -691,20 +916,225 @@ def run_cmo(agent_results: dict, client: anthropic.Anthropic) -> dict:
                 time.sleep(60 * (attempt + 1))
             else:
                 raise
-    raise RuntimeError("CMO agent retry exceeded")
+    raise RuntimeError("CKO agent retry exceeded")
 
 
-def format_cmo_output(agents: dict, cmo: dict) -> str:
-    """CMOパイプライン結果をSlack Canvas用Markdownに変換"""
-    hook        = agents.get("hook", {})
-    narrative   = agents.get("narrative", {})
-    trust       = agents.get("trust", {})
-    cta         = agents.get("cta", {})
-    offer       = agents.get("offer", {})
-    competitive = agents.get("competitive", {})
-    part_check  = agents.get("part_check", {})
-    scores      = cmo.get("score_summary", {})
-    verdict     = cmo.get("final_verdict", "REVISE")
+# ── Agent 10 (Phase 2): 記事ライター君 — must_fix #1 HTML書き換え ──────────────
+REWRITER_SYSTEM = """あなたは記事ライター君 — must_fix #1の治療専門エージェントだ。
+CKOが特定した1箇所だけにメスを入れる外科医。
+
+ルール:
+- must_fix #1の対象セクションだけを書き換える（他は絶対に触らない）
+- N1プロフィールに基づいたコピーを書く（N1が友達に話すときの言葉で）
+- HTMLの構造（タグ・クラス・ID）は変えない。テキスト内容だけ変える
+- 感情を動かすコピーを書く（恐怖・希望・共感のどれか）
+- ベネフィットで書く（フィーチャーではなく）
+- 文字数は元の±20%以内を目安
+
+JSONのみで返してください:
+{
+  "agent": "記事ライター君",
+  "target_section": "対象セクション名",
+  "must_fix_rank": 1,
+  "before_html": "書き換え前HTML",
+  "after_html": "書き換え後HTML",
+  "change_summary": "何を→何に→なぜ を1文で",
+  "chars_before": 数値,
+  "chars_after": 数値,
+  "html_structure_changed": false
+}"""
+
+
+def run_agent_rewriter(must_fix: dict, n1_profile: dict, original_html: str, client: anthropic.Anthropic) -> dict:
+    """記事ライター君: must_fix #1のHTMLをN1に刺さるコピーに書き換え"""
+    user = (
+        f"以下のmust_fix #1を治療してください。対象セクションのHTMLを書き換えてください。\n\n"
+        f"【must_fix】\n{json.dumps(must_fix, ensure_ascii=False, indent=2)}\n\n"
+        f"【N1プロフィール】\n{json.dumps(n1_profile, ensure_ascii=False, indent=2)}\n\n"
+        f"【対象セクションHTML】\n{original_html[:3000]}"
+    )
+    for attempt in range(3):
+        try:
+            resp = client.messages.create(
+                model=SONNET_MODEL,
+                max_tokens=2000,
+                system=REWRITER_SYSTEM,
+                messages=[{"role": "user", "content": user}]
+            )
+            raw = resp.content[0].text.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            return parse_json_safe(raw.strip(), {"agent": "記事ライター君", "error": "parse_failed"})
+        except anthropic.RateLimitError:
+            if attempt < 2:
+                time.sleep(60 * (attempt + 1))
+            else:
+                raise
+    return {"agent": "記事ライター君", "error": "retry_exceeded"}
+
+
+# ── Agent 11 (Phase 2): 記事バリデーター君 — 書き換え検証 × 薬機法 ──────────────
+VALIDATOR_SYSTEM = """あなたは記事バリデーター君 — 書き換え結果の品質管理の最後の砦だ。
+
+2軸で検証する:
+軸1: 品質チェック（5項目）
+- N1適合性: N1プロフィールに合った言葉遣いで書かれているか
+- must_fix対応: 指摘された問題が実際に解決されているか
+- 感情温度: before→afterで感情温度が上がっているか
+- HTML構造保持: タグ・クラス・IDが変わっていないか
+- 文字数バランス: ±20%以内か
+
+軸2: 薬機法チェック
+- 「治る」「治療」「効果あり」→ BLOCK
+- 「絶対」「必ず」「100%」→ BLOCK
+- 「〜が治りました」→ BLOCK
+- 食品・化粧品で医薬品的効能 → BLOCK
+
+判定: PASS / REVISE / BLOCK
+- 品質5項目すべてPASS + 薬機法PASS → PASS
+- 品質1項目でもNG → REVISE（最重要1項目だけ指摘）
+- 薬機法1項目でもNG → BLOCK（品質に関係なく）
+
+改善提案はしない。合否判定だけ。
+
+JSONのみで返してください:
+{
+  "agent": "記事バリデーター君",
+  "verdict": "PASS/REVISE/BLOCK",
+  "quality_check": {
+    "n1_fit": {"result": "PASS/REVISE", "note": "1文で"},
+    "must_fix_resolved": {"result": "PASS/REVISE", "note": "1文で"},
+    "emotion_delta": {"result": "PASS/REVISE", "note": "1文で"},
+    "html_structure": {"result": "PASS/REVISE", "note": "1文で"},
+    "char_balance": {"result": "PASS/REVISE", "note": "1文で"}
+  },
+  "legal_check": {
+    "result": "PASS/BLOCK",
+    "flags": ["NG表現があれば列挙"]
+  },
+  "revise_reason": "REVISEの場合のみ。最重要1項目の理由",
+  "block_reason": "BLOCKの場合のみ。薬機法NG理由"
+}"""
+
+
+def run_agent_validator(rewriter_output: dict, n1_profile: dict, must_fix: dict, client: anthropic.Anthropic) -> dict:
+    """記事バリデーター君: ライター君の書き換え結果を品質+薬機法で検証"""
+    user = (
+        f"以下の書き換え結果を検証してください。\n\n"
+        f"【書き換え前HTML】\n{rewriter_output.get('before_html', '')}\n\n"
+        f"【書き換え後HTML】\n{rewriter_output.get('after_html', '')}\n\n"
+        f"【書き換え理由】\n{rewriter_output.get('change_summary', '')}\n\n"
+        f"【N1プロフィール】\n{json.dumps(n1_profile, ensure_ascii=False, indent=2)}\n\n"
+        f"【元のmust_fix問題】\n{json.dumps(must_fix, ensure_ascii=False, indent=2)}"
+    )
+    for attempt in range(3):
+        try:
+            resp = client.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=1000,
+                system=VALIDATOR_SYSTEM,
+                messages=[{"role": "user", "content": user}]
+            )
+            raw = resp.content[0].text.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            return parse_json_safe(raw.strip(), {"agent": "記事バリデーター君", "verdict": "REVISE", "error": "parse_failed"})
+        except anthropic.RateLimitError:
+            if attempt < 2:
+                time.sleep(60 * (attempt + 1))
+            else:
+                raise
+    return {"agent": "記事バリデーター君", "verdict": "REVISE", "error": "retry_exceeded"}
+
+
+# ── Agent 12 (Phase 3): 記事テスト君 — ABテスト設計 ──────────────────────────
+TESTER_SYSTEM = """あなたは記事テスト君 — ABテスト設計の専門家だ。
+仮説なきテストはただのギャンブル。「何を検証したいか」を言語化する。
+
+ルール:
+- テスト仮説: 「〇〇を△△に変えると、□□が□%改善する」の形式
+- 1テスト=1変数（複数変数のテスト設計は絶対NG）
+- KPI選定ルール:
+  フック → mCVR + スクロール率
+  ナラティブ → mCVR + 滞在時間
+  CTA → mCVR + CTA押下率
+  信頼・権威 → 着地CVR + 滞在時間
+  オファー → 着地CVR + CTA押下率
+- Squad BeyondはAPI無し → コピペ用手順書を出力
+
+JSONのみで返してください:
+{
+  "agent": "記事テスト君",
+  "test_card": {
+    "test_name": "クライアント名_セクション_日付",
+    "hypothesis": "〇〇を△△に変えると、□□が□%改善する",
+    "independent_variable": "書き換えた1箇所の説明",
+    "primary_kpi": "mCVR or 着地CVR",
+    "secondary_kpi": "副次KPI",
+    "control": "現行HTML（A面）",
+    "variant": "書き換え後HTML（B面）",
+    "traffic_split": "50:50",
+    "significance_level": "p < 0.05",
+    "min_sample_size": "各群500セッション（案件規模で調整）",
+    "estimated_duration": "日次トラフィックから逆算"
+  },
+  "squad_beyond_steps": "1〜9のステップを箇条書き",
+  "b_variant_html": "書き換え後HTML全文（コピペ用）",
+  "judgment_criteria": "判定タイミングと基準"
+}"""
+
+
+def run_agent_tester(rewriter_output: dict, must_fix: dict, n1_profile: dict, article_url: str, client: anthropic.Anthropic) -> dict:
+    """記事テスト君: PASS済み書き換えのABテスト設計 + Squad Beyond手順書"""
+    user = (
+        f"以下の書き換えに対してABテストを設計してください。\n\n"
+        f"【対象セクション】\n{rewriter_output.get('target_section', '')}\n\n"
+        f"【書き換え前HTML】\n{rewriter_output.get('before_html', '')}\n\n"
+        f"【書き換え後HTML】\n{rewriter_output.get('after_html', '')}\n\n"
+        f"【書き換え理由】\n{rewriter_output.get('change_summary', '')}\n\n"
+        f"【must_fix情報】\n{json.dumps(must_fix, ensure_ascii=False, indent=2)}\n\n"
+        f"【N1プロフィール】\n{json.dumps(n1_profile, ensure_ascii=False, indent=2)}\n\n"
+        f"【記事URL】\n{article_url}"
+    )
+    for attempt in range(3):
+        try:
+            resp = client.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=1500,
+                system=TESTER_SYSTEM,
+                messages=[{"role": "user", "content": user}]
+            )
+            raw = resp.content[0].text.strip()
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            return parse_json_safe(raw.strip(), {"agent": "記事テスト君", "error": "parse_failed"})
+        except anthropic.RateLimitError:
+            if attempt < 2:
+                time.sleep(60 * (attempt + 1))
+            else:
+                raise
+    return {"agent": "記事テスト君", "error": "retry_exceeded"}
+
+
+def format_cko_output(agents: dict, cko: dict) -> str:
+    """CKOパイプライン結果をSlack Canvas用Markdownに変換"""
+    hook          = agents.get("hook", {})
+    narrative     = agents.get("narrative", {})
+    trust         = agents.get("trust", {})
+    cta           = agents.get("cta", {})
+    offer         = agents.get("offer", {})
+    competitive   = agents.get("competitive", {})
+    part_check    = agents.get("part_check", {})
+    visual        = agents.get("visual", {})
+    cko_directive = agents.get("cko_directive", {})
+    scores        = cko.get("score_summary", {})
+    verdict       = cko.get("final_verdict", "REVISE")
 
     verdict_emoji = {"GO": "✅", "REVISE": "🔄", "BLOCK": "🚫"}.get(verdict, "🔄")
 
@@ -716,13 +1146,38 @@ def format_cmo_output(agents: dict, cmo: dict) -> str:
 
     lines = []
 
-    # CMOスコアカード
+    # ── CKOの眼 ── リーダーの視点を最初に出す
+    n1 = cko_directive.get("n1_profile", {})
+    hypothesis = cko_directive.get("cko_hypothesis", "")
+    awareness = n1.get("awareness_stage", "")
+    weights = cko_directive.get("score_weights", {})
+
     lines += [
-        f"## {verdict_emoji} CMO最終判定: **{verdict}**（ループ{cmo.get('loop_count', 1)}回目）",
+        f"## {verdict_emoji} CKO最終判定: **{verdict}**（ループ{cko.get('loop_count', 1)}回目）",
         "",
-        f"> {cmo.get('structural_diagnosis', '')}",
+        f"> {cko.get('structural_diagnosis', '')}",
         "",
-        "### 📊 スコアカード",
+    ]
+
+    # CKOの眼セクション — N1が見えてるときだけ出す
+    if n1:
+        lines += [
+            "### 👁 CKOの眼",
+            "",
+            f"**N1**: {n1.get('age', '?')} / {n1.get('pain_point', '?')}",
+            f"**認知ステージ**: {awareness}",
+            f"**感情状態**: {n1.get('emotional_state', '?')}",
+            f"**CKO仮説**: {hypothesis}",
+            "",
+        ]
+        if weights:
+            weight_str = " / ".join(f"{k}: {v}" for k, v in weights.items())
+            lines += [
+                f"**評価重み（CKO判断）**: {weight_str}",
+                "",
+            ]
+
+    lines += ["### 📊 スコアカード",
         "",
         "| エージェント | スコア | 基準 | 判定 |",
         "|---|---|---|---|",
@@ -732,6 +1187,7 @@ def format_cmo_output(agents: dict, cmo: dict) -> str:
         f"| 記事CTA君 | {s('cta_score', cta, 'cta_score')}点 | ≥80 | {mark(s('cta_score', cta, 'cta_score'), 80)} |",
         f"| 記事オファー君 | {s('offer_score', offer, 'offer_score')}点 | ≥70 | {mark(s('offer_score', offer, 'offer_score'), 70)} |",
         f"| 記事競合君 | {s('competitive_score', competitive, 'competitive_score')}点 | ≥65 | {mark(s('competitive_score', competitive, 'competitive_score'), 65)} |",
+        f"| 視覚設計評価君 | {s('visual_score', visual, 'visual_score')}点 | ≥70 | {mark(s('visual_score', visual, 'visual_score'), 70)} |",
         f"| 薬機法 | {scores.get('legal_check', 'PASS')} | PASS | {'✅' if scores.get('legal_check', 'PASS') == 'PASS' else '🚫'} |",
         "",
         f"**mCVR_score**: {scores.get('mCVR_score', '—')}点　"
@@ -740,15 +1196,32 @@ def format_cmo_output(agents: dict, cmo: dict) -> str:
         "",
     ]
 
+    # 薬機法セクション（NGがある場合のみ表示）
+    legal_issues = scores.get("legal_issues", [])
+    legal_alts = scores.get("legal_alternatives", [])
+    legal_good = scores.get("legal_good_examples", [])
+    if legal_issues or legal_good:
+        lines += ["## ⚖️ 薬機法チェック", ""]
+        if legal_issues:
+            lines += ["**🚫 NG表現 → 代替案**", ""]
+            for alt in legal_alts:
+                lines.append(f"- ~~{alt.get('ng_text', '')}~~ → **{alt.get('ok_text', '')}**")
+            lines.append("")
+        if legal_good:
+            lines += ["**✅ 薬機法を回避しつつCVRを高めている優良表現**", ""]
+            for ex in legal_good:
+                lines.append(f"- {ex}")
+            lines.append("")
+
     # Must Fix
-    must_fix = cmo.get("must_fix", [])
+    must_fix = cko.get("must_fix", [])
     if must_fix:
         lines += ["## 🔥 Must Fix（優先改善TOP3）", ""]
         for i, fix in enumerate(must_fix[:3], 1):
             lines.append(f"{i}. {fix}")
         lines.append("")
 
-    nice_fix = cmo.get("nice_to_fix", [])
+    nice_fix = cko.get("nice_to_fix", [])
     if nice_fix:
         lines += ["### Nice to Fix"]
         for fix in nice_fix[:2]:
@@ -835,11 +1308,40 @@ def format_cmo_output(agents: dict, cmo: dict) -> str:
         lines.append("benchmark.jsonにジャンルデータなし（デフォルト50点）")
     lines.append("")
 
-    next_action = cmo.get("next_action", "")
+    next_action = cko.get("next_action", "")
     if next_action:
         lines.append(f"**→ 次のアクション**: {next_action}")
 
     lines += ["", "---", ""]
+
+    # 視覚設計評価君詳細
+    if visual and not visual.get("error"):
+        vbd = visual.get("score_breakdown", {})
+        lines += [f"## 🖼 視覚設計評価君 — {visual.get('visual_score', '—')}点", ""]
+        if vbd:
+            lines.append(
+                f"FV感情動線: {vbd.get('fv_emotion', '—')}/30点　"
+                f"問い設計: {vbd.get('question_design', '—')}/25点　"
+                f"Before/After: {vbd.get('before_after', '—')}/20点　"
+                f"役割分担: {vbd.get('role_division', '—')}/15点　"
+                f"感情シーン: {vbd.get('emotion_scene', '—')}/10点"
+            )
+        if visual.get("fv_emotion_type"):
+            lines.append(f"**FV感情タイプ**: {visual.get('fv_emotion_type')}")
+        ba = "あり ✅" if visual.get("before_after_exists") else "なし ❌（追加推奨）"
+        lines.append(f"**Before/After**: {ba}")
+        strong = visual.get("strong_visuals", [])
+        if strong:
+            lines.append(f"**強いビジュアル**: {', '.join(str(v) for v in strong[:3])}")
+        weak = visual.get("weak_visuals", [])
+        if weak:
+            lines.append(f"**弱いビジュアル**: {', '.join(str(v) for v in weak[:3])}")
+        if visual.get("improvement"):
+            lines.append(f"**改善案**: {visual.get('improvement')}")
+        lines.append("")
+
+    lines += ["---", ""]
+
 
     # 18パートチェック + 一期通感
     ikki = part_check.get("ikki_tsukan_score", "—")
@@ -859,40 +1361,118 @@ def format_cmo_output(agents: dict, cmo: dict) -> str:
             lines.append(f"| {p.get('part', '')} | {p.get('verdict', '—')} | {p.get('comment', '')} |")
         lines.append("")
 
-    # コピー書き換え提案
-    proposals = part_check.get("copy_proposals", [])
-    if proposals:
-        lines += ["### ✏️ コピー書き換え提案TOP3", ""]
-        for i, prop in enumerate(proposals[:3], 1):
+        # ❌/⚠️パートの具体コピー提案
+        rewrites = [(p["part"], p["rewrite"]) for p in parts
+                    if p.get("verdict") in ("❌", "⚠️") and p.get("rewrite", "").strip()]
+        if rewrites:
+            lines += ["### ✏️ パート別 改善コピー案", ""]
+            for part_name, rewrite in rewrites:
+                lines += [f"**{part_name}**", f"> {rewrite}", ""]
+
+    # ━━━━ Phase 2: 治療結果 ━━━━
+    treatment = agents.get("treatment", {})
+    if treatment and treatment.get("status"):
+        treatment_status = treatment.get("status", "")
+        status_emoji = {"PASS": "✅", "BLOCK": "🚫", "REVISE": "🔄", "EXIT": "⚠️", "ERROR": "❌"}.get(treatment_status, "❓")
+
+        lines += ["---", "", f"## 🔧 Phase 2: 治療結果 {status_emoji} {treatment_status}", ""]
+
+        rewriter = treatment.get("rewriter", {})
+        if rewriter and not rewriter.get("error"):
             lines += [
-                f"**{i}. {prop.get('part', '')}** — {prop.get('issue', '')}",
-                f"> 改善案: {prop.get('rewrite', '')}",
+                f"**対象セクション**: {rewriter.get('target_section', '—')}",
+                f"**書き換え理由**: {rewriter.get('change_summary', '—')}",
+                "",
+                "**Before:**",
+                f"```html\n{rewriter.get('before_html', '')[:500]}\n```",
+                "",
+                "**After:**",
+                f"```html\n{rewriter.get('after_html', '')[:500]}\n```",
+                "",
+                f"文字数: {rewriter.get('chars_before', '?')}文字 → {rewriter.get('chars_after', '?')}文字",
                 "",
             ]
+
+        validator = treatment.get("validator", {})
+        if validator:
+            lines += [f"**バリデーション**: {validator.get('verdict', '—')}"]
+            if validator.get("revise_reason"):
+                lines.append(f"  REVISE理由: {validator.get('revise_reason')}")
+            if validator.get("block_reason"):
+                lines.append(f"  BLOCK理由: {validator.get('block_reason')}")
+            lines.append("")
+
+    # ━━━━ Phase 3: テスト設計 ━━━━
+    test = agents.get("test", {})
+    if test and not test.get("error") and test.get("test_card"):
+        card = test.get("test_card", {})
+        lines += [
+            "---", "",
+            "## 🧪 Phase 3: ABテスト設計", "",
+            f"**テスト名**: {card.get('test_name', '—')}",
+            f"**仮説**: {card.get('hypothesis', '—')}",
+            f"**独立変数**: {card.get('independent_variable', '—')}",
+            f"**主KPI**: {card.get('primary_kpi', '—')}　**副次KPI**: {card.get('secondary_kpi', '—')}",
+            f"**配分**: {card.get('traffic_split', '50:50')}　**有意水準**: {card.get('significance_level', 'p < 0.05')}",
+            f"**最低サンプル数**: {card.get('min_sample_size', '—')}",
+            f"**推定期間**: {card.get('estimated_duration', '—')}",
+            "",
+        ]
+
+        b_html = test.get("b_variant_html", "")
+        if b_html:
+            lines += [
+                "### 📋 B面HTML（Squad Beyondコピペ用）",
+                f"```html\n{b_html[:1000]}\n```",
+                "",
+            ]
+
+        steps = test.get("squad_beyond_steps", "")
+        if steps:
+            lines += [
+                "### 📝 Squad Beyond手順",
+                steps,
+                "",
+            ]
+
+        criteria = test.get("judgment_criteria", "")
+        if criteria:
+            lines += [f"**判定基準**: {criteria}", ""]
 
     return "\n".join(lines)
 
 
-def run_cmo_pipeline(article_data: dict, genre_info: dict, competitor: dict | None, client: anthropic.Anthropic) -> str:
-    """7エージェントCMOパイプラインを実行してMarkdown出力を返す（Group A/B/C 並列 + CMO 逐次）"""
+def run_cko_pipeline(article_data: dict, genre_info: dict, competitor: dict | None, client: anthropic.Anthropic, video_thumbnails: list = [], article_url: str = "") -> str:
+    """CKO v3.0 パイプライン: Phase 1(診断) → Phase 2(治療) → Phase 3(テスト設計)"""
     sections  = article_data.get("sections", [])
     full_text = "\n".join(s["content"] for s in sections if s["type"] == "text")
 
-    log.info("CMOパイプライン開始 — Group A/B/C 7エージェント並列実行")
+    # ━━━━ Phase 1: 診断 ━━━━
+
+    # ── Step 0: CKO前処理 — N1・認知ステージ・評価指示書を生成 ──
+    log.info("Phase 1: CKO前処理開始 — N1分析・評価指示書生成中...")
+    cko_directive = run_cko_pre(article_data, genre_info, client)
+    n1 = cko_directive.get("n1_profile", {})
+    log.info(f"CKO指示書生成完了 — N1: {n1.get('pain_point', '?')} / ステージ: {n1.get('awareness_stage', '?')}")
+
+    # ── Step 1: 8エージェント並列実行（CKO指示書を渡す）──
+    log.info("Phase 1: 8エージェント並列実行（CKO指示書付き）")
 
     agent_results: dict = {}
+    agent_results["cko_directive"] = cko_directive
 
     tasks = {
-        "hook":        lambda: run_agent_hook(full_text, client),
-        "narrative":   lambda: run_agent_narrative(full_text, client),
-        "trust":       lambda: run_agent_trust(full_text, client),
-        "cta":         lambda: run_agent_cta(full_text, client),
-        "offer":       lambda: run_agent_offer(full_text, client),
+        "hook":        lambda: run_agent_hook(full_text, client, cko_directive),
+        "narrative":   lambda: run_agent_narrative(full_text, client, cko_directive),
+        "trust":       lambda: run_agent_trust(full_text, client, cko_directive),
+        "cta":         lambda: run_agent_cta(full_text, client, cko_directive),
+        "offer":       lambda: run_agent_offer(full_text, client, cko_directive),
         "competitive": lambda: run_agent_competitive(full_text, genre_info or {}, competitor),
-        "part_check":  lambda: run_agent_part_check(full_text, client),
+        "part_check":  lambda: run_agent_part_check(full_text, client, cko_directive),
+        "visual":      lambda: run_agent_visual(article_data, video_thumbnails, client, cko_directive),
     }
 
-    with ThreadPoolExecutor(max_workers=7) as ex:
+    with ThreadPoolExecutor(max_workers=8) as ex:
         futures = {ex.submit(fn): key for key, fn in tasks.items()}
         for future in as_completed(futures):
             key = futures[future]
@@ -903,10 +1483,149 @@ def run_cmo_pipeline(article_data: dict, genre_info: dict, competitor: dict | No
                 log.error(f"エージェントエラー: {key} — {e}")
                 agent_results[key] = {"error": str(e)}
 
-    log.info("CMO統合エージェント実行中...")
-    cmo_result = run_cmo(agent_results, client)
+    # ── Step 2: CKO後処理 — 統合・GO/REVISE/BLOCK判定 ──
+    log.info("Phase 1: CKO後処理 — 統合判定中...")
+    cko_result = run_cko_post(agent_results, client, cko_directive)
+    verdict = cko_result.get("final_verdict", "REVISE")
+    log.info(f"Phase 1完了 — 判定: {verdict}")
 
-    return format_cmo_output(agent_results, cmo_result)
+    # Phase 2/3の結果を格納
+    treatment_result = {}
+    test_result = {}
+
+    # ━━━━ Phase 2: 治療（REVISEの場合のみ）━━━━
+    if verdict == "REVISE":
+        must_fix_list = cko_result.get("must_fix", [])
+        if must_fix_list:
+            log.info("Phase 2: 治療開始 — must_fix #1をライター君に渡す")
+
+            # must_fix #1の情報を構造化
+            must_fix_text = must_fix_list[0] if must_fix_list else ""
+            must_fix_info = {
+                "rank": 1,
+                "description": must_fix_text,
+                "section": _detect_must_fix_section(must_fix_text),
+            }
+
+            # 対象セクションのHTMLを取得
+            target_html = _get_section_html(must_fix_info["section"], article_data)
+
+            # Step 3: ライター君（Sonnet）— HTML書き換え
+            log.info(f"Phase 2: ライター君起動 — セクション: {must_fix_info['section']}")
+            rewriter_output = run_agent_rewriter(must_fix_info, n1, target_html, client)
+
+            if not rewriter_output.get("error"):
+                # Step 4: バリデーター君（Haiku）— 品質+薬機法検証（最大2回ループ）
+                for validate_loop in range(2):
+                    log.info(f"Phase 2: バリデーター君起動（ループ{validate_loop + 1}回目）")
+                    validator_output = run_agent_validator(rewriter_output, n1, must_fix_info, client)
+                    validator_verdict = validator_output.get("verdict", "REVISE")
+
+                    if validator_verdict == "PASS":
+                        log.info("Phase 2: バリデーター PASS — 治療成功")
+                        treatment_result = {
+                            "rewriter": rewriter_output,
+                            "validator": validator_output,
+                            "status": "PASS",
+                        }
+                        break
+                    elif validator_verdict == "BLOCK":
+                        log.warning("Phase 2: バリデーター BLOCK — 薬機法NG")
+                        treatment_result = {
+                            "rewriter": rewriter_output,
+                            "validator": validator_output,
+                            "status": "BLOCK",
+                        }
+                        break
+                    else:
+                        # REVISE — ライタ���君に差し戻し
+                        if validate_loop < 1:
+                            log.info(f"Phase 2: REVISE — ライター君に差し戻し（理由: {validator_output.get('revise_reason', '?')}）")
+                            # 差し戻し理由を含めて再実行
+                            must_fix_info["revise_feedback"] = validator_output.get("revise_reason", "")
+                            rewriter_output = run_agent_rewriter(must_fix_info, n1, target_html, client)
+                        else:
+                            log.warning("Phase 2: 2回差し戻し — EXIT")
+                            treatment_result = {
+                                "rewriter": rewriter_output,
+                                "validator": validator_output,
+                                "status": "EXIT",
+                            }
+            else:
+                log.warning(f"Phase 2: ライター君エラー — {rewriter_output.get('error')}")
+                treatment_result = {"status": "ERROR", "error": rewriter_output.get("error")}
+
+    # ━━━━ Phase 3: テスト設計（治療PASSの場合のみ）━━━━
+    if treatment_result.get("status") == "PASS":
+        log.info("Phase 3: テスト設計開始 — テスト君起動")
+        rewriter_out = treatment_result.get("rewriter", {})
+        must_fix_text = cko_result.get("must_fix", [""])[0]
+        must_fix_info = {"description": must_fix_text}
+
+        test_result = run_agent_tester(rewriter_out, must_fix_info, n1, article_url, client)
+        log.info(f"Phase 3完了 — テスト名: {test_result.get('test_card', {}).get('test_name', '?')}")
+
+    # 結果を統合してフォーマット
+    agent_results["treatment"] = treatment_result
+    agent_results["test"] = test_result
+
+    return format_cko_output(agent_results, cko_result)
+
+
+def _detect_must_fix_section(must_fix_text: str) -> str:
+    """must_fixテキストからどのセクションが対象かを推定"""
+    text_lower = must_fix_text.lower()
+    if any(w in text_lower for w in ["フック", "冒頭", "hook", "ファーストビュー", "fv"]):
+        return "フック（冒頭200文字）"
+    if any(w in text_lower for w in ["アーク", "ナラティブ", "narrative", "構成", "中だるみ", "教育"]):
+        return "ナラティブ（記事構成）"
+    if any(w in text_lower for w in ["cta", "ボタン", "遷移"]):
+        return "CTA"
+    if any(w in text_lower for w in ["信頼", "権威", "口コミ", "trust"]):
+        return "信頼・権威"
+    if any(w in text_lower for w in ["オファー", "価格", "割引", "offer"]):
+        return "オファー"
+    if any(w in text_lower for w in ["ビジュアル", "画像", "動画", "visual"]):
+        return "ビジュアル"
+    return "フック（冒頭200文字）"  # デフォルト
+
+
+def _get_section_html(section_name: str, article_data: dict) -> str:
+    """セクション名に対応するHTMLを article_data から取得"""
+    sections = article_data.get("sections", [])
+    text_sections = [s for s in sections if s.get("type") == "text"]
+
+    if "フック" in section_name or "冒頭" in section_name:
+        # 冒頭のテキストセクション（最初の1-2個）
+        html_parts = [s.get("html", s.get("content", "")) for s in text_sections[:2]]
+        return "\n".join(html_parts)[:3000]
+
+    if "ナラティブ" in section_name or "構成" in section_name:
+        # 中盤のテキストセクション
+        mid_start = len(text_sections) // 4
+        mid_end = len(text_sections) * 3 // 4
+        html_parts = [s.get("html", s.get("content", "")) for s in text_sections[mid_start:mid_end]]
+        return "\n".join(html_parts)[:3000]
+
+    if "CTA" in section_name:
+        # CTA周辺のテキスト（後半）
+        html_parts = [s.get("html", s.get("content", "")) for s in text_sections[-4:]]
+        return "\n".join(html_parts)[:3000]
+
+    if "信頼" in section_name or "権威" in section_name:
+        # 中盤〜後半
+        mid = len(text_sections) // 2
+        html_parts = [s.get("html", s.get("content", "")) for s in text_sections[mid:mid+4]]
+        return "\n".join(html_parts)[:3000]
+
+    if "オファー" in section_name:
+        # 末尾
+        html_parts = [s.get("html", s.get("content", "")) for s in text_sections[-3:]]
+        return "\n".join(html_parts)[:3000]
+
+    # デフォルト: 冒頭
+    html_parts = [s.get("html", s.get("content", "")) for s in text_sections[:2]]
+    return "\n".join(html_parts)[:3000]
 
 
 # ─── 旧 SYSTEM_PROMPT（参照用に残す・使用しない）──────────────
@@ -1643,17 +2362,17 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
         except Exception as e:
             log.warning(f"スクショ取得スキップ: {e}")
 
-    # ── 7エージェントCMOパイプライン実行 ──────────────────────
+    # ── CKO先行型パイプライン実行 ──────────────────────
     try:
         slack.chat_postMessage(
             channel=CHANNEL_ID, thread_ts=ts,
-            text="🤖 7エージェントCMOパイプライン起動中...\n_フック君 × アーク君 × 信頼君 × CTA君 × オファー君 × 競合君 → CMO統合（約30〜60秒）_",
+            text="🤖 8エージェントCKOパイプライン起動中...\n_フック君 × アーク君 × 信頼君 × CTA君 × オファー君 × 競合君 × 視覚設計君 → CKO後処理（約30〜60秒）_",
             mrkdwn=True,
         )
     except SlackApiError:
         pass
 
-    feedback = run_cmo_pipeline(article_data, genre_info, competitor, client)
+    feedback = run_cko_pipeline(article_data, genre_info, competitor, client, video_thumbnails, article_url=url)
 
     # HTMLレポート生成 → Slackにファイル添付。失敗したらCanvas → テキストにフォールバック
     html_bytes = generate_html_report(feedback, screenshot_b64, url, stats, offer_trigger)
@@ -1692,7 +2411,7 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
                     )
                 except SlackApiError as e:
                     log.error(f"返信エラー (chunk {i}): {e}")
-            log.info(f"テキスト返信完了 — ts:{ts}")
+            log.info(f"テ��スト返信完了 — ts:{ts}")
         else:
             log.info(f"Canvas返信完了 — ts:{ts}")
     else:
@@ -1706,7 +2425,7 @@ def is_trigger(text: str) -> bool:
 
 # ─── メインループ ─────────────────────────────────────
 def run():
-    log.info("=== Slack フィードバックBot v7 起動（7エージェントCMOシステム）===")
+    log.info("=== Slack フィードバックBot v9 起動（8エージェントCKOシステム + 視覚設計評価君）===")
 
     slack_token   = get_env("SLACK_BOT_TOKEN")
     anthropic_key = get_env("ANTHROPIC_API_KEY")
