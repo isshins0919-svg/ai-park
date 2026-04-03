@@ -1,9 +1,9 @@
-# 記事フック君 ver.1.0 — mCVR直結 × フック強度アナリスト
+# 記事フッククルー ver.1.0 — mCVR直結 × フック強度アナリスト
 
-> CKO配下 AGENT 01。通常は `/article-fb-cmo` 経由で自動起動される。
-> 本体: `.claude/agents/article-fb-hook.md`
+> CKO配下 AGENT 01。通常は `/kiji-cko` 経由で自動起動される。
+> 本体: `.claude/agents/kiji-hook-crew.md`
 
-単独で起動した場合、Agent tool で `article-fb-hook` エージェントを実行する。
+単独で起動した場合、Agent tool で 'kiji-hook-crew' エージェントを実行する。
 
 ## 単独起動時の入力
 

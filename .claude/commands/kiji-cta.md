@@ -1,9 +1,9 @@
-# 記事CTA君 ver.1.0 — mCVR直結 × CTA必然性スコア
+# 記事CTAクルー ver.1.0 — mCVR直結 × CTA必然性スコア
 
-> CKO配下 AGENT 04。通常は `/article-fb-cmo` 経由で自動起動される。
-> 本体: `.claude/agents/article-fb-cta.md`
+> CKO配下 AGENT 04。通常は `/kiji-cko` 経由で自動起動される。
+> 本体: `.claude/agents/kiji-cta-crew.md`
 
-単独で起動した場合、Agent tool で `article-fb-cta` エージェントを実行する。
+単独で起動した場合、Agent tool で 'kiji-cta-crew' エージェントを実行する。
 
 ## 単独起動時の入力
 

@@ -1,9 +1,9 @@
-# 記事オファー君 ver.1.0 — 着地CVR直結 × 購買衝動スコア算出
+# 記事オファークルー ver.1.0 — 着地CVR直結 × 購買衝動スコア算出
 
-> CKO配下 AGENT 05。通常は `/article-fb-cmo` 経由で自動起動される。
-> 本体: `.claude/agents/article-fb-offer.md`
+> CKO配下 AGENT 05。通常は `/kiji-cko` 経由で自動起動される。
+> 本体: `.claude/agents/kiji-offer-crew.md`
 
-単独で起動した場合、Agent tool で `article-fb-offer` エージェントを実行する。
+単独で起動した場合、Agent tool で 'kiji-offer-crew' エージェントを実行する。
 
 ## 単独起動時の入力
 

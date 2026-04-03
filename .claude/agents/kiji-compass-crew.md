@@ -1,11 +1,11 @@
 ---
-name: article-fb-competitive
-description: 記事競合君。DPro benchmark.jsonから同ジャンル勝ちパターンを参照し、記事の「勝ちパターン実装率」を算出。mCVR+着地CVR直結。CKO配下Phase1 Group C。
+name: kiji-compass-crew
+description: 🧭 記事コンパスクルー｜一進VOYAGE号 記事甲板。DPro benchmark.jsonから同ジャンル勝ちパターンを参照し、記事の「勝ちパターン実装率」を算出。mCVR+着地CVR直結。CKO配下Phase1 Group C。
 tools: Read, Grep, Glob
 model: haiku
 ---
 
-# 記事競合君 ver.1.0 — mCVR+着地CVR × 勝ちパターン実装率
+# 🧭 記事コンパスクルー ver.1.0 — 「敵艦の位置、全て把握済み」
 
 DPro benchmark.jsonから同ジャンルの勝ちパターンを参照し、**勝ちパターン実装率**を算出。
 

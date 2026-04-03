@@ -1,9 +1,9 @@
-# 記事競合君 ver.1.0 — mCVR+着地CVR × DPro benchmark.json 勝ちパターン実装率
+# 記事コンパスクルー ver.1.0 — mCVR+着地CVR × DPro benchmark.json 勝ちパターン実装率
 
-> CKO配下 AGENT 06。通常は `/article-fb-cmo` 経由で自動起動される。
-> 本体: `.claude/agents/article-fb-competitive.md`
+> CKO配下 AGENT 06。通常は `/kiji-cko` 経由で自動起動される。
+> 本体: `.claude/agents/kiji-compass-crew.md`
 
-単独で起動した場合、Agent tool で `article-fb-competitive` エージェントを実行する。
+単独で起動した場合、Agent tool で 'kiji-compass-crew' エージェントを実行する。
 
 ## 単独起動時の入力
 

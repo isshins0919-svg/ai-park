@@ -1,9 +1,9 @@
-# 記事アーク君 ver.1.0 — mCVR+着地CVR × 感情アーク設計評価
+# 記事アーククルー ver.1.0 — mCVR+着地CVR × 感情アーク設計評価
 
-> CKO配下 AGENT 02。通常は `/article-fb-cmo` 経由で自動起動される。
-> 本体: `.claude/agents/article-fb-narrative.md`
+> CKO配下 AGENT 02。通常は `/kiji-cko` 経由で自動起動される。
+> 本体: `.claude/agents/kiji-arc-crew.md`
 
-単独で起動した場合、Agent tool で `article-fb-narrative` エージェントを実行する。
+単独で起動した場合、Agent tool で 'kiji-arc-crew' エージェントを実行する。
 
 ## 単独起動時の入力
 

@@ -1,9 +1,9 @@
-# 記事信頼君 ver.1.0 — 着地CVR直結 × 3層信頼スコア算出
+# 記事トラストクルー ver.1.0 — 着地CVR直結 × 3層信頼スコア算出
 
-> CKO配下 AGENT 03。通常は `/article-fb-cmo` 経由で自動起動される。
-> 本体: `.claude/agents/article-fb-trust.md`
+> CKO配下 AGENT 03。通常は `/kiji-cko` 経由で自動起動される。
+> 本体: `.claude/agents/kiji-trust-crew.md`
 
-単独で起動した場合、Agent tool で `article-fb-trust` エージェントを実行する。
+単独で起動した場合、Agent tool で 'kiji-trust-crew' エージェントを実行する。
 
 ## 単独起動時の入力
 
