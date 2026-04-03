@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>澤田一進 記事LP哲学レポート</title>
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #161a22;
+    --surface2: #1e2330;
+    --border: #2a3040;
+    --accent: #4f8ef7;
+    --accent2: #f7c44f;
+    --accent3: #4fc97e;
+    --accent-red: #f7604f;
+    --text: #e8ecf4;
+    --text-muted: #7a8499;
+    --text-dim: #4a5468;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 40px 20px 80px;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  /* ===== COVER ===== */
+  .cover {
+    text-align: center;
+    padding: 60px 20px 50px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 50px;
+  }
+  .cover .eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .cover h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .cover h1 span { color: var(--accent2); }
+  .cover .sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .cover .meta-chips {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .chip {
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .chip.accent { border-color: var(--accent); color: var(--accent); }
+  .chip.yellow { border-color: var(--accent2); color: var(--accent2); }
+  .chip.green { border-color: var(--accent3); color: var(--accent3); }
+
+  /* ===== SECTION HEADING ===== */
+  .section { margin-bottom: 48px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-num {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 8px;
+  }
+  .card p { font-size: 13px; color: var(--text-muted); }
+
+  /* ===== HIGHLIGHT BOX ===== */
+  .highlight {
+    background: linear-gradient(135deg, #1a2540 0%, #1e2330 100%);
+    border: 1px solid var(--accent);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .highlight .quote {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .highlight .quote-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* ===== MOTIVE BOXES ===== */
+  .motive-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .motive-box {
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .motive-box.loss {
+    background: #1e1520;
+    border: 1px solid #6b3d5c;
+  }
+  .motive-box.gain {
+    background: #13201a;
+    border: 1px solid #2d6b4a;
+  }
+  .motive-box .icon { font-size: 28px; margin-bottom: 8px; }
+  .motive-box .label {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .motive-box.loss .label { color: #e05070; }
+  .motive-box.gain .label { color: #40c870; }
+  .motive-box .desc { font-size: 12px; color: var(--text-muted); }
+  .motive-conclusion {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .motive-conclusion strong { color: var(--accent2); }
+
+  /* ===== PERSONA 5 ELEMENTS ===== */
+  .persona-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .persona-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .persona-num {
+    width: 26px; height: 26px;
+    background: var(--surface2);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .persona-content .title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .persona-content .desc { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== FLOW CHART ===== */
+  .flow-section {
+    margin-bottom: 24px;
+  }
+  .flow-phase-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .phase-front { background: #1a2530; color: var(--accent); border: 1px solid var(--accent); }
+  .phase-edu { background: #221a10; color: var(--accent2); border: 1px solid var(--accent2); }
+  .phase-back { background: #131f18; color: var(--accent3); border: 1px solid var(--accent3); }
+
+  .flow-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 12px;
+    border-left: 2px solid var(--border);
+    margin-left: 4px;
+  }
+  .flow-item {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .flow-item::before {
+    content: '';
+    position: absolute;
+    left: -17px;
+    top: 18px;
+    width: 10px;
+    height: 2px;
+    background: var(--border);
+  }
+  .flow-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .phase-front .flow-badge,
+  .flow-item.front .flow-badge { background: #1a2530; color: var(--accent); border: 1px solid var(--accent); }
+  .flow-item.edu .flow-badge { background: #221a10; color: var(--accent2); border: 1px solid var(--accent2); }
+  .flow-item.back .flow-badge { background: #131f18; color: var(--accent3); border: 1px solid var(--accent3); }
+  .flow-item .flow-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .flow-item .flow-desc { font-size: 12px; color: var(--text-muted); }
+  .flow-item .flow-tag {
+    display: inline-block;
+    font-size: 10px;
+    background: #2a2010;
+    color: var(--accent2);
+    border-radius: 3px;
+    padding: 1px 5px;
+    margin-top: 4px;
+  }
+
+  .arrow-down {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 18px;
+    margin: 4px 0;
+  }
+
+  /* ===== PRINCIPLES ===== */
+  .principle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .principle-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .principle-card.most-important {
+    border-color: var(--accent2);
+    background: linear-gradient(135deg, #1e1e10 0%, var(--surface) 100%);
+    grid-column: 1 / -1;
+  }
+  .principle-icon { font-size: 22px; margin-bottom: 8px; }
+  .principle-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .principle-card.most-important .principle-name { color: var(--accent2); }
+  .principle-desc { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== BUSINESS MODEL TABLE ===== */
+  .biz-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .biz-table tr { border-bottom: 1px solid var(--border); }
+  .biz-table tr:last-child { border-bottom: none; }
+  .biz-table td {
+    padding: 12px 14px;
+    vertical-align: middle;
+  }
+  .biz-table td:first-child {
+    color: var(--text-muted);
+    width: 40%;
+  }
+  .biz-table td:last-child {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .biz-table td .big { font-size: 18px; color: var(--accent); font-weight: 700; }
+
+  /* ===== CHECKLIST ===== */
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .check-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .check-item .num {
+    width: 22px; height: 22px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .check-item .check-text strong { color: var(--text); }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 600px) {
+    .motive-grid { grid-template-columns: 1fr; }
+    .principle-grid { grid-template-columns: 1fr; }
+    .principle-card.most-important { grid-column: auto; }
+    h1 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="eyebrow">Sawada Isshin — Article LP Philosophy</div>
+    <h1>澤田一進の<br><span>記事LP哲学</span>レポート</h1>
+    <div class="sub">40分音声講義（Gemini文字起こし）から構造化 — 2026-03-23</div>
+    <div class="meta-chips">
+      <span class="chip accent">6年間の実践知</span>
+      <span class="chip yellow">CVR影響度 65%</span>
+      <span class="chip green">本人の言葉をそのまま構造化</span>
+    </div>
+  </div>
+
+
+  <!-- 1. 記事LPの本質定義 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">記事LPとは何か</div>
+        <div class="section-subtitle">本質定義</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <div class="quote">「商品紹介の媒体ではない。セールスコピーだ。」</div>
+      <div class="quote-sub">—— 澤田一進、音声講義より</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="card">
+        <div class="card-title">役割の定義</div>
+        <p>広告を踏んだ客が、<strong style="color:var(--text)">短時間でAIDMAを貫徹</strong>して即申し込むための装置</p>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent)">CVRへの影響</div>
+        <p>購入CVRの <strong style="color:var(--accent); font-size:20px;">約65%</strong> を記事LPが決める</p>
+      </div>
+      <div class="card">
+        <div class="card-title">重要度</div>
+        <p>いいクリエイティブ・商品LPがあっても、<strong style="color:var(--text)">記事LPが弱ければ売れない</strong></p>
+      </div>
+      <div class="card">
+        <div class="card-title">フォーマット</div>
+        <p><strong style="color:var(--text)">「第三者がレビューするブログ風LP」</strong><br>日本特有の最適解。6年変わらず。</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 2. 購買動機 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">購買動機の本質</div>
+        <div class="section-subtitle">2つだけ — これだけ</div>
+      </div>
+    </div>
+
+    <div class="motive-grid">
+      <div class="motive-box loss">
+        <div class="icon">😰</div>
+        <div class="label">① 損したくない</div>
+        <div class="desc">「この商品を買わないと<br>私は損する」という確信</div>
+      </div>
+      <div class="motive-box gain">
+        <div class="icon">✨</div>
+        <div class="label">② 得したい</div>
+        <div class="desc">「買えば明らかにいい未来が<br>待っている」という確信</div>
+      </div>
+    </div>
+
+    <div class="motive-conclusion">
+      記事LPのゴールは<strong>「なんとなく良さそう」ではなく「確信」させること</strong><br>
+      確信させないとCVRは出ない
+    </div>
+  </div>
+
+
+  <!-- 3. ペルソナ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">ペルソナが全て</div>
+        <div class="section-subtitle">最重要前提 — ここが抜けたら全部崩れる</div>
+      </div>
+    </div>
+
+    <div class="highlight" style="border-color: var(--accent2); background: linear-gradient(135deg, #1e1e10 0%, #1e2330 100%);">
+      <div class="quote" style="color:var(--accent2);">「誰に書くかが分からない限り、何も書けない。」</div>
+      <div class="quote-sub">実践：既存顧客インタビュー10名が最善手。実在する「Aさん」に向けて書く。</div>
+    </div>
+
+    <div class="persona-list">
+      <div class="persona-item">
+        <div class="persona-num">1</div>
+        <div class="persona-content">
+          <div class="title">痛み</div>
+          <div class="desc">どんな悩みを持っているか</div>
+        </div>
+      </div>
+      <div class="persona-item">
+        <div class="persona-num">2</div>
+        <div class="persona-content">
+          <div class="title">思い描く未来</div>
+          <div class="desc">解決したらどうなりたいか</div>
+        </div>
+      </div>
+      <div class="persona-item">
+        <div class="persona-num">3</div>
+        <div class="persona-content">
+          <div class="title">具体的な苦しみのシーン</div>
+          <div class="desc">日常のどの瞬間に苦しんでいるか</div>
+        </div>
+      </div>
+      <div class="persona-item">
+        <div class="persona-num">4</div>
+        <div class="persona-content">
+          <div class="title">現在やっている対策</div>
+          <div class="desc">何で解決しようとしているか</div>
+        </div>
+      </div>
+      <div class="persona-item">
+        <div class="persona-num">5</div>
+        <div class="persona-content">
+          <div class="title">その対策に満足できていない理由</div>
+          <div class="desc">なぜうまくいっていないか</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 4. 記事LP構成フロー -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">記事LP構成フロー</div>
+        <div class="section-subtitle">18ステップ（3フェーズ構成）</div>
+      </div>
+    </div>
+
+    <!-- 前半パート -->
+    <div class="flow-section">
+      <div class="flow-phase-label phase-front">前半パート — 読者の温度感を上げる</div>
+      <div class="flow-items">
+        <div class="flow-item front">
+          <span class="flow-badge">① FV</span>
+          <div>
+            <div class="flow-title">ファーストビュー</div>
+            <div class="flow-desc">「スクロールしたい」を一瞬（無意識）で生む。パンチ力 × なんか効きそう × 好奇心ギャップ。まだ商品名は出さない。</div>
+            <div class="flow-tag">ここで離脱させない = 記事LP最大の勝負</div>
+          </div>
+        </div>
+        <div class="flow-item front">
+          <span class="flow-badge">② 悩み共感</span>
+          <div>
+            <div class="flow-title">悩みへの共感</div>
+            <div class="flow-desc">ペルソナの痛みをそのまま言語化・画像化。「これは私のための記事だ」と一瞬で感じさせる。</div>
+          </div>
+        </div>
+        <div class="flow-item front">
+          <span class="flow-badge">③ 対策共感</span>
+          <div>
+            <div class="flow-title">対策への共感</div>
+            <div class="flow-desc">「こんな対策してないですか？」ペルソナが実際にやっている行動を当てる。「私これやってるわ」という感覚。</div>
+          </div>
+        </div>
+        <div class="flow-item front">
+          <span class="flow-badge">④ 未来想像</span>
+          <div>
+            <div class="flow-title">未来の想像</div>
+            <div class="flow-desc">同じ悩みを持つ人でも解決している人がいると知ってましたか？「私みたいな人でも解決できるんだ」という希望。</div>
+            <div class="flow-tag">ここで温度感を上げる</div>
+          </div>
+        </div>
+        <div class="flow-item front">
+          <span class="flow-badge">⑤ 方法提示</span>
+          <div>
+            <div class="flow-title">キャッチーな方法の提示</div>
+            <div class="flow-desc">「実はこんな方法が存在するんです」。悩みが一瞬で消える裏技があるの？という感覚。<strong style="color:var(--accent2)">まだ商品名は出さない。</strong></div>
+          </div>
+        </div>
+        <div class="flow-item front">
+          <span class="flow-badge">⑥ ベネフィット</span>
+          <div>
+            <div class="flow-title">ベネフィットの視覚的提示</div>
+            <div class="flow-desc">その方法を使った人はこうなっています（画像・映像）。「こんな状態になれます」を視覚で見せる。</div>
+          </div>
+        </div>
+        <div class="flow-item front">
+          <span class="flow-badge">⑦ 口コミ</span>
+          <div>
+            <div class="flow-title">口コミ（具体的成功事例）</div>
+            <div class="flow-desc">私と同じ境遇の人の成功例。「解決の希望がある」ことを示す。</div>
+            <div class="flow-tag">前半パート終了</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">↓</div>
+
+    <!-- 教育パート -->
+    <div class="flow-section">
+      <div class="flow-phase-label phase-edu">新事実・教育パート — 常識を覆す</div>
+      <div class="flow-items">
+        <div class="flow-item edu">
+          <span class="flow-badge" style="background:#221a10;color:var(--accent2);border:1px solid var(--accent2)">⑧ 新事実</span>
+          <div>
+            <div class="flow-title">新事実パート（既存対策の否定）</div>
+            <div class="flow-desc">「あなたのやっている対策、実は間違っています」。読者の常識を覆す。「だから改善できていなかったんだ」と気づかせる。</div>
+          </div>
+        </div>
+        <div class="flow-item edu">
+          <span class="flow-badge" style="background:#221a10;color:var(--accent2);border:1px solid var(--accent2)">⑨ 原因教育</span>
+          <div>
+            <div class="flow-title">真の原因の教育</div>
+            <div class="flow-desc">「なぜあなたの対策が間違いか」の根本理由を伝える。<strong style="color:var(--accent2)">まだ商品は出さない。</strong></div>
+          </div>
+        </div>
+        <div class="flow-item edu">
+          <span class="flow-badge" style="background:#221a10;color:var(--accent2);border:1px solid var(--accent2)">⑩ 新パラダイム</span>
+          <div>
+            <div class="flow-title">本来やるべき新パラダイムの教育</div>
+            <div class="flow-desc">あなたが間違っていた理由 → 本当はこういう方法をやるべき。「教育」という言葉が重要。なぜ今までの方法がダメで、正しい方向性は何か。</div>
+          </div>
+        </div>
+        <div class="flow-item edu">
+          <span class="flow-badge" style="background:#221a10;color:var(--accent2);border:1px solid var(--accent2)">⑪ 商品導入</span>
+          <div>
+            <div class="flow-title">商品導入（伏線回収）</div>
+            <div class="flow-desc">「それが◯◯なんです」。FVのキャッチコピーが伏線として回収される瞬間。</div>
+            <div class="flow-tag">🔑 一期通感 — FVキャッチ→教育→商品が全て繋がる</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">↓</div>
+
+    <!-- 後半パート -->
+    <div class="flow-section">
+      <div class="flow-phase-label phase-back">後半パート — 確信・安心・行動</div>
+      <div class="flow-items">
+        <div class="flow-item back">
+          <span class="flow-badge" style="background:#131f18;color:var(--accent3);border:1px solid var(--accent3)">⑫ 実証</span>
+          <div>
+            <div class="flow-title">実証パート</div>
+            <div class="flow-desc">商品がどのように悩みに作用するかのロジック説明。直感的に分かりやすく（論文チックはNG）。</div>
+          </div>
+        </div>
+        <div class="flow-item back">
+          <span class="flow-badge" style="background:#131f18;color:var(--accent3);border:1px solid var(--accent3)">⑬ ベネフィット</span>
+          <div>
+            <div class="flow-title">ベネフィットパート（実証直後に必ず）</div>
+            <div class="flow-desc">ロジック説明 → 即座に未来のビジュアル。「だからこういう未来が描けるんです、ドン」</div>
+            <div class="flow-tag">実証→即ベネフィット = 最強パターン</div>
+          </div>
+        </div>
+        <div class="flow-item back">
+          <span class="flow-badge" style="background:#131f18;color:var(--accent3);border:1px solid var(--accent3)">⑭ 権威</span>
+          <div>
+            <div class="flow-title">権威・信頼パート</div>
+            <div class="flow-desc">テレビ特集、楽天1位、医者・皮膚科推薦等。「これはマジで効く」という確信をどんどん強化する。</div>
+          </div>
+        </div>
+        <div class="flow-item back">
+          <span class="flow-badge" style="background:#131f18;color:var(--accent3);border:1px solid var(--accent3)">⑮ 使ってみた</span>
+          <div>
+            <div class="flow-title">使ってみたパート</div>
+            <div class="flow-desc">商品のテクスチャー・使用感・届いた時のイメージ。「自分が使ったらこんな感じ」のイメージを読者に湧かせる。言葉＋画像の両方で。</div>
+          </div>
+        </div>
+        <div class="flow-item back">
+          <span class="flow-badge" style="background:#131f18;color:var(--accent3);border:1px solid var(--accent3)">⑯ ベネフィット再</span>
+          <div>
+            <div class="flow-title">ベネフィット（再び）</div>
+            <div class="flow-desc">使ってみたら私はこうなった。<strong style="color:var(--accent3)">ベネフィットは何度でも入れる。</strong>心を動かすにはベネフィットが何より重要。</div>
+          </div>
+        </div>
+        <div class="flow-item back">
+          <span class="flow-badge" style="background:#131f18;color:var(--accent3);border:1px solid var(--accent3)">⑰ 安心口コミ</span>
+          <div>
+            <div class="flow-title">安心パート（口コミ × 多様な人）</div>
+            <div class="flow-desc">いろんな属性（年代・地域・境遇）の人の成功口コミ。「自分だけじゃない」という安心感。1人だけじゃなくいろんな人が使っている。</div>
+          </div>
+        </div>
+        <div class="flow-item back">
+          <span class="flow-badge" style="background:#131f18;color:var(--accent3);border:1px solid var(--accent3)">⑱ オファー</span>
+          <div>
+            <div class="flow-title">オファーパート（最後の仕上げ）</div>
+            <div class="flow-desc">「今すぐ買わないと損」という心理設計。限定クーポン・特典等。解約方法・保証・大手決済の明示で懸念を全て払拭。そしてCTAへ。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 5. 設計の大原則 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">設計の大原則</div>
+        <div class="section-subtitle">これを守れば記事LPは機能する</div>
+      </div>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle-card most-important">
+        <div class="principle-icon">🔗</div>
+        <div class="principle-name">一期通感（最重要）</div>
+        <div class="principle-desc">FVのキャッチコピー → 中盤の教育 → 商品説明 が<strong style="color:var(--accent2)">全て繋がっていること</strong>。<br>構成全体が「この商品じゃなきゃ私の悩みが解決しない」という結論に向かって設計されている。FVの伏線が商品導入で回収される。</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">💫</div>
+        <div class="principle-name">ベネフィットを何度でも入れる</div>
+        <div class="principle-desc">実証後・権威後・使ってみた後・口コミ後と、繰り返し未来のビジュアルを差し込む。心を動かすにはベネフィットが何より重要。</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🖼️</div>
+        <div class="principle-name">画像が重要</div>
+        <div class="principle-desc">未来を見せるシーンは画像・映像が命。言葉だけでは足りない。</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">👤</div>
+        <div class="principle-name">ペルソナなくして記事LPなし</div>
+        <div class="principle-desc">誰に書くかが分からない記事LPは必ず失敗する。</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 6. ビジネスモデル前提 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">ビジネスモデル前提</div>
+        <div class="section-subtitle">この哲学が生まれた文脈</div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:0; overflow:hidden;">
+      <table class="biz-table">
+        <tr>
+          <td>ビジネスモデル</td>
+          <td>単品リピート通販（定期購入）</td>
+        </tr>
+        <tr>
+          <td>LTV</td>
+          <td><span class="big">約18,000円</span>/年（プルストクリームの場合）</td>
+        </tr>
+        <tr>
+          <td>目標CPA</td>
+          <td><span class="big">11,000〜12,000円</span></td>
+        </tr>
+        <tr>
+          <td>記事LPのCVRへの影響</td>
+          <td><span class="big">約65%</span> を記事LPが決める</td>
+        </tr>
+        <tr>
+          <td>記事LPフォーマット</td>
+          <td>ブログ風LP（第三者レビュー形式）</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- 7. AI向けチェックリスト -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">記事LP生成チェックリスト</div>
+        <div class="section-subtitle">生成前に必ず確認する8項目</div>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="num">1</div>
+        <div class="check-text"><strong>ペルソナの5要素が揃っているか</strong>（痛み・未来・苦しみのシーン・対策・不満理由）</div>
+      </div>
+      <div class="check-item">
+        <div class="num">2</div>
+        <div class="check-text">FVに<strong>「パンチ力 × 効きそう × 好奇心ギャップ」</strong>があるか</div>
+      </div>
+      <div class="check-item">
+        <div class="num">3</div>
+        <div class="check-text">前半で<strong>読者の温度感を十分に上げているか</strong>（共感 → 希望 → 期待）</div>
+      </div>
+      <div class="check-item">
+        <div class="num">4</div>
+        <div class="check-text">新事実パートで<strong>「既存対策の否定 → 真の原因 → 新方法の教育」</strong>が一気通貫か</div>
+      </div>
+      <div class="check-item">
+        <div class="num">5</div>
+        <div class="check-text"><strong>商品導入がFVの伏線回収</strong>になっているか（一期通感）</div>
+      </div>
+      <div class="check-item">
+        <div class="num">6</div>
+        <div class="check-text">後半が<strong>「実証 → ベネフィット → 権威」</strong>の流れになっているか</div>
+      </div>
+      <div class="check-item">
+        <div class="num">7</div>
+        <div class="check-text"><strong>ベネフィットが複数回</strong>入っているか（実証後・権威後・使ってみた後・口コミ後）</div>
+      </div>
+      <div class="check-item">
+        <div class="num">8</div>
+        <div class="check-text">オファーパートで<strong>購入への懸念を全て潰しているか</strong>（解約・保証・決済・個人情報）</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="footer">
+    澤田一進 記事LP哲学レポート — 2026-03-23<br>
+    出典: 「AIに記事LPを覚えさせる」40分音声講義（Gemini文字起こし）<br>
+    AI生成ではなく本人の言葉・思考をそのまま構造化
+  </div>
+
+</div>
+</body>
+</html>

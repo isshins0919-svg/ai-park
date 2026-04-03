@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camicks Amazon出品戦略レポート</title>
+<style>
+  :root {
+    --blue: #3ABCEE;
+    --navy: #1a2e3d;
+    --gray: #666;
+    --light: #f8f9fa;
+    --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #fff; color: var(--navy); }
+
+  /* ============ COVER ============ */
+  .cover {
+    background: var(--navy);
+    color: #fff;
+    padding: 80px 60px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cover .tag { color: var(--blue); font-size: 13px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; }
+  .cover h1 { font-size: 36px; font-weight: 700; line-height: 1.3; margin-bottom: 16px; }
+  .cover h1 span { color: var(--blue); }
+  .cover .meta { font-size: 14px; color: rgba(255,255,255,0.6); margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 24px; display: flex; gap: 32px; }
+
+  /* ============ SECTION ============ */
+  .section { padding: 64px 60px; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+  .section-alt { background: var(--light); }
+  .section-label { font-size: 11px; color: var(--blue); letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+  .section-title { font-size: 26px; font-weight: 700; margin-bottom: 32px; line-height: 1.3; }
+  .section-title span { color: var(--blue); }
+
+  /* ============ TABLES ============ */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { background: var(--navy); color: #fff; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f0f9ff; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-blue { background: #e0f4fd; color: #0077a8; }
+  .badge-green { background: #e6f4ea; color: #1e7e34; }
+  .badge-orange { background: #fff3e0; color: #e65100; }
+  .badge-red { background: #fde8e8; color: #c0392b; }
+  .num { font-size: 20px; font-weight: 700; color: var(--blue); }
+
+  /* ============ TITLE BOX ============ */
+  .title-box {
+    background: var(--navy);
+    color: #fff;
+    padding: 32px 40px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .title-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px; height: 100%;
+    background: var(--blue);
+  }
+  .title-box .title-label { font-size: 11px; color: var(--blue); letter-spacing: 2px; margin-bottom: 12px; }
+  .title-box .title-text { font-size: 22px; font-weight: 700; line-height: 1.5; }
+  .title-box .title-intent { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.15); }
+
+  /* ============ BULLETS ============ */
+  .bullet-list { display: flex; flex-direction: column; gap: 16px; }
+  .bullet-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    transition: box-shadow 0.2s;
+  }
+  .bullet-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+  .bullet-num {
+    width: 32px; height: 32px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .bullet-text { flex: 1; }
+  .bullet-head { font-weight: 700; font-size: 15px; color: var(--navy); margin-bottom: 6px; }
+  .bullet-body { font-size: 13px; color: var(--gray); line-height: 1.7; }
+
+  /* ============ KW ============ */
+  .kw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .kw-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .kw-word { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .kw-vol { font-size: 28px; font-weight: 700; color: var(--blue); }
+  .kw-unit { font-size: 12px; color: var(--gray); }
+  .kw-tier { font-size: 11px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-top: 8px; font-weight: 600; }
+  .tier-1 { background: #e0f4fd; color: #0077a8; }
+  .tier-2 { background: #e6f4ea; color: #1e7e34; }
+  .tier-3 { background: #f3f0ff; color: #6c3cbe; }
+
+  /* ============ IMAGES ============ */
+  .image-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .image-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .image-card.main-card { grid-column: 1 / -1; }
+  .image-card img { width: 100%; display: block; }
+  .image-info { padding: 16px 20px; }
+  .image-info .img-label { font-size: 12px; color: var(--blue); font-weight: 600; letter-spacing: 1px; margin-bottom: 6px; }
+  .image-info .img-copy { font-size: 13px; color: var(--gray); line-height: 1.6; }
+  .image-placeholder { background: var(--light); display: flex; align-items: center; justify-content: center; height: 200px; color: var(--gray); font-size: 14px; }
+
+  /* ============ STRATEGY ============ */
+  .strategy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .strategy-card {
+    border-radius: 12px;
+    padding: 28px;
+    border: 1px solid var(--border);
+  }
+  .strategy-card.highlight { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .strategy-card.highlight .s-label { color: var(--blue); }
+  .strategy-card.highlight .s-body { color: rgba(255,255,255,0.75); }
+  .s-label { font-size: 11px; letter-spacing: 2px; color: var(--blue); font-weight: 600; margin-bottom: 12px; }
+  .s-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; line-height: 1.4; }
+  .s-body { font-size: 13px; color: var(--gray); line-height: 1.8; }
+
+  /* ============ PRICE ============ */
+  .price-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  .price-card { border-radius: 12px; padding: 28px; border: 2px solid var(--border); }
+  .price-card.ours { border-color: var(--blue); }
+  .price-label { font-size: 12px; letter-spacing: 1px; color: var(--gray); margin-bottom: 12px; }
+  .price-main { font-size: 36px; font-weight: 700; color: var(--navy); }
+  .price-sub { font-size: 13px; color: var(--gray); margin-top: 8px; }
+
+  /* ============ NEXT ACTIONS ============ */
+  .action-list { display: flex; flex-direction: column; gap: 12px; }
+  .action-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px; border: 1px solid var(--border); border-radius: 10px;
+  }
+  .action-icon { width: 36px; height: 36px; background: var(--blue); color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .action-text { font-size: 14px; font-weight: 600; }
+  .action-sub { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
+  /* ============ PRINT ============ */
+  @media print {
+    body { background: #fff; }
+    .cover { background: #1a2e3d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .section { padding: 40px 40px; }
+    .image-grid { grid-template-columns: repeat(2, 1fr); }
+    .kw-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="tag">Amazon出品戦略レポート — 2026年03月20日 <span style="background:rgba(58,188,238,0.2);padding:2px 10px;border-radius:10px;margin-left:8px;">v2 更新：消臭試験データ / 洗濯メリット追加</span></div>
+  <h1>Camicks｜Amazon出品<br><span>クリエイティブ × KW × 価格戦略</span></h1>
+  <div class="meta">
+    <span>🧦 ミドル丈シークレット五本指ソックス</span>
+    <span>📦 単品4SKU + セット2SKU</span>
+    <span>🎯 メンズ・レディース兼用 / ビジネス特化</span>
+    <span>🏭 日本製・大阪泉州・創業55年</span>
+  </div>
+</div>
+
+<!-- 1. 競合分析 -->
+<div class="section section-alt">
+  <div class="section-label">COMPETITIVE INTELLIGENCE</div>
+  <div class="section-title">競合分析｜<span>SLEEPSINERO vs Camicks</span></div>
+  <table>
+    <thead><tr><th>指標</th><th>SLEEPSINERO（競合）</th><th>Camicks（自社）</th></tr></thead>
+    <tbody>
+      <tr><td>価格</td><td>¥1,343〜¥2,080 / <strong>5足セット</strong></td><td>¥1,540 / <strong>1足</strong>（単品）</td></tr>
+      <tr><td>1足あたり</td><td>¥269〜¥416</td><td><strong>¥1,540</strong>（6倍の価格差）</td></tr>
+      <tr><td>レビュー</td><td>4.5★ / 611件（72%が★5）</td><td>4.6★ / 9件（88.9%が★5）</td></tr>
+      <tr><td>ランク</td><td>レディースランニングソックス <strong>1位</strong></td><td>未出品</td></tr>
+      <tr><td>月間販売数</td><td>1,000点以上 / 7万人以上（3ヶ月）</td><td>—</td></tr>
+      <tr><td>素材</td><td>コットン80-90%（汎用）</td><td><strong>camifine®和紙40%（自社開発）</strong></td></tr>
+      <tr><td>構造</td><td>通常の5本指ソックス</td><td><strong>シークレット構造（外から見えない）</strong></td></tr>
+      <tr><td>製造</td><td>不明</td><td><strong>日本製・大阪泉州・創業55年・糸から自社開発</strong></td></tr>
+      <tr><td>ターゲット</td><td>レディース・スポーツ特化</td><td><strong>男女兼用・ビジネスシーン特化</strong></td></tr>
+      <tr><td>主な弱点</td><td>指が入れにくい・薄手で冬は重ね履き必要</td><td>価格差の正当化が必要</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:32px; padding:24px; background:#fff3e0; border-radius:10px; border-left:4px solid #e65100;">
+    <div style="font-weight:700; margin-bottom:8px; color:#e65100;">⚠️ 価格差の正当化が最大の課題</div>
+    <div style="font-size:14px; color:#666; line-height:1.8;">
+      SLEEPSINEROは5足で¥1,343。Camicksは1足で¥1,540。同じ土俵では戦えない。<br>
+      →「別カテゴリ」として見せる戦略が必須。<strong>シークレット構造 × 和紙素材 × ビジネスシーン</strong>で土俵を変える。
+    </div>
+  </div>
+</div>
+
+<!-- 2. 価格・SKU戦略 -->
+<div class="section">
+  <div class="section-label">PRICING & SKU STRATEGY</div>
+  <div class="section-title">価格 × <span>SKUラインナップ</span></div>
+
+  <div class="price-compare">
+    <div class="price-card">
+      <div class="price-label">単品（4SKU）</div>
+      <div class="price-main">¥1,540</div>
+      <div class="price-sub">ブラック / ダークグレー / ネイビー / オフ</div>
+    </div>
+    <div class="price-card ours">
+      <div class="price-label">セット — 1足あたり価格を下げてコスパ感を演出</div>
+      <div class="price-main">¥3,980〜¥5,980</div>
+      <div class="price-sub">3足カラーMIX（¥1,327/足）/ 5足カラーMIX（¥1,196/足）</div>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>#</th><th>商品</th><th>カラー</th><th>価格</th><th>1足あたり</th><th>ターゲット</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>単品</td><td>ブラック</td><td>¥1,540</td><td>¥1,540</td><td>男女・ビジネス鉄板</td></tr>
+      <tr><td>2</td><td>単品</td><td>ダークグレー</td><td>¥1,540</td><td>¥1,540</td><td>ビジネス男性</td></tr>
+      <tr><td>3</td><td>単品</td><td>ネイビー</td><td>¥1,540</td><td>¥1,540</td><td>ビジネス男性</td></tr>
+      <tr><td>4</td><td>単品</td><td>オフ</td><td>¥1,540</td><td>¥1,540</td><td>女性・カジュアル</td></tr>
+      <tr><td>5</td><td><span class="badge badge-blue">3足セット</span></td><td>カラーMIX</td><td>¥3,980</td><td>¥1,327</td><td>「まずお試し」層</td></tr>
+      <tr><td>6</td><td><span class="badge badge-green">5足セット</span></td><td>カラーMIX</td><td>¥5,980</td><td>¥1,196</td><td>週5日ヘビーユーザー</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 3. 商品タイトル -->
+<div class="section section-alt">
+  <div class="section-label">PRODUCT TITLE & BULLETS</div>
+  <div class="section-title">商品タイトル × <span>箇条書き5項目</span></div>
+
+  <div class="title-box">
+    <div class="title-label">CONFIRMED TITLE — 確定済み</div>
+    <div class="title-text">【外から見えない】Camicks 五本指靴下 メンズ レディース シークレット 蒸れない 和紙40% 日本製 23-27cm</div>
+    <div class="title-intent">
+      戦略意図：メイン画像（普通の靴下に見える）× タイトル冒頭「外から見えない」→ 認知ギャップでCTR最大化。
+      SEOはタイトル後半にKWを配置（五本指靴下・シークレット・蒸れない・和紙・日本製）。
+    </div>
+  </div>
+
+  <div class="bullet-list">
+    <div class="bullet-item">
+      <div class="bullet-num">1</div>
+      <div class="bullet-text">
+        <div class="bullet-head">【脱いでもバレない、シークレット5本指】</div>
+        <div class="bullet-body">外側は普通の靴下。内側だけ5本指に分かれるパーティション構造。職場でも、デートでも、靴を脱ぐ場面を選ばない。</div>
+      </div>
+    </div>
+    <div class="bullet-item">
+      <div class="bullet-num">2</div>
+      <div class="bullet-text">
+        <div class="bullet-head">【和紙40%の吸湿速乾。足臭の原因を最大95%除去】</div>
+        <div class="bullet-body">自社開発素材camifine®は、和紙を糸から開発した独自ファイバー。汗を吸ってすぐ乾き、足臭の原因物質を最大95%減少（第三者機関試験済み）。革靴・ブーツのビジネスシーンでも快適。</div>
+      </div>
+    </div>
+    <div class="bullet-item">
+      <div class="bullet-num">3</div>
+      <div class="bullet-text">
+        <div class="bullet-head">【外反母趾・足の疲れに。健康設計のアーチサポート】</div>
+        <div class="bullet-body">足指を正しい位置に配置し、土踏まずを引き上げるアーチサポート構造。「痛みがなくなりました」というリピーターの声多数。</div>
+      </div>
+    </div>
+    <div class="bullet-item">
+      <div class="bullet-num">4</div>
+      <div class="bullet-text">
+        <div class="bullet-head">【洗濯後の裏返し、不要。普通の靴下と同じ手間で5本指の機能を】</div>
+        <div class="bullet-body">シークレット構造だから、洗濯も普通の靴下と同じでOK。通常の5本指靴下特有の「指袋を一本一本直す手間」がゼロ。縫い目なしで細めの靴でも履ける。</div>
+      </div>
+    </div>
+    <div class="bullet-item">
+      <div class="bullet-num">5</div>
+      <div class="bullet-text">
+        <div class="bullet-head">【創業55年・大阪泉州の日本製。糸から自社開発】</div>
+        <div class="bullet-body">1969年創業の澤田株式会社が、糸の開発から製造まで一貫生産。有害物質を含まない染料で15色展開。毎日履きたくなる品質。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. KW戦略 -->
+<div class="section">
+  <div class="section-label">KEYWORD STRATEGY</div>
+  <div class="section-title">KW選定｜<span>3レイヤー戦略</span></div>
+
+  <div style="margin-bottom:32px;">
+    <div style="font-weight:700; margin-bottom:16px;">レイヤー① 集客KW（ボリューム最大・流入を稼ぐ）</div>
+    <div class="kw-grid">
+      <div class="kw-card"><div class="kw-word">靴下 5本指</div><div class="kw-vol">9,452</div><div class="kw-unit">件/月</div><div class="kw-tier tier-1">最優先</div></div>
+      <div class="kw-card"><div class="kw-word">蒸れない靴下</div><div class="kw-vol">4,386</div><div class="kw-unit">件/月</div><div class="kw-tier tier-1">最優先</div></div>
+      <div class="kw-card"><div class="kw-word">水虫 靴下</div><div class="kw-vol">3,443</div><div class="kw-unit">件/月</div><div class="kw-tier tier-1">優先</div></div>
+      <div class="kw-card"><div class="kw-word">五本指靴下 レディース</div><div class="kw-vol">3,121</div><div class="kw-unit">件/月</div><div class="kw-tier tier-1">優先</div></div>
+      <div class="kw-card"><div class="kw-word">五本指靴下</div><div class="kw-vol">2,379</div><div class="kw-unit">件/月</div><div class="kw-tier tier-1">最優先</div></div>
+      <div class="kw-card"><div class="kw-word">足汗 靴下</div><div class="kw-vol">1,404</div><div class="kw-unit">件/月</div><div class="kw-tier tier-1">優先</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <div style="font-weight:700; margin-bottom:16px;">レイヤー② 差別化KW（競合ゼロ・転換率を上げる）</div>
+    <div class="kw-grid">
+      <div class="kw-card"><div class="kw-word">シークレット 五本指 靴下</div><div class="kw-vol">—</div><div class="kw-unit">競合ゼロ</div><div class="kw-tier tier-2">差別化</div></div>
+      <div class="kw-card"><div class="kw-word">和紙 靴下</div><div class="kw-vol">—</div><div class="kw-unit">独自素材</div><div class="kw-tier tier-2">差別化</div></div>
+      <div class="kw-card"><div class="kw-word">日本製 靴下</div><div class="kw-vol">—</div><div class="kw-unit">品質訴求</div><div class="kw-tier tier-2">差別化</div></div>
+    </div>
+  </div>
+
+  <div>
+    <div style="font-weight:700; margin-bottom:16px;">レイヤー③ 潜在層KW（悩み検索で引っかける）</div>
+    <div class="kw-grid">
+      <div class="kw-card"><div class="kw-word">ビジネス 蒸れない 靴下</div><div class="kw-vol">—</div><div class="kw-unit">ビジネス層</div><div class="kw-tier tier-3">潜在層</div></div>
+      <div class="kw-card"><div class="kw-word">五本指 バレない</div><div class="kw-vol">—</div><div class="kw-unit">シークレット</div><div class="kw-tier tier-3">潜在層</div></div>
+      <div class="kw-card"><div class="kw-word">外反母趾 靴下</div><div class="kw-vol">—</div><div class="kw-unit">健康悩み</div><div class="kw-tier tier-3">潜在層</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Amazon商品画像 -->
+<div class="section section-alt">
+  <div class="section-label">CREATIVE — AMAZON PRODUCT IMAGES</div>
+  <div class="section-title">Amazon商品画像｜<span>A案 × B案 比較</span></div>
+
+  <!-- A案 B案 凡例 -->
+  <div style="display:flex; gap:16px; margin-bottom:32px;">
+    <div style="display:flex; align-items:center; gap:10px; background:white; border:2px solid var(--navy); border-radius:8px; padding:14px 20px; flex:1;">
+      <div style="width:10px; height:40px; background:var(--navy); border-radius:3px; flex-shrink:0;"></div>
+      <div>
+        <div style="font-size:11px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">A案 — 機能キャッチコピー</div>
+        <div style="font-size:13px; font-weight:600; color:var(--navy);">「秘密は、内側にある。」「和紙だから、蒸れない。」etc.</div>
+        <div style="font-size:12px; color:var(--gray); margin-top:4px;">因果・機能を直接言語化。納得感重視。</div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; background:white; border:2px solid var(--blue); border-radius:8px; padding:14px 20px; flex:1;">
+      <div style="width:10px; height:40px; background:var(--blue); border-radius:3px; flex-shrink:0;"></div>
+      <div>
+        <div style="font-size:11px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">B案 — 情緒系コピー</div>
+        <div style="font-size:13px; font-weight:600; color:var(--navy);">「美しい5本指の完成形」「見えないところに、本物がある。」etc.</div>
+        <div style="font-size:12px; color:var(--gray); margin-top:4px;">感情・価値観に訴求。¥2,000の世界観重視。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- メイン画像 -->
+  <div style="margin-bottom:40px;">
+    <div style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--navy);">MAIN IMAGE — 共通</div>
+    <div class="image-card main-card"><img src="camicks-images/amazon_00_main.png" alt="メイン画像">
+      <div class="image-info">
+        <div class="img-label">メイン画像｜第一印象「普通の靴下に見える」でCTR最大化</div>
+        <div class="img-copy">5本指に見えない × おしゃれさ × 権威（camifine®・日本製・消臭95%バッジ）を1枚に集約</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- サブ① -->
+  <div style="margin-bottom:40px;">
+    <div style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--border);">SUB IMAGE 01</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--navy); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--navy); letter-spacing:1px;">A案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_01_a_luxury.png" alt="サブ①A">
+          <div class="image-info"><div class="img-label">これが、5本指なんです。</div><div class="img-copy">シークレット構造の驚き。Luxury Editorial スタイル v5。</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--blue); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--blue); letter-spacing:1px;">B案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_01_b_luxury.png" alt="サブ①B">
+          <div class="image-info"><div class="img-label">美しい5本指の完成形</div><div class="img-copy">A案ビジュアルスタイル寄せ。Luxury Editorial v5。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- サブ② -->
+  <div style="margin-bottom:40px;">
+    <div style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--border);">SUB IMAGE 02 — 構造</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--navy); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--navy); letter-spacing:1px;">A案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_02_structure_v4.png" alt="サブ②A">
+          <div class="image-info"><div class="img-label">秘密は、内側にある。</div><div class="img-copy">手元で靴下をそっと開く「宝石見せ」の瞬間。</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--blue); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--blue); letter-spacing:1px;">B案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_02_b_authentic.png" alt="サブ②B">
+          <div class="image-info"><div class="img-label">見えないところに、本物がある。</div><div class="img-copy">クラフトマンシップへの静かな宣言。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- サブ③ -->
+  <div style="margin-bottom:40px;">
+    <div style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--border);">SUB IMAGE 03 — 素材</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--navy); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--navy); letter-spacing:1px;">A案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_03_material_v4.png" alt="サブ③A">
+          <div class="image-info"><div class="img-label">和紙だから、蒸れない。</div><div class="img-copy">因果関係を一行で。消臭データを権威として添える。</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--blue); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--blue); letter-spacing:1px;">B案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_03_b_washi.png" alt="サブ③B">
+          <div class="image-info"><div class="img-label">爽やかさでたどり着いた、和紙の糸</div><div class="img-copy">素材開発の旅を語る。和紙 × 糸の静物詩。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- サブ④ -->
+  <div style="margin-bottom:40px;">
+    <div style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--border);">SUB IMAGE 04 — 洗濯</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--navy); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--navy); letter-spacing:1px;">A案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_04_laundry_v4.png" alt="サブ④A">
+          <div class="image-info"><div class="img-label">洗濯後の裏返し、不要です。</div><div class="img-copy">5本指ユーザーの不満を直接解消。朝の静物画。</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--blue); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--blue); letter-spacing:1px;">B案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_04_b_effortless.png" alt="サブ④B">
+          <div class="image-info"><div class="img-label">洗濯の手間ゼロを目指して</div><div class="img-copy">設計哲学として語る。意図ある「ゼロ」。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- サブ⑤ -->
+  <div style="margin-bottom:40px;">
+    <div style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--border);">SUB IMAGE 05 — 着用シーン</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--navy); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--navy); letter-spacing:1px;">A案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_05_scene_v3b.png" alt="サブ⑤A">
+          <div class="image-info"><div class="img-label">脱いだ後も、おしゃれ。</div><div class="img-copy">テキスト1行のみ。ビジュアル全振り。</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--blue); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--blue); letter-spacing:1px;">B案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_05_b_craft.png" alt="サブ⑤B">
+          <div class="image-info"><div class="img-label">1足ずつ作る、美しさ。</div><div class="img-copy">職人的な一対一の製造をライフスタイルで体現。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- サブ⑥ -->
+  <div style="margin-bottom:8px;">
+    <div style="font-size:12px; font-weight:700; color:var(--navy); letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--border);">SUB IMAGE 06 — ブランド権威</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--navy); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--navy); letter-spacing:1px;">A案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_06_brand_v3b.png" alt="サブ⑥A">
+          <div class="image-info"><div class="img-label">57年分の本気が、一足に。</div><div class="img-copy">糸巻き × 完成品の並び。職人アトリエ × 老舗。</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><div style="width:8px; height:8px; background:var(--blue); border-radius:50%;"></div><span style="font-size:11px; font-weight:700; color:var(--blue); letter-spacing:1px;">B案</span></div>
+        <div class="image-card"><img src="camicks-images/amazon_06_b_yarn.png" alt="サブ⑥B">
+          <div class="image-info"><div class="img-label">創業57年の糸屋のこだわり</div><div class="img-copy">糸屋としての57年。原点と完成形を一枚に。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 5-B. 消臭試験データ -->
+<div class="section">
+  <div class="section-label">SCIENTIFIC PROOF — 第三者機関試験データ</div>
+  <div class="section-title">消臭性試験｜<span>ニッセンケン品質評価センター</span></div>
+  <div style="font-size:13px; color:var(--gray); margin-bottom:24px;">報告書No. DCB24-T03482（2024年12月24日）/ camifine®糸 TAKUMI 1/40 c/# GREEN</div>
+  <table>
+    <thead><tr><th>試験ガス</th><th>減少率</th><th>JTETC基準（機器単独）</th><th>訴求可否</th><th>コピー活用</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>イソ吉草酸（足臭の主成分）</td>
+        <td><span style="font-size:24px; font-weight:700; color:#3ABCEE;">90%</span> 減少</td>
+        <td>≥95%</td>
+        <td><span class="badge badge-green">✅ 訴求OK</span></td>
+        <td>「足臭の原因物質を90%減少」</td>
+      </tr>
+      <tr>
+        <td>酢酸（汗臭の原因）</td>
+        <td><span style="font-size:24px; font-weight:700; color:#3ABCEE;">95%</span> 減少</td>
+        <td>≥70%</td>
+        <td><span class="badge badge-green">✅ 訴求OK</span></td>
+        <td>「足臭の原因を最大95%除去」</td>
+      </tr>
+      <tr>
+        <td>アンモニア</td>
+        <td>61% 減少</td>
+        <td>≥80%</td>
+        <td><span class="badge badge-red">❌ 基準未達</span></td>
+        <td>訴求NG（使用禁止）</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:24px; padding:20px 24px; background:#e6f4ea; border-radius:10px; border-left:4px solid #1e7e34;">
+    <div style="font-weight:700; margin-bottom:8px; color:#1e7e34;">✅ 採用コピー（確定）</div>
+    <div style="font-size:14px; color:#333; line-height:1.8;">
+      「足臭の原因物質を最大95%除去（第三者機関試験済み）」<br>
+      ※「最大95%」= 酢酸95%減少を指す。アンモニア（61%）は記載しない。イソ吉草酸は「90%減少」として単独訴求可能。
+    </div>
+  </div>
+</div>
+
+<!-- 6. 差別化戦略 -->
+<div class="section">
+  <div class="section-label">DIFFERENTIATION STRATEGY</div>
+  <div class="section-title">勝ち筋｜<span>土俵を変える戦略</span></div>
+  <div class="strategy-grid">
+    <div class="strategy-card highlight">
+      <div class="s-label">CORE STRATEGY</div>
+      <div class="s-title">「別カテゴリ」として戦う</div>
+      <div class="s-body">SLEEPSINEROと同じ土俵（5足セット・低価格・コットン素材）では戦わない。<br><br>Camicksは「シークレット構造 × 和紙camifine® × 日本製55年」で全く異なるポジションを取る。</div>
+    </div>
+    <div class="strategy-card">
+      <div class="s-label">TARGET</div>
+      <div class="s-title">ビジネスシーンの蒸れ悩みに刺す</div>
+      <div class="s-body">競合は「スポーツ・ランニング」特化。ビジネスマン（革靴・ブーツで蒸れる）層は空白地帯。23-27cmのミドル丈サイズ展開がメンズ対応を支える。</div>
+    </div>
+    <div class="strategy-card">
+      <div class="s-label">CTR TACTIC</div>
+      <div class="s-title">メイン画像 × タイトルのパンチライン</div>
+      <div class="s-body">メイン画像は「普通の靴下に見える」→ タイトル冒頭「外から見えない」で認知ギャップ発生 → 「え？」でクリック率を上げる設計。</div>
+    </div>
+    <div class="strategy-card">
+      <div class="s-label">PRICE JUSTIFICATION</div>
+      <div class="s-title">セット展開で1足単価を下げる</div>
+      <div class="s-body">単品¥1,540 vs 競合¥269/足の差を埋めるためセット展開。3足¥3,980（¥1,327/足）、5足¥5,980（¥1,196/足）で「コスパ感」を演出。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. Next Actions -->
+<div class="section">
+  <div class="section-label">CREATIVE — A+ CONTENT</div>
+  <div class="section-title">A+コンテンツ｜<span>5モジュール設計ラフ</span></div>
+  <p style="font-size:14px; color:var(--gray); margin-bottom:8px; line-height:1.8;">メインコピー: <strong>「機能のために、おしゃれを諦めない。」</strong> を軸に、購買後の納得感を高める5モジュール構成。PC: 1464×600px / SP: 600×450px。</p>
+  <p style="font-size:13px; color:var(--blue); margin-bottom:36px;">※ブランドレジストリ登録後に利用可能。ベーシックA+（最大5モジュール）から開始。</p>
+
+  <!-- モジュール概要テーブル -->
+  <table style="margin-bottom:48px;">
+    <tr><th style="width:60px;">#</th><th style="width:160px;">テーマ</th><th>キャッチコピー</th><th>役割</th><th style="width:200px;">サイズ</th></tr>
+    <tr><td style="font-weight:700; color:var(--blue);">01</td><td>ヒーロー</td><td><strong>「機能のために、おしゃれを諦めない。」</strong></td><td>N1の潜在心理に直撃。¥2,000の価値観を宣言</td><td style="font-size:12px; color:var(--gray);">PC 1464×600 / SP 600×450</td></tr>
+    <tr><td style="font-weight:700; color:var(--blue);">02</td><td>構造説明</td><td><strong>「秘密は、内側にある。」</strong></td><td>「なぜバレないか」を体験ベースで納得させる</td><td style="font-size:12px; color:var(--gray);">PC 1464×600 / SP 600×450</td></tr>
+    <tr><td style="font-weight:700; color:var(--blue);">03</td><td>素材訴求</td><td><strong>「和紙だから、蒸れない。」</strong></td><td>因果関係を一行で。消臭データを権威として添える</td><td style="font-size:12px; color:var(--gray);">PC 1464×600 / SP 600×450</td></tr>
+    <tr><td style="font-weight:700; color:var(--blue);">04</td><td>カラー展開</td><td><strong>「どの色も、おしゃれの一部に。」</strong></td><td>4色のみ表示（15色には言及しない）。ファッション訴求</td><td style="font-size:12px; color:var(--gray);">PC 1464×600 / SP 600×450</td></tr>
+    <tr><td style="font-weight:700; color:var(--blue);">05</td><td>ブランド権威</td><td><strong>「57年分の本気が、一足に。」</strong></td><td>¥2,000を最終的に正当化。「糸屋」という逆説的権威</td><td style="font-size:12px; color:var(--gray);">PC 1464×600 / SP 600×450</td></tr>
+  </table>
+
+  <!-- モジュールプレビュー -->
+  <div style="display:flex; flex-direction:column; gap:32px;">
+
+    <!-- M01 ヒーロー -->
+    <div>
+      <div style="font-size:11px; color:var(--blue); letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:12px;">Module 01 — Hero</div>
+      <div style="width:100%; background:var(--navy); border-radius:8px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.12);">
+        <div style="height:3px; background:var(--blue);"></div>
+        <div style="padding:60px; text-align:center;">
+          <div style="font-size:11px; letter-spacing:3px; color:var(--blue); text-transform:uppercase; margin-bottom:24px;">Camicks — camifine® Secret 5-Toe</div>
+          <div style="font-size:44px; font-weight:700; color:white; line-height:1.4; letter-spacing:0.04em; margin-bottom:24px; font-family:'Hiragino Mincho ProN','Yu Mincho',Georgia,serif;">機能のために、<br>おしゃれを諦めない。</div>
+          <div style="width:40px; height:2px; background:var(--blue); margin:0 auto 24px;"></div>
+          <div style="font-size:15px; color:rgba(255,255,255,0.6); line-height:1.9;">5本指だから機能がある。おしゃれだから選ばれる。<br>その両方を、一足に。</div>
+          <div style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.35);">和紙40% camifine® × シークレット構造 × 日本製 / 1969年創業 澤田株式会社</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- M02 構造 -->
+    <div>
+      <div style="font-size:11px; color:var(--blue); letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:12px;">Module 02 — Secret Structure</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; border-radius:8px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.10);">
+        <div style="background:#d8dfe3; display:flex; align-items:center; justify-content:center; min-height:280px;">
+          <div style="text-align:center; color:#888; font-size:13px; line-height:1.8;">
+            <div style="font-size:28px; margin-bottom:8px;">🧦</div>
+            商品写真<br>（外側 vs 内側 比較）<br><span style="font-size:11px;">camicks-women-inside.jpg</span>
+          </div>
+        </div>
+        <div style="background:white; padding:48px 44px; display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:11px; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:16px;">Secret Structure</div>
+          <div style="font-size:32px; font-weight:700; color:var(--navy); line-height:1.4; font-family:'Hiragino Mincho ProN','Yu Mincho',Georgia,serif; margin-bottom:16px;">秘密は、<br>内側にある。</div>
+          <div style="width:32px; height:2px; background:var(--blue); margin-bottom:20px;"></div>
+          <div style="font-size:13px; color:var(--gray); line-height:1.9; margin-bottom:20px;">外から見ると、ただおしゃれな靴下。<br>でも内側には、指を一本ずつ包む構造がある。</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; gap:10px; font-size:13px; color:var(--navy); line-height:1.6; align-items:flex-start;"><div style="width:2px; min-height:36px; background:var(--blue); margin-top:2px; flex-shrink:0;"></div>外見は普通の靴下と変わらない「シークレット構造」</div>
+            <div style="display:flex; gap:10px; font-size:13px; color:var(--navy); line-height:1.6; align-items:flex-start;"><div style="width:2px; min-height:36px; background:var(--blue); margin-top:2px; flex-shrink:0;"></div>縫い目なし。細めの靴でも、ごつつかない</div>
+            <div style="display:flex; gap:10px; font-size:13px; color:var(--navy); line-height:1.6; align-items:flex-start;"><div style="width:2px; min-height:36px; background:var(--blue); margin-top:2px; flex-shrink:0;"></div>脱いでも、5本指とはわからない</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- M03 素材 -->
+    <div>
+      <div style="font-size:11px; color:var(--blue); letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:12px;">Module 03 — Material</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; border-radius:8px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.10);">
+        <div style="background:#f5f4ef; padding:48px 44px; display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:11px; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:16px;">camifine® — Japanese Paper Fiber</div>
+          <div style="font-size:32px; font-weight:700; color:var(--navy); line-height:1.4; font-family:'Hiragino Mincho ProN','Yu Mincho',Georgia,serif; margin-bottom:16px;">和紙だから、<br>蒸れない。</div>
+          <div style="width:32px; height:2px; background:var(--blue); margin-bottom:20px;"></div>
+          <div style="font-size:13px; color:var(--gray); line-height:1.9; margin-bottom:20px;">天然由来の和紙を糸から開発した自社素材 camifine®。<br>汗を吸い、素早く乾かす。一日中、さらさらが続く。</div>
+          <div style="border-top:1px solid #e5e7eb;">
+            <div style="display:flex; align-items:center; padding:12px 0; border-bottom:1px solid #e5e7eb; gap:16px;">
+              <div style="font-size:12px; color:var(--gray); flex:1;">足臭の原因（イソ吉草酸）</div>
+              <div style="font-size:26px; font-weight:700; color:var(--navy);">90<span style="font-size:12px; color:var(--blue); font-weight:400; margin-left:2px;">% 減少</span></div>
+            </div>
+            <div style="display:flex; align-items:center; padding:12px 0; border-bottom:1px solid #e5e7eb; gap:16px;">
+              <div style="font-size:12px; color:var(--gray); flex:1;">汗臭の原因（酢酸）</div>
+              <div style="font-size:26px; font-weight:700; color:var(--navy);">95<span style="font-size:12px; color:var(--blue); font-weight:400; margin-left:2px;">% 減少</span></div>
+            </div>
+            <div style="display:flex; align-items:center; padding:12px 0; gap:16px;">
+              <div style="font-size:12px; color:var(--gray); flex:1;">和紙配合率</div>
+              <div style="font-size:26px; font-weight:700; color:var(--navy);">40<span style="font-size:12px; color:var(--blue); font-weight:400; margin-left:2px;">%</span></div>
+            </div>
+          </div>
+          <div style="font-size:10px; color:#9ca3af; margin-top:10px; line-height:1.7;">※ニッセンケン品質評価センター 機器分析試験（DCB24-T03482）camifine®糸単体での試験値</div>
+        </div>
+        <div style="background:#e4ebe0; display:flex; align-items:center; justify-content:center; min-height:280px;">
+          <div style="text-align:center; color:#7a8c72; font-size:13px; line-height:1.8;">
+            <div style="font-size:28px; margin-bottom:8px;">🌿</div>
+            素材クローズアップ<br>（和紙テクスチャ）<br><span style="font-size:11px;">camicks-s_detail04.jpg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- M04 カラー -->
+    <div>
+      <div style="font-size:11px; color:var(--blue); letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:12px;">Module 04 — Color Selection</div>
+      <div style="background:white; border-radius:8px; padding:48px 56px; box-shadow:0 4px 16px rgba(0,0,0,0.10);">
+        <div style="text-align:center; margin-bottom:40px;">
+          <div style="font-size:11px; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:12px;">Color Selection</div>
+          <div style="font-size:28px; font-weight:700; color:var(--navy); font-family:'Hiragino Mincho ProN','Yu Mincho',Georgia,serif;">どの色も、おしゃれの一部に。</div>
+          <div style="font-size:13px; color:var(--gray); margin-top:10px;">23cm〜27cm対応 / メンズ・レディース兼用ユニセックス</div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px; max-width:640px; margin:0 auto 32px;">
+          <div style="text-align:center;">
+            <div style="width:100%; padding-top:100%; background:#1c1c1e; border-radius:8px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.15);"></div>
+            <div style="font-size:13px; font-weight:600; color:var(--navy);">ブラック</div>
+            <div style="font-size:11px; color:var(--gray); letter-spacing:1px;">BLACK</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:100%; padding-top:100%; background:#1b2a4a; border-radius:8px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.15);"></div>
+            <div style="font-size:13px; font-weight:600; color:var(--navy);">ネイビー</div>
+            <div style="font-size:11px; color:var(--gray); letter-spacing:1px;">NAVY</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:100%; padding-top:100%; background:#3a3d42; border-radius:8px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.15);"></div>
+            <div style="font-size:13px; font-weight:600; color:var(--navy);">ダークグレー</div>
+            <div style="font-size:11px; color:var(--gray); letter-spacing:1px;">DARK GRAY</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:100%; padding-top:100%; background:#f5f0e8; border-radius:8px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); border:1px solid #e0dbd0;"></div>
+            <div style="font-size:13px; font-weight:600; color:var(--navy);">オフ</div>
+            <div style="font-size:11px; color:var(--gray); letter-spacing:1px;">OFF WHITE</div>
+          </div>
+        </div>
+        <div style="text-align:center; font-size:13px; color:var(--gray); line-height:2;">
+          単品 / 3足セット / 5足セット展開<br>
+          <span style="color:var(--blue);">セット購入で1足あたりの価格がお得に</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- M05 ブランド -->
+    <div>
+      <div style="font-size:11px; color:var(--blue); letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:12px;">Module 05 — Brand Story</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; border-radius:8px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.10);">
+        <div style="background:#0d1a24; display:flex; align-items:center; justify-content:center; min-height:280px;">
+          <div style="text-align:center; color:rgba(255,255,255,0.35); font-size:13px; line-height:1.8;">
+            <div style="font-size:28px; margin-bottom:8px;">🧵</div>
+            ブランドビジュアル<br>（糸・製造工程イメージ）<br><span style="font-size:11px;">camicks_men_400x1000_09.jpg</span>
+          </div>
+        </div>
+        <div style="background:var(--navy); padding:48px 44px; display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:11px; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:16px;">Sawada Co., Ltd. — Since 1969</div>
+          <div style="font-size:30px; font-weight:700; color:white; line-height:1.4; font-family:'Hiragino Mincho ProN','Yu Mincho',Georgia,serif; margin-bottom:16px;">57年分の本気が、<br>一足に。</div>
+          <div style="width:32px; height:2px; background:var(--blue); margin-bottom:20px;"></div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.6); line-height:1.9; margin-bottom:24px;">靴下を作り続けたのではない。<br>糸から、こだわり続けてきた。</div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color:rgba(255,255,255,0.75);"><div style="width:6px; height:6px; border-radius:50%; background:var(--blue); flex-shrink:0;"></div>1969年創業 / 大阪・泉州</div>
+            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color:rgba(255,255,255,0.75);"><div style="width:6px; height:6px; border-radius:50%; background:var(--blue); flex-shrink:0;"></div>糸の開発から製造まで、一貫生産</div>
+            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color:rgba(255,255,255,0.75);"><div style="width:6px; height:6px; border-radius:50%; background:var(--blue); flex-shrink:0;"></div>自社開発素材 camifine® — 和紙を糸から設計</div>
+            <div style="display:flex; align-items:center; gap:12px; font-size:13px; color:rgba(255,255,255,0.75);"><div style="width:6px; height:6px; border-radius:50%; background:var(--blue); flex-shrink:0;"></div>縫い目なし・ホールガーメント製法</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end モジュールプレビュー -->
+</div>
+
+<div class="section section-alt">
+  <div class="section-label">NEXT ACTIONS</div>
+  <div class="section-title">出品完走に向けた<span>残りタスク</span></div>
+  <div class="action-list">
+    <div class="action-item">
+      <div class="action-icon">1</div>
+      <div>
+        <div class="action-text">画像レビュー → 差し替え・修正対応</div>
+        <div class="action-sub">今日生成したメイン+サブ6枚を確認。NGがあれば即修正して再生成。</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-icon">2</div>
+      <div>
+        <div class="action-text">JANコード取得 + 商標出願 → ブランドレジストリ申請</div>
+        <div class="action-sub">出品前に必須。ブランド登録なしだとA+コンテンツが使えない。</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-icon">3</div>
+      <div>
+        <div class="action-text">KW精度向上 → SellerSpriteで競合流入KW調査</div>
+        <div class="action-sub">今回のKWデータは代理店提供の概算値。SellerSpriteで競合（SLEEPSINERO ASIN: B0DX62GBMR）の流入KWを詳細取得。</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-icon">4</div>
+      <div>
+        <div class="action-text">Amazon Vine 申請 → 初期レビュー獲得</div>
+        <div class="action-sub">出品直後に必ず申請。レビューゼロでは転換率が取れない。最優先初期設定。</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-icon">5</div>
+      <div>
+        <div class="action-text">SP/SD広告 → 出品直後に配信開始</div>
+        <div class="action-sub">クリエイティブなしでも開始可能。まずオートターゲティングで走らせ、勝ちKWを特定してからマニュアルに切り替え。</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-icon">6</div>
+      <div>
+        <div class="action-text">A+コンテンツ制作（販売実績ができたら）</div>
+        <div class="action-sub">ベーシック最大5枚から開始。プレミアム（最大7枚）は販売実績が必要。今回の画像素材を流用して制作。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:var(--navy); color:rgba(255,255,255,0.5); padding:32px 60px; font-size:12px; display:flex; justify-content:space-between; align-items:center;">
+  <span>Camicks Amazon出品戦略レポート</span>
+  <span>Generated by 一進AI — Banner Park v7.0 × Amazon Park</span>
+  <span>2026-03-19</span>
+</div>
+
+</body>
+</html>
