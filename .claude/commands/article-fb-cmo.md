@@ -137,13 +137,16 @@ Step 8: CKO最終承認
 
 ## 認知ステージ別 重み基準（CKOの判断ガイド）
 
-| ステージ | 最重要 | 重要 | その他 |
+| ステージ | 重め（0.25〜0.30） | 中（0.15〜0.20） | 軽め（0.05〜0.10） |
 |---|---|---|---|
-| 潜在層 | hook×0.40 + visual×0.30 | narrative×0.15 | cta, offer, trust は小さめ |
-| 準顕在層 | narrative×0.35 + hook×0.30 | trust×0.15 + cta×0.10 | offer, visual は小さめ |
-| 顕在層 | offer×0.45 + trust×0.30 | cta×0.15 | hook, narrative, visual は小さめ |
+| 潜在層 | hook + visual | narrative | cta, offer, trust |
+| 準顕在層 | narrative + hook | trust + cta | offer, visual |
+| 顕在層 | offer + trust | cta | hook, narrative, visual |
 
-※これはガイドライン。CKOは商品カテゴリーや記事の特性に応じて自分の判断で調整する。
+**重みの制約（v3.0追加）:**
+- 各軸の最大値: **0.30**（1軸に集中しすぎると他の良い部分が埋もれる）
+- 各軸の最小値: **0.05**（どの軸も完全無視しない）
+- CKOは商品カテゴリーや記事の特性に応じて自分の判断で調整する
 
 ---
 

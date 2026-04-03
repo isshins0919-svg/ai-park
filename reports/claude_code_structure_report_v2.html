@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一進AI まるわかりガイド v2</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<!-- Mermaid.js -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<!-- AOS (Animate on Scroll) -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+        jp: ['Noto Sans JP', 'sans-serif'],
+      },
+      colors: {
+        brand: {
+          50: '#fef7f0',
+          100: '#fdecd8',
+          200: '#fbd5b0',
+          400: '#f5a55a',
+          500: '#f08c38',
+          600: '#e07020',
+        },
+        surface: {
+          50: '#fafaf8',
+          100: '#f5f3f0',
+          200: '#eae7e2',
+        },
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  /* Mermaid theme override */
+  .mermaid { display: flex; justify-content: center; }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d4d0cc; border-radius: 3px; }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #f08c38 0%, #e05080 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass card */
+  .glass {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Tier progress bars */
+  .tier-progress {
+    height: 8px;
+    border-radius: 4px;
+    transition: width 1.5s ease-out;
+  }
+
+  /* Chart container */
+  .chart-container {
+    position: relative;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+
+<body class="bg-surface-50 text-gray-700 font-sans antialiased">
+
+<!-- ============ HERO ============ -->
+<header class="relative overflow-hidden bg-gradient-to-br from-amber-50 via-rose-50 to-sky-50 py-24 px-6">
+  <!-- Decorative blobs -->
+  <div class="absolute top-[-20%] left-[-10%] w-96 h-96 bg-orange-200 opacity-20 rounded-full blur-3xl animate-pulse"></div>
+  <div class="absolute bottom-[-20%] right-[-10%] w-96 h-96 bg-pink-200 opacity-20 rounded-full blur-3xl animate-pulse" style="animation-delay:1s"></div>
+
+  <div class="relative max-w-3xl mx-auto text-center" data-aos="fade-up">
+    <p class="text-sm tracking-widest text-gray-400 uppercase mb-4 font-light">Claude Code Structure Report</p>
+    <h1 class="text-4xl md:text-5xl font-black text-gray-800 leading-tight font-jp">
+      一進AI<br class="md:hidden"> <span class="gradient-text">まるわかりガイド</span>
+    </h1>
+    <p class="mt-4 text-gray-500 text-lg font-light">1人 × 21体のAIチーム。その全体像をビジュアルで</p>
+    <div class="inline-flex items-center gap-2 mt-6 bg-white/60 backdrop-blur px-5 py-2 rounded-full text-sm text-gray-500 shadow-sm">
+      <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+      2026.04.02 updated
+    </div>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 md:px-8">
+
+<!-- ============ SECTION 1: Overview Stats ============ -->
+<section class="py-20" data-aos="fade-up">
+  <div class="text-center mb-12">
+    <h2 class="text-2xl font-black text-gray-800 font-jp">数字で見る全体像</h2>
+    <p class="text-sm text-gray-400 mt-2">Numbers at a Glance</p>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 text-center" data-aos="zoom-in" data-aos-delay="0">
+      <div class="chart-container mb-3">
+        <canvas id="chart-agents"></canvas>
+      </div>
+      <p class="text-xs text-gray-400 mt-1">AIエージェント</p>
+    </div>
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 text-center" data-aos="zoom-in" data-aos-delay="100">
+      <div class="chart-container mb-3">
+        <canvas id="chart-skills"></canvas>
+      </div>
+      <p class="text-xs text-gray-400 mt-1">スキル</p>
+    </div>
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 text-center" data-aos="zoom-in" data-aos-delay="200">
+      <div class="chart-container mb-3">
+        <canvas id="chart-knowledge"></canvas>
+      </div>
+      <p class="text-xs text-gray-400 mt-1">ナレッジDB</p>
+    </div>
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 text-center" data-aos="zoom-in" data-aos-delay="300">
+      <div class="chart-container mb-3">
+        <canvas id="chart-clients"></canvas>
+      </div>
+      <p class="text-xs text-gray-400 mt-1">クライアント</p>
+    </div>
+  </div>
+</section>
+
+<hr class="border-surface-200">
+
+<!-- ============ SECTION 2: Concept ============ -->
+<section class="py-20" data-aos="fade-up">
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-black text-gray-800 font-jp">ひとことで言うと</h2>
+    <p class="text-sm text-gray-400 mt-2">What is this?</p>
+  </div>
+
+  <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 max-w-2xl mx-auto">
+    <!-- Human -->
+    <div class="text-center" data-aos="fade-right">
+      <div class="w-28 h-28 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center mx-auto shadow-lg">
+        <span class="text-5xl">👨‍💻</span>
+      </div>
+      <p class="mt-3 font-bold text-gray-700 font-jp">澤田一進</p>
+      <p class="text-xs text-gray-400">1人</p>
+    </div>
+
+    <!-- Arrow -->
+    <div class="flex flex-col items-center gap-1" data-aos="fade-up" data-aos-delay="200">
+      <svg width="80" height="24" viewBox="0 0 80 24" class="hidden md:block">
+        <line x1="0" y1="12" x2="65" y2="12" stroke="#d4d0cc" stroke-width="2" stroke-dasharray="6,4"/>
+        <polygon points="65,6 80,12 65,18" fill="#d4d0cc"/>
+      </svg>
+      <svg width="24" height="60" viewBox="0 0 24 60" class="block md:hidden">
+        <line x1="12" y1="0" x2="12" y2="45" stroke="#d4d0cc" stroke-width="2" stroke-dasharray="6,4"/>
+        <polygon points="6,45 12,60 18,45" fill="#d4d0cc"/>
+      </svg>
+      <span class="text-xs text-gray-300 font-light">指示</span>
+    </div>
+
+    <!-- AI Team -->
+    <div class="relative" data-aos="fade-left">
+      <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-8 border border-emerald-100 shadow-sm">
+        <p class="text-xs font-bold text-emerald-600 tracking-wider mb-4 text-center">AI AGENT TEAM</p>
+        <div class="flex gap-2 justify-center flex-wrap">
+          <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-lg">🤖</div>
+          <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-lg">🤖</div>
+          <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-lg">🤖</div>
+          <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-lg">🤖</div>
+          <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-lg">🤖</div>
+        </div>
+        <p class="text-center text-xs text-gray-400 mt-3">21体が専門分野ごとに並列で動く</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-center text-gray-400 text-sm mt-8 max-w-md mx-auto leading-relaxed font-light">
+    1人の人間が21人のAI社員を使って仕事をしている状態。<br>
+    各AIには専門分野があり、マネージャーAIが指示を出して並列に動く。
+  </p>
+</section>
+
+<hr class="border-surface-200">
+
+<!-- ============ SECTION 3: 4 Teams ============ -->
+<section class="py-20" data-aos="fade-up">
+  <div class="text-center mb-12">
+    <h2 class="text-2xl font-black text-gray-800 font-jp">4つのチーム</h2>
+    <p class="text-sm text-gray-400 mt-2">Team Structure</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all border-l-4 border-amber-300" data-aos="fade-up" data-aos-delay="0">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">🎨</div>
+        <div>
+          <h3 class="font-bold text-gray-800 text-lg font-jp">クリエイティブ制作</h3>
+          <p class="text-sm text-gray-400 mt-1 leading-relaxed">バナー・動画・記事LPを戦略データから自動生成する</p>
+          <div class="flex gap-2 mt-3 flex-wrap">
+            <span class="text-xs bg-amber-50 text-amber-600 px-2.5 py-1 rounded-full">Banner Park</span>
+            <span class="text-xs bg-amber-50 text-amber-600 px-2.5 py-1 rounded-full">記事LP Park</span>
+            <span class="text-xs bg-amber-50 text-amber-600 px-2.5 py-1 rounded-full">Short Ad Park</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all border-l-4 border-emerald-300" data-aos="fade-up" data-aos-delay="100">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">🔍</div>
+        <div>
+          <h3 class="font-bold text-gray-800 text-lg font-jp">記事FB AI</h3>
+          <p class="text-sm text-gray-400 mt-1 leading-relaxed">既存の記事LPを8人のAIが同時に診断 → 治療 → テスト設計</p>
+          <div class="flex gap-2 mt-3 flex-wrap">
+            <span class="text-xs bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full">CKO君</span>
+            <span class="text-xs bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full">フック君</span>
+            <span class="text-xs bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full">他6体</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all border-l-4 border-sky-300" data-aos="fade-up" data-aos-delay="200">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-sky-50 rounded-xl flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">🎬</div>
+        <div>
+          <h3 class="font-bold text-gray-800 text-lg font-jp">動画AI</h3>
+          <p class="text-sm text-gray-400 mt-1 leading-relaxed">60秒動画を30スロットで設計・自動編集する</p>
+          <div class="flex gap-2 mt-3 flex-wrap">
+            <span class="text-xs bg-sky-50 text-sky-600 px-2.5 py-1 rounded-full">カントク君</span>
+            <span class="text-xs bg-sky-50 text-sky-600 px-2.5 py-1 rounded-full">フック君</span>
+            <span class="text-xs bg-sky-50 text-sky-600 px-2.5 py-1 rounded-full">アーク君</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all border-l-4 border-violet-300" data-aos="fade-up" data-aos-delay="300">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-violet-50 rounded-xl flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">💼</div>
+        <div>
+          <h3 class="font-bold text-gray-800 text-lg font-jp">事業・戦略</h3>
+          <p class="text-sm text-gray-400 mt-1 leading-relaxed">提案書・Amazon出店・週次レビュー・朝ルーティン</p>
+          <div class="flex gap-2 mt-3 flex-wrap">
+            <span class="text-xs bg-violet-50 text-violet-600 px-2.5 py-1 rounded-full">Proposal Park</span>
+            <span class="text-xs bg-violet-50 text-violet-600 px-2.5 py-1 rounded-full">Amazon Park</span>
+            <span class="text-xs bg-violet-50 text-violet-600 px-2.5 py-1 rounded-full">Weekly Review</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="border-surface-200">
+
+<!-- ============ SECTION 4: Creative Flow ============ -->
+<section class="py-20" data-aos="fade-up">
+  <div class="text-center mb-12">
+    <h2 class="text-2xl font-black text-gray-800 font-jp">クリエイティブ制作の流れ</h2>
+    <p class="text-sm text-gray-400 mt-2">リサーチ → コンセプト → 制作 → 品質チェック の4ステップ</p>
+  </div>
+
+  <div class="pre class mermaid" data-aos="zoom-in">
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff5e6', 'primaryBorderColor': '#f5a55a', 'primaryTextColor': '#333', 'lineColor': '#d4d0cc', 'fontSize': '14px', 'fontFamily': 'Noto Sans JP, sans-serif'}}}%%
+graph LR
+    A["🔎 Research Park<br/><small>商品を深く理解<br/>N1を発見</small>"] --> B["💡 Concept Park<br/><small>コンセプトを<br/>対話で磨く</small>"]
+    B --> C["✨ 制作 Park<br/><small>バナー / 動画 / 記事LP<br/>を自動生成</small>"]
+    C --> D["✅ 品質ゲート<br/><small>ベクトルで<br/>品質を自動チェック</small>"]
+
+    style A fill:#fff5e6,stroke:#f5a55a,stroke-width:2px,rx:16
+    style B fill:#e8f5e9,stroke:#81c784,stroke-width:2px,rx:16
+    style C fill:#e3f2fd,stroke:#64b5f6,stroke-width:2px,rx:16
+    style D fill:#f3e5f5,stroke:#ba68c8,stroke-width:2px,rx:16
+  </div>
+
+  <p class="text-center text-gray-400 text-xs mt-6">
+    全ての制作物は「ベクトル品質ゲート」を通過しないと完成にならない
+  </p>
+</section>
+
+<hr class="border-surface-200">
+
+<!-- ============ SECTION 5: CKO Org Chart ============ -->
+<section class="py-20" data-aos="fade-up">
+  <div class="text-center mb-4">
+    <h2 class="text-2xl font-black text-gray-800 font-jp">記事FB AI — 8人同時診断システム</h2>
+    <p class="text-sm text-gray-400 mt-2">記事URLを送るだけで60秒で自動診断 → 改善 → テスト設計</p>
+  </div>
+
+  <div class="bg-white rounded-3xl p-6 md:p-10 shadow-sm mt-8" data-aos="zoom-in">
+    <div class="mermaid">
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff0f0', 'primaryBorderColor': '#ef9a9a', 'primaryTextColor': '#333', 'lineColor': '#c8e6c9', 'fontSize': '13px', 'fontFamily': 'Noto Sans JP, sans-serif'}}}%%
+graph TD
+    CKO["👑 CKO君<br/><small>判断と指示だけ。実行しない</small>"]
+
+    subgraph Phase1["Phase 1: 診断（6エージェント並列 = 60秒）"]
+        H["🎣 フック君<br/><small>冒頭200字</small>"]
+        N["🎢 アーク君<br/><small>感情の流れ</small>"]
+        T["🏆 信頼君<br/><small>権威×証拠×口コミ</small>"]
+        CT["👉 CTA君<br/><small>ボタン設計</small>"]
+        O["🎁 オファー君<br/><small>価格×特典</small>"]
+        CO["🥊 競合君<br/><small>勝ちパターン照合</small>"]
+    end
+
+    CKO --> Phase1
+    Phase1 --> Judge{"👑 CKO判定<br/>GO? REVISE? BLOCK?"}
+
+    Judge -->|REVISE| Phase2
+    Judge -->|GO| Phase3
+    Judge -->|BLOCK| STOP["🛑 即停止"]
+
+    subgraph Phase2["Phase 2: 治療"]
+        W["✍️ ライター君"] --> V["🔍 バリデーター君"]
+    end
+
+    subgraph Phase3["Phase 3: テスト設計"]
+        TE["🧪 テスト君"]
+    end
+
+    Phase2 --> Slack["💬 Slackに自動配信"]
+    Phase3 --> Slack
+
+    style CKO fill:#fff0f0,stroke:#ef9a9a,stroke-width:2px
+    style Judge fill:#fff3e0,stroke:#ffcc80,stroke-width:2px
+    style STOP fill:#ffebee,stroke:#ef9a9a,stroke-width:2px
+    style Slack fill:#e8eaf6,stroke:#9fa8da,stroke-width:2px
+    style Phase1 fill:#f1f8e9,stroke:#c5e1a5,stroke-width:1px,rx:16
+    style Phase2 fill:#fff8e1,stroke:#ffe082,stroke-width:1px,rx:16
+    style Phase3 fill:#e8f5e9,stroke:#a5d6a7,stroke-width:1px,rx:16
+    </div>
+  </div>
+</section>
+
+<hr class="border-surface-200">
+
+<!-- ============ SECTION 6: Why This Structure ============ -->
+<section class="py-20" data-aos="fade-up">
+  <div class="text-center mb-12">
+    <h2 class="text-2xl font-black text-gray-800 font-jp">なぜこの構造なのか</h2>
+    <p class="text-sm text-gray-400 mt-2">AIには「一度に覚えていられる量」に限界がある。その限界を最適に使う設計</p>
+  </div>
+
+  <div class="max-w-2xl mx-auto space-y-4">
+    <!-- Tier 0 -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-red-300" data-aos="fade-right" data-aos-delay="0">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 bg-red-400 rounded-full"></span>
+          <span class="font-bold text-gray-800">Tier 0: 常に読み込み</span>
+        </div>
+        <span class="text-xs bg-red-50 text-red-500 px-3 py-1 rounded-full font-bold">最高コスト</span>
+      </div>
+      <p class="text-sm text-gray-400 mb-3">CLAUDE.md（99行）。全メッセージに入る。1行でも減らしたい</p>
+      <div class="bg-gray-50 rounded-full h-2.5 overflow-hidden">
+        <div class="tier-progress bg-gradient-to-r from-red-300 to-red-400" style="width:100%"></div>
+      </div>
+      <p class="text-right text-xs text-gray-300 mt-1">コスト: 100%</p>
+    </div>
+
+    <!-- Tier 1 -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-amber-300" data-aos="fade-right" data-aos-delay="100">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 bg-amber-400 rounded-full"></span>
+          <span class="font-bold text-gray-800">Tier 1: セッション開始時</span>
+        </div>
+        <span class="text-xs bg-amber-50 text-amber-600 px-3 py-1 rounded-full font-bold">中コスト</span>
+      </div>
+      <p class="text-sm text-gray-400 mb-3">人格定義・ナレッジ。必要時だけ読み込む</p>
+      <div class="bg-gray-50 rounded-full h-2.5 overflow-hidden">
+        <div class="tier-progress bg-gradient-to-r from-amber-200 to-amber-400" style="width:60%"></div>
+      </div>
+      <p class="text-right text-xs text-gray-300 mt-1">コスト: 60%</p>
+    </div>
+
+    <!-- Tier 2 -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-emerald-300" data-aos="fade-right" data-aos-delay="200">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 bg-emerald-400 rounded-full"></span>
+          <span class="font-bold text-gray-800">Tier 2: スキル起動時</span>
+        </div>
+        <span class="text-xs bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full font-bold">低コスト</span>
+      </div>
+      <p class="text-sm text-gray-400 mb-3">ユーザーが /バナー作って で呼んだ時だけ読み込む</p>
+      <div class="bg-gray-50 rounded-full h-2.5 overflow-hidden">
+        <div class="tier-progress bg-gradient-to-r from-emerald-200 to-emerald-400" style="width:30%"></div>
+      </div>
+      <p class="text-right text-xs text-gray-300 mt-1">コスト: 30%</p>
+    </div>
+
+    <!-- Tier 3 -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-sky-300" data-aos="fade-right" data-aos-delay="300">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 bg-sky-400 rounded-full"></span>
+          <span class="font-bold text-gray-800">Tier 3: 独立コンテキスト</span>
+        </div>
+        <span class="text-xs bg-sky-50 text-sky-500 px-3 py-1 rounded-full font-bold">コスト 0</span>
+      </div>
+      <p class="text-sm text-gray-400 mb-3">エージェントが別プロセスで動く。親に影響ゼロ</p>
+      <div class="bg-gray-50 rounded-full h-2.5 overflow-hidden">
+        <div class="tier-progress bg-gradient-to-r from-sky-100 to-sky-300" style="width:5%"></div>
+      </div>
+      <p class="text-right text-xs text-gray-300 mt-1">コスト: 0%</p>
+    </div>
+  </div>
+
+  <p class="text-center text-gray-400 text-sm mt-8 font-light">
+    重い専門タスクほど Tier 3（青）に。対話が必要なものは Tier 2（緑）に置く。
+  </p>
+</section>
+
+<hr class="border-surface-200">
+
+<!-- ============ SECTION 7: Before / After ============ -->
+<section class="py-20" data-aos="fade-up">
+  <div class="text-center mb-12">
+    <h2 class="text-2xl font-black text-gray-800 font-jp">本日の最適化</h2>
+    <p class="text-sm text-gray-400 mt-2">Today's Optimization</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+    <!-- Before -->
+    <div class="bg-white rounded-2xl p-8 shadow-sm border-t-4 border-red-200" data-aos="fade-right">
+      <p class="text-xs font-bold text-red-400 tracking-widest uppercase mb-6">Before</p>
+      <div class="space-y-5">
+        <div class="flex items-baseline gap-3">
+          <span class="text-3xl font-black text-red-300">261</span>
+          <span class="text-sm text-gray-400">行の設定ファイル</span>
+        </div>
+        <div class="flex items-baseline gap-3">
+          <span class="text-3xl font-black text-red-300">24KB</span>
+          <span class="text-sm text-gray-400">毎回強制ロード</span>
+        </div>
+        <div class="flex items-baseline gap-3">
+          <span class="text-3xl font-black text-red-300">3</span>
+          <span class="text-sm text-gray-400">ファイルにコード重複</span>
+        </div>
+        <div class="flex items-baseline gap-3">
+          <span class="text-3xl font-black text-red-300">17</span>
+          <span class="text-sm text-gray-400">体のエージェント</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- After -->
+    <div class="bg-white rounded-2xl p-8 shadow-sm border-t-4 border-emerald-300" data-aos="fade-left">
+      <p class="text-xs font-bold text-emerald-500 tracking-widest uppercase mb-6">After</p>
+      <div class="space-y-5">
+        <div class="flex items-baseline gap-3">
+          <span class="text-3xl font-black text-emerald-500">99</span>
+          <span class="text-sm text-gray-400">行に圧縮（<span class="text-emerald-500 font-bold">-62%</span>）</span>
+        </div>
+        <div class="flex items-baseline gap-3">
+          <span class="text-3xl font-black text-emerald-500">0KB</span>
+          <span class="text-sm text-gray-400">必要時だけ読む</span>
+        </div>
+        <div class="flex items-baseline gap-3">
+          <span class="text-3xl font-black text-emerald-500">1</span>
+          <span class="text-sm text-gray-400">箇所に統合</span>
+        </div>
+        <div class="flex items-baseline gap-3">
+          <span class="text-3xl font-black text-emerald-500">21</span>
+          <span class="text-sm text-gray-400">体に最適化</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Improvement Chart -->
+  <div class="max-w-xl mx-auto mt-12 bg-white rounded-2xl p-8 shadow-sm" data-aos="fade-up">
+    <canvas id="chart-improvement" height="200"></canvas>
+  </div>
+</section>
+
+<hr class="border-surface-200">
+
+<!-- ============ SECTION 8: Glossary ============ -->
+<section class="py-20" data-aos="fade-up">
+  <div class="text-center mb-12">
+    <h2 class="text-2xl font-black text-gray-800 font-jp">用語集</h2>
+    <p class="text-sm text-gray-400 mt-2">Glossary</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="0">
+      <span class="text-xl shrink-0">💻</span>
+      <div><p class="font-bold text-sm text-gray-700">Claude Code</p><p class="text-xs text-gray-400 mt-0.5">AIと対話しながら自動化するCLIツール</p></div>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="50">
+      <span class="text-xl shrink-0">🤖</span>
+      <div><p class="font-bold text-sm text-gray-700">エージェント</p><p class="text-xs text-gray-400 mt-0.5">専門タスクを自律実行する「AI社員」</p></div>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="100">
+      <span class="text-xl shrink-0">⚡</span>
+      <div><p class="font-bold text-sm text-gray-700">スキル</p><p class="text-xs text-gray-400 mt-0.5">ユーザーが /名前 で起動する機能</p></div>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="150">
+      <span class="text-xl shrink-0">🎯</span>
+      <div><p class="font-bold text-sm text-gray-700">N1</p><p class="text-xs text-gray-400 mt-0.5">たった1人の理想的な顧客像</p></div>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="200">
+      <span class="text-xl shrink-0">📊</span>
+      <div><p class="font-bold text-sm text-gray-700">ベクトル検証</p><p class="text-xs text-gray-400 mt-0.5">AIで意味の近さを数学的にチェック</p></div>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="250">
+      <span class="text-xl shrink-0">✅</span>
+      <div><p class="font-bold text-sm text-gray-700">GO / REVISE / BLOCK</p><p class="text-xs text-gray-400 mt-0.5">リリース可 / 改善必要 / 即停止</p></div>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="300">
+      <span class="text-xl shrink-0">🏞️</span>
+      <div><p class="font-bold text-sm text-gray-700">Park</p><p class="text-xs text-gray-400 mt-0.5">制作スキルの総称（自由に遊べる場所）</p></div>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="350">
+      <span class="text-xl shrink-0">👑</span>
+      <div><p class="font-bold text-sm text-gray-700">CKO / カントク君パターン</p><p class="text-xs text-gray-400 mt-0.5">判断だけして実行しないリーダー設計</p></div>
+    </div>
+    <div class="bg-white rounded-xl p-4 shadow-sm flex gap-3 items-start hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay="400">
+      <span class="text-xl shrink-0">📐</span>
+      <div><p class="font-bold text-sm text-gray-700">strategy.json</p><p class="text-xs text-gray-400 mt-0.5">商品の設計図。全スキルの起点</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="text-center py-12 text-gray-300 text-xs">
+  <p>Generated by 一進AI — 2026-04-02</p>
+  <p class="mt-1">Powered by Tailwind CSS + Chart.js + Mermaid.js + AOS</p>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+// Initialize AOS
+AOS.init({
+  duration: 700,
+  easing: 'ease-out-cubic',
+  once: true,
+  offset: 60,
+});
+
+// Initialize Mermaid
+mermaid.initialize({
+  startOnLoad: true,
+  securityLevel: 'loose',
+  theme: 'base',
+  flowchart: {
+    useMaxWidth: true,
+    htmlLabels: true,
+    curve: 'basis',
+    padding: 20,
+    nodeSpacing: 30,
+    rankSpacing: 50,
+  }
+});
+
+// ====== Doughnut Charts ======
+const doughnutDefaults = {
+  cutout: '70%',
+  responsive: true,
+  maintainAspectRatio: true,
+  plugins: {
+    legend: { display: false },
+    tooltip: { enabled: false },
+  },
+  animation: {
+    animateRotate: true,
+    duration: 1500,
+  }
+};
+
+function createDoughnut(id, value, max, color, bgColor) {
+  const ctx = document.getElementById(id).getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      datasets: [{
+        data: [value, max - value],
+        backgroundColor: [color, bgColor || '#f3f1ee'],
+        borderWidth: 0,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      ...doughnutDefaults,
+    },
+    plugins: [{
+      id: 'centerText',
+      afterDraw(chart) {
+        const { ctx, chartArea: { width, height, top } } = chart;
+        ctx.save();
+        ctx.font = '800 28px Inter, sans-serif';
+        ctx.fillStyle = '#333';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(value, width / 2, top + height / 2);
+        ctx.restore();
+      }
+    }]
+  });
+}
+
+createDoughnut('chart-agents', 21, 30, '#f5a55a');
+createDoughnut('chart-skills', 41, 50, '#81c784');
+createDoughnut('chart-knowledge', 14, 20, '#64b5f6');
+createDoughnut('chart-clients', 9, 15, '#ba68c8');
+
+// ====== Improvement Bar Chart ======
+const impCtx = document.getElementById('chart-improvement').getContext('2d');
+new Chart(impCtx, {
+  type: 'bar',
+  data: {
+    labels: ['設定ファイル (行)', '強制ロード (KB)', 'コード重複 (箇所)', 'エージェント (体)'],
+    datasets: [
+      {
+        label: 'Before',
+        data: [261, 24, 3, 17],
+        backgroundColor: 'rgba(239, 154, 154, 0.6)',
+        borderColor: '#ef9a9a',
+        borderWidth: 1,
+        borderRadius: 8,
+        barPercentage: 0.5,
+      },
+      {
+        label: 'After',
+        data: [99, 0, 1, 21],
+        backgroundColor: 'rgba(129, 199, 132, 0.6)',
+        borderColor: '#81c784',
+        borderWidth: 1,
+        borderRadius: 8,
+        barPercentage: 0.5,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          usePointStyle: true,
+          pointStyle: 'circle',
+          padding: 20,
+          font: { family: 'Noto Sans JP, sans-serif', size: 12 }
+        }
+      },
+      tooltip: {
+        backgroundColor: '#fff',
+        titleColor: '#333',
+        bodyColor: '#666',
+        borderColor: '#eee',
+        borderWidth: 1,
+        cornerRadius: 12,
+        padding: 12,
+        titleFont: { family: 'Noto Sans JP, sans-serif' },
+        bodyFont: { family: 'Noto Sans JP, sans-serif' },
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { family: 'Noto Sans JP, sans-serif', size: 11 } }
+      },
+      y: {
+        grid: { color: '#f5f3f0' },
+        ticks: { font: { family: 'Inter, sans-serif', size: 11 } },
+        beginAtZero: true,
+      }
+    },
+    animation: {
+      duration: 1500,
+      easing: 'easeOutQuart',
+    }
+  }
+});
+</script>
+
+</body>
+</html>

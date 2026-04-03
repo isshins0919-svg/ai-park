@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【スタパク】Claude Code勉強会 レポート — 2026/04/01</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --card: #141420;
+    --border: #2a2a3a;
+    --accent: #7c6aef;
+    --accent2: #e06c75;
+    --accent3: #61afef;
+    --accent4: #98c379;
+    --text: #e0e0e8;
+    --muted: #8888a0;
+    --gold: #e5c07b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Hiragino Sans', 'Noto Sans JP', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 0;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #1a1032 0%, #0d1b2a 50%, #1a0a2e 100%);
+    padding: 80px 40px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(124,106,239,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(97,175,239,0.06) 0%, transparent 50%);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #c4b8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-meta {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+  .hero-meta span { margin: 0 12px; }
+  .hero-summary {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+    color: #b0b0c0;
+    line-height: 1.9;
+  }
+
+  /* Container */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(124,106,239,0.12);
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h3 .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .card p, .card li {
+    color: #c0c0d0;
+    font-size: 0.95rem;
+  }
+  .card ul {
+    margin-top: 8px;
+    padding-left: 20px;
+  }
+  .card li { margin-bottom: 6px; }
+
+  /* Quote */
+  .quote {
+    background: linear-gradient(135deg, rgba(124,106,239,0.08), rgba(97,175,239,0.05));
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-style: italic;
+    color: #d0d0e0;
+    font-size: 1.05rem;
+  }
+  .quote .attr {
+    font-style: normal;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* Highlight box */
+  .highlight {
+    background: rgba(229,192,123,0.08);
+    border: 1px solid rgba(229,192,123,0.25);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .highlight h4 {
+    color: var(--gold);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .highlight p { color: #d0c8a0; font-size: 0.95rem; }
+
+  /* Key insight */
+  .insight {
+    background: rgba(224,108,117,0.08);
+    border: 1px solid rgba(224,108,117,0.2);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .insight h4 {
+    color: var(--accent2);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  /* Flow diagram */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .flow-step {
+    background: rgba(124,106,239,0.15);
+    border: 1px solid rgba(124,106,239,0.3);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #c4b8ff;
+  }
+  .flow-arrow {
+    color: var(--muted);
+    font-size: 1.2rem;
+  }
+
+  /* Grid */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 640px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.6rem; }
+    .hero { padding: 48px 20px 40px; }
+    .container { padding: 24px 16px 60px; }
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  th {
+    background: rgba(124,106,239,0.12);
+    color: var(--accent);
+    font-weight: 700;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #c0c0d0;
+  }
+
+  /* Tag */
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-right: 6px;
+  }
+  .tag-core { background: rgba(224,108,117,0.15); color: var(--accent2); }
+  .tag-tech { background: rgba(97,175,239,0.15); color: var(--accent3); }
+  .tag-tip { background: rgba(152,195,121,0.15); color: var(--accent4); }
+
+  /* Separator */
+  hr {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 48px;
+  }
+  .toc h3 {
+    font-size: 1rem;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .toc ol {
+    padding-left: 20px;
+  }
+  .toc li {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+  .toc a {
+    color: var(--accent3);
+    text-decoration: none;
+  }
+  .toc a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Claude Code勉強会 レポート</h1>
+    <div class="hero-meta">
+      <span>2026年4月1日（火）19:33〜</span>
+      <span>|</span>
+      <span>講師: 森田新之助（パク）</span>
+    </div>
+    <div class="hero-meta">
+      参加者: 澤田一進 / 佐野星河 / 横野
+    </div>
+    <p class="hero-summary">
+      エージェント設計 = 組織設計。1体を育てるところから始め、<br>
+      エンベディングでAIに「意味の理解」を与え、大当たりCRを生み出し続ける。<br>
+      パクさんが実際に運用しているAIシステムの全体像と哲学を公開した90分。
+    </p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>CONTENTS</h3>
+    <ol>
+      <li><a href="#s1">エージェント設計の基本 — 目的・ゴール・制約条件</a></li>
+      <li><a href="#s2">組織構造 — CEO / CMO / 専門エージェント</a></li>
+      <li><a href="#s3">エンベディング — AIに「意味」を理解させる技術</a></li>
+      <li><a href="#s4">データの質 > データの量</a></li>
+      <li><a href="#s5">エージェント・オーケストレーション</a></li>
+      <li><a href="#s6">プランモード — 考えることと作ることを分ける</a></li>
+      <li><a href="#s7">ハンドオフ & ナイスダイブ — セッション管理</a></li>
+      <li><a href="#s8">フィードバックの哲学</a></li>
+      <li><a href="#s9">制約は後入れ — クリエイティブの自由を守る</a></li>
+      <li><a href="#s10">ネクストアクション</a></li>
+    </ol>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section" id="s1">
+    <span class="section-label">Chapter 01</span>
+    <h2>エージェント設計の基本 — 目的・ゴール・制約条件</h2>
+
+    <div class="quote">
+      「エージェントの設計 = 組織設計。全く同じ考え方で運営できる。」
+      <div class="attr">— 森田新之助（パク）</div>
+    </div>
+
+    <div class="card">
+      <h3><span class="num">1</span> 目的・ゴール・行動指針・制約条件を必ず持たせる</h3>
+      <p>制約なしで動かすと暴走する。パクさんの実体験として、制約条件なしでエージェントを動かしたところ、ダブルチェックせずに広告予算を100倍に設定→150万円の出費に。Anthropicの上限10万円で止まったが「アップサイダー必須」とのこと。</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="num">2</span> 1エージェント1タスク</h3>
+      <p>1体に複数タスクをさせるとコンテキストウィンドウがいっぱいになり制御不能に。うまくいかなかったら分割、タスクが少なすぎたら統合。</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="num">3</span> CLAUDE.md = エージェントのアイデンティティ</h3>
+      <p>CLAUDE.mdはエージェントが「自分が誰なのか」を理解するために必ず読むファイル。ここに性格・目的・価値観を書いておくと、それに従って動く。人間の組織でいう「ジョブディスクリプション + カルチャーガイド」。</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="num">4</span> 自走ルールを渡す</h3>
+      <p>「ユーザーに聞く前に3回自分で試す」などの行動指針を明示。これにより、いちいち聞いてこなくなる。</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 2 -->
+  <div class="section" id="s2">
+    <span class="section-label">Chapter 02</span>
+    <h2>組織構造 — CEO / CMO / 専門エージェント</h2>
+
+    <p style="margin-bottom:20px;">パクさんのAIシステムは、人間の会社組織と同じ階層構造を持つ。</p>
+
+    <table>
+      <tr>
+        <th>層</th>
+        <th>エージェント</th>
+        <th>役割</th>
+      </tr>
+      <tr>
+        <td><span class="tag tag-core">経営</span></td>
+        <td>CEO AIパク</td>
+        <td>本質思考。価値観の一貫性を担保。方針を渡し、手順は渡さない</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-core">統括</span></td>
+        <td>CMO AIパク</td>
+        <td>大当たりCRを生み出し続ける。配下9エージェントのオーケストレーション</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-tech">実行</span></td>
+        <td>RAG / N1 / コンセプト / バナー / 記事LP / ショート / 入稿 / 運用</td>
+        <td>各専門領域の具体的タスクを手順ベースで実行</td>
+      </tr>
+    </table>
+
+    <div class="highlight">
+      <h4>KEY POINT</h4>
+      <p>上のマネージャー層に具体度が高いことをやらせると「そいつが手を動かしちゃう」。マネージャーは方針と判断、実行は部下に。まさに組織設計。</p>
+    </div>
+
+    <div class="card">
+      <h3>CMOのゴール設定</h3>
+      <p>CMOのゴールは<strong>「大当たりクリエイティブを生み出し続ける」</strong>の一点。運用のことはCMOに言わない。運用は運用担当がやる。マネージャーのゴール設定の抽象度がセンスを決める。</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 3 -->
+  <div class="section" id="s3">
+    <span class="section-label">Chapter 03</span>
+    <h2>エンベディング — AIに「意味」を理解させる技術</h2>
+
+    <div class="quote">
+      「エンベディングを知らないとクリエイティブは何もできないぐらいの技術なのに、みんな知らない。これはアドバンテージ。」
+      <div class="attr">— 森田新之助（パク）</div>
+    </div>
+
+    <div class="card">
+      <h3><span class="num">1</span> エンベディングとは</h3>
+      <p>テキストデータを<strong>3,072次元のベクトル空間</strong>に変換する処理。「おはよう」なら「朝っぽい」「挨拶っぽい」「お別れっぽくはない」——こういった意味の成分を数値化する。</p>
+      <ul>
+        <li><strong>処理なし:</strong> AIは言葉を単なるパターンとして扱う。「こう言われたらこう返す」レベル</li>
+        <li><strong>処理あり:</strong> AIが意味を深く理解する。「身長」と「伸び伸び」が似た概念だと分かる</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="num">2</span> エンベディング処理の効果（Before / After）</h3>
+      <p>SNSタイプ診断バナーの例:</p>
+      <ul>
+        <li><strong>処理なし:</strong> ゲームっぽい仕上がり。施策の意味が分かっていない。人間がキャッチコピーを考え、ディレクションしないとダメ</li>
+        <li><strong>処理あり:</strong> AIが意味を理解し、どう出せばいいか分かる。クリエイティブの質が圧倒的に向上</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="num">3</span> エンベディング2（2026年3月登場）</h3>
+      <p>テキストだけでなく、<strong>イメージ・ビデオ・オーディオ</strong>もひとつのベクトル空間に統合できる技術。マルチモーダル・エンベディング。</p>
+      <ul>
+        <li>提供元: OpenAI / Google（Gemini）のAPIで利用可能</li>
+        <li>コスト: 100万行 × 500次元程度で数万円前半。比較的安価</li>
+      </ul>
+    </div>
+
+    <div class="insight">
+      <h4>実務での使い方</h4>
+      <p>200本の売れてる動画と100本の売れてない動画を全部ベクトル化 → 売れてる広告の共通要素を抽出。人間が200本全部見て分析したのと同じ結果がAIから出てくる。ベクトル空間内で「需要ベクトルが高い」「オンリーワンベクトルが高い」と指定できるため、独自性の高いコンセプトをAI自身が生み出せるようになる。</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 4 -->
+  <div class="section" id="s4">
+    <span class="section-label">Chapter 04</span>
+    <h2>データの質 > データの量</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>量の目安</h3>
+        <p><strong>200本あれば十分。</strong><br>売れてるクリエイティブ200本を丁寧にベクトル化すれば、十分な精度でスコアリングが可能。</p>
+      </div>
+      <div class="card">
+        <h3>質がキモ</h3>
+        <p><strong>スコアリングが大事。</strong><br>「どれが売れてる」「どれが売れてない」まで全部ラベリングすると、売れてる方に寄せて作ってくれる。ラベルなしだと「全部足して割った平均」になる。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>データベース構築 = 最重要インフラ</h3>
+      <p>人間と同じで、AIも「何も知らない状態」から始めると良いアウトプットが出ない。ビタミンCクレンジングのマーケティングを頼まれたら、まずリサーチする。AIも同じ。</p>
+      <ul>
+        <li><strong>分析基盤を作る子</strong>と<strong>分析をする子</strong>を分ける</li>
+        <li>売れてるクリエイティブを洗い出し → エンベディング → AIが「売れるパターン」を意味として理解</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 5 -->
+  <div class="section" id="s5">
+    <span class="section-label">Chapter 05</span>
+    <h2>エージェント・オーケストレーション</h2>
+
+    <div class="card">
+      <h3>まず1体を育てる</h3>
+      <p>最初からオーケストレーションを構築するのではなく、<strong>まずは狙い通りに動く1体を作る</strong>。人間がオーケストレーターとして複数エージェントを束ねる。5体ぐらいになったらマネージャーエージェントを作る。</p>
+      <div class="flow">
+        <span class="flow-step">1体を精密に育てる</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">人間がオーケストレーション</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">5体になったらマネージャーを作る</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">ホールディングス型へ</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>新エージェントは上司にレビューさせる</h3>
+      <p>新しく作ったエージェントは、CMOなどの上位エージェントにレビューしてもらう。質の高いレビューが得られ、エージェント作成コストが下がる。最初の優秀なやつだけ何回か作れば、あとは楽になる。</p>
+    </div>
+
+    <div class="card">
+      <h3>粒度の決め方</h3>
+      <p>コンテキストウィンドウ（100万トークン）を基準に考える。</p>
+      <ul>
+        <li>タスクが少なすぎ → 1体に統合してOK</li>
+        <li>言うこと聞かなくなった → コンテキスト溢れ。分割</li>
+        <li>例: 動画編集は「テロップ入れ」「カット」など5体ぐらいに分ける。1体に全部やらせない</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 6 -->
+  <div class="section" id="s6">
+    <span class="section-label">Chapter 06</span>
+    <h2>プランモード — 考えることと作ることを分ける</h2>
+
+    <div class="quote">
+      「エージェントを生み出す時はプランモード。動かす時はプランモードを使わない。」
+      <div class="attr">— 森田新之助（パク）</div>
+    </div>
+
+    <div class="card">
+      <h3>なぜプランモード必須なのか</h3>
+      <ul>
+        <li><strong>ハルシネーション防止:</strong> あれこれ言いながら作るとコンテキストが溢れ、嘘をつく・いい加減な仕事をする</li>
+        <li><strong>建築と同じ:</strong> まずしっかり考えてから、めちゃくちゃしっかり作る</li>
+        <li><strong>プランを立てたセッションで実行はしない:</strong> 思考力を使い切っているため。次のセッションに引き継ぐ</li>
+      </ul>
+    </div>
+
+    <div class="highlight">
+      <h4>魔法の言葉</h4>
+      <p>エージェントを作る時に言う一言:<br>
+      <strong>「要件定義書、基本設計、技術要件、詳細仕様書、テスト書を作って」</strong><br>
+      これで全部作ってくれる。この「型」を知っていることが大事。</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 7 -->
+  <div class="section" id="s7">
+    <span class="section-label">Chapter 07</span>
+    <h2>ハンドオフ & ナイスダイブ — セッション管理</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>ハンドオフスキル</h3>
+        <p>セッションのプラン・コンテキストを圧縮して次のセッションに引き継ぐ。</p>
+        <ul>
+          <li>プランモードで設計 → ハンドオフ → 次セッションで実行</li>
+          <li>コンテキストウィンドウ100万の状態で続きから始められる</li>
+          <li>「これ導入してから1.5倍速くなった」</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>ナイスダイブスキル</h3>
+        <p>セッションの学びをログに記録し、次のセッションで振り返れる形に整理する。</p>
+        <ul>
+          <li>学びの蓄積が自動化される</li>
+          <li>ワンクリックでコピーできるUI</li>
+          <li>セッション名を日本語で要約してくれる</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 8 -->
+  <div class="section" id="s8">
+    <span class="section-label">Chapter 08</span>
+    <h2>フィードバックの哲学</h2>
+
+    <div class="insight">
+      <h4>最も重要な気づき</h4>
+      <p>アウトプットに対して「いやこれ違うわ」と<strong>表面の具体的なフィードバックをしてはいけない</strong>。本質的に何がいけないのかが模索されず、アウトプットを変えるだけの努力になってしまう。</p>
+    </div>
+
+    <div class="card">
+      <h3>正しいフィードバックの方法</h3>
+      <ul>
+        <li><span class="tag tag-core">NG</span> 「この色を変えて」「この文言を直して」 → 表面が変わるだけで本質が解決されない</li>
+        <li><span class="tag tag-tip">OK</span> 「なぜこうなったか」を問う → 根本原因から改善される</li>
+      </ul>
+      <p style="margin-top:12px">オーケストレーションを理解した上で指示すると、PDCAが回せるようになる。</p>
+    </div>
+
+    <div class="card">
+      <h3>PDCAの回し方</h3>
+      <p>ビジュアルの仮説（「チェスが売れたからチェス風をもっと」）ではなく、<strong>N1とコンセプトの組み合わせだけを試す</strong>。ファンダメンタルで考える。</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 9 -->
+  <div class="section" id="s9">
+    <span class="section-label">Chapter 09</span>
+    <h2>制約は後入れ — クリエイティブの自由を守る</h2>
+
+    <div class="card">
+      <h3>後入れ原則</h3>
+      <p>最初から薬機法などの制約を入れすぎると、良いクリエイティブができない。</p>
+      <div class="flow">
+        <span class="flow-step">まず自由に作らせる</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">後から制約チェック（薬機法等）</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">制約に引っかかる部分だけ修正</span>
+      </div>
+      <p style="margin-top:12px">実例: アポロ君（営業エージェント）も、最初は自由に作って後から制御したら良い結果に。制約を先に入れたバージョンは「だいぶ微妙」だった。</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 10 -->
+  <div class="section" id="s10">
+    <span class="section-label">Chapter 10</span>
+    <h2>ネクストアクション</h2>
+
+    <table>
+      <tr>
+        <th>担当</th>
+        <th>タスク</th>
+      </tr>
+      <tr>
+        <td>森田（パク）</td>
+        <td>ハンドオフスキルをフリー素材として参加者全員に送付</td>
+      </tr>
+      <tr>
+        <td>森田（パク）</td>
+        <td>商品リサーチエージェントの構築（N1 AIパクへ情報を渡す機能）</td>
+      </tr>
+      <tr>
+        <td>森田（パク）</td>
+        <td>案件ごとの初期クリエイティブ品質チューニングを必ず実施</td>
+      </tr>
+      <tr>
+        <td>森田（パク）</td>
+        <td>Klink API停止問題の確認・解決</td>
+      </tr>
+      <tr>
+        <td>森田（パク）</td>
+        <td>動画編集AIのデモ実施</td>
+      </tr>
+      <tr>
+        <td>全員</td>
+        <td>まず1体のエージェントを作ってみる → 育てる</td>
+      </tr>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- Bonus: Key Quotes -->
+  <div class="section">
+    <span class="section-label">Appendix</span>
+    <h2>名言集</h2>
+
+    <div class="quote">
+      「エンベディングなしで良いクリエイティブは作れない」
+    </div>
+    <div class="quote">
+      「出力を100倍よくするには、売れてるクリエイティブをめちゃくちゃちゃんと洗い出して分析させること」
+    </div>
+    <div class="quote">
+      「フィードバックしていってサイクルを作っていくことが一番大事」
+    </div>
+    <div class="quote">
+      「まずしっかり考えてからめちゃしっかり作る。建築に近い」
+    </div>
+    <div class="quote">
+      「このタイミングから悪くは絶対ならない。これが今の最高点で上がっていくだけ」
+    </div>
+    <div class="quote">
+      「ずっと使ってると頭おかしくなるんで、土曜日はパソコンから離れる環境を作ってる」
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>【スタパク】Claude Code勉強会 レポート — 2026/04/01</p>
+  <p style="margin-top:4px;">Report generated by 一進AI</p>
+</div>
+
+</body>
+</html>
