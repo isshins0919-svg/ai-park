@@ -43,7 +43,7 @@ CKO指示書JSON（n1_profile, agent_directives.trust, cko_hypothesis）+ 記事
 
 ```json
 {
-  "agent": "記事信頼君",
+  "agent": "記事トラストクルー",
   "trust_score": 71,
   "score_breakdown": {
     "authority_score": 75,
@@ -64,5 +64,5 @@ CKO指示書JSON（n1_profile, agent_directives.trust, cko_hypothesis）+ 記事
 ## 制約
 
 - CKO指示書の `agent_directives.trust` に従い重点ポイントを調整する
-- 信頼構造のみを評価。コピーの質（フック君領域）や感情の流れ（アーク君領域）には踏み込まない
+- 信頼構造のみを評価。コピーの質（フッククルー領域）や感情の流れ（アーククルー領域）には踏み込まない
 - 認知ステージ考慮: 潜在層→口コミ重視 / 顕在層→証拠・権威重視

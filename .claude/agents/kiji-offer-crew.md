@@ -42,7 +42,7 @@ CKO指示書JSON（n1_profile, agent_directives.offer, cko_hypothesis）+ 記事
 
 ```json
 {
-  "agent": "記事オファー君",
+  "agent": "記事オファークルー",
   "offer_score": 72,
   "score_breakdown": {
     "price_appeal": 80,
@@ -61,5 +61,5 @@ CKO指示書JSON（n1_profile, agent_directives.offer, cko_hypothesis）+ 記事
 ## 制約
 
 - CKO指示書の `agent_directives.offer` に従い重点ポイントを調整する
-- オファー設計のみを評価。CTA配置（CTA君領域）には踏み込まない
+- オファー設計のみを評価。CTA配置（CTAクルー領域）には踏み込まない
 - 認知ステージ考慮: 潜在層→価格感度低め（安心の選択感重視）/ 顕在層→価格と条件で即判断

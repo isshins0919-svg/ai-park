@@ -40,7 +40,7 @@ CKO指示書JSON（n1_profile, agent_directives, cko_hypothesis）+ ジャンル
 
 ```json
 {
-  "agent": "記事競合君",
+  "agent": "記事コンパスクルー",
   "competitive_score": 65,
   "benchmark_genre": "スキンケア",
   "winning_patterns_total": 8,
@@ -61,4 +61,4 @@ CKO指示書JSON（n1_profile, agent_directives, cko_hypothesis）+ ジャンル
 
 - benchmark.jsonにジャンルデータがない場合は `competitive_score: null` + 理由を返す
 - 勝ちパターンの「実装有無」だけを判定。改善提案はCKOの仕事
-- 他エージェントの評価軸と重複しない（フックの質はフック君、信頼は信頼君の領域）
+- 他エージェントの評価軸と重複しない（フックの質はフッククルー、信頼はトラストクルーの領域）

@@ -44,7 +44,7 @@ CKO指示書JSON（n1_profile, agent_directives.hook, cko_hypothesis）+ 記事L
 
 ```json
 {
-  "agent": "記事フック君",
+  "agent": "記事フッククルー",
   "hook_score": 68,
   "score_breakdown": {
     "resolution": 55,
