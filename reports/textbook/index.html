@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI教科書 — SAWADA AI Lab</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Kaisei+Decol&family=Zen+Maru+Gothic:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Zen Maru Gothic", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+    background: #0f0f13;
+    color: #e8e8f0;
+    min-height: 100vh;
+  }
+
+  /* ===== Back Link ===== */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #7c7c9a;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 20px 24px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: #D97706; }
+
+  /* ===== Blackboard Hero ===== */
+  .hero {
+    position: relative;
+    padding: 60px 24px 50px;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(170deg, #1a3a2a 0%, #1b4332 30%, #1a3a2a 70%, #14312a 100%);
+    border-top: 12px solid #5c3a1e;
+    border-bottom: 12px solid #5c3a1e;
+    box-shadow: inset 0 0 80px rgba(0,0,0,0.4), inset 0 0 20px rgba(0,0,0,0.3);
+    margin: 0 24px;
+    border-radius: 8px;
+  }
+  /* Chalk dust particles */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 50%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(2px 2px at 80% 85%, rgba(255,255,255,0.1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 40%, rgba(255,255,255,0.2) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  /* Chalk tray */
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: 10%; right: 10%;
+    height: 8px;
+    background: #4a2e14;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 8px;
+    padding: 6px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: "Kaisei Decol", "Zen Maru Gothic", serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 900;
+    line-height: 1.3;
+    color: rgba(255,255,255,0.92);
+    text-shadow: 0 0 20px rgba(255,255,255,0.08), 2px 2px 0 rgba(0,0,0,0.2);
+    margin-bottom: 12px;
+    position: relative;
+    letter-spacing: 0.08em;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.55);
+    font-size: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    line-height: 1.9;
+  }
+  .hero .author {
+    margin-top: 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    position: relative;
+  }
+  .chalk-icons {
+    position: absolute;
+    bottom: 16px;
+    right: 24px;
+    font-size: 20px;
+    opacity: 0.25;
+    letter-spacing: 8px;
+  }
+
+  /* ===== Stats ===== */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 24px 32px;
+    flex-wrap: wrap;
+  }
+  .stat-item { text-align: center; }
+  .stat-item .num {
+    font-size: 32px;
+    font-weight: 900;
+    color: #D97706;
+  }
+  .stat-item .label {
+    font-size: 12px;
+    color: #5a5a7a;
+    margin-top: 4px;
+  }
+
+  /* ===== Semester Section ===== */
+  .semester-flow {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    padding: 0 24px;
+  }
+  .semester-flow h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #e8e8f0;
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+  .flow-steps {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    text-align: center;
+    padding: 20px 24px;
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+  .flow-step:first-child { border-radius: 12px 0 0 12px; }
+  .flow-step:last-child { border-radius: 0 12px 12px 0; }
+  .flow-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 12px solid #2a2a3a;
+    z-index: 2;
+  }
+  .flow-step .step-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .flow-step:nth-child(1) .step-label { color: #10b981; }
+  .flow-step:nth-child(2) .step-label { color: #60a5fa; }
+  .flow-step:nth-child(3) .step-label { color: #D97706; }
+  .flow-step .step-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e8e8f0;
+    margin-bottom: 4px;
+  }
+  .flow-step .step-courses {
+    font-size: 12px;
+    color: #5a5a7a;
+  }
+
+  /* ===== Filters ===== */
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 24px 40px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 20px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #2a2a3a;
+    background: transparent;
+    color: #7c7c9a;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    font-family: inherit;
+  }
+  .filter-btn:hover {
+    border-color: #D97706;
+    color: #D97706;
+  }
+  .filter-btn.active {
+    background: linear-gradient(135deg, #D97706, #F59E0B);
+    border-color: transparent;
+    color: #fff;
+  }
+  .filter-btn .count {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-left: 4px;
+  }
+
+  /* ===== Semester Divider ===== */
+  .semester-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+  }
+  .semester-divider::before,
+  .semester-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #2a2a3a, transparent);
+  }
+  .semester-divider span {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+  .semester-divider.sem-1 span { color: #10b981; }
+  .semester-divider.sem-2 span { color: #60a5fa; }
+  .semester-divider.sem-3 span { color: #D97706; }
+
+  /* ===== Grid ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ===== Card — Notebook Style ===== */
+  .card {
+    background: #1a1a24;
+    border: 1px solid #2a2a3a;
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: #D97706;
+    box-shadow: 0 16px 48px rgba(217,119,6,0.12);
+  }
+
+  /* Notebook lined effect on card body */
+  .card-body {
+    padding: 24px 24px 24px 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 31px,
+        rgba(255,255,255,0.03) 31px,
+        rgba(255,255,255,0.03) 32px
+      );
+    background-position: 0 0;
+  }
+  /* Red margin line */
+  .card-body::before {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(220,80,80,0.15);
+  }
+
+  .card-banner {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-banner .banner-icon {
+    font-size: 44px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-banner .banner-num {
+    position: absolute;
+    right: 16px;
+    bottom: 8px;
+    font-size: 56px;
+    font-weight: 900;
+    opacity: 0.08;
+    color: white;
+    line-height: 1;
+  }
+  .card-banner .banner-semester {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    z-index: 1;
+  }
+  .sem-badge-1 { background: rgba(16,185,129,0.2); color: #10b981; }
+  .sem-badge-2 { background: rgba(96,165,250,0.2); color: #60a5fa; }
+  .sem-badge-3 { background: rgba(217,119,6,0.2); color: #D97706; }
+
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .card-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #e8e8f0;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: #7c7c9a;
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .card-info {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: #5a5a7a;
+    flex-wrap: wrap;
+  }
+  .card-info span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #5a5a7a;
+    padding-top: 12px;
+    border-top: 1px solid #2a2a3a;
+    margin-top: auto;
+  }
+  .card-meta .cta {
+    color: #D97706;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s;
+  }
+  .card:hover .card-meta .cta { gap: 8px; }
+
+  /* ===== Difficulty Stars ===== */
+  .stars { letter-spacing: 2px; font-size: 13px; }
+
+  /* ===== Banner Colors ===== */
+  .banner-intro  { background: linear-gradient(135deg, #1e3a5f, #0f2942); }
+  .banner-prompt { background: linear-gradient(135deg, #1a3d2e, #0f2a1e); }
+  .banner-mcp    { background: linear-gradient(135deg, #3b1f5e, #1f1040); }
+  .banner-mkt    { background: linear-gradient(135deg, #4a2018, #2a1008); }
+  .banner-agent  { background: linear-gradient(135deg, #3a2a10, #2a1a08); }
+  .banner-code   { background: linear-gradient(135deg, #1a2840, #0f1828); }
+
+  /* ===== Tag Colors ===== */
+  .tag-beginner     { background: rgba(16,185,129,0.15); color: #10b981; }
+  .tag-intermediate { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .tag-advanced     { background: rgba(217,119,6,0.15); color: #D97706; }
+  .tag-cat          { background: rgba(167,139,250,0.15); color: #a78bfa; }
+
+  /* ===== Empty ===== */
+  .empty { grid-column: 1 / -1; text-align: center; color: #5a5a7a; padding: 60px; display: none; }
+  .empty.show { display: block; }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid #1a1a24;
+  }
+  .footer p { color: #3a3a4a; font-size: 12px; }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    .stats { gap: 24px; }
+    .flow-steps { flex-direction: column; }
+    .flow-step { border-radius: 12px !important; }
+    .flow-step:not(:last-child)::after { display: none; }
+    .hero { margin: 0 12px; }
+  }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="../index.html">&larr; レポート一覧に戻る</a>
+
+<!-- ===== Blackboard Hero ===== -->
+<div class="hero">
+  <div class="hero-badge">SAWADA AI LAB</div>
+  <h1>AI 教科書</h1>
+  <p>Claude・AI活用・マーケティング &times; テクノロジーを<br>ゼロから学べる社内カリキュラム</p>
+  <div class="author">Presented by 澤田一進 ｜ 一進AI</div>
+  <div class="chalk-icons">&#x270F;&#xFE0F; &#x1F4D6; &#x1F3EB;</div>
+</div>
+
+<!-- ===== Stats ===== -->
+<div class="stats" id="stats">
+  <div class="stat-item">
+    <div class="num">6</div>
+    <div class="label">教材数</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">3</div>
+    <div class="label">学期</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">135</div>
+    <div class="label">合計 min</div>
+  </div>
+</div>
+
+<!-- ===== Semester Flow ===== -->
+<div class="semester-flow">
+  <h2>&#x1F4CB; 受講の流れ（カリキュラムマップ）</h2>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="step-label">1 学期 &#x2014; 基礎</div>
+      <div class="step-title">知る・使う</div>
+      <div class="step-courses">01 Claude入門 &rarr; 02 プロンプト</div>
+    </div>
+    <div class="flow-step">
+      <div class="step-label">2 学期 &#x2014; 実践</div>
+      <div class="step-title">つなぐ・活かす</div>
+      <div class="step-courses">03 MCP実践 &rarr; 04 マーケAI</div>
+    </div>
+    <div class="flow-step">
+      <div class="step-label">3 学期 &#x2014; 応用</div>
+      <div class="step-title">設計する・育てる</div>
+      <div class="step-courses">05 エージェント設計 &rarr; 06 AI育成</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Filters ===== -->
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-filter="all">すべて <span class="count"></span></button>
+  <button class="filter-btn" data-filter="claude-basics">Claude入門 <span class="count"></span></button>
+  <button class="filter-btn" data-filter="mcp">MCP・連携 <span class="count"></span></button>
+  <button class="filter-btn" data-filter="prompt">プロンプト <span class="count"></span></button>
+  <button class="filter-btn" data-filter="marketing">マーケ &times; AI <span class="count"></span></button>
+  <button class="filter-btn" data-filter="code">コード・自動化 <span class="count"></span></button>
+  <button class="filter-btn" data-filter="agent">エージェント <span class="count"></span></button>
+</div>
+
+<!-- ===== Grid ===== -->
+<div class="grid" id="grid">
+
+  <!-- ── 1学期：基礎 ── -->
+  <div class="semester-divider sem-1" data-semester="1"><span>&#x1F331; 1学期 &#x2014; 基礎（知る・使う）</span></div>
+
+  <!-- 01: Claude入門ガイド -->
+  <a class="card" href="claude-intro.html" data-categories="claude-basics mcp" data-semester="1">
+    <div class="card-banner banner-intro">
+      <span class="banner-semester sem-badge-1">1学期</span>
+      <span class="banner-icon">&#x1F9E0;</span>
+      <span class="banner-num">01</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="card-tag tag-beginner">初級</span>
+        <span class="card-tag tag-cat">Claude入門</span>
+        <span class="card-tag tag-cat">MCP</span>
+      </div>
+      <div class="card-title">AIで仕事が変わる<br>Claude 入門ガイド</div>
+      <div class="card-desc">Claudeの概要・他AIとの違い・MCPの仕組みと構造図・記事FBや動画編集の実システム事例・導入ロードマップまで。初めてのAI活用に必要なすべてを網羅。</div>
+      <div class="card-info">
+        <span>&#x23F1; 15分</span>
+        <span class="stars">&#x2605;&#x2606;&#x2606;</span>
+        <span>前提: なし</span>
+      </div>
+      <div class="card-meta">
+        <span>2026.04.03</span>
+        <span class="cta">受講する &rarr;</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 02: プロンプトの書き方 -->
+  <a class="card" href="prompt-engineering.html" data-categories="prompt" data-semester="1">
+    <div class="card-banner banner-prompt">
+      <span class="banner-semester sem-badge-1">1学期</span>
+      <span class="banner-icon">&#x270D;&#xFE0F;</span>
+      <span class="banner-num">02</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="card-tag tag-beginner">初級</span>
+        <span class="card-tag tag-cat">プロンプト</span>
+      </div>
+      <div class="card-title">伝わるプロンプトの書き方<br>基本テクニック集</div>
+      <div class="card-desc">AIに的確な指示を出すための基本パターン。構造化・ロール指定・Few-shot・Chain of Thoughtなど実例つきで解説。</div>
+      <div class="card-info">
+        <span>&#x23F1; 20分</span>
+        <span class="stars">&#x2605;&#x2606;&#x2606;</span>
+        <span>前提: 01</span>
+      </div>
+      <div class="card-meta">
+        <span>2026.04.03</span>
+        <span class="cta">受講する &rarr;</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- ── 2学期：実践 ── -->
+  <div class="semester-divider sem-2" data-semester="2"><span>&#x1F527; 2学期 &#x2014; 実践（つなぐ・活かす）</span></div>
+
+  <!-- 03: MCP実践ガイド -->
+  <a class="card" href="mcp-guide.html" data-categories="mcp" data-semester="2">
+    <div class="card-banner banner-mcp">
+      <span class="banner-semester sem-badge-2">2学期</span>
+      <span class="banner-icon">&#x1F50C;</span>
+      <span class="banner-num">03</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="card-tag tag-intermediate">中級</span>
+        <span class="card-tag tag-cat">MCP・連携</span>
+      </div>
+      <div class="card-title">MCP実践ガイド<br>外部ツール接続ハンズオン</div>
+      <div class="card-desc">Google Calendar・Slack・Notion・CanvaをClaudeに接続するステップバイステップガイド。初回設定から業務フロー構築まで。</div>
+      <div class="card-info">
+        <span>&#x23F1; 20分</span>
+        <span class="stars">&#x2605;&#x2605;&#x2606;</span>
+        <span>前提: 01</span>
+      </div>
+      <div class="card-meta">
+        <span>2026.04.03</span>
+        <span class="cta">受講する &rarr;</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 04: マーケターのためのAI活用 -->
+  <a class="card" href="marketing-ai.html" data-categories="marketing" data-semester="2">
+    <div class="card-banner banner-mkt">
+      <span class="banner-semester sem-badge-2">2学期</span>
+      <span class="banner-icon">&#x1F4CA;</span>
+      <span class="banner-num">04</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="card-tag tag-intermediate">中級</span>
+        <span class="card-tag tag-cat">マーケ &times; AI</span>
+      </div>
+      <div class="card-title">マーケターのためのAI活用<br>実践フレームワーク</div>
+      <div class="card-desc">N1分析・コンセプト設計・LP制作・バナー制作・競合分析…マーケティング業務にAIを組み込むフレームワークを実例つきで解説。</div>
+      <div class="card-info">
+        <span>&#x23F1; 25分</span>
+        <span class="stars">&#x2605;&#x2605;&#x2606;</span>
+        <span>前提: 01, 02</span>
+      </div>
+      <div class="card-meta">
+        <span>2026.04.03</span>
+        <span class="cta">受講する &rarr;</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- ── 3学期：応用 ── -->
+  <div class="semester-divider sem-3" data-semester="3"><span>&#x1F680; 3学期 &#x2014; 応用（設計する・育てる）</span></div>
+
+  <!-- 05: AIエージェント設計入門 -->
+  <a class="card" href="agent-architecture.html" data-categories="agent code" data-semester="3">
+    <div class="card-banner banner-agent">
+      <span class="banner-semester sem-badge-3">3学期</span>
+      <span class="banner-icon">&#x1F916;</span>
+      <span class="banner-num">05</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="card-tag tag-advanced">上級</span>
+        <span class="card-tag tag-cat">エージェント</span>
+        <span class="card-tag tag-cat">コード</span>
+      </div>
+      <div class="card-title">AIエージェント設計入門<br>複数AIを組み合わせるアーキテクチャ</div>
+      <div class="card-desc">記事FBの8エージェントシステムを題材に、AIエージェントの設計思想・並列処理・スコアリング・自動化の実装パターンを解説。</div>
+      <div class="card-info">
+        <span>&#x23F1; 25分</span>
+        <span class="stars">&#x2605;&#x2605;&#x2605;</span>
+        <span>前提: 01, 03</span>
+      </div>
+      <div class="card-meta">
+        <span>2026.04.03</span>
+        <span class="cta">受講する &rarr;</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 06: AIチーム育成の軌跡 -->
+  <a class="card" href="agent-evolution.html" data-categories="agent code" data-semester="3">
+    <div class="card-banner banner-code">
+      <span class="banner-semester sem-badge-3">3学期</span>
+      <span class="banner-icon">&#x1F4D6;</span>
+      <span class="banner-num">06</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="card-tag tag-advanced">上級</span>
+        <span class="card-tag tag-cat">エージェント</span>
+        <span class="card-tag tag-cat">コード</span>
+      </div>
+      <div class="card-title">AIチーム育成の軌跡<br>記事FB AIができるまで</div>
+      <div class="card-desc">ゼロからAIチームを構築した実録ドキュメント。試行錯誤・設計判断・改善プロセスを時系列で追い、再現可能なノウハウとして体系化。</div>
+      <div class="card-info">
+        <span>&#x23F1; 30分</span>
+        <span class="stars">&#x2605;&#x2605;&#x2605;</span>
+        <span>前提: 05</span>
+      </div>
+      <div class="card-meta">
+        <span>2026.04.03</span>
+        <span class="cta">受講する &rarr;</span>
+      </div>
+    </div>
+  </a>
+
+  <div class="empty" id="empty-msg">このカテゴリにはまだ教材がありません</div>
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>SAWADA AI Lab &mdash; AI教科書 ｜ Powered by Claude &times; 一進AI</p>
+</div>
+
+<script>
+  // ===== Filter logic =====
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card[data-categories]');
+  const dividers = document.querySelectorAll('.semester-divider');
+  const emptyMsg = document.getElementById('empty-msg');
+
+  // Update count badges
+  function updateCounts() {
+    filterBtns.forEach(btn => {
+      const f = btn.dataset.filter;
+      const matched = [...cards].filter(c => f === 'all' || c.dataset.categories.includes(f));
+      btn.querySelector('.count').textContent = '(' + matched.length + ')';
+    });
+  }
+
+  // Check if any visible card belongs to a semester
+  function updateDividers(filter) {
+    dividers.forEach(div => {
+      const sem = div.dataset.semester;
+      const hasVisible = [...cards].some(c =>
+        c.dataset.semester === sem && (filter === 'all' || c.dataset.categories.includes(filter))
+      );
+      div.style.display = hasVisible ? '' : 'none';
+    });
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      cards.forEach(card => {
+        const match = filter === 'all' || card.dataset.categories.includes(filter);
+        card.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+      updateDividers(filter);
+      emptyMsg.classList.toggle('show', visible === 0);
+    });
+  });
+
+  updateCounts();
+  updateDividers('all');
+</script>
+
+</body>
+</html>
