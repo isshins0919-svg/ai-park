@@ -1,240 +1,364 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Park — レポート一覧</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一進VOYAGE号 — 夜の航海</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", sans-serif;
-      background: #0f0f13;
-      color: #e8e8f0;
-      min-height: 100vh;
-      padding: 40px 20px;
-    }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #080c1a;
+    color: #c8d6e5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    header .logo {
-      font-size: 13px;
-      letter-spacing: 0.2em;
-      color: #7c7c9a;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
+  /* ── 夜の海 背景 ── */
+  .night-sky {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, #0a0e27 0%, #0d1b3e 30%, #162d5a 55%, #1a3a6e 70%, #0f2847 100%);
+    z-index: -3;
+  }
 
-    header h1 {
-      font-size: clamp(24px, 4vw, 36px);
-      font-weight: 700;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+  /* 星 */
+  .stars {
+    position: fixed; top: 0; left: 0; width: 100%; height: 60%;
+    z-index: -2;
+    background:
+      radial-gradient(1px 1px at 5% 8%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 12% 22%, #fff 0.5px, transparent 1px),
+      radial-gradient(1.5px 1.5px at 18% 5%, #FFD700 1px, transparent 1.5px),
+      radial-gradient(1px 1px at 25% 30%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 32% 12%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 40% 25%, #87CEEB 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 48% 8%, #fff 0.5px, transparent 1px),
+      radial-gradient(1.5px 1.5px at 55% 18%, #FFD700 1px, transparent 1.5px),
+      radial-gradient(1px 1px at 62% 28%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 70% 6%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 78% 20%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 85% 10%, #87CEEB 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 92% 24%, #fff 0.5px, transparent 1px),
+      radial-gradient(1.5px 1.5px at 38% 35%, #FFD700 1px, transparent 1.5px),
+      radial-gradient(1px 1px at 65% 32%, #fff 0.5px, transparent 1px);
+  }
 
-    header p {
-      margin-top: 10px;
-      color: #7c7c9a;
-      font-size: 14px;
-    }
+  /* 月 */
+  .moon {
+    position: fixed; top: 50px; right: 70px;
+    width: 70px; height: 70px;
+    background: radial-gradient(circle at 35% 35%, #FFFDE7 0%, #FFF9C4 40%, rgba(255,249,196,0.2) 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(255,249,196,0.3), 0 0 80px rgba(255,249,196,0.1);
+    z-index: -1;
+  }
 
-    /* ── タブ ── */
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 36px;
-      flex-wrap: wrap;
-    }
+  /* 灯台の光 */
+  .lighthouse {
+    position: fixed; bottom: 80px; left: 40px;
+    z-index: -1;
+  }
+  .lighthouse-beam {
+    width: 3px; height: 60px;
+    background: linear-gradient(to top, #FFD700, transparent);
+    margin: 0 auto 4px;
+    opacity: 0.6;
+  }
+  .lighthouse-body { font-size: 28px; text-align: center; }
+  .lighthouse-glow {
+    position: absolute; top: -20px; left: -30px;
+    width: 66px; height: 40px;
+    background: radial-gradient(ellipse, rgba(255,215,0,0.15) 0%, transparent 70%);
+    animation: beacon 4s ease-in-out infinite;
+  }
+  @keyframes beacon { 0%,100% { opacity: 0.3; } 50% { opacity: 0.8; } }
 
-    .tab {
-      padding: 8px 22px;
-      border-radius: 24px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      border: 1px solid #2a2a3a;
-      background: transparent;
-      color: #7c7c9a;
-      transition: all 0.2s;
-    }
+  /* 波 */
+  .waves {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 80px;
+    z-index: -1; overflow: hidden;
+  }
+  .wave-line {
+    position: absolute; bottom: 0; width: 200%; height: 100%;
+    animation: wave-move 10s linear infinite;
+  }
+  .wave-line:nth-child(1) {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80'%3E%3Cpath d='M0,40 Q150,15 300,40 T600,40 T900,40 T1200,40 L1200,80 L0,80Z' fill='rgba(15,40,71,0.5)'/%3E%3C/svg%3E");
+    background-size: 600px 80px;
+  }
+  .wave-line:nth-child(2) {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80'%3E%3Cpath d='M0,50 Q150,25 300,50 T600,50 T900,50 T1200,50 L1200,80 L0,80Z' fill='rgba(10,30,55,0.4)'/%3E%3C/svg%3E");
+    background-size: 600px 80px;
+    animation-duration: 14s; animation-direction: reverse;
+  }
+  @keyframes wave-move { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    .tab:hover {
-      border-color: #a78bfa;
-      color: #a78bfa;
-    }
+  /* ── ヘッダー ── */
+  .header {
+    text-align: center;
+    padding: 60px 20px 20px;
+  }
+  .ship-icon { font-size: 64px; margin-bottom: 8px; filter: drop-shadow(0 0 12px rgba(255,249,196,0.3)); }
+  .header h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 900;
+    color: #E8EDF5;
+    text-shadow: 0 0 20px rgba(255,249,196,0.15);
+  }
+  .header .subtitle {
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: #7EB8DA;
+    margin-top: 4px;
+    font-weight: 700;
+  }
+  .header .motto {
+    font-size: 15px;
+    color: #9BB5C9;
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .header .desc {
+    font-size: 13px;
+    color: #6a8ba3;
+    margin-top: 12px;
+  }
 
-    .tab.active {
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
-      border-color: transparent;
-      color: #fff;
-    }
+  /* ── タブ ── */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 20px 12px;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 7px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid rgba(126,184,218,0.2);
+    background: transparent;
+    color: #6a8ba3;
+    transition: all 0.2s;
+  }
+  .tab:hover { border-color: #7EB8DA; color: #A8D0E6; }
+  .tab.active { background: #7EB8DA; border-color: #7EB8DA; color: #080c1a; }
+  .tab .count { font-size: 10px; opacity: 0.7; margin-left: 3px; }
 
-    /* カテゴリ別アクティブ色 */
-    .tab[data-tab="ヨミテ"].active  { background: linear-gradient(135deg, #f59e0b, #ef4444); border-color: transparent; color:#fff; }
-    .tab[data-tab="SAWADA"].active  { background: linear-gradient(135deg, #10b981, #06b6d4); border-color: transparent; color:#fff; }
-    .tab[data-tab="個人"].active    { background: linear-gradient(135deg, #a78bfa, #ec4899); border-color: transparent; color:#fff; }
+  /* カテゴリ別色 */
+  .tab[data-tab="ヨミテ"].active { background: linear-gradient(135deg, #F59E0B, #EF4444); border-color: transparent; color: #fff; }
+  .tab[data-tab="SAWADA"].active { background: linear-gradient(135deg, #10B981, #06B6D4); border-color: transparent; color: #fff; }
+  .tab[data-tab="個人"].active { background: linear-gradient(135deg, #7EB8DA, #A78BFA); border-color: transparent; color: #fff; }
 
-    /* ── カウンター ── */
-    .tab .count {
-      font-size: 11px;
-      opacity: 0.7;
-      margin-left: 4px;
-    }
+  /* ── 相互リンク ── */
+  .crosslink {
+    max-width: 1100px;
+    margin: 0 auto 20px;
+    padding: 0 20px;
+  }
+  .crosslink a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: rgba(126,184,218,0.06);
+    border: 1px solid rgba(126,184,218,0.15);
+    border-radius: 14px;
+    text-decoration: none;
+    color: #A8D0E6;
+    transition: background 0.2s;
+  }
+  .crosslink a:hover { background: rgba(126,184,218,0.12); }
+  .crosslink-icon { font-size: 28px; }
+  .crosslink-title { font-size: 14px; font-weight: 700; }
+  .crosslink-desc { font-size: 11px; color: #6a8ba3; margin-top: 2px; }
 
-    /* ── グリッド ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+  /* ── 教科書バナー ── */
+  .textbook-banner {
+    max-width: 1100px;
+    margin: 0 auto 24px;
+    padding: 0 20px;
+  }
+  .textbook-banner a {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(135deg, rgba(217,119,6,0.1), rgba(15,40,71,0.3));
+    border: 1px solid rgba(217,119,6,0.3);
+    border-radius: 14px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  .textbook-banner a:hover { background: linear-gradient(135deg, rgba(217,119,6,0.15), rgba(15,40,71,0.4)); }
 
-    .card {
-      background: #1a1a24;
-      border: 1px solid #2a2a3a;
-      border-radius: 16px;
-      padding: 28px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-      overflow: hidden;
-    }
+  /* ── グリッド ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #a78bfa, #60a5fa);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
+  /* ── カード ── */
+  .card {
+    background: rgba(16,26,48,0.7);
+    border: 1px solid rgba(126,184,218,0.12);
+    border-radius: 16px;
+    padding: 0;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #7EB8DA, #A78BFA);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(126,184,218,0.3);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 20px rgba(126,184,218,0.08);
+  }
+  .card:hover::before { opacity: 1; }
 
-    .card[data-category="ヨミテ"]::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
-    .card[data-category="SAWADA"]::before   { background: linear-gradient(90deg, #10b981, #06b6d4); }
-    .card[data-category="個人"]::before   { background: linear-gradient(90deg, #a78bfa, #ec4899); }
+  /* カテゴリ別ボーダー */
+  .card[data-category="ヨミテ"]::before { background: linear-gradient(90deg, #F59E0B, #EF4444); }
+  .card[data-category="SAWADA"]::before { background: linear-gradient(90deg, #10B981, #06B6D4); }
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: #3a3a5a;
-      box-shadow: 0 12px 40px rgba(167, 139, 250, 0.12);
-    }
+  .card-inner { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 
-    .card:hover::before { opacity: 1; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .card-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; letter-spacing: 0.1em;
+    color: #7EB8DA;
+    background: rgba(126,184,218,0.08);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .cat-badge {
+    font-size: 10px; font-weight: 700;
+    padding: 3px 9px; border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+  .cat-badge.ヨミテ { background: rgba(245,158,11,0.15); color: #F59E0B; }
+  .cat-badge.SAWADA { background: rgba(16,185,129,0.15); color: #10B981; }
+  .cat-badge.個人 { background: rgba(126,184,218,0.15); color: #7EB8DA; }
 
-    .card.hidden {
-      display: none;
-    }
+  .card-title {
+    font-size: 17px; font-weight: 700; line-height: 1.5;
+    color: #E8EDF5;
+  }
+  .card-desc { font-size: 13px; color: #7a97ad; line-height: 1.7; }
+  .card-meta {
+    font-size: 12px; color: #4a6b80;
+    margin-top: auto; padding-top: 12px;
+    border-top: 1px solid rgba(126,184,218,0.1);
+  }
+  .card-arrow {
+    position: absolute; top: 24px; right: 20px;
+    color: rgba(126,184,218,0.3); font-size: 18px;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .card:hover .card-arrow { color: #7EB8DA; transform: translateX(3px); }
 
-    .card-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+  .card.hidden { display: none; }
 
-    .card-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: #a78bfa;
-      background: rgba(167, 139, 250, 0.1);
-      padding: 4px 10px;
-      border-radius: 20px;
-      width: fit-content;
-    }
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #4a6b80;
+    padding: 60px;
+    display: none;
+  }
+  .empty.show { display: block; }
 
-    .cat-badge {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 20px;
-      letter-spacing: 0.05em;
-    }
+  /* ── フッター ── */
+  .footer {
+    background: rgba(10,14,39,0.6);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    text-align: center;
+    font-size: 11px;
+    color: #4a6b80;
+    letter-spacing: 1px;
+  }
 
-    .cat-badge.ヨミテ { background: rgba(245,158,11,0.15); color: #f59e0b; }
-    .cat-badge.SAWADA { background: rgba(16,185,129,0.15);  color: #10b981; }
-    .cat-badge.個人   { background: rgba(167,139,250,0.15); color: #a78bfa; }
-
-    .card-title {
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.5;
-      color: #e8e8f0;
-    }
-
-    .card-desc {
-      font-size: 13px;
-      color: #7c7c9a;
-      line-height: 1.7;
-    }
-
-    .card-meta {
-      font-size: 12px;
-      color: #5a5a7a;
-      margin-top: auto;
-      padding-top: 12px;
-      border-top: 1px solid #2a2a3a;
-    }
-
-    .card-arrow {
-      position: absolute;
-      top: 28px;
-      right: 24px;
-      color: #3a3a5a;
-      font-size: 18px;
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .card:hover .card-arrow { color: #a78bfa; transform: translateX(3px); }
-
-    .empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      color: #5a5a7a;
-      padding: 60px;
-      display: none;
-    }
-
-    .empty.show { display: block; }
-  </style>
+  @media (max-width: 600px) {
+    .header { padding: 40px 16px 16px; }
+    .grid { padding: 0 12px 60px; grid-template-columns: 1fr; }
+    .moon { width: 45px; height: 45px; top: 25px; right: 25px; }
+    .lighthouse { display: none; }
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <div class="logo">AI Park</div>
-  <h1>レポート一覧</h1>
-  <p>生成されたリサーチ・インサイトレポートを確認できます</p>
-</header>
+<!-- 背景 -->
+<div class="night-sky"></div>
+<div class="stars"></div>
+<div class="moon"></div>
+<div class="lighthouse">
+  <div class="lighthouse-glow"></div>
+  <div class="lighthouse-beam"></div>
+  <div class="lighthouse-body">&#x1F6E4;&#xFE0F;</div>
+</div>
+<div class="waves">
+  <div class="wave-line"></div>
+  <div class="wave-line"></div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="ship-icon">&#x26f5;</div>
+  <h1>一進VOYAGE号</h1>
+  <div class="subtitle">ISSHIN VOYAGE &mdash; MIDNIGHT OCEAN</div>
+  <div class="motto">&#x2693; Bon Voyage!</div>
+  <div class="desc">星空の下のレポート港 &mdash; 夜の航海</div>
+</div>
+
+<!-- 昼の海へのリンク -->
+<div class="crosslink">
+  <a href="../docs/">
+    <div class="crosslink-icon">&#x2600;&#xFE0F;</div>
+    <div>
+      <div class="crosslink-title">昼の航海 &mdash; Public Gallery</div>
+      <div class="crosslink-desc">陽光の下の公開ギャラリーへ出航する</div>
+    </div>
+  </a>
+</div>
 
 <!-- 教科書バナー -->
-<div style="max-width:1100px;margin:0 auto 32px;padding:0 20px;">
-  <a href="textbook/index.html" style="display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,#2a1a08,#1a1a24);border:1px solid #D97706;border-radius:16px;padding:24px 28px;text-decoration:none;color:inherit;transition:transform 0.2s,box-shadow 0.2s;">
-    <span style="font-size:36px;">📖</span>
+<div class="textbook-banner">
+  <a href="textbook/index.html">
+    <span style="font-size:32px;">&#x1F4D6;</span>
     <div>
-      <div style="font-size:11px;font-weight:700;color:#D97706;letter-spacing:2px;margin-bottom:4px;">NEW — AI教科書</div>
-      <div style="font-size:17px;font-weight:700;color:#e8e8f0;">AI教科書ライブラリを見る →</div>
-      <div style="font-size:13px;color:#7c7c9a;margin-top:4px;">Claude・MCP・プロンプト・マーケ×AIなどをゼロから学べる教材集</div>
+      <div style="font-size:11px;font-weight:700;color:#D97706;letter-spacing:2px;margin-bottom:4px;">AI教科書</div>
+      <div style="font-size:15px;font-weight:700;color:#E8EDF5;">AI教科書ライブラリを見る &#x2192;</div>
+      <div style="font-size:12px;color:#6a8ba3;margin-top:3px;">Claude・MCP・プロンプト・マーケ&times;AIなどをゼロから学べる教材集</div>
     </div>
   </a>
 </div>
 
 <!-- タブ -->
 <div class="tabs">
-  <button class="tab active" data-tab="全て">全て <span class="count"></span></button>
+  <button class="tab active" data-tab="全て">&#x2693; 全て <span class="count"></span></button>
   <button class="tab" data-tab="ヨミテ">ヨミテ <span class="count"></span></button>
   <button class="tab" data-tab="SAWADA">SAWADA <span class="count"></span></button>
   <button class="tab" data-tab="個人">個人 <span class="count"></span></button>
@@ -244,97 +368,118 @@
 
   <!-- ヨミテ -->
   <a class="card" href="proust-lp-optimization.html" data-category="ヨミテ">
-    <div class="card-tags">
-      <span class="cat-badge ヨミテ">ヨミテ</span>
-      <span class="card-tag" style="color:#3fb950;background:rgba(63,185,80,0.1)">⚡ LP高速化</span>
+    <div class="card-inner">
+      <div class="card-tags">
+        <span class="cat-badge ヨミテ">ヨミテ</span>
+        <span class="card-tag" style="color:#3fb950;background:rgba(63,185,80,0.1)">&#x26A1; LP高速化</span>
+      </div>
+      <div class="card-title">プルーストクリーム<br>LP高速化レポート</div>
+      <div class="card-desc">アンケートLPの表示速度改善レポート。jQuery軽量化・遅延読み込み・スクロールバグ・Q5重複バグの修正内容を収録。</div>
+      <div class="card-meta">2026-03-11</div>
     </div>
-    <div class="card-title">プルーストクリーム<br>LP高速化レポート</div>
-    <div class="card-desc">アンケートLPの表示速度改善レポート。jQuery軽量化・遅延読み込み・スクロールバグ・Q5重複バグの修正内容をまとめた技術ドキュメント。</div>
-    <div class="card-meta">2026-03-11</div>
-    <span class="card-arrow">→</span>
+    <span class="card-arrow">&#x2192;</span>
   </a>
 
   <a class="card" href="yomite-ai-policy.html" data-category="ヨミテ">
-    <div class="card-tags">
-      <span class="cat-badge ヨミテ">ヨミテ</span>
-      <span class="card-tag" style="color:#f59e0b;background:rgba(245,158,11,0.1)">📋 AI方針</span>
+    <div class="card-inner">
+      <div class="card-tags">
+        <span class="cat-badge ヨミテ">ヨミテ</span>
+        <span class="card-tag" style="color:#f59e0b;background:rgba(245,158,11,0.1)">&#x1F4CB; AI方針</span>
+      </div>
+      <div class="card-title">YOMITE<br>AI方針 2026</div>
+      <div class="card-desc">全50名向けAI活用ガイド。ツール地図・データ活用3大ライン・プロンプト型集・ロードマップ・新入社員Day1チェックリストを収録。</div>
+      <div class="card-meta">2026-03-10</div>
     </div>
-    <div class="card-title">YOMITE<br>AI方針 2026</div>
-    <div class="card-desc">全50名向けAI活用ガイド。ツール地図・データ活用3大ライン・プロンプト型集・ロードマップ・新入社員Day1チェックリストを収録。</div>
-    <div class="card-meta">2026-03-10</div>
-    <span class="card-arrow">→</span>
+    <span class="card-arrow">&#x2192;</span>
   </a>
 
   <a class="card" href="growth-supplement-competitive-report.html" data-category="ヨミテ">
-    <div class="card-tags">
-      <span class="cat-badge ヨミテ">ヨミテ</span>
-      <span class="card-tag">📊 競合分析</span>
+    <div class="card-inner">
+      <div class="card-tags">
+        <span class="cat-badge ヨミテ">ヨミテ</span>
+        <span class="card-tag">&#x1F4CA; 競合分析</span>
+      </div>
+      <div class="card-title">成長期サポートサプリ<br>競合 imp 分析レポート</div>
+      <div class="card-desc">全媒体の imp ランキング・クリエイティブ傾向・訴求軸を分析。2025/11〜2026/03 期間データ。</div>
+      <div class="card-meta">2025/11 〜 2026/03</div>
     </div>
-    <div class="card-title">成長期サポートサプリ<br>競合 imp 分析レポート</div>
-    <div class="card-desc">全媒体の imp ランキング・クリエイティブ傾向・訴求軸を分析。2025/11〜2026/03 期間データ。</div>
-    <div class="card-meta">2025/11 〜 2026/03</div>
-    <span class="card-arrow">→</span>
+    <span class="card-arrow">&#x2192;</span>
   </a>
 
   <a class="card" href="gungun_insight_report.html" data-category="ヨミテ">
-    <div class="card-tags">
-      <span class="cat-badge ヨミテ">ヨミテ</span>
-      <span class="card-tag">💡 顧客インサイト</span>
+    <div class="card-inner">
+      <div class="card-tags">
+        <span class="cat-badge ヨミテ">ヨミテ</span>
+        <span class="card-tag">&#x1F4A1; 顧客インサイト</span>
+      </div>
+      <div class="card-title">伸長ぐんぐん習慣<br>顧客インサイトレポート</div>
+      <div class="card-desc">購買動機・継続理由・解約要因など顧客の声を構造化した定性分析レポート。</div>
+      <div class="card-meta">2026</div>
     </div>
-    <div class="card-title">伸長ぐんぐん習慣<br>顧客インサイトレポート</div>
-    <div class="card-desc">購買動機・継続理由・解約要因など顧客の声を構造化した定性分析レポート。</div>
-    <div class="card-meta">2026</div>
-    <span class="card-arrow">→</span>
+    <span class="card-arrow">&#x2192;</span>
   </a>
 
   <a class="card" href="gungun_article_lp.html" data-category="ヨミテ">
-    <div class="card-tags">
-      <span class="cat-badge ヨミテ">ヨミテ</span>
-      <span class="card-tag" style="color:#43e97b;background:rgba(67,233,123,0.1)">📄 記事LP</span>
+    <div class="card-inner">
+      <div class="card-tags">
+        <span class="cat-badge ヨミテ">ヨミテ</span>
+        <span class="card-tag" style="color:#43e97b;background:rgba(67,233,123,0.1)">&#x1F4C4; 記事LP</span>
+      </div>
+      <div class="card-title">伸長ぐんぐん習慣<br>記事LP（ドラフト版）</div>
+      <div class="card-desc">N1インタビューデータからリサーチ→記事LP化。コンセプト「遺伝より、習慣。」。※薬機法未対応版。</div>
+      <div class="card-meta">2026-03-09</div>
     </div>
-    <div class="card-title">伸長ぐんぐん習慣<br>記事LP（ドラフト版）</div>
-    <div class="card-desc">N1インタビューデータからリサーチ→記事LP化。コンセプト「遺伝より、習慣。」。※薬機法未対応版。</div>
-    <div class="card-meta">2026-03-09</div>
-    <span class="card-arrow">→</span>
+    <span class="card-arrow">&#x2192;</span>
   </a>
 
   <a class="card" href="gungun_article_lp_yakki.html" data-category="ヨミテ">
-    <div class="card-tags">
-      <span class="cat-badge ヨミテ">ヨミテ</span>
-      <span class="card-tag" style="color:#f7c948;background:rgba(247,201,72,0.1)">✅ 記事LP（薬機法準拠）</span>
+    <div class="card-inner">
+      <div class="card-tags">
+        <span class="cat-badge ヨミテ">ヨミテ</span>
+        <span class="card-tag" style="color:#f7c948;background:rgba(247,201,72,0.1)">&#x2705; 記事LP（薬機法準拠）</span>
+      </div>
+      <div class="card-title">伸長ぐんぐん習慣<br>記事LP &mdash; 薬機法準拠版</div>
+      <div class="card-desc">栄養機能食品の規定表示文言に統一。「身長サポート」等の表現を全修正。配信可能な正式版。</div>
+      <div class="card-meta">2026-03-09</div>
     </div>
-    <div class="card-title">伸長ぐんぐん習慣<br>記事LP — 薬機法準拠版</div>
-    <div class="card-desc">栄養機能食品の規定表示文言に統一。「身長サポート」等の表現を全修正。配信可能な正式版。</div>
-    <div class="card-meta">2026-03-09</div>
-    <span class="card-arrow">→</span>
+    <span class="card-arrow">&#x2192;</span>
   </a>
 
   <!-- 研修 -->
-  <a class="card" href="ad-calculation-training.html" data-category="研修">
-    <div class="card-tags">
-      <span class="cat-badge" style="background:#6366f1;color:white;">研修</span>
-      <span class="card-tag" style="color:#6366f1;background:rgba(99,102,241,0.1)">📊 広告計算問題</span>
+  <a class="card" href="ad-calculation-training.html" data-category="SAWADA">
+    <div class="card-inner">
+      <div class="card-tags">
+        <span class="cat-badge SAWADA">SAWADA</span>
+        <span class="card-tag" style="color:#6366f1;background:rgba(99,102,241,0.1)">&#x1F4CA; 広告計算問題</span>
+      </div>
+      <div class="card-title">広告運用 計算問題<br>完全解説ガイド</div>
+      <div class="card-desc">CPC・CPM・CPA・mCVR・着地CVRなど広告運用で必須の計算式を、問題の解き方とともに解説した研修資料。</div>
+      <div class="card-meta">2026-03-14</div>
     </div>
-    <div class="card-title">広告運用 計算問題<br>完全解説ガイド</div>
-    <div class="card-desc">CPC・CPM・CPA・mCVR・着地CVRなど広告運用で必須の計算式を、問題の解き方とともに丁寧に解説したマーケター育成研修資料。</div>
-    <div class="card-meta">2026-03-14</div>
-    <span class="card-arrow">→</span>
+    <span class="card-arrow">&#x2192;</span>
   </a>
 
   <!-- 個人 -->
   <a class="card" href="ai-park-capabilities.html" data-category="個人">
-    <div class="card-tags">
-      <span class="cat-badge 個人">個人</span>
-      <span class="card-tag" style="color:#60a5fa;background:rgba(96,165,250,0.1)">🤖 システムガイド</span>
+    <div class="card-inner">
+      <div class="card-tags">
+        <span class="cat-badge 個人">個人</span>
+        <span class="card-tag" style="color:#60a5fa;background:rgba(96,165,250,0.1)">&#x1F916; システムガイド</span>
+      </div>
+      <div class="card-title">一進AI<br>全機能・スキル ガイド</div>
+      <div class="card-desc">メモリ・Park Skills 9種・フックDB・CTADB・トリガーワード・マーケ哲学を網羅した完全ガイド。</div>
+      <div class="card-meta">2026-03-09</div>
     </div>
-    <div class="card-title">一進AI<br>全機能・スキル ガイド</div>
-    <div class="card-desc">メモリ・Park Skills 9種・フックDB・CTADB・トリガーワード・マーケ哲学を網羅した完全ガイド。</div>
-    <div class="card-meta">2026-03-09</div>
-    <span class="card-arrow">→</span>
+    <span class="card-arrow">&#x2192;</span>
   </a>
 
-  <div class="empty" id="empty-msg">このカテゴリにはまだレポートがありません</div>
+  <div class="empty" id="empty-msg">この海域にはまだレポートが届いていません</div>
 
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  一進VOYAGE号 &mdash; Midnight Ocean &nbsp;|&nbsp; Powered by Claude Code
 </div>
 
 <script>
@@ -342,17 +487,14 @@
   const cards = document.querySelectorAll('.card[data-category]');
   const emptyMsg = document.getElementById('empty-msg');
 
-  // カウント表示
-  const counts = { 全て: cards.length, ヨミテ: 0, SAWADA: 0, 個人: 0 };
+  const counts = { '全て': cards.length, 'ヨミテ': 0, 'SAWADA': 0, '個人': 0 };
   cards.forEach(c => { const cat = c.dataset.category; if (counts[cat] !== undefined) counts[cat]++; });
-  tabs.forEach(t => { t.querySelector('.count').textContent = `(${counts[t.dataset.tab] ?? 0})`; });
-
+  tabs.forEach(t => { t.querySelector('.count').textContent = '(' + (counts[t.dataset.tab] ?? 0) + ')'; });
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-
       const selected = tab.dataset.tab;
       let visible = 0;
       cards.forEach(card => {

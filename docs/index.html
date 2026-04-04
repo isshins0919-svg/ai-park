@@ -3,129 +3,210 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>一進AI — Output Gallery</title>
+<title>一進VOYAGE号 — 昼の航海</title>
 <style>
-  :root {
-    --bg: #0A0E1A;
-    --surface: #111827;
-    --surface2: #1A2235;
-    --border: #1E2D45;
-    --text: #E8EDF5;
-    --muted: #8896A8;
-    --accent: #FF9900;
-    --accent2: #00A8E0;
-    --go: #00C853;
-    --purple: #7C6AEF;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; min-height: 100vh; }
 
-  /* HEADER */
-  .header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-mark { font-size: 22px; }
-  .logo-text { font-size: 18px; font-weight: 700; }
-  .logo-sub { font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-top: 2px; }
-  .header-badge {
-    font-size: 11px;
-    background: rgba(255,153,0,0.1);
-    border: 1px solid rgba(255,153,0,0.3);
-    color: var(--accent);
-    padding: 4px 14px;
-    border-radius: 20px;
-    letter-spacing: 1px;
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #e8f4f8;
+    color: #1a3a5c;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 56px 40px 40px;
-    position: relative;
-    overflow: hidden;
+  /* ── 昼の海 背景 ── */
+  .sky {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 25%, #E0F7FA 50%, #4DB8D1 70%, #2E8BC0 85%, #1B6B93 100%);
+    z-index: -3;
   }
-  .hero::before {
-    content: "";
+
+  /* 雲 */
+  .clouds {
+    position: fixed; top: 0; left: 0; width: 200%; height: 35%;
+    z-index: -2;
+    animation: drift 60s linear infinite;
+  }
+  .cloud {
     position: absolute;
-    top: -120px; left: 50%; transform: translateX(-50%);
-    width: 700px; height: 400px;
-    background: radial-gradient(ellipse, rgba(255,153,0,0.07) 0%, transparent 70%);
-    pointer-events: none;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50%;
+    filter: blur(1px);
   }
-  .hero-label { font-size: 11px; color: var(--accent); letter-spacing: 3px; margin-bottom: 12px; }
-  .hero-title { font-size: 36px; font-weight: 200; line-height: 1.2; }
-  .hero-title strong { font-weight: 700; color: var(--accent); }
-  .hero-desc { font-size: 14px; color: var(--muted); margin-top: 12px; }
+  .cloud::before, .cloud::after {
+    content: ''; position: absolute; background: inherit; border-radius: 50%;
+  }
+  .c1 { width: 120px; height: 50px; top: 8%; left: 10%; }
+  .c1::before { width: 70px; height: 40px; top: -20px; left: 20px; }
+  .c1::after { width: 50px; height: 30px; top: -10px; left: 60px; }
+  .c2 { width: 100px; height: 40px; top: 15%; left: 45%; opacity: 0.7; }
+  .c2::before { width: 60px; height: 35px; top: -18px; left: 15px; }
+  .c3 { width: 140px; height: 55px; top: 5%; left: 75%; }
+  .c3::before { width: 80px; height: 45px; top: -22px; left: 25px; }
+  .c3::after { width: 55px; height: 32px; top: -12px; left: 70px; }
+  .c4 { width: 90px; height: 35px; top: 20%; left: 30%; opacity: 0.5; }
 
-  /* FILTER BAR */
-  .filter-bar {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 40px 20px;
+  @keyframes drift { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* 太陽 */
+  .sun {
+    position: fixed; top: 40px; right: 80px; width: 80px; height: 80px;
+    background: radial-gradient(circle, #FFD700 30%, rgba(255,215,0,0.3) 70%, transparent 100%);
+    border-radius: 50%;
+    z-index: -1;
+    box-shadow: 0 0 60px rgba(255,215,0,0.4), 0 0 120px rgba(255,215,0,0.2);
+  }
+
+  /* 波 */
+  .waves {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 100px;
+    z-index: -1; overflow: hidden;
+  }
+  .wave-line {
+    position: absolute; bottom: 0; width: 200%; height: 100%;
+    animation: wave-move 8s linear infinite;
+  }
+  .wave-line:nth-child(1) {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100'%3E%3Cpath d='M0,50 Q150,20 300,50 T600,50 T900,50 T1200,50 L1200,100 L0,100Z' fill='rgba(30,107,147,0.3)'/%3E%3C/svg%3E");
+    background-size: 600px 100px;
+    animation-duration: 7s;
+  }
+  .wave-line:nth-child(2) {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100'%3E%3Cpath d='M0,60 Q150,30 300,60 T600,60 T900,60 T1200,60 L1200,100 L0,100Z' fill='rgba(46,139,192,0.25)'/%3E%3C/svg%3E");
+    background-size: 600px 100px;
+    animation-duration: 11s;
+    animation-direction: reverse;
+  }
+  @keyframes wave-move { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* カモメ */
+  .seagulls { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+  .gull {
+    position: absolute; font-size: 18px; opacity: 0.6;
+    animation: fly 20s linear infinite;
+  }
+  .g1 { top: 12%; left: -5%; animation-delay: 0s; }
+  .g2 { top: 18%; left: -5%; animation-delay: 4s; font-size: 14px; opacity: 0.4; }
+  .g3 { top: 8%; left: -5%; animation-delay: 9s; font-size: 22px; opacity: 0.5; }
+  @keyframes fly { 0% { transform: translateX(0); } 100% { transform: translateX(110vw); } }
+
+  /* ── ヘッダー ── */
+  .header {
+    text-align: center;
+    padding: 60px 20px 20px;
+    position: relative;
+  }
+  .ship-icon { font-size: 64px; margin-bottom: 8px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); }
+  .header h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 900;
+    color: #0D3B66;
+    text-shadow: 0 2px 4px rgba(255,255,255,0.5);
+  }
+  .header .subtitle {
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: #2E8BC0;
+    margin-top: 4px;
+    font-weight: 700;
+  }
+  .header .motto {
+    font-size: 15px;
+    color: #4a7c9b;
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .header .desc {
+    font-size: 13px;
+    color: #6a9bb5;
+    margin-top: 12px;
+  }
+
+  /* ── 統計 ── */
+  .stats {
     display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px 20px 10px;
+  }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 900;
+    color: #0D3B66;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #6a9bb5;
+    margin-top: 2px;
+  }
+
+  /* ── フィルター ── */
+  .filter-bar {
+    display: flex;
+    justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
+    padding: 16px 20px 24px;
   }
   .filter-btn {
-    padding: 5px 16px;
+    padding: 6px 18px;
     border-radius: 20px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
+    border: 2px solid rgba(13,59,102,0.2);
+    background: rgba(255,255,255,0.6);
+    color: #4a7c9b;
     font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
   }
-  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .filter-btn.active { background: rgba(255,153,0,0.12); border-color: var(--accent); color: var(--accent); }
+  .filter-btn:hover { border-color: #2E8BC0; color: #0D3B66; background: rgba(255,255,255,0.85); }
+  .filter-btn.active { background: #0D3B66; color: #fff; border-color: #0D3B66; }
 
-  /* GRID */
+  /* ── グリッド ── */
   .grid {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 0 40px 60px;
+    padding: 0 20px 80px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
   }
 
-  /* CARD */
+  /* ── カード ── */
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
+    background: rgba(255,255,255,0.75);
+    border: 1px solid rgba(13,59,102,0.12);
+    border-radius: 16px;
     overflow: hidden;
     text-decoration: none;
-    color: var(--text);
+    color: #1a3a5c;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(8px);
   }
   .card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255,153,0,0.4);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(13,59,102,0.18);
   }
+
   .card-preview {
-    height: 180px;
+    height: 160px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 52px;
+    font-size: 48px;
     position: relative;
-    overflow: hidden;
   }
-  .card-preview-amazon { background: linear-gradient(135deg, #131921 0%, #1a2840 100%); }
-  .card-preview-report  { background: linear-gradient(135deg, #0A0E1A 0%, #1B1040 100%); }
-  .card-preview-study   { background: linear-gradient(135deg, #0F1A10 0%, #102030 100%); }
-  .card-preview-lp      { background: linear-gradient(135deg, #1A0A0A 0%, #2A1020 100%); }
+  .card-preview-amazon { background: linear-gradient(135deg, #E6F3FF 0%, #B8D4E8 100%); }
+  .card-preview-report { background: linear-gradient(135deg, #E8F0FE 0%, #C5D5F0 100%); }
+  .card-preview-study  { background: linear-gradient(135deg, #E8F5E9 0%, #B8D8BA 100%); }
+  .card-preview-voyage { background: linear-gradient(135deg, #E0F7FA 0%, #80DEEA 100%); }
 
   .preview-label {
     position: absolute;
@@ -133,313 +214,359 @@
     font-size: 10px;
     letter-spacing: 2px;
     padding: 3px 10px;
-    border-radius: 4px;
-    font-weight: 600;
+    border-radius: 20px;
+    font-weight: 700;
   }
-  .preview-label-amazon  { background: rgba(255,153,0,0.2); color: #FF9900; border: 1px solid rgba(255,153,0,0.4); }
-  .preview-label-report  { background: rgba(0,168,224,0.2); color: #00A8E0; border: 1px solid rgba(0,168,224,0.4); }
-  .preview-label-study   { background: rgba(0,200,83,0.2);  color: #00C853; border: 1px solid rgba(0,200,83,0.4); }
-  .preview-label-lp      { background: rgba(124,106,239,0.2); color: #7C6AEF; border: 1px solid rgba(124,106,239,0.4); }
+  .preview-label-amazon { background: rgba(255,153,0,0.15); color: #D48800; border: 1px solid rgba(255,153,0,0.3); }
+  .preview-label-report { background: rgba(46,139,192,0.15); color: #1B6B93; border: 1px solid rgba(46,139,192,0.3); }
+  .preview-label-study  { background: rgba(46,125,50,0.15); color: #2E7D32; border: 1px solid rgba(46,125,50,0.3); }
+  .preview-label-voyage { background: rgba(13,59,102,0.15); color: #0D3B66; border: 1px solid rgba(13,59,102,0.3); }
 
   .card-body { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; }
-  .card-client { font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 6px; }
-  .card-title { font-size: 15px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
-  .card-desc { font-size: 12px; color: var(--muted); line-height: 1.6; flex: 1; }
+  .card-client { font-size: 11px; color: #6a9bb5; letter-spacing: 1px; margin-bottom: 4px; }
+  .card-title { font-size: 15px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; color: #0D3B66; }
+  .card-desc { font-size: 12px; color: #4a7c9b; line-height: 1.6; flex: 1; }
+  .tag-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
+  .tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; background: rgba(13,59,102,0.06); border: 1px solid rgba(13,59,102,0.1); color: #4a7c9b; }
+
   .card-footer {
     padding: 12px 20px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(13,59,102,0.08);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .card-date { font-size: 11px; color: var(--muted); }
-  .card-arrow { font-size: 13px; color: var(--accent); opacity: 0; transition: opacity 0.15s; }
+  .card-date { font-size: 11px; color: #6a9bb5; }
+  .card-arrow { font-size: 13px; color: #2E8BC0; opacity: 0; transition: opacity 0.2s; }
   .card:hover .card-arrow { opacity: 1; }
 
-  /* TAG CHIPS */
-  .tag-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
-  .tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
-
-  /* EMPTY STATE */
   .coming-soon {
-    background: var(--surface);
-    border: 1px dashed var(--border);
-    border-radius: 14px;
+    background: rgba(255,255,255,0.5);
+    border: 2px dashed rgba(13,59,102,0.15);
+    border-radius: 16px;
     padding: 32px;
     text-align: center;
-    color: var(--muted);
+    color: #6a9bb5;
     font-size: 13px;
+    backdrop-filter: blur(4px);
   }
-  .coming-soon .icon { font-size: 32px; margin-bottom: 10px; opacity: 0.4; }
+  .coming-soon .icon { font-size: 32px; margin-bottom: 10px; opacity: 0.5; }
 
-  /* STATS BAR */
-  .stats-bar {
-    max-width: 1100px;
-    margin: 0 auto 32px;
-    padding: 0 40px;
-    display: flex;
-    gap: 32px;
-  }
-  .stat { text-align: center; }
-  .stat-num { font-size: 28px; font-weight: 700; color: var(--accent); }
-  .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-top: 2px; }
-
-  /* FOOTER */
+  /* ── フッター ── */
   .footer {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: 20px 40px;
+    background: rgba(13,59,102,0.08);
+    backdrop-filter: blur(8px);
+    padding: 20px;
     text-align: center;
     font-size: 11px;
-    color: var(--muted);
+    color: #6a9bb5;
     letter-spacing: 1px;
   }
 
+  /* ── 相互リンク ── */
+  .crosslink {
+    max-width: 1100px;
+    margin: 0 auto 32px;
+    padding: 0 20px;
+  }
+  .crosslink a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: rgba(13,59,102,0.08);
+    border: 1px solid rgba(13,59,102,0.15);
+    border-radius: 14px;
+    text-decoration: none;
+    color: #0D3B66;
+    transition: background 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .crosslink a:hover { background: rgba(13,59,102,0.14); }
+  .crosslink-icon { font-size: 28px; }
+  .crosslink-title { font-size: 14px; font-weight: 700; }
+  .crosslink-desc { font-size: 11px; color: #6a9bb5; margin-top: 2px; }
+
   @media (max-width: 600px) {
-    .header { padding: 16px 20px; }
-    .hero { padding: 36px 20px 28px; }
-    .hero-title { font-size: 26px; }
-    .grid { padding: 0 16px 40px; grid-template-columns: 1fr; }
-    .filter-bar { padding: 0 16px 16px; }
-    .stats-bar { padding: 0 16px; gap: 20px; }
+    .header { padding: 40px 16px 16px; }
+    .grid { padding: 0 12px 60px; grid-template-columns: 1fr; }
+    .stats { gap: 24px; }
+    .sun { width: 50px; height: 50px; top: 20px; right: 20px; }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="logo">
-    <div class="logo-mark">⚡</div>
-    <div>
-      <div class="logo-text">一進AI — Output Gallery</div>
-      <div class="logo-sub">isshins0919-svg.github.io/ai-park/docs</div>
-    </div>
-  </div>
-  <div class="header-badge">POWERED BY CLAUDE CODE</div>
+<!-- 背景 -->
+<div class="sky"></div>
+<div class="sun"></div>
+<div class="clouds">
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  <div class="cloud c4"></div>
+</div>
+<div class="seagulls">
+  <div class="gull g1">~</div>
+  <div class="gull g2">~</div>
+  <div class="gull g3">~</div>
+</div>
+<div class="waves">
+  <div class="wave-line"></div>
+  <div class="wave-line"></div>
 </div>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-label">OUTPUT GALLERY</div>
-  <h1 class="hero-title">AIが生み出した<br><strong>成果物ライブラリ</strong></h1>
-  <p class="hero-desc">Amazon戦略 / レポート / LPモックアップ — 随時更新</p>
+<!-- HEADER -->
+<div class="header">
+  <div class="ship-icon">&#x26f5;</div>
+  <h1>一進VOYAGE号</h1>
+  <div class="subtitle">ISSHIN VOYAGE &mdash; DAYLIGHT OCEAN</div>
+  <div class="motto">&#x2693; Bon Voyage!</div>
+  <div class="desc">AIが生み出した成果物を公開する港 &mdash; 昼の航海</div>
 </div>
 
 <!-- STATS -->
-<div class="stats-bar">
-  <div class="stat">
-    <div class="stat-num" id="docCount">13</div>
+<div class="stats">
+  <div style="text-align:center">
+    <div class="stat-num" id="docCount">14</div>
     <div class="stat-label">DOCUMENTS</div>
   </div>
-  <div class="stat">
+  <div style="text-align:center">
     <div class="stat-num">2</div>
     <div class="stat-label">CLIENTS</div>
   </div>
-  <div class="stat">
-    <div class="stat-num">3</div>
+  <div style="text-align:center">
+    <div class="stat-num">4</div>
     <div class="stat-label">PROJECTS</div>
   </div>
 </div>
 
 <!-- FILTER -->
 <div class="filter-bar">
-  <button class="filter-btn active" onclick="filter('all', this)">すべて</button>
+  <button class="filter-btn active" onclick="filter('all', this)">&#x26f5; すべて</button>
   <button class="filter-btn" onclick="filter('amazon', this)">Amazon</button>
-  <button class="filter-btn" onclick="filter('report', this)">レポート</button>
-  <button class="filter-btn" onclick="filter('study', this)">スタディ</button>
+  <button class="filter-btn" onclick="filter('report', this)">REPORT</button>
+  <button class="filter-btn" onclick="filter('study', this)">STUDY</button>
+  <button class="filter-btn" onclick="filter('voyage', this)">VOYAGE</button>
+</div>
+
+<!-- 夜の海へのリンク -->
+<div class="crosslink">
+  <a href="../reports/">
+    <div class="crosslink-icon">&#x1F319;</div>
+    <div>
+      <div class="crosslink-title">夜の航海 &mdash; Reports Ocean</div>
+      <div class="crosslink-desc">星空の下のレポート一覧へ出航する</div>
+    </div>
+  </a>
 </div>
 
 <!-- GRID -->
 <div class="grid" id="grid">
 
+  <!-- VOYAGE号クルーマップ -->
+  <a class="card" href="voyage-crew-map.html" target="_blank" data-tag="voyage">
+    <div class="card-preview card-preview-voyage">
+      &#x2693;
+      <span class="preview-label preview-label-voyage">VOYAGE</span>
+    </div>
+    <div class="card-body">
+      <div class="card-client">航海長 イッシン &times; 一進VOYAGE号</div>
+      <div class="card-title">一進VOYAGE号 クルーマップ &mdash; 全64クルーの航海図</div>
+      <div class="card-desc">64クルー・7部門の全体像。6つの航海（協力ミッション）、コンテキストTier設計、命名メリットを可視化。船のミッション宣言付き。</div>
+      <div class="tag-row">
+        <span class="tag">VOYAGE号</span>
+        <span class="tag">64クルー</span>
+        <span class="tag">7部門</span>
+        <span class="tag">航海図</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="card-date">2026-04-04</span>
+      <span class="card-arrow">&#x2192;</span>
+    </div>
+  </a>
+
   <!-- Camicks Amazon 撮影香盤表 -->
   <a class="card" href="camicks-amazon-shooting-plan.html" target="_blank" data-tag="amazon">
     <div class="card-preview card-preview-amazon">
-      📸
+      &#x1F4F8;
       <span class="preview-label preview-label-amazon">AMAZON</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Camicks（キャミックス）× 澤田株式会社</div>
+      <div class="card-client">Camicks &times; 澤田株式会社</div>
       <div class="card-title">Amazon撮影香盤表 v3.0</div>
-      <div class="card-desc">7枚画像アーク × AI撮影コンテ複数パターン × 他社Amazon画像リファレンス10選。AI参考画像15枚埋め込み。撮影→AI仕上げフロー。</div>
+      <div class="card-desc">7枚画像アーク &times; AI撮影コンテ複数パターン &times; 他社Amazon画像リファレンス10選。AI参考画像15枚埋め込み。</div>
       <div class="tag-row">
         <span class="tag">撮影計画</span>
-        <span class="tag">AI×実写ハイブリッド</span>
+        <span class="tag">AI&times;実写</span>
         <span class="tag">競合リサーチ付き</span>
       </div>
     </div>
     <div class="card-footer">
       <span class="card-date">2026-04-03</span>
-      <span class="card-park">Banner Park v7.0</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
   <!-- Camicks Amazon Mockup -->
   <a class="card" href="camicks-amazon-mockup.html" target="_blank" data-tag="amazon">
     <div class="card-preview card-preview-amazon">
-      🛒
+      &#x1F6D2;
       <span class="preview-label preview-label-amazon">AMAZON</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Camicks（キャミックス）× 澤田株式会社</div>
+      <div class="card-client">Camicks &times; 澤田株式会社</div>
       <div class="card-title">Amazon商品ページ モックアップ</div>
-      <div class="card-desc">シークレット五本指ソックス出品用。全7枚の確定画像・確定コピー5本・比較表・スペック・レビューセクションを実装。サムネイルクリックで画像切り替えあり。</div>
+      <div class="card-desc">シークレット五本指ソックス出品用。全7枚の確定画像・確定コピー5本・比較表・スペック・レビューセクションを実装。</div>
       <div class="tag-row">
         <span class="tag">Amazon出品</span>
-        <span class="tag">¥2,480</span>
+        <span class="tag">&yen;2,480</span>
         <span class="tag">GO判定済み</span>
-        <span class="tag">薬機法クリア</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.04.03</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-04-03</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
-  <!-- Claude Code 勉強会レポート -->
+  <!-- Claude Code 勉強会 -->
   <a class="card" href="studypark-claude-code-2026-04-01.html" target="_blank" data-tag="study">
     <div class="card-preview card-preview-study">
-      📚
+      &#x1F4DA;
       <span class="preview-label preview-label-study">STUDY</span>
     </div>
     <div class="card-body">
       <div class="card-client">スタパク（澤田一進）</div>
       <div class="card-title">【スタパク】Claude Code勉強会レポート</div>
-      <div class="card-desc">Claude Codeの活用法・エージェント設計・Park Skills体系を整理した勉強会アウトプット。AIシステム設計のナレッジ集。</div>
+      <div class="card-desc">Claude Codeの活用法・エージェント設計・Park Skills体系を整理した勉強会アウトプット。</div>
       <div class="tag-row">
         <span class="tag">Claude Code</span>
         <span class="tag">AIエージェント</span>
-        <span class="tag">Park Skills</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.04.01</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-04-01</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
   <!-- Camicks Amazon Launch Report -->
   <a class="card" href="camicks-amazon-launch-report.html" target="_blank" data-tag="amazon">
     <div class="card-preview card-preview-amazon">
-      📊
+      &#x1F4CA;
       <span class="preview-label preview-label-amazon">AMAZON</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Camicks（キャミックス）× 澤田株式会社</div>
+      <div class="card-client">Camicks &times; 澤田株式会社</div>
       <div class="card-title">Amazon出品 完全戦略レポート</div>
-      <div class="card-desc">Amazon部長クン v3.1 Phase 0〜4診断。薬機法チェック・7軸29点画像評価・GO判定・出品チェックリスト・月商ロードマップを完全収録。</div>
+      <div class="card-desc">Amazonキャプテン v3.1 Phase 0〜4診断。薬機法チェック・7軸29点画像評価・GO判定・月商ロードマップを完全収録。</div>
       <div class="tag-row">
         <span class="tag">Phase 0〜4</span>
         <span class="tag">GO判定済み</span>
-        <span class="tag">出品チェックリスト</span>
         <span class="tag">月商ロードマップ</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.04.03</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-04-03</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
-  <!-- Amazon CMO v3.1 Upgrade Report -->
+  <!-- Amazon CMO v3.1 Upgrade -->
   <a class="card" href="amazon-cmo-v31-upgrade-report.html" target="_blank" data-tag="report">
     <div class="card-preview card-preview-report">
-      🤖
+      &#x1F916;
       <span class="preview-label preview-label-report">REPORT</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Amazon部長クン AIチーム</div>
-      <div class="card-title">Amazon部長クン v3.1 アップグレードレポート</div>
-      <div class="card-desc">v3.0→v3.1の変更内容と知識化の価値を解説。11体AIエージェント全体像・PDF知識取り込みの効果・残り改善ロードマップを収録。</div>
+      <div class="card-client">Amazonキャプテン AIチーム</div>
+      <div class="card-title">Amazonキャプテン v3.1 アップグレードレポート</div>
+      <div class="card-desc">v3.0→v3.1の変更内容と知識化の価値を解説。11体AIエージェント全体像・PDF知識取り込みの効果を収録。</div>
       <div class="tag-row">
         <span class="tag">AIエージェント</span>
         <span class="tag">v3.1</span>
-        <span class="tag">久野将司PDF反映</span>
-        <span class="tag">A9アルゴリズム</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.04.03</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-04-03</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
-  <!-- Camicks Amazon Strategy Report -->
+  <!-- Camicks Strategy Report -->
   <a class="card" href="camicks-amazon-strategy-report.html" target="_blank" data-tag="amazon">
     <div class="card-preview card-preview-amazon">
-      📋
+      &#x1F4CB;
       <span class="preview-label preview-label-amazon">AMAZON</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Camicks（キャミックス）× 澤田株式会社</div>
-      <div class="card-title">Amazon出品 クリエイティブ × KW × 価格戦略</div>
+      <div class="card-client">Camicks &times; 澤田株式会社</div>
+      <div class="card-title">Amazon出品 クリエイティブ &times; KW &times; 価格戦略</div>
       <div class="card-desc">ミドル丈シークレット五本指ソックスのAmazon出品戦略。競合分析・SKU設計・タイトル・箇条書き・KW・商品画像7枚を収録。</div>
       <div class="tag-row">
         <span class="tag">競合分析</span>
         <span class="tag">KW設計</span>
-        <span class="tag">¥2,480</span>
+        <span class="tag">&yen;2,480</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.03.19</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-03-19</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
-  <!-- Camicks Creative Process Report -->
+  <!-- Camicks Creative Process -->
   <a class="card" href="camicks-creative-process-report.html" target="_blank" data-tag="amazon">
     <div class="card-preview card-preview-amazon">
-      🎨
+      &#x1F3A8;
       <span class="preview-label preview-label-amazon">AMAZON</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Camicks（キャミックス）× 澤田株式会社</div>
+      <div class="card-client">Camicks &times; 澤田株式会社</div>
       <div class="card-title">Camicks クリエイティブ制作プロセスレポート</div>
       <div class="card-desc">Banner Park v7.0によるCamicksバナー制作の全プロセス。v1〜v5の生成記録・品質検証・デザイン設計書を収録。</div>
       <div class="tag-row">
         <span class="tag">Banner Park</span>
         <span class="tag">v7.0</span>
-        <span class="tag">画像生成</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.03.19</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-03-19</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
   <!-- Amazon CMO v3 Report -->
   <a class="card" href="amazon_cmo_v3_report.html" target="_blank" data-tag="report">
     <div class="card-preview card-preview-report">
-      🤖
+      &#x1F916;
       <span class="preview-label preview-label-report">REPORT</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Amazon部長クン AIチーム</div>
-      <div class="card-title">Amazon部長クン v3.0 — 何がどう賢くなったか</div>
+      <div class="card-client">Amazonキャプテン AIチーム</div>
+      <div class="card-title">Amazonキャプテン v3.0 &mdash; 何がどう賢くなったか</div>
       <div class="card-desc">v2.0→v3.0の全面刷新レポート。組織設計・KW層分析・薬機法チェック・7軸評価・PDCAループの設計思想を解説。</div>
       <div class="tag-row">
         <span class="tag">v3.0</span>
         <span class="tag">設計思想</span>
-        <span class="tag">AIエージェント</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.04.03</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-04-03</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
   <!-- Camicks A+ Content -->
   <a class="card" href="camicks-aplus-content.html" target="_blank" data-tag="amazon">
     <div class="card-preview card-preview-amazon">
-      ✨
+      &#x2728;
       <span class="preview-label preview-label-amazon">AMAZON</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Camicks（キャミックス）× 澤田株式会社</div>
+      <div class="card-client">Camicks &times; 澤田株式会社</div>
       <div class="card-title">Camicks A+コンテンツ 設計ラフ</div>
       <div class="card-desc">Amazon A+コンテンツのデザイン設計ラフ。ブランドストーリー・素材科学・比較表・着用シーンの4セクション構成。</div>
       <div class="tag-row">
@@ -448,58 +575,57 @@
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.04.03</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-04-03</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
   <!-- Camicks C Philosophy -->
   <a class="card" href="camicks-c-philosophy.html" target="_blank" data-tag="amazon">
     <div class="card-preview card-preview-amazon">
-      🌾
+      &#x1F33E;
       <span class="preview-label preview-label-amazon">AMAZON</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Camicks（キャミックス）× 澤田株式会社</div>
-      <div class="card-title">Camicks C案 — 素材哲学型クリエイティブ</div>
-      <div class="card-desc">camifine®和紙の素材哲学を前面に出した画像設計案。「和紙は、もともと呼吸している。」コンセプトの視覚化。</div>
+      <div class="card-client">Camicks &times; 澤田株式会社</div>
+      <div class="card-title">Camicks C案 &mdash; 素材哲学型クリエイティブ</div>
+      <div class="card-desc">camifine&reg;和紙の素材哲学を前面に出した画像設計案。「和紙は、もともと呼吸している。」コンセプトの視覚化。</div>
       <div class="tag-row">
-        <span class="tag">camifine®</span>
+        <span class="tag">camifine&reg;</span>
         <span class="tag">素材哲学</span>
-        <span class="tag">クリエイティブ案</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.04.03</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-04-03</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
-  <!-- Camicks Page Mockup (相対パス版) -->
+  <!-- Camicks Page Mockup (制作版) -->
   <a class="card" href="camicks-amazon-page-mockup.html" target="_blank" data-tag="amazon">
     <div class="card-preview card-preview-amazon">
-      🛍️
+      &#x1F6CD;&#xFE0F;
       <span class="preview-label preview-label-amazon">AMAZON</span>
     </div>
     <div class="card-body">
-      <div class="card-client">Camicks（キャミックス）× 澤田株式会社</div>
+      <div class="card-client">Camicks &times; 澤田株式会社</div>
       <div class="card-title">Amazon商品ページ モックアップ（制作版）</div>
-      <div class="card-desc">相対パス参照版のAmazonモックアップ。サムネイル切り替えUI・比較表・スペック・レビューセクションを実装した制作過程版。</div>
+      <div class="card-desc">相対パス参照版のAmazonモックアップ。サムネイル切り替えUI・比較表・スペック・レビューセクションを実装。</div>
       <div class="tag-row">
         <span class="tag">モックアップ</span>
         <span class="tag">制作版</span>
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.04.03</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-04-03</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
   <!-- Sawada AI Consulting Report -->
   <a class="card" href="sawada-ai-consulting-report.html" target="_blank" data-tag="report">
     <div class="card-preview card-preview-report">
-      💼
+      &#x1F4BC;
       <span class="preview-label preview-label-report">REPORT</span>
     </div>
     <div class="card-body">
@@ -512,15 +638,15 @@
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.03.10</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-03-10</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
   <!-- Sawada Article LP Philosophy -->
   <a class="card" href="sawada-article-lp-philosophy-report.html" target="_blank" data-tag="report">
     <div class="card-preview card-preview-report">
-      📝
+      &#x1F4DD;
       <span class="preview-label preview-label-report">REPORT</span>
     </div>
     <div class="card-body">
@@ -534,59 +660,31 @@
       </div>
     </div>
     <div class="card-footer">
-      <span class="card-date">2026.03.15</span>
-      <span class="card-arrow">開く →</span>
+      <span class="card-date">2026-03-15</span>
+      <span class="card-arrow">&#x2192;</span>
     </div>
   </a>
 
-  <!-- VOYAGE号 クルーマップ -->
-  <a class="card" href="voyage-crew-map.html" target="_blank" data-tag="report">
-    <div class="card-preview card-preview-report">
-      ⚓
-      <span class="preview-label preview-label-report">REPORT</span>
-    </div>
-    <div class="card-body">
-      <div class="card-client">航海長 イッシン × 一進VOYAGE号</div>
-      <div class="card-title">一進VOYAGE号 クルーマップ — 全64クルーの航海図</div>
-      <div class="card-desc">64クルー・7部門の全体像。6つの航海（協力ミッション）、コンテキストTier設計、命名メリットを可視化。船のミッション宣言付き。</div>
-      <div class="tag-row">
-        <span class="tag">VOYAGE号</span>
-        <span class="tag">64クルー</span>
-        <span class="tag">7部門</span>
-        <span class="tag">航海図</span>
-      </div>
-    </div>
-    <div class="card-footer">
-      <span class="card-date">2026-04-04</span>
-      <span class="card-arrow">開く →</span>
-    </div>
-  </a>
-
-  <!-- Coming Soon Slot -->
+  <!-- Coming Soon -->
   <div class="coming-soon" data-tag="__hidden">
-    <div class="icon">＋</div>
-    <div>次のアウトプットが追加されます</div>
+    <div class="icon">&#x2693;</div>
+    <div>次の航海で新しい成果物が届きます</div>
   </div>
 
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
-  一進AI Output Gallery — GitHub Pages / isshins0919-svg/ai-park
-  &nbsp;|&nbsp; Powered by Claude Code &amp; Amazon部長クン v3.1
+  一進VOYAGE号 &mdash; Daylight Ocean &nbsp;|&nbsp; Powered by Claude Code
 </div>
 
 <script>
   function filter(tag, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('.card, .coming-soon').forEach(card => {
+    document.querySelectorAll('#grid > .card, #grid > .coming-soon').forEach(card => {
       const t = card.dataset.tag || '';
-      if (tag === 'all' || t === tag) {
-        card.style.display = '';
-      } else {
-        card.style.display = 'none';
-      }
+      card.style.display = (tag === 'all' || t === tag) ? '' : 'none';
     });
   }
 </script>
