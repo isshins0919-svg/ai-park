@@ -29,10 +29,21 @@ import textwrap
 import unicodedata
 from pathlib import Path
 from dataclasses import dataclass, field
+from concurrent.futures import ThreadPoolExecutor
 
 import cv2
 import numpy as np
 import requests
+try:
+    import mediapipe as mp
+    _MP_FACE_MESH = mp.solutions.face_mesh.FaceMesh(
+        static_image_mode=True, max_num_faces=1,
+        refine_landmarks=True, min_detection_confidence=0.5
+    )
+    _MEDIAPIPE_AVAILABLE = True
+except Exception:
+    _MP_FACE_MESH = None
+    _MEDIAPIPE_AVAILABLE = False
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from moviepy.editor import (
@@ -118,6 +129,56 @@ def _get_face_cascade():
     return _FACE_CASCADE
 
 
+# ─── Gemini APIキー管理 ─────────────────────────────────────
+class GeminiKeyManager:
+    """
+    複数のGemini APIキーをラウンドロビンで管理。
+    429 (rate limit) エラー時に自動で次のキーに切り替える。
+    """
+    def __init__(self, keys: list[str]):
+        self._keys = [k for k in keys if k]
+        self._idx = 0
+
+    def __bool__(self) -> bool:
+        return bool(self._keys)
+
+    def current(self) -> str | None:
+        return self._keys[self._idx % len(self._keys)] if self._keys else None
+
+    def rotate(self) -> str | None:
+        if len(self._keys) <= 1:
+            return self.current()
+        self._idx = (self._idx + 1) % len(self._keys)
+        print(f"  🔄 Gemini APIキー切り替え → KEY_{self._idx + 1}")
+        return self.current()
+
+_GEMINI_KEY_MGR: GeminiKeyManager | None = None
+
+
+def _gemini_post(payload: dict, timeout: int = 20,
+                 model: str = "gemini-2.5-flash") -> requests.Response:
+    """
+    Gemini APIへのPOST。
+    _GEMINI_KEY_MGR が設定されていれば 429 時にキーローテーションしてリトライ。
+    """
+    mgr = _GEMINI_KEY_MGR
+    max_attempts = len(mgr._keys) if mgr else 1
+    last_resp = None
+    for attempt in range(max(1, max_attempts)):
+        key = mgr.current() if mgr else None
+        if not key:
+            raise RuntimeError("Gemini APIキーが設定されていません")
+        url = (f"https://generativelanguage.googleapis.com/v1beta/models"
+               f"/{model}:generateContent?key={key}")
+        last_resp = requests.post(url, json=payload, timeout=timeout)
+        if last_resp.status_code == 429 and mgr and len(mgr._keys) > 1 and attempt < max_attempts - 1:
+            print(f"  ⚠️  Gemini rate limit (429)。キーローテーション中...")
+            mgr.rotate()
+            continue
+        return last_resp
+    return last_resp
+
+
 # ─── Gemini Vision: クリップ内容分析 ──────────────────────────
 def analyze_clip_with_gemini(clip_path: str, gemini_key: str,
                              scene_text: str = "") -> dict:
@@ -177,11 +238,7 @@ def analyze_clip_with_gemini(clip_path: str, gemini_key: str,
             "JSON only。余計な説明不要。"
         )})
 
-        resp = requests.post(
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}",
-            json={"contents": [{"parts": parts}]},
-            timeout=20
-        )
+        resp = _gemini_post({"contents": [{"parts": parts}]}, timeout=20)
         raw = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
         raw = re.sub(r"```json|```", "", raw).strip()
         # Geminiが複数JSONオブジェクトやトレイリングカンマを返すことがあるので堅牢にパース
@@ -350,6 +407,8 @@ def generate_scene_narrations(
     【コアロジック】シーンごとに個別TTSを生成し、音声の実尺を返す。
     返値: [(mp3_path_or_None, duration_sec), ...]  ← scenesと同順
 
+    v14: ThreadPoolExecutor で全シーン並列生成（最大15並列）。
+    Fish Audioは並列リクエストを受け付けるため、20シーン分が3〜5秒に短縮される。
     音声尺が映像尺を決定する。映像を音声に合わせる（逆は不可）。
     """
     catalog = load_voice_catalog()
@@ -361,22 +420,37 @@ def generate_scene_narrations(
         print(f"  🎚  TTS速度: {effective_speed:.2f}x（voice={voice_speed}, target={tts_speed:.2f}）")
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
-    results: list[tuple[str | None, float]] = []
 
+    # 結果リストをシーン数で初期化（順序保持のためインデックスで管理）
+    results: list[tuple[str | None, float]] = [(None, MIN_DURATION)] * len(scenes)
+
+    # テキストありシーンのみタスクリストに追加
+    tts_tasks: list[tuple[int, object, str, str]] = []
     for i, scene in enumerate(scenes):
-        if not scene.text:
-            results.append((None, MIN_DURATION))
-            continue
-        mp3_path = str(Path(output_dir) / f"scene_{scene.no:02d}.mp3")
-        tts_text = normalize_text_for_tts(scene.text)
+        if scene.text:
+            mp3_path = str(Path(output_dir) / f"scene_{scene.no:02d}.mp3")
+            tts_text = normalize_text_for_tts(scene.text)
+            tts_tasks.append((i, scene, mp3_path, tts_text))
+
+    if not tts_tasks:
+        return results
+
+    print(f"  🚀 TTS並列生成: {len(tts_tasks)}シーン（最大15並列）")
+
+    def _do_tts(task: tuple) -> tuple:
+        idx, scene, mp3_path, tts_text = task
         ok = _fish_tts_single(tts_text, fish_key, mp3_path, reference_id, effective_speed)
-        if ok:
-            trim_silence(mp3_path)  # v13: 先頭・末尾の無音をカット
-            dur = get_audio_duration(mp3_path)
-            print(f"      🎙  S{scene.no:02d} → {dur:.2f}s")
-            results.append((mp3_path, max(dur, MIN_DURATION)))
-        else:
-            results.append((None, max(MIN_DURATION, len(scene.text) / CHARS_PER_SEC)))
+        return idx, scene, mp3_path, ok
+
+    with ThreadPoolExecutor(max_workers=min(15, len(tts_tasks))) as executor:
+        for idx, scene, mp3_path, ok in executor.map(_do_tts, tts_tasks):
+            if ok:
+                trim_silence(mp3_path)  # 先頭・末尾の無音をカット
+                dur = get_audio_duration(mp3_path)
+                print(f"      🎙  S{scene.no:02d} → {dur:.2f}s")
+                results[idx] = (mp3_path, max(dur, MIN_DURATION))
+            else:
+                results[idx] = (None, max(MIN_DURATION, len(scene.text) / CHARS_PER_SEC))
 
     total = sum(d for _, d in results)
     print(f"  ✅ シーン別TTS完了 合計: {total:.1f}s ({len(results)}シーン)")
@@ -1008,13 +1082,33 @@ def image_to_clip(path: str, duration: float) -> VideoFileClip | ImageClip:
 
 
 def detect_face_center(img_arr: np.ndarray) -> tuple[int, int] | None:
-    """BGRのnumpy配列から顔の中心座標(cx, cy)を返す。見つからなければNone"""
+    """
+    BGRのnumpy配列から顔の中心座標(cx, cy)を返す。見つからなければNone。
+    MediaPipe Face Mesh（468ランドマーク）を優先使用。
+    未インストール or 検出失敗時はOpenCV Haar Cascadeにフォールバック。
+    """
+    h, w = img_arr.shape[:2]
+
+    # ── MediaPipe Face Mesh（優先） ──────────────────────────
+    if _MEDIAPIPE_AVAILABLE and _MP_FACE_MESH is not None:
+        try:
+            rgb = cv2.cvtColor(img_arr, cv2.COLOR_BGR2RGB)
+            result = _MP_FACE_MESH.process(rgb)
+            if result.multi_face_landmarks:
+                lm = result.multi_face_landmarks[0].landmark
+                # 全ランドマークの重心を顔中心とする
+                cx = int(sum(p.x for p in lm) / len(lm) * w)
+                cy = int(sum(p.y for p in lm) / len(lm) * h)
+                return (cx, cy)
+        except Exception:
+            pass  # フォールバックへ
+
+    # ── OpenCV Haar Cascade（フォールバック） ─────────────────
     gray = cv2.cvtColor(img_arr, cv2.COLOR_BGR2GRAY)
     cascade = _get_face_cascade()
     faces = cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4, minSize=(30, 30))
     if len(faces) == 0:
         return None
-    # 最大の顔を採用
     x, y, fw, fh = max(faces, key=lambda f: f[2] * f[3])
     return (x + fw // 2, y + fh // 2)
 
@@ -1464,14 +1558,10 @@ def analyze_reference_video(ref_path: str, gemini_key: str, ref_level: int = 2) 
             "- white_barsの場合、テロップはバー内にあるので、バーの中でのY位置を返すこと\n"
             "JSON only。"
         )
-        resp = requests.post(
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}",
-            json={"contents": [{"parts": [
-                {"inline_data": {"mime_type": "image/jpeg", "data": sample_frames[0]}},
-                {"text": layout_prompt}
-            ]}]},
-            timeout=15
-        )
+        resp = _gemini_post({"contents": [{"parts": [
+            {"inline_data": {"mime_type": "image/jpeg", "data": sample_frames[0]}},
+            {"text": layout_prompt}
+        ]}]}, timeout=15)
         raw = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
         raw = re.sub(r"```json|```", "", raw).strip()
         layout_info = json.loads(raw) or {}
@@ -1582,8 +1672,15 @@ def main():
     def _get_env(key):
         return subprocess.run(["zsh", "-i", "-c", f"echo ${key}"],
                               capture_output=True, text=True).stdout.strip()
-    gemini_key = _get_env("GEMINI_API_KEY_1") if not args.no_ai else None
-    fish_key   = _get_env("FISH_AUDIO_API_KEY") if not args.no_ai else None
+    fish_key = _get_env("FISH_AUDIO_API_KEY") if not args.no_ai else None
+    if not args.no_ai:
+        global _GEMINI_KEY_MGR
+        gemini_keys = [_get_env(f"GEMINI_API_KEY_{i}") for i in [1, 2, 3]]
+        _GEMINI_KEY_MGR = GeminiKeyManager(gemini_keys)
+        gemini_key = _GEMINI_KEY_MGR.current()
+        print(f"  🔑 Gemini APIキー: {len(_GEMINI_KEY_MGR._keys)}本 読み込み済み")
+    else:
+        gemini_key = None
 
     # 台本パース
     print("\n📄 台本パース中...")

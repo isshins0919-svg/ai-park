@@ -3,15 +3,15 @@
   "configurations": [
     {
       "name": "rough-cut-remotion",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["remotion", "studio"],
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && npx remotion studio"],
       "port": 3000,
       "cwd": "rough-cut/remotion"
     },
     {
       "name": "video-ai-remotion",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["remotion", "studio", "--port", "3100"],
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && npx remotion studio --port 3100"],
       "port": 3100,
       "cwd": "video-ai/remotion"
     },
