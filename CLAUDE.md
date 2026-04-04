@@ -24,8 +24,9 @@
 
 ### セッション終了（おつかれ/ばいばい/おわり/また明日/終了/寝る）
 
-1. `git status` → 変更あり → `git add -A && git commit -m "sync: YYYY-MM-DD" && git push origin main`
-2. うまくいかなかったSkillがあれば改善提案
+1. `python3 scripts/update_crew_map.py` — クルーマップ自動更新
+2. `git status` → 変更あり → `git add -A && git commit -m "sync: YYYY-MM-DD" && git push origin main`
+3. うまくいかなかったSkillがあれば改善提案
 
 ### プランモード
 
