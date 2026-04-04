@@ -1,0 +1,26 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "rough-cut-remotion",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["remotion", "studio"],
+      "port": 3000,
+      "cwd": "rough-cut/remotion"
+    },
+    {
+      "name": "video-ai-remotion",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["remotion", "studio", "--port", "3100"],
+      "port": 3100,
+      "cwd": "video-ai/remotion"
+    },
+    {
+      "name": "article-banner-maker",
+      "runtimeExecutable": "streamlit",
+      "runtimeArgs": ["run", "app.py", "--server.port", "8501"],
+      "port": 8501,
+      "cwd": "article-banner-maker"
+    }
+  ]
+}
