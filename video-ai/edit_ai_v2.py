@@ -1691,10 +1691,14 @@ def main():
 
     # ─── BGMミックス ─────────────────────────────────────────
     if bgm_filename:
-        # BGMファイルを素材フォルダまたはCSVと同じディレクトリから検索
+        # BGMファイルを検索（カレントディレクトリ相対 → clips → CSVと同じフォルダの順）
         bgm_path = None
-        for search_dir in [Path(args.clips), Path(args.script).parent]:
-            candidate = search_dir / bgm_filename
+        search_candidates = [
+            Path(bgm_filename),                        # カレントディレクトリ相対（shortad-park/bgm/... 等）
+            Path(args.clips) / bgm_filename,            # clipsフォルダ内
+            Path(args.script).parent / bgm_filename,    # CSVと同じフォルダ
+        ]
+        for candidate in search_candidates:
             if candidate.exists():
                 bgm_path = str(candidate)
                 break
