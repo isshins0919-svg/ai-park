@@ -600,8 +600,11 @@ def _parse_clip_refs_csv(raw: str) -> list[str]:
     tokens = [t.strip() for t in re.split(r"[\s\n]+", raw) if t.strip()]
     refs = []
     for t in tokens:
+        # "clip-001", "clip-012" などの clip-NNN 形式（新フォーマット）
+        if re.match(r"^clip-\d+$", t, re.IGNORECASE):
+            refs.append(t)
         # "1-1", "12-2" などの X-N 形式
-        if re.match(r"^\d{1,2}-\d$", t):
+        elif re.match(r"^\d{1,2}-\d$", t):
             refs.append(t)
         # 単体番号 "3", "11", "15" など
         elif re.match(r"^\d+$", t):
@@ -708,7 +711,7 @@ def _parse_clip_refs(raw: str) -> list[str]:
 
 
 # ── クリップ検索 ──────────────────────────────────────────
-EXTS = [".mp4", ".MP4", ".mov", ".MOV", ".HEIC", ".heic", ".jpeg", ".jpg", ".JPG", ".PNG"]
+EXTS = [".mp4", ".MP4", ".mov", ".MOV", ".HEIC", ".heic", ".jpeg", ".jpg", ".JPG", ".PNG", ".webp", ".WEBP"]
 
 def expand_clip_refs(refs: list[str], clips_dir: str) -> list[str]:
     """
@@ -1128,7 +1131,7 @@ def _load_single_clip(clip_path: str, duration: float,
                       scene_text: str = "") -> VideoFileClip | ImageClip:
     """1つのクリップファイルを読み込み、縦型クロップ・ベストモーメント選定して返す。"""
     ext = Path(clip_path).suffix.lower()
-    if ext in (".heic", ".jpeg", ".jpg", ".png"):
+    if ext in (".heic", ".jpeg", ".jpg", ".png", ".webp"):
         return image_to_clip(clip_path, duration)
 
     try:
