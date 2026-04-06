@@ -27,6 +27,8 @@ import subprocess
 import tempfile
 import textwrap
 import unicodedata
+import time
+import random
 from pathlib import Path
 from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor
@@ -56,7 +58,7 @@ import moviepy.video.fx.all as vfx
 OUTPUT_SIZE    = (1080, 1920)   # 縦型 9:16
 TARGET_DURATION = 60.0          # 目標動画尺（秒）
 CHARS_PER_SEC  = 4.0            # テロップ読速（文字/秒）
-MIN_DURATION   = 1.5            # シーン最短秒
+MIN_DURATION   = 0.9            # シーン最短秒（1.5→0.9: テンポ改善）
 MAX_DURATION   = 10.0           # シーン最長秒（長すぎ防止）
 FONT_SIZE           = 76         # 通常テロップ（68→76に拡大）
 FONT_EMPH_SIZE      = 84         # 強調テロップ
@@ -334,8 +336,8 @@ def get_audio_duration(path: str) -> float:
             return 0.0
 
 
-def trim_silence(audio_path: str, threshold_db: float = -40.0,
-                 min_silence_ms: int = 50) -> str:
+def trim_silence(audio_path: str, threshold_db: float = -32.0,
+                 min_silence_ms: int = 30) -> str:
     """ナレーションmp3の先頭・末尾の無音をトリムしたファイルを返す。
     ffmpegのsilenceremoveフィルタで先頭・末尾を処理。元ファイルを上書き。
     """
@@ -369,31 +371,46 @@ def trim_silence(audio_path: str, threshold_db: float = -40.0,
 
 # ─── Fish Audio: シーン単位TTS（同期方式の核心） ──────────────
 def _fish_tts_single(text: str, fish_key: str, output_path: str,
-                     reference_id: str | None, speed: float) -> bool:
-    """1シーン分のテキストをFish AudioでTTS生成。成功でTrue。"""
+                     reference_id: str | None, speed: float,
+                     max_retries: int = 4) -> bool:
+    """1シーン分のテキストをFish AudioでTTS生成。成功でTrue。
+    429 (Rate Limit) の場合はエクスポネンシャルバックオフ+ジッターでリトライ。
+    """
     payload: dict = {"text": text, "format": "mp3", "latency": "normal"}
     if reference_id:
         payload["reference_id"] = reference_id
     if speed != 1.0:
         payload["prosody"] = {"speed": speed}
-    try:
-        resp = requests.post(
-            "https://api.fish.audio/v1/tts",
-            headers={"Authorization": f"Bearer {fish_key}", "Content-Type": "application/json"},
-            json=payload,
-            stream=True,
-            timeout=60
-        )
-        if resp.status_code != 200:
-            print(f"      ⚠️  Fish Audio エラー: {resp.status_code}")
+
+    for attempt in range(max_retries):
+        try:
+            resp = requests.post(
+                "https://api.fish.audio/v1/tts",
+                headers={"Authorization": f"Bearer {fish_key}", "Content-Type": "application/json"},
+                json=payload,
+                stream=True,
+                timeout=60
+            )
+            if resp.status_code == 429:
+                wait = (2 ** attempt) + random.uniform(0.5, 2.0)
+                print(f"      ⏳ Fish Audio 429 rate limit → {wait:.1f}s待機後リトライ ({attempt+1}/{max_retries})")
+                time.sleep(wait)
+                continue
+            if resp.status_code != 200:
+                print(f"      ⚠️  Fish Audio エラー: {resp.status_code}")
+                return False
+            with open(output_path, "wb") as f:
+                for chunk in resp.iter_content(1024):
+                    f.write(chunk)
+            return True
+        except Exception as e:
+            if attempt < max_retries - 1:
+                time.sleep(2.0)
+                continue
+            print(f"      ⚠️  Fish Audio 失敗: {e}")
             return False
-        with open(output_path, "wb") as f:
-            for chunk in resp.iter_content(1024):
-                f.write(chunk)
-        return True
-    except Exception as e:
-        print(f"      ⚠️  Fish Audio 失敗: {e}")
-        return False
+    print(f"      ⚠️  Fish Audio: {max_retries}回リトライ後もエラー")
+    return False
 
 
 def generate_scene_narrations(
@@ -435,14 +452,14 @@ def generate_scene_narrations(
     if not tts_tasks:
         return results
 
-    print(f"  🚀 TTS並列生成: {len(tts_tasks)}シーン（最大15並列）")
+    print(f"  🚀 TTS並列生成: {len(tts_tasks)}シーン（最大4並列・429リトライ付き）")
 
     def _do_tts(task: tuple) -> tuple:
         idx, scene, mp3_path, tts_text = task
         ok = _fish_tts_single(tts_text, fish_key, mp3_path, reference_id, effective_speed)
         return idx, scene, mp3_path, ok
 
-    with ThreadPoolExecutor(max_workers=min(15, len(tts_tasks))) as executor:
+    with ThreadPoolExecutor(max_workers=min(4, len(tts_tasks))) as executor:
         for idx, scene, mp3_path, ok in executor.map(_do_tts, tts_tasks):
             if ok:
                 trim_silence(mp3_path)  # 先頭・末尾の無音をカット
@@ -457,18 +474,20 @@ def generate_scene_narrations(
     return results
 
 
-def estimate_tts_speed(scenes: list, target_sec: float = TARGET_DURATION * 0.92) -> float:
+def estimate_tts_speed(scenes: list, target_sec: float = TARGET_DURATION * 0.72) -> float:
     """
     テキスト文字数から自然な読み上げ時間を推定し、
-    target_secに収まる最小速度（1.0以上）を返す。
+    target_secに収まる最小速度（1.25以上）を返す。
+    目標尺を72%に設定（60s×0.72≒43s）で無言間を最小化。
+    最低でも1.25x（速め）を保証してテンポを維持。
     """
     total_chars = sum(len(normalize_text_for_tts(s.text)) for s in scenes if s.text)
     natural_sec = total_chars / CHARS_PER_SEC
-    if natural_sec <= target_sec:
-        return 1.0
-    speed = natural_sec / target_sec
+    speed = natural_sec / target_sec if natural_sec > target_sec else 1.0
     speed = round(min(speed, 2.0), 2)
-    print(f"  📊 推定読み上げ時間: {natural_sec:.1f}s → 目標{target_sec:.0f}s → TTS速度: {speed}x")
+    # テンポ維持のため最低速度フロアを1.25xに設定
+    speed = max(speed, 1.25)
+    print(f"  📊 推定読み上げ時間: {natural_sec:.1f}s → 目標{target_sec:.0f}s → TTS速度: {speed}x（フロア1.25x）")
     return speed
 
 
@@ -588,15 +607,20 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str |
             break
 
         elif mode == "narr":
-            key = col0
-            val = row[1].strip() if len(row) > 1 else ""
+            # 4列形式: col0=key, col1=val / 5列形式: col0="", col1=key, col2=val
+            if col0:
+                key, val = col0, (row[1].strip() if len(row) > 1 else "")
+            else:
+                key, val = (row[1].strip() if len(row) > 1 else ""), (row[2].strip() if len(row) > 2 else "")
             if key == "声のカテゴリー" and val:
                 # "女性・クール（健康食品・サプリ向き" → "女性・クール" に正規化
                 voice_category = val.split("（")[0].strip()
 
         elif mode == "ref":
-            key = col0
-            val = row[1].strip() if len(row) > 1 else ""
+            if col0:
+                key, val = col0, (row[1].strip() if len(row) > 1 else "")
+            else:
+                key, val = (row[1].strip() if len(row) > 1 else ""), (row[2].strip() if len(row) > 2 else "")
             if "反映レベル" in key and val:
                 # "1", "2", "3" or "1（エッセンス）" → 先頭数字を抽出
                 m = re.match(r"(\d)", val)
@@ -604,31 +628,49 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str |
                     ref_level = max(1, min(3, int(m.group(1))))
 
         elif mode == "bgm":
-            key = col0
-            val = row[1].strip() if len(row) > 1 else ""
-            if key == "BGMファイル" and val:
+            # 4列形式: col0=key, col1=val / 5列形式: col0="", col1=key, col2=val
+            if col0:
+                key, val = col0, (row[1].strip() if len(row) > 1 else "")
+            else:
+                key, val = (row[1].strip() if len(row) > 1 else ""), (row[2].strip() if len(row) > 2 else "")
+            # "BGMファイル" / "BGMファイル名" どちらのキー名も受け付ける
+            if key in ("BGMファイル", "BGMファイル名") and val:
                 bgm_filename = val
 
         elif mode == "anno":
             # 注釈テキストが入っている行（col0が空 or "固定注釈⇨"でない）
-            text = row[1].strip() if len(row) > 1 else ""
-            if text and "【例" not in text and "【必要" not in text and "注釈テキスト" not in text:
+            # 5列形式では col1=key/note, col2=text になる場合があるので両方チェック
+            text = ""
+            for ci in [1, 2]:
+                candidate = row[ci].strip() if len(row) > ci else ""
+                if candidate and "【例" not in candidate and "【必要" not in candidate and "注釈テキスト" not in candidate and "注釈内容" not in candidate:
+                    text = candidate
+                    break
+            if text:
                 if global_annotation:
                     global_annotation += "　" + text
                 else:
                     global_annotation = text
 
         elif mode == "script":
-            # ヘッダ行スキップ
-            if col0 in ("No.", ""):
-                continue
-            if not col0.isdigit():
-                continue
+            # 4列形式: col0=No., col1=text, col2=素材, col3=note
+            # 5列形式: col0="",  col1=No., col2=text, col3=素材, col4=note
+            if col0 == "" and len(row) > 1 and row[1].strip().isdigit():
+                # 5列形式（新テンプレート）
+                no_str   = row[1].strip()
+                text     = row[2].strip() if len(row) > 2 else ""
+                sozai_raw= row[3].strip() if len(row) > 3 else ""
+                note     = row[4].strip() if len(row) > 4 else ""
+            elif col0.isdigit():
+                # 4列形式（旧テンプレート）
+                no_str   = col0
+                text     = row[1].strip() if len(row) > 1 else ""
+                sozai_raw= row[2].strip() if len(row) > 2 else ""
+                note     = row[3].strip() if len(row) > 3 else ""
+            else:
+                continue  # ヘッダ行 or 空行スキップ
 
-            no = int(col0)
-            text = row[1].strip() if len(row) > 1 else ""
-            sozai_raw = row[2].strip() if len(row) > 2 else ""
-            note = row[3].strip() if len(row) > 3 else ""
+            no = int(no_str)
 
             # テキスト空・テンプレートプレースホルダーはスキップ
             if not text or text in ("【ここに書く】",) or text == "【ここに書く】":
@@ -995,17 +1037,18 @@ def make_telop(text: str, size: tuple, emphasis: bool = False,
     total_h    = line_h * len(main_lines) + (sub_line_h * len(sub_lines) + 4 if sub_lines else 0)
     pad_x, pad_y = 24, 14
 
-    # 動的Y位置: 参考動画は基本「上部」配置（y=0.15〜0.25）
-    # テロップが大きいほど上、小さいほどやや下に（映像を活かす）
+    # 動的Y位置: Meta Reels安全帯（y_ratio 0.55〜0.78）に配置
+    # 下部320px（y>0.833）はいいね/コメント/URLバナーUI干渉ゾーンのため禁止
     if fs >= 80:
-        dynamic_y = 0.18   # 大きいテロップ → 上部に大胆に配置
+        dynamic_y = 0.62   # 大きいテロップ → HOOK・強調（安全帯上部）
     elif fs >= 65:
-        dynamic_y = 0.22   # 中くらい → やや上
+        dynamic_y = 0.67   # 中くらい → 通常説明（安全帯中央）
     else:
-        dynamic_y = 0.28   # 小さいテロップ → 少し下げて映像スペース確保
+        dynamic_y = 0.72   # 小さいテロップ → OFFER・CTA（安全帯下部）
 
-    # telop_y_ratio が明示的に設定されていない場合は動的Y、設定済みなら尊重
-    effective_y = dynamic_y if telop_y_ratio == TELOP_Y_RATIO else telop_y_ratio
+    # Meta安全帯フロア: 0.55以上、0.833未満を保証
+    raw_y = dynamic_y if telop_y_ratio == TELOP_Y_RATIO else telop_y_ratio
+    effective_y = max(raw_y, 0.55)   # Meta Reels安全帯下限（旧0.75は誤り・UI干渉ゾーン）
     base_y = int(h * effective_y) - total_h // 2
     # 上端・下端はみ出し防止
     base_y = max(20, min(h - total_h - 40, base_y))
@@ -1054,8 +1097,57 @@ def make_telop(text: str, size: tuple, emphasis: bool = False,
 
 
 # ── 静止画をVideoクリップ化 ─────────────────────────────────
+
+def fit_to_vertical_blur_fill(img: Image.Image) -> Image.Image:
+    """
+    静止画を 1080×1920 に変換する「ブラー背景フィル」方式。
+
+    設計思想:
+    - 広告素材・商品画像は「制作者が意図した全体」を見せるべき
+    - 横長・正方形画像をクロップすると重要な要素が失われる
+    - Instagram/TikTokリール標準: ブラー背景+全体前景でプロ品質
+
+    処理:
+    - 背景: 元画像をcover(拡大充填)→ ガウスブラー(r=30)→ 輝度50%で暗化
+    - 前景: 元画像をcontain(クロップなし)で中央に配置
+    - 結果: 黒帯なし・全体表示・フレーム余白なし
+    """
+    from PIL import ImageFilter, ImageEnhance
+
+    ow, oh = OUTPUT_SIZE
+    w, h = img.size
+
+    # アスペクト比が9:16に近い場合はそのままリサイズ
+    if abs(w / h - ow / oh) < 0.08:
+        return img.resize((ow, oh), Image.LANCZOS)
+
+    # ── 背景: coverスケール → ブラー → 暗化 ──────────────────
+    scale_cover = max(ow / w, oh / h)
+    bg_w = int(w * scale_cover)
+    bg_h = int(h * scale_cover)
+    bg = img.resize((bg_w, bg_h), Image.LANCZOS)
+    bx = (bg_w - ow) // 2
+    by = (bg_h - oh) // 2
+    bg = bg.crop((bx, by, bx + ow, by + oh))
+    bg = bg.filter(ImageFilter.GaussianBlur(radius=30))
+    bg = ImageEnhance.Brightness(bg).enhance(0.45)   # 暗化して前景を引き立てる
+
+    # ── 前景: containスケール（クロップなし）→ 中央配置 ──────
+    scale_contain = min(ow / w, oh / h)
+    fg_w = int(w * scale_contain)
+    fg_h = int(h * scale_contain)
+    fg = img.resize((fg_w, fg_h), Image.LANCZOS)
+
+    canvas = bg.copy()
+    x_off = (ow - fg_w) // 2
+    y_off = (oh - fg_h) // 2
+    canvas.paste(fg, (x_off, y_off))
+
+    return canvas
+
+
 def image_to_clip(path: str, duration: float) -> VideoFileClip | ImageClip:
-    """HEIC/JPG → ImageClip（縦型にクロップ済み）"""
+    """HEIC/JPG → ImageClip（ブラー背景フィル・クロップなし）"""
     try:
         # HEICはffmpegでJPGに変換
         if path.lower().endswith(".heic"):
@@ -1070,9 +1162,10 @@ def image_to_clip(path: str, duration: float) -> VideoFileClip | ImageClip:
         img = Image.open(path)
         img = ImageOps.exif_transpose(img)  # EXIF回転情報を適用
         img = img.convert("RGB")
-        img = fit_to_vertical(img)
+        img = fit_to_vertical_blur_fill(img)   # ← ブラー背景フィル（旧: fit_to_vertical）
         arr = np.array(img)
         clip = ImageClip(arr, duration=duration)
+        print(f"    🖼️  画像: ブラー背景フィル適用 ({Path(path).name})")
         return clip
     except Exception as e:
         print(f"  ⚠️  画像読み込みエラー {Path(path).name}: {e}")
@@ -1351,18 +1444,29 @@ def build_continuous_group_clip(
                          .set_opacity(1.0)
                          .set_start(t_offset))
             layers.append(telop_clip)
+        t_offset += audio_dur
+
+    # ① global_annotation を先に追加（全シーン共通・フルデュレーション）
+    if global_annotation:
+        ann_arr = make_annotation_overlay(global_annotation, OUTPUT_SIZE, y_start=24)
+        layers.append(ImageClip(ann_arr, duration=total_dur).set_opacity(1.0))
+
+    # ② scene.note を後から追加（global_annotationより上に描画される）
+    t_offset = 0.0
+    for scene, (_, audio_dur) in zip(group_scenes, group_audios):
         if scene.note:
-            note_y = 24 + (ANNOT_FONT_SIZE + 6) * (global_annotation.count("\n") + 1) + 10
+            # global_annotationの行数を計算して、その下にnoteを配置
+            import textwrap as _tw
+            ann_lines = []
+            for raw_line in global_annotation.split("\n"):
+                ann_lines.extend(_tw.wrap(raw_line, width=ANNOT_CHARS_LINE) or [raw_line])
+            note_y = 24 + (ANNOT_FONT_SIZE + 6) * max(len(ann_lines), 1) + 10
             note_arr = make_annotation_overlay(scene.note, OUTPUT_SIZE, y_start=note_y)
             note_clip = (ImageClip(note_arr, duration=audio_dur)
                         .set_opacity(1.0)
                         .set_start(t_offset))
             layers.append(note_clip)
         t_offset += audio_dur
-
-    if global_annotation:
-        ann_arr = make_annotation_overlay(global_annotation, OUTPUT_SIZE, y_start=24)
-        layers.append(ImageClip(ann_arr, duration=total_dur).set_opacity(1.0))
 
     return CompositeVideoClip(layers, size=OUTPUT_SIZE)
 
@@ -1444,12 +1548,19 @@ def build_scene_clip(scene: Scene, clips_dir: str,
                                scene_no=scene.no, total_scenes=total_scenes)
         layers.append(ImageClip(telop_arr, duration=base.duration).set_opacity(1.0))
 
+    # ① global_annotation を先に追加（下層）
     if global_annotation:
         ann_arr = make_annotation_overlay(global_annotation, OUTPUT_SIZE, y_start=24)
         layers.append(ImageClip(ann_arr, duration=base.duration).set_opacity(1.0))
 
+    # ② scene.note を後から追加（global_annotationより上に描画）
     if scene.note:
-        note_y = 24 + (ANNOT_FONT_SIZE + 6) * (global_annotation.count("\n") + 1) + 10
+        # global_annotationの実際の行数を計算してnote_yを決定
+        import textwrap as _tw
+        ann_lines = []
+        for raw_line in global_annotation.split("\n"):
+            ann_lines.extend(_tw.wrap(raw_line, width=ANNOT_CHARS_LINE) or [raw_line])
+        note_y = 24 + (ANNOT_FONT_SIZE + 6) * max(len(ann_lines), 1) + 10
         note_arr = make_annotation_overlay(scene.note, OUTPUT_SIZE, y_start=note_y)
         layers.append(ImageClip(note_arr, duration=base.duration).set_opacity(1.0))
 

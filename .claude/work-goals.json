@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-31",
+  "last_updated": "2026-04-06 10:15",
   "jobs": [
     {
       "id": 1,
@@ -86,28 +86,37 @@
       "id": 11,
       "name": "mauri進捗を上長に説明できる状態にする",
       "goal": "mauri事業の進捗・数字・ネクストを上長に話せるレベルに整理する",
-      "status": "active",
+      "status": "completed",
       "priority": "high",
       "created_at": "2026-03-25",
-      "notes": "14:30〜17:00のClaude code枠で進める"
+      "notes": "2026-04-06完了！全ゴール達成"
     },
     {
       "id": 12,
       "name": "mauriのAIでの戦い方を明確にする",
       "goal": "mauri事業においてAIをどう使って戦うかの方針・打ち手を言語化する",
-      "status": "active",
+      "status": "completed",
       "priority": "high",
       "created_at": "2026-03-25",
-      "notes": ""
+      "notes": "2026-04-06完了！全ゴール達成"
     },
     {
       "id": 14,
       "name": "camicksアップデート提案",
       "goal": "Camicksの最新状況を踏まえた追加提案を完成させる",
-      "status": "active",
+      "status": "completed",
       "priority": "high",
       "created_at": "2026-03-26",
-      "notes": "週末（3/29）にやる"
+      "notes": "2026-04-06完了！→撮影ゴールに切り替え"
+    },
+    {
+      "id": 19,
+      "name": "camicks撮影",
+      "goal": "Camicksの撮影を完了させる",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-06",
+      "notes": "期限: 2026-04月中"
     },
     {
       "id": 15,
@@ -125,7 +134,7 @@
       "status": "active",
       "priority": "high",
       "created_at": "2026-03-26",
-      "notes": "期限: 来週中（2026-04-03まで）"
+      "notes": "期限: 2026-04-11（金）に延長"
     },
     {
       "id": 16,
@@ -140,19 +149,37 @@
       "id": 18,
       "name": "動画自動編集AI v2 — テスト動画1本出力",
       "goal": "台本 + 素材クリップを登録→縦型1分動画mp4が自動出力される仕組みをテスト動画1本完成まで動かす",
-      "status": "active",
+      "status": "completed",
       "priority": "high",
       "created_at": "2026-03-31",
-      "notes": "台本先行（Aパターン）。素材はプルースト2 or 別商品。ffmpegインストール済み。edit_ai.py v2として実装"
+      "notes": "2026-04-06完了！動画Proミッション達成"
+    },
+    {
+      "id": 20,
+      "name": "記事ABテスト作成AIへの移行",
+      "goal": "記事フィードバックAIを記事ABテスト作成AIに移行し、今週中に2商品で検証・実装を完了する",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-06",
+      "notes": "期限: 2026-04-11（金）。2商品での検証・実装が完了条件"
+    },
+    {
+      "id": 21,
+      "name": "動画編集AIでの2本配信",
+      "goal": "動画編集AIを使って動画を2本配信する",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-06",
+      "notes": ""
     },
     {
       "id": 13,
-      "name": "クリエイティブAgentチーム構築（週1体ペース）",
-      "goal": "記事LP・バナー・動画の専門Agent12体を今週中に全て完成させる",
+      "name": "クリエイティブAgentチーム構築（週1〜2体ペース）",
+      "goal": "記事LP・バナー・動画の専門Agent12体を週1〜2体ペースで完成させる",
       "status": "active",
       "priority": "high",
       "created_at": "2026-03-25",
-      "notes": "対象: hook-critic / cro-specialist / n1-validator / legal-checker / visual-director / typography-critic / brand-guardian / image-prompt-optimizer + 動画系4体 = 計12体。週1ペースで3ヶ月で完成"
+      "notes": "対象: hook-critic / cro-specialist / n1-validator / legal-checker / visual-director / typography-critic / brand-guardian / image-prompt-optimizer + 動画系4体 = 計12体。週1〜2体ペースで完成。どんどん進める！"
     }
   ]
 }

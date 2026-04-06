@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>動画編集AI — 知見可視化レポート</title>
+<style>
+  :root {
+    --navy: #0f1b35;
+    --ocean: #1a3a5c;
+    --wave: #2d6a8f;
+    --gold: #f0c040;
+    --accent: #4fc3f7;
+    --green: #66bb6a;
+    --red: #ef5350;
+    --orange: #ffa726;
+    --text: #e8edf5;
+    --muted: #8fa5be;
+    --card: #162340;
+    --border: #2a4060;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* ヘッダー */
+  .header {
+    text-align: center;
+    padding: 40px 0 30px;
+    border-bottom: 2px solid var(--wave);
+    margin-bottom: 40px;
+  }
+  .header h1 { font-size: 2rem; color: var(--gold); margin-bottom: 8px; }
+  .header p { color: var(--muted); font-size: 0.9rem; }
+  .header .badge {
+    display: inline-block;
+    background: var(--wave);
+    color: var(--accent);
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin: 6px 4px;
+  }
+
+  /* セクション */
+  .section { margin-bottom: 48px; }
+  .section-title {
+    font-size: 1.3rem;
+    color: var(--gold);
+    border-left: 4px solid var(--gold);
+    padding-left: 14px;
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--accent);
+    margin: 20px 0 10px;
+    font-weight: bold;
+  }
+
+  /* カード */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card h4 { color: var(--accent); margin-bottom: 8px; font-size: 0.95rem; }
+  .card p, .card li { font-size: 0.88rem; color: var(--text); margin-bottom: 4px; }
+  .card ul { padding-left: 18px; }
+
+  /* グリッド */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* テーブル */
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th {
+    background: var(--ocean);
+    color: var(--gold);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--wave);
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td { background: rgba(45,106,143,0.15); }
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin: 1px 2px;
+    font-weight: bold;
+  }
+  .tag-perm { background: #1b4d3e; color: var(--green); }
+  .tag-temp { background: #4d2c00; color: var(--orange); }
+  .tag-new  { background: #1a2a4d; color: var(--accent); }
+  .tag-fix  { background: #4d1a1a; color: var(--red); }
+  .tag-dpro { background: #2d1b4d; color: #ce93d8; }
+
+  /* ソース帰属 */
+  .source-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .src-icon { font-size: 1rem; }
+
+  /* ステータスバー */
+  .status-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .status-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+  }
+  .status-item .val { font-size: 1.2rem; font-weight: bold; color: var(--gold); }
+
+  /* 凡例 */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    align-items: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+
+  /* フロー図 */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    margin: 16px 0;
+  }
+  .flow-step {
+    background: var(--ocean);
+    border: 1px solid var(--wave);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    text-align: center;
+    min-width: 110px;
+  }
+  .flow-step .step-num { font-size: 0.65rem; color: var(--muted); }
+  .flow-step .step-label { color: var(--text); }
+  .flow-step .step-src { font-size: 0.65rem; margin-top: 4px; }
+  .flow-arrow {
+    color: var(--wave);
+    font-size: 1.2rem;
+    padding: 0 4px;
+  }
+
+  /* コードブロック */
+  code {
+    background: #0a1525;
+    color: #90caf9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "Menlo", monospace;
+    font-size: 0.8rem;
+  }
+
+  /* 注記 */
+  .note {
+    background: rgba(240, 192, 64, 0.08);
+    border-left: 3px solid var(--gold);
+    padding: 10px 16px;
+    font-size: 0.83rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ヘッダー -->
+  <div class="header">
+    <h1>🎬 動画編集AI — 知見可視化レポート</h1>
+    <p>edit_ai_v2.py が「何を知っていて」「どこからその知識を得たか」を完全可視化</p>
+    <br>
+    <span class="badge">📅 2026-04-07更新</span>
+    <span class="badge">🎬 参考動画: 参考動画-ai isshin.mp4</span>
+    <span class="badge">📊 DPro: スキンケア/デオドラント系</span>
+    <span class="badge">🎯 v6 proust_v6_blur.mp4 時点</span>
+  </div>
+
+  <!-- 凡例 -->
+  <div class="legend">
+    <strong>ラベル凡例:</strong>
+    <div class="legend-item"><span class="tag tag-perm">定常</span> 常に適用される知識</div>
+    <div class="legend-item"><span class="tag tag-temp">一時</span> 参考動画セッションごとに変わる</div>
+    <div class="legend-item"><span class="tag tag-dpro">DPro</span> 動画Pro分析から得た知見</div>
+    <div class="legend-item"><span class="tag tag-new">NEW</span> v4〜v6で追加・改善</div>
+    <div class="legend-item"><span class="tag tag-fix">FIX</span> バグ修正</div>
+  </div>
+
+  <!-- ステータスサマリー -->
+  <div class="status-bar">
+    <div class="status-item">現行バージョン<br><span class="val">v6</span></div>
+    <div class="status-item">総尺<br><span class="val">35.5s</span></div>
+    <div class="status-item">シーン数<br><span class="val">25</span></div>
+    <div class="status-item">音声成功率<br><span class="val">25/25</span></div>
+    <div class="status-item">静止画処理<br><span class="val">Blur Fill</span></div>
+    <div class="status-item">テロップY帯<br><span class="val">0.62〜0.72</span></div>
+  </div>
+
+  <!-- ===== 1. 編集の進め方 ===== -->
+  <div class="section">
+    <div class="section-title">1. 編集の進め方</div>
+
+    <div class="section-sub">▶ パイプライン全体フロー</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">①</div>
+        <div class="step-label">台本CSV<br>パース</div>
+        <div class="step-src"><span class="tag tag-perm">定常</span></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-num">②</div>
+        <div class="step-label">参考動画<br>解析</div>
+        <div class="step-src"><span class="tag tag-temp">一時</span></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-num">③</div>
+        <div class="step-label">Fish Audio<br>TTS生成</div>
+        <div class="step-src"><span class="tag tag-perm">定常</span></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-num">④</div>
+        <div class="step-label">Gemini<br>素材分析</div>
+        <div class="step-src"><span class="tag tag-perm">定常</span></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-num">⑤</div>
+        <div class="step-label">クリップ<br>生成</div>
+        <div class="step-src"><span class="tag tag-perm">定常</span></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-num">⑥</div>
+        <div class="step-label">結合+BGM<br>出力</div>
+        <div class="step-src"><span class="tag tag-perm">定常</span></div>
+      </div>
+    </div>
+
+    <div class="section-sub">▶ 尺・テンポ設計</div>
+    <div class="card">
+      <table>
+        <tr>
+          <th>パラメータ</th>
+          <th>現在値</th>
+          <th>出典</th>
+          <th>変遷・理由</th>
+        </tr>
+        <tr>
+          <td>TARGET_DURATION</td>
+          <td><code>60.0s</code></td>
+          <td><span class="tag tag-perm">定常</span></td>
+          <td>目標尺（実際にはTTSが短くなりがち）</td>
+        </tr>
+        <tr>
+          <td>実TTS尺の目標</td>
+          <td><code>TARGET × 0.72 ≒ 43s</code></td>
+          <td><span class="tag tag-new">NEW v4</span></td>
+          <td>v3で66s超→v4で34-35sに短縮。0.92→0.72に変更</td>
+        </tr>
+        <tr>
+          <td>MIN_DURATION</td>
+          <td><code>0.9s</code></td>
+          <td><span class="tag tag-new">NEW v4</span></td>
+          <td>v3まで1.5s → テンポが遅い → 0.9sに短縮</td>
+        </tr>
+        <tr>
+          <td>TTS速度フロア</td>
+          <td><code>1.25x〜2.0x</code></td>
+          <td><span class="tag tag-new">NEW v4</span></td>
+          <td>最低1.25x保証（ゆっくり読み上げ防止）</td>
+        </tr>
+        <tr>
+          <td>v6実績尺</td>
+          <td><code>35.5s</code></td>
+          <td><span class="tag tag-temp">一時</span></td>
+          <td>参考動画(35.9s)のテンポが反映された結果</td>
+        </tr>
+        <tr>
+          <td>参考動画尺</td>
+          <td><code>35.9s</code></td>
+          <td><span class="tag tag-temp">一時 ← 参考動画</span></td>
+          <td>解析結果→TTS速度計算に間接影響</td>
+        </tr>
+        <tr>
+          <td>シーン同期方式</td>
+          <td>シーン単位TTS同期</td>
+          <td><span class="tag tag-perm">定常</span></td>
+          <td>テロップ↔ナレーション1:1対応。映像をTTSに合わせる</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section-sub">▶ 参考動画から抽出する情報（②の詳細）</div>
+    <div class="grid-2">
+      <div class="card">
+        <h4>🎬 一時情報（参考動画を変えると変わる）</h4>
+        <ul>
+          <li>フォントサイズ（Geminiがpx推定 → 比例変換）</li>
+          <li>テロップY位置の初期候補（layout_typeがfull_bleedの場合）</li>
+          <li>テロップ文字色・縁取り色</li>
+          <li>カットテンポ（avg_cut_sec）</li>
+          <li>layout_type: white_bars / full_bleed / overlay</li>
+          <li>総尺（ref_duration）</li>
+        </ul>
+        <div class="note">⚠️ 今の参考動画は white_bars → Y位置はデフォルト(0.72)が使われている</div>
+      </div>
+      <div class="card">
+        <h4>📌 定常情報（コードに焼き込まれた知識）</h4>
+        <ul>
+          <li>Meta Reels安全帯 (y=0.55〜0.78) <span class="tag tag-new">NEW v5</span></li>
+          <li>dynamic_y: 0.62/0.67/0.72 <span class="tag tag-new">NEW v5</span></li>
+          <li>white_bars → Y位置はデフォルトを使う（バー方式と混在させない）</li>
+          <li>フォントサイズ上限/下限クリップ (50〜100px)</li>
+          <li>はみ出し安全チェック</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 2. 素材選び ===== -->
+  <div class="section">
+    <div class="section-title">2. 素材選び</div>
+
+    <div class="section-sub">▶ Gemini Vision による素材分析（analyze_clip_with_gemini）</div>
+    <div class="card">
+      <table>
+        <tr>
+          <th>判断軸</th>
+          <th>処理内容</th>
+          <th>出典</th>
+        </tr>
+        <tr>
+          <td>被写体の特定</td>
+          <td>素材の前半/中間/後半3フレームを送り「何が映っているか」をGeminiが記述</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>クロップX位置</td>
+          <td>被写体の横位置(0〜100%)をGeminiが推定 → 9:16変換時の横切り出し位置を決定</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>ベスト開始秒</td>
+          <td>「感情を最も動かす瞬間は何秒目か」をGeminiが判断（表情変化・動き開始・商品登場）</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>テロップとの一致</td>
+          <td>scene_textをGeminiに渡し、テロップ内容と映像内容の整合を考慮させる</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>素材の優先順位</td>
+          <td>CSVの「素材ID」列で指定。AIが選ばない（人間がCSVで指定）</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>複数素材の等分</td>
+          <td>1シーンに複数素材IDが書かれていると等分して使用</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>連続グループ化</td>
+          <td>同一素材IDが連続するシーンは1本の映像を流し続け、テロップだけ切り替え</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+      </table>
+      <div class="note">📊 DPro知見: 美容系広告の上位クリエイティブは「問題提示シーン」「医師/専門家シーン」「使用シーン」「CTA/価格シーン」の4ブロック構成が多い。現在のCSV設計はこの構成を踏襲。</div>
+    </div>
+  </div>
+
+  <!-- ===== 3. クロップ・カットの仕方 ===== -->
+  <div class="section">
+    <div class="section-title">3. 素材のカット・クロップの仕方</div>
+
+    <div class="section-sub">▶ 動画素材のクロップロジック（crop_clip_to_vertical）</div>
+    <div class="card">
+      <table>
+        <tr>
+          <th>条件</th>
+          <th>処理</th>
+          <th>出典</th>
+        </tr>
+        <tr>
+          <td>9:16に近い（差<8%）</td>
+          <td>そのままリサイズ</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>やや横広（ratio: 0.6〜1.2）</td>
+          <td>Geminiのcrop_x_percentで横位置指定クロップ</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>かなり横長（ratio > 1.2）</td>
+          <td>① MediaPipe顔検出 → 顔中心にクロップ<br>② 顔なし → Gemini X%でクロップ</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>縦長（ratio < 0.5625）</td>
+          <td>高さ1920にスケール → 幅が足りなければ黒帯（ピラーボックス）</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>向き回転あり（スマホ撮影）</td>
+          <td>ffmpegで回転メタデータを焼き込んで正規化（キャッシュあり）</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section-sub">▶ 静止画のクロップロジック（v6で大幅改善）</div>
+    <div class="card">
+      <table>
+        <tr>
+          <th>バージョン</th>
+          <th>処理</th>
+          <th>問題</th>
+        </tr>
+        <tr>
+          <td><strong>〜v5</strong><br><code>fit_to_vertical</code></td>
+          <td>横長 → 顔検出してタイトクロップ<br>正方形 → 56%センタークロップ</td>
+          <td>🔴 医師が顔アップになる<br>🔴 210円コインが1.78倍ズームでずれる</td>
+        </tr>
+        <tr>
+          <td><strong>v6〜</strong><br><code>fit_to_vertical_blur_fill</code></td>
+          <td>① 背景: cover拡大 → ガウスブラー(r=30) → 輝度45%暗化<br>② 前景: containクロップなし → 中央配置</td>
+          <td>✅ 全体が見える<br>✅ 黒帯なし・プロ品質</td>
+        </tr>
+      </table>
+      <div class="note">📊 DPro知見: Instagram上位美容広告では「引き」の素材（商品全体・人物上半身）が多い。タイトな顔クロップは<br>「Before/After」「証言」シーンに限定使用されている傾向。静止画はほぼ全品「引き」で使われている。</div>
+    </div>
+
+    <div class="section-sub">▶ ベストモーメント選定（_fit_video_to_duration）</div>
+    <div class="card">
+      <table>
+        <tr>
+          <th>ロジック</th>
+          <th>内容</th>
+          <th>出典</th>
+        </tr>
+        <tr>
+          <td>best_start_sec</td>
+          <td>Geminiが指定した秒数から切り出し開始。シーンに合った感情ピークを使う</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>尺調整</td>
+          <td>TTSより長い素材 → best_start_secから必要秒数だけ切り出し<br>短い素材 → ループ or 速度調整</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>無音トリム</td>
+          <td>ナレーションMP3の先頭/末尾無音をffmpegで除去（threshold: -32dB）</td>
+          <td><span class="tag tag-new">NEW v4</span></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 4. テロップ設計 ===== -->
+  <div class="section">
+    <div class="section-title">4. テロップ設計（定常 vs 一時 の分離）</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4>📌 定常知識（コードに焼き込み済み）</h4>
+        <table>
+          <tr><th>項目</th><th>値</th><th>出典</th></tr>
+          <tr><td>デフォルトY</td><td>0.72</td><td><span class="tag tag-perm">定常</span></td></tr>
+          <tr><td>Meta安全帯</td><td>y=0.55〜0.78</td><td><span class="tag tag-dpro">DPro</span><span class="tag tag-new">NEW v5</span></td></tr>
+          <tr><td>dynamic_y(大)</td><td>0.62</td><td><span class="tag tag-dpro">DPro</span><span class="tag tag-new">NEW v5</span></td></tr>
+          <tr><td>dynamic_y(中)</td><td>0.67</td><td><span class="tag tag-dpro">DPro</span><span class="tag tag-new">NEW v5</span></td></tr>
+          <tr><td>dynamic_y(小)</td><td>0.72</td><td><span class="tag tag-dpro">DPro</span><span class="tag tag-new">NEW v5</span></td></tr>
+          <tr><td>フロア</td><td>max(raw_y, 0.55)</td><td><span class="tag tag-new">NEW v5</span></td></tr>
+          <tr><td>FONT_SIZE</td><td>76px</td><td><span class="tag tag-perm">定常</span></td></tr>
+          <tr><td>FONT_EMPH_SIZE</td><td>84px</td><td><span class="tag tag-perm">定常</span></td></tr>
+          <tr><td>1行文字数</td><td>14文字</td><td><span class="tag tag-perm">定常</span></td></tr>
+          <tr><td>テキスト色</td><td>白(#FFFFFF)</td><td><span class="tag tag-perm">定常</span></td></tr>
+          <tr><td>縁取り</td><td>黒(#000000) 4px</td><td><span class="tag tag-perm">定常</span></td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h4>🎬 一時情報（参考動画を変えると変わる）</h4>
+        <table>
+          <tr><th>項目</th><th>現在値(参考動画から)</th><th>状態</th></tr>
+          <tr><td>layout_type</td><td>white_bars</td><td>参考動画がバー方式</td></tr>
+          <tr><td>Gemini推定フォント</td><td>60〜90px（毎回変動）</td><td>変換後: 60〜90px</td></tr>
+          <tr><td>Gemini Y位置</td><td>white_bars時は不使用</td><td>→デフォルト0.72が採用</td></tr>
+          <tr><td>テロップ色</td><td>白（参考動画から転用）</td><td>ほぼ定常と一致</td></tr>
+          <tr><td>テンポ</td><td>カット検出なし/35.9s</td><td>TTS速度計算に影響</td></tr>
+        </table>
+        <div class="note">⚠️ 重要: 今の参考動画はwhite_bars方式。Y位置はGeminiの値を使わず定常のdynamic_y(0.62〜0.72)が採用されている。参考動画をfull_bleedのものに変えると、Geminiのpx値がそのままY計算に入る。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 5. 音声設計 ===== -->
+  <div class="section">
+    <div class="section-title">5. 音声・BGM設計</div>
+    <div class="card">
+      <table>
+        <tr><th>項目</th><th>内容</th><th>出典</th></tr>
+        <tr>
+          <td>TTSエンジン</td>
+          <td>Fish Audio（シーン単位同期方式）</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>声モデル</td>
+          <td>CSV「声カテゴリー」列で指定（女性・クール = reference_id: 0089dce5...）</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>並列数</td>
+          <td>最大4並列（v3の15並列から削減）</td>
+          <td><span class="tag tag-new">NEW v4</span><span class="tag tag-fix">FIX 429エラー</span></td>
+        </tr>
+        <tr>
+          <td>429リトライ</td>
+          <td>指数バックオフ + ジッター（最大4回）</td>
+          <td><span class="tag tag-new">NEW v4</span></td>
+        </tr>
+        <tr>
+          <td>BGM</td>
+          <td>CSVの「BGMファイル名」列で指定（Escort.mp3）、15%音量ミックス</td>
+          <td><span class="tag tag-perm">定常</span></td>
+        </tr>
+        <tr>
+          <td>無音トリム</td>
+          <td>silenceremove -32dB / 30ms</td>
+          <td><span class="tag tag-new">NEW v4</span></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 6. 注釈・薬機法表示 ===== -->
+  <div class="section">
+    <div class="section-title">6. 注釈・薬機法表示</div>
+    <div class="card">
+      <table>
+        <tr><th>種別</th><th>内容</th><th>出典</th><th>v6での状態</th></tr>
+        <tr>
+          <td>固定注釈（global_annotation）</td>
+          <td>全シーン通し・上部y=24pxに常時表示。薬機法テキスト</td>
+          <td><span class="tag tag-perm">定常</span></td>
+          <td>✅「※個人の感想です　※効果効能を保証するものではありません」</td>
+        </tr>
+        <tr>
+          <td>カット注釈（scene.note）</td>
+          <td>特定シーンのみ・global_annotationの下に表示</td>
+          <td><span class="tag tag-perm">定常</span></td>
+          <td>✅ S03に設定（出典URL + 10億個の計算根拠）</td>
+        </tr>
+        <tr>
+          <td>レイヤー順序バグ</td>
+          <td>S03注釈がglobal_annotationに隠れていた</td>
+          <td><span class="tag tag-fix">FIX v5</span></td>
+          <td>✅ global_annotation → note の順に修正済み</td>
+        </tr>
+        <tr>
+          <td>note_y計算</td>
+          <td>global_annotationの実折り返し行数を計算してnote_yを動的決定</td>
+          <td><span class="tag tag-fix">FIX v5</span></td>
+          <td>✅ textwrap.wrap実行後の行数を使用</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 7. DPro知見まとめ ===== -->
+  <div class="section">
+    <div class="section-title">7. DPro分析から得た知見（実装済み vs 未実装）</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4>✅ 実装済み（コードに反映）</h4>
+        <ul>
+          <li>Meta Reels安全帯 y=0.55〜0.78 <span class="tag tag-new">NEW v5</span></li>
+          <li>下部UI干渉ゾーン（y>0.833）を回避</li>
+          <li>静止画を「引き」で見せる（blur fill）<span class="tag tag-new">NEW v6</span></li>
+          <li>テロップは1行完結（CHARS_PER_LINE=14）</li>
+          <li>白文字+黒縁（美容広告スタンダード）</li>
+          <li>TTS速度1.25x〜1.92x（視聴者テンポに合わせた高速読み上げ）</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🔲 未実装（次フェーズ候補）</h4>
+        <ul>
+          <li>テロップスタイル6分類（impact / lower_third / proof / cta / emphasis / default）</li>
+          <li>シーン種別による自動スタイル割り当て（HOOK=impact, CTA=cta等）</li>
+          <li>DPro上位3本の自動参照・提案書への記載</li>
+          <li>黄色強調テキスト（数字・キーワードのハイライト）</li>
+          <li>テロップ背景帯（lower_third用）</li>
+          <li>Before/Afterシーンの split-screen対応</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      📊 <strong>DPro 実データ（2026-04-07取得 / Instagram スキンケア+除毛ジャンル 縦長動画）</strong><br><br>
+      <strong>▼ スキンケア系 縦長動画 上位6本（cost_difference順 / 最新30日）</strong><br>
+      <table style="margin-top:8px; font-size:0.78rem; border-collapse:collapse; width:100%;">
+        <tr style="background:#1a3a5c;"><th style="padding:5px 8px;text-align:left;color:#f0c040;">商品名</th><th style="padding:5px 8px;color:#f0c040;">尺</th><th style="padding:5px 8px;text-align:left;color:#f0c040;">冒頭フック（実ナレ）</th></tr>
+        <tr style="border-bottom:1px solid #2a4060;"><td style="padding:5px 8px;">SISIスパークリングパック</td><td style="padding:5px 8px;text-align:center;color:#66bb6a;">28秒</td><td style="padding:5px 8px;">「炭酸パックの常識変わる 正直タイパ最強すぎ」</td></tr>
+        <tr style="border-bottom:1px solid #2a4060;"><td style="padding:5px 8px;">ファンケル スキンパッチ</td><td style="padding:5px 8px;text-align:center;color:#66bb6a;">30秒</td><td style="padding:5px 8px;">「すべての人に無料で肌の健康測定を」</td></tr>
+        <tr style="border-bottom:1px solid #2a4060;"><td style="padding:5px 8px;">ごめんね素肌マスク</td><td style="padding:5px 8px;text-align:center;color:#66bb6a;">28秒</td><td style="padding:5px 8px;">「あのゴメンネ素肌から化粧水と乳液爆弾」</td></tr>
+        <tr style="border-bottom:1px solid #2a4060;"><td style="padding:5px 8px;">第一三共 ブライトエイジ</td><td style="padding:5px 8px;text-align:center;color:#66bb6a;">43秒</td><td style="padding:5px 8px;">「同世代よりも若見えしたい人は必見！なんとたった1本で」</td></tr>
+        <tr style="border-bottom:1px solid #2a4060;"><td style="padding:5px 8px;">オルビス ユー セット</td><td style="padding:5px 8px;text-align:center;color:#66bb6a;">31秒</td><td style="padding:5px 8px;">「すっぴんこういう毛穴気になる方へ」</td></tr>
+        <tr><td style="padding:5px 8px;">KOSE クリアターン</td><td style="padding:5px 8px;text-align:center;color:#66bb6a;">39秒</td><td style="padding:5px 8px;">「こんなに美容液が入ってる」</td></tr>
+      </table>
+      <br>
+      <strong>▼ 除毛系（プルーストに近いジャンル）縦長動画 上位3本</strong><br>
+      <table style="margin-top:8px; font-size:0.78rem; border-collapse:collapse; width:100%;">
+        <tr style="background:#1a3a5c;"><th style="padding:5px 8px;text-align:left;color:#f0c040;">商品名</th><th style="padding:5px 8px;color:#f0c040;">尺</th><th style="padding:5px 8px;text-align:left;color:#f0c040;">構造パターン</th></tr>
+        <tr style="border-bottom:1px solid #2a4060;"><td style="padding:5px 8px;">パイナップル豆乳ローション</td><td style="padding:5px 8px;text-align:center;color:#ffa726;">66〜69秒</td><td style="padding:5px 8px;">共感フック → 臨床的根拠 → 使用感 → 初回半額2250円 → 返金保証+縛りなし</td></tr>
+        <tr style="border-bottom:1px solid #2a4060;"><td style="padding:5px 8px;">VIRNAS つるるんたん</td><td style="padding:5px 8px;text-align:center;color:#ffa726;">48〜51秒</td><td style="padding:5px 8px;">差別化主張 → 仕組み解説 → 限定70%OFF → 「今日が最終日」</td></tr>
+        <tr><td style="padding:5px 8px;">SMOOTHSKIN Pure Switch</td><td style="padding:5px 8px;text-align:center;color:#ffa726;">74秒</td><td style="padding:5px 8px;">自己紹介フック → 悩み共感 → 製品紹介 → 台数限定50%OFF</td></tr>
+      </table>
+      <br>
+      <strong>▼ DPro実データから読み取れる「勝ちパターン」</strong><br>
+      ① <strong>尺</strong>: スキンケア系28〜43秒 / 除毛系48〜74秒。プルーストv6(35.5秒)はスキンケア寄り。除毛ジャンルなら<span style="color:#ffa726;">45〜50秒が最適帯</span><br>
+      ② <strong>フック型3パターン</strong>: 「〇〇な人は必見/絶対見て」「〇〇の常識変わる」「こんなに〜」が上位を独占<br>
+      ③ <strong>オファー4点セット</strong>: 価格 → 初回割引率 → 返金保証 → 定期縛りなし（全上位作品に共通）<br>
+      ④ <strong>CTA限定感ワード</strong>: 「この動画から」「今日が最終日」「在庫なくなる前に」が必須<br>
+      ⑤ <strong>テロップY帯</strong>: サムネイル分析から画面60〜75%(y=0.60〜0.75)に集中 → <span style="color:#66bb6a;">v6の0.62〜0.72と一致✅</span>
+    </div>
+  </div>
+
+  <div style="text-align:center; color: var(--muted); font-size: 0.8rem; padding: 30px 0;">
+    🚢 一進VOYAGE号 動画編集AI v6 — edit_ai_v2.py 知見可視化レポート
+  </div>
+
+</div>
+</body>
+</html>

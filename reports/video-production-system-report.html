@@ -412,6 +412,66 @@
   }
   .compare-row .arrow { color: var(--highlight); font-weight: 700; }
   .compare-row .new { color: var(--green); font-weight: 600; }
+  .update-banner {
+    background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+    border-left: 6px solid var(--gold);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    color: white;
+  }
+  .update-banner h2 {
+    color: var(--gold) !important;
+    border-bottom-color: rgba(245,166,35,0.3) !important;
+    font-size: 1.3em;
+  }
+  .update-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .update-item:last-child { border-bottom: none; }
+  .badge-new {
+    background: var(--gold);
+    color: #000;
+    font-size: 0.7em;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
+  .badge-upd {
+    background: var(--highlight);
+    color: white;
+    font-size: 0.7em;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
+  .update-item .body strong { color: var(--gold); }
+  .update-item .body { font-size: 0.92em; line-height: 1.7; color: rgba(255,255,255,0.88); }
+  .update-item .body .sub { font-size: 0.85em; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .inline-tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 8px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin: 0 2px;
+  }
+  .it-green { background: rgba(39,174,96,0.2); color: #27ae60; }
+  .it-blue  { background: rgba(52,152,219,0.2); color: #3498db; }
+  .it-gold  { background: rgba(245,166,35,0.2); color: #f5a623; }
+  .it-red   { background: rgba(233,69,96,0.2); color: #e94560; }
   .footer {
     text-align: center;
     padding: 40px 24px;
@@ -434,7 +494,7 @@
 <div class="hero">
   <h1>動画制作チーム<br>技術環境レポート</h1>
   <div class="subtitle">AI駆動パイプラインによる統合動画制作システム</div>
-  <div class="date">2026-04-04 | 一進AI 動画カントククルー主導</div>
+  <div class="date">初版 2026-04-04 ／ <strong style="color:var(--gold);">最終更新 2026-04-05</strong> | 一進AI 動画カントククルー主導</div>
 </div>
 
 <!-- ===== SUMMARY CARDS ===== -->
@@ -462,6 +522,81 @@
 </div>
 
 <div class="container">
+
+<!-- ===== UPDATE BANNER ===== -->
+<div class="update-banner">
+  <h2 style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid rgba(245,166,35,0.3);">
+    🆕 本日の更新（2026-04-05）
+  </h2>
+
+  <div class="update-item">
+    <span class="badge-upd">UPGRADED</span>
+    <div class="body">
+      <strong>Gemini API：2.0 Flash → 2.5 Flash にアップグレード</strong><br>
+      <span class="sub">クリップ映像分析の精度・速度が向上。全Gemini呼び出しを <code>_gemini_post()</code> に集約し、モデル切り替えが一か所で完結するように</span>
+    </div>
+  </div>
+
+  <div class="update-item">
+    <span class="badge-new">NEW</span>
+    <div class="body">
+      <strong>GeminiKeyManager — APIキー自動ローテーション実装</strong><br>
+      <span class="sub">3本のAPIキー（GEMINI_API_KEY_1〜3）をラウンドロビン管理。<span class="inline-tag it-red">429 Rate Limit</span> を検知すると自動的に次のキーへ切り替え、処理が止まらない耐久設計に</span>
+    </div>
+  </div>
+
+  <div class="update-item">
+    <span class="badge-new">NEW</span>
+    <div class="body">
+      <strong>TTS生成を最大15並列に（ThreadPoolExecutor 導入）</strong><br>
+      <span class="sub">25シーンのナレーション音声を逐次処理 → <span class="inline-tag it-green">最大15並列</span> で同時生成。生成時間を大幅短縮。シーン単位同期方式は維持</span>
+    </div>
+  </div>
+
+  <div class="update-item">
+    <span class="badge-upd">UPGRADED</span>
+    <div class="body">
+      <strong>顔検出エンジン：OpenCV Haar Cascade → MediaPipe Face Mesh（468点）</strong><br>
+      <span class="sub">顔ランドマーク468点の重心を縦型クロップの中心座標に使用。斜め顔・小さい顔も高精度で検出。Haar Cascadeをフォールバックとして維持</span>
+    </div>
+  </div>
+
+  <div class="update-item">
+    <span class="badge-upd">UPDATED</span>
+    <div class="body">
+      <strong>AIクルーのモデル最適化（コスト/精度の最適配分）</strong><br>
+      <span class="sub">
+        <span class="inline-tag it-blue">ブリッジクルー</span> → Claude Sonnet 4.6（LP連携判断は重要）／
+        <span class="inline-tag it-blue">マッチクルー</span> → Claude Haiku 4.5（ルールベース）／
+        <span class="inline-tag it-blue">リテンションクルー</span> → Claude Haiku 4.5（数値計算）
+      </span>
+    </div>
+  </div>
+
+  <div class="update-item">
+    <span class="badge-new">NEW</span>
+    <div class="body">
+      <strong>動画AI編集シート テンプレート v2（マーケター向け拡張）</strong><br>
+      <span class="sub">新フィールド追加：<span class="inline-tag it-gold">商材カテゴリ</span> <span class="inline-tag it-gold">N1ペルソナ</span> <span class="inline-tag it-gold">配信先</span> <span class="inline-tag it-gold">優先KPI</span> <span class="inline-tag it-gold">フック型</span> <span class="inline-tag it-gold">LP URL</span>。シーンロール（HOOK/PAIN/PIVOT/PROOF/OFFER/CTA）をnote列で管理</span>
+    </div>
+  </div>
+
+  <div class="update-item">
+    <span class="badge-upd">UPDATED</span>
+    <div class="body">
+      <strong>動画尺の考え方を変更（固定尺廃止）</strong><br>
+      <span class="sub">「60秒 / 30秒の2択」から <span class="inline-tag it-green">コンマ何秒単位の柔軟な尺設計</span> へ。商材・シーン数に合わせてTTS実尺ベースで自動決定</span>
+    </div>
+  </div>
+
+  <div class="update-item">
+    <span class="badge-new">✅ DONE</span>
+    <div class="body">
+      <strong>プルーストクリーム2 本番動画を生成完了</strong><br>
+      <span class="sub">25シーン / BGM: Escort.mp3 / 参考動画スタイル継承 → <code>video-ai/output/proust_wakiga_v2.mp4</code> として出力確認済み</span>
+    </div>
+  </div>
+</div>
 
 <!-- ===== 1. エグゼクティブサマリー ===== -->
 <section>
@@ -644,14 +779,19 @@
       <div class="desc">カントク・ジャッジ（重要判定）。最高精度の言語理解・判断</div>
     </div>
     <div class="tech-card">
-      <div class="name">Claude Haiku 4.5</div>
+      <div class="name">Claude Sonnet 4.6 <span style="background:var(--highlight);color:white;font-size:0.65em;padding:2px 8px;border-radius:10px;margin-left:6px;font-weight:700;">UPDATED</span></div>
       <div class="provider">Anthropic</div>
-      <div class="desc">各評価クルー（並列実行）。高速・低コストで並列処理に最適</div>
+      <div class="desc">ブリッジクルー（LP連携判断）。Haiku以上の理解精度が必要な判断に</div>
     </div>
     <div class="tech-card">
-      <div class="name">Gemini 2.0 Flash</div>
+      <div class="name">Claude Haiku 4.5 <span style="background:var(--highlight);color:white;font-size:0.65em;padding:2px 8px;border-radius:10px;margin-left:6px;font-weight:700;">UPDATED</span></div>
+      <div class="provider">Anthropic</div>
+      <div class="desc">マッチ・リテンション・テンポ・スタイル等の評価クルー。ルールベース・数値計算に最適</div>
+    </div>
+    <div class="tech-card" style="border-color:var(--gold);">
+      <div class="name">Gemini 2.5 Flash <span style="background:var(--gold);color:#000;font-size:0.65em;padding:2px 8px;border-radius:10px;margin-left:6px;font-weight:700;">UPGRADED</span></div>
       <div class="provider">Google</div>
-      <div class="desc">クリップ映像の内容分析。マルチモーダル（映像→テキスト解析）</div>
+      <div class="desc">クリップ映像の内容分析。マルチモーダル（映像→テキスト解析）。3キー自動ローテーション対応</div>
     </div>
     <div class="tech-card">
       <div class="name">Fish Audio TTS</div>
@@ -676,7 +816,8 @@
     <tbody>
       <tr><td><strong>moviepy 2.1.2</strong></td><td>動画結合・テロップ合成・最終出力</td></tr>
       <tr><td><strong>ffmpeg</strong></td><td>動画の向き正規化・コーデック変換</td></tr>
-      <tr><td><strong>OpenCV</strong></td><td>顔検出・クロップ位置最適化</td></tr>
+      <tr><td><strong>MediaPipe Face Mesh</strong> <span style="background:var(--gold);color:#000;font-size:0.72em;padding:1px 7px;border-radius:8px;font-weight:700;">NEW</span></td><td>顔検出（468点ランドマーク）・クロップ中心座標算出。精度大幅向上</td></tr>
+      <tr><td><strong>OpenCV</strong></td><td>顔検出フォールバック（Haar Cascade）・画像変換処理</td></tr>
       <tr><td><strong>Pillow</strong></td><td>テロップ画像生成・フォント描画</td></tr>
       <tr><td><strong>Python 3</strong></td><td>パイプライン全体の制御</td></tr>
     </tbody>
@@ -700,11 +841,23 @@
       <div style="font-size:0.8em; color:var(--text-light);">フレームレート</div>
       <div style="font-size:1.4em; font-weight:800; color:var(--primary);">30fps</div>
     </div>
-    <div style="background:#f0f2f5; padding:12px 20px; border-radius:10px; flex:1; min-width:150px; text-align:center;">
-      <div style="font-size:0.8em; color:var(--text-light);">標準尺</div>
-      <div style="font-size:1.4em; font-weight:800; color:var(--primary);">60秒 / 30秒</div>
+    <div style="background:#fff8e6; padding:12px 20px; border-radius:10px; flex:1; min-width:150px; text-align:center; border:1px solid var(--gold);">
+      <div style="font-size:0.8em; color:var(--text-light);">動画尺 <span style="color:var(--gold);font-weight:700;">UPDATED</span></div>
+      <div style="font-size:1.2em; font-weight:800; color:var(--primary);">柔軟（TTS実尺）</div>
+      <div style="font-size:0.75em;color:var(--text-light);">コンマ何秒単位で自動決定</div>
     </div>
   </div>
+
+  <h3>edit_ai_v2.py 新機能（2026-04-05追加）</h3>
+  <table>
+    <thead><tr><th>機能</th><th>クラス / 関数</th><th>効果</th></tr></thead>
+    <tbody>
+      <tr><td><span style="background:var(--gold);color:#000;font-size:0.75em;padding:2px 8px;border-radius:8px;font-weight:700;">NEW</span> <strong>APIキー自動ローテーション</strong></td><td><code>GeminiKeyManager</code> + <code>_gemini_post()</code></td><td>3キーをラウンドロビン管理。429エラー時に自動切り替えし処理継続</td></tr>
+      <tr><td><span style="background:var(--gold);color:#000;font-size:0.75em;padding:2px 8px;border-radius:8px;font-weight:700;">NEW</span> <strong>TTS並列生成</strong></td><td><code>ThreadPoolExecutor(max_workers=15)</code></td><td>25シーンを最大15同時処理。逐次処理比で大幅な時間短縮</td></tr>
+      <tr><td><span style="background:var(--gold);color:#000;font-size:0.75em;padding:2px 8px;border-radius:8px;font-weight:700;">NEW</span> <strong>高精度顔検出</strong></td><td><code>MediaPipe Face Mesh</code>（468点ランドマーク）</td><td>斜め顔・小さい顔も検出。Haar Cascadeをフォールバックとして維持</td></tr>
+      <tr><td><span style="background:var(--highlight);color:white;font-size:0.75em;padding:2px 8px;border-radius:8px;font-weight:700;">UPD</span> <strong>Geminiモデル更新</strong></td><td><code>gemini-2.5-flash</code></td><td>クリップ分析の精度・レスポンス速度が向上</td></tr>
+    </tbody>
+  </table>
 
   <h3>処理パイプライン（5ステップ）</h3>
   <table>
@@ -712,8 +865,8 @@
     <tbody>
       <tr><td><strong>1</strong></td><td>CSVパース</td><td>Python</td><td>台本CSVを読み込み、Sceneオブジェクトのリストに変換</td></tr>
       <tr><td><strong>2</strong></td><td>クリップ分析</td><td>Gemini Vision</td><td>複数フレーム抽出→被写体・クロップ位置・ベスト開始秒を取得（並列処理）</td></tr>
-      <tr><td><strong>3</strong></td><td>TTS生成</td><td>Fish Audio</td><td>シーン単位同期方式（核心技術）。目標60秒に収まるよう読速を事前計算</td></tr>
-      <tr><td><strong>4</strong></td><td>クリップ処理</td><td>ffmpeg + OpenCV</td><td>向き正規化→顔検出→縦型9:16クロップ→テロップ描画（並列処理）</td></tr>
+      <tr><td><strong>3</strong></td><td>TTS生成 <span style="background:var(--gold);color:#000;font-size:0.7em;padding:1px 7px;border-radius:8px;font-weight:700;">UPGRADED</span></td><td>Fish Audio × ThreadPoolExecutor</td><td>最大15並列でシーン音声を同時生成。シーン単位同期方式を維持しつつ生成速度を大幅短縮</td></tr>
+      <tr><td><strong>4</strong></td><td>クリップ処理 <span style="background:var(--gold);color:#000;font-size:0.7em;padding:1px 7px;border-radius:8px;font-weight:700;">UPGRADED</span></td><td>ffmpeg + MediaPipe + OpenCV</td><td>向き正規化→<strong>MediaPipe Face Mesh（468点）</strong>で高精度顔検出→縦型9:16クロップ→テロップ描画</td></tr>
       <tr><td><strong>5</strong></td><td>結合・出力</td><td>moviepy</td><td>映像+テロップ+ナレーション+BGMを時間同期で合成→mp4</td></tr>
     </tbody>
   </table>
@@ -784,6 +937,18 @@
     <div class="org-label">▼ 最終判定</div>
     <div class="org-node judge">ジャッジクルー ── GO / REVISE / BLOCK / EXIT</div>
   </div>
+
+  <h3>クルーモデル配分（2026-04-05 最適化）<span style="background:var(--highlight);color:white;font-size:0.7em;padding:2px 10px;border-radius:8px;margin-left:10px;font-weight:700;">UPDATED</span></h3>
+  <table>
+    <thead><tr><th>クルー</th><th>モデル</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td>カントク・ジャッジ</td><td><strong>Claude Opus 4.6</strong></td><td>最重要判断。最高精度が必要</td></tr>
+      <tr style="background:#fff8e6;"><td><strong>ブリッジクルー</strong> <span style="color:var(--gold);font-weight:700;">★変更</span></td><td><strong>Claude Sonnet 4.6</strong></td><td>LP連携の文脈理解はHaikuでは不十分</td></tr>
+      <tr style="background:#fff8e6;"><td><strong>マッチクルー</strong> <span style="color:var(--gold);font-weight:700;">★変更</span></td><td><strong>Claude Haiku 4.5</strong></td><td>映像×テキスト整合はルールベースで判断可</td></tr>
+      <tr style="background:#fff8e6;"><td><strong>リテンションクルー</strong> <span style="color:var(--gold);font-weight:700;">★変更</span></td><td><strong>Claude Haiku 4.5</strong></td><td>視聴維持率の数値計算に特化</td></tr>
+      <tr><td>フック・アーク・テンポ・スタイル・CTA</td><td><strong>Claude Haiku 4.5</strong></td><td>高速並列処理に最適</td></tr>
+    </tbody>
+  </table>
 
   <h3>ブリッジスコア（動画→LP連携）</h3>
   <p style="margin-bottom:12px;"><strong>最も重視する指標。</strong>動画単体の品質より「LPへ正しく送り込めるか」を優先。</p>
@@ -922,8 +1087,8 @@
     <div class="tech-card">
       <div class="name">API連携</div>
       <div class="desc">
-        Anthropic Claude API (Opus 4.6 / Haiku 4.5)<br>
-        Google Gemini API (Vision 2.0 Flash / 3 Pro)<br>
+        Anthropic Claude API (Opus 4.6 / Sonnet 4.6 / Haiku 4.5)<br>
+        Google Gemini API (<strong>2.5 Flash</strong> / 3 Pro) ★2.0→2.5更新<br>
         Fish Audio API (TTS)<br>
         xAI Grok API (Imagine Video)<br>
         DPro MCP (広告データベース)
