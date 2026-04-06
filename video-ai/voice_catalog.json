@@ -1,9 +1,10 @@
 {
-  "_comment": "Fish Audio reference_id マッピング。fetch_fish_voices.py で最新一覧を取得できる。",
-  "_last_updated": "2026-04-02",
+  "_comment": "TTS声カタログ。Fish Audio（本命）+ VOICEVOX（フォールバック・無料）+ Coefont（オプション）",
+  "_last_updated": "2026-04-07",
 
   "voices": {
     "女性・クール": {
+      "engine": "fish_audio",
       "reference_id": "0089dce5fefb4c6ba9b9f2f0debe1ddc",
       "fish_audio_name": "落ち着いた女性",
       "description": "落ち着いた・柔らかい・温かみのある女性。健康食品・サプリ・医療系に最適。プルーストの鉄板。",
@@ -12,6 +13,7 @@
       "tested": true
     },
     "女性・柔らか": {
+      "engine": "fish_audio",
       "reference_id": "fbea303b64374bffb8843569404b095e",
       "fish_audio_name": "まな",
       "description": "プロフェッショナルで温かみのある女性。美容・スキンケア向き。",
@@ -20,6 +22,7 @@
       "tested": true
     },
     "女性・明るい": {
+      "engine": "fish_audio",
       "reference_id": "63bc41e652214372b15d9416a30a60b4",
       "fish_audio_name": "元気な女性v2",
       "description": "エネルギッシュ・明るい・元気な女性。コスメ・ライフスタイル向き。",
@@ -28,6 +31,7 @@
       "tested": true
     },
     "男性・権威": {
+      "engine": "fish_audio",
       "reference_id": "a365c3050dd04026a81291145e017d6f",
       "fish_audio_name": "つの",
       "description": "深み・落ち着き・プロフェッショナル感のある男性。健康食品・D2C・金融向き。",
@@ -36,12 +40,40 @@
       "tested": true
     },
     "男性・親しみ": {
+      "engine": "fish_audio",
       "reference_id": "45c5d3723c9c42f598e4776dcfd5f02d",
       "fish_audio_name": "落ち着いた男性",
       "description": "落ち着いた・プロフェッショナル・自信のある男性。アプリ・通信・BtoB向き。",
       "best_for": ["アプリ", "通信", "BtoB", "サービス系"],
       "speed": 1.0,
       "tested": true
+    },
+
+    "男性・青山龍星": {
+      "engine": "voicevox",
+      "speaker_id": 13,
+      "voicevox_name": "青山龍星（VOICEVOX Nemo）",
+      "api_key_env": "VOICEVOX_API_KEY",
+      "api_url": "https://api.su-shiki.com/v2/voicevox/audio/",
+      "description": "VOICEVOX Nemoの男性キャラクター。落ち着いた低音男性。商用利用無料（クレジット: VOICEVOX Nemo）。Fish Audio 429時のフォールバック候補。",
+      "best_for": ["解説系", "メンズ向け", "フォールバック"],
+      "speed": 1.0,
+      "tested": false,
+      "credit_required": "VOICEVOX Nemo",
+      "_note": "APIキー取得先: https://voicevox.su-shiki.com/su-shikiapis/ (無料)"
+    },
+
+    "男性・ひろゆき": {
+      "engine": "coefont",
+      "coefont_voice_id": "FILL_AFTER_CONFIRM",
+      "api_key_env": "COEFONT_API_KEY",
+      "api_url": "https://api.coefont.cloud/v2/speech",
+      "description": "Coefontのひろゆき声モデル。解説・ツッコミ・権威系に強い。商用利用はStandardプラン(¥4,400/月)必須。",
+      "best_for": ["解説系", "ツッコミ型フック", "男性権威"],
+      "speed": 1.0,
+      "tested": false,
+      "_safety_note": "⚠️ 実在人物の声。商用広告使用前にCoefontの正式ライセンス契約を必ず確認すること",
+      "_note": "voice_idはCoefontダッシュボードで確認。APIキー: https://coefont.cloud/settings"
     }
   },
 
