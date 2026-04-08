@@ -319,6 +319,25 @@ def resolve_voice(category: str | None, catalog: dict) -> tuple[str | None, floa
     return ref_id, voice.get("speed", 1.0)
 
 
+def resolve_voice_full(category: str | None, catalog: dict) -> dict:
+    """
+    声カテゴリー名 → voice dictをそのまま返す（engine / reference_id / speaker_id 等を含む）。
+    engine未設定の場合は "fish_audio" を補完して返す。
+    """
+    voices = catalog.get("voices", {})
+    defaults = catalog.get("defaults", {})
+    if not category:
+        category = defaults.get("fallback_category", "女性・クール")
+    voice = voices.get(category)
+    if not voice:
+        print(f"  ⚠️  声カテゴリー '{category}' が voice_catalog.json に見つかりません。fish_audioデフォルトで続行。")
+        return {"engine": "fish_audio", "reference_id": None, "speed": 1.0}
+    result = dict(voice)
+    result.setdefault("engine", "fish_audio")  # engineフィールド後付け補完
+    print(f"  🎙  声: {category} (engine={result['engine']})")
+    return result
+
+
 # ─── Fish Audio: 音声時間取得 ─────────────────────────────────
 def get_audio_duration(path: str) -> float:
     """ffprobeで音声ファイルの長さ（秒）を取得"""
@@ -413,6 +432,80 @@ def _fish_tts_single(text: str, fish_key: str, output_path: str,
     return False
 
 
+# ─── VOICEVOX TTS (su-shiki.com 非公式Web API) ────────────────
+def _voicevox_tts_single(text: str, api_key: str, output_path: str,
+                          speaker_id: int = 13, speed: float = 1.0) -> bool:
+    """
+    VOICEVOX TTSをsu-shiki.com非公式Web API経由で呼び出す。
+    APIキー取得先（無料）: https://voicevox.su-shiki.com/su-shikiapis/
+    speaker_id=13 → 青山龍星 (VOICEVOX Nemo)  ← クレジット: "VOICEVOX Nemo" 必須
+    商用利用無料。ただし出力動画にクレジット表記を入れること。
+    """
+    if not api_key:
+        print("      ⚠️  VOICEVOX_API_KEY が未設定。su-shiki.com でAPIキーを取得してください。")
+        return False
+    url = "https://api.su-shiki.com/v2/voicevox/audio/"
+    params = {
+        "text": text,
+        "speaker": speaker_id,
+        "key": api_key,
+        "speed": round(speed, 2),
+    }
+    try:
+        resp = requests.get(url, params=params, timeout=60)
+        if resp.status_code != 200:
+            print(f"      ⚠️  VOICEVOX エラー: {resp.status_code} {resp.text[:80]}")
+            return False
+        with open(output_path, "wb") as f:
+            f.write(resp.content)
+        return True
+    except Exception as e:
+        print(f"      ⚠️  VOICEVOX 失敗: {e}")
+        return False
+
+
+# ─── Coefont TTS API ─────────────────────────────────────────
+def _coefont_tts_single(text: str, api_key: str, output_path: str,
+                         voice_id: str = "", speed: float = 1.0) -> bool:
+    """
+    Coefont REST APIでTTSを生成する（Standardプラン ¥4,400/月 が必要）。
+    voice_id: Coefontダッシュボードで確認 → voice_catalog.json の coefont_voice_id に設定。
+    ⚠️ ひろゆき等の実在人物モデルは商用広告使用前にCoefontの正式ライセンス契約を必ず確認すること。
+    API仕様: https://coefont.cloud/developers
+    """
+    if not api_key:
+        print("      ⚠️  COEFONT_API_KEY が未設定。~/.zshrc に COEFONT_API_KEY を追加してください。")
+        return False
+    if not voice_id or voice_id == "FILL_AFTER_CONFIRM":
+        print("      ⚠️  Coefont voice_id が未設定。voice_catalog.json の coefont_voice_id を設定してください。")
+        return False
+    url = "https://api.coefont.cloud/v2/speech"
+    payload = {
+        "coefont": voice_id,
+        "text": text,
+        "speed": round(speed, 2),
+    }
+    try:
+        resp = requests.post(
+            url,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json=payload,
+            timeout=60,
+        )
+        if resp.status_code != 200:
+            print(f"      ⚠️  Coefont エラー: {resp.status_code} {resp.text[:100]}")
+            return False
+        with open(output_path, "wb") as f:
+            f.write(resp.content)
+        return True
+    except Exception as e:
+        print(f"      ⚠️  Coefont 失敗: {e}")
+        return False
+
+
 def generate_scene_narrations(
     scenes: list,
     fish_key: str,
@@ -429,12 +522,32 @@ def generate_scene_narrations(
     音声尺が映像尺を決定する。映像を音声に合わせる（逆は不可）。
     """
     catalog = load_voice_catalog()
-    reference_id, voice_speed = resolve_voice(voice_category, catalog)
+    voice_info = resolve_voice_full(voice_category, catalog)
+    engine = voice_info.get("engine", "fish_audio")
+    voice_speed = voice_info.get("speed", 1.0)
     # voice_catalog の speed は音質調整用。tts_speed は全体テンポ調整用。
-    # 両方掛け合わせて Fish Audio に渡す（上限2.0、下限0.5でクリップ）
+    # 両方掛け合わせてTTSエンジンに渡す（上限2.0、下限0.5でクリップ）
     effective_speed = max(0.5, min(2.0, voice_speed * tts_speed))
     if effective_speed != 1.0:
         print(f"  🎚  TTS速度: {effective_speed:.2f}x（voice={voice_speed}, target={tts_speed:.2f}）")
+
+    # ─── エンジン別パラメータ解決 ────────────────────────────
+    if engine == "voicevox":
+        _voicevox_speaker_id = voice_info.get("speaker_id", 13)
+        _voicevox_key = os.environ.get(voice_info.get("api_key_env", "VOICEVOX_API_KEY"), "")
+        if not _voicevox_key:
+            print(f"  ⚠️  VOICEVOX_API_KEY が未設定 → fish_audioにフォールバック")
+            engine = "fish_audio"
+    if engine == "coefont":
+        _coefont_voice_id = voice_info.get("coefont_voice_id", "FILL_AFTER_CONFIRM")
+        _coefont_key = os.environ.get(voice_info.get("api_key_env", "COEFONT_API_KEY"), "")
+        if not _coefont_key or _coefont_voice_id == "FILL_AFTER_CONFIRM":
+            print(f"  ⚠️  Coefont APIキーまたはvoice_idが未設定 → fish_audioにフォールバック")
+            engine = "fish_audio"
+    if engine == "fish_audio":
+        reference_id = voice_info.get("reference_id")
+        if not reference_id or reference_id == "FILL_FROM_FISH_AUDIO":
+            reference_id = None
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
@@ -452,11 +565,17 @@ def generate_scene_narrations(
     if not tts_tasks:
         return results
 
-    print(f"  🚀 TTS並列生成: {len(tts_tasks)}シーン（最大4並列・429リトライ付き）")
+    engine_label = {"fish_audio": "Fish Audio", "voicevox": "VOICEVOX", "coefont": "Coefont"}.get(engine, engine)
+    print(f"  🚀 TTS並列生成: {len(tts_tasks)}シーン（最大4並列・engine={engine_label}）")
 
     def _do_tts(task: tuple) -> tuple:
         idx, scene, mp3_path, tts_text = task
-        ok = _fish_tts_single(tts_text, fish_key, mp3_path, reference_id, effective_speed)
+        if engine == "voicevox":
+            ok = _voicevox_tts_single(tts_text, _voicevox_key, mp3_path, _voicevox_speaker_id, effective_speed)
+        elif engine == "coefont":
+            ok = _coefont_tts_single(tts_text, _coefont_key, mp3_path, _coefont_voice_id, effective_speed)
+        else:  # fish_audio（デフォルト）
+            ok = _fish_tts_single(tts_text, fish_key, mp3_path, reference_id, effective_speed)
         return idx, scene, mp3_path, ok
 
     with ThreadPoolExecutor(max_workers=min(4, len(tts_tasks))) as executor:
@@ -566,10 +685,11 @@ EMPHASIS_WORDS = ["臭い", "臭く", "ツーン", "病気", "悩む", "97%OFF",
 
 
 # ── 台本パーサ（CSV） ──────────────────────────────────────
-def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str | None, int]:
+def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str | None, int, str]:
     """
     新フォーマットCSV台本をパース。
-    返値: (scenes, global_annotation, voice_category, bgm_filename, ref_level)
+    返値: (scenes, global_annotation, voice_category, bgm_filename, ref_level, narration_mode)
+    narration_mode: "tts"（AI生成）or "original"（元動画の音声をそのまま使う）
     ref_level: 参考動画の反映レベル (1=エッセンス, 2=スタイル踏襲, 3=完全トレース)
     """
     scenes: list[Scene] = []
@@ -577,6 +697,7 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str |
     voice_category: str | None = None
     bgm_filename: str | None = None
     ref_level: int = 2  # デフォルト: スタイル踏襲（現状の動作）
+    narration_mode: str = "tts"  # デフォルト: TTS生成
 
     with open(csv_path, encoding="utf-8-sig", newline="") as f:
         rows = list(csv.reader(f))
@@ -612,6 +733,13 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str |
                 key, val = col0, (row[1].strip() if len(row) > 1 else "")
             else:
                 key, val = (row[1].strip() if len(row) > 1 else ""), (row[2].strip() if len(row) > 2 else "")
+            if key == "ナレーション" and val:
+                # "なし（テロップのみ）" / "なし" → original モード
+                if val.startswith("なし"):
+                    narration_mode = "original"
+                    print(f"  🔇 ナレーションモード: 元音声をそのまま使用（TTS不使用）")
+                else:
+                    narration_mode = "tts"
             if key == "声のカテゴリー" and val:
                 # "女性・クール（健康食品・サプリ向き" → "女性・クール" に正規化
                 voice_category = val.split("（")[0].strip()
@@ -702,8 +830,9 @@ def parse_script_csv(csv_path: str) -> tuple[list[Scene], str, str | None, str |
 
     if bgm_filename:
         print(f"  🎵 BGM: {bgm_filename}")
-    print(f"\n台本パース完了 (CSV): {len(scenes)} シーン / 声: {voice_category or 'デフォルト'}")
-    return scenes, global_annotation, voice_category, bgm_filename, ref_level
+    narr_label = "元音声（TTS不使用）" if narration_mode == "original" else "TTS生成"
+    print(f"\n台本パース完了 (CSV): {len(scenes)} シーン / 声: {voice_category or 'デフォルト'} / ナレーション: {narr_label}")
+    return scenes, global_annotation, voice_category, bgm_filename, ref_level, narration_mode
 
 
 def _parse_clip_refs_csv(raw: str) -> list[str]:
@@ -718,6 +847,9 @@ def _parse_clip_refs_csv(raw: str) -> list[str]:
     for t in tokens:
         # "clip-001", "clip-012" などの clip-NNN 形式（新フォーマット）
         if re.match(r"^clip-\d+$", t, re.IGNORECASE):
+            refs.append(t)
+        # "scene_01.mov" などの前処理済みファイル名（拡張子付き）
+        elif re.match(r".+\.(mov|mp4|avi|mkv|webm|heic|jpeg|jpg|png|webp)$", t, re.IGNORECASE):
             refs.append(t)
         # "1-1", "12-2" などの X-N 形式
         elif re.match(r"^\d{1,2}-\d$", t):
@@ -866,15 +998,22 @@ def expand_clip_refs(refs: list[str], clips_dir: str) -> list[str]:
 
 def find_clip(clips_dir: str, ref: str) -> str | None:
     """
-    ref="1-1"  → 1-1.mp4 or 1-1.mov など
-    ref="3"    → 3.HEIC など（全角数字も対応）
+    ref="1-1"           → 1-1.mp4 or 1-1.mov など
+    ref="3"             → 3.HEIC など（全角数字も対応）
+    ref="scene_01.mov"  → 拡張子付きファイル名を直接マッチング
     """
     d = Path(clips_dir)
 
+    # 拡張子付きファイル名の直接マッチング（前処理済みファイル対応）
+    direct = d / ref
+    if direct.exists():
+        return str(direct)
+
     # 半角→全角、全角→半角の両方で試す
-    ref_full = ref.translate(str.maketrans("0123456789", "０１２３４５６７８９"))
-    ref_half = ref.translate(str.maketrans("０１２３４５６７８９", "0123456789"))
-    candidates = [ref, ref_full, ref_half]
+    ref_stem = Path(ref).stem  # 拡張子を除いた部分
+    ref_full = ref_stem.translate(str.maketrans("0123456789", "０１２３４５６７８９"))
+    ref_half = ref_stem.translate(str.maketrans("０１２３４５６７８９", "0123456789"))
+    candidates = [ref_stem, ref_full, ref_half]
 
     for c in candidates:
         for ext in EXTS:
@@ -1315,8 +1454,13 @@ def crop_clip_to_vertical(clip: VideoFileClip, crop_x_percent: int = 50) -> Vide
 # ── シーン1本分のVideoClipを生成 ──────────────────────────────
 def _load_single_clip(clip_path: str, duration: float,
                       gemini_key: str | None,
-                      scene_text: str = "") -> VideoFileClip | ImageClip:
-    """1つのクリップファイルを読み込み、縦型クロップ・ベストモーメント選定して返す。"""
+                      scene_text: str = "",
+                      keep_audio: bool = False) -> VideoFileClip | ImageClip:
+    """
+    1つのクリップファイルを読み込み、縦型クロップ・ベストモーメント選定して返す。
+    keep_audio=True: 元音声を保持（「ナレーションなし=元音声使用」モード用）。
+                     Trueの場合はdurationを無視してクリップの自然尺を返す。
+    """
     ext = Path(clip_path).suffix.lower()
     if ext in (".heic", ".jpeg", ".jpg", ".png", ".webp"):
         return image_to_clip(clip_path, duration)
@@ -1325,7 +1469,8 @@ def _load_single_clip(clip_path: str, duration: float,
         # ffmpegで向きを正規化してから読み込む（回転メタデータを焼き込み）
         normalized_path = normalize_video_orientation(clip_path)
         raw = VideoFileClip(normalized_path)
-        raw = raw.set_audio(None)
+        if not keep_audio:
+            raw = raw.set_audio(None)  # TTS音声を使う場合は元音声を剥ぎ取る
 
         crop_x_percent = 50  # デフォルト: 中央
         best_start = 0.0
@@ -1340,6 +1485,10 @@ def _load_single_clip(clip_path: str, duration: float,
                   f"| 開始={best_start}s ({reason})")
 
         raw = crop_clip_to_vertical(raw, crop_x_percent=crop_x_percent)
+
+        # keep_audio=True: 前処理済みの精密カット済みクリップ → 自然尺のまま返す
+        if keep_audio:
+            return raw  # トリム・ループなし。クリップ尺がそのままシーン尺になる
 
         # ベストモーメントから切り出し（先頭から使うのではなく感情的に最も訴える瞬間から）
         if best_start > 0 and raw.duration > duration:
@@ -1478,22 +1627,30 @@ def build_scene_clip(scene: Scene, clips_dir: str,
                      gemini_key: str | None = None,
                      global_annotation: str = "",
                      style: dict | None = None,
-                     total_scenes: int = 1) -> CompositeVideoClip | None:
+                     total_scenes: int = 1,
+                     keep_audio: bool = False) -> CompositeVideoClip | None:
     """
     1シーンのCompositeVideoClipを生成。
     audio_path/audio_duration が渡された場合（シーン単位TTS方式）:
       - 映像尺 = 音声尺（完全同期）
       - 音声をクリップに埋め込む
+    keep_audio=True（元音声使用モード）:
+      - クリップの自然尺を使用（TTS不使用）
+      - 前処理で精密にカットされた音声付きクリップをそのまま使う
     渡されない場合（フォールバック）:
       - 文字数から尺を推定
     """
     # 尺の決定順: 音声実尺 > override_duration > 文字数推定
-    if audio_duration is not None:
-        duration = audio_duration
-    elif override_duration is not None:
-        duration = override_duration
+    # keep_audio=True の場合はクリップ読み込み後に自然尺を取得するため後回し
+    if not keep_audio:
+        if audio_duration is not None:
+            duration = audio_duration
+        elif override_duration is not None:
+            duration = override_duration
+        else:
+            duration = max(MIN_DURATION, min(MAX_DURATION, len(scene.text) / CHARS_PER_SEC))
     else:
-        duration = max(MIN_DURATION, min(MAX_DURATION, len(scene.text) / CHARS_PER_SEC))
+        duration = override_duration or MIN_DURATION  # 仮置き。後でクリップ実尺に上書き
 
     print(f"  シーン{scene.no}: 「{scene.text[:20]}...」 → {duration:.1f}s refs={scene.clip_refs}")
 
@@ -1510,8 +1667,14 @@ def build_scene_clip(scene: Scene, clips_dir: str,
     elif len(found_clips) == 1:
         print(f"    ✅ {Path(found_clips[0]).name}")
         raw = _load_single_clip(found_clips[0], duration, gemini_key,
-                                scene_text=scene.text)
-        base = _fit_video_to_duration(raw, duration)
+                                scene_text=scene.text, keep_audio=keep_audio)
+        if keep_audio:
+            # 元音声モード: クリップの自然尺をシーン尺として確定
+            duration = max(MIN_DURATION, raw.duration)
+            print(f"      🎙  元音声モード: 尺={duration:.2f}s（クリップ自然尺）")
+            base = raw  # トリム不要（前処理で精密カット済み）
+        else:
+            base = _fit_video_to_duration(raw, duration)
     else:
         per_dur = duration / len(found_clips)
         print(f"    ✅ {len(found_clips)}クリップを等分 ({per_dur:.1f}s×{len(found_clips)})")
@@ -1774,6 +1937,10 @@ def main():
                         help="声カテゴリー（例: '女性・クール'）。未指定時はCSVまたはvoice_catalog.jsonのデフォルト")
     parser.add_argument("--ref-video", default=None,
                         help="参考動画パス。テロップスタイル（フォント・位置）を自動抽出して適用")
+    parser.add_argument("--keep-audio", action="store_true",
+                        help="元動画の音声をそのまま使う（TTS不使用）。"
+                             "トーキングヘッド素材など、撮影済み音声を活かす場合に使用。"
+                             "CSVのナレーション欄が「なし」の場合は自動適用。")
     args = parser.parse_args()
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
@@ -1798,8 +1965,9 @@ def main():
     csv_voice_category = None
     bgm_filename = None
     ref_level = 2  # デフォルト: スタイル踏襲
+    narration_mode = "tts"  # デフォルト
     if args.script.lower().endswith(".csv"):
-        scenes, global_annotation, csv_voice_category, bgm_filename, ref_level = parse_script_csv(args.script)
+        scenes, global_annotation, csv_voice_category, bgm_filename, ref_level, narration_mode = parse_script_csv(args.script)
     else:
         scenes, global_annotation = parse_script(args.script)
 
@@ -1813,9 +1981,21 @@ def main():
     # 声カテゴリー決定（CLI > CSV > デフォルト）
     effective_voice = args.voice or csv_voice_category
 
+    # ナレーションモード決定（CLI --keep-audio > CSV ナレーション欄 > デフォルトTTS）
+    use_original_audio = args.keep_audio or (narration_mode == "original")
+    if use_original_audio:
+        print("\n🎙  ナレーションモード: 元音声キープ（TTS不使用）")
+        print("    前処理済みクリップの音声をそのまま使用します")
+
     # ─── シーン単位TTS（音声が映像尺を決定する） ─────────────────
     scene_audio: list[tuple[str | None, float]] = []
-    if fish_key:
+    if use_original_audio:
+        # 元音声モード: TTSを生成しない。尺はクリップの自然尺を後で取得
+        # ここではプレースホルダーとして (None, MIN_DURATION) を入れる
+        # 実際の尺は build_scene_clip() 内でクリップ読み込み後に決定される
+        scene_audio = [(None, MIN_DURATION)] * len(valid_scenes)
+        print(f"  📹 {len(valid_scenes)}シーン分の音声尺はクリップ実尺から取得します")
+    elif fish_key:
         print("\n🎙  Fish Audio: シーン別ナレーション生成中...")
         # 速度推定: テキスト文字数から60秒に収まる速度を計算
         tts_speed = estimate_tts_speed(valid_scenes)
@@ -1868,12 +2048,13 @@ def main():
             scene, (audio_path, audio_dur) = group_scenes[0], group_audios[0]
             c = build_scene_clip(
                 scene, args.clips,
-                audio_path=audio_path,
-                audio_duration=audio_dur,
+                audio_path=audio_path if not use_original_audio else None,
+                audio_duration=audio_dur if not use_original_audio else None,
                 gemini_key=gemini_key,
                 global_annotation=global_annotation,
                 style=style,
                 total_scenes=len(valid_scenes),
+                keep_audio=use_original_audio,
             )
         else:
             # 継続グループ: 複数シーンを1クリップで処理
@@ -1905,6 +2086,8 @@ def main():
             Path(bgm_filename),                        # カレントディレクトリ相対（shortad-park/bgm/... 等）
             Path(args.clips) / bgm_filename,            # clipsフォルダ内
             Path(args.script).parent / bgm_filename,    # CSVと同じフォルダ
+            Path("/Users/ca01224/Desktop/動画編集フォルダ/よく使う音楽素材") / bgm_filename,  # 社内BGMライブラリ
+            Path(__file__).parent / bgm_filename,       # video-ai/ ディレクトリ
         ]
         for candidate in search_candidates:
             if candidate.exists():
@@ -1918,8 +2101,8 @@ def main():
                     bgm_audio = vfx.loop(bgm_audio, duration=total_sec)
                 else:
                     bgm_audio = bgm_audio.subclip(0, total_sec)
-                # BGM音量: ナレーションの邪魔にならないよう20%に抑える
-                bgm_audio = bgm_audio.volumex(0.15)
+                # BGM音量: 声の邪魔にならないよう10%固定
+                bgm_audio = bgm_audio.volumex(0.10)
                 # 既存音声（ナレーション）とBGMを合成
                 if final.audio:
                     from moviepy.editor import CompositeAudioClip
@@ -1927,7 +2110,7 @@ def main():
                     final = final.set_audio(mixed)
                 else:
                     final = final.set_audio(bgm_audio)
-                print(f"  🎵 BGMミックス: {bgm_filename} (vol=15%)")
+                print(f"  🎵 BGMミックス: {bgm_filename} (vol=10%)")
             except Exception as e:
                 print(f"  ⚠️  BGMミックス失敗: {e}")
         else:
