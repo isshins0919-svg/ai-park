@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru LP ラフ v3</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue:       #4CBAD4;
+    --blue-dark:  #2A9AB8;
+    --blue-light: #D6F1F8;
+    --blue-pale:  #EEF9FC;
+    --pink:       #F5A8C0;
+    --pink-light: #FDE8F0;
+    --cream:      #FAFBF8;
+    --dark:       #1E3A42;
+    --mid:        #4A7A8A;
+    --light:      #9AC4CE;
+    --white:      #FFFFFF;
+    --gold:       #E8B84B;
+  }
+
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /* ══════════════════════════════
+     01. FV
+  ══════════════════════════════ */
+  .fv {
+    background: linear-gradient(180deg, var(--blue) 0%, #6CCDE0 55%, var(--blue-light) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 背景の装飾丸 */
+  .fv::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+  }
+  .fv::after {
+    content: '';
+    position: absolute;
+    bottom: 60px; left: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .fv-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .fv-logo {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .fv-logo sup {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    vertical-align: top;
+    margin-top: 4px;
+    display: inline-block;
+    opacity: 0.8;
+  }
+  .fv-ip-badge {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--pink);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  /* パッケージ画像エリア */
+  .fv-pkg-wrap {
+    position: relative;
+    z-index: 2;
+    padding: 16px 24px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .fv-pkg-wrap img {
+    width: 78%;
+    max-width: 300px;
+    display: block;
+    filter: drop-shadow(0 12px 32px rgba(0,0,0,0.22));
+    border-radius: 4px;
+  }
+
+  /* テキスト+CTAパネル */
+  .fv-panel {
+    background: var(--white);
+    border-radius: 24px 24px 0 0;
+    padding: 28px 24px 36px;
+    position: relative;
+    z-index: 2;
+    margin-top: -12px;
+  }
+
+  .fv-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--light);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .fv-main-copy {
+    font-size: clamp(22px, 6vw, 30px);
+    font-weight: 900;
+    line-height: 1.35;
+    color: var(--dark);
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+  .fv-main-copy em {
+    font-style: normal;
+    color: var(--blue-dark);
+  }
+  .fv-sub-copy {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--mid);
+    margin-bottom: 24px;
+  }
+
+  .fv-price { font-size: 12px; color: var(--mid); margin-bottom: 10px; }
+  .fv-price strong { font-size: 24px; color: var(--dark); font-weight: 900; }
+
+  .btn-blue {
+    display: block;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 17px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(76,186,212,0.4);
+    margin-bottom: 10px;
+  }
+  .btn-note {
+    font-size: 10px;
+    color: var(--light);
+    text-align: center;
+  }
+
+
+  /* ══════════════════════════════
+     02. PACKAGE SHOWCASE
+     「届いた瞬間から、可愛かった」
+  ══════════════════════════════ */
+  .pkg-showcase {
+    background: var(--blue-pale);
+    padding: 56px 24px;
+    text-align: center;
+  }
+
+  .pkg-showcase h2 {
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 900;
+    line-height: 1.45;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .pkg-showcase .sub {
+    font-size: 12px;
+    color: var(--mid);
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+
+  .pkg-img-large {
+    width: 82%;
+    max-width: 280px;
+    display: block;
+    margin: 0 auto 24px;
+    filter: drop-shadow(0 8px 24px rgba(0,80,100,0.15));
+    border-radius: 4px;
+  }
+
+  .pkg-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .pkg-tag {
+    font-size: 12px;
+    color: var(--blue-dark);
+    background: var(--white);
+    border: 1.5px solid var(--blue-light);
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-weight: 600;
+  }
+
+
+  /* ══════════════════════════════
+     03. CHARACTER — ずもっぴ紹介
+  ══════════════════════════════ */
+  .character {
+    background: var(--white);
+    padding: 56px 24px;
+  }
+
+  .character h2 {
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 900;
+    line-height: 1.45;
+    color: var(--dark);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .character .sub {
+    font-size: 12px;
+    color: var(--mid);
+    margin-bottom: 28px;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  /* キャラ大カット — パッケージからクロップして使う想定 */
+  .char-img-wrap {
+    background: linear-gradient(135deg, var(--blue-light) 0%, #B8E8F4 100%);
+    border-radius: 20px;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .char-img-wrap::before {
+    content: 'No.1';
+    position: absolute;
+    top: 14px; left: 14px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--blue-dark);
+    background: var(--white);
+    padding: 3px 10px;
+    border-radius: 50px;
+    opacity: 0.85;
+  }
+  .char-img-wrap img {
+    width: 72%;
+    max-width: 240px;
+    display: block;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 6px 18px rgba(0,80,100,0.18));
+  }
+  .char-name {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--dark);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .char-name-en {
+    font-size: 11px;
+    color: var(--mid);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .char-desc {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.8;
+    text-align: center;
+  }
+
+
+  /* ══════════════════════════════
+     04. COLLECTION — 全5種
+  ══════════════════════════════ */
+  .collection {
+    background: var(--cream);
+    padding: 56px 24px;
+    text-align: center;
+  }
+  .collection h2 {
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 900;
+    line-height: 1.45;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .collection .sub {
+    font-size: 12px;
+    color: var(--mid);
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+
+  .col-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .col-item { text-align: center; }
+  .col-circle {
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-light), #A0D8E8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    border: 2.5px solid var(--white);
+    box-shadow: 0 2px 8px rgba(0,80,100,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  /* No.1だけパッケージ画像を使う */
+  .col-circle.is-filled img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .col-circle span {
+    font-size: 8px;
+    color: var(--mid);
+    text-align: center;
+    line-height: 1.3;
+    padding: 2px;
+  }
+  .col-item p {
+    font-size: 8px;
+    color: var(--light);
+    font-weight: 600;
+  }
+  .col-item.active p { color: var(--blue-dark); font-weight: 900; }
+
+  .col-message {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.7;
+    color: var(--dark);
+    background: var(--white);
+    padding: 18px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,80,100,0.06);
+  }
+  .col-message span {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--mid);
+    display: block;
+    margin-top: 4px;
+  }
+
+
+  /* ══════════════════════════════
+     05. HOW — 「実は誰でも作れる」
+  ══════════════════════════════ */
+  .how {
+    background: linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
+    padding: 56px 24px;
+    color: var(--white);
+    text-align: center;
+  }
+  .how .label { color: rgba(255,255,255,0.45); }
+  .how h2 {
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 900;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+  .how .sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .how-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+  }
+  .how-step {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .how-step-icon {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .how-step-num {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 3px;
+    text-transform: uppercase;
+  }
+  .how-step-title {
+    font-size: 14px;
+    font-weight: 900;
+    margin-bottom: 3px;
+    line-height: 1.35;
+  }
+  .how-step-title em {
+    font-style: normal;
+    background: rgba(255,255,255,0.2);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .how-step-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+  }
+
+
+  /* ══════════════════════════════
+     06. OFFER
+  ══════════════════════════════ */
+  .offer {
+    background: var(--dark);
+    padding: 56px 24px;
+    color: var(--white);
+    text-align: center;
+  }
+  .offer .label { color: rgba(255,255,255,0.35); }
+  .offer h2 {
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 900;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+  .offer .sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .offer-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 28px 20px;
+    margin-bottom: 20px;
+  }
+  .offer-badge {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 16px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
+
+  .offer-steps { list-style: none; text-align: left; margin-bottom: 20px; }
+  .offer-steps li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .offer-steps li:last-child { border-bottom: none; }
+  .step-l { display: flex; align-items: center; gap: 10px; }
+  .step-no {
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    background: var(--blue);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-txt { font-size: 13px; line-height: 1.35; }
+  .step-price { font-weight: 900; white-space: nowrap; }
+  .step-price.first { font-size: 20px; color: var(--gold); }
+
+  .offer-total {
+    background: rgba(232,184,75,0.1);
+    border: 1px solid rgba(232,184,75,0.3);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .offer-total p { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .offer-total strong { font-size: 22px; color: var(--gold); font-weight: 900; }
+
+  .offer-includes { text-align: left; margin: 20px 0; }
+  .offer-includes h3 {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .pills { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pills span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 4px 12px;
+    border-radius: 50px;
+  }
+
+  .btn-offer {
+    display: block;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 20px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-bottom: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(76,186,212,0.35);
+  }
+  .offer-notes { list-style: none; }
+  .offer-notes li {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 3px;
+  }
+  .offer-notes li::before { content: '※ '; }
+
+  /* ══════════════════════════════
+     ROUGH NOTE
+  ══════════════════════════════ */
+  .rough-note {
+    background: #111;
+    padding: 20px 24px;
+    font-size: 10px;
+    color: #555;
+    line-height: 1.8;
+    border-top: 1px solid #222;
+  }
+  .rough-note strong { color: #888; }
+  .rough-note ul { padding-left: 0; }
+  .rough-note li { list-style: none; margin-bottom: 1px; }
+</style>
+</head>
+<body>
+
+<!-- ══ 01. FV ══ -->
+<section class="fv">
+  <div class="fv-top-bar">
+    <div class="fv-logo">ameru <sup>アメル</sup></div>
+    <div class="fv-ip-badge">らぶいーず</div>
+  </div>
+
+  <!-- ★ 実パッケージ画像 -->
+  <div class="fv-pkg-wrap">
+    <img src="ameru_pkg_3rd.png" alt="ameru あみぐるみキット No.1 ずもっぴ">
+  </div>
+
+  <div class="fv-panel">
+    <p class="fv-eyebrow">amigurumi for everyone</p>
+    <h1 class="fv-main-copy">
+      あの子が、<br>
+      <em>自分の手</em>で<br>
+      できあがる。
+    </h1>
+    <p class="fv-sub-copy">
+      Love is... の5キャラが揃う、あみぐるみキット。<br>
+      道具も糸も動画解説も全部入り。<br>
+      届いたら、すぐ始められる。
+    </p>
+    <p class="fv-price">初回 <strong>¥1,980</strong>（送料無料）</p>
+    <a href="#offer" class="btn-blue">試してみる →</a>
+    <p class="btn-note">2回目以降 ¥4,200 ／ いつでも解約可</p>
+  </div>
+</section>
+
+
+<!-- ══ 02. PACKAGE SHOWCASE ══ -->
+<section class="pkg-showcase">
+  <span class="label">Package</span>
+  <h2>届いた瞬間から、<br>可愛かった。</h2>
+  <p class="sub">
+    開けたくないくらいのパッケージ。<br>
+    写真撮りたくなる、インテリアになるキット。
+  </p>
+
+  <!-- ★ 実パッケージ画像（大） -->
+  <img class="pkg-img-large" src="ameru_pkg_3rd.png" alt="ameru パッケージ">
+
+  <div class="pkg-tags">
+    <span class="pkg-tag">✔ 全道具入り</span>
+    <span class="pkg-tag">✔ 全5種シリーズ統一デザイン</span>
+    <span class="pkg-tag">✔ 並べて飾れるコレクション仕様</span>
+    <span class="pkg-tag">✔ 写真撮りたくなる可愛さ</span>
+  </div>
+</section>
+
+
+<!-- ══ 03. CHARACTER ══ -->
+<section class="character">
+  <span class="label">No.1 Character</span>
+  <h2>No.1 は、ずもっぴ。</h2>
+  <p class="sub">
+    Love is... の人気キャラクターが<br>
+    あなたの手で編みあがる。
+  </p>
+
+  <div class="char-img-wrap">
+    <!-- ★ パッケージ画像をキャラ紹介にも流用（次フェーズで切り抜き素材に差し替え） -->
+    <img src="ameru_pkg_3rd.png" alt="ずもっぴ">
+    <p class="char-name">ずもっぴ</p>
+    <p class="char-name-en">Zumoppi · Love is...</p>
+  </div>
+
+  <p class="char-desc">
+    ぷくっとした白いシルエット、まんまるの目。<br>
+    完成した瞬間、飾りたくなる、渡したくなる。<br>
+    手のひらサイズの、私だけの ずもっぴ。
+  </p>
+</section>
+
+
+<!-- ══ 04. COLLECTION ══ -->
+<section class="collection">
+  <span class="label">Collection</span>
+  <h2>Love is... 全5種、<br>ぜんぶ揃う。</h2>
+  <p class="sub">
+    1個完成するたびに次が届く、定期コレクション。<br>
+    5体並んだとき、「私がぜんぶ作った」になる。
+  </p>
+
+  <div class="col-row">
+    <div class="col-item active">
+      <div class="col-circle is-filled">
+        <img src="ameru_pkg_3rd.png" alt="No.1">
+      </div>
+      <p>No.1</p>
+    </div>
+    <div class="col-item">
+      <div class="col-circle"><span>No.2<br>近日</span></div>
+      <p>No.2</p>
+    </div>
+    <div class="col-item">
+      <div class="col-circle"><span>No.3<br>近日</span></div>
+      <p>No.3</p>
+    </div>
+    <div class="col-item">
+      <div class="col-circle"><span>No.4<br>近日</span></div>
+      <p>No.4</p>
+    </div>
+    <div class="col-item">
+      <div class="col-circle"><span>No.5<br>近日</span></div>
+      <p>No.5</p>
+    </div>
+  </div>
+
+  <p class="col-message">
+    完成品を棚に並べると、5体の家族ができあがる。
+    <span>プレゼントにしても、飾っておいても。<br>作り終えるたびに、また次が届く。</span>
+  </p>
+</section>
+
+
+<!-- ══ 05. HOW ══ -->
+<section class="how">
+  <span class="label">How it works</span>
+  <h2>手芸、やったこと<br>なくて大丈夫。</h2>
+  <p class="sub">3つの設計で「難しそう」を取り除きました。</p>
+
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="how-step-icon">🪡</div>
+      <div>
+        <p class="how-step-num">Point 01</p>
+        <p class="how-step-title"><em>編み始め</em>、完成済みで届く</p>
+        <p class="how-step-desc">最も難しい最初の工程はあらかじめ完成済み。箱を開けた瞬間から、楽しい工程だけ。</p>
+      </div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-icon">📱</div>
+      <div>
+        <p class="how-step-num">Point 02</p>
+        <p class="how-step-title">全工程、<em>動画でわかる</em></p>
+        <p class="how-step-desc">難解な編み図は使いません。QRコードから動画を開けば、見るだけで全工程わかります。</p>
+      </div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-icon">🧶</div>
+      <div>
+        <p class="how-step-num">Point 03</p>
+        <p class="how-step-title"><em>絡まない糸</em>、独自開発</p>
+        <p class="how-step-desc">初心者でも扱いやすい糸を独自に開発。「道具のせいで失敗した」が起きない設計です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 06. OFFER ══ -->
+<section class="offer" id="offer">
+  <span class="label">Offer</span>
+  <h2>まず1回、<br>試してみてほしい。</h2>
+  <p class="sub">5 Deliveries · Complete Collection</p>
+
+  <div class="offer-card">
+    <span class="offer-badge">Love is... × ameru 全5種</span>
+    <ul class="offer-steps">
+      <li>
+        <span class="step-l">
+          <span class="step-no">1</span>
+          <span class="step-txt">1回目（初回特別価格）<br><small style="opacity:.5;">No.1 ずもっぴ + 全道具セット</small></span>
+        </span>
+        <span class="step-price first">¥1,980</span>
+      </li>
+      <li>
+        <span class="step-l">
+          <span class="step-no">2</span>
+          <span class="step-txt">2回目 — No.2キャラ</span>
+        </span>
+        <span class="step-price">¥4,200</span>
+      </li>
+      <li>
+        <span class="step-l">
+          <span class="step-no">3</span>
+          <span class="step-txt">3回目 — No.3キャラ</span>
+        </span>
+        <span class="step-price">¥4,200</span>
+      </li>
+      <li>
+        <span class="step-l">
+          <span class="step-no">4</span>
+          <span class="step-txt">4回目 — No.4キャラ</span>
+        </span>
+        <span class="step-price">¥4,200</span>
+      </li>
+      <li>
+        <span class="step-l">
+          <span class="step-no">5</span>
+          <span class="step-txt">5回目 — No.5キャラ</span>
+        </span>
+        <span class="step-price">¥4,200</span>
+      </li>
+    </ul>
+    <div class="offer-total">
+      <p>5種コンプリート 総額</p>
+      <strong>¥18,780</strong>
+    </div>
+  </div>
+
+  <div class="offer-includes">
+    <h3>各回の同梱内容</h3>
+    <div class="pills">
+      <span>オリジナル糸</span>
+      <span>かぎ針（初回のみ）</span>
+      <span>とじ針</span>
+      <span>目パーツ</span>
+      <span>わた</span>
+      <span>編み始め完成済み</span>
+      <span>QR動画教材</span>
+    </div>
+  </div>
+
+  <a href="#" class="btn-offer">初回 ¥1,980 で始める →</a>
+  <ul class="offer-notes">
+    <li>初回お届け後、2回目以降は毎月自動でお届けします</li>
+    <li>いつでも解約・一時停止できます</li>
+    <li>送料は初回無料、2回目以降 ¥420</li>
+  </ul>
+</section>
+
+
+<!-- ── ROUGH NOTE ── -->
+<div class="rough-note">
+  <strong>📝 ameru LP ROUGH v3 — パッケージ画像組み込み（2026-04-08）</strong>
+  <ul style="margin-top:8px;">
+    <li>01 FV ............ パッケージ実画像（260408_ameru_PKG_3rd.png）組み込み</li>
+    <li>02 Package ...... パッケージ大カット + 同梱タグ</li>
+    <li>03 Character .... ずもっぴ紹介（次フェーズで切り抜き素材に差し替え）</li>
+    <li>04 Collection ... 全5種コレクション（No.2〜5は素材待ち）</li>
+    <li>05 How .......... 「実は誰でも」訴求（中盤に移動）</li>
+    <li>06 Offer ........ 価格設計・同梱内容・CTA</li>
+  </ul>
+  <div style="margin-top:8px; color:#444;">
+    次フェーズ: ずもっぴ切り抜き素材 / No.2〜5キャラ画像 / ライフスタイルカット
+  </div>
+</div>
+
+</body>
+</html>
