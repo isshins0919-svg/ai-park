@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOYAGE 2026 — 世界一周の冒険</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+:root{--bg:#0a1628;--card:#0f1f38;--gold:#c9a84c;--orange:#e07c3e;--red:#e74c3c;--green:#2ecc71;--purple:#9b59b6;--cream:#f0e6d3;--muted:#7a8da6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--cream);font-family:'Noto Sans JP',system-ui,sans-serif;line-height:1.7}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(ellipse at center,#142640 0%,#0a1628 70%);padding:40px 20px;position:relative}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero-icon{font-size:80px;margin-bottom:16px;animation:float 3s ease-in-out infinite}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,5rem);font-weight:900;color:var(--gold);letter-spacing:.08em;text-shadow:0 0 80px rgba(201,168,76,.25)}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.5rem);margin-top:8px;opacity:.85}
+.hero-period{font-size:.95rem;color:var(--muted);margin-top:12px}
+.hero-stats{display:flex;gap:48px;margin-top:48px;flex-wrap:wrap;justify-content:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:var(--gold)}
+.stat-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.2em}
+.hero-flags{margin-top:40px;font-size:1.3rem;color:var(--muted);letter-spacing:.08em}
+.scroll-hint{position:absolute;bottom:30px;font-size:1.5rem;opacity:.4;animation:float 2s ease-in-out infinite}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+.map-wrap{padding:60px 0}
+.map-wrap h2{text-align:center;font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:24px}
+#map{height:500px;border-radius:14px;border:2px solid rgba(201,168,76,.25);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.map-legend{display:flex;gap:24px;justify-content:center;margin-top:16px;font-size:.8rem;color:var(--muted);flex-wrap:wrap}
+.map-legend span{display:flex;align-items:center;gap:6px}
+.leg-flight{width:24px;height:2px;background:var(--gold);border-top:2px dashed var(--gold)}
+.leg-ground{width:24px;height:3px;background:var(--orange)}
+.leg-dot-gold{width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.leg-dot-red{width:10px;height:10px;border-radius:50%;background:var(--red)}
+.country{margin:56px 0}
+.country-head{position:relative;height:260px;border-radius:14px;overflow:hidden;margin-bottom:24px;display:flex;align-items:flex-end}
+.country-bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.country-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,22,40,.95) 0%,rgba(10,22,40,.3) 50%,transparent 100%)}
+.country-info{position:relative;padding:28px;width:100%}
+.country-flag{font-size:2.5rem}
+.country-name{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-top:4px}
+.country-dates{font-size:.85rem;color:var(--muted)}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.day{background:var(--card);border-radius:10px;padding:20px;border-left:4px solid var(--muted);transition:transform .2s,box-shadow .2s}
+.day:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.day.active{border-left-color:var(--green)}
+.day.night{border-left-color:var(--red);background:linear-gradient(135deg,var(--card),#251520)}
+.day.recovery{border-left-color:var(--purple)}
+.day.travel{border-left-color:var(--orange)}
+.day-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.day-date{font-size:.8rem;font-weight:700;color:var(--gold)}
+.day-badge{font-size:1.3rem}
+.day-city{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:6px}
+.day-img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin:10px 0 8px}
+.day-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
+.night-tag{display:inline-block;background:rgba(231,76,60,.15);color:var(--red);padding:3px 12px;border-radius:12px;font-size:.78rem;font-weight:700;margin-top:10px;line-height:1.5}
+.summary{text-align:center;padding:80px 0 60px}
+.summary h2{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.8rem;margin-bottom:32px}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px}
+.summary-card{background:var(--card);border-radius:10px;padding:28px}
+.summary-card .stat-num{font-size:2.2rem}
+footer{text-align:center;padding:40px;color:var(--muted);font-size:.8rem;border-top:1px solid rgba(201,168,76,.1)}
+@media(max-width:768px){.days{grid-template-columns:1fr}.hero-stats{gap:24px}#map{height:320px}.country-head{height:200px}}
+/* Route Overview */
+.overview-section{padding:60px 0 40px}
+.route-flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;gap:0;padding:20px 0}
+.rf-node{background:var(--card);border-radius:12px;padding:16px 18px;text-align:center;min-width:140px;max-width:200px;flex:0 0 auto;border:1px solid rgba(201,168,76,.15);transition:transform .2s}
+.rf-node:hover{transform:translateY(-3px)}
+.rf-node.rf-home{border-color:var(--gold);background:rgba(201,168,76,.08)}
+.rf-node.rf-big{min-width:180px;max-width:240px;border-color:rgba(201,168,76,.3)}
+.rf-flag{font-size:2rem;margin-bottom:4px}
+.rf-country{color:var(--gold);font-weight:700;font-size:.9rem}
+.rf-city,.rf-cities{color:var(--cream);font-size:.85rem;margin-top:2px}
+.rf-sub{color:var(--muted);font-size:.75rem;display:block;line-height:1.5}
+.rf-date{color:var(--muted);font-size:.75rem;margin-top:6px}
+.rf-note{color:var(--muted);font-size:.7rem;margin-top:4px;font-style:italic;line-height:1.4}
+.rf-arrow{display:flex;align-items:center;justify-content:center;flex-direction:column;padding:0 6px;color:var(--gold);font-size:1.2rem;min-width:60px}
+.rf-arrow span{font-size:.6rem;color:var(--muted);margin-top:2px;white-space:nowrap}
+.rf-arrow.rf-solo span{color:var(--red);font-weight:700}
+.overview-summary{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:32px;padding:20px;background:var(--card);border-radius:12px;border:1px solid rgba(201,168,76,.15);text-align:center}
+.os-item{font-size:.85rem;color:var(--cream);line-height:1.6}
+.os-item strong{color:var(--gold);display:block;margin-bottom:4px}
+.os-divider{color:var(--gold);font-size:1.5rem;opacity:.3}
+@media(max-width:768px){.route-flow{flex-direction:column;align-items:center}.rf-arrow{transform:rotate(90deg);padding:8px 0}.overview-summary{flex-direction:column}}
+
+/* Timeline table */
+.tl-legend{display:flex;gap:20px;margin-bottom:20px;font-size:.8rem;color:var(--muted);flex-wrap:wrap}
+.tl-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.tl-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.tl-table th{text-align:left;color:var(--gold);padding:10px 8px;border-bottom:2px solid rgba(201,168,76,.3);white-space:nowrap}
+.tl-table td{padding:8px;border-bottom:1px solid rgba(201,168,76,.06);vertical-align:top;color:var(--muted)}
+.tl-table td:first-child{color:var(--gold);font-weight:700;width:35px;text-align:center}
+.tl-table td:nth-child(2){white-space:nowrap;width:65px}
+.tl-table td:nth-child(3){white-space:nowrap;width:120px;color:var(--cream);font-weight:600}
+.tl-num{text-align:center !important;width:55px;white-space:nowrap;font-weight:600}
+.tl-country td{background:rgba(201,168,76,.1);color:var(--gold) !important;font-weight:700;font-size:.9rem;padding:12px 8px}
+.tl-night{background:rgba(231,76,60,.04)}
+.tl-recovery{background:rgba(155,89,182,.04)}
+.tl-total td{background:rgba(201,168,76,.12);color:var(--gold) !important;font-size:.9rem;padding:12px 8px}
+.tl-avg td{color:var(--muted) !important;font-size:.8rem}
+.tl-m,.tl-s,.tl-n,.tl-r,.tl-f{display:block;padding:2px 0;padding-left:16px;position:relative;line-height:1.5}
+.tl-m::before,.tl-s::before,.tl-n::before,.tl-r::before,.tl-f::before{content:'';position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:50%}
+.tl-m::before{background:var(--orange)}
+.tl-s::before{background:var(--green)}
+.tl-n::before{background:var(--red)}
+.tl-r::before{background:var(--purple)}
+.tl-f::before{background:#556677}
+.tl-m{color:#e8a85c}
+.tl-s{color:#5cd68a}
+.tl-n{color:#f07070}
+.tl-r{color:#bf8fdf}
+.tl-scenic{font-weight:700;font-style:italic}
+.city-lbl span{font-size:11px;font-weight:700;color:#0a1628;background:rgba(255,255,255,.85);padding:1px 5px;border-radius:3px;white-space:nowrap}
+/* Extra sections */
+.extra-section{padding:60px 0}
+.section-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:8px}
+.section-sub{color:var(--muted);font-size:.85rem;margin-bottom:32px}
+.check-group{margin-bottom:32px}
+.check-cat{color:var(--cream);font-size:1.1rem;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(201,168,76,.2)}
+.check-items{display:flex;flex-direction:column;gap:10px}
+.check-item{display:flex;gap:12px;background:var(--card);padding:14px 16px;border-radius:8px;align-items:flex-start}
+.check-item.urgent{border-left:3px solid var(--red)}
+.check-icon{font-size:1.1rem;flex-shrink:0;margin-top:2px}
+.check-item strong{color:var(--cream);font-size:.9rem}
+.check-meta{color:var(--muted);font-size:.8rem;line-height:1.8}
+.check-meta a{color:var(--gold);text-decoration:underline;text-underline-offset:2px}
+.check-meta a:hover{color:#e8d088}
+.cost-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.cost-table th{text-align:left;color:var(--gold);padding:10px 12px;border-bottom:2px solid rgba(201,168,76,.3)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid rgba(201,168,76,.08);color:var(--muted)}
+.cost-table td:last-child{text-align:right;white-space:nowrap;color:var(--cream)}
+.cost-header td{background:rgba(201,168,76,.08);color:var(--gold) !important;font-weight:700;font-size:.9rem}
+.cost-sub td{background:rgba(201,168,76,.05);font-weight:700;color:var(--cream) !important}
+.cost-total td{background:rgba(201,168,76,.15);font-size:1rem;color:var(--gold) !important;font-weight:700;padding:14px 12px}
+.cost-note td{color:var(--muted) !important;font-size:.8rem;text-align:center !important;padding:12px}
+.pack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.pack-cat{background:var(--card);border-radius:10px;padding:20px}
+.pack-cat h3{color:var(--gold);font-size:1rem;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(201,168,76,.2)}
+.pack-item{margin-bottom:14px;font-size:.85rem;color:var(--cream);line-height:1.5}
+.pack-item strong{display:block;margin-bottom:2px}
+.pack-price{display:inline-block;background:rgba(201,168,76,.15);color:var(--gold);padding:1px 8px;border-radius:4px;font-size:.75rem;font-weight:700;margin-right:8px}
+.pack-why{color:var(--muted);font-size:.78rem}
+.souvenir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.souvenir-country{background:var(--card);border-radius:10px;padding:20px}
+.souvenir-country h3{color:var(--gold);font-size:1rem;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(201,168,76,.2)}
+.sov-item{margin-bottom:14px;font-size:.85rem;color:var(--cream);line-height:1.5}
+.sov-item strong{display:block;margin-bottom:2px}
+.sov-tip{display:block;color:var(--muted);font-size:.78rem;margin-top:4px}
+.hotel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.hotel-card{background:var(--card);border-radius:10px;padding:20px}
+.hotel-city{color:var(--gold);font-weight:700;font-size:1rem;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(201,168,76,.2)}
+.hotel-rec{margin-bottom:12px}
+.hotel-rec.splurge{background:rgba(201,168,76,.08);padding:10px;border-radius:6px;border-left:3px solid var(--gold)}
+.hotel-name{color:var(--cream);font-weight:700;font-size:.9rem;margin-bottom:4px}
+.hotel-detail{color:var(--muted);font-size:.8rem;line-height:1.6}
+.hotel-note{margin-top:20px;background:var(--card);border-radius:10px;padding:16px;font-size:.85rem;color:var(--muted);border-left:3px solid var(--gold)}
+@media print{body{background:#fff;color:#222}.hero{min-height:auto;background:#fff;padding:20px}.hero h1{color:#333;text-shadow:none}.day{background:#f5f5f5;border:1px solid #ddd}.country-bg{display:none}.country-overlay{background:none !important}.country-name{color:#333}#map{height:300px}}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-icon">🧭</div>
+  <h1>VOYAGE 2026</h1>
+  <p class="hero-sub">世界一周の冒険</p>
+  <p class="hero-period">2026.06.29 — 08.05</p>
+  <div class="hero-stats">
+    <div><div class="stat-num">38</div><div class="stat-label">Days</div></div>
+    <div><div class="stat-num">10</div><div class="stat-label">Countries</div></div>
+    <div><div class="stat-num">5</div><div class="stat-label">Big Nights</div></div>
+    <div><div class="stat-num">∞</div><div class="stat-label">Adventures</div></div>
+  </div>
+  <div class="scroll-hint">↓</div>
+</section>
+
+<!-- ═══ ROUTE OVERVIEW ═══ -->
+<section class="overview-section">
+<div class="container">
+<h2 class="section-title" style="text-align:center">🗺️ 全行程オーバービュー</h2>
+<p class="section-sub" style="text-align:center">38日間・10カ国・19都市の全ルートを一気に把握</p>
+
+<div class="route-flow">
+
+<div class="rf-node rf-home">
+<div class="rf-flag">🇯🇵</div>
+<div class="rf-country">日本</div>
+<div class="rf-city">東京 (NRT)</div>
+<div class="rf-date">6/29 出発</div>
+</div>
+<div class="rf-arrow">✈️<span>ZIPAIR</span></div>
+
+<div class="rf-node">
+<div class="rf-flag">🇨🇦</div>
+<div class="rf-country">カナダ</div>
+<div class="rf-city">バンクーバー</div>
+<div class="rf-date">6/29（1日）</div>
+<div class="rf-note">すぎ合流・UBC</div>
+</div>
+<div class="rf-arrow">✈️<span>Alaska</span></div>
+
+<div class="rf-node">
+<div class="rf-flag">🇺🇸</div>
+<div class="rf-country">アメリカ</div>
+<div class="rf-city">ダラス</div>
+<div class="rf-date">6/30（トランジット）</div>
+<div class="rf-note">BBQ・JFK記念碑</div>
+</div>
+<div class="rf-arrow">✈️<span>American</span></div>
+
+<div class="rf-node rf-big">
+<div class="rf-flag">🇨🇴</div>
+<div class="rf-country">コロンビア</div>
+<div class="rf-city">ボゴタ</div>
+<div class="rf-date">7/1-3（3日間）</div>
+<div class="rf-note">旧市街・岩塩教会・Andres</div>
+</div>
+<div class="rf-arrow">✈️<span>LATAM</span></div>
+
+<div class="rf-node rf-big">
+<div class="rf-flag">🇵🇪</div>
+<div class="rf-country">ペルー</div>
+<div class="rf-cities">
+<span class="rf-sub">リマ → イキトス(アマゾン) → リマ → クスコ → マチュピチュ</span>
+</div>
+<div class="rf-date">7/4-13（10日間）</div>
+<div class="rf-note">アマゾンロッジ・セビチェ・マチュピチュ・聖なる谷</div>
+</div>
+<div class="rf-arrow">🚌<span>観光バス 7h</span></div>
+
+<div class="rf-node rf-big">
+<div class="rf-flag">🇧🇴</div>
+<div class="rf-country">ボリビア</div>
+<div class="rf-cities">
+<span class="rf-sub">プーノ → ラパス → ウユニ → サンタクルス</span>
+</div>
+<div class="rf-date">7/14-19（6日間）</div>
+<div class="rf-note">チチカカ湖・アルティプラーノ高原(陸路)・ウユニ塩湖</div>
+</div>
+<div class="rf-arrow">✈️<span>BOA→LATAM</span></div>
+
+<div class="rf-node rf-big">
+<div class="rf-flag">🇧🇷</div>
+<div class="rf-country">ブラジル</div>
+<div class="rf-cities">
+<span class="rf-sub">リオデジャネイロ → イグアスの滝 → サンパウロ</span>
+</div>
+<div class="rf-date">7/20-28（9日間）</div>
+<div class="rf-note">キリスト像・ラパ地区・イグアス両サイド・日本人街</div>
+</div>
+<div class="rf-arrow rf-solo">✈️<span>GOL → ここからソロ</span></div>
+
+<div class="rf-node">
+<div class="rf-flag">🇲🇦</div>
+<div class="rf-country">モロッコ【ソロ】</div>
+<div class="rf-cities">
+<span class="rf-sub">カサブランカ → マラケシュ → カサブランカ</span>
+</div>
+<div class="rf-date">7/29-8/1（4日間）</div>
+<div class="rf-note">フナ広場・スーク・ハマム・アトラス山脈</div>
+</div>
+<div class="rf-arrow">✈️<span>Qatar</span></div>
+
+<div class="rf-node">
+<div class="rf-flag">🇪🇬</div>
+<div class="rf-country">エジプト【ソロ】</div>
+<div class="rf-city">カイロ</div>
+<div class="rf-date">8/2-4（3日間）</div>
+<div class="rf-note">ピラミッド・博物館・ナイルクルーズ</div>
+</div>
+<div class="rf-arrow">✈️<span>中国東方</span></div>
+
+<div class="rf-node">
+<div class="rf-flag">🇨🇳</div>
+<div class="rf-country">中国</div>
+<div class="rf-city">上海</div>
+<div class="rf-date">8/5（トランジット）</div>
+<div class="rf-note">外灘の朝景色</div>
+</div>
+<div class="rf-arrow">✈️<span>中国東方</span></div>
+
+<div class="rf-node rf-home">
+<div class="rf-flag">🇯🇵</div>
+<div class="rf-country">日本</div>
+<div class="rf-city">東京 (HND)</div>
+<div class="rf-date">8/5 15:50着</div>
+<div class="rf-note">🏠 おかえり！</div>
+</div>
+
+</div>
+
+<div class="overview-summary">
+<div class="os-item"><strong>2人旅パート</strong><br>6/29-7/28（30日）<br>🇯🇵→🇨🇦→🇺🇸→🇨🇴→🇵🇪→🇧🇴→🇧🇷</div>
+<div class="os-divider">｜</div>
+<div class="os-item"><strong>ソロ旅パート</strong><br>7/29-8/5（8日）<br>🇲🇦→🇪🇬→🇨🇳→🇯🇵</div>
+</div>
+
+</div>
+</section>
+
+<section class="map-wrap">
+  <div class="container">
+    <h2>⚓ Adventure Route</h2>
+    <div id="map"></div>
+    <div class="map-legend">
+      <span><span class="leg-flight"></span> フライト</span>
+      <span><span class="leg-ground"></span> 陸路</span>
+      <span><span class="leg-dot-gold"></span> 都市</span>
+    </div>
+  </div>
+</section>
+
+<section class="itinerary">
+  <div class="container" id="root"></div>
+</section>
+
+<!-- ═══ DAILY TIMELINE TABLE ═══ -->
+<section class="extra-section">
+<div class="container">
+<h2 class="section-title">🕐 日別タイムライン</h2>
+<p class="section-sub">移動 / 観光 / 夜遊び / 回復の時間配分が一目でわかる</p>
+<div class="tl-legend">
+<span><span class="tl-dot" style="background:var(--orange)"></span>移動</span>
+<span><span class="tl-dot" style="background:var(--green)"></span>観光</span>
+<span><span class="tl-dot" style="background:var(--red)"></span>夜遊び</span>
+<span><span class="tl-dot" style="background:var(--purple)"></span>回復/自由</span>
+</div>
+<div style="overflow-x:auto">
+<table class="tl-table">
+<thead><tr><th>DAY</th><th>日付</th><th>都市</th><th>タイムライン</th><th class="tl-num">🚌移動</th><th class="tl-num">📸観光</th></tr></thead>
+<tbody>
+<!-- CANADA -->
+<tr class="tl-country"><td colspan="6">🇨🇦 カナダ</td></tr>
+<tr><td>0</td><td>6/29 日</td><td>バンクーバー</td><td>
+<span class="tl-m">08:30 到着・入国</span>
+<span class="tl-s">09:30-12:00 UBCキャンパス</span>
+<span class="tl-s">12:00-13:30 Granville Island ランチ</span>
+<span class="tl-s">14:00-16:30 Stanley Park</span>
+<span class="tl-f">17:00-19:00 すぎとディナー</span>
+<span class="tl-m">19:30-23:51 空港移動・出発</span>
+</td><td class="tl-num">5h</td><td class="tl-num">6.5h</td></tr>
+
+<!-- USA -->
+<tr class="tl-country"><td colspan="6">🇺🇸 アメリカ</td></tr>
+<tr><td>1</td><td>6/30 月</td><td>ダラス→ボゴタ</td><td>
+<span class="tl-m">06:00 DFW着・入国</span>
+<span class="tl-m">07:00-07:30 DART電車で市内へ</span>
+<span class="tl-s">07:30-09:30 Dealey Plaza・JFK記念碑</span>
+<span class="tl-s">09:30-11:00 Pecan Lodge テキサスBBQ</span>
+<span class="tl-s">11:00-13:00 Deep Ellum散策</span>
+<span class="tl-m">13:30-15:00 空港へ戻る</span>
+<span class="tl-m">17:05-22:38 DFW→BOG ✈️</span>
+<span class="tl-m">23:00 ホテル着</span>
+</td><td class="tl-num">9.5h</td><td class="tl-num">4.5h</td></tr>
+
+<!-- COLOMBIA -->
+<tr class="tl-country"><td colspan="6">🇨🇴 コロンビア</td></tr>
+<tr><td>2</td><td>7/1 火</td><td>ボゴタ</td><td>
+<span class="tl-s">09:00-11:00 モンセラーテの丘（ロープウェイ）</span>
+<span class="tl-s">11:30-13:00 ラ・カンデラリア旧市街散策</span>
+<span class="tl-s">13:00-14:00 ランチ（アヒアコ）</span>
+<span class="tl-s">14:30-16:00 金博物館</span>
+<span class="tl-s">16:00-17:30 ボテロ広場・周辺散策</span>
+<span class="tl-f">18:00-20:00 ディナー</span>
+<span class="tl-n">21:00-24:00 サルサバー（アグアルディエンテ入門）</span>
+</td><td class="tl-num">0.5h</td><td class="tl-num">7.5h</td></tr>
+
+<tr class="tl-night"><td>3</td><td>7/2 水</td><td>ボゴタ 🌙</td><td>
+<span class="tl-m">09:00-10:30 シパキラへ移動（バス1.5h）</span>
+<span class="tl-s">10:30-13:00 シパキラ岩塩教会</span>
+<span class="tl-m">13:00-14:30 ボゴタ市内へ戻る</span>
+<span class="tl-f">15:00-18:00 ホテル休憩・準備</span>
+<span class="tl-m">18:30-19:30 チア（Chia）へタクシー移動</span>
+<span class="tl-n">20:00-04:00 🔥 Andres Carne de Res</span>
+</td><td class="tl-num">4h</td><td class="tl-num">2.5h</td></tr>
+
+<tr class="tl-recovery"><td>4</td><td>7/3 木</td><td>ボゴタ→リマ 😴</td><td>
+<span class="tl-r">09:00-13:00 睡眠</span>
+<span class="tl-r">13:00-15:00 ブランチ（コロンビア最後の飯）</span>
+<span class="tl-r">15:00-18:00 荷造り・ホテルまったり</span>
+<span class="tl-m">19:00-20:00 空港へ移動</span>
+<span class="tl-m">21:00-翌朝 夜便リマへ ✈️（機内泊）</span>
+</td><td class="tl-num">5h</td><td class="tl-num">0h</td></tr>
+
+<!-- PERU -->
+<tr class="tl-country"><td colspan="6">🇵🇪 ペルー</td></tr>
+<tr><td>5</td><td>7/4 金</td><td>リマ→アマゾン</td><td>
+<span class="tl-m">06:00 リマ着</span>
+<span class="tl-m">08:00-10:00 国内線 リマ→イキトス ✈️</span>
+<span class="tl-m">10:30-13:30 ボートでロッジへ（3h）</span>
+<span class="tl-s">14:00-15:30 ロッジ周辺散策・オリエンテーション</span>
+<span class="tl-s">16:00-18:00 ジャングル短距離トレッキング</span>
+<span class="tl-f">18:30-20:00 ロッジでディナー</span>
+</td><td class="tl-num">7.5h</td><td class="tl-num">3.5h</td></tr>
+
+<tr><td>6</td><td>7/5 土</td><td>アマゾン</td><td>
+<span class="tl-s">06:00-08:00 早朝バードウォッチング</span>
+<span class="tl-s">09:00-12:00 ジャングルトレッキング（深部）</span>
+<span class="tl-f">12:30-14:00 ランチ・休憩</span>
+<span class="tl-s">14:30-17:00 ピラニア釣り</span>
+<span class="tl-s">19:00-21:30 ナイトサファリ（カイマンワニ探し）</span>
+</td><td class="tl-num">0h</td><td class="tl-num">8.5h</td></tr>
+
+<tr><td>7</td><td>7/6 日</td><td>アマゾン</td><td>
+<span class="tl-s">06:30-09:30 カヌーでピンクイルカ探し</span>
+<span class="tl-s">10:00-12:00 先住民コミュニティ訪問</span>
+<span class="tl-f">12:30-14:00 ランチ・休憩</span>
+<span class="tl-s">14:30-17:00 野鳥・動物観察トレッキング</span>
+<span class="tl-f">17:30-20:00 ロッジでディナー・星空観察</span>
+</td><td class="tl-num">0h</td><td class="tl-num">8h</td></tr>
+
+<tr><td>8</td><td>7/7 月</td><td>アマゾン→リマ</td><td>
+<span class="tl-m">06:00-09:00 ボートでイキトスへ戻る（3h）</span>
+<span class="tl-m">11:00-13:00 イキトス→リマ ✈️</span>
+<span class="tl-f">14:00-16:00 ホテルチェックイン・シャワー・休憩</span>
+<span class="tl-s">16:30-18:30 ミラフローレス海岸散歩</span>
+<span class="tl-f">19:00-21:00 ディナー</span>
+</td><td class="tl-num">5h</td><td class="tl-num">2h</td></tr>
+
+<tr><td>9</td><td>7/8 火</td><td>リマ</td><td>
+<span class="tl-s">09:00-11:00 ミラフローレス地区散策</span>
+<span class="tl-s">11:00-13:00 セビチェ食べ歩き（中央市場）</span>
+<span class="tl-m">13:30-14:00 タクシー移動</span>
+<span class="tl-s">14:00-16:30 バランコ地区（ため息の橋・ストリートアート）</span>
+<span class="tl-f">17:00-19:00 バランコのバーで軽く一杯</span>
+<span class="tl-f">19:30-21:00 ディナー</span>
+</td><td class="tl-num">0.5h</td><td class="tl-num">6.5h</td></tr>
+
+<tr><td>10</td><td>7/9 水</td><td>リマ→クスコ</td><td>
+<span class="tl-m">06:00-07:00 空港へ移動</span>
+<span class="tl-m">08:00-09:30 リマ→クスコ ✈️</span>
+<span class="tl-r">10:00-12:00 ホテルチェックイン・高地順応（コカ茶）</span>
+<span class="tl-s">13:00-14:30 アルマス広場周辺散策（ゆっくり）</span>
+<span class="tl-s">15:00-16:30 サンペドロ市場</span>
+<span class="tl-f">17:00-20:00 ディナー・早めに就寝（高地順応）</span>
+</td><td class="tl-num">3.5h</td><td class="tl-num">3h</td></tr>
+
+<tr><td>11</td><td>7/10 木</td><td>聖なる谷</td><td>
+<span class="tl-m">07:00-08:30 クスコ→ピサック移動（車1.5h）</span>
+<span class="tl-s">08:30-10:30 ピサック遺跡・市場</span>
+<span class="tl-m">10:30-11:30 ピサック→オリャンタイタンボ移動</span>
+<span class="tl-s">11:30-13:30 オリャンタイタンボ遺跡</span>
+<span class="tl-f">13:30-14:30 ランチ</span>
+<span class="tl-s">15:00-16:30 チンチェーロ（織物市場）</span>
+<span class="tl-m">16:30-18:00 クスコへ戻る</span>
+<span class="tl-f">18:30-21:00 ディナー</span>
+</td><td class="tl-num">4.5h</td><td class="tl-num">5h</td></tr>
+
+<tr><td>12</td><td>7/11 金</td><td>マチュピチュ</td><td>
+<span class="tl-m">04:30-06:00 オリャンタイタンボへ移動（車1.5h）</span>
+<span class="tl-m">06:00-07:30 ペルーレイル（1.5h）</span>
+<span class="tl-m">07:30-08:00 バスで遺跡入口へ（30分）</span>
+<span class="tl-s">08:00-10:00 マチュピチュ遺跡（メインルート）</span>
+<span class="tl-s">10:00-12:30 ワイナピチュ登山（往復2.5h）</span>
+<span class="tl-s">12:30-14:00 遺跡内自由散策・写真</span>
+<span class="tl-m">14:30-15:00 バスでアグアスカリエンテスへ</span>
+<span class="tl-f">15:30-18:00 温泉 or 街散策</span>
+<span class="tl-f">18:00-21:00 ディナー・就寝</span>
+</td><td class="tl-num">4h</td><td class="tl-num">6h</td></tr>
+
+<tr class="tl-night"><td>13</td><td>7/12 土</td><td>マチュピチュ→クスコ 🌙</td><td>
+<span class="tl-s">05:30-08:30 早朝マチュピチュ（朝霧の絶景）</span>
+<span class="tl-m">09:00-10:30 ペルーレイル復路</span>
+<span class="tl-m">10:30-12:00 オリャンタイタンボ→クスコ（車）</span>
+<span class="tl-r">12:30-16:00 ホテル休憩・シャワー・昼寝</span>
+<span class="tl-f">17:00-19:00 ディナー</span>
+<span class="tl-n">20:00-02:00 🔥 Calle Procuradoresバーホッピング・ピスコサワー</span>
+</td><td class="tl-num">3h</td><td class="tl-num">3h</td></tr>
+
+<tr class="tl-recovery"><td>14</td><td>7/13 日</td><td>クスコ 😴</td><td>
+<span class="tl-r">09:00-12:00 睡眠・回復</span>
+<span class="tl-r">12:00-13:30 サンペドロ市場でフレッシュジュース+ブランチ</span>
+<span class="tl-r">14:00-17:00 路地裏カフェ・お土産探し（ゆっくり）</span>
+<span class="tl-f">18:00-20:00 ディナー・早めに就寝（翌日7hバス）</span>
+</td><td class="tl-num">0h</td><td class="tl-num">0h</td></tr>
+
+<!-- BOLIVIA -->
+<tr class="tl-country"><td colspan="6">🇧🇴 ボリビア</td></tr>
+<tr><td>15</td><td>7/14 月</td><td>クスコ→プーノ</td><td>
+<span class="tl-m">07:00-07:30 ホテル出発</span>
+<span class="tl-m tl-scenic">07:30-14:30 観光バス クスコ→プーノ（7h）🏔️ ラ・ラヤ峠4,335m・途中遺跡停車</span>
+<span class="tl-s">15:00-17:00 プーノ市内散策（チチカカ湖畔）</span>
+<span class="tl-f">17:30-20:00 ディナー</span>
+</td><td class="tl-num">7.5h</td><td class="tl-num">2h</td></tr>
+
+<tr><td>16</td><td>7/15 火</td><td>チチカカ湖→ラパス</td><td>
+<span class="tl-m">07:00-07:30 港へ移動</span>
+<span class="tl-s">07:30-09:30 ウロス浮島ツアー（ボート）</span>
+<span class="tl-m">10:00-10:30 プーノ市内へ戻る</span>
+<span class="tl-f">10:30-11:30 ランチ</span>
+<span class="tl-m">12:00-18:00 バスでラパスへ（国境越え含む6h）</span>
+<span class="tl-f">18:30-20:30 ラパスでディナー</span>
+</td><td class="tl-num">7h</td><td class="tl-num">2h</td></tr>
+
+<tr class="tl-night"><td>17</td><td>7/16 水</td><td>ラパス 🌙</td><td>
+<span class="tl-s">09:00-11:00 魔女市場・旧市街散策</span>
+<span class="tl-s">11:00-12:30 テレフェリコ（ロープウェイ）で市内一望</span>
+<span class="tl-f">12:30-14:00 ランチ（サルテーニャ）</span>
+<span class="tl-s">14:30-16:30 月の谷（Valle de la Luna）</span>
+<span class="tl-r">17:00-19:00 ホテル休憩・準備</span>
+<span class="tl-n">20:00-02:00 🔥 Calle Jaénバー街・シンガニで乾杯</span>
+</td><td class="tl-num">0.5h</td><td class="tl-num">5h</td></tr>
+
+<tr><td>18</td><td>7/17 木</td><td>ラパス→ウユニ 🚌</td><td>
+<span class="tl-r">07:00-09:30 回復・朝食・チェックアウト</span>
+<span class="tl-m tl-scenic">10:00-20:00 昼行バス ラパス→ウユニ（10h）🏔️ アルティプラーノ高原絶景</span>
+<span class="tl-f">20:30-21:30 ウユニでチェックイン・軽食</span>
+</td><td class="tl-num">10h</td><td class="tl-num">0h</td></tr>
+
+<tr><td>19</td><td>7/18 金</td><td>ウユニ塩湖</td><td>
+<span class="tl-s">06:00-08:30 サンライズ塩湖ツアー出発</span>
+<span class="tl-s">08:30-12:00 塩のホテル・インカワシ島（サボテン巨大群）</span>
+<span class="tl-f">12:00-13:00 塩湖の上でランチ</span>
+<span class="tl-s">13:00-17:00 トリック写真撮影・塩湖ドライブ</span>
+<span class="tl-s">17:00-19:00 サンセット鑑賞</span>
+<span class="tl-s">19:30-21:30 星空ツアー（気温-10℃防寒必須）</span>
+</td><td class="tl-num">0h</td><td class="tl-num">12h</td></tr>
+
+<tr><td>20</td><td>7/19 土</td><td>ウユニ→サンタクルス</td><td>
+<span class="tl-f">08:00-09:30 ウユニ市内・朝食</span>
+<span class="tl-m">10:00-11:00 空港へ・チェックイン</span>
+<span class="tl-m">12:00-13:00 ウユニ→サンタクルス ✈️</span>
+<span class="tl-f">14:00-20:00 サンタクルス（ホテル・夕食・翌日準備）</span>
+</td><td class="tl-num">3h</td><td class="tl-num">0h</td></tr>
+
+<!-- BRAZIL -->
+<tr class="tl-country"><td colspan="6">🇧🇷 ブラジル</td></tr>
+<tr><td>21</td><td>7/20 日</td><td>サンタクルス→リオ</td><td>
+<span class="tl-m">06:00-08:00 空港移動・チェックイン</span>
+<span class="tl-m">09:00-12:30 サンタクルス→リオ ✈️（乗継含む）</span>
+<span class="tl-m">13:00-14:00 ホテルへ移動・チェックイン</span>
+<span class="tl-s">15:00-18:00 コパカバーナビーチでチルアウト</span>
+<span class="tl-f">18:30-21:00 ビーチ沿いでディナー</span>
+</td><td class="tl-num">8h</td><td class="tl-num">3h</td></tr>
+
+<tr><td>22</td><td>7/21 月</td><td>リオ</td><td>
+<span class="tl-m">08:00-08:30 タクシー移動</span>
+<span class="tl-s">08:30-12:00 コルコバードのキリスト像（登山電車+観光）</span>
+<span class="tl-f">12:30-14:00 ランチ</span>
+<span class="tl-m">14:00-14:30 移動</span>
+<span class="tl-s">14:30-17:30 ポン・ジ・アスーカル（シュガーローフ・夕日）</span>
+<span class="tl-f">18:00-21:00 ディナー</span>
+</td><td class="tl-num">1h</td><td class="tl-num">6.5h</td></tr>
+
+<tr class="tl-night"><td>23</td><td>7/22 火</td><td>リオ 🌙</td><td>
+<span class="tl-s">10:00-11:30 セラロン階段（タイルアートの階段）</span>
+<span class="tl-s">11:30-13:30 サンタテレーザ地区散策</span>
+<span class="tl-f">14:00-15:30 ランチ</span>
+<span class="tl-r">15:30-19:00 ホテル休憩・夜に備える</span>
+<span class="tl-f">19:30-21:00 ディナー</span>
+<span class="tl-n">21:30-04:00 🔥 Lapa地区・Rio Scenarium → サンバ → 屋台街</span>
+</td><td class="tl-num">0.5h</td><td class="tl-num">3.5h</td></tr>
+
+<tr class="tl-recovery"><td>24</td><td>7/23 水</td><td>リオ 😴</td><td>
+<span class="tl-r">09:00-12:00 睡眠</span>
+<span class="tl-r">12:00-13:30 ブランチ</span>
+<span class="tl-r">14:00-17:00 イパネマビーチでゴロゴロ・アサイーボウル</span>
+<span class="tl-f">17:30-20:00 ディナー・早めに就寝</span>
+</td><td class="tl-num">0h</td><td class="tl-num">0h</td></tr>
+
+<tr><td>25</td><td>7/24 木</td><td>リオ→イグアス</td><td>
+<span class="tl-m">06:00-07:00 空港移動</span>
+<span class="tl-m">08:00-10:00 リオ→イグアス ✈️</span>
+<span class="tl-m">10:30-11:00 ホテルへ移動</span>
+<span class="tl-f">11:00-12:00 ランチ</span>
+<span class="tl-s">13:00-17:00 イグアスの滝ブラジル側（パノラマ遊歩道）</span>
+<span class="tl-f">18:00-20:00 ディナー</span>
+</td><td class="tl-num">4.5h</td><td class="tl-num">4h</td></tr>
+
+<tr><td>26</td><td>7/25 金</td><td>イグアスの滝</td><td>
+<span class="tl-m">07:00-08:00 バスでアルゼンチン側へ（国境越え）</span>
+<span class="tl-s">08:30-12:00 悪魔の喉笛 + アッパートレイル</span>
+<span class="tl-s">12:00-13:30 ロワートレイル + ボートで滝壺突入</span>
+<span class="tl-f">13:30-14:30 園内ランチ</span>
+<span class="tl-s">14:30-16:00 サン・マルティン島トレイル</span>
+<span class="tl-m">16:30-17:30 ブラジル側へ戻る</span>
+<span class="tl-f">18:00-20:00 ディナー</span>
+</td><td class="tl-num">2h</td><td class="tl-num">7h</td></tr>
+
+<tr><td>27</td><td>7/26 土</td><td>イグアス→SP</td><td>
+<span class="tl-m">08:00-09:00 空港移動</span>
+<span class="tl-m">10:00-11:30 イグアス→サンパウロ ✈️</span>
+<span class="tl-m">12:00-13:00 ホテルへ移動</span>
+<span class="tl-s">14:00-17:00 リベルダーデ（日本人街）散策・日本食</span>
+<span class="tl-f">17:30-20:00 ディナー</span>
+</td><td class="tl-num">4.5h</td><td class="tl-num">3h</td></tr>
+
+<tr><td>28</td><td>7/27 日</td><td>サンパウロ</td><td>
+<span class="tl-s">09:00-11:00 パウリスタ通り散策</span>
+<span class="tl-s">11:00-13:00 ピニャコテカ美術館</span>
+<span class="tl-f">13:00-14:30 ランチ</span>
+<span class="tl-s">15:00-17:00 バットマン横丁（グラフィティ通り）</span>
+<span class="tl-f">17:30-20:00 最後のシュラスコディナー</span>
+</td><td class="tl-num">0.5h</td><td class="tl-num">6h</td></tr>
+
+<tr class="tl-recovery"><td>29</td><td>7/28 月</td><td>サンパウロ 😴</td><td>
+<span class="tl-r">09:00-12:00 ゆっくり起床・パッキング</span>
+<span class="tl-r">12:00-17:00 自由時間（買い忘れ土産・散歩）</span>
+<span class="tl-f">17:00-19:00 最後のディナー（相棒と別れの乾杯）</span>
+<span class="tl-m">21:00-00:30 GRU空港移動・チェックイン → 出発</span>
+</td><td class="tl-num">3.5h</td><td class="tl-num">0h</td></tr>
+
+<!-- MOROCCO -->
+<tr class="tl-country"><td colspan="6">🇲🇦 モロッコ【ソロ】</td></tr>
+<tr><td>30</td><td>7/29 火</td><td>カサブランカ→マラケシュ</td><td>
+<span class="tl-m">00:30-13:25 GRU→CMN ✈️（機内泊）</span>
+<span class="tl-m">14:00-14:30 入国・荷物</span>
+<span class="tl-m">15:00-18:00 電車でマラケシュへ（3h）</span>
+<span class="tl-m">18:30-19:00 リヤドへチェックイン</span>
+<span class="tl-s">19:30-22:00 ジャマ・エル・フナ広場（夜市・屋台・大道芸）</span>
+</td><td class="tl-num">17h</td><td class="tl-num">2.5h</td></tr>
+
+<tr><td>31</td><td>7/30 水</td><td>マラケシュ</td><td>
+<span class="tl-s">09:00-10:30 バヒア宮殿</span>
+<span class="tl-s">11:00-12:30 マジョレル庭園（イヴ・サンローランの庭）</span>
+<span class="tl-f">12:30-14:00 ランチ（タジン鍋）</span>
+<span class="tl-s">14:30-17:00 スーク（市場）— 革製品・ランプ・スパイス交渉</span>
+<span class="tl-s">17:30-19:00 ハマム体験（モロッコ式サウナ）</span>
+<span class="tl-f">19:30-21:30 フナ広場でディナー</span>
+</td><td class="tl-num">0.5h</td><td class="tl-num">7h</td></tr>
+
+<tr><td>32</td><td>7/31 木</td><td>マラケシュ</td><td>
+<span class="tl-m">07:00-09:30 アトラス山脈 or エッサウィラへ移動（2.5h）</span>
+<span class="tl-s">09:30-15:00 日帰りツアー（山村 or 港町散策）</span>
+<span class="tl-m">15:00-17:30 マラケシュへ戻る</span>
+<span class="tl-f">18:00-19:30 ディナー</span>
+<span class="tl-s">20:00-22:00 ルーフトップバー（フナ広場を上から一望）</span>
+</td><td class="tl-num">5h</td><td class="tl-num">7.5h</td></tr>
+
+<tr><td>33</td><td>8/1 金</td><td>マラケシュ→CMN発</td><td>
+<span class="tl-s">08:00-10:00 朝のスーク散策（人少なくてベスト）</span>
+<span class="tl-f">10:00-11:00 ミントティー休憩</span>
+<span class="tl-m">11:30-14:30 電車でカサブランカへ（3h）</span>
+<span class="tl-m">15:00-16:00 カサブランカ→空港移動</span>
+<span class="tl-m">20:50 CMN→DOH ✈️</span>
+</td><td class="tl-num">8h</td><td class="tl-num">2h</td></tr>
+
+<!-- EGYPT -->
+<tr class="tl-country"><td colspan="6">🇪🇬 エジプト【ソロ】</td></tr>
+<tr><td>34</td><td>8/2 土</td><td>カイロ</td><td>
+<span class="tl-m">06:00 DOH着（乗継）</span>
+<span class="tl-m">07:35-10:50 DOH→CAI ✈️</span>
+<span class="tl-m">11:00-12:00 入国・ホテルへ移動</span>
+<span class="tl-f">12:00-13:00 ランチ</span>
+<span class="tl-s">14:00-17:30 ギザの三大ピラミッド＋スフィンクス</span>
+<span class="tl-f">17:30-19:00 ディナー</span>
+<span class="tl-s">19:30-21:00 サウンド＆ライトショー</span>
+</td><td class="tl-num">6h</td><td class="tl-num">5h</td></tr>
+
+<tr><td>35</td><td>8/3 日</td><td>カイロ</td><td>
+<span class="tl-s">08:30-11:30 エジプト考古学博物館（ツタンカーメン）</span>
+<span class="tl-f">11:30-13:00 ランチ</span>
+<span class="tl-m">13:00-13:30 タクシー移動</span>
+<span class="tl-s">13:30-16:30 ハン・ハリーリ・バザール（最大市場）</span>
+<span class="tl-r">17:00-18:30 ホテル休憩</span>
+<span class="tl-s">19:00-22:00 ナイル川ディナークルーズ（ベリーダンス）</span>
+</td><td class="tl-num">0.5h</td><td class="tl-num">9h</td></tr>
+
+<tr><td>36</td><td>8/4 月</td><td>カイロ→上海</td><td>
+<span class="tl-s">08:00-10:00 オールドカイロ散策（コプト教会地区）</span>
+<span class="tl-m">10:30-12:00 空港移動・チェックイン</span>
+<span class="tl-m">14:15- 翌06:00 CAI→PVG ✈️（機内泊）</span>
+</td><td class="tl-num">12h</td><td class="tl-num">2h</td></tr>
+
+<!-- RETURN -->
+<tr class="tl-country"><td colspan="6">🇯🇵 帰国</td></tr>
+<tr><td>37</td><td>8/5 火</td><td>上海→東京</td><td>
+<span class="tl-m">06:00 PVG着</span>
+<span class="tl-r">06:30-11:00 トランジット（外灘散歩 or ラウンジ休憩）</span>
+<span class="tl-m">12:00-15:50 PVG→HND ✈️</span>
+<span class="tl-f">15:50 🏠 羽田到着！おかえり！</span>
+</td><td class="tl-num">6h</td><td class="tl-num">0h</td></tr>
+
+<!-- TOTALS -->
+<tr class="tl-total"><td colspan="3"><strong>38日間 合計</strong></td><td></td><td class="tl-num"><strong>147h</strong></td><td class="tl-num"><strong>148h</strong></td></tr>
+<tr class="tl-avg"><td colspan="3">1日あたり平均</td><td></td><td class="tl-num">3.9h</td><td class="tl-num">3.9h</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<section class="summary">
+  <div class="container">
+    <h2>Journey Stats</h2>
+    <div class="summary-grid" id="stats"></div>
+  </div>
+</section>
+
+<!-- ═══ RESERVATION CHECKLIST ═══ -->
+<section class="extra-section">
+<div class="container">
+<h2 class="section-title">📋 予約すべきリスト（リンク付き）</h2>
+<p class="section-sub">早いものは3ヶ月前から埋まる。優先度順 × 選択肢広め</p>
+<div class="checklist">
+
+<div class="check-group">
+<h3 class="check-cat">🔴 今すぐ予約（3ヶ月前〜）— 売り切れリスク高</h3>
+<div class="check-items">
+
+<div class="check-item urgent"><span class="check-icon">⬜</span><div><strong>マチュピチュ入場券 + ワイナピチュ</strong><br>
+📅 7/11（Circuit 2 + ワイナピチュ）＋ 7/12（Circuit 2 朝イチ）<br>
+<span class="check-meta">
+🔗 <a href="https://www.machupicchu.gob.pe/" target="_blank" style="color:var(--gold)">公式予約サイト（machupicchu.gob.pe）</a><br>
+・入場券: S/.152（≒¥6,000）/ Circuit 2が定番ルート<br>
+・ワイナピチュ追加: +S/.200（≒¥8,000）/ 1日200人限定 → 争奪戦<br>
+・2日間入るなら2枚分別々に購入<br>
+・パスポート番号が必要（予約時に入力）<br>
+💡 ワイナピチュが取れなかった場合の代替: <strong>モンターニャ・マチュピチュ</strong>（同じく追加予約。体力的にはこっちのがキツいけど景色は最高）
+</span></div></div>
+
+<div class="check-item urgent"><span class="check-icon">⬜</span><div><strong>マチュピチュ行き列車</strong><br>
+📅 7/11 往路 + 7/12 復路<br>
+<span class="check-meta">
+<strong>選択肢A:</strong> 🔗 <a href="https://www.perurail.com/" target="_blank" style="color:var(--gold)">PeruRail（perurail.com）</a><br>
+・Expedition: $80往復（標準・窓大きい）<br>
+・Vistadome: $140往復（パノラマ天窓・軽食付き）<br>
+・Hiram Bingham: $500往復（超豪華・ブランチ付き）<br><br>
+<strong>選択肢B:</strong> 🔗 <a href="https://incarail.com/" target="_blank" style="color:var(--gold)">IncaRail（incarail.com）</a><br>
+・Voyager: $75往復（PeruRailより若干安い）<br>
+・360°: $120往復（全面ガラス車両）<br><br>
+💡 どっちも同じ路線。座席数限定なので早い者勝ち。乾季の7月は特に混む
+</span></div></div>
+
+<div class="check-item urgent"><span class="check-icon">⬜</span><div><strong>アマゾンロッジ（イキトス発 2泊3日）</strong><br>
+📅 7/4チェックイン〜7/6チェックアウト<br>
+<span class="check-meta">
+<strong>選択肢A（冒険重視）:</strong> 🔗 <a href="https://www.treehouselodgeperu.com/" target="_blank" style="color:var(--gold)">Treehouse Lodge</a><br>
+・木の上のロッジ。ジャングル没入感MAX<br>
+・2泊3日 $350-450/人（食事・ガイド・ボート全込み）<br><br>
+<strong>選択肢B（快適重視）:</strong> 🔗 <a href="https://www.heliconialodge.com/" target="_blank" style="color:var(--gold)">Heliconia Lodge</a><br>
+・設備しっかり。エアコン・温水シャワーあり<br>
+・2泊3日 $300-400/人<br><br>
+<strong>選択肢C（高級）:</strong> 🔗 <a href="https://www.inkaterra.com/inkaterra/reserva-amazonica/" target="_blank" style="color:var(--gold)">Inkaterra Reserva Amazonica</a><br>
+・5つ星エコロッジ。キャノピーウォーク付き<br>
+・2泊3日 $600-800/人<br><br>
+<strong>選択肢D（格安）:</strong> 🔗 <a href="https://www.curassowlodge.com/" target="_blank" style="color:var(--gold)">Curassow Amazon Lodge</a><br>
+・バジェット系でもジャングル体験充実<br>
+・2泊3日 $200-280/人<br><br>
+💡 イキトスのロッジは全てボートで1-3時間移動。到着日は午前リマ発推奨
+</span></div></div>
+
+<div class="check-item urgent"><span class="check-icon">⬜</span><div><strong>ESTA申請（アメリカ経由に必須）</strong><br>
+<span class="check-meta">
+🔗 <a href="https://esta.cbp.dhs.gov/" target="_blank" style="color:var(--gold)">公式ESTA申請サイト（esta.cbp.dhs.gov）</a><br>
+・$21 / 72時間前までに申請（余裕持って1週間前推奨）<br>
+・承認されれば2年間有効<br>
+・⚠️ 「ESTA 代行」で検索すると$80-100取る詐欺サイトが出る。必ず .gov ドメインから
+</span></div></div>
+
+<div class="check-item urgent"><span class="check-icon">⬜</span><div><strong>Andres Carne de Res テーブル予約</strong><br>
+📅 7/2（水）20:00〜<br>
+<span class="check-meta">
+🔗 <a href="https://andrescarnederes.com/" target="_blank" style="color:var(--gold)">andrescarnederes.com</a><br>
+・チア本店（Chia店）を選ぶ。ボゴタ市内店より本店がデカい<br>
+・水曜は比較的取りやすいが、予約推奨<br>
+・予約なしでも入れることもあるが、1-2時間待ちリスク<br>
+💡 WhatsAppで予約できる。Instagram DMも対応してることがある
+</span></div></div>
+
+</div>
+</div>
+
+<div class="check-group">
+<h3 class="check-cat">🟡 1ヶ月前までに予約</h3>
+<div class="check-items">
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>南米内LCC航空券（8区間）</strong><br>
+<span class="check-meta">
+各区間の検索リンク（🔗 はSkyscanner直リンク）:<br><br>
+① ボゴタ→リマ（7/3夜）<br>
+🔗 <a href="https://www.skyscanner.jp/transport/flights/bogo/lima/" target="_blank" style="color:var(--gold)">Skyscanner BOG→LIM</a> |
+<a href="https://www.avianca.com/" target="_blank" style="color:var(--gold)">Avianca</a> /
+<a href="https://www.latamairlines.com/" target="_blank" style="color:var(--gold)">LATAM</a> /
+<a href="https://www.jetsmart.com/" target="_blank" style="color:var(--gold)">JetSMART</a><br>
+目安: ¥15,000-25,000<br><br>
+② リマ→イキトス（7/4朝）<br>
+🔗 <a href="https://www.skyscanner.jp/transport/flights/lima/iqt/" target="_blank" style="color:var(--gold)">Skyscanner LIM→IQT</a> |
+<a href="https://www.latamairlines.com/" target="_blank" style="color:var(--gold)">LATAM</a>（ほぼ独占路線）<br>
+目安: ¥8,000-15,000<br><br>
+③ イキトス→リマ（7/7朝）<br>
+上記の復路。LATAMで往復購入が安い<br><br>
+④ リマ→クスコ（7/9朝）<br>
+🔗 <a href="https://www.skyscanner.jp/transport/flights/lima/cuz/" target="_blank" style="color:var(--gold)">Skyscanner LIM→CUZ</a> |
+<a href="https://www.jetsmart.com/" target="_blank" style="color:var(--gold)">JetSMART</a>（最安）/
+<a href="https://www.latamairlines.com/" target="_blank" style="color:var(--gold)">LATAM</a> /
+<a href="https://www.starperu.com/" target="_blank" style="color:var(--gold)">StarPeru</a><br>
+目安: ¥5,000-12,000（JetSMARTなら¥3,000台もある）<br><br>
+⑤ ラパス→ウユニ（7/17 昼行バス 🚌陸路に変更！）<br>
+🔗 <a href="https://www.todotransporte.com/" target="_blank" style="color:var(--gold)">Todo Turismo</a> /
+<a href="https://www.ticketsbolivia.com/" target="_blank" style="color:var(--gold)">Tickets Bolivia</a><br>
+目安: ¥2,000-3,000 / 10h / <strong>アルティプラーノ高原の絶景ルート</strong>🏔️<br>
+💡 Todo Turismo社のセミカマ（半リクライニング）推奨。10時発→20時着<br><br>
+⑥ ウユニ→サンタクルス（7/19朝）<br>
+🔗 <a href="https://www.boa.bo/" target="_blank" style="color:var(--gold)">BOA</a> or
+<a href="https://www.amaszonas.com/" target="_blank" style="color:var(--gold)">Amaszonas</a><br>
+目安: ¥6,000-10,000<br><br>
+⑦ サンタクルス→リオ（7/20）<br>
+🔗 <a href="https://www.skyscanner.jp/transport/flights/sre/riod/" target="_blank" style="color:var(--gold)">Skyscanner VVI→GIG</a> |
+<a href="https://www.latamairlines.com/" target="_blank" style="color:var(--gold)">LATAM</a> /
+<a href="https://www.voegol.com.br/" target="_blank" style="color:var(--gold)">GOL</a>（サンパウロ経由多い）<br>
+目安: ¥20,000-35,000<br><br>
+⑧ リオ→イグアス（7/24）+ イグアス→サンパウロ（7/26）<br>
+🔗 <a href="https://www.voeazul.com.br/" target="_blank" style="color:var(--gold)">Azul</a> /
+<a href="https://www.voegol.com.br/" target="_blank" style="color:var(--gold)">GOL</a> /
+<a href="https://www.latamairlines.com/" target="_blank" style="color:var(--gold)">LATAM</a><br>
+目安: 各¥6,000-15,000<br><br>
+💡 <strong>まとめ買いのコツ:</strong> Skyscannerで最安を見つけてから、航空会社の公式サイトで直接購入（公式の方が安いことも多い）。JetSMARTはセール時¥2,000台がある
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>ウユニ塩湖ツアー</strong><br>
+📅 7/18 終日<br>
+<span class="check-meta">
+<strong>選択肢A:</strong> 🔗 <a href="https://www.hodakatour.com/" target="_blank" style="color:var(--gold)">Hodaka Mountain Tours</a>（日本語対応・安心）<br>
+・1日ツアー $40-60/人 / サンライズ or サンセットツアーも<br><br>
+<strong>選択肢B:</strong> 🔗 <a href="https://www.redplanetexpedition.com/" target="_blank" style="color:var(--gold)">Red Planet Expedition</a>（現地人気No.1）<br>
+・1日ツアー $30-50/人 / 星空ツアー追加可<br><br>
+<strong>選択肢C:</strong> 現地ウユニの旅行代理店で前日予約（最安$20-30/人）<br>
+💡 乾季はサンセット＋星空ツアーが神。日中+夕日+星空の3点セットで$60-80が最高
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>クスコ→プーノ 観光バス</strong><br>
+📅 7/14 朝<br>
+<span class="check-meta">
+<strong>選択肢A:</strong> 🔗 <a href="https://www.turismomer.com/" target="_blank" style="color:var(--gold)">Turismo Mer</a>（観光バス・途中下車付き）<br>
+・$25-35/人 / 7h / 途中ラ・ラヤ峠+プカラ+シユスタニ遺跡で停車<br><br>
+<strong>選択肢B:</strong> 🔗 <a href="https://www.inkaexpress.com/" target="_blank" style="color:var(--gold)">Inka Express</a>（定番観光バス）<br>
+・$45-55/人 / ビュッフェランチ付き / 英語ガイド<br><br>
+<strong>選択肢C:</strong> 🔗 <a href="https://www.cruzdelsur.com.pe/" target="_blank" style="color:var(--gold)">Cruz del Sur</a>（長距離バス最大手）<br>
+・$15-20/人 / 直行6h / 観光停車なし（安さ重視）<br><br>
+💡 Inka Express は観光+移動を兼ねて効率的。予約は1週間前でもOK
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>海外旅行保険</strong><br>
+<span class="check-meta">
+<strong>選択肢A:</strong> 🔗 <a href="https://tabiho.jp/" target="_blank" style="color:var(--gold)">tabiho（たびほ）</a> — ネット完結・安い・カスタマイズ可<br>
+・38日間: ¥15,000-25,000（プラン次第）<br><br>
+<strong>選択肢B:</strong> 🔗 <a href="https://www.sjnk.jp/kinsurance/leisure/off/" target="_blank" style="color:var(--gold)">損保ジャパン 新・海外旅行保険off!</a><br>
+・38日間: ¥20,000-35,000 / 補償手厚い<br><br>
+<strong>選択肢C:</strong> 🔗 <a href="https://www.hs-sonpo.co.jp/travel/" target="_blank" style="color:var(--gold)">HS損保 たびとも</a><br>
+・38日間: ¥12,000-20,000 / コスパ系<br><br>
+<strong>選択肢D:</strong> クレカ付帯保険で節約<br>
+・エポスカード（年会費無料で自動付帯・90日間）が最強<br>
+・ただし補償額に上限あり。南米は医療費高いので上乗せ推奨<br><br>
+💡 高山病での通院・アマゾンでの感染症に対応できるプランを選ぶ
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>ボリビア入国ビザ</strong><br>
+<span class="check-meta">
+日本国籍は到着時ビザ（Visa on Arrival）取得可能<br>
+・到着ビザ: $52（現金USD）<br>
+・必要書類: パスポート（残存6ヶ月以上）、往復航空券、黄熱病予防接種証明（推奨）、ホテル予約確認書<br>
+・⚠️ 陸路入国（プーノ→ラパス）の場合も国境で取得可能だが、混む場合あり<br>
+💡 黄熱病ワクチンは接種から10日後に有効。出発の2週間前には打つ
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>宿泊先予約</strong><br>
+<span class="check-meta">
+🔗 <a href="https://www.booking.com/" target="_blank" style="color:var(--gold)">Booking.com</a>（ジーニアス割引10-15%OFF） |
+🔗 <a href="https://www.hostelworld.com/" target="_blank" style="color:var(--gold)">Hostelworld</a>（ドミ比較最強） |
+🔗 <a href="https://www.airbnb.com/" target="_blank" style="color:var(--gold)">Airbnb</a>（2人なら個室がコスパ◎）<br>
+💡 キャンセル無料プランで全部押さえておく→直前に安いの見つけたら差替え
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>聖なる谷ツアー予約</strong><br>
+📅 7/10 終日<br>
+<span class="check-meta">
+<strong>選択肢A:</strong> 🔗 <a href="https://www.viator.com/" target="_blank" style="color:var(--gold)">Viator</a> or
+🔗 <a href="https://www.getyourguide.com/" target="_blank" style="color:var(--gold)">GetYourGuide</a> で事前予約<br>
+・$30-60/人 / ランチ付き / ガイド+車<br><br>
+<strong>選択肢B:</strong> クスコのアルマス広場周辺の旅行代理店で前日予約（$20-30 / 現地最安）<br><br>
+💡 事前予約の方が英語ガイド確約。現地だとスペイン語のみのことも
+</span></div></div>
+
+</div>
+</div>
+
+<div class="check-group">
+<h3 class="check-cat">🟢 2週間前までに</h3>
+<div class="check-items">
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>高山病薬（ダイアモックス）処方</strong><br>
+<span class="check-meta">
+クスコ3,400m / ラパス3,600m / ウユニ3,600m → 高山病リスクあり<br>
+🔗 <a href="https://www.nishi-shinjuku-travel-clinic.com/" target="_blank" style="color:var(--gold)">西新宿トラベルクリニック</a> /
+🔗 <a href="https://www.forth.go.jp/moreinfo/topics/access.html" target="_blank" style="color:var(--gold)">全国トラベルクリニック一覧（FORTH）</a><br>
+・ダイアモックス（アセタゾラミド）250mg / 到着前日から1日2回 / 処方¥2,000-3,000<br>
+・黄熱病ワクチンも同時に接種推奨（¥10,000前後 / 生涯有効）<br>
+💡 渡航外来は予約制が多い。1ヶ月前がベスト
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>eSIM購入</strong><br>
+<span class="check-meta">
+<strong>選択肢A:</strong> 🔗 <a href="https://www.airalo.com/" target="_blank" style="color:var(--gold)">Airalo</a>（リージョン別が安い）<br>
+・南米 5GB/30日: $16 / グローバル 10GB: $32<br><br>
+<strong>選択肢B:</strong> 🔗 <a href="https://www.holafly.com/" target="_blank" style="color:var(--gold)">Holafly</a>（無制限プランあり）<br>
+・南米無制限 30日: $57 / 便利だけど高め<br><br>
+<strong>選択肢C:</strong> 🔗 <a href="https://www.nomad.inc/" target="_blank" style="color:var(--gold)">Nomad eSIM</a>（日本語対応）<br>
+・リージョン別あり / 日本語サポート安心<br><br>
+💡 南米+アフリカ+アジアでリージョンが変わる。グローバルプランか、3枚買うか選択
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>Wiseカード発行</strong><br>
+<span class="check-meta">
+🔗 <a href="https://wise.com/jp/" target="_blank" style="color:var(--gold)">Wise（wise.com）</a><br>
+・年会費無料 / 現地通貨ATM引き出しが最安レート<br>
+・1回3万円まで無料引き出し / 月2回まで<br>
+・VISAデビット / Apple Pay対応<br>
+・発行まで1-2週間かかるので早めに申請<br>
+💡 メインをWise、サブにVISAクレカ、緊急用にMasterクレカの3枚体制が最強
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>イグアスの滝 入場チケット</strong><br>
+📅 7/24（ブラジル側）+ 7/25（アルゼンチン側）<br>
+<span class="check-meta">
+<strong>ブラジル側:</strong> 🔗 <a href="https://cataratasdoiguacu.com.br/" target="_blank" style="color:var(--gold)">cataratasdoiguacu.com.br</a><br>
+・R$94（≒¥3,000）/ 当日券もあるが混雑時入場制限あり<br><br>
+<strong>アルゼンチン側:</strong> 🔗 <a href="https://iguazuargentina.com/" target="_blank" style="color:var(--gold)">iguazuargentina.com</a><br>
+・ARS（変動大 / 現時点≒¥5,000）/ 悪魔の喉笛はこっち<br><br>
+💡 アルゼンチン側は国境越えが必要。パスポート持参。バスで30分
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>ナイル川ディナークルーズ</strong><br>
+📅 8/3 夜<br>
+<span class="check-meta">
+🔗 <a href="https://www.viator.com/Cairo-tours/Dinner-Cruises/d782-g10-c45" target="_blank" style="color:var(--gold)">Viator カイロ ディナークルーズ</a> /
+🔗 <a href="https://www.getyourguide.com/" target="_blank" style="color:var(--gold)">GetYourGuide</a><br>
+・$30-80/人（ビュッフェ+ベリーダンス+タヌーラダンス）<br>
+・ソロでも全然OK。観光客だらけで気楽<br>
+💡 ホテルから送迎付きプランが楽。Nile Maxim / Nile Crystal が定番
+</span></div></div>
+
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>ピラミッド サウンド＆ライトショー</strong><br>
+📅 8/2 夜<br>
+<span class="check-meta">
+🔗 <a href="https://www.soundandlightshow.com.eg/" target="_blank" style="color:var(--gold)">公式サイト（soundandlightshow.com.eg）</a><br>
+・$20-30/人 / 英語ショーの時間帯を確認<br>
+・ピラミッドがライトアップされてスフィンクスが喋る（笑）。B級だけど一見の価値あり
+</span></div></div>
+
+</div>
+</div>
+
+<div class="check-group">
+<h3 class="check-cat">⚪ あると便利（出発前チェック）</h3>
+<div class="check-items">
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>パスポートコピー + 証明写真2枚</strong><br><span class="check-meta">紛失時の再発行用。データでもクラウドに保存</span></div></div>
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>海外ATM引き出し設定確認</strong><br><span class="check-meta">クレカ・デビット全てのカードで海外キャッシング有効化確認</span></div></div>
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>Google Maps オフラインマップDL</strong><br><span class="check-meta">各都市のマップを事前にダウンロード。電波ない場所で命綱</span></div></div>
+<div class="check-item"><span class="check-icon">⬜</span><div><strong>各国の緊急連絡先メモ</strong><br><span class="check-meta">日本大使館・警察・救急の番号をスマホのメモに保存</span></div></div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ═══ COST BREAKDOWN ═══ -->
+<section class="extra-section">
+<div class="container">
+<h2 class="section-title">💰 コスト詳細ブレイクダウン</h2>
+<p class="section-sub">2人旅パート（6/29-7/28）+ ソロパート（7/29-8/5）</p>
+
+<table class="cost-table">
+<thead><tr><th>カテゴリ</th><th>内訳</th><th>1人あたり</th></tr></thead>
+<tbody>
+<tr class="cost-header"><td colspan="3">✈️ 国際フライト（確定済み）</td></tr>
+<tr><td>✈️ 🇯🇵東京(NRT) → 🇨🇦バンクーバー(YVR)</td><td>ZIPAIR ZG022 予約済み</td><td>¥130,530</td></tr>
+<tr><td>✈️ 🇨🇦バンクーバー → 🇺🇸ダラス → 🇨🇴ボゴタ</td><td>Alaska+American 予約済み</td><td>上記に含む</td></tr>
+<tr><td>✈️ 🇧🇷サンパウロ → 🇲🇦カサブランカ → 🇶🇦ドーハ → 🇪🇬カイロ → 🇨🇳上海 → 🇯🇵東京</td><td>GOL+Qatar+中国東方 予約済み</td><td>¥239,810</td></tr>
+<tr class="cost-sub"><td><strong>国際フライト小計</strong></td><td></td><td><strong>¥370,340</strong></td></tr>
+
+<tr class="cost-header"><td colspan="3">✈️🚌 南米内 移動（未予約）</td></tr>
+<tr><td>✈️ 🇨🇴コロンビア ボゴタ → 🇵🇪ペルー リマ</td><td>LATAM / Avianca</td><td>¥15,000-25,000</td></tr>
+<tr><td>✈️ 🇵🇪ペルー リマ ⇔ イキトス（往復）</td><td>LATAM</td><td>¥12,000-20,000</td></tr>
+<tr><td>✈️ 🇵🇪ペルー リマ → クスコ</td><td>JetSMART / LATAM</td><td>¥8,000-15,000</td></tr>
+<tr><td>🚌 🇧🇴ボリビア ラパス → ウユニ【陸路】</td><td>Todo Turismo 昼行バス 10h</td><td>¥2,000-3,000</td></tr>
+<tr><td>✈️ 🇧🇴ボリビア ウユニ → サンタクルス</td><td>BOA / Amaszonas</td><td>¥6,000-10,000</td></tr>
+<tr><td>✈️ 🇧🇴ボリビア サンタクルス → 🇧🇷ブラジル リオ</td><td>LATAM / GOL（乗継）</td><td>¥20,000-35,000</td></tr>
+<tr><td>✈️ 🇧🇷ブラジル リオ → イグアス</td><td>GOL / Azul</td><td>¥8,000-15,000</td></tr>
+<tr><td>✈️ 🇧🇷ブラジル イグアス → サンパウロ</td><td>GOL / Azul</td><td>¥6,000-12,000</td></tr>
+<tr class="cost-sub"><td><strong>南米内 移動小計（✈️×7 + 🚌×1）</strong></td><td></td><td><strong>¥77,000-135,000</strong></td></tr>
+
+<tr class="cost-header"><td colspan="3">🏨 宿泊（28泊 南米 + 7泊 アフリカ/中東）</td></tr>
+<tr><td>ホステル / ゲストハウス（20泊）</td><td>¥2,000-4,000/泊</td><td>¥40,000-80,000</td></tr>
+<tr><td>中級ホテル（8泊: アマゾン含む）</td><td>¥5,000-10,000/泊</td><td>¥40,000-80,000</td></tr>
+<tr><td>リヤド（マラケシュ2泊）</td><td>伝統的モロッコ宿</td><td>¥8,000-12,000</td></tr>
+<tr class="cost-sub"><td><strong>宿泊小計</strong></td><td></td><td><strong>¥88,000-172,000</strong></td></tr>
+
+<tr class="cost-header"><td colspan="3">🎫 ツアー・アクティビティ</td></tr>
+<tr><td>アマゾンロッジ（2泊3日）</td><td>食事・ツアー込み</td><td>¥40,000-70,000</td></tr>
+<tr><td>マチュピチュ入場+列車</td><td>入場$50 + 列車$80</td><td>¥20,000-25,000</td></tr>
+<tr><td>ウユニ塩湖ツアー</td><td>1日4WDツアー</td><td>¥5,000-8,000</td></tr>
+<tr><td>イグアス（両サイド入場）</td><td>BR側+AR側</td><td>¥8,000-12,000</td></tr>
+<tr><td>ピラミッド+博物館</td><td>入場料各種</td><td>¥5,000-8,000</td></tr>
+<tr><td>ナイルクルーズ</td><td>ディナー+ショー</td><td>¥5,000-10,000</td></tr>
+<tr><td>ハマム（マラケシュ）</td><td>モロッコ式サウナ</td><td>¥3,000-5,000</td></tr>
+<tr class="cost-sub"><td><strong>ツアー小計</strong></td><td></td><td><strong>¥86,000-138,000</strong></td></tr>
+
+<tr class="cost-header"><td colspan="3">🚌🚄 陸路移動（バス・電車）</td></tr>
+<tr><td>🚌 🇵🇪ペルー クスコ → 🇧🇴ボリビア プーノ</td><td>Inka Express 観光バス 7h</td><td>¥3,000-8,000</td></tr>
+<tr><td>🚌 🇧🇴ボリビア プーノ → ラパス（国境越え）</td><td>ツーリストバス 6h</td><td>¥2,000-4,000</td></tr>
+<tr><td>🚄 🇲🇦モロッコ カサブランカ ⇔ マラケシュ（往復）</td><td>ONCF 電車 各3h</td><td>¥4,000-6,000</td></tr>
+<tr class="cost-sub"><td><strong>陸路移動小計</strong></td><td></td><td><strong>¥9,000-18,000</strong></td></tr>
+
+<tr class="cost-header"><td colspan="3">🍽️ 食事・交通・その他</td></tr>
+<tr><td>食事（38日間）</td><td>¥2,000-4,000/日</td><td>¥76,000-152,000</td></tr>
+<tr><td>現地交通（タクシー・バス等）</td><td>各都市移動</td><td>¥20,000-40,000</td></tr>
+<tr><td>ナイトライフ（5回のBig Night + 軽い夜）</td><td>飲食+入場</td><td>¥30,000-60,000</td></tr>
+<tr><td>お土産</td><td>後述リスト参照</td><td>¥20,000-40,000</td></tr>
+<tr><td>雑費（SIM・洗濯・チップ等）</td><td></td><td>¥15,000-25,000</td></tr>
+<tr class="cost-sub"><td><strong>その他小計</strong></td><td></td><td><strong>¥161,000-317,000</strong></td></tr>
+
+<tr class="cost-total"><td><strong>合計（1人あたり）</strong></td><td></td><td><strong>¥800,000〜1,150,000</strong></td></tr>
+<tr class="cost-note"><td colspan="3">💡 節約モード: ¥80万前後 / 快適モード: ¥100万前後 / 余裕モード: ¥115万前後<br>✈️=飛行機 🚌=バス 🚄=電車 でひと目で交通手段がわかる</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ═══ PACKING LIST ═══ -->
+<section class="extra-section">
+<div class="container">
+<h2 class="section-title">🎒 持ち物リスト（商品名付き）</h2>
+<p class="section-sub">38日間 × 気温-10℃〜35℃対応。バックパック1つに収める</p>
+
+<div class="pack-grid">
+<div class="pack-cat">
+<h3>🎒 バッグ</h3>
+<div class="pack-item"><strong>メインバックパック</strong><br>Osprey Farpoint 40L<br><span class="pack-price">¥22,000</span><span class="pack-why">機内持込サイズギリギリ。背面パネルで背負い心地◎</span></div>
+<div class="pack-item"><strong>サブバッグ（デイパック）</strong><br>Matador Freerain24 2.0<br><span class="pack-price">¥9,000</span><span class="pack-why">防水・超軽量・折りたたみ。日帰り観光用</span></div>
+<div class="pack-item"><strong>パッキングキューブ</strong><br>Eagle Creek Pack-It Reveal（S/M/L）<br><span class="pack-price">¥4,500</span><span class="pack-why">荷物整理の神。色分けで「着た/着てない」管理</span></div>
+</div>
+
+<div class="pack-cat">
+<h3>👕 衣類（7日分ローテ）</h3>
+<div class="pack-item"><strong>Tシャツ ×4</strong><br>Uniqlo AIRism コットン<br><span class="pack-price">¥1,500×4</span><span class="pack-why">速乾・臭くなりにくい。現地でも洗える</span></div>
+<div class="pack-item"><strong>短パン ×2</strong><br>Uniqlo ドライEXハーフパンツ<br><span class="pack-price">¥1,990×2</span><span class="pack-why">暑い地域メイン。ストレッチ効く</span></div>
+<div class="pack-item"><strong>長ズボン ×2</strong><br>Uniqlo 感動パンツ（ウルトラライト）<br><span class="pack-price">¥3,990×2</span><span class="pack-why">軽い・シワにならない・ちょい良い飯にも使える</span></div>
+<div class="pack-item"><strong>パーカー</strong><br>Uniqlo ウルトラライトダウン（コンパクト）<br><span class="pack-price">¥6,990</span><span class="pack-why">ウユニ-10℃対策。丸めてポケットサイズ</span></div>
+<div class="pack-item"><strong>レインジャケット</strong><br>Workman イージス透湿レインジャケット<br><span class="pack-price">¥4,900</span><span class="pack-why">防水+透湿。アマゾン・イグアスの水しぶき対策</span></div>
+<div class="pack-item"><strong>下着 ×5</strong><br>Exofficio Give-N-Go 2.0<br><span class="pack-price">¥3,500×5</span><span class="pack-why">速乾世界最強。洗って翌朝乾く。旅人御用達</span></div>
+<div class="pack-item"><strong>靴下 ×4</strong><br>Darn Tough メリノウール<br><span class="pack-price">¥2,800×4</span><span class="pack-why">永久保証。臭くならない。3日履いてもOK</span></div>
+<div class="pack-item"><strong>水着 ×1</strong><br>Patagonia Baggies Shorts 5"<br><span class="pack-price">¥7,700</span><span class="pack-why">水着兼短パン。コパカバーナ→そのまま街歩きOK</span></div>
+</div>
+
+<div class="pack-cat">
+<h3>👟 靴</h3>
+<div class="pack-item"><strong>メインシューズ</strong><br>HOKA Anacapa Low GTX<br><span class="pack-price">¥22,000</span><span class="pack-why">防水+クッション。マチュピチュもリオの街歩きもこれ1足</span></div>
+<div class="pack-item"><strong>サンダル</strong><br>Teva Hurricane XLT2<br><span class="pack-price">¥8,800</span><span class="pack-why">ホステル・ビーチ・シャワー用。ストラップで脱げない</span></div>
+</div>
+
+<div class="pack-cat">
+<h3>📱 ガジェット</h3>
+<div class="pack-item"><strong>モバイルバッテリー</strong><br>Anker PowerCore 20000mAh<br><span class="pack-price">¥4,000</span><span class="pack-why">iPhone 4回分。長距離バス・アマゾンで命綱</span></div>
+<div class="pack-item"><strong>変換プラグ</strong><br>TESSAN 万能変換アダプター（USB-C×2）<br><span class="pack-price">¥2,500</span><span class="pack-why">全世界対応。USB-C直差しで充電器不要</span></div>
+<div class="pack-item"><strong>eSIM</strong><br>Airalo（リージョン別）or Holafly（無制限）<br><span class="pack-price">¥3,000-8,000</span><span class="pack-why">到着即ネット。SIMカード入替不要</span></div>
+<div class="pack-item"><strong>アクションカメラ</strong><br>GoPro HERO13 Black<br><span class="pack-price">¥62,000</span><span class="pack-why">アマゾン・イグアス・ウユニ星空。防水でタフ</span></div>
+<div class="pack-item"><strong>ネックピロー</strong><br>Cabeau Evolution S3<br><span class="pack-price">¥6,600</span><span class="pack-why">長距離フライト5回+夜行バス。首固定で爆睡</span></div>
+</div>
+
+<div class="pack-cat">
+<h3>💊 医薬品・衛生</h3>
+<div class="pack-item"><strong>高山病薬</strong><br>ダイアモックス（アセタゾラミド）<br><span class="pack-price">処方箋 ¥2,000</span><span class="pack-why">クスコ到着前日から服用開始。渡航外来で処方</span></div>
+<div class="pack-item"><strong>胃腸薬</strong><br>正露丸糖衣A + ビオフェルミン<br><span class="pack-price">¥1,500</span><span class="pack-why">南米の水・食事対策。必ず持つ</span></div>
+<div class="pack-item"><strong>日焼け止め</strong><br>Anessa パーフェクトUV SPF50+<br><span class="pack-price">¥2,500</span><span class="pack-why">ウユニ標高3,600m+赤道直下。紫外線が凶器</span></div>
+<div class="pack-item"><strong>虫除け</strong><br>DEET30%スプレー + ムヒアルファEX<br><span class="pack-price">¥1,500</span><span class="pack-why">アマゾン必須。蚊・サシバエ対策</span></div>
+<div class="pack-item"><strong>速乾タオル</strong><br>PackTowl Personal（L）<br><span class="pack-price">¥3,300</span><span class="pack-why">ホステルにタオルない率高い。絞って即乾</span></div>
+</div>
+
+<div class="pack-cat">
+<h3>🔒 セキュリティ</h3>
+<div class="pack-item"><strong>セキュリティポーチ</strong><br>pacsafe Coversafe V75<br><span class="pack-price">¥3,500</span><span class="pack-why">首下げ型。パスポート+カード+現金。南米必須</span></div>
+<div class="pack-item"><strong>ワイヤーロック</strong><br>pacsafe Retractasafe 250<br><span class="pack-price">¥3,000</span><span class="pack-why">ホステルのロッカー+バスでバッグ固定</span></div>
+<div class="pack-item"><strong>Wiseデビットカード</strong><br>Wise（旧TransferWise）<br><span class="pack-price">無料</span><span class="pack-why">現地ATMから最安レートで引き出し。メインカード</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ SOUVENIRS ═══ -->
+<section class="extra-section">
+<div class="container">
+<h2 class="section-title">🎁 絶対買うべきお土産リスト</h2>
+<p class="section-sub">自分用＋配り用。各国のベスト</p>
+
+<div class="souvenir-grid">
+<div class="souvenir-country">
+<h3>🇨🇴 コロンビア</h3>
+<div class="sov-item"><strong>コーヒー豆（Juan Valdez / 現地ロースター）</strong><br>世界3大コーヒー。スーパーで買うと¥500程度<br><span class="sov-tip">💡 粉より豆で買う。空港より市内のJuan Valdez店が安い</span></div>
+<div class="sov-item"><strong>エメラルド（小粒ペンダント）</strong><br>コロンビア=世界最大のエメラルド産地<br><span class="sov-tip">💡 ラ・カンデラリアの宝石店街で。$50-200。鑑定書付きを選ぶ</span></div>
+<div class="sov-item"><strong>アグアルディエンテ（蒸留酒）</strong><br>Nectar / Antioqueño ブランド。1本¥800程度<br><span class="sov-tip">💡 免税で持ち出しOK。ショットで飲む文化を日本でも再現</span></div>
+</div>
+
+<div class="souvenir-country">
+<h3>🇵🇪 ペルー</h3>
+<div class="sov-item"><strong>アルパカ製品（マフラー / ニット帽）</strong><br>ベビーアルパカ素材は最高級。クスコのサンペドロ市場が安い<br><span class="sov-tip">💡 ¥1,500-5,000。手触りで品質がわかる。値切り必須</span></div>
+<div class="sov-item"><strong>ピスコ（ぶどう蒸留酒）</strong><br>Pisco Quebranta or Torontel。ピスコサワーを自宅で<br><span class="sov-tip">💡 空港免税店が楽。700ml ¥2,000-4,000</span></div>
+<div class="sov-item"><strong>チョコレート（Maraná / Cacaosuyo）</strong><br>ペルー産カカオは世界トップ。Bean to Bar ブランド多数<br><span class="sov-tip">💡 リマのMiraflores地区に専門店。1枚¥500-1,000</span></div>
+</div>
+
+<div class="souvenir-country">
+<h3>🇧🇴 ボリビア</h3>
+<div class="sov-item"><strong>ウユニ塩（塩のボトル）</strong><br>世界一の塩湖から直接。ツアー中に買える<br><span class="sov-tip">💡 ¥300-500。軽い・安い・話題性MAX。配り土産最強</span></div>
+<div class="sov-item"><strong>アワイヨ（アンデス織物）</strong><br>カラフルなアンデス伝統布。ポーチ・バッグ型もある<br><span class="sov-tip">💡 ラパス魔女市場で。ポーチ¥500-1,000</span></div>
+</div>
+
+<div class="souvenir-country">
+<h3>🇧🇷 ブラジル</h3>
+<div class="sov-item"><strong>カシャッサ（サトウキビ蒸留酒）</strong><br>カイピリーニャの材料。Leblon / Ypioca ブランド<br><span class="sov-tip">💡 スーパーで¥800-2,000。ライム絞って自宅カイピリーニャ</span></div>
+<div class="sov-item"><strong>Havaianas（ビーチサンダル）</strong><br>ブラジル国民的ブランド。日本の半額以下<br><span class="sov-tip">💡 ¥500-1,500。限定デザインはブラジルでしか買えない</span></div>
+<div class="sov-item"><strong>ブラジリアンコーヒー（Café Pilão / 3 Corações）</strong><br>深煎り強め。安くて旨い<br><span class="sov-tip">💡 スーパーで500g ¥300。安すぎて大量買い推奨</span></div>
+</div>
+
+<div class="souvenir-country">
+<h3>🇲🇦 モロッコ</h3>
+<div class="sov-item"><strong>アルガンオイル</strong><br>モロッコ特産。スキンケア・ヘアケア用<br><span class="sov-tip">💡 マラケシュのスークで。100ml ¥1,000-2,000。品質はピンキリ</span></div>
+<div class="sov-item"><strong>モロッカンランプ（真鍮×ガラス）</strong><br>幻想的な透かし模様。小型なら持ち帰れる<br><span class="sov-tip">💡 スークで¥2,000-5,000。必ず値切る（最初の言い値の1/3が相場）</span></div>
+<div class="sov-item"><strong>ミントティーセット（グラス+ポット）</strong><br>モロッカングラスのカラフルなデザイン<br><span class="sov-tip">💡 グラス6個セット¥1,500程度。割れ物注意で梱包</span></div>
+<div class="sov-item"><strong>スパイス（ラスエルハヌート / サフラン）</strong><br>万能スパイスミックス。料理好きへの最強土産<br><span class="sov-tip">💡 フナ広場のスパイス屋で。¥500-1,000。量り売り</span></div>
+</div>
+
+<div class="souvenir-country">
+<h3>🇪🇬 エジプト</h3>
+<div class="sov-item"><strong>パピルス画</strong><br>古代エジプト式の紙に描いた絵画<br><span class="sov-tip">💡 本物のパピルスか確認。バナナの葉の偽物多い。¥1,000-5,000</span></div>
+<div class="sov-item"><strong>エジプト香水（香油）</strong><br>ハン・ハリーリで調合してもらえる<br><span class="sov-tip">💡 自分だけのオリジナルブレンド。20ml ¥500-1,500</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ HOTELS ═══ -->
+<section class="extra-section">
+<div class="container">
+<h2 class="section-title">🏨 ホテル・宿泊おすすめ</h2>
+<p class="section-sub">男2人旅向け。立地 × コスパ × 夜遊びアクセス重視</p>
+
+<div class="hotel-grid">
+<div class="hotel-card">
+<div class="hotel-city">🇨🇴 ボゴタ（3泊）</div>
+<div class="hotel-rec">
+<div class="hotel-name">Selina Bogota</div>
+<div class="hotel-detail">📍 La Candelaria地区 | ドミ¥2,500/人 ツイン¥4,500/人<br>コワーキング付きソーシャルホステル。バー併設で旅人と交流しやすい。サルサバーまで徒歩圏</div>
+</div>
+<div class="hotel-rec splurge">
+<div class="hotel-name">🌟 ちょい贅沢: Click Clack Hotel</div>
+<div class="hotel-detail">📍 Zona T | ツイン¥8,000/人<br>デザイナーズホテル。屋上バーから夜景。Andresに行く日の前泊におすすめ</div>
+</div>
+</div>
+
+<div class="hotel-card">
+<div class="hotel-city">🇵🇪 イキトス / アマゾン（3泊）</div>
+<div class="hotel-rec">
+<div class="hotel-name">Treehouse Lodge</div>
+<div class="hotel-detail">📍 アマゾン川沿い | 2泊3日パッケージ ¥40,000-55,000/人<br>木の上のロッジ。食事・ガイド・ボート全込み。ナイトサファリ付き</div>
+</div>
+</div>
+
+<div class="hotel-card">
+<div class="hotel-city">🇵🇪 クスコ（4泊）</div>
+<div class="hotel-rec">
+<div class="hotel-name">Pariwana Hostel Cusco</div>
+<div class="hotel-detail">📍 アルマス広場徒歩3分 | ドミ¥1,800/人 ツイン¥3,500/人<br>庭が広くてゆったり。バー＆レストラン併設。高山病でダウンしてもすぐ休める立地</div>
+</div>
+</div>
+
+<div class="hotel-card">
+<div class="hotel-city">🇧🇴 ラパス（2泊）</div>
+<div class="hotel-rec">
+<div class="hotel-name">Loki La Paz</div>
+<div class="hotel-detail">📍 旧市街 | ドミ¥1,500/人 ツイン¥2,800/人<br>南米最強のパーティーホステルチェーン。バー毎晩イベント。Calle Jaénまで徒歩5分</div>
+</div>
+</div>
+
+<div class="hotel-card">
+<div class="hotel-city">🇧🇴 ウユニ（1泊）</div>
+<div class="hotel-rec">
+<div class="hotel-name">Hostal Marith</div>
+<div class="hotel-detail">📍 ウユニ中心部 | ツイン¥2,000/人<br>清潔でお湯出る（ウユニでは貴重）。ツアー会社が近い。暖房あり</div>
+</div>
+</div>
+
+<div class="hotel-card">
+<div class="hotel-city">🇧🇷 リオデジャネイロ（4泊）</div>
+<div class="hotel-rec">
+<div class="hotel-name">Selina Lapa Rio</div>
+<div class="hotel-detail">📍 Lapa地区 | ドミ¥3,000/人 ツイン¥5,000/人<br>ラパ地区のど真ん中。Big Night当日はここから歩いて出て、歩いて帰れる。プール付き</div>
+</div>
+<div class="hotel-rec splurge">
+<div class="hotel-name">🌟 ちょい贅沢: Santa Teresa Hotel (1泊)</div>
+<div class="hotel-detail">📍 Santa Teresa | ツイン¥12,000/人<br>コロニアル建築の高台ホテル。インフィニティプールからリオ一望。回復日にここ泊まる</div>
+</div>
+</div>
+
+<div class="hotel-card">
+<div class="hotel-city">🇲🇦 マラケシュ（2泊）【ソロ】</div>
+<div class="hotel-rec">
+<div class="hotel-name">Riad Yasmine</div>
+<div class="hotel-detail">📍 メディナ内 | シングル¥5,000<br>Instagramで有名なプール付きリヤド。伝統建築でモロッコ感MAX。フナ広場徒歩10分</div>
+</div>
+</div>
+
+<div class="hotel-card">
+<div class="hotel-city">🇪🇬 カイロ（2泊）【ソロ】</div>
+<div class="hotel-rec">
+<div class="hotel-name">Egyptian Night Hotel</div>
+<div class="hotel-detail">📍 ギザ地区 | シングル¥2,500<br>ピラミッドビューの屋上テラス。朝日に照らされるピラミッドを部屋から見れる</div>
+</div>
+</div>
+</div>
+
+<div class="hotel-note">
+<strong>💡 予約のコツ:</strong> Booking.comの「ジーニアス割引」でさらに10-15%オフ。キャンセル無料プランで予約→直前に安いの見つけたら切り替え。Hostelworldはドミトリー比較に強い。
+</div>
+</div>
+</section>
+
+<footer>⚓ VOYAGE 2026 — Crafted with adventure in mind</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ── DATA ── */
+const imgs = {
+  amazon:'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&h=250&fit=crop&q=80',
+  machupicchu:'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=600&h=250&fit=crop&q=80',
+  uyuni:'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&h=250&fit=crop&q=80',
+  rio:'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&h=250&fit=crop&q=80',
+  iguazu:'https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?w=600&h=250&fit=crop&q=80',
+  marrakech:'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&h=250&fit=crop&q=80',
+  pyramids:'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=600&h=250&fit=crop&q=80',
+};
+
+const countries = [
+  { flag:'🇨🇦', name:'カナダ — バンクーバー', dates:'6月29日（1日間）',
+    grad:'linear-gradient(135deg,#1a5276,#2e86c1)',
+    days:[
+      {date:'6/29 (日)',badge:'🌅',type:'active',city:'バンクーバー',
+       desc:'08:30着。元同期すぎと合流 → UBCキャンパス（新渡戸記念庭園・人類学博物館）→ Granville Islandランチ → Stanley Park → ディナー → 23:51 YVR発'}
+    ]},
+  { flag:'🇺🇸', name:'アメリカ — ダラス（トランジット）', dates:'6月30日',
+    grad:'linear-gradient(135deg,#922b21,#c0392b)',
+    days:[
+      {date:'6/30 (月)',badge:'✈️',type:'travel',city:'ダラス → ボゴタ',
+       desc:'DFW 06:00着。DART電車で市内へ → Dealey Plaza（JFK記念碑）→ テキサスBBQ🥩（Pecan Lodge）→ Deep Ellum散策 → 17:05 BOG行き → 22:38 ボゴタ着'}
+    ]},
+  { flag:'🇨🇴', name:'コロンビア — ボゴタ', dates:'7月1日〜3日（3日間）',
+    grad:'linear-gradient(135deg,#d4ac0d,#b7950b)',
+    days:[
+      {date:'7/1 (火)',badge:'🌅',type:'active',city:'ボゴタ',
+       desc:'モンセラーテの丘（ロープウェイで市内一望）→ ラ・カンデラリア旧市街 → 金博物館 → ボテロ広場。夜はサルサバーでアグアルディエンテ入門🍸'},
+      {date:'7/2 (水)',badge:'🌙',type:'night',city:'ボゴタ',
+       desc:'午前：シパキラ岩塩教会（地下120mの大聖堂）',
+       night:'🔥 Andres Carne de Res（チア本店）— 20時イン〜朝4時。コロンビア最狂の夜'},
+      {date:'7/3 (木)',badge:'😴',type:'recovery',city:'ボゴタ → リマ',
+       desc:'13時起床。アヒアコ（鶏スープ）で〆のコロンビア飯。夜便でリマへ（機内爆睡）'}
+    ]},
+  { flag:'🇵🇪', name:'ペルー — アマゾン × マチュピチュ', dates:'7月4日〜13日（10日間）',
+    grad:'linear-gradient(135deg,#1e8449,#0e6251)',
+    days:[
+      {date:'7/4 (金)',badge:'✈️',type:'travel',city:'リマ → イキトス → アマゾン',
+       desc:'リマ着 → イキトス国内線2h → ボートでアマゾンロッジへ'},
+      {date:'7/5 (土)',badge:'🌅',type:'active',city:'アマゾン',img:'amazon',
+       desc:'ジャングルトレッキング、ピラニア釣り🎣、ナイトサファリ（カイマンワニ探し）'},
+      {date:'7/6 (日)',badge:'🌅',type:'active',city:'アマゾン',
+       desc:'カヌーでピンクイルカ探し🐬、先住民コミュニティ訪問、野鳥観察'},
+      {date:'7/7 (月)',badge:'✈️',type:'travel',city:'アマゾン → リマ',
+       desc:'朝ロッジ出発 → イキトス → リマへ帰還'},
+      {date:'7/8 (火)',badge:'🌅',type:'active',city:'リマ',
+       desc:'ミラフローレス海岸散歩、セビチェ食べ歩き🐟、バランコ地区（ため息の橋）'},
+      {date:'7/9 (水)',badge:'✈️',type:'travel',city:'リマ → クスコ',
+       desc:'クスコへ（国内線1.5h）。高地順応日（標高3,400m）。アルマス広場、コカ茶でゆっくり'},
+      {date:'7/10 (木)',badge:'🌅',type:'active',city:'聖なる谷',
+       desc:'オリャンタイタンボ遺跡、ピサック遺跡、チンチェーロの織物市場'},
+      {date:'7/11 (金)',badge:'🌅',type:'active',city:'マチュピチュ',img:'machupicchu',
+       desc:'早朝ペルーレイル → マチュピチュ遺跡を堪能。ワイナピチュ登山（要事前予約）'},
+      {date:'7/12 (土)',badge:'🌙',type:'night',city:'マチュピチュ → クスコ',
+       desc:'朝もう一度マチュピチュ（朝霧が最高）→ 午後クスコへ帰還',
+       night:'🔥 マチュピチュ制覇祝い！Calle Procuradoresバーホッピング。ピスコサワー飲み比べ🥂'},
+      {date:'7/13 (日)',badge:'😴',type:'recovery',city:'クスコ',
+       desc:'完全回復日。昼起床、サンペドロ市場でフレッシュジュース、路地裏カフェでまったり'}
+    ]},
+  { flag:'🇧🇴', name:'ボリビア — チチカカ × ウユニ', dates:'7月14日〜19日（6日間）',
+    grad:'linear-gradient(135deg,#ba4a00,#d35400)',
+    days:[
+      {date:'7/14 (月)',badge:'✈️',type:'travel',city:'クスコ → プーノ',
+       desc:'観光バス7h。途中ラ・ラヤ峠（標高4,335m）の絶景パノラマ'},
+      {date:'7/15 (火)',badge:'🌅',type:'active',city:'チチカカ湖 → ラパス',
+       desc:'ウロス浮島（葦で作った浮島集落）→ 午後バスで国境越え → ラパス着'},
+      {date:'7/16 (水)',badge:'🌙',type:'night',city:'ラパス',
+       desc:'すり鉢都市ラパス散策（魔女市場、月の谷）',
+       night:'🔥 Calle Jaénのバー街。標高3,600mで酒は倍効く。シンガニ（ぶどう蒸留酒）で乾杯🍷'},
+      {date:'7/17 (木)',badge:'🚌',type:'travel',city:'ラパス → ウユニ（陸路）',
+       desc:'午前ゆっくり回復 → 10時発の昼行バスでウユニへ（10h）。アルティプラーノ高原の絶景を車窓から堪能🏔️ 荒野×雪山×リャマの群れ×異次元の空の青さ。20時ウユニ着'},
+      {date:'7/18 (金)',badge:'🌅',type:'active',city:'ウユニ塩湖',img:'uyuni',
+       desc:'終日4WDツアー。サボテン島インカワシ、塩のホテル、夕日＆満天の星空撮影✨ 夜は-10℃'},
+      {date:'7/19 (土)',badge:'✈️',type:'travel',city:'ウユニ → サンタクルス',
+       desc:'国内線でサンタクルスへ。翌日リオ行き準備'}
+    ]},
+  { flag:'🇧🇷', name:'ブラジル — リオ × イグアス × サンパウロ', dates:'7月20日〜28日（9日間）',
+    grad:'linear-gradient(135deg,#1a9c5b,#148f77)',
+    days:[
+      {date:'7/20 (日)',badge:'✈️',type:'travel',city:'サンタクルス → リオ',
+       desc:'LCC 3.5h。到着後コパカバーナビーチでチルアウト🏖️'},
+      {date:'7/21 (月)',badge:'🌅',type:'active',city:'リオデジャネイロ',img:'rio',
+       desc:'コルコバードのキリスト像 → ポン・ジ・アスーカル（シュガーローフ）。夕日が最高'},
+      {date:'7/22 (火)',badge:'🌙',type:'night',city:'リオデジャネイロ',
+       desc:'セラロン階段 → サンタテレーザ地区を散策',
+       night:'🔥 ラパ地区（Lapa）。Rio Scenariumでサンバ → カイピリーニャ無限🍹 → 屋台街で朝まで'},
+      {date:'7/23 (水)',badge:'😴',type:'recovery',city:'リオデジャネイロ',
+       desc:'完全回復。昼まで寝てイパネマビーチでゴロゴロ。アサイーボウル'},
+      {date:'7/24 (木)',badge:'🌅',type:'active',city:'リオ → イグアス',
+       desc:'国内線2h。午後ブラジル側から滝パノラマ鑑賞'},
+      {date:'7/25 (金)',badge:'🌅',type:'active',city:'イグアスの滝',img:'iguazu',
+       desc:'アルゼンチン側（国境越え）。悪魔の喉笛は人生レベルの衝撃。ボートで滝壺突入ツアー💦'},
+      {date:'7/26 (土)',badge:'✈️',type:'travel',city:'イグアス → サンパウロ',
+       desc:'国内線1.5h。リベルダーデ（日本人街）で懐かしの日本食'},
+      {date:'7/27 (日)',badge:'🌅',type:'active',city:'サンパウロ',
+       desc:'パウリスタ通り、ピニャコテカ美術館、バットマン横丁（グラフィティ通り）'},
+      {date:'7/28 (月)',badge:'😴',type:'recovery',city:'サンパウロ',
+       desc:'予備日。パッキング、最後のシュラスコ🥩 深夜GRU空港へ。ここから1人旅スタート'}
+    ]},
+  { flag:'🇲🇦', name:'モロッコ — マラケシュ【ソロ】', dates:'7月29日〜8月1日（4日間）',
+    grad:'linear-gradient(135deg,#b9770e,#ca6f1e)',
+    days:[
+      {date:'7/29 (火)',badge:'✈️',type:'travel',city:'カサブランカ → マラケシュ',
+       desc:'GRU 00:30発 → カサブランカ13:25着。電車3hでマラケシュへ。夜ジャマ・エル・フナ広場の夜市直行'},
+      {date:'7/30 (水)',badge:'🌅',type:'active',city:'マラケシュ',img:'marrakech',
+       desc:'バヒア宮殿、マジョレル庭園（イヴ・サンローランの青い庭）、スークで革製品・ランプ交渉、ハマム体験🧖'},
+      {date:'7/31 (木)',badge:'🌅',type:'active',city:'マラケシュ',
+       desc:'アトラス山脈日帰り or エッサウィラ（青い港町）。夜はメディナのルーフトップバーでミントティーカクテル'},
+      {date:'8/1 (金)',badge:'✈️',type:'travel',city:'マラケシュ → カサブランカ',
+       desc:'朝のスーク散策 → 電車でカサブランカ → 20:50発ドーハ行き'}
+    ]},
+  { flag:'🇪🇬', name:'エジプト — カイロ【ソロ】', dates:'8月2日〜4日（3日間）',
+    grad:'linear-gradient(135deg,#b7950b,#d4ac0d)',
+    days:[
+      {date:'8/2 (土)',badge:'🌅',type:'active',city:'カイロ',img:'pyramids',
+       desc:'ドーハ経由 → カイロ10:50着。午後ギザの三大ピラミッド＋スフィンクス。夜サウンド＆ライトショー'},
+      {date:'8/3 (日)',badge:'🌅',type:'active',city:'カイロ',
+       desc:'エジプト考古学博物館（ツタンカーメン黄金マスク）→ ハン・ハリーリ・バザール → 夜ナイル川ディナークルーズ🚢'},
+      {date:'8/4 (月)',badge:'✈️',type:'travel',city:'カイロ → 上海',
+       desc:'午前オールドカイロ散策 → 14:15発 中国東方航空で上海へ'}
+    ]},
+  { flag:'🇯🇵', name:'帰国', dates:'8月5日',
+    grad:'linear-gradient(135deg,#c0392b,#922b21)',
+    days:[
+      {date:'8/5 (火)',badge:'🏠',type:'travel',city:'上海 → 東京',
+       desc:'上海PVG 06:00着。6hトランジット（外灘の朝景色 or ラウンジ休憩）→ 12:00発 → 羽田15:50着。おかえり！🏠'}
+    ]}
+];
+
+/* ── RENDER ITINERARY ── */
+(function(){
+  const root = document.getElementById('root');
+  let html = '', dayNum = 0;
+  countries.forEach(c => {
+    html += '<div class="country"><div class="country-head">' +
+      '<div class="country-bg" style="background:' + c.grad + '"></div>' +
+      '<div class="country-overlay"></div>' +
+      '<div class="country-info"><div class="country-flag">' + c.flag + '</div>' +
+      '<div class="country-name">' + c.name + '</div>' +
+      '<div class="country-dates">' + c.dates + '</div></div></div><div class="days">';
+    c.days.forEach(d => {
+      const imgTag = d.img ? '<img class="day-img" src="' + imgs[d.img] + '" alt="' + d.city + '" loading="lazy" onerror="this.style.display=\'none\'">' : '';
+      const nightTag = d.night ? '<div class="night-tag">' + d.night + '</div>' : '';
+      html += '<div class="day ' + d.type + '">' +
+        '<div class="day-top"><span class="day-date">DAY ' + dayNum + ' — ' + d.date + '</span><span class="day-badge">' + d.badge + '</span></div>' +
+        '<div class="day-city">' + d.city + '</div>' + imgTag +
+        '<div class="day-desc">' + d.desc + '</div>' + nightTag + '</div>';
+      dayNum++;
+    });
+    html += '</div></div>';
+  });
+  root.innerHTML = html;
+})();
+
+/* ── SUMMARY STATS ── */
+(function(){
+  const s = document.getElementById('stats');
+  const d = [{n:'38',l:'日間'},{n:'10',l:'カ国'},{n:'5',l:'Big Nights'},{n:'~50K',l:'km 移動'},{n:'15+',l:'フライト'},{n:'7',l:'世界遺産級'}];
+  s.innerHTML = d.map(x => '<div class="summary-card"><div class="stat-num">' + x.n + '</div><div class="stat-label">' + x.l + '</div></div>').join('');
+})();
+
+/* ── MAP ── */
+(function(){
+  const map = L.map('map',{scrollWheelZoom:false}).setView([10,-20],2);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; OpenStreetMap', maxZoom:18
+  }).addTo(map);
+
+  const p = {
+    tokyo:[35.68,139.69], vancouver:[49.28,-123.12], dallas:[32.78,-96.80],
+    bogota:[4.71,-74.07], lima:[-12.05,-77.04], iquitos:[-3.75,-73.25],
+    cusco:[-13.53,-71.97], puno:[-15.84,-70.02], lapaz:[-16.49,-68.12],
+    uyuni:[-20.46,-66.83], santacruz:[-17.78,-63.18], rio:[-22.91,-43.17],
+    iguazu:[-25.52,-54.59], saopaulo:[-23.55,-46.63], casablanca:[33.57,-7.59],
+    marrakech:[31.63,-7.98], doha:[25.29,51.53], cairo:[30.04,31.24],
+    shanghai:[31.23,121.47]
+  };
+
+  const gold='#c9a84c', orange='#e07c3e', red='#e74c3c';
+
+  /* Flights (dashed) */
+  [[p.vancouver,p.dallas],[p.dallas,p.bogota],[p.bogota,p.lima],[p.lima,p.iquitos],
+   [p.iquitos,p.lima],[p.lima,p.cusco],[p.uyuni,p.santacruz],
+   [p.santacruz,p.rio],[p.rio,p.iguazu],[p.iguazu,p.saopaulo],
+   [p.saopaulo,p.casablanca],[p.casablanca,p.doha],[p.doha,p.cairo],
+   [p.cairo,p.shanghai],[p.shanghai,p.tokyo]
+  ].forEach(r => L.polyline(r,{color:gold,weight:2,opacity:.6,dashArray:'8,6'}).addTo(map));
+
+  /* Transpacific (subtle) */
+  L.polyline([p.tokyo,[42,172]],{color:gold,weight:1.5,opacity:.3,dashArray:'4,8'}).addTo(map);
+  L.polyline([[47,-168],p.vancouver],{color:gold,weight:1.5,opacity:.3,dashArray:'4,8'}).addTo(map);
+
+  /* Ground (solid) */
+  [[p.cusco,p.puno],[p.puno,p.lapaz],[p.lapaz,p.uyuni],[p.casablanca,p.marrakech]
+  ].forEach(r => L.polyline(r,{color:orange,weight:3,opacity:.8}).addTo(map));
+
+  /* Markers */
+  const labels = {
+    tokyo:'東京',vancouver:'バンクーバー',dallas:'ダラス',bogota:'ボゴタ',
+    lima:'リマ',iquitos:'イキトス',cusco:'クスコ',puno:'プーノ',
+    lapaz:'ラパス',uyuni:'ウユニ',santacruz:'サンタクルス',
+    rio:'リオ',iguazu:'イグアス',saopaulo:'サンパウロ',
+    casablanca:'カサブランカ',marrakech:'マラケシュ',
+    doha:'ドーハ',cairo:'カイロ',shanghai:'上海'
+  };
+  Object.entries(p).forEach(([k,v]) => {
+    const home = k==='tokyo';
+    L.circleMarker(v,{
+      radius: home?8:5,
+      fillColor: home?'#fff':gold,
+      color:'#0a1628', weight:2, fillOpacity:1
+    }).addTo(map).bindPopup('<b>'+labels[k]+'</b>');
+    var show=['tokyo','vancouver','dallas','bogota','lima','cusco','lapaz','uyuni','rio','saopaulo','casablanca','cairo','shanghai'];
+    if(show.indexOf(k)>=0){L.marker(v,{icon:L.divIcon({className:'city-lbl',html:'<span>'+labels[k]+'</span>',iconSize:[80,20],iconAnchor:[40,-8]})}).addTo(map)}
+  });
+
+  map.fitBounds(L.latLngBounds([p.vancouver,p.bogota,p.saopaulo,p.cairo,p.shanghai]),{padding:[40,40]});
+})();
+</script>
+</body>
+</html>
