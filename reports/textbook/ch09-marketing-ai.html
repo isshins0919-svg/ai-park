@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 09: マーケティング × AI — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html" class="active">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover" data-island="9">
+  <div class="cover-badge">ISLAND 09 OF 10</div>
+  <h1>マーケティング × AI<br>— 実戦投入</h1>
+  <p class="subtitle">N1 × コンセプト × クリエイティブ。理論を実戦に変える</p>
+  <span class="time-badge">本編 25分 + ミッション 25分</span>
+</div>
+
+<div class="recap">
+  <h3>📌 Island 08の振り返り</h3>
+  <ul>
+    <li>「やる→測る→直す」の自動化がフィードバックループ</li>
+    <li>リフレクションは具体的な評価軸を指定する</li>
+    <li>多層防御（スクリプト→AI→人間）とNice Diveで学びを蓄積</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ AIマーケの3ステップ ═══ -->
+<div class="section">
+  <div class="section-label">THREE STEPS</div>
+  <h2>AIマーケティングの3ステップ</h2>
+
+  <p>Island 01-08で学んだ技術を、マーケティングの実務に投入します。<br>
+  AIマーケは<strong>「誰に」「何を」「どう伝えるか」</strong>の3ステップです。</p>
+
+  <div class="story-step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h4>N1を定義する — 「誰に」</h4>
+      <p>N1（エヌワン）= たった1人の理想顧客像。「30代女性」ではなく「渋谷で働く34歳の営業ウーマン、膝の痛みで趣味のランニングを諦めかけている」レベルまで具体化する。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h4>コンセプトを設計する — 「何を」</h4>
+      <p>N1の悩みに対して「この商品ならこう解決できる」を1文で。「膝サポーター」ではなく「走れる毎日を取り戻す、薄型膝サポーター」。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h4>クリエイティブを制作する — 「どう伝えるか」</h4>
+      <p>バナー・記事LP・動画・SNS投稿。N1の言葉で、コンセプトを「刺さる形」に変換する。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ N1設計 ═══ -->
+<div class="section">
+  <div class="section-label">N1 DESIGN</div>
+  <h2>N1設計 — ペルソナではなく「実在する1人」</h2>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">❌ ペルソナ（ぼんやり）</div>
+      <p>30-40代女性<br>
+      健康意識が高い<br>
+      ECで買い物する<br><br>
+      → ぼんやりしすぎて「誰にも刺さらない」コピーが出る</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ N1（くっきり）</div>
+      <p>34歳、渋谷で営業職<br>
+      週末のランニングが唯一の息抜き<br>
+      半年前から右膝が痛くて走れない<br>
+      整形外科に行く時間がない<br>
+      「もう走れないのかも」と不安<br><br>
+      → <strong>この人の言葉</strong>でコピーが書ける</p>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">N1の作り方</div>
+    <p>① 実際の顧客インタビュー・口コミから「生の言葉」を拾う<br>
+    ② その人の1日の行動を想像できるまで具体化する<br>
+    ③ AIに「この人に向けて書いて」と指示する<br><br>
+    <strong>N1が曖昧だと、AIのアウトプットも曖昧になる。</strong>入力の精度 = 出力の精度。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 実戦パイプライン ═══ -->
+<div class="section">
+  <div class="section-label">PIPELINE</div>
+  <h2>VOYAGE号のクリエイティブ制作パイプライン</h2>
+
+  <p>実際にVOYAGE号がどのようにAIでクリエイティブを制作しているかを紹介します。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🎨</span> バナー制作（Banner Park）</h3>
+    <p class="tagline">Research → Concept → Banner の3フェーズ</p>
+
+    <div class="story-step">
+      <div class="step-num">R</div>
+      <div class="step-body">
+        <h4>Research フェーズ</h4>
+        <p>クライアント情報を読む → N1を定義 → 競合の勝ちパターンをDProで分析</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">C</div>
+      <div class="step-body">
+        <h4>Concept フェーズ</h4>
+        <p>N1の需要ベクトル × 商品の強み = コンセプト仮説を3つ生成 → 品質ゲートで絞る</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">B</div>
+      <div class="step-body">
+        <h4>Banner フェーズ</h4>
+        <p>コンセプトをビジュアルに変換 → Gemini画像生成 → gate-quality-crew がPASS/FAIL判定</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📝</span> 記事LP制作（記事LP Park）</h3>
+    <p class="tagline">CKOが指揮、5つのクルーが独立評価</p>
+
+    <table>
+      <tr><th>クルー</th><th>評価対象</th><th>スコア</th></tr>
+      <tr><td>kiji-hook-crew</td><td>冒頭200文字のフック強度</td><td>hook_score</td></tr>
+      <tr><td>kiji-trust-crew</td><td>権威 × 数値証拠 × 口コミの信頼構造</td><td>trust_score</td></tr>
+      <tr><td>kiji-arc-crew</td><td>共感→問題→新認識→解決→希望の感情アーク</td><td>narrative_score</td></tr>
+      <tr><td>kiji-offer-crew</td><td>初回価格 × 割引率 × 緊急性 × 特典</td><td>offer_score</td></tr>
+      <tr><td>kiji-cta-crew</td><td>CTA数 × 配置 × 文言 × 必然性</td><td>cta_score</td></tr>
+    </table>
+
+    <div class="why-box">
+      <div class="label">ポイント</div>
+      <p>5つのクルーは全てagents/（Tier 3）。親のCWを使わず、独立で並列実行される。結果だけが親に返る。<br>
+      <strong>Island 05の「1エージェント1タスク」と Island 06の「Tier 3設計」の実践例。</strong></p>
+    </div>
+  </div>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🎬</span> 動画制作（Movie Kantoku）</h3>
+    <p class="tagline">監督が指揮、専門クルーが各領域を評価</p>
+
+    <table>
+      <tr><th>クルー</th><th>担当</th></tr>
+      <tr><td>movie-hook-crew</td><td>冒頭3秒のフック評価</td></tr>
+      <tr><td>movie-arc-crew</td><td>60秒の感情アーク設計</td></tr>
+      <tr><td>movie-script-crew</td><td>台本の構成・テンポ評価</td></tr>
+      <tr><td>movie-cta-crew</td><td>CTA設計・誘導評価</td></tr>
+      <tr><td>movie-style-crew</td><td>テロップ・ビジュアル設計</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Island 09 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🎯</div>
+    <div class="hl-text">3つの持ち帰り</div>
+    <div class="hl-sub">
+      ① AIマーケは「誰に（N1）」「何を（コンセプト）」「どう伝えるか（CR）」の3ステップ<br>
+      ② N1はペルソナではなく「実在する1人」。曖昧なN1からは曖昧なCRしか出ない<br>
+      ③ 制作パイプライン = オーケストレーター + 独立クルーの組み合わせ
+    </div>
+  </div>
+</div>
+
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>AIマーケの3ステップ: N1定義 → コンセプト設計 → CR制作</li>
+    <li>N1は「その人の1日を想像できる」レベルまで具体化する</li>
+    <li>制作パイプラインはIsland 01-08の技術の総合実践</li>
+    <li>品質は構造で担保する（クルー分割 × 品質ゲート × 多層防御）</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="mission">
+  <h3>🎯 N1 × コンセプトを設計しよう</h3>
+  <p class="mission-desc">自分の業務で扱う商品・サービスのN1とコンセプトをAIで設計するハンズオン。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>自分の業務の商品/サービスについて、N1定義 + コンセプト3案を生成する</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">自分の業務で扱う商品・サービスを1つ選ぶ</li>
+    <li data-step="2">Claude Codeで以下を実行:
+      <div class="code-block" style="margin-top:8px;">
+        以下の商品のN1（理想顧客像）を設計してください。<br>
+        <br>
+        <span class="comment"># 商品情報</span><br>
+        - 商品名: [商品名]<br>
+        - カテゴリ: [例: 健康食品、SaaS、アパレル]<br>
+        - 価格帯: [例: 月額3,000円]<br>
+        - 主な特徴: [3つ]<br>
+        <br>
+        <span class="comment"># N1設計</span><br>
+        「ペルソナ」ではなく「実在する1人」として:<br>
+        - 年齢、職業、家族構成<br>
+        - 今一番困っていること（具体的に）<br>
+        - 普段使っている言葉遣い<br>
+        - 朝起きてから寝るまでの1日<br>
+        <br>
+        <span class="comment"># コンセプト</span><br>
+        このN1に向けたコンセプトを3案:<br>
+        各案は「[悩み] → [解決] → [理想の状態]」の構成で
+      </div>
+    </li>
+    <li data-step="3">3案のコンセプトを読んで、「自分がこのN1だったら刺さるか？」で評価</li>
+    <li data-step="4">最も良い案を選び、「これをバナーのキャッチコピーにして（3パターン）」と追加指示</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約25分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>N1定義書 + コンセプト3案 + キャッチコピー3パターン。実務にそのまま使えるレベル。</p>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="ch08-feedback-loops.html">← Island 08: フィードバックループ</a>
+  <a href="ch10-capstone.html">Island 10: キャップストーン →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 09</p>
+</div>
+
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 9;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>
