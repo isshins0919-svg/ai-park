@@ -1,11 +1,296 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="refresh" content="0;url=../../textbook/index.html">
-<title>リダイレクト中...</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Textbook — 10の島を巡る航海</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .voyage-intro {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 28px; margin-bottom: 28px;
+  }
+  .voyage-intro h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+  .voyage-intro p { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+  .voyage-intro .route-summary {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px;
+  }
+  @media (max-width: 640px) { .voyage-intro .route-summary { grid-template-columns: 1fr; } }
+  .voyage-intro .route-item {
+    background: var(--dark); border-radius: 10px; padding: 14px; text-align: center;
+  }
+  .voyage-intro .route-item .ri-num { font-size: 28px; font-weight: 800; color: var(--accent); }
+  .voyage-intro .route-item .ri-label { font-size: 12px; color: var(--muted); }
+  .starter-kit-link {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 20px 24px; margin-top: 28px; text-decoration: none; color: inherit;
+    transition: 0.2s;
+  }
+  .starter-kit-link:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .starter-kit-link .sk-icon { font-size: 28px; }
+  .starter-kit-link .sk-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .starter-kit-link .sk-info p { font-size: 13px; color: var(--muted); margin: 0; }
+</style>
 </head>
 <body>
-<p>移動しました。自動で遷移しない場合は <a href="../../textbook/index.html">こちら</a></p>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links" id="nav-links">
+    <a href="index.html" class="active">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <div class="cover-badge">ISSHIN INTERNAL TRAINING 2026</div>
+  <h1>Claude Code Textbook</h1>
+  <p class="subtitle">10の島を巡る航海 — AIエージェント実践ガイド</p>
+  <p class="part-num">1-DAY WORKSHOP / ALL 10 CHAPTERS</p>
+  <span class="time-badge">所要時間: 約8時間（休憩込み）</span>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar">
+  <div class="prog-header">
+    <span>航海の進捗</span>
+    <span class="prog-count" id="prog-count">0 / 10 島</span>
+  </div>
+  <div class="prog-track">
+    <div class="prog-fill" id="prog-fill" style="width: 0%"></div>
+  </div>
+</div>
+
+<!-- Intro -->
+<div class="voyage-intro">
+  <h3>この航海について</h3>
+  <p>Claude Codeを使いこなすための実践型テキストブック。<br>
+  10の島（チャプター）を順に巡り、各島でミッション（ハンズオン課題）をクリアしていきます。</p>
+  <p><strong>対象:</strong> Claude Codeに初めて触れる方 〜 使い始めて間もない方</p>
+  <p><strong>前提:</strong> Claude Codeがインストール済みであること</p>
+  <div class="route-summary">
+    <div class="route-item">
+      <div class="ri-num">10</div>
+      <div class="ri-label">チャプター</div>
+    </div>
+    <div class="route-item">
+      <div class="ri-num">10</div>
+      <div class="ri-label">ミッション</div>
+    </div>
+    <div class="route-item">
+      <div class="ri-num">8h</div>
+      <div class="ri-label">所要時間</div>
+    </div>
+  </div>
+</div>
+
+<!-- How to Use -->
+<div class="highlight">
+  <div class="hl-emoji">🧭</div>
+  <div class="hl-text">航海の進め方</div>
+  <div class="hl-sub">
+    各島は <strong>本編（15-20分）</strong> + <strong>ミッション（10-15分）</strong> の構成。<br>
+    ミッションでは実際にClaude Codeを使って成果物を作ります。<br>
+    チェックボックスで進捗管理できます（ブラウザに保存されます）。
+  </div>
+</div>
+
+<!-- Island Map -->
+<div class="island-grid">
+
+  <a href="ch01-agent-anatomy.html" class="island-card" data-ch="1">
+    <div class="island-icon i1">🧩</div>
+    <div class="island-info">
+      <div class="island-label c1">ISLAND 01</div>
+      <h3>AIエージェントの正体</h3>
+      <p>7つのパーツを知れば全体像が見える。最初の島でエージェントを解剖する。</p>
+      <div class="topics"><span>LLM</span><span>Tools</span><span>MCP</span><span>Instructions</span><span>Memory</span></div>
+    </div>
+    <div class="island-meta"><span class="time">30 min</span></div>
+  </a>
+
+  <a href="ch02-prompt-engineering.html" class="island-card" data-ch="2">
+    <div class="island-icon i2">✍️</div>
+    <div class="island-info">
+      <div class="island-label c2">ISLAND 02</div>
+      <h3>AIへの指示の技術</h3>
+      <p>5要素テンプレートとShot設計。良い指示がAIを劇的に賢くする。</p>
+      <div class="topics"><span>5要素テンプレート</span><span>Shot設計</span><span>指示の粒度</span></div>
+    </div>
+    <div class="island-meta"><span class="time">30 min</span></div>
+  </a>
+
+  <a href="ch03-mcp-tools.html" class="island-card" data-ch="3">
+    <div class="island-icon i3">🔌</div>
+    <div class="island-info">
+      <div class="island-label c3">ISLAND 03</div>
+      <h3>MCPツール — AIの手足</h3>
+      <p>Slack、Google Drive、DBに繋がる。MCPでAIの能力を10倍に拡張する。</p>
+      <div class="topics"><span>MCP概念</span><span>サーバー設定</span><span>ツール連携</span></div>
+    </div>
+    <div class="island-meta"><span class="time">30 min</span></div>
+  </a>
+
+  <a href="ch04-skill-design.html" class="island-card" data-ch="4">
+    <div class="island-icon i4">🛠️</div>
+    <div class="island-info">
+      <div class="island-label c4">ISLAND 04</div>
+      <h3>Skill設計 — 再利用できる指示書</h3>
+      <p>Script→Skill→Agentの進化。何度も使う仕事をスキルに変える。</p>
+      <div class="topics"><span>commands/</span><span>テンプレート</span><span>Skill成長過程</span></div>
+    </div>
+    <div class="island-meta"><span class="time">45 min</span></div>
+  </a>
+
+  <a href="ch05-agent-architecture.html" class="island-card" data-ch="5">
+    <div class="island-icon i5">🏗️</div>
+    <div class="island-info">
+      <div class="island-label c5">ISLAND 05</div>
+      <h3>エージェント設計 — 組織図を作る</h3>
+      <p>commands/ vs agents/。親子関係と独立コンテキスト。組織設計の原則。</p>
+      <div class="topics"><span>agents/</span><span>Tier設計</span><span>並列実行</span></div>
+    </div>
+    <div class="island-meta"><span class="time">45 min</span></div>
+  </a>
+
+  <a href="ch06-context-management.html" class="island-card" data-ch="6">
+    <div class="island-icon i6">🧠</div>
+    <div class="island-info">
+      <div class="island-label c6">ISLAND 06</div>
+      <h3>コンテキストウィンドウ — AIの脳の限界</h3>
+      <p>情報を入れすぎるとAIは壊れる。Tier 0-3設計で品質を守る。</p>
+      <div class="topics"><span>CW管理</span><span>CLAUDE.md</span><span>knowledge/</span><span>NG信号</span></div>
+    </div>
+    <div class="island-meta"><span class="time">45 min</span></div>
+  </a>
+
+  <a href="ch07-embedding.html" class="island-card" data-ch="7">
+    <div class="island-icon i7">🧲</div>
+    <div class="island-info">
+      <div class="island-label c7">ISLAND 07</div>
+      <h3>ベクトル化 — AIに「意味」を教える</h3>
+      <p>エンベディングで意味検索が可能に。キーワードマッチからの卒業。</p>
+      <div class="topics"><span>エンベディング</span><span>意味検索</span><span>類似度</span></div>
+    </div>
+    <div class="island-meta"><span class="time">50 min</span></div>
+  </a>
+
+  <a href="ch08-feedback-loops.html" class="island-card" data-ch="8">
+    <div class="island-icon i8">🔄</div>
+    <div class="island-info">
+      <div class="island-label c8">ISLAND 08</div>
+      <h3>フィードバックループ</h3>
+      <p>やりっぱなしのAIは成長しない。自動で賢くなる仕組みの設計。</p>
+      <div class="topics"><span>3つのループ</span><span>リフレクション</span><span>Nice Dive</span></div>
+    </div>
+    <div class="island-meta"><span class="time">45 min</span></div>
+  </a>
+
+  <a href="ch09-marketing-ai.html" class="island-card" data-ch="9">
+    <div class="island-icon i9">🎯</div>
+    <div class="island-info">
+      <div class="island-label c9">ISLAND 09</div>
+      <h3>マーケティング × AI実践</h3>
+      <p>N1 × コンセプト × クリエイティブ。AIマーケティングの実戦投入。</p>
+      <div class="topics"><span>Banner Park</span><span>記事LP</span><span>動画制作</span></div>
+    </div>
+    <div class="island-meta"><span class="time">50 min</span></div>
+  </a>
+
+  <a href="ch10-capstone.html" class="island-card" data-ch="10">
+    <div class="island-icon i10">🏴‍☠️</div>
+    <div class="island-info">
+      <div class="island-label c10">ISLAND 10</div>
+      <h3>キャップストーン — 自分の船を造る</h3>
+      <p>全10島の総まとめ。自分だけのAIエージェント環境を構築する最終ミッション。</p>
+      <div class="topics"><span>CLAUDE.md</span><span>identity.md</span><span>フル構築</span></div>
+    </div>
+    <div class="island-meta"><span class="time">60 min</span></div>
+  </a>
+
+</div>
+
+<!-- Starter Kit Link -->
+<a href="starter-kit/" class="starter-kit-link">
+  <span class="sk-icon">📦</span>
+  <div class="sk-info">
+    <h4>Starter Kit — すぐ使えるテンプレート集</h4>
+    <p>CLAUDE.md / identity.md / Skill / ルールのテンプレートと配布用スキル。各ミッションで使います。</p>
+  </div>
+</a>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook</p>
+  <p>Internal Training Material / 2026</p>
+</div>
+
+<!-- Progress Tracking (localStorage) -->
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const TOTAL = 10;
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; }
+  }
+  function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
+
+  function updateUI() {
+    const data = load();
+    const done = Object.keys(data).filter(k => data[k]).length;
+    const pct = Math.round((done / TOTAL) * 100);
+
+    document.getElementById('prog-count').textContent = done + ' / ' + TOTAL + ' 島';
+    document.getElementById('prog-fill').style.width = pct + '%';
+
+    document.querySelectorAll('.island-card').forEach(card => {
+      const ch = card.getAttribute('data-ch');
+      if (data['ch' + ch]) {
+        card.classList.add('completed');
+      } else {
+        card.classList.remove('completed');
+      }
+    });
+
+    // Nav links done state
+    document.querySelectorAll('#nav-links a').forEach(a => {
+      const href = a.getAttribute('href');
+      const m = href.match(/ch(\d+)/);
+      if (m && data['ch' + parseInt(m[1])]) {
+        a.classList.add('done');
+      }
+    });
+  }
+
+  // Listen for storage changes (cross-tab sync)
+  window.addEventListener('storage', e => { if (e.key === KEY) updateUI(); });
+
+  // Initial render
+  updateUI();
+
+  // Expose for chapter pages
+  window.textbookProgress = {
+    markDone: function(ch) { const d = load(); d['ch' + ch] = true; save(d); updateUI(); },
+    isDone: function(ch) { return !!load()['ch' + ch]; },
+    reset: function() { save({}); updateUI(); }
+  };
+})();
+</script>
+
 </body>
 </html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 01: AIエージェントの正体 — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html" class="active">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Cover -->
+<div class="cover" data-island="1">
+  <div class="cover-badge">ISLAND 01 OF 10</div>
+  <h1>AIエージェントの正体</h1>
+  <p class="subtitle">7つのパーツを知れば、全体像が見える</p>
+  <span class="time-badge">本編 15分 + ミッション 15分</span>
+</div>
+
+<!-- ═══ 前提 ═══ -->
+<div class="section">
+  <div class="section-label">BEFORE WE START</div>
+  <h2>そもそも「AIエージェント」って何？</h2>
+
+  <p>「ChatGPTに質問すること」と「AIエージェントを使うこと」は全く違います。</p>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">ChatGPT（チャットAI）</div>
+      <p>人間が質問 → AIが回答 → 人間が次を質問<br><br>
+      <strong>AI = 辞書。聞いたことに答えるだけ。</strong><br>
+      ファイルを読めない。メールを送れない。データベースにアクセスできない。</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">AIエージェント</div>
+      <p>人間が目的を伝える → AIが自分で考え → 自分で実行 → 結果を報告<br><br>
+      <strong>AI = 新入社員。指示を受けて自分で動く。</strong><br>
+      ファイルを読み書き。Slackに投稿。カレンダーを確認。全部自分でやる。</p>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏢 オフィスで例えると</div>
+      <p><strong>ChatGPT</strong> = 百科事典に詳しい人がデスクに座ってるだけ。「これ何？」に答えてくれるけど、電話もメールもできない。<br><br>
+      <strong>エージェント</strong> = PCもSlackもカレンダーも使える新入社員。「この案件の競合調べて、レポートにまとめて、Slackに投げといて」ができる。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号での実例</div>
+      <p>「大当たりクリエイティブを生み出し続ける」というゴールを持ち、自分でリサーチして、コンセプトを作り、バナーを生成する。人間は最終チェックだけ。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 7つの構成要素 ═══ -->
+<div class="section">
+  <div class="section-label">THE 7 COMPONENTS</div>
+  <h2>AIエージェントは7つのパーツでできている</h2>
+
+  <p>どんなに複雑なAIエージェントも、分解すると7つのパーツに分かれます。</p>
+
+  <div class="diagram" style="text-align: left;">
+    ┌───────────────────────────────────────┐<br>
+    │&emsp;&emsp;&emsp;&emsp;&emsp;<span class="a">AIエージェントの7パーツ</span>&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="a">1. LLM</span>&emsp;&emsp;&emsp;← 脳（考える力）&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="g">2. Tools</span>&emsp;&emsp;&emsp;← 手足（実行する力）&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="o">3. Trigger</span>&emsp;&emsp;← きっかけ（いつ動くか）&emsp;│<br>
+    │&emsp;<span class="p">4. Instructions</span> ← マニュアル（何をどう）&emsp;│<br>
+    │&emsp;<span class="y">5. Skills</span>&emsp;&emsp;&emsp;← 業務手順書&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="a">6. Memory</span>&emsp;&emsp;&emsp;← 長期記憶&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="g">7. Context Window</span> ← 今の頭の中&emsp;&emsp;&emsp;&emsp;│<br>
+    └───────────────────────────────────────┘
+  </div>
+</div>
+
+<!-- 1. LLM -->
+<div class="topic-card">
+  <h3><span class="emoji">🧠</span> 1. LLM — 脳みそ</h3>
+  <p class="tagline">考える力そのもの。でも「脳だけ」では何もできない</p>
+
+  <p>LLM（Large Language Model）はAIの「脳」。テキストを理解し、推論し、文章を生成する力の源泉。Claude、GPT、Geminiなどがこれにあたります。</p>
+  <p>ただし、<strong>脳だけでは現実世界に手出しできない</strong>。ファイルを読めない、メールを送れない、データベースにアクセスできない。脳には「手足」が必要です。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>LLMの性能がエージェント全体の「思考力の上限」を決めます。<strong>脳の能力に合った道具を選ぶのが設計の第一歩。</strong></p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🍳 料理の例</div>
+      <p>世界一のシェフでも、包丁もコンロもない部屋では料理できない。逆に最高のキッチン設備があっても、レシピを知らなければ使えない。<br><strong>脳（シェフの腕前）× 道具（キッチン設備）= 料理の質</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ 実例</div>
+      <p>Claude Opus 4.6（100万トークンCW）を使用。現時点で最高峰のLLM。「脳」が強力なので、複雑な分析・判断・文章生成が1セッションでできる。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Tools -->
+<div class="topic-card">
+  <h3><span class="emoji">🔧</span> 2. Tools（MCP）— 手足</h3>
+  <p class="tagline">AIが「実際にやる」ための道具。接続先が増えるほど能力が広がる</p>
+
+  <p>MCP（Model Context Protocol）は、AIが外部サービスを操作するための<strong>統一規格</strong>。Slack送信、Google Calendar確認、ファイル操作、ブラウザ操作...AIに「手足」を与える仕組みです。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>ChatGPTに「メール送っといて」と言っても送れません。Claude Codeに「Slackに投稿して」と言ったら<strong>本当に投稿できます</strong>。この差がTools（MCP）。AIが「考えるだけ」から「実行できる」に進化するかどうかの分水嶺です。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📱 スマホの例</div>
+      <p>アプリが入っていないスマホは、電話しかできない。LINEを入れれば連絡できる。カメラアプリを入れれば写真が撮れる。<strong>MCPは「AIにアプリをインストールする」ようなもの。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🔌 USBの例</div>
+      <p>USB以前は、プリンターもマウスもそれぞれ違う端子だった。USBで統一されて「何でも刺せば使える」になった。<strong>MCPも同じ。全部同じ規格でAIに繋がる。</strong></p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>MCP接続先</th><th>何ができるか</th><th>仕事で例えると</th></tr>
+    <tr><td>Slack</td><td>メッセージ送信・チャンネル読み取り</td><td>社内チャットスタッフ</td></tr>
+    <tr><td>Google Calendar</td><td>予定確認・作成・空き時間検索</td><td>秘書</td></tr>
+    <tr><td>Canva</td><td>デザイン生成・編集・エクスポート</td><td>デザイナー</td></tr>
+    <tr><td>Chrome</td><td>ブラウザ操作・スクリーンショット</td><td>Web調査スタッフ</td></tr>
+  </table>
+
+  <p style="font-size:13px; color:var(--muted);">※ MCPの詳しい仕組みはIsland 03で深掘りします。</p>
+</div>
+
+<!-- 3. Trigger -->
+<div class="topic-card">
+  <h3><span class="emoji">⚡</span> 3. Trigger — きっかけ</h3>
+  <p class="tagline">「いつ動くか」を決める。手動 → 自動化の進化ポイント</p>
+
+  <p>Triggerは「AIがいつ動き出すか」のきっかけ。毎回チャットに打ち込む「手動」から、時間指定・イベント検知の「自動」まで段階があります。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>毎朝「今日の予定教えて」と打つのは面倒。「毎朝8時に自動で予定を教えてくれる」なら便利。<strong>人間が起動しなくても動く</strong>のが、ツール→エージェントへの進化です。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">⏰ 目覚ましの例</div>
+      <p>毎朝自分で時計を見て起きる = <strong>手動</strong><br>
+      アラームが鳴って起きる = <strong>スケジュールトリガー</strong><br>
+      スマートアラームが浅い眠りを検知して起こす = <strong>条件トリガー</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ 実例</div>
+      <p>現在は<strong>手動が中心</strong>（「/morning」と打つ）。DProニュースクルーは毎朝8時に広告トレンドを自動取得してSlackに投稿する、スケジュールトリガー型。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Instructions -->
+<div class="topic-card">
+  <h3><span class="emoji">🧭</span> 4. Instructions — マニュアル</h3>
+  <p class="tagline">「言わなかったら間違う方向に進むか？」で書くかどうかを判断する</p>
+
+  <p>InstructionsはAIの行動を方向づける「マニュアル」。CLAUDE.mdが「必ず読むファイル」として、全セッションで適用されます。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>新人に「いい感じにやっといて」と丸投げしたら自己流で事故る。でも<strong>マニュアルが100ページあったら誰も読まない</strong>。ちょうどいい量を、ちょうどいい具体度で書く。これがInstructions設計の本質。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏗️ 設計図の例</div>
+      <p>「いい感じの家建てて」と言われたら？窓の数も間取りもバラバラな家ができる。設計図があれば、職人は迷わず正確に作れる。<strong>設計図 = Instructions。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ 実例</div>
+      <p><strong>CLAUDE.md</strong> = 全体のマニュアル<br>
+      <strong>identity.md</strong> = AIの人格設定<br>
+      <strong>rules/</strong> = セキュリティ・個人情報保護の禁止事項<br><br>
+      「言わなかったら事故る」内容だけ厳選して書かれている。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Skills -->
+<div class="topic-card">
+  <h3><span class="emoji">📋</span> 5. Skills — 業務手順書</h3>
+  <p class="tagline">「毎回同じ説明をするなら、手順書にしよう」がSkillの発想</p>
+
+  <p>Skillは「再利用可能な業務手順」。毎回チャットで長い指示を書く代わりに、一度まとめておけば <code>/skill名</code> で呼び出せます。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>マクドナルドが世界中で同じ味を出せるのは、<strong>全工程がマニュアル化（=Skill化）されている</strong>から。属人化していないから、誰でも同品質で出せる。AIのSkillも同じ原理。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📝 チェックリストの例</div>
+      <p>パイロットが離陸前にチェックリストを確認する理由: 「毎回全部覚えているはず」は危険。<strong>手順を外出しすることで、ミスを構造的に防ぐ。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ 実例</div>
+      <p><code>/morning</code> — 毎朝の起動ルーチン<br>
+      <code>/banner-park</code> — バナー制作パイプライン<br>
+      <code>/handoff</code> — セッション引き継ぎ<br>
+      <code>/nice-dive</code> — 学びのログ記録</p>
+    </div>
+  </div>
+</div>
+
+<!-- 6. Memory -->
+<div class="topic-card">
+  <h3><span class="emoji">💾</span> 6. Memory — 長期記憶</h3>
+  <p class="tagline">「前も同じ説明したよね？」をなくす仕組み</p>
+
+  <p>Memoryは「セッションをまたいで覚えておく情報」。ユーザーの好み、過去の判断基準、プロジェクトの背景情報など。セッションが変わっても「いつもの」で通じる状態を作る。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>行きつけのカフェで毎回「カフェラテのミルク多めで」と説明するのは面倒。常連になれば「いつもの」で通じる。<strong>AIのMemoryも「いつもの」を可能にする仕組み。</strong></p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏥 カルテの例</div>
+      <p>病院に行くたびに「アレルギーありますか？」と聞かれたら面倒。カルテがあるから、前回の情報を引き継げる。<strong>Memory = AIのカルテ。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ 実例</div>
+      <p><strong>knowledge/</strong> = ナレッジDB（マーケ哲学、フックDB等）<br>
+      <strong>clients/</strong> = クライアント情報<br>
+      <strong>memory/</strong> = ユーザーの好み・判断記録</p>
+    </div>
+  </div>
+</div>
+
+<!-- 7. Context Window -->
+<div class="topic-card">
+  <h3><span class="emoji">🪟</span> 7. Context Window — 今の頭の中</h3>
+  <p class="tagline">AIの「今、頭の中に入っている量」。これが全ての品質を決める</p>
+
+  <p>Context Window（CW）は「AIが一度に処理できる情報量の上限」。人間の短期記憶（ワーキングメモリ）に相当します。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>会議で10個の議題を一気に話されたら、最後の方は覚えていない。<strong>AIも同じ。</strong>情報を詰め込みすぎると「嘘をつく」「指示を忘れる」「精度が落ちる」が起きる。これが「ハルシネーション」の原因の一つ。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🧳 スーツケースの例</div>
+      <p>30Lのスーツケースに全部詰め込もうとすると、大事なものが奥に埋もれて取り出せない。<strong>CW = スーツケースのサイズ。詰め方の設計が命。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ 実例</div>
+      <p>CW 100万トークン（業界最大級）。でも無限ではない。だからエージェントを分割して、それぞれが独立したCWを持つ設計にする（Island 06で詳しく）。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Island 01 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🧩</div>
+    <div class="hl-text">7パーツの覚え方</div>
+    <div class="hl-sub">
+      脳（LLM）× 手足（Tools）× きっかけ（Trigger）= <strong>動くAI</strong><br>
+      マニュアル（Instructions）× 手順書（Skills）= <strong>正しく動くAI</strong><br>
+      記憶（Memory）× 頭の容量（CW）= <strong>賢く動くAI</strong>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>#</th><th>パーツ</th><th>一言で</th><th>人間で例えると</th></tr>
+    <tr><td>1</td><td>LLM</td><td>考える力</td><td>脳みそ</td></tr>
+    <tr><td>2</td><td>Tools / MCP</td><td>実行する力</td><td>手足 + 道具</td></tr>
+    <tr><td>3</td><td>Trigger</td><td>いつ動くか</td><td>出勤時間 / アラーム</td></tr>
+    <tr><td>4</td><td>Instructions</td><td>何をどうするか</td><td>業務マニュアル</td></tr>
+    <tr><td>5</td><td>Skills</td><td>手順書</td><td>レシピ / チェックリスト</td></tr>
+    <tr><td>6</td><td>Memory</td><td>長期記憶</td><td>カルテ / 引き継ぎノート</td></tr>
+    <tr><td>7</td><td>Context Window</td><td>今の頭の容量</td><td>ワーキングメモリ</td></tr>
+  </table>
+</div>
+
+<!-- ═══ チェックポイント ═══ -->
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>AIエージェントは7つのパーツで構成されている</li>
+    <li>「チャットAI」と「エージェント」の違いは、自分で実行できるかどうか</li>
+    <li>Context Window（CW）の管理がエージェントの品質を決める最重要要素</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ ミッション ═══ -->
+<div class="mission">
+  <h3>🗺️ 乗組員名簿を作ろう</h3>
+  <p class="mission-desc">自分の仕事をAIエージェントの7パーツに当てはめて整理するハンズオン。<br>「自分の仕事にAIを導入するなら、何が必要か？」を具体的にする最初のステップです。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>Claude Codeを使って、自分の業務に必要なAIエージェントの7パーツを書き出す</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">Claude Codeを開く（ターミナルで <code>claude</code> と入力）</li>
+    <li data-step="2">以下のプロンプトをそのまま貼り付ける:
+      <div class="code-block" style="margin-top:8px;">
+        私の仕事に必要なAIエージェントを設計してください。<br>
+        <br>
+        <span class="comment"># 私の仕事</span><br>
+        - 職種: [あなたの職種を書く]<br>
+        - よくやるタスク: [3つ挙げる]<br>
+        - 使っているツール: [Slack, Googleなど]<br>
+        <br>
+        <span class="comment"># 7パーツに当てはめて</span><br>
+        1. LLM: どのモデルが最適？<br>
+        2. Tools: 何を繋ぐ必要がある？<br>
+        3. Trigger: いつ動かす？<br>
+        4. Instructions: 何を書く？<br>
+        5. Skills: どんな手順を定型化する？<br>
+        6. Memory: 何を覚えておく？<br>
+        7. Context Window: 何を優先的に入れる？
+      </div>
+    </li>
+    <li data-step="3">AIの回答を読んで、自分の仕事に合っているか確認する</li>
+    <li data-step="4">「これを表形式でまとめて」と追加で指示して、見やすく整理する</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約15分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>自分の業務に必要な7パーツの一覧表。これがIsland 10の最終ミッション「自分の船を造る」の設計書になります。</p>
+  </div>
+</div>
+
+<!-- ═══ ナビ ═══ -->
+<div class="pagination">
+  <a href="index.html">← 航海マップに戻る</a>
+  <a href="ch02-prompt-engineering.html">Island 02: AIへの指示の技術 →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 01</p>
+</div>
+
+<!-- Progress tracking -->
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 1;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+
+  // Auto-mark as visited (not completed — completion is manual or on mission done)
+  // Add completion button at bottom of mission
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)';
+      btn.style.color = 'var(--accent)';
+    };
+    // Check if already done
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)';
+      btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>
