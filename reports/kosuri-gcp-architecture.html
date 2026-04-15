@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOSURIちゃん GCP実装ガイド — 2026-04-15</title>
+<style>
+  :root {
+    --bg: #0f172a; --surface: #1e293b; --surface2: #334155;
+    --text: #f1f5f9; --text2: #94a3b8; --accent: #38bdf8;
+    --green: #4ade80; --yellow: #fbbf24; --pink: #f472b6;
+    --orange: #fb923c; --purple: #a78bfa; --red: #f87171;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 24px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 1.8rem; margin-bottom: 8px; }
+  h1 span { font-size: 0.9rem; color: var(--text2); font-weight: 400; }
+  h2 { font-size: 1.3rem; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--surface2); display: flex; align-items: center; gap: 8px; }
+  h3 { font-size: 1rem; margin: 20px 0 8px; color: var(--accent); }
+  h4 { font-size: 0.9rem; margin: 12px 0 4px; color: var(--yellow); }
+  p, li { font-size: 0.88rem; color: var(--text2); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; }
+  .badge-live { background: var(--green); color: #000; }
+  .badge-local { background: var(--yellow); color: #000; }
+  .badge-plan { background: var(--purple); color: #000; }
+  .badge-link { background: var(--accent); color: #000; }
+
+  /* Cards */
+  .card { background: var(--surface); border-radius: 16px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--surface2); }
+  .card-header { font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.82rem; }
+  th { text-align: left; padding: 8px 12px; background: var(--surface2); color: var(--text); font-weight: 700; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--surface2); color: var(--text2); }
+  td:first-child { color: var(--text); font-weight: 600; }
+  tr:hover td { background: rgba(56,189,248,0.05); }
+
+  /* Flow diagram */
+  .flow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 16px 0; }
+  .flow-box { background: var(--surface); border: 1.5px solid var(--surface2); border-radius: 12px; padding: 10px 16px; text-align: center; min-width: 120px; font-size: 0.82rem; font-weight: 600; }
+  .flow-box.input { border-color: var(--green); color: var(--green); }
+  .flow-box.process { border-color: var(--accent); color: var(--accent); }
+  .flow-box.output { border-color: var(--pink); color: var(--pink); }
+  .flow-box.storage { border-color: var(--yellow); color: var(--yellow); }
+  .flow-arrow { font-size: 1.5rem; color: var(--text2); }
+
+  /* Code */
+  code { background: var(--surface2); padding: 2px 8px; border-radius: 6px; font-size: 0.82rem; font-family: 'SF Mono', monospace; }
+  pre { background: var(--surface); border: 1px solid var(--surface2); border-radius: 12px; padding: 16px; overflow-x: auto; font-size: 0.8rem; line-height: 1.6; margin: 12px 0; }
+
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* Architecture diagram */
+  .arch-diagram { background: var(--surface); border-radius: 16px; padding: 24px; margin: 16px 0; border: 1px solid var(--surface2); }
+  .arch-layer { display: flex; gap: 12px; margin: 8px 0; align-items: stretch; flex-wrap: wrap; }
+  .arch-box { flex: 1; min-width: 150px; border-radius: 10px; padding: 12px; text-align: center; font-size: 0.8rem; font-weight: 700; }
+  .arch-box small { display: block; font-weight: 400; font-size: 0.7rem; opacity: 0.8; margin-top: 4px; }
+  .arch-label { font-size: 0.75rem; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin: 16px 0 6px; }
+  .arch-arrow-down { text-align: center; font-size: 1.2rem; color: var(--text2); margin: 4px 0; }
+
+  .link-card { display: inline-flex; align-items: center; gap: 6px; background: var(--surface2); padding: 6px 14px; border-radius: 10px; font-size: 0.8rem; margin: 4px; }
+  .link-card:hover { background: rgba(56,189,248,0.15); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; font-size: 0.85rem; display: flex; align-items: flex-start; gap: 8px; }
+  .checklist li::before { content: ''; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--surface2); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ HEADER ━━━━━━━━━━━━━━━━━━━━━ -->
+<h1>KOSURIちゃん GCP実装ガイド <span>— 2026-04-15 明日作業用</span></h1>
+<p style="margin-bottom: 32px;">アプリの全体構造・データの所在・外部連携を可視化したドキュメント。<br>明日のGCP実装で「これどこにあるん？」にならないための地図。</p>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ 1. 全体アーキテクチャ ━━━━━━━━━━━━━━━━━━━━━ -->
+<h2>1. 全体アーキテクチャ図</h2>
+
+<div class="arch-diagram">
+  <div class="arch-label">ユーザー（ブラウザ）</div>
+  <div class="arch-layer">
+    <div class="arch-box" style="background: rgba(74,222,128,0.15); color: var(--green);">
+      KOSURIちゃん UI<small>index.html（Flask templates）</small>
+    </div>
+  </div>
+
+  <div class="arch-arrow-down">↕ HTTP (fetch API)</div>
+
+  <div class="arch-label">サーバー（Cloud Run）</div>
+  <div class="arch-layer">
+    <div class="arch-box" style="background: rgba(56,189,248,0.15); color: var(--accent);">
+      Flask App<small>app.py（990行）</small>
+    </div>
+    <div class="arch-box" style="background: rgba(56,189,248,0.1); color: var(--accent);">
+      FFmpeg<small>動画処理エンジン</small>
+    </div>
+    <div class="arch-box" style="background: rgba(56,189,248,0.1); color: var(--accent);">
+      Gunicorn<small>1 worker / 8 threads</small>
+    </div>
+  </div>
+
+  <div class="arch-arrow-down">↕</div>
+
+  <div class="arch-label">データストア</div>
+  <div class="arch-layer">
+    <div class="arch-box" style="background: rgba(251,191,36,0.15); color: var(--yellow);">
+      エフェメラルストレージ<small>uploads/（10GB, Cloud Run）</small>
+    </div>
+    <div class="arch-box" style="background: rgba(251,191,36,0.15); color: var(--yellow);">
+      Google Sheets<small>KOSURIちゃんDB（6シート）</small>
+    </div>
+    <div class="arch-box" style="background: rgba(251,191,36,0.1); color: var(--yellow);">
+      feedback.json<small>ローカルJSONファイル</small>
+    </div>
+  </div>
+
+  <div class="arch-arrow-down">↕ gspread（Service Account）</div>
+
+  <div class="arch-label">外部サービス</div>
+  <div class="arch-layer">
+    <div class="arch-box" style="background: rgba(167,139,250,0.15); color: var(--purple);">
+      GCP<small>Cloud Run / Cloud Build</small>
+    </div>
+    <div class="arch-box" style="background: rgba(167,139,250,0.1); color: var(--purple);">
+      Google Drive<small>動画素材の受け渡し</small>
+    </div>
+  </div>
+</div>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ 2. データの所在マップ ━━━━━━━━━━━━━━━━━━━━━ -->
+<h2>2. データベース・ストレージの所在</h2>
+
+<div class="card">
+  <div class="card-header">
+    <span style="color: var(--yellow);">A. Google Sheets（KOSURIちゃんDB）</span>
+    <span class="badge badge-live">LIVE</span>
+  </div>
+  <p>メインの永続データストア。Cloud RunからgspreadでService Account経由でアクセス。</p>
+  <div style="margin: 12px 0;">
+    <a class="link-card" href="https://docs.google.com/spreadsheets/d/1PxCyac4kuPivDo_uby48s-pHtlbv0Eme1bW7BYDUdKA/" target="_blank">
+      📊 KOSURIちゃんDB を開く
+    </a>
+  </div>
+  <table>
+    <tr><th>シート名</th><th>列数</th><th>用途</th><th>書き込み元</th></tr>
+    <tr><td>案件マスター</td><td>15</td><td>クライアント・商材・案件情報</td><td>手動</td></tr>
+    <tr><td>動画アウトプット</td><td>13</td><td>生成した動画の記録</td><td>app.py（自動）</td></tr>
+    <tr><td>FV分析</td><td>17</td><td>FVパターン・テロップ・訴求軸</td><td>手動 + 分析スクリプト</td></tr>
+    <tr><td>シーン詳細</td><td>15</td><td>各FV内のシーン構成</td><td>手動</td></tr>
+    <tr><td>学習データ</td><td>16</td><td>勝因分析・A/Bテスト結果</td><td>手動</td></tr>
+    <tr><td>前処理ログ</td><td>10</td><td>FFmpeg処理の実行ログ</td><td>app.py（自動）</td></tr>
+  </table>
+  <h4>Spreadsheet ID</h4>
+  <code>1PxCyac4kuPivDo_uby48s-pHtlbv0Eme1bW7BYDUdKA</code>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <span style="color: var(--accent);">B. Cloud Run エフェメラルストレージ</span>
+      <span class="badge badge-live">LIVE</span>
+    </div>
+    <p>動画のアップロード・生成結果を一時保存。コンテナ再起動で消える。</p>
+    <pre>uploads/{session_id}/
+  ├── base/       ← ベース動画
+  ├── fv/         ← 個別FV映像
+  ├── body/       ← ボディ映像
+  ├── packed/     ← まとめ素材
+  ├── output/     ← 生成済み動画
+  └── thumbnails/ ← 解析サムネイル</pre>
+    <p style="margin-top: 8px;">容量上限: <b>10GB</b>（deploy.sh で設定）</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span style="color: var(--orange);">C. ローカルファイル</span>
+      <span class="badge badge-local">LOCAL</span>
+    </div>
+    <table>
+      <tr><td>feedback.json</td><td>フィードバック投稿データ</td></tr>
+      <tr><td>scripts/knowledge_vectors.db</td><td>ナレッジ用ベクトルDB（SQLite）</td></tr>
+      <tr><td>scripts/dpro_benchmark.json</td><td>DPro競合分析データ</td></tr>
+      <tr><td>scripts/slack_feedback_state.json</td><td>Slack Bot状態管理</td></tr>
+    </table>
+    <p style="margin-top: 8px; color: var(--orange);">注: feedback.jsonはCloud Run上だとコンテナ再起動で消える。永続化が必要。</p>
+  </div>
+</div>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ 3. 処理フロー ━━━━━━━━━━━━━━━━━━━━━ -->
+<h2>3. 処理フロー（入力 → 処理 → 出力）</h2>
+
+<h3>3-1. FVカットモード（自動分割）</h3>
+<div class="flow">
+  <div class="flow-box input">まとめ素材.mp4<br><small>FVが連結された1本</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box process">ffmpeg scene filter<br><small>全フレームスコア取得</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box process">局所ピーク検出<br><small>window=10, prom=0.03</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box process">ハイブリッドペア判定<br><small>スコア比3:1で切替</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box output">FV_01.mp4<br>FV_02.mp4<br>...<br><small>libx264 crf18</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box storage">Google Sheets<br><small>生成ログに記録</small></div>
+</div>
+
+<h3>3-2. FVオーバーレイモード</h3>
+<div class="flow">
+  <div class="flow-box input">ベース.mp4<br>+ FV.mp4 ×N<br>+ BGM.mp3</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box process">ffmpeg filter_complex<br><small>scale → overlay → amix</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box output">完成動画 ×N<br><small>各FV × BGM音量</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box storage">Google Sheets<br><small>生成ログに記録</small></div>
+</div>
+
+<h3>3-3. FV結合モード</h3>
+<div class="flow">
+  <div class="flow-box input">FV.mp4 ×N<br>+ Body.mp4<br>+ BGM.mp3</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box process">ffmpeg concat<br><small>FV + Body → 1本化</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box output">完成動画 ×N<br><small>FV毎にBody連結</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box storage">Google Sheets<br><small>生成ログに記録</small></div>
+</div>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ 4. GCP構成 ━━━━━━━━━━━━━━━━━━━━━ -->
+<h2>4. GCP構成詳細</h2>
+
+<div class="card">
+  <div class="card-header">Cloud Run 設定</div>
+  <table>
+    <tr><th>項目</th><th>値</th></tr>
+    <tr><td>プロジェクトID</td><td><code>claude-x-api</code></td></tr>
+    <tr><td>サービス名</td><td><code>kosuri-studio</code></td></tr>
+    <tr><td>リージョン</td><td><code>asia-northeast1</code>（東京）</td></tr>
+    <tr><td>メモリ</td><td>4GB</td></tr>
+    <tr><td>CPU</td><td>2</td></tr>
+    <tr><td>エフェメラルストレージ</td><td>10GB</td></tr>
+    <tr><td>タイムアウト</td><td>3600秒（1時間）</td></tr>
+    <tr><td>インスタンス数</td><td>min=1 / max=1</td></tr>
+    <tr><td>認証</td><td>未認証アクセス許可</td></tr>
+    <tr><td>ポート</td><td>8080</td></tr>
+    <tr><td>ランタイム</td><td>Python 3.11-slim + ffmpeg</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-header">環境変数（Cloud Run に設定が必要）</div>
+  <table>
+    <tr><th>変数名</th><th>用途</th><th>現状</th></tr>
+    <tr><td><code>SPREADSHEET_ID</code></td><td>KOSURIちゃんDBのシートID</td><td>app.pyにデフォルト値あり</td></tr>
+    <tr><td><code>GOOGLE_SERVICE_ACCOUNT_JSON</code></td><td>GCPサービスアカウント認証JSON</td><td>Cloud Run環境変数に設定必要</td></tr>
+    <tr><td><code>PORT</code></td><td>サーバーポート</td><td>Dockerfile で8080固定</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-header">デプロイ手順</div>
+  <pre>
+# 1. リポジトリルートで実行
+bash video-ai/fv_studio/deploy.sh
+
+# 内部で実行されること:
+#   1. gcloud config set project claude-x-api
+#   2. Cloud Build API + Run API を有効化
+#   3. Cloud Build でDockerイメージをビルド&push
+#   4. Cloud Run にデプロイ
+#   5. URLを表示
+
+# デプロイ後にService Account JSONを設定:
+gcloud run services update kosuri-studio \
+  --region asia-northeast1 \
+  --set-env-vars "GOOGLE_SERVICE_ACCOUNT_JSON=$(cat /path/to/service_account.json)"</pre>
+</div>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ 5. 外部連携リンク集 ━━━━━━━━━━━━━━━━━━━━━ -->
+<h2>5. 外部連携・リンク集</h2>
+
+<div class="card">
+  <div class="card-header">Google Sheets / GAS</div>
+  <table>
+    <tr><th>リソース</th><th>リンク</th><th>用途</th></tr>
+    <tr>
+      <td>KOSURIちゃんDB</td>
+      <td><a href="https://docs.google.com/spreadsheets/d/1PxCyac4kuPivDo_uby48s-pHtlbv0Eme1bW7BYDUdKA/" target="_blank">スプシを開く</a></td>
+      <td>メインDB（6シート）</td>
+    </tr>
+    <tr>
+      <td>Service Account JSON</td>
+      <td><code>/Users/ca01224/Downloads/claude-x-api-51b0d4975bbb.json</code></td>
+      <td>GCP認証（Sheets書き込み用）</td>
+    </tr>
+  </table>
+  <h4>GAS（Google Apps Script）</h4>
+  <p>現時点ではGASは未実装。Sheets連携はPython（gspread）経由で直接実行。</p>
+  <p>将来的に定期同期（スプシ → ベクトルDB）を実装する場合にGASトリガーを検討。</p>
+</div>
+
+<div class="card">
+  <div class="card-header">GCPプロジェクト</div>
+  <table>
+    <tr><th>リソース</th><th>リンク/コマンド</th></tr>
+    <tr>
+      <td>GCPコンソール</td>
+      <td><a href="https://console.cloud.google.com/home/dashboard?project=claude-x-api" target="_blank">console.cloud.google.com</a></td>
+    </tr>
+    <tr>
+      <td>Cloud Run サービス</td>
+      <td><a href="https://console.cloud.google.com/run/detail/asia-northeast1/kosuri-studio?project=claude-x-api" target="_blank">kosuri-studio</a></td>
+    </tr>
+    <tr>
+      <td>Cloud Build ログ</td>
+      <td><code>gs://claude-x-api_cloudbuild/logs</code></td>
+    </tr>
+    <tr>
+      <td>Container Registry</td>
+      <td><code>gcr.io/claude-x-api/kosuri-studio</code></td>
+    </tr>
+  </table>
+</div>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ 6. ファイル構成 ━━━━━━━━━━━━━━━━━━━━━ -->
+<h2>6. アプリのファイル構成</h2>
+
+<div class="card">
+  <pre style="margin: 0;">
+video-ai/fv_studio/
+├── app.py                  ← メインFlaskアプリ（990行）
+│   ├── Google Sheets連携    (35-67行)
+│   ├── FV検出 v5 hybrid     (166-280行) ← 今回更新
+│   ├── 動画生成ロジック      (349-676行)
+│   └── APIルート            (700-990行)
+│
+├── templates/
+│   └── index.html           ← フロントエンドUI（900行）
+│       ├── 3モードタブ       (overlay / concat / cut)
+│       ├── FV本数入力        ← 今回追加
+│       └── フィードバック機能
+│
+├── requirements.txt         ← Python依存（flask, pillow, gspread, numpy）
+├── Dockerfile               ← python:3.11-slim + ffmpeg + Noto CJK
+├── deploy.sh                ← Cloud Runデプロイスクリプト
+├── feedback.json            ← フィードバックデータ（ローカル）
+│
+└── uploads/                 ← 動画アップロード・出力先（エフェメラル）
+    └── {session_id}/
+        ├── base/ fv/ body/ packed/  ← 入力素材
+        ├── output/                   ← 生成済み動画
+        └── thumbnails/               ← 解析サムネイル</pre>
+</div>
+
+<div class="card">
+  <div class="card-header">関連スクリプト（リポジトリ内）</div>
+  <table>
+    <tr><th>ファイル</th><th>用途</th><th>関連度</th></tr>
+    <tr><td><code>scripts/fv_detect_v3.py</code></td><td>旧FV検出（ペアパターン方式）</td><td>参考用</td></tr>
+    <tr><td><code>scripts/fv_detect_v5.py</code></td><td>新FV検出（v5 ハイブリッド）テスト用</td><td>app.pyに統合済み</td></tr>
+    <tr><td><code>video-ai/fv_mixer.py</code></td><td>CLIベースのFV差し替え+BGMミキサー</td><td>v5アルゴリズム統合済み</td></tr>
+    <tr><td><code>scripts/vector_store.py</code></td><td>ナレッジのベクトル化・検索</td><td>Phase 2で連携予定</td></tr>
+  </table>
+</div>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ 7. FV検出アルゴリズム ━━━━━━━━━━━━━━━━━━━━━ -->
+<h2>7. FV検出アルゴリズム（v5 ハイブリッド方式）</h2>
+
+<div class="card">
+  <div class="card-header">精度実績</div>
+  <table>
+    <tr><th>テスト動画</th><th>FV数</th><th>正解率</th><th>最大誤差</th></tr>
+    <tr><td>13FV packed（38.2秒・学習データ）</td><td>13</td><td style="color: var(--green); font-weight: 800;">12/12 (100%)</td><td>0.000秒</td></tr>
+    <tr><td>7FV packed（15.4秒・未知データ）</td><td>7</td><td style="color: var(--green); font-weight: 800;">6/6 (100%)</td><td>0.067秒</td></tr>
+    <tr><td style="font-weight: 800;">合計</td><td></td><td style="color: var(--green); font-weight: 800;">18/18 (100%)</td><td>0.067秒</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-header">アルゴリズムの流れ</div>
+  <pre style="margin: 0;">
+1. ffmpeg scene filter → 全フレームのsceneスコアを取得
+   select='gte(scene,0)' → metadata=print
+
+2. 局所ピーク検出
+   window=10フレーム / min_prominence=0.03
+   → 周囲より突出したフレームを抽出
+
+3. ペア候補検出（0.3〜0.8秒間隔の隣接ピーク）
+   ※ FV切り替わりは「前FV最終フレーム + 次FV最初フレーム」のペアとして出現
+
+4. ★ v5の核心: ペア内スコア比による選択切替
+   スコア比 > 3:1 → 高スコア側をカットポイントに（noise混入ケース）
+   スコア比 <= 3:1 → 後方ピークをカットポイントに（true pairケース）
+
+5. 貪欲法でペアマッチング → 単独ピーク回収
+
+6. 近接マージ（1.0秒以内）→ 高pair_scoreを優先
+
+7. expected_count に基づいて上位N件を選択</pre>
+</div>
+
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ 8. 明日のTODO ━━━━━━━━━━━━━━━━━━━━━ -->
+<h2>8. 明日のGCP作業チェックリスト</h2>
+
+<div class="card">
+  <div class="card-header">デプロイ前の確認</div>
+  <ul class="checklist">
+    <li>gcloud CLIがインストールされていて <code>claude-x-api</code> プロジェクトにアクセスできる</li>
+    <li>Service Account JSONファイルの場所を確認（<code>/Users/ca01224/Downloads/claude-x-api-51b0d4975bbb.json</code>）</li>
+    <li>スプシ（KOSURIちゃんDB）にService Accountのメールアドレスが編集者として追加されている</li>
+    <li>Cloud Build API と Cloud Run API が有効化されている</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-header">デプロイ手順</div>
+  <ul class="checklist">
+    <li><code>bash video-ai/fv_studio/deploy.sh</code> を実行</li>
+    <li>Service Account JSON を環境変数に設定</li>
+    <li><code>/setup-sheets</code> エンドポイントを叩いてシートヘッダーを初期化</li>
+    <li>FVカットモードで動作確認（まとめ素材 → 解析 → 書き出し）</li>
+    <li>FVオーバーレイモードで動作確認</li>
+    <li>Google Sheetsに生成ログが記録されることを確認</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-header">今後の拡張予定</div>
+  <ul class="checklist">
+    <li>feedback.json を Cloud Storage or Firestore に永続化</li>
+    <li>KOSURIちゃんDB → ベクトルDB定期同期スクリプト</li>
+    <li>テロップOCR + FV始まり/終わりシグナル検出（検出精度80→90点）</li>
+    <li>GAS: スプシ更新トリガー → ベクトルDB自動再インデックス</li>
+  </ul>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━ -->
+<div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--surface2); text-align: center; color: var(--text2); font-size: 0.75rem;">
+  Generated by 一進AI — 2026-04-15 00:00 JST
+</div>
+
+</div>
+</body>
+</html>

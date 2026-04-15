@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FV量産Studio KOSURIちゃん</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+:root {
+  --font-family: 'Noto Sans JP', sans-serif;
+  --radius-lg: 16px;
+  --bg-primary: #fdf2f8;
+  --bg-secondary: #fce7f3;
+  --bg-card: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --accent-primary: #ec4899;
+  --accent-gradient: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+  --border-default: rgba(15, 23, 42, 0.08);
+  --color-danger: #ef4444;
+  --color-success: #10b981;
+}
+* { box-sizing: border-box; }
+body { font-family: var(--font-family); background: var(--bg-primary); color: var(--text-primary); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+.container { max-width: 1600px; margin: 0 auto; height: 100%; width: 100%; display: flex; flex-direction: column; overflow: hidden; padding: 15px; }
+.main-grid { display: grid; grid-template-columns: 460px 1fr; gap: 20px; flex: 1; overflow: hidden; }
+.panel { background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-default); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.panel-head { padding: 15px 20px; background: #fff; font-weight: 800; border-bottom: 1px solid var(--border-default); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.panel-body { padding: 24px; overflow-y: auto; flex: 1; }
+
+header { display: flex; justify-content: space-between; align-items: center; padding: 5px 10px 15px 10px; flex-shrink: 0; }
+.brand { font-size: 1.5rem; font-weight: 900; color: var(--accent-primary); display: flex; align-items: center; gap: 12px; }
+footer { text-align: center; padding: 12px; font-size: 0.75rem; color: var(--text-tertiary); border-top: 1px solid var(--border-default); background: #fff; }
+
+/* Buttons */
+.btn { padding: 10px 18px; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; font-family: inherit; font-size: 0.85rem; }
+.btn:active:not(:disabled) { transform: scale(0.95); }
+.btn-generate { background: var(--accent-gradient); color: white; width: 100%; padding: 16px; font-size: 1.1rem; border-radius: 14px; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2); }
+.btn-generate:disabled { background: #cbd5e1; cursor: wait; box-shadow: none; }
+.btn-secondary { background: var(--bg-secondary); color: var(--text-secondary); }
+.btn-dl { background: var(--accent-gradient); color: white; width: 100%; box-shadow: 0 2px 8px rgba(13,148,136,0.18); }
+.btn-icon { width: 38px; height: 38px; border-radius: 10px; color: var(--text-secondary); background: transparent; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
+.btn-icon:hover { background: var(--bg-secondary); color: var(--accent-primary); }
+
+/* Forms */
+.form-group { margin-bottom: 22px; }
+label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 800; }
+textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid var(--border-default); background: #fff; color: var(--text-primary); font-family: inherit; resize: vertical; font-size: 0.85rem; }
+
+/* Upload zone */
+.upload-zone {
+  background: var(--bg-secondary); border: 2px dashed var(--text-tertiary);
+  border-radius: 14px; padding: 24px; text-align: center; cursor: pointer;
+  transition: 0.2s; position: relative; min-height: 80px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--accent-primary); background: #fff; transform: scale(1.01);
+}
+.upload-zone .material-icons { font-size: 2rem; color: var(--accent-primary); }
+.upload-zone .hint { font-size: 0.75rem; color: var(--text-tertiary); }
+.upload-zone .file-list { font-size: 0.8rem; font-weight: 700; color: var(--accent-primary); margin-top: 4px; }
+
+/* Radio group */
+.radio-group { display: flex; gap: 8px; }
+.radio-option { flex: 1; }
+.radio-option input { display: none; }
+.radio-option label {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px; border-radius: 12px; border: 2px solid var(--border-default);
+  background: #fff; cursor: pointer; transition: 0.2s; font-weight: 700;
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+.radio-option input:checked + label {
+  border-color: var(--accent-primary); background: rgba(236, 72, 153, 0.06);
+  color: var(--accent-primary);
+}
+.radio-option .badge {
+  font-size: 0.6rem; background: var(--accent-primary); color: white;
+  padding: 2px 6px; border-radius: 6px; font-weight: 800;
+}
+
+/* Progress */
+.progress-container {
+  background: linear-gradient(135deg, rgba(13,148,136,0.06), rgba(45,212,191,0.12));
+  border: 2px solid rgba(13,148,136,0.25); border-radius: 16px;
+  padding: 18px 20px; margin-top: 20px; display: none;
+}
+.prog-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; font-size: 0.85rem; color: var(--accent-primary); }
+.prog-bar { height: 12px; background: var(--bg-secondary); border-radius: 6px; overflow: hidden; }
+.prog-fill { width: 0%; height: 100%; background: var(--accent-gradient); transition: 0.3s; border-radius: 6px; box-shadow: 0 0 12px rgba(13,148,136,0.4); }
+
+/* Results */
+.results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.card { background: var(--bg-card); border: 1px solid var(--border-default); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: 0.3s; }
+.card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.1); transform: translateY(-2px); }
+.card-header { padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-default); }
+.card-header .material-icons { font-size: 2rem; color: var(--accent-primary); }
+.card-title { font-weight: 900; font-size: 1rem; }
+.card-meta { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px; }
+.card-actions { padding: 16px 20px; }
+
+/* Toast */
+#toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #0f172a; color: white; padding: 14px 36px; border-radius: 50px; opacity: 0; transition: 0.4s; z-index: 6000; pointer-events: none; font-weight: 700; font-size: 0.85rem; }
+#toast.show { opacity: 1; transform: translate(-50%, -15px); }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-tertiary); }
+.empty-state .material-icons { font-size: 4rem; margin-bottom: 12px; opacity: 0.3; }
+
+@keyframes pulse { 0%, 100% { transform: scale(0.95); opacity: 0.7; } 50% { transform: scale(1.05); opacity: 1; } }
+
+/* Mode tabs */
+.mode-tabs { display: flex; gap: 6px; background: var(--bg-secondary); padding: 5px; border-radius: 14px; margin-bottom: 20px; }
+.mode-tab { flex: 1; padding: 10px 8px; border: none; border-radius: 10px; background: transparent; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.82rem; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s; }
+.mode-tab.active { background: white; color: var(--accent-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+/* FV type sub-tabs */
+.fv-type-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+.fv-type-btn { padding: 7px 14px; border: 1.5px solid var(--border-default); border-radius: 10px; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); transition: 0.2s; }
+.fv-type-btn.active { border-color: var(--accent-primary); background: rgba(236,72,153,0.06); color: var(--accent-primary); }
+
+/* Info boxes */
+.info-box { margin-top: 8px; padding: 10px 14px; border-radius: 10px; font-size: 0.75rem; display: flex; align-items: flex-start; gap: 8px; }
+.info-box.green { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.info-box.pink  { background: #fdf2f8; border: 1px solid #fbcfe8; color: #9d174d; }
+.info-box.yellow { background: #fefce8; border: 1px solid #fde68a; color: #92400e; }
+</style>
+</head>
+<body>
+<div id="toast"></div>
+<div class="container">
+  <header>
+    <div class="brand">
+      <span class="material-icons" style="font-size: 2.2rem;">movie_filter</span>
+      FV量産Studio KOSURIちゃん
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <span id="server-status" title="サーバー接続状態" style="display:inline-flex;align-items:center;gap:5px;font-size:0.75rem;color:var(--text-tertiary);padding:4px 10px;border-radius:20px;background:var(--bg-secondary);">
+        <span id="status-dot" style="width:8px;height:8px;border-radius:50%;background:#94a3b8;"></span>
+        <span id="status-text">確認中...</span>
+      </span>
+      <a href="https://docs.google.com/spreadsheets/d/1PxCyac4kuPivDo_uby48s-pHtlbv0Eme1bW7BYDUdKA/edit" target="_blank" class="btn-icon" title="スプレッドシートを開く" style="text-decoration:none;"><span class="material-icons">table_chart</span></a>
+      <button class="btn-icon" onclick="openFeedbackAdmin()" title="フィードバック管理"><span class="material-icons">rate_review</span></button>
+      <button class="btn-icon" onclick="resetAll()" title="リセット"><span class="material-icons">refresh</span></button>
+    </div>
+  </header>
+
+  <div class="main-grid">
+    <!-- ═══ 設定パネル ═══ -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="material-icons" style="color:var(--accent-primary);">tune</span> 作成設定
+      </div>
+      <div class="panel-body">
+
+        <!-- ─── モード切り替えタブ ─── -->
+        <div class="mode-tabs">
+          <button class="mode-tab active" onclick="switchMode('overlay')" id="tab-overlay">
+            <span class="material-icons" style="font-size:0.9rem;">layers</span> FVオーバーレイ
+          </button>
+          <button class="mode-tab" onclick="switchMode('concat')" id="tab-concat">
+            <span class="material-icons" style="font-size:0.9rem;">call_merge</span> FV結合
+          </button>
+          <button class="mode-tab" onclick="switchMode('cut')" id="tab-cut">
+            <span class="material-icons" style="font-size:0.9rem;">content_cut</span> FVカット<span style="font-size:0.65rem; background:#ec4899; color:white; padding:1px 5px; border-radius:5px; margin-left:4px;">β</span>
+          </button>
+        </div>
+
+        <!-- ─── FVオーバーレイ モード ─── -->
+        <div id="mode-overlay">
+          <div style="margin-bottom:20px; padding:14px 16px; background:linear-gradient(135deg,#fdf2f8,#fce7f3); border:1.5px solid #fbcfe8; border-radius:14px;">
+            <div style="font-weight:900; font-size:0.9rem; color:#be185d; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+              <span class="material-icons" style="font-size:1.1rem;">layers</span> FVオーバーレイとは？
+            </div>
+            <div style="font-size:0.78rem; color:#9d174d; line-height:1.8;">
+              すでに<b>音声が入ったベース動画</b>の上に、<b>別撮りしたFV映像</b>を重ねるモードです。<br>
+              ベース動画の音声はそのまま残り、FVの映像だけが差し替わります。<br>
+              <span style="color:#be185d;">📌 FVを複数用意すれば、パターン違いの動画を一括で量産できます。</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>ベース動画</label>
+            <div class="upload-zone" id="zone-base" onclick="document.getElementById('input-base').click()">
+              <span class="material-icons">videocam</span>
+              <div class="hint">クリック or ドラッグ&ドロップ</div>
+              <div class="file-list" id="files-base"></div>
+            </div>
+            <input type="file" id="input-base" hidden accept="video/*">
+            <div class="info-box green">
+              <span class="material-icons" style="font-size:1rem; margin-top:1px;">volume_up</span>
+              <span>ベース動画の音声がそのまま完成動画の音声になります。</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>FV映像 (複数可)</label>
+            <div class="upload-zone" id="zone-fv" onclick="document.getElementById('input-fv').click()">
+              <span class="material-icons">auto_awesome_motion</span>
+              <div class="hint">複数ファイルをまとめて選択可能</div>
+              <div class="file-list" id="files-fv"></div>
+            </div>
+            <input type="file" id="input-fv" hidden accept="video/*" multiple>
+            <div class="info-box pink">
+              <span class="material-icons" style="font-size:1rem; margin-top:1px;">info</span>
+              <span>FV映像の尺はベース動画のFVパートと同じ長さに揃えてください。<br>※ FV音声は自動で無視されます（映像のみ使用）。</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── FV結合 モード ─── -->
+        <div id="mode-concat" style="display:none;">
+          <div style="margin-bottom:20px; padding:14px 16px; background:linear-gradient(135deg,#f0fdf4,#dcfce7); border:1.5px solid #bbf7d0; border-radius:14px;">
+            <div style="font-weight:900; font-size:0.9rem; color:#15803d; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+              <span class="material-icons" style="font-size:1.1rem;">call_merge</span> FV結合とは？
+            </div>
+            <div style="font-size:0.78rem; color:#166534; line-height:1.8;">
+              <b>FV映像</b>と<b>ボディ映像（FVなし）</b>を前後につなげて1本の動画にするモードです。<br>
+              FVの音声もボディの音声もどちらも残ります。<br>
+              <span style="color:#15803d;">📌 FVを複数用意すれば、冒頭だけ違う動画を一括で量産できます。</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>FV映像 (複数可・個別クリップ)</label>
+            <div class="upload-zone" id="zone-fv-concat" onclick="document.getElementById('input-fv-concat').click()">
+              <span class="material-icons">auto_awesome_motion</span>
+              <div class="hint">複数ファイルをまとめて選択可能</div>
+              <div class="file-list" id="files-fv-concat"></div>
+            </div>
+            <input type="file" id="input-fv-concat" hidden accept="video/*" multiple>
+            <div class="info-box pink">
+              <span class="material-icons" style="font-size:1rem; margin-top:1px;">info</span>
+              <span>FV音声はそのまま残ります。無音FVも自動対応します。</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>ボディ動画（FV抜き）</label>
+            <div class="upload-zone" id="zone-body" onclick="document.getElementById('input-body').click()">
+              <span class="material-icons">videocam</span>
+              <div class="hint">クリック or ドラッグ&ドロップ</div>
+              <div class="file-list" id="files-body"></div>
+            </div>
+            <input type="file" id="input-body" hidden accept="video/*">
+            <div class="info-box green">
+              <span class="material-icons" style="font-size:1rem; margin-top:1px;">volume_up</span>
+              <span>FV音声とボディ音声がどちらも残ります。</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── FVカット（β）モード ─── -->
+        <div id="mode-cut" style="display:none;">
+          <div style="margin-bottom:20px; padding:14px 16px; background:linear-gradient(135deg,#fffbeb,#fef3c7); border:1.5px solid #fde68a; border-radius:14px;">
+            <div style="font-weight:900; font-size:0.9rem; color:#92400e; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+              <span class="material-icons" style="font-size:1.1rem;">content_cut</span> FVカットとは？
+              <span style="font-size:0.65rem; background:#ec4899; color:white; padding:2px 7px; border-radius:6px; font-weight:800;">β版</span>
+            </div>
+            <div style="font-size:0.78rem; color:#78350f; line-height:1.8;">
+              <b>複数のFVが1本につながった「まとめ素材」</b>を、AIが自動でクリップごとに切り分けるモードです。<br>
+              アップロード後に「解析」ボタンを押すと、どこで切れるかを自動判別してサムネイルで確認できます。<br>
+              <span style="color:#92400e;">⚠️ まだ学習中のβ版です。解析結果は必ず目で確認してから書き出してください。</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>まとめ素材（複数FVが1本に繋がった動画）</label>
+            <div class="upload-zone" id="zone-packed" onclick="document.getElementById('input-packed').click()">
+              <span class="material-icons">video_library</span>
+              <div class="hint">クリック or ドラッグ&ドロップ</div>
+              <div class="file-list" id="files-packed"></div>
+            </div>
+            <input type="file" id="input-packed" hidden accept="video/*">
+          </div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>FV本数（わかっている場合）<span style="font-weight:400; color:var(--text-tertiary);">（任意・精度が上がります）</span></label>
+            <input type="number" id="expected-fv-count" min="0" max="50" value="0" placeholder="0 = 自動検出"
+              style="border-radius:12px; padding:12px; border:1.5px solid var(--border-default); font-family:inherit; width:100%;">
+            <div style="margin-top:4px; font-size:0.7rem; color:var(--text-tertiary);">0にすると自動で検出します。本数を入力すると検出精度が大幅に上がります。</div>
+          </div>
+          <button class="btn btn-secondary" onclick="analyzePackedVideo()" id="analyze-btn" style="width:100%; margin-bottom:16px;">
+            <span class="material-icons">search</span> FVを自動解析する
+          </button>
+          <!-- 解析結果 -->
+          <div id="analyze-results" style="display:none;">
+            <div style="font-weight:900; font-size:0.85rem; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+              <span class="material-icons" style="color:var(--accent-primary); font-size:1.1rem;">auto_awesome</span>
+              <span id="analyze-count">0本を検出</span>
+            </div>
+            <div id="analyze-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px;"></div>
+            <div class="form-group">
+              <label>出力ファイル名 <span style="font-weight:400; color:var(--text-tertiary);">（必須）</span></label>
+              <input type="text" id="cut-filename-prefix" placeholder="例: onmyskin_FV"
+                style="border-radius:12px; padding:12px; border:1.5px solid var(--border-default); font-family:inherit; width:100%;">
+              <div style="margin-top:6px; font-size:0.7rem; color:var(--text-tertiary);">
+                → <b>onmyskin_FV_01.mp4</b>, <b>onmyskin_FV_02.mp4</b> ...
+              </div>
+            </div>
+            <button class="btn btn-generate" onclick="exportCuts()" id="export-btn">
+              <span class="material-icons">file_download</span> 書き出す
+            </button>
+          </div>
+        </div>
+
+        <!-- ─── 共通設定（FVカット時は非表示） ─── -->
+        <div id="common-options-area">
+
+        <!-- BGM -->
+        <div class="form-group">
+          <label>BGM (背景音楽)</label>
+          <div class="upload-zone" id="zone-bgm" onclick="document.getElementById('input-bgm').click()">
+            <span class="material-icons">music_note</span>
+            <div class="hint">MP3 / WAV / AAC</div>
+            <div class="file-list" id="files-bgm"></div>
+          </div>
+          <input type="file" id="input-bgm" hidden accept="audio/*">
+        </div>
+
+        <!-- BGM音量 -->
+        <div class="form-group">
+          <label>BGM音量</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" name="bgm_vol" id="vol-small" value="small">
+              <label for="vol-small">小</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="bgm_vol" id="vol-medium" value="medium" checked>
+              <label for="vol-medium">中 <span class="badge">推奨</span></label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" name="bgm_vol" id="vol-large" value="large">
+              <label for="vol-large">大</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ファイル名 -->
+        <div class="form-group">
+          <label>出力ファイル名 <span style="font-weight:400; color:var(--text-tertiary);">（必須）</span></label>
+          <input type="text" id="filename-prefix" placeholder="例: onmyskin_macho_FV" style="border-radius:12px; padding:12px; border:1.5px solid var(--border-default); font-family:inherit; width:100%;">
+          <div style="margin-top:6px; font-size:0.7rem; color:var(--text-tertiary);">
+            入力した文字列に連番が付与されます → <b>onmyskin_macho_FV_1.mp4</b>, <b>onmyskin_macho_FV_2.mp4</b> ...
+          </div>
+        </div>
+
+        <!-- 注釈 -->
+        <div class="form-group">
+          <label>注釈テキスト <span style="font-weight:400; color:var(--text-tertiary);">（空欄なら非表示）</span></label>
+          <textarea id="annotation" rows="3" placeholder="例: ※個人の感想です&#10;※効果効能を保証するものではありません"></textarea>
+        </div>
+
+        <!-- 運用手順 -->
+        <div style="margin-bottom:22px; padding:14px 16px; background:#fefce8; border:1px solid #fde68a; border-radius:12px; font-size:0.75rem; color:#92400e;">
+          <div style="font-weight:900; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+            <span class="material-icons" style="font-size:1rem;">checklist</span> 運用手順
+          </div>
+          <div style="line-height:1.8;">
+            1. まず<b>FV映像1本だけ</b>をアップロードしてテスト生成<br>
+            2. 出力動画を再生して、映像・音声・BGM・注釈を確認<br>
+            3. 問題なければ残りのFV映像を追加して一括生成<br>
+            <span style="color:#b45309;">※ 最初から全部入れると、不具合時にやり直しが大変です</span>
+          </div>
+        </div>
+
+        <!-- トラブルシューティング -->
+        <div style="margin-bottom:22px; padding:14px 16px; background:#fef2f2; border:1px solid #fecaca; border-radius:12px; font-size:0.75rem; color:#991b1b;">
+          <div style="font-weight:900; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+            <span class="material-icons" style="font-size:1rem;">troubleshoot</span> 動画が出力されない場合
+          </div>
+          <div style="line-height:1.8;">
+            <b>1. ファイル形式</b> — MP4推奨。MOV等は変換してからアップロード<br>
+            <b>2. FV映像の尺</b> — ベース動画のFVパートと必ず同じ長さに揃える<br>
+            <b>3. ベースの音声</b> — ベース動画に音声トラックがあるか確認<br>
+            <b>4. ファイルサイズ</b> — 1ファイル500MB以下に収める<br>
+            <b>5. ファイル名</b> — 特殊文字（#, &, %等）を含まない名前にする
+          </div>
+        </div>
+
+        </div><!-- /#common-options-area -->
+
+        <!-- 生成ボタン -->
+        <div id="common-generate-area">
+        <button id="gen-btn" class="btn btn-generate" onclick="startGeneration()">
+          <span class="material-icons">movie_filter</span> 動画を生成
+        </button>
+
+        <div class="progress-container" id="progress">
+          <div class="prog-label">
+            <span id="prog-status">生成中...</span>
+            <span id="prog-text">0%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+        </div>
+        </div><!-- /#common-generate-area -->
+
+      </div>
+    </div>
+
+    <!-- ═══ 出力パネル ═══ -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="material-icons" style="color:var(--accent-primary);">video_library</span>
+        生成結果
+      </div>
+      <div class="panel-body">
+        <div id="results" class="results-grid">
+          <div class="empty-state" id="empty-state">
+            <span class="material-icons">movie_creation</span>
+            <div style="font-weight:700;">素材をアップロードして生成を開始</div>
+            <div style="font-size:0.8rem; margin-top:8px;">FV映像 x ベース動画 x BGM</div>
+          </div>
+        </div>
+
+        <!-- フィードバックフォーム（生成後に表示） -->
+        <div id="feedback-section" style="display:none; margin-top:24px; padding:20px; background:#f8fafc; border:2px solid var(--accent-primary); border-radius:16px;">
+          <div style="font-weight:900; font-size:1rem; margin-bottom:12px; display:flex; align-items:center; gap:8px; color:var(--accent-primary);">
+            <span class="material-icons">rate_review</span> フィードバック（必須）
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:16px;">
+            動画の品質向上のため、必ずフィードバックを送信してください。
+          </div>
+
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>担当者名</label>
+            <input type="text" id="fb-creator" placeholder="例: コスリちゃん" style="border-radius:10px; padding:10px; border:1.5px solid var(--border-default);">
+          </div>
+
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>評価</label>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" name="fb_rating" id="fb-good" value="good">
+                <label for="fb-good" style="gap:4px;">OK</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" name="fb_rating" id="fb-bad" value="bad">
+                <label for="fb-bad" style="gap:4px;">要改善</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>カテゴリ</label>
+            <select id="fb-category" style="width:100%; padding:10px; border-radius:10px; border:1.5px solid var(--border-default); font-family:inherit;">
+              <option value="">選択してください</option>
+              <option value="bgm">BGM音量・選曲</option>
+              <option value="fv_timing">FV映像のつなぎ目・タイミング</option>
+              <option value="annotation">注釈テキスト</option>
+              <option value="quality">映像品質・画質</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>コメント</label>
+            <textarea id="fb-comment" rows="3" placeholder="具体的な改善点や気づきを記入してください"></textarea>
+          </div>
+
+          <button class="btn btn-generate" onclick="submitFeedback()" id="fb-submit-btn">
+            <span class="material-icons">send</span> フィードバックを送信
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- フィードバック管理モーダル -->
+  <div id="fb-admin-modal" style="position:fixed; inset:0; background:rgba(15,23,42,0.7); z-index:5000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+    <div style="background:var(--bg-card); width:90%; max-width:800px; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 20px 50px rgba(0,0,0,0.3); max-height:85vh;">
+      <div style="padding:20px 24px; border-bottom:1px solid var(--border-default); font-weight:900; font-size:1.1rem; display:flex; justify-content:space-between; align-items:center;">
+        <span style="display:flex; align-items:center; gap:8px;"><span class="material-icons" style="color:var(--accent-primary);">admin_panel_settings</span> フィードバック管理</span>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <button class="btn btn-secondary" style="font-size:0.75rem; padding:7px 12px;" onclick="setupSheets()" title="初回のみ実行。シートにヘッダーを作成します"><span class="material-icons" style="font-size:1rem;">table_chart</span> Sheetsセットアップ</button>
+          <a href="https://docs.google.com/spreadsheets/d/1PxCyac4kuPivDo_uby48s-pHtlbv0Eme1bW7BYDUdKA/edit" target="_blank" class="btn btn-secondary" style="font-size:0.75rem; padding:7px 12px; text-decoration:none;"><span class="material-icons" style="font-size:1rem;">open_in_new</span> Sheetsを開く</a>
+          <button class="btn-icon" onclick="document.getElementById('fb-admin-modal').style.display='none'"><span class="material-icons">close</span></button>
+        </div>
+      </div>
+      <div style="padding:24px; overflow-y:auto; flex:1;" id="fb-admin-list"></div>
+    </div>
+  </div>
+
+  <footer>FV量産Studio KOSURIちゃん v1.0</footer>
+</div>
+
+<script>
+let sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
+let uploadState = { base: null, bgm: null, fv: [], body: null, packed: null };
+let currentMode = 'overlay';
+let fvInputType = 'individual';
+
+// ─── Server Health Check ───────────────────────────────────
+async function checkHealth() {
+  const dot = document.getElementById('status-dot');
+  const txt = document.getElementById('status-text');
+  try {
+    const res = await fetch('/health', { cache: 'no-store' });
+    if (res.ok) {
+      dot.style.background = '#10b981';
+      txt.textContent = 'サーバー接続中';
+    } else {
+      throw new Error();
+    }
+  } catch {
+    dot.style.background = '#ef4444';
+    txt.textContent = 'サーバー停止中！';
+    document.getElementById('status-text').style.color = '#ef4444';
+  }
+}
+checkHealth();
+setInterval(checkHealth, 15000);
+
+// ─── Toast ────────────────────────────────────────────────
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── Mode Switch ──────────────────────────────────────────
+function switchMode(mode) {
+  currentMode = mode;
+  ['overlay','concat','cut'].forEach(m => {
+    document.getElementById('mode-' + m).style.display = m === mode ? '' : 'none';
+    document.getElementById('tab-' + m).classList.toggle('active', m === mode);
+  });
+  // FVカットは共通設定（BGM/注釈等）と生成ボタン不要なので隠す
+  const genArea = document.getElementById('common-generate-area');
+  if (genArea) genArea.style.display = mode === 'cut' ? 'none' : '';
+  const optArea = document.getElementById('common-options-area');
+  if (optArea) optArea.style.display = mode === 'cut' ? 'none' : '';
+}
+
+// ─── Upload Zones ─────────────────────────────────────────
+function setupZone(zoneId, inputId, type) {
+  const zone = document.getElementById(zoneId);
+  const input = document.getElementById(inputId);
+  if (!zone || !input) return;
+
+  zone.ondragover = (e) => { e.preventDefault(); zone.classList.add('drag-over'); };
+  zone.ondragleave = () => zone.classList.remove('drag-over');
+  zone.ondrop = (e) => {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files, type);
+  };
+  input.onchange = (e) => {
+    if (e.target.files.length) uploadFiles(e.target.files, type);
+    e.target.value = '';
+  };
+}
+
+setupZone('zone-base',       'input-base',       'base');
+setupZone('zone-fv',         'input-fv',         'fv');
+setupZone('zone-fv-concat',  'input-fv-concat',  'fv');
+setupZone('zone-body',       'input-body',        'body');
+setupZone('zone-packed',     'input-packed',      'packed');
+setupZone('zone-bgm',        'input-bgm',         'bgm');
+
+async function uploadFiles(fileList, type) {
+  const fd = new FormData();
+  fd.append('session_id', sessionId);
+  fd.append('type', type);
+  for (const f of fileList) fd.append('files', f);
+
+  toast('アップロード中...');
+  try {
+    const res = await fetch('/upload', { method: 'POST', body: fd });
+    const data = await res.json();
+    sessionId = data.session_id;
+
+    if (type === 'base') {
+      uploadState.base = data.saved[0] || null;
+      document.getElementById('files-base').textContent = uploadState.base || '';
+    } else if (type === 'bgm') {
+      uploadState.bgm = data.saved[0] || null;
+      document.getElementById('files-bgm').textContent = uploadState.bgm || '';
+    } else if (type === 'fv') {
+      uploadState.fv = uploadState.fv.concat(data.saved);
+      const label = uploadState.fv.length + '本のFV映像';
+      ['files-fv', 'files-fv-concat'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = label;
+      });
+    } else if (type === 'body') {
+      uploadState.body = data.saved[0] || null;
+      document.getElementById('files-body').textContent = uploadState.body || '';
+    } else if (type === 'packed') {
+      uploadState.packed = data.saved[0] || null;
+      document.getElementById('files-packed').textContent = uploadState.packed || '';
+    }
+    toast('アップロード完了');
+  } catch (e) {
+    toast('アップロードに失敗しました');
+  }
+}
+
+// ─── FVカット: 解析 & 書き出し ────────────────────────────
+let detectedClips = [];
+
+async function analyzePackedVideo() {
+  if (!uploadState.packed) return toast('まとめ素材をアップロードしてください');
+  const btn = document.getElementById('analyze-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-icons">hourglass_top</span> 解析中...';
+  toast('解析中... しばらくお待ちください');
+
+  try {
+    const res = await fetch('/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session_id: sessionId, expected_count: parseInt(document.getElementById('expected-fv-count').value) || 0 }),
+    });
+    const data = await res.json();
+    if (data.error) { toast('エラー: ' + data.error); return; }
+
+    detectedClips = data.clips;
+    renderAnalyzeResults(detectedClips);
+    toast(detectedClips.length + '本のFVを検出しました');
+  } catch (e) {
+    toast('解析に失敗しました');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-icons">search</span> FVを自動解析する';
+  }
+}
+
+function renderAnalyzeResults(clips) {
+  document.getElementById('analyze-results').style.display = '';
+  document.getElementById('analyze-count').textContent = clips.length + '本を検出しました';
+  const grid = document.getElementById('analyze-grid');
+  grid.innerHTML = clips.map(c => `
+    <div style="background:#f8fafc; border:1px solid var(--border-default); border-radius:10px; overflow:hidden; text-align:center;">
+      ${c.thumb
+        ? `<img src="/thumbnail/${sessionId}/${c.thumb}" style="width:100%; aspect-ratio:9/16; object-fit:cover;">`
+        : `<div style="aspect-ratio:9/16; background:var(--bg-secondary); display:flex; align-items:center; justify-content:center;"><span class="material-icons" style="opacity:0.3;">image_not_supported</span></div>`}
+      <div style="padding:4px 6px; font-size:0.7rem; font-weight:700; color:var(--text-secondary);">
+        FV_${String(c.index).padStart(2,'0')}<br>
+        <span style="color:var(--text-tertiary);">${c.duration}s</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function exportCuts() {
+  if (!detectedClips.length) return toast('先に解析を実行してください');
+  const prefix = document.getElementById('cut-filename-prefix').value.trim();
+  if (!prefix) return toast('出力ファイル名を入力してください');
+
+  const btn = document.getElementById('export-btn');
+  btn.disabled = true;
+  document.getElementById('empty-state').style.display = 'none';
+
+  try {
+    const res = await fetch('/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id: sessionId,
+        mode: 'cut',
+        clips: detectedClips,
+        filename_prefix: prefix,
+      }),
+    });
+    const { job_id } = await res.json();
+    pollStatus(job_id, () => { btn.disabled = false; });
+  } catch (e) {
+    btn.disabled = false;
+    toast('書き出しに失敗しました');
+  }
+}
+
+// ─── Generation ───────────────────────────────────────────
+async function startGeneration() {
+  if (!uploadState.bgm) return toast('BGMをアップロードしてください');
+
+  if (currentMode === 'overlay') {
+    if (!uploadState.base) return toast('ベース動画をアップロードしてください');
+    if (!uploadState.fv.length) return toast('FV映像をアップロードしてください');
+  } else {
+    if (!uploadState.body) return toast('ボディ動画をアップロードしてください');
+    if (fvInputType === 'individual' && !uploadState.fv.length) return toast('FV映像をアップロードしてください');
+    if (fvInputType === 'packed' && !uploadState.packed) return toast('まとめ素材をアップロードしてください');
+  }
+
+  const filenamePrefix = document.getElementById('filename-prefix').value.trim();
+  if (!filenamePrefix) return toast('出力ファイル名を入力してください');
+
+  const btn = document.getElementById('gen-btn');
+  const prog = document.getElementById('progress');
+  btn.disabled = true;
+  prog.style.display = 'block';
+  document.getElementById('prog-fill').style.width = '0%';
+  document.getElementById('prog-text').textContent = '0%';
+  document.getElementById('empty-state').style.display = 'none';
+
+  const bgmVol = document.querySelector('input[name="bgm_vol"]:checked').value;
+  const annotation = document.getElementById('annotation').value;
+  const clipDur = parseFloat(document.getElementById('clip-dur')?.value || 2);
+
+  try {
+    const res = await fetch('/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id: sessionId, bgm_volume: bgmVol, annotation,
+        filename_prefix: filenamePrefix, mode: currentMode,
+        fv_input_type: fvInputType, clip_dur: clipDur,
+      }),
+    });
+    const { job_id } = await res.json();
+    pollStatus(job_id);
+  } catch (e) {
+    btn.disabled = false;
+    prog.style.display = 'none';
+    toast('生成開始に失敗しました');
+  }
+}
+
+function pollStatus(jobId, onDone) {
+  const interval = setInterval(async () => {
+    try {
+      const res = await fetch('/status/' + jobId);
+      const job = await res.json();
+
+      if (job.total > 0) {
+        const pct = Math.round((job.current / job.total) * 100);
+        document.getElementById('prog-fill').style.width = pct + '%';
+        document.getElementById('prog-text').textContent = pct + '%';
+        document.getElementById('prog-status').textContent = job.current + ' / ' + job.total + ' を生成中...';
+      }
+
+      if (job.status === 'done') {
+        clearInterval(interval);
+        document.getElementById('gen-btn').disabled = false;
+        document.getElementById('progress').style.display = 'none';
+        renderResults(jobId, job.results);
+        toast(job.results.length + '本の動画を生成しました');
+        if (onDone) onDone();
+      } else if (job.status === 'error') {
+        clearInterval(interval);
+        document.getElementById('gen-btn').disabled = false;
+        document.getElementById('progress').style.display = 'none';
+        toast('エラー: ' + (job.error || '生成に失敗'));
+      }
+    } catch (e) { /* retry */ }
+  }, 1500);
+}
+
+let currentJobId = null;
+
+function renderResults(jobId, results) {
+  currentJobId = jobId;
+  const grid = document.getElementById('results');
+  grid.innerHTML = '';
+  results.forEach((r) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-header">
+        <span class="material-icons">movie</span>
+        <div>
+          <div class="card-title">${r.name}</div>
+          <div class="card-meta">${r.duration}s / ${r.size_mb}MB / ${r.fv_name}</div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a href="/download/${jobId}/${r.name}" class="btn btn-dl" style="text-decoration:none;">
+          <span class="material-icons" style="font-size:1rem;">download</span> ダウンロード
+        </a>
+      </div>`;
+    grid.appendChild(card);
+  });
+  // フィードバックフォームを表示
+  document.getElementById('feedback-section').style.display = 'block';
+  document.getElementById('fb-submit-btn').disabled = false;
+  document.getElementById('fb-submit-btn').innerHTML = '<span class="material-icons">send</span> フィードバックを送信';
+}
+
+// ─── Feedback ─────────────────────────────────────────────
+async function submitFeedback() {
+  const creator = document.getElementById('fb-creator').value.trim();
+  const rating = document.querySelector('input[name="fb_rating"]:checked');
+  const category = document.getElementById('fb-category').value;
+  const comment = document.getElementById('fb-comment').value.trim();
+
+  if (!creator) return toast('担当者名を入力してください');
+  if (!rating) return toast('評価を選択してください');
+  if (!category) return toast('カテゴリを選択してください');
+  if (!comment) return toast('コメントを入力してください');
+
+  const btn = document.getElementById('fb-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-icons" style="animation:spin 1s linear infinite;">sync</span> 送信中...';
+
+  try {
+    await fetch('/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        creator, job_id: currentJobId,
+        rating: rating.value, category, comment,
+      }),
+    });
+    btn.innerHTML = '<span class="material-icons">check_circle</span> 送信完了';
+    btn.style.background = 'var(--color-success)';
+    toast('フィードバックを送信しました');
+  } catch (e) {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-icons">send</span> フィードバックを送信';
+    toast('送信に失敗しました');
+  }
+}
+
+// ─── Sheets Setup ─────────────────────────────────────────
+async function setupSheets() {
+  if (!confirm('スプレッドシートにシート（生成ログ・フィードバック・スクリプト一覧）を作成します。\n初回のみ実行してください。')) return;
+  try {
+    const res = await fetch('/setup-sheets', { method: 'POST' });
+    const data = await res.json();
+    if (data.ok) {
+      toast('Sheetsのセットアップが完了しました');
+    } else {
+      toast('エラー: ' + (data.error || '失敗'));
+    }
+  } catch (e) {
+    toast('セットアップに失敗しました');
+  }
+}
+
+// ─── Feedback Admin ───────────────────────────────────────
+async function openFeedbackAdmin() {
+  document.getElementById('fb-admin-modal').style.display = 'flex';
+  const container = document.getElementById('fb-admin-list');
+  container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-tertiary);">読み込み中...</div>';
+
+  try {
+    const res = await fetch('/feedback');
+    const list = await res.json();
+    if (!list.length) {
+      container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-tertiary);"><span class="material-icons" style="font-size:3rem; opacity:0.3;">inbox</span><div style="margin-top:8px; font-weight:700;">フィードバックはまだありません</div></div>';
+      return;
+    }
+    const statusColors = { pending: '#f59e0b', approved: '#10b981', rejected: '#ef4444' };
+    const statusLabels = { pending: '未レビュー', approved: '承認済み', rejected: '却下' };
+    const catLabels = { bgm: 'BGM', fv_timing: 'FVタイミング', annotation: '注釈', quality: '映像品質', other: 'その他' };
+
+    container.innerHTML = list.slice().reverse().map(fb => `
+      <div style="padding:16px; border-bottom:1px solid var(--border-default);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-weight:900;">${fb.creator || '匿名'}</span>
+            <span style="font-size:0.7rem; padding:2px 8px; border-radius:6px; background:${fb.rating === 'good' ? '#dcfce7' : '#fee2e2'}; color:${fb.rating === 'good' ? '#166534' : '#991b1b'}; font-weight:700;">${fb.rating === 'good' ? 'OK' : '要改善'}</span>
+            <span style="font-size:0.7rem; padding:2px 8px; border-radius:6px; background:var(--bg-secondary); font-weight:700;">${catLabels[fb.category] || fb.category}</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:0.7rem; color:var(--text-tertiary);">${fb.timestamp}</span>
+            <span style="font-size:0.7rem; padding:2px 8px; border-radius:6px; background:${statusColors[fb.status]}20; color:${statusColors[fb.status]}; font-weight:800;">${statusLabels[fb.status]}</span>
+          </div>
+        </div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:10px; line-height:1.6;">${fb.comment}</div>
+        ${fb.review_note ? `<div style="font-size:0.75rem; color:var(--accent-primary); background:#eff6ff; padding:8px 12px; border-radius:8px; margin-bottom:10px;">管理者メモ: ${fb.review_note}</div>` : ''}
+        ${fb.status === 'pending' ? `
+          <div style="display:flex; gap:8px;">
+            <button class="btn" style="flex:1; background:#dcfce7; color:#166534; font-size:0.75rem;" onclick="reviewFeedback('${fb.id}','approved')"><span class="material-icons" style="font-size:0.9rem;">check</span> 承認</button>
+            <button class="btn" style="flex:1; background:#fee2e2; color:#991b1b; font-size:0.75rem;" onclick="reviewFeedback('${fb.id}','rejected')"><span class="material-icons" style="font-size:0.9rem;">close</span> 却下</button>
+          </div>` : ''}
+      </div>
+    `).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--color-danger);">読み込みに失敗しました</div>';
+  }
+}
+
+async function reviewFeedback(fbId, status) {
+  const note = prompt(status === 'approved' ? '承認メモ（任意）:' : '却下理由:') || '';
+  try {
+    await fetch(`/feedback/${fbId}/review`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status, note }),
+    });
+    toast(status === 'approved' ? '承認しました' : '却下しました');
+    openFeedbackAdmin(); // リロード
+  } catch (e) {
+    toast('更新に失敗しました');
+  }
+}
+
+// ─── Reset ────────────────────────────────────────────────
+async function resetAll() {
+  try { await fetch('/clear/' + sessionId, { method: 'DELETE' }); } catch (e) {}
+  sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
+  uploadState = { base: null, bgm: null, fv: [], body: null, packed: null };
+  ['files-base','files-fv','files-fv-concat','files-body','files-packed','files-bgm'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.textContent = '';
+  });
+  document.getElementById('results').innerHTML = '<div class="empty-state" id="empty-state"><span class="material-icons">movie_creation</span><div style="font-weight:700;">素材をアップロードして生成を開始</div><div style="font-size:0.8rem;margin-top:8px;">FV映像 x ベース動画 x BGM</div></div>';
+  document.getElementById('annotation').value = '';
+  document.getElementById('feedback-section').style.display = 'none';
+  toast('リセットしました');
+}
+
+// ─── Init ─────────────────────────────────────────────────
+</script>
+</body>
+</html>
