@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prologue: なぜ今Claude Codeなのか — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch00-prologue.html" class="active">00</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Cover -->
+<div class="cover" data-island="0">
+  <div class="cover-badge">PROLOGUE</div>
+  <h1>なぜ今<br>Claude Codeなのか</h1>
+  <p class="subtitle">出航前に — 他のAIと何が違い、なぜ今学ぶべきなのか</p>
+  <span class="time-badge">本編 10分 + ミッション 10分</span>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Section 1: 他のAIと何が違うのか ═══ -->
+<div class="section">
+  <div class="section-label">WHAT MAKES IT DIFFERENT</div>
+  <h2>そもそも他のAIと何が違うのか</h2>
+
+  <p>ChatGPT、Gemini、Claude…色々なAIがある中で、なぜ「Claude Code」なのか。<br>
+  違いはシンプルです。<strong>「質問に答える」だけのAIと、「自分で仕事をする」AIの違い。</strong></p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🔄</span> AIの3つの世代</h3>
+    <p class="tagline">チャット → アシスタント → エージェント</p>
+
+    <table>
+      <tr><th>世代</th><th>できること</th><th>例</th></tr>
+      <tr>
+        <td><strong>第1世代</strong><br>チャットAI</td>
+        <td>質問に答える。文章を書く。翻訳する<br><strong>自分では何も実行できない</strong></td>
+        <td>ChatGPT（Web版）<br>Gemini（Web版）</td>
+      </tr>
+      <tr>
+        <td><strong>第2世代</strong><br>AIアシスタント</td>
+        <td>ファイルを読む。画像を生成する<br><strong>指示された1つの作業を手伝う</strong></td>
+        <td>ChatGPT + Code Interpreter<br>Claude.ai + Artifacts</td>
+      </tr>
+      <tr>
+        <td><strong>第3世代</strong><br>AIエージェント</td>
+        <td>自分で考え、自分でツールを使い、自分で実行する<br><strong>「目的」を伝えれば、途中の判断も自分でやる</strong></td>
+        <td><strong>Claude Code</strong><br>Devin / Cursor Agent</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">従来のAI（チャット型）</div>
+      <p>人間「この商品のタイトル案を3つ考えて」<br>
+      AI → タイトル案を3つ出す<br>
+      人間「2番目をもう少し短くして」<br>
+      AI → 修正版を出す<br>
+      人間「じゃあこれをセラセンに貼って…」<br><br>
+      <strong>1往復ごとに人間が指示し、結果をコピペする。</strong></p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">Claude Code（エージェント型）</div>
+      <p>人間「この商品のAmazon出品ページを最適化して」<br>
+      AI →<br>
+      ① 競合10商品のタイトル・箇条書きを分析<br>
+      ② 検索キーワードのトレンドを調査<br>
+      ③ タイトル・箇条書き・A+コンテンツの改善案を作成<br>
+      ④ HTMLで出品ページのモックアップを生成<br><br>
+      <strong>「目的」を伝えれば、途中のステップを自分で判断して実行。</strong></p>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">Claude Codeの強み</div>
+    <p>
+      <strong>コードを書ける</strong> — ファイル作成・編集・実行ができる<br>
+      <strong>ツールを使える</strong> — Slack、Google Drive、DB、APIに自分で繋がる（MCP）<br>
+      <strong>自律的に動く</strong> — 途中でエラーが出たら自分で修正して再試行する<br>
+      <strong>記憶する</strong> — 前回の作業内容やクライアント情報を覚えている
+    </p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Section 2: なぜ今こんなに話題なのか ═══ -->
+<div class="section">
+  <div class="section-label">WHY NOW</div>
+  <h2>なぜ今こんなに話題なのか</h2>
+
+  <p>AIは何年も前からあります。でも2025-2026年に起きた3つの変化で「使える人」と「使えない人」の差が一気に広がりました。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🚀</span> 2025-2026に起きた3つの変化</h3>
+    <p class="tagline">量の変化ではなく、質の変化</p>
+
+    <div class="story-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>コンテキストウィンドウ（脳の容量）が100倍に</h4>
+        <p>2023年: 8,000トークン（文庫本10ページ分）<br>
+        2026年: <strong>100万トークン（文庫本1,000ページ分）</strong><br><br>
+        長い商品説明、競合データ、過去の売上レポート…を一度に全部読み込んで分析できるようになった。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>MCP（外部ツール連携）の標準化</h4>
+        <p>AIがSlack、Googleドライブ、データベース、ブラウザに<strong>自分でアクセス</strong>できるようになった。「データをコピペしてAIに渡す」作業が不要に。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>エージェント実行（自律動作）の実用化</h4>
+        <p>「目的を伝えたら勝手にやってくれる」が現実になった。途中でエラーが出ても自分で修正。複数のツールを組み合わせて複雑なタスクを完遂する。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📊 生産性の格差</div>
+      <p>AIを使いこなしている会社:<br>
+      → バナーを<strong>1日50パターン</strong>テスト<br>
+      → 商品ページを<strong>毎週AB</strong>テスト<br>
+      → 競合データを<strong>毎朝自動</strong>取得<br><br>
+      AIを使っていない会社:<br>
+      → バナーを<strong>月2パターン</strong>作成<br>
+      → 商品ページは<strong>半年に1回</strong>更新<br><br>
+      <strong>この差は毎日広がっていく。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ Amazon運用の現実</div>
+      <p>競合セラーはすでにAIで:<br>
+      ・商品タイトルの最適化を自動実行<br>
+      ・広告入札戦略をデータ分析で調整<br>
+      ・レビュー分析から訴求軸を毎月更新<br>
+      ・A+コンテンツを複数パターン量産<br><br>
+      <strong>「手作業 vs AI」では勝負にならない時代。</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Section 3: どんなシーンで使われているか ═══ -->
+<div class="section">
+  <div class="section-label">USE CASES</div>
+  <h2>実際にどんなシーンで使われているのか</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">💼</span> 一般的なビジネスシーン</h3>
+    <p class="tagline">業種を問わず使われている用途</p>
+
+    <table>
+      <tr><th>シーン</th><th>従来</th><th>Claude Code</th></tr>
+      <tr><td>議事録整理</td><td>会議後30分かけて手動で整理</td><td>音声テキストを渡して「要約+TODO抽出」→ 3分</td></tr>
+      <tr><td>データ分析</td><td>Excelで関数を組んで集計</td><td>「先月の売上を分析して」→ グラフ付きレポート自動生成</td></tr>
+      <tr><td>レポート作成</td><td>半日かけてWord/PowerPoint</td><td>データとフォーマットを渡して「レポート作って」→ 30分</td></tr>
+      <tr><td>メール・文書作成</td><td>1通10分 × 20通 = 3時間</td><td>テンプレートを定義して「全部書いて」→ 30分</td></tr>
+    </table>
+  </div>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📦</span> Amazon運用での活用シーン</h3>
+    <p class="tagline">EC運用に特化した使い方</p>
+
+    <div class="story-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>商品ページの最適化</h4>
+        <p>商品タイトル、箇条書き5点、商品説明、A+コンテンツを一括で最適化。検索キーワード分析 → 競合比較 → 改善案生成をAIが一気通貫で実行。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>競合分析・広告データ分析</h4>
+        <p>広告データAPIと連携して、競合の広告出稿量・クリエイティブ傾向を自動取得。「どの訴求が効いているか」を数値で把握し、次のアクションを提案。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>レビュー分析 → 訴求軸の発見</h4>
+        <p>商品レビューを分析して「顧客が本当に求めているもの」を抽出。「軽い」「持ち運びやすい」「充電が長持ち」…など、刺さるキーワードを特定。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>バナー・動画広告の量産</h4>
+        <p>1つのコンセプトから複数パターンのバナーと動画広告を自動生成。ABテストの速度を10倍に。勝ちパターンを見つけたら即スケール。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>日次レポート・週次レポートの自動化</h4>
+        <p>売上データ・広告データを毎朝自動集計 → Slackにレポート投稿。人間は「確認するだけ」に。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">この航海で学ぶこと</div>
+    <p>上の活用シーンを実現するために必要な<strong>「AIエージェントの設計力」</strong>を10の島で身につけます。<br>
+    ツールの使い方だけでなく、<strong>「なぜそう設計するのか」の原則</strong>を学ぶことで、どんな業務にも応用できるようになります。</p>
+  </div>
+</div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Prologue まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">⚓</div>
+    <div class="hl-text">3つの理解</div>
+    <div class="hl-sub">
+      ① Claude Code = 「質問に答える」ではなく「自分で仕事をする」第3世代AI<br>
+      ② 2025-2026年の3つの変化（脳の容量100倍・ツール連携・自律動作）で実用化<br>
+      ③ Amazon運用でも商品ページ最適化・競合分析・CR量産・レポート自動化に直結
+    </div>
+  </div>
+</div>
+
+<!-- ═══ チェックポイント ═══ -->
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — 出航前に確認</h3>
+  <ul>
+    <li>Claude Code = AIエージェント。チャットAIとは根本的に違う</li>
+    <li>「質問に答える」→「自分で実行する」の進化が今起きている</li>
+    <li>AIを使いこなすかどうかで、生産性に大きな差が生まれる</li>
+    <li>この航海で「AIエージェントの設計力」を身につける</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ ミッション ═══ -->
+<div class="mission">
+  <h3>🗺️ AIに任せたい仕事TOP3</h3>
+  <p class="mission-desc">航海を始める前に、自分の業務で「AIに任せたい仕事」を3つ書き出す準備運動。<br>
+  この3つが、Island 10の最終ミッションで実際にAIに任せる対象になります。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>自分の業務で「AIに任せたい仕事TOP3」を書き出す</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">紙やメモアプリに、日々の業務を10個書き出す（5分）</li>
+    <li data-step="2">その中から「繰り返しが多い」「時間がかかる」「判断が必要」の3つの基準で優先順位をつける</li>
+    <li data-step="3">TOP3を選んで、それぞれ「今何時間かかっているか」を書く</li>
+    <li data-step="4">「AIに任せたら何分になりそうか」を想像して書く（正解はなくてOK）</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約10分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>「AIに任せたい仕事TOP3」リスト。この航海の全ミッションを通じて、これらを実際にAIに任せる設計を作っていきます。</p>
+  </div>
+</div>
+
+<!-- ═══ ナビ ═══ -->
+<div class="pagination">
+  <a href="index.html">← 航海マップに戻る</a>
+  <a href="ch01-agent-anatomy.html">Island 01: AIエージェントの正体 →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Prologue</p>
+</div>
+
+<!-- Progress tracking -->
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 0;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>

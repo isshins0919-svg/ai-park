@@ -39,6 +39,7 @@
   <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
   <div class="nav-links" id="nav-links">
     <a href="index.html" class="active">TOP</a>
+    <a href="ch00-prologue.html">00</a>
     <a href="ch01-agent-anatomy.html">01</a>
     <a href="ch02-prompt-engineering.html">02</a>
     <a href="ch03-mcp-tools.html">03</a>
@@ -58,8 +59,8 @@
 <div class="cover">
   <div class="cover-badge">ISSHIN INTERNAL TRAINING 2026</div>
   <h1>Claude Code Textbook</h1>
-  <p class="subtitle">10の島を巡る航海 — AIエージェント実践ガイド</p>
-  <p class="part-num">1-DAY WORKSHOP / ALL 10 CHAPTERS</p>
+  <p class="subtitle">11の島を巡る航海 — AIエージェント実践ガイド</p>
+  <p class="part-num">1-DAY WORKSHOP / PROLOGUE + 10 CHAPTERS</p>
   <span class="time-badge">所要時間: 約8時間（休憩込み）</span>
 </div>
 
@@ -67,7 +68,7 @@
 <div class="progress-bar">
   <div class="prog-header">
     <span>航海の進捗</span>
-    <span class="prog-count" id="prog-count">0 / 10 島</span>
+    <span class="prog-count" id="prog-count">0 / 11 島</span>
   </div>
   <div class="prog-track">
     <div class="prog-fill" id="prog-fill" style="width: 0%"></div>
@@ -78,16 +79,16 @@
 <div class="voyage-intro">
   <h3>この航海について</h3>
   <p>Claude Codeを使いこなすための実践型テキストブック。<br>
-  10の島（チャプター）を順に巡り、各島でミッション（ハンズオン課題）をクリアしていきます。</p>
+  プロローグ + 10の島（チャプター）を順に巡り、各島でミッション（ハンズオン課題）をクリアしていきます。</p>
   <p><strong>対象:</strong> Claude Codeに初めて触れる方 〜 使い始めて間もない方</p>
   <p><strong>前提:</strong> Claude Codeがインストール済みであること</p>
   <div class="route-summary">
     <div class="route-item">
-      <div class="ri-num">10</div>
+      <div class="ri-num">11</div>
       <div class="ri-label">チャプター</div>
     </div>
     <div class="route-item">
-      <div class="ri-num">10</div>
+      <div class="ri-num">11</div>
       <div class="ri-label">ミッション</div>
     </div>
     <div class="route-item">
@@ -110,6 +111,17 @@
 
 <!-- Island Map -->
 <div class="island-grid">
+
+  <a href="ch00-prologue.html" class="island-card" data-ch="0">
+    <div class="island-icon i1">⚓</div>
+    <div class="island-info">
+      <div class="island-label c1">PROLOGUE</div>
+      <h3>なぜ今Claude Codeなのか</h3>
+      <p>出航前の予備知識。他のAIとの違い、なぜ今話題か、どんなシーンで使われるか。</p>
+      <div class="topics"><span>ChatGPT vs Claude Code</span><span>2026年の変化</span><span>Amazon活用</span></div>
+    </div>
+    <div class="island-meta"><span class="time">20 min</span></div>
+  </a>
 
   <a href="ch01-agent-anatomy.html" class="island-card" data-ch="1">
     <div class="island-icon i1">🧩</div>
@@ -243,7 +255,7 @@
 <script>
 (function() {
   const KEY = 'cc-textbook-progress';
-  const TOTAL = 10;
+  const TOTAL = 11;
 
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; }
