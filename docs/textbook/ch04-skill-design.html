@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 04: Skill設計 — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html" class="active">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Cover -->
+<div class="cover" data-island="4">
+  <div class="cover-badge">ISLAND 04 OF 10</div>
+  <h1>Skill設計<br>— 再利用できる指示書</h1>
+  <p class="subtitle">何度も使う仕事を「手順書」に変えて、誰がやっても同じ品質にする</p>
+  <span class="time-badge">本編 20分 + ミッション 25分</span>
+</div>
+
+<!-- 前島の振り返り -->
+<div class="recap">
+  <h3>📌 Island 03の振り返り</h3>
+  <ul>
+    <li>MCPはAIのためのUSB。外部ツールをAIに繋ぐ仕組み</li>
+    <li>ホスト・クライアント・サーバーの3者構成</li>
+    <li>ローカル（手元で動く）とリモート（クラウドで動く）の2種類</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Script vs Skill ═══ -->
+<div class="section">
+  <div class="section-label">SCRIPT VS SKILL</div>
+  <h2>「考える必要ある？」で分ける</h2>
+
+  <p>全てをAI（Skill）でやる必要はありません。<strong>考える必要がない定型処理</strong>は、Pythonスクリプトの方が速い・安い・確実です。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>電卓で計算できることをわざわざ数学教授に頼む人はいない。<strong>「AIじゃなくてもできること」にAIを使うと、コスト・速度・信頼性の全てで損をする</strong>。判断基準は「考える必要があるか？」だけ。</p>
+  </div>
+
+  <table>
+    <tr><th>処理の内容</th><th>判断</th><th>理由</th></tr>
+    <tr><td>ファイル名の一括リネーム</td><td>🐍 スクリプト</td><td>ルールが決まっている。考える余地なし</td></tr>
+    <tr><td>CSVの集計・グラフ化</td><td>🐍 スクリプト</td><td>計算は機械の仕事。LLMに計算させると間違う</td></tr>
+    <tr><td>画像のリサイズ・形式変換</td><td>🐍 スクリプト</td><td>ピクセル計算に思考は不要</td></tr>
+    <tr><td>広告コピーの生成</td><td>📋 スキル</td><td>「刺さるコピー」は判断力が必要</td></tr>
+    <tr><td>競合分析レポート作成</td><td>📋 スキル</td><td>データの解釈・洞察に思考力が要る</td></tr>
+    <tr><td>ブランドガイドに沿ったチェック</td><td>📋 スキル</td><td>「ガイドの意図」を理解する必要がある</td></tr>
+  </table>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏭 工場の例</div>
+      <p>ネジを締める作業 → <strong>ロボットアーム</strong>（正確・速い・安い）<br>
+      新製品のデザイン → <strong>人間のデザイナー</strong>（創造力が必要）<br><br>
+      定型作業をデザイナーにやらせるのは「もったいない」。AIでも同じ。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号のスクリプト例</div>
+      <p><code>sync.sh</code> — gitの自動同期（pull/push）<br>
+      <code>update_crew_map.py</code> — クルーマップ自動更新<br>
+      <code>slack_feedback_bot.py</code> — Slackフィードバック収集<br><br>
+      どれも「考える」必要がない。決まったルールで動くだけ。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Skillの構造 ═══ -->
+<div class="section">
+  <div class="section-label">SKILL ANATOMY</div>
+  <h2>Skillの基本構造 — 5つのパーツ</h2>
+
+  <p>Skillは <code>.claude/commands/</code> フォルダに置くMarkdownファイルです。<code>/skill-name</code> で起動できます。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">Skillの5パーツ</span><br><br>
+    <span class="g">① いつ使うか（Trigger）</span><br>
+    &emsp;→ どんな時にこのスキルを起動するか。条件を明記<br><br>
+    <span class="a">② 実行手順（Steps）</span><br>
+    &emsp;→ Step 1, 2, 3... の順番で。迷う余地をなくす<br><br>
+    <span class="o">③ 出力フォーマット（Output）</span><br>
+    &emsp;→ 「こういう形式で出す」のテンプレート<br><br>
+    <span class="p">④ 注意点（Constraints）</span><br>
+    &emsp;→ やってはいけないこと、気をつけること<br><br>
+    <span class="y">⑤ ナレッジ参照（Knowledge）</span><br>
+    &emsp;→ 「先にこのファイルを読んでから始める」の指定
+  </div>
+
+  <div class="why-box">
+    <div class="label">テンプレート</div>
+    <p>starter-kit に <a href="starter-kit/skill-template.md" style="color:var(--accent)">skill-template.md</a> があります。ミッションで使います。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Shot設計 ═══ -->
+<div class="section">
+  <div class="section-label">SHOT DESIGN</div>
+  <h2>Skillの品質を爆上げする「Shot」の技術</h2>
+
+  <p>Skillに「こういうアウトプットを出して」の<strong>具体例（Shot）</strong>を入れると、精度が劇的に上がります。<br>
+  ポイントは<strong>「数より多様性」</strong>。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🎯</span> 3つのShotで90%カバーする</h3>
+    <p class="tagline">10個の似た例より、3つの多様な例</p>
+
+    <div class="story-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>正常系の例（典型的なケース）</h4>
+        <p>「こういう入力が来たら、こういう出力を出す」の王道パターン。料理で言えば「完成写真」。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>異常系の例（エラー・例外ケース）</h4>
+        <p>「こういうダメな入力が来たら、こう対処する」のパターン。料理で言えば「焦がした写真」。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>境界ケースの例（判断に迷うケース）</h4>
+        <p>「微妙な判断が求められるとき、こう判断する」のパターン。料理で言えば「ギリギリOKの焼き色」。</p>
+      </div>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-box">
+        <div class="ex-label real">👨‍🍳 料理の例</div>
+        <p>レシピに「完成写真」が1枚あるだけで、文章だけのレシピより格段にわかりやすくなる。<br><br>
+        さらに「失敗例」と「ギリギリOK」の写真があれば、<strong>判断基準がクリアになる。</strong></p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-label voyage">⚓ VOYAGE号の実例</div>
+        <p>banner-park のSkillには:<br>
+        ✅ 良いバナーの例（N1に刺さるコピー）<br>
+        ❌ ダメなバナーの例（機能説明だけ）<br>
+        🔶 微妙な例（方向性は合ってるけど弱い）<br><br>
+        この3パターンがあるから、AIが「何が良くて何がダメか」を判断できる。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Skillの成長 ═══ -->
+<div class="section">
+  <div class="section-label">SKILL EVOLUTION</div>
+  <h2>Skillはどう育つのか — VOYAGE号の成長物語</h2>
+
+  <p>Skillは最初から完成形ではありません。<strong>使いながら育てていく</strong>もの。<br>
+  バナー制作Skill「Banner Park」の成長過程を見てみましょう。</p>
+
+  <div class="story-step">
+    <div class="step-num">v1</div>
+    <div class="step-body">
+      <h4>最初は「とりあえず作れる」だけ</h4>
+      <p>「バナーを作って」と言えば何か出てくるレベル。でもクオリティはバラバラ。人間で言えば「初日のバイト」。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">v3</div>
+    <div class="step-body">
+      <h4>「手順書」ができた</h4>
+      <p>Research → Concept → Banner の3ステップが定義された。毎回同じ順序で考えるから、品質が安定し始めた。人間で言えば「業務マニュアルを覚えた社員」。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">v5</div>
+    <div class="step-body">
+      <h4>「品質チェック」が入った</h4>
+      <p>N1の語彙が入っているか、コンセプトと一致しているか…のチェックゲートが追加された。人間で言えば「先輩のレビューが入るようになった」。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">v7</div>
+    <div class="step-body">
+      <h4>「ベクトル品質ゲート」が入った（現在）</h4>
+      <p>生成されたコピーが、N1の需要ベクトルとどれくらい近いかを数値で測定。0.7以上なら合格、0.5以下なら自動で書き直し。人間で言えば「数字で判断できるベテラン」。</p>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">Skillの育て方のコツ</div>
+    <p><strong>最初から完璧を目指さない。</strong>まず動くものを作り、使ってみて、ダメだったところを直す。この「使う → 直す」サイクルが Skill を育てる。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ VOYAGE号のSkill一覧 ═══ -->
+<div class="section">
+  <div class="section-label">SKILL MAP</div>
+  <h2>VOYAGE号のSkill全体像</h2>
+
+  <p>現在、VOYAGE号には40以上のSkillと29体のサブエージェントが稼働しています。<br>
+  これは一晩で作ったのではなく、<strong>2ヶ月かけて1つずつ育てた</strong>結果です。</p>
+
+  <table>
+    <tr><th>カテゴリ</th><th>Skill例</th><th>やること</th></tr>
+    <tr><td>🎨 クリエイティブ</td><td>banner-park, shortad-park, 記事LP-park</td><td>バナー/ショート広告/記事LP の制作</td></tr>
+    <tr><td>🔍 リサーチ</td><td>research-park, concept-park</td><td>競合分析、N1設定、コンセプト設計</td></tr>
+    <tr><td>📹 動画</td><td>movie-kantoku, movie-hook</td><td>動画の構成・フック・アーク評価</td></tr>
+    <tr><td>📱 SNS</td><td>sns-marketer, sns-script-crew</td><td>SNSアカウント設計、台本生成</td></tr>
+    <tr><td>⚙️ 運用</td><td>morning, handoff, nice-dive</td><td>朝の起動、引き継ぎ、学びログ</td></tr>
+    <tr><td>🔧 品質管理</td><td>kiji-cko, kiji-validator</td><td>記事LP診断、薬機法チェック</td></tr>
+  </table>
+
+  <div class="why-box">
+    <div class="label">ポイント</div>
+    <p>40個のSkillがあるから何でもできる…のではなく、<strong>40個のSkillがあるから「誰がやっても同じ品質で出せる」</strong>。属人化を防ぎ、品質を構造で担保する仕組み。</p>
+  </div>
+</div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Island 04 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🛠️</div>
+    <div class="hl-text">3つの持ち帰り</div>
+    <div class="hl-sub">
+      ① 考える必要がない処理はスクリプトに、考える処理はSkillに<br>
+      ② Skillは5パーツ構成。Shot（具体例）を3つ入れると精度が劇的に上がる<br>
+      ③ 最初から完璧を目指さず、使いながら育てる（v1 → v3 → v5 → v7）
+    </div>
+  </div>
+</div>
+
+<!-- ═══ チェックポイント ═══ -->
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>Script（考えない処理）とSkill（考える処理）を使い分ける</li>
+    <li>Skillの5パーツ: Trigger / Steps / Output / Constraints / Knowledge</li>
+    <li>Shotは「正常・異常・境界」の3パターンで多様性を確保する</li>
+    <li>Skillは最初から完璧でなくていい。育てる前提で作り始める</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ ミッション ═══ -->
+<div class="mission">
+  <h3>🛠️ はじめてのSkillを書こう</h3>
+  <p class="mission-desc">自分の業務で「毎回やっている繰り返し作業」を1つ選び、Skillのテンプレートに当てはめるハンズオン。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>starter-kit の <a href="starter-kit/skill-template.md" style="color:var(--accent)">skill-template.md</a> を使って、自分の業務用Skillを1つ完成させる</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">自分の仕事で「毎週やっている繰り返し作業」を1つ選ぶ（例: 週次レポート作成、定例MTGの議事録整理）</li>
+    <li data-step="2">それが「Script向き」か「Skill向き」か判断する。考える要素があるならSkill</li>
+    <li data-step="3">Claude Codeで以下を実行:
+      <div class="code-block" style="margin-top:8px;">
+        starter-kit/skill-template.md を読んで、<br>
+        以下の業務をSkillに変換してください。<br>
+        <br>
+        <span class="comment"># 業務内容</span><br>
+        - タスク名: [例: 週次レポート作成]<br>
+        - 頻度: [例: 毎週金曜]<br>
+        - 手順: [箇条書きで3-5ステップ]<br>
+        - 注意点: [やってはいけないこと]<br>
+        <br>
+        <span class="comment"># Shotを3つ入れて</span><br>
+        - 正常系: [良いアウトプットの例]<br>
+        - 異常系: [ダメなアウトプットの例]<br>
+        - 境界: [判断に迷うケースとその判断基準]
+      </div>
+    </li>
+    <li data-step="4">出力されたSkillファイルを読んで、自分の業務に合っているか確認・修正する</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約25分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>自分の業務用Skill（.md形式）1ファイル。Island 10でCLAUDE.mdに組み込みます。</p>
+  </div>
+</div>
+
+<!-- ═══ ナビ ═══ -->
+<div class="pagination">
+  <a href="ch03-mcp-tools.html">← Island 03: MCPツール</a>
+  <a href="ch05-agent-architecture.html">Island 05: エージェント設計 →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 04</p>
+</div>
+
+<!-- Progress tracking -->
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 4;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>

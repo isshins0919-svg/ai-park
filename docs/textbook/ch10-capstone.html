@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 10: キャップストーン — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html" class="active">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover" data-island="10">
+  <div class="cover-badge">ISLAND 10 OF 10 — FINAL</div>
+  <h1>キャップストーン<br>— 自分の船を造る</h1>
+  <p class="subtitle">全10島の学びを統合して、あなただけのAIエージェント環境を構築する</p>
+  <span class="time-badge">本編 15分 + ミッション 45分</span>
+</div>
+
+<div class="recap">
+  <h3>📌 Island 01-09の振り返り</h3>
+  <ul>
+    <li><strong>01</strong> AIエージェント = 7パーツの組み合わせ</li>
+    <li><strong>02</strong> 指示は5要素で。Shotで精度を上げる</li>
+    <li><strong>03</strong> MCP = AIのUSB。外部ツールを繋ぐ仕組み</li>
+    <li><strong>04</strong> Script vs Skill。Skillは5パーツ構成で育てる</li>
+    <li><strong>05</strong> commands/ vs agents/。1タスク1体。NG信号で分割</li>
+    <li><strong>06</strong> CW管理 = Tier 0-3。CLAUDE.mdは短く。プランと実行は分離</li>
+    <li><strong>07</strong> ベクトル化 = 意味の座標化。勝ちパターン発見・品質ゲートに直結</li>
+    <li><strong>08</strong> フィードバックループ。リフレクション。多層防御。Nice Dive</li>
+    <li><strong>09</strong> N1 × コンセプト × CR。制作パイプラインの実践</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 全体像 ═══ -->
+<div class="section">
+  <div class="section-label">THE BIG PICTURE</div>
+  <h2>AIエージェント設計の3大原則</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">⚓</div>
+    <div class="hl-text">3大原則</div>
+    <div class="hl-sub">
+      ① コンテキストは有限。必要なものだけ持つ<br>
+      ② 考える仕事はAIに、考えない仕事はスクリプトに<br>
+      ③ 間違えても大丈夫な仕組みを複数層で作る
+    </div>
+  </div>
+
+  <table>
+    <tr><th>Island</th><th>テーマ</th><th>一番大事なこと</th></tr>
+    <tr><td>01</td><td>AIエージェントの正体</td><td>7パーツで構成される</td></tr>
+    <tr><td>02</td><td>AIへの指示の技術</td><td>5要素で書く。Shotで精度UP</td></tr>
+    <tr><td>03</td><td>MCPツール</td><td>外部ツールをAIに繋ぐ仕組み</td></tr>
+    <tr><td>04</td><td>Skill設計</td><td>考える処理はSkill、考えない処理はScript</td></tr>
+    <tr><td>05</td><td>エージェント設計</td><td>1タスク1体。commands/ vs agents/</td></tr>
+    <tr><td>06</td><td>コンテキストウィンドウ</td><td>Tier設計で管理。短く。分離する</td></tr>
+    <tr><td>07</td><td>ベクトル化</td><td>意味を数値化。勝ちパターン発見</td></tr>
+    <tr><td>08</td><td>フィードバックループ</td><td>やる→測る→直すの自動化</td></tr>
+    <tr><td>09</td><td>マーケティング × AI</td><td>N1 × コンセプト × CRの3ステップ</td></tr>
+    <tr><td>10</td><td>キャップストーン</td><td>全てを統合して自分の環境を構築</td></tr>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 構築する要素 ═══ -->
+<div class="section">
+  <div class="section-label">WHAT YOU BUILD</div>
+  <h2>最終ミッションで作るもの</h2>
+
+  <p>各島のミッションで作った成果物を統合して、<strong>自分だけのAIエージェント環境</strong>を完成させます。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📦</span> 構築するファイル一覧</h3>
+    <p class="tagline">Island 01-09の成果物がここに集結する</p>
+
+    <table>
+      <tr><th>ファイル</th><th>元のIsland</th><th>役割</th></tr>
+      <tr><td><code>CLAUDE.md</code></td><td>Island 06</td><td>AIの設計図（Tier 0）</td></tr>
+      <tr><td><code>.claude/identity.md</code></td><td>Island 10</td><td>AIの人格・トーン定義</td></tr>
+      <tr><td><code>.claude/commands/</code></td><td>Island 04</td><td>自分のSkillファイル</td></tr>
+      <tr><td><code>.claude/agents/</code></td><td>Island 05</td><td>サブエージェント定義</td></tr>
+      <tr><td><code>.claude/rules/</code></td><td>Island 08</td><td>セキュリティ・匿名化ルール</td></tr>
+      <tr><td><code>.claude/knowledge/</code></td><td>Island 09</td><td>N1定義・コンセプトなど</td></tr>
+      <tr><td><code>.claude/logs/</code></td><td>Island 08</td><td>Nice Diveログ</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 明日からやること ═══ -->
+<div class="section">
+  <div class="section-label">NEXT STEPS</div>
+  <h2>航海を終えた後にやること</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">✅</span> 最初の1週間</h3>
+    <p class="tagline">一気にやらなくていい。1日1つずつ</p>
+
+    <ul class="checklist">
+      <li>CLAUDE.mdを実際のプロジェクトに配置して、Claude Codeを起動してみる</li>
+      <li>identity.mdを書いて、AIの応答トーンを確認する</li>
+      <li>Island 04で作ったSkillを <code>/skill名</code> で実行してみる</li>
+      <li>MCPで繋がっているツール（Slack, Calendar, Drive等）を確認する</li>
+      <li>Nice Diveを1回書いて、学びの蓄積を始める</li>
+    </ul>
+  </div>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🗺️</span> 最初の1ヶ月</h3>
+    <p class="tagline">環境を育てていく</p>
+
+    <ul class="checklist">
+      <li>Skillを3つ以上作って、日常業務に組み込む</li>
+      <li>サブエージェント（agents/）を1体作って、Skillから呼び出してみる</li>
+      <li>knowledge/ にN1定義やブランドガイドを追加する</li>
+      <li>rules/ にセキュリティルールを追加する</li>
+      <li>Nice Diveログを週1で振り返り、繰り返しのミスをルール化する</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ チェックポイント ═══ -->
+<div class="checkpoint">
+  <h3>🏁 最終チェックポイント</h3>
+  <ul>
+    <li>CLAUDE.md（Tier 0設計）が完成している</li>
+    <li>identity.md（AI人格）が定義されている</li>
+    <li>Skill（commands/）が1つ以上ある</li>
+    <li>エージェント組織図（commands/ + agents/）が設計されている</li>
+    <li>ルール（rules/）が1つ以上ある</li>
+    <li>Nice Diveログが1件以上記録されている</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 最終ミッション ═══ -->
+<div class="mission">
+  <h3>🏴‍☠️ 自分の船を造ろう — 最終ミッション</h3>
+  <p class="mission-desc">全10島の成果物を統合して、自分だけのAIエージェント環境を構築する。<br>
+  このミッションが完了したら、あなたは<strong>自分の船の船長</strong>です。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>Claude Codeで動く、自分の業務用AIエージェント環境一式を完成させる</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1"><strong>フォルダ構造を作る</strong> — Claude Codeで以下を実行:
+      <div class="code-block" style="margin-top:8px;">
+        以下のフォルダ構造を作成してください:<br>
+        .claude/commands/<br>
+        .claude/agents/<br>
+        .claude/knowledge/<br>
+        .claude/rules/<br>
+        .claude/logs/<br>
+        .claude/handoff/
+      </div>
+    </li>
+    <li data-step="2"><strong>CLAUDE.mdを配置</strong> — Island 06で作ったCLAUDE.mdをプロジェクトルートに置く</li>
+    <li data-step="3"><strong>identity.mdを作る</strong> — Claude Codeで以下を実行:
+      <div class="code-block" style="margin-top:8px;">
+        starter-kit/identity-template.md を読んで、<br>
+        以下の設定で identity.md を作成してください。<br>
+        <br>
+        <span class="comment"># 人格設定</span><br>
+        - 名前: [AIの名前を自由に]<br>
+        - トーン: [例: 丁寧だけど簡潔、関西弁、etc.]<br>
+        - 口癖: [例: 「了解です！」]<br>
+        - やらないこと: [例: 曖昧な返事をしない]
+      </div>
+    </li>
+    <li data-step="4"><strong>Skillを配置</strong> — Island 04で作ったSkillを <code>.claude/commands/</code> に置く</li>
+    <li data-step="5"><strong>ルールを配置</strong> — starter-kit の <a href="starter-kit/security.md" style="color:var(--accent)">security.md</a> と <a href="starter-kit/anonymize.md" style="color:var(--accent)">anonymize.md</a> を <code>.claude/rules/</code> に配置</li>
+    <li data-step="6"><strong>動作確認</strong> — Claude Codeを起動して、CLAUDE.mdが正しく読み込まれるか確認</li>
+    <li data-step="7"><strong>Nice Diveを書く</strong> — この航海全体の振り返りをNice Diveフォーマットで記録</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約45分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>自分だけのAIエージェント環境一式（CLAUDE.md + identity.md + Skill + ルール + ログ）。<br>
+    <strong>明日からこの環境でAIと一緒に仕事ができる。</strong></p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 最後に ═══ -->
+<div class="highlight" style="background: linear-gradient(135deg, rgba(129,140,248,0.1), rgba(244,114,182,0.1)); border-color: rgba(129,140,248,0.2);">
+  <div class="hl-emoji">⚓</div>
+  <div class="hl-text">Bon Voyage!</div>
+  <div class="hl-sub">
+    AIエージェントは「魔法」ではなく「設計」の産物。<br>
+    正しい設計ができれば、誰でも強力なAIパートナーを作れる。<br>
+    まずは触ってみて、壊して、直して、育てていこう。<br><br>
+    <strong>質問があればいつでも聞いてください。一緒に航海しましょう。</strong>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="ch09-marketing-ai.html">← Island 09: マーケティング × AI</a>
+  <a href="completion.html">航海完了証 →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 10 — FINAL</p>
+</div>
+
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 10;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 全島制覇！航海完了証を見よう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 全島制覇！';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>

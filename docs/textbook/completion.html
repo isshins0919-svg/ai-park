@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>航海完了証 — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .cert {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #3b1340 60%, #0f172a 100%);
+    border: 2px solid rgba(129,140,248,0.3);
+    border-radius: 24px;
+    padding: 60px 40px;
+    text-align: center;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .cert::before {
+    content: '';
+    position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(244,114,182,0.06) 0%, transparent 70%);
+    top: -200px; left: -150px;
+  }
+  .cert::after {
+    content: '';
+    position: absolute; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(56,189,248,0.04) 0%, transparent 70%);
+    bottom: -100px; right: -100px;
+  }
+  .cert-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(129,140,248,0.15));
+    border: 1px solid rgba(129,140,248,0.3);
+    padding: 8px 24px; border-radius: 20px;
+    font-size: 12px; font-weight: 700; letter-spacing: 3px;
+    color: var(--accent2); margin-bottom: 24px;
+  }
+  .cert h1 {
+    font-size: clamp(28px, 6vw, 48px); font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #818cf8, #f472b6, #fb923c);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .cert .cert-sub {
+    font-size: 16px; color: var(--muted); margin-bottom: 32px;
+    position: relative; z-index: 1;
+  }
+  .cert .cert-name {
+    font-size: 28px; font-weight: 800; color: var(--text);
+    margin-bottom: 8px; position: relative; z-index: 1;
+  }
+  .cert .cert-name input {
+    background: transparent; border: none; border-bottom: 2px solid var(--accent2);
+    color: var(--text); font-size: 28px; font-weight: 800;
+    text-align: center; width: 300px; outline: none;
+    padding: 4px 0;
+  }
+  .cert .cert-name input::placeholder { color: var(--muted); font-weight: 400; font-size: 18px; }
+  .cert .cert-date {
+    font-size: 14px; color: var(--muted); margin-top: 16px;
+    position: relative; z-index: 1;
+  }
+  .cert .cert-islands {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+    margin: 24px 0; position: relative; z-index: 1;
+  }
+  .cert .cert-islands .ci {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    background: rgba(74,222,128,0.15); color: var(--green);
+    border: 1px solid rgba(74,222,128,0.3);
+  }
+  .cert .cert-islands .ci.incomplete {
+    background: rgba(148,163,184,0.1); color: var(--muted);
+    border-color: var(--border);
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin: 32px 0;
+  }
+  @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px; text-align: center;
+  }
+  .stat-card .stat-num {
+    font-size: 36px; font-weight: 800; color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .stat-card .stat-label { font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Certificate -->
+<div class="cert">
+  <div class="cert-badge">CERTIFICATE OF COMPLETION</div>
+  <h1>航海完了証</h1>
+  <p class="cert-sub">Claude Code Textbook — 10の島を巡る航海</p>
+
+  <div class="cert-islands" id="cert-islands"></div>
+
+  <div class="cert-name">
+    <input type="text" id="cert-name-input" placeholder="名前を入力">
+  </div>
+  <p class="cert-date" id="cert-date"></p>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-num" id="stat-islands">0</div>
+    <div class="stat-label">島を制覇</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="stat-missions">0</div>
+    <div class="stat-label">ミッション完了</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="stat-skills">6+</div>
+    <div class="stat-label">成果物を作成</div>
+  </div>
+</div>
+
+<!-- What you built -->
+<div class="section">
+  <div class="section-label">YOUR ACHIEVEMENTS</div>
+  <h2>この航海で手に入れたもの</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🗂️</span> 成果物一覧</h3>
+    <p class="tagline">各島のミッションで作った成果物</p>
+
+    <table>
+      <tr><th>Island</th><th>成果物</th></tr>
+      <tr><td>01</td><td>7パーツの業務分析表</td></tr>
+      <tr><td>02</td><td>5要素テンプレートで書いた指示</td></tr>
+      <tr><td>03</td><td>MCP接続の棚卸しリスト</td></tr>
+      <tr><td>04</td><td>自分の業務用Skill（.md）</td></tr>
+      <tr><td>05</td><td>エージェント組織図</td></tr>
+      <tr><td>06</td><td>自分のCLAUDE.md</td></tr>
+      <tr><td>07</td><td>ベクトル検索の概念理解 + 活用アイデア</td></tr>
+      <tr><td>08</td><td>Nice Diveログ</td></tr>
+      <tr><td>09</td><td>N1定義書 + コンセプト3案 + キャッチコピー</td></tr>
+      <tr><td>10</td><td>AIエージェント環境一式</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Next -->
+<div class="section">
+  <div class="section-label">WHAT'S NEXT</div>
+  <h2>航海は終わらない</h2>
+
+  <div class="highlight" style="background: linear-gradient(135deg, rgba(129,140,248,0.1), rgba(244,114,182,0.1)); border-color: rgba(129,140,248,0.2);">
+    <div class="hl-emoji">⚓</div>
+    <div class="hl-text">Bon Voyage!</div>
+    <div class="hl-sub">
+      この航海はゴールではなく、スタート地点。<br>
+      AIエージェントは「使いながら育てる」もの。<br>
+      Skillを増やし、ルールを追加し、ログを溜めて、<br>
+      あなただけの強力なAIパートナーを育てていってください。<br><br>
+      <strong>困ったらいつでも聞いてください。一緒に航海しましょう。</strong>
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="ch10-capstone.html">← Island 10: キャップストーン</a>
+  <a href="index.html">航海マップに戻る →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook</p>
+  <p>Internal Training Material / 2026</p>
+</div>
+
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const TOTAL = 10;
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; }
+  }
+
+  // Render certificate islands
+  const data = load();
+  const done = Object.keys(data).filter(k => data[k]).length;
+  const container = document.getElementById('cert-islands');
+
+  for (let i = 1; i <= TOTAL; i++) {
+    const el = document.createElement('div');
+    el.className = 'ci' + (data['ch' + i] ? '' : ' incomplete');
+    el.textContent = i;
+    container.appendChild(el);
+  }
+
+  // Stats
+  document.getElementById('stat-islands').textContent = done;
+  document.getElementById('stat-missions').textContent = done;
+
+  // Date
+  const now = new Date();
+  document.getElementById('cert-date').textContent =
+    now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日 完了';
+
+  // Name persistence
+  const nameInput = document.getElementById('cert-name-input');
+  const savedName = localStorage.getItem('cc-textbook-name');
+  if (savedName) nameInput.value = savedName;
+  nameInput.addEventListener('input', function() {
+    localStorage.setItem('cc-textbook-name', this.value);
+  });
+})();
+</script>
+
+</body>
+</html>

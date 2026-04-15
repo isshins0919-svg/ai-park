@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 02: AIへの指示の技術 — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html" class="active">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Cover -->
+<div class="cover" data-island="2">
+  <div class="cover-badge">ISLAND 02 OF 10</div>
+  <h1>AIへの指示の技術</h1>
+  <p class="subtitle">「良い指示」で、AIの出力は10倍変わる</p>
+  <span class="time-badge">本編 15分 + ミッション 15分</span>
+</div>
+
+<!-- Recap -->
+<div class="recap">
+  <h3>📌 前の島の振り返り</h3>
+  <ul>
+    <li>AIエージェントは7パーツ（脳・手足・きっかけ・マニュアル・手順書・記憶・頭の容量）で構成される</li>
+    <li>今回は「マニュアル（Instructions）」の書き方を深掘りする</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 指示の5要素 ═══ -->
+<div class="section">
+  <div class="section-label">THE 5 ELEMENTS</div>
+  <h2>AIへの指示の5要素</h2>
+
+  <p>AIへの指示は「過不足なく」書くのが理想。多すぎると読まれない。少なすぎると誤解される。<br>
+  判断基準はシンプル: <strong>「これを書かなかったら、AIが間違った方向に進むか？」</strong></p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">指示の5要素テンプレート</span><br><br>
+    <span class="g">① 役割</span>: あなたは [○○の専門家] です<br>
+    <span class="a">② 目的</span>: [○○] を達成してください<br>
+    <span class="o">③ 背景</span>: この案件は [○○] の文脈で [○○] な対象向けです<br>
+    <span class="p">④ 制約</span>: [○○] はしないでください / [○○] の範囲内で<br>
+    <span class="y">⑤ 参考</span>: [○○.md] を読んでから始めてください
+  </div>
+
+  <p>この5つが揃っていれば、AIは迷わず動けます。逆に1つでも欠けると「いい感じにやっといて」と同じ結果になります。</p>
+</div>
+
+<!-- 各要素の詳細 -->
+<div class="topic-card">
+  <h3><span class="emoji">🎭</span> ① 役割 — 「誰として」考えるか</h3>
+  <p class="tagline">同じ質問でも、専門家と一般人では答えが変わる</p>
+
+  <p>AIに「あなたは広告コピーライターです」と伝えるだけで、出力の質が変わります。役割を指定すると、AIはその分野の専門知識と思考パターンを優先的に使います。</p>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">❌ 役割なし</div>
+      <p>「膝サポーターのキャッチコピーを書いて」<br><br>
+      → 汎用的で当たり障りのないコピーが出る</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ 役割あり</div>
+      <p>「あなたは<strong>シニア向け健康商品の広告コピーライター</strong>です。膝サポーターのキャッチコピーを書いて」<br><br>
+      → ターゲットの痛みに寄り添ったコピーが出る</p>
+    </div>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🎯</span> ② 目的 — 「何を達成する」か</h3>
+  <p class="tagline">アウトプットではなく、アウトカムを伝える</p>
+
+  <p>「バナーを作って」ではなく「クリック率を上げるバナーを作って」。<strong>最終的に何を達成したいか</strong>を伝えると、AIの判断基準が明確になります。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>「報告書を作って」= アウトプット（成果物）を指示。<br>「経営陣が投資判断できる報告書を作って」= アウトカム（結果）を指示。<br>後者の方が、AIは何を強調し何を省くかを判断できる。</p>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🌍</span> ③ 背景 — 「なぜこれをやる」のか</h3>
+  <p class="tagline">文脈があるから、的外れを防げる</p>
+
+  <p>同じ「メール文面を書いて」でも、謝罪メールと営業メールでは全く違います。背景を伝えることで、AIはTPOに合った出力を返せます。</p>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🍽️ レストランの例</div>
+      <p>「おすすめは？」だけだと、ウェイターは困る。<br>
+      「今日は記念日なんです。2人で、予算1万円くらいで」と言えば、ぴったりのコースを提案してくれる。<br><strong>背景 = ウェイターへの「空気読んで」の代わり。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ 実例</div>
+      <p>「この案件はシニア女性向けの膝サポーター。競合は○○で、うちの強みは医師推薦。初回半額キャンペーンで新規獲得を狙っている」<br><br>
+      これだけの背景があれば、AIは競合との差別化を意識したコピーを書ける。</p>
+    </div>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🚫</span> ④ 制約 — 「やってはいけない」こと</h3>
+  <p class="tagline">自由すぎるAIは暴走する。柵を作る</p>
+
+  <p>AIは指示されないと何でもやります。薬機法に触れるコピーも、3000文字の長文も、英語の回答も。制約は「やらない」を明確にする安全装置です。</p>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🚗 車線の例</div>
+      <p>道路に白線がなかったら？ → 全員が好き勝手に走って事故る。<br>
+      白線 = 制約。自由を少し制限することで、全体が安全に動く。<br><strong>制約は「縛り」ではなく「道しるべ」。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ よく使う制約</div>
+      <p>・薬機法に触れる表現は使わない<br>
+      ・1文は40文字以内<br>
+      ・HTMLで出力（Markdown不可）<br>
+      ・○○.md のトーンに合わせる<br>
+      ・個人情報は匿名化する</p>
+    </div>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">📚</span> ⑤ 参考 — 「これを読んでから」動く</h3>
+  <p class="tagline">ナレッジを渡せば、素人が一瞬で専門家になる</p>
+
+  <p>AIに専門知識がなくても、参考資料を渡せば学習できます。Claude Codeでは <code>.claude/knowledge/</code> や <code>.claude/clients/</code> にナレッジファイルを置いておき、指示で「これを読んで」と指定します。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>新入社員に「先輩のレポート3本読んでから書いて」と言えば、いきなり書くより格段に良いものが出る。AIも全く同じ。<strong>参考を渡す = 即席の専門教育。</strong></p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Shot設計 ═══ -->
+<div class="section">
+  <div class="section-label">SHOT DESIGN</div>
+  <h2>例を見せる技術 — 「Shot」で精度を爆上げ</h2>
+
+  <p>5要素テンプレートで「何をするか」を伝えたら、次は「どんなアウトプットが正解か」を<strong>具体例（Shot）</strong>で見せます。ポイントは<strong>「数より多様性」</strong>。</p>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🎯</span> 3つのShotで90%カバー</h3>
+  <p class="tagline">10個の似た例より、3つの多様な例</p>
+
+  <div class="story-step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h4>正常系の例（典型的なケース）</h4>
+      <p>「こういう入力が来たら、こういう出力を出す」の王道パターン。料理で言えば「完成写真」。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h4>異常系の例（NGケース）</h4>
+      <p>「こういうダメな出力は出さない」のパターン。料理で言えば「焦がした写真」。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h4>境界ケースの例（判断に迷うケース）</h4>
+      <p>「微妙な判断が求められるとき、こう判断する」のパターン。料理で言えば「ギリギリOKの焼き色」。</p>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">👨‍🍳 料理の例</div>
+      <p>レシピに「完成写真」が1枚あるだけで、文章だけのレシピより格段にわかりやすい。さらに「失敗例」と「ギリギリOK」の写真があれば、<strong>判断基準がクリアになる。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ 実例</div>
+      <p>バナー制作Skillには:<br>
+      ✅ 良い例（N1に刺さるコピー）<br>
+      ❌ NG例（機能説明だけ）<br>
+      🔶 微妙な例（方向性は合ってるけど弱い）<br><br>
+      3パターンあるから「何が良くて何がダメか」を判断できる。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 実践テクニック ═══ -->
+<div class="section">
+  <div class="section-label">PRO TIPS</div>
+  <h2>すぐ使える3つのテクニック</h2>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🔗</span> テクニック1: 「段階的に」指示する</h3>
+  <p class="tagline">一度に全部頼まず、ステップを刻む</p>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">❌ 一括指示</div>
+      <p>「競合を分析して、コンセプトを決めて、コピーを10本書いて、バナーも作って」<br><br>
+      → 全部が中途半端になる。CWも一気に埋まる</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ 段階指示</div>
+      <p>Step 1:「まず競合3社を分析して」<br>
+      Step 2:「分析結果をもとにコンセプトを3案出して」<br>
+      Step 3:「コンセプトAでコピーを10本書いて」<br><br>
+      → 各ステップで確認・修正ができる</p>
+    </div>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🪞</span> テクニック2: 「考え方を見せて」と頼む</h3>
+  <p class="tagline">答えだけでなく、思考プロセスを出力させる</p>
+
+  <p>「答えを出す前に、まず考え方を箇条書きで見せて」と追加するだけで、AIの思考が可視化されます。間違った前提で突き進むのを防げます。</p>
+
+  <div class="code-block">
+    <span class="comment"># 考え方を見せてもらう指示の例</span><br>
+    このコピーを改善してください。<br>
+    <br>
+    ただし改善案を出す前に、まず:<br>
+    1. 現状のコピーの問題点を3つ挙げて<br>
+    2. ターゲットが本当に求めていることを推測して<br>
+    3. その上で改善の方向性を提示して<br>
+    <br>
+    それから改善案を書いてください。
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🔄</span> テクニック3: 「ダメ出し」を前提にする</h3>
+  <p class="tagline">最初から完璧を求めず、キャッチボールで磨く</p>
+
+  <p>AIの一発目の出力は「叩き台」。そこからフィードバックを繰り返して磨いていくのが、最も品質が高くなるアプローチです。</p>
+
+  <div class="why-box">
+    <div class="label">ポイント</div>
+    <p>ダメ出しの質も大事。「なんか違う」ではなく<strong>「なぜ違うか」</strong>を伝える。<br>
+    ❌「もっと良くして」→ AIは何を直せばいいかわからない<br>
+    ✅「ターゲットの悩みに寄り添う表現が弱い。もっと具体的な痛みのシーンを入れて」</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>指示は5要素（役割・目的・背景・制約・参考）で書く。判断基準は「書かなかったらAIが間違うか？」</li>
+    <li>例（Shot）は「正常・異常・境界」の3パターンで多様性を確保する</li>
+    <li>一発で完璧を求めず、段階的に指示して、考え方を可視化し、フィードバックで磨く</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ ミッション ═══ -->
+<div class="mission">
+  <h3>🍕 ガレー船の初注文 — 5要素で指示を書く</h3>
+  <p class="mission-desc">5要素テンプレートを使って、実際にClaude Codeに仕事を頼むハンズオン。<br>「曖昧な指示」と「5要素入りの指示」で出力がどう変わるか体験します。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>同じタスクを「曖昧な指示」と「5要素入りの指示」の両方で試し、違いを体感する</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">Claude Codeを開く</li>
+    <li data-step="2"><strong>まず曖昧な指示</strong>で試す:
+      <div class="code-block" style="margin-top:8px;">
+        メールの文面を書いて。お客さんへのお礼メール。
+      </div>
+    </li>
+    <li data-step="3">出力を確認する。汎用的で当たり障りのない内容になっているはず</li>
+    <li data-step="4"><strong>次に5要素入りの指示</strong>で試す:
+      <div class="code-block" style="margin-top:8px;">
+        <span class="comment"># ① 役割</span><br>
+        あなたはBtoBのSaaS企業の営業担当者です。<br>
+        <br>
+        <span class="comment"># ② 目的</span><br>
+        初回商談後のお礼メールを書いてください。<br>
+        次回のデモ設定に繋げることがゴールです。<br>
+        <br>
+        <span class="comment"># ③ 背景</span><br>
+        先方は従業員50名のWeb制作会社の部長。<br>
+        現在はExcelで案件管理しており、ミスが多いのが悩み。<br>
+        商談では当社のプロジェクト管理ツールに興味を示した。<br>
+        <br>
+        <span class="comment"># ④ 制約</span><br>
+        - 300文字以内<br>
+        - 売り込み感を出さない<br>
+        - 「お時間をいただきありがとうございました」から始めない（定型すぎる）<br>
+        <br>
+        <span class="comment"># ⑤ 参考</span><br>
+        トーンは「丁寧だけど親しみやすい」。<br>
+        「御社の○○という課題に対して」のように、商談で聞いた具体的な<br>
+        悩みに触れると効果的。
+      </div>
+    </li>
+    <li data-step="5">2つの出力を並べて比較する。5要素版の方が、相手に刺さる具体的な内容になっているはず</li>
+    <li data-step="6">（余裕があれば）自分の仕事で実際に使う指示を5要素で書いてみる</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約15分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>5要素テンプレートで書いた「自分の仕事で使える指示」1つ。これがIsland 04「Skill設計」の土台になります。</p>
+  </div>
+</div>
+
+<!-- ═══ ナビ ═══ -->
+<div class="pagination">
+  <a href="ch01-agent-anatomy.html">← Island 01: AIエージェントの正体</a>
+  <a href="ch03-mcp-tools.html">Island 03: MCPツール →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 02</p>
+</div>
+
+<!-- Progress tracking -->
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 2;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>

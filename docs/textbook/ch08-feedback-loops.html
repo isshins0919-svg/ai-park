@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 08: フィードバックループ — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html" class="active">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover" data-island="8">
+  <div class="cover-badge">ISLAND 08 OF 10</div>
+  <h1>フィードバックループ<br>— AIを賢くする仕組み</h1>
+  <p class="subtitle">やりっぱなしのAIは成長しない。自動で賢くなる設計</p>
+  <span class="time-badge">本編 20分 + ミッション 25分</span>
+</div>
+
+<div class="recap">
+  <h3>📌 Island 07の振り返り</h3>
+  <ul>
+    <li>ベクトル化 = 言葉に座標を与える。意味の近さが計算できる</li>
+    <li>勝ちパターンの発見・品質ゲートに直結する技術</li>
+    <li>エンベディング v2 で画像・動画・音声も同じベクトル空間に</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ FBループとは ═══ -->
+<div class="section">
+  <div class="section-label">FEEDBACK LOOPS</div>
+  <h2>フィードバックループ = 「やる → 測る → 直す」の自動化</h2>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>テスト勉強で「問題を解く → 丸つけしない → また同じ範囲を解く」を繰り返す人はいない。<strong>丸つけ（評価）して間違いを直す（改善）から成績が上がる。</strong>AIも同じ。実行→評価→改善のサイクルがないと、何回やっても同じ品質のまま。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏋️ 筋トレの例</div>
+      <p>❌ 毎日なんとなく腕立て → 3ヶ月後も変化なし<br><br>
+      ✅ 記録つけて → 重量を少しずつ上げて → フォーム動画で確認 → 着実に成長<br><br>
+      <strong>「記録 → 分析 → 調整」のサイクルが成長を生む。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">📊 営業の例</div>
+      <p>❌ テレアポ100件 → 結果を振り返らない → 同じトークで次の100件<br><br>
+      ✅ テレアポ100件 → 「どのトークで何件取れたか」分析 → トーク改善 → 次の100件<br><br>
+      <strong>PDCAが回る営業チームは自然と数字が上がる。</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 3つのループ ═══ -->
+<div class="section">
+  <div class="section-label">THREE LOOPS</div>
+  <h2>3つのフィードバックループ</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🔧</span> ループA: スキル自動改善</h3>
+    <p class="tagline">「このSkillのどのステップが弱いか」を自動で見つけて直す</p>
+
+    <div class="diagram" style="text-align: left;">
+      <span class="g">Skillを実行</span> → <span class="a">結果の品質スコアを記録</span> → <span class="o">3回分の傾向を分析</span><br>
+      → 「Step 3で品質が落ちる傾向」を発見 → <span class="p">Step 3だけ自動修正</span>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-box">
+        <div class="ex-label real">🍰 パティシエの例</div>
+        <p>新人パティシエが毎日ケーキを焼く。師匠が毎回フィードバック。<br>
+        3回分を見ると「卵の泡立てが甘い日に硬くなる」パターンが見える。<br>
+        <strong>→ 泡立て工程だけを重点的に改善。</strong></p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-label voyage">⚓ VOYAGE号の実例</div>
+        <p><code>/park-kaizen</code> — Skill改善スキル<br>
+        各Skillの実行結果を分析 → 弱いステップを特定 → 改善提案を自動で出す。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📈</span> ループB: CRパフォーマンスフィードバック</h3>
+    <p class="tagline">「実際に売れたCR」のデータが、次のCR生成の精度を上げる</p>
+
+    <div class="diagram" style="text-align: left;">
+      <span class="g">CRを生成</span> → <span class="a">広告配信</span> → <span class="o">実績データ取得</span><br>
+      → ベクトルDBに「勝ち/負け」タグ付与 → <span class="p">次回生成時に「勝ちゾーン」を参照</span>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-box">
+        <div class="ex-label real">🎯 ダーツの例</div>
+        <p>1投目: 左上に当たった → 「右下にずらす」<br>
+        2投目: 中心付近 → 「この力加減を記憶」<br>
+        3投目: ブルズアイ<br><br>
+        <strong>毎回の結果を次に反映するから精度が上がる。</strong></p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-label voyage">⚓ VOYAGE号での設計</div>
+        <p>① DPro APIでCR実績を取得<br>
+        ② 実績 × CRのベクトルを紐付けて蓄積<br>
+        ③ 「勝ちCR」のベクトル重心を計算<br>
+        ④ 新CRは「勝ちゾーン」に近い方向で生成</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🚦</span> ループC: コンテキスト品質監視</h3>
+    <p class="tagline">「AIがパンクしそう」を自動検知して、手遅れになる前に対処</p>
+
+    <div class="diagram" style="text-align: left;">
+      <span class="g">セッション中のNG回数をカウント</span> → <span class="o">3回以上NGが続いたら警告</span><br>
+      → <span class="p">サブエージェントに委譲 or セッション分割を提案</span>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-box">
+        <div class="ex-label real">🚗 車のダッシュボードの例</div>
+        <p>ガソリンが少なくなったら警告ランプ。エンジン温度が上がりすぎたら警告。<br>
+        <strong>壊れる前に教えてくれるから、事故を防げる。</strong></p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-label voyage">⚓ 実例</div>
+        <p>プランモードで設計した後、同じセッションで実行しようとした → CW溢れ。<br>
+        <strong>これを自動検知するのがループC。</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ リフレクション ═══ -->
+<div class="section">
+  <div class="section-label">REFLECTION</div>
+  <h2>リフレクション — 「振り返って」は曖昧すぎる</h2>
+
+  <p>リフレクションは「AIに自分の出力を振り返らせて修正させる」手法。ただし<strong>曖昧な指示では機能しない。</strong></p>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">❌ NG — 曖昧なリフレクション</div>
+      <p>「品質を振り返って改善して」<br>
+      「もっと良くして」<br><br>
+      → AIは「何をどう改善すればいいか」がわからないから、表面的な変更しかしない</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ OK — 具体的なリフレクション</div>
+      <p>「各ステップの出力を比較して、以下の異常を検出して」<br><br>
+      ・トーンの急変（前ステップと感情スコアが ±30% 以上）<br>
+      ・情報の欠落（前ステップの必須項目が消えている）<br>
+      ・矛盾（前ステップの結論と逆の主張が出現）<br><br>
+      「異常があったステップ<strong>のみ</strong>再実行」</p>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">ポイント</div>
+    <p><strong>表面（アウトプット）を直すのではなく、根本（なぜそうなったか）を直す。</strong>それがリフレクションの正しい使い方。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 多層防御 ═══ -->
+<div class="section">
+  <div class="section-label">MULTI-LAYER DEFENSE</div>
+  <h2>多層防御 — 「AIが間違えても大事故にならない」設計</h2>
+
+  <p>AIは間違えます。これは前提。だから<strong>「間違えても被害が出ない仕組み」</strong>を複数の層で作る。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">多層防御の3層</span><br><br>
+    <span class="g">第1層: スクリプト検証（機械的チェック）</span><br>
+    &emsp;→ 入力値フォーマット、禁止ワードチェック等<br>
+    &emsp;→ LLMを使わない = <strong>100%確実な防波堤</strong><br><br>
+    <span class="a">第2層: AI自己チェック（リフレクション）</span><br>
+    &emsp;→ 自分の出力に矛盾・異常がないか確認<br>
+    &emsp;→ 精度は高いが100%ではない<br><br>
+    <span class="o">第3層: 人間の確認（最終ゲート）</span><br>
+    &emsp;→ 金額が大きい操作、公開する内容、不可逆な操作<br>
+    &emsp;→ 「送信ボタン」を押すのは人間<br><br>
+    <span class="y">原則: 検証はスクリプトで。判断はAIで。最終承認は人間で。</span>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏦 銀行ATMの例</div>
+      <p>第1層: カード + 暗証番号（機械的認証）<br>
+      第2層: 異常取引検知AI（パターン照合）<br>
+      第3層: 高額送金は窓口で本人確認（人間チェック）<br><br>
+      <strong>3層全部突破されないと被害が出ない。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号の多層防御</div>
+      <p>第1層: <code>rules/security.md</code> でAPIキー直書き・強制push等を禁止<br>
+      第2層: gate-quality-crew が品質ゲートでPASS/FAIL判定<br>
+      第3層: Slack投稿・メール送信は人間が最終確認</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Nice Dive ═══ -->
+<div class="section">
+  <div class="section-label">NICE DIVE</div>
+  <h2>Nice Dive — セッションの学びを蓄積する</h2>
+
+  <p>フィードバックループの中で最もシンプルで、<strong>今すぐ始められる</strong>のがNice Diveです。<br>
+  セッション終了時に「今日の学び」をログに記録するだけ。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📝</span> 4つの観点で振り返る</h3>
+    <p class="tagline">発見・ミス・改善・仮説</p>
+
+    <div class="story-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>発見</h4>
+        <p>「知らなかったこと」「視点が変わったこと」</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>ミス → 次はこうする</h4>
+        <p>「やってしまったこと」と「次回の改善策」をセットで</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>仮説</h4>
+        <p>「これが効く気がする」次に試したいこと</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Skill更新提案</h4>
+        <p>今日の学びから「このSkillを修正した方がいい」があれば即提案</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">テンプレート</div>
+    <p>starter-kit に <a href="starter-kit/nice-dive.md" style="color:var(--accent)">nice-dive.md</a> があります。ミッションで使います。</p>
+  </div>
+</div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Island 08 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🔄</div>
+    <div class="hl-text">3つの持ち帰り</div>
+    <div class="hl-sub">
+      ① 「やる→測る→直す」の自動化がフィードバックループ<br>
+      ② リフレクションは具体的に。曖昧な「もっと良くして」はNG<br>
+      ③ 多層防御（スクリプト→AI→人間）で安全に。Nice Diveで学びを蓄積
+    </div>
+  </div>
+</div>
+
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>3つのループ: A（スキル改善）B（CRパフォーマンス）C（CW監視）</li>
+    <li>リフレクションは「何を、どう評価するか」を具体的に指定する</li>
+    <li>多層防御の3層: スクリプト検証 → AI自己チェック → 人間の最終確認</li>
+    <li>Nice Diveで「発見・ミス・改善・仮説」を毎セッション記録する</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="mission">
+  <h3>🔄 Nice Diveを書いてみよう</h3>
+  <p class="mission-desc">ここまでの学びを、Nice Diveのフォーマットで実際に記録するハンズオン。<br>
+  starter-kit の <a href="starter-kit/nice-dive.md" style="color:var(--accent)">nice-dive.md</a> を参考にします。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>Island 01-08で学んだことをNice Diveフォーマットで記録する</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">Claude Codeで以下を実行:
+      <div class="code-block" style="margin-top:8px;">
+        starter-kit/nice-dive.md を読んで、<br>
+        以下の学びをNice Diveフォーマットで整理してください。<br>
+        <br>
+        <span class="comment"># 今日の学び</span><br>
+        - このテキストブックで一番印象に残ったこと<br>
+        - 「自分の業務でこう使えそう」と思ったこと<br>
+        - まだよくわからないこと・疑問<br>
+        - 明日試してみたいこと
+      </div>
+    </li>
+    <li data-step="2">出力されたNice Diveを読んで、自分の言葉で加筆する</li>
+    <li data-step="3">「これを .claude/logs/dive_2026-04.md に追記するフォーマットにして」と指示</li>
+    <li data-step="4">出力されたMarkdownをコピーして保存する（Island 10で使う）</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約25分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>Nice Diveログ1件。フィードバックループの第一歩。</p>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="ch07-embedding.html">← Island 07: ベクトル化</a>
+  <a href="ch09-marketing-ai.html">Island 09: マーケティング × AI →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 08</p>
+</div>
+
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 8;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>

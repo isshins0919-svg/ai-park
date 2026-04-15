@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 05: エージェント設計 — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html" class="active">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover" data-island="5">
+  <div class="cover-badge">ISLAND 05 OF 10</div>
+  <h1>エージェント設計<br>— 組織図を作る</h1>
+  <p class="subtitle">1体で全部やらせるな。分けるから品質が上がる</p>
+  <span class="time-badge">本編 20分 + ミッション 25分</span>
+</div>
+
+<div class="recap">
+  <h3>📌 Island 04の振り返り</h3>
+  <ul>
+    <li>考える処理はSkill、考えない処理はScript</li>
+    <li>Skillは5パーツ構成。Shot（正常・異常・境界）で精度が上がる</li>
+    <li>Skillは使いながら育てる。v1 → v3 → v5 → v7 の成長過程</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ commands/ vs agents/ ═══ -->
+<div class="section">
+  <div class="section-label">COMMANDS VS AGENTS</div>
+  <h2>2種類のエージェント — commands/ と agents/</h2>
+
+  <p>Island 04で学んだSkill（commands/）は、ユーザーが <code>/skill名</code> で起動するもの。<br>
+  もう1つ、<strong>AIが自動で起動するサブエージェント（agents/）</strong>があります。</p>
+
+  <table>
+    <tr><th></th><th>commands/（Skill）</th><th>agents/（サブエージェント）</th></tr>
+    <tr><td><strong>起動方法</strong></td><td>ユーザーが <code>/skill</code> で手動</td><td>AIが Agent tool で自動</td></tr>
+    <tr><td><strong>コンテキスト</strong></td><td>親と共有（Tier 2）</td><td><strong>独立空間（Tier 3）</strong></td></tr>
+    <tr><td><strong>向いてる用途</strong></td><td>対話型・オーケストレーター</td><td>レビュー・評価・並列タスク</td></tr>
+    <tr><td><strong>人間で例えると</strong></td><td>目の前で指示を出す部下</td><td>別室で作業する専門家</td></tr>
+  </table>
+
+  <div class="why-box">
+    <div class="label">判断基準</div>
+    <p><strong>ユーザーとの対話が必要 → commands/</strong><br>
+    <strong>独立して完結する専門タスク → agents/</strong></p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🎬 映画制作の例</div>
+      <p><strong>commands/ = 監督</strong>（俳優と直接やりとりする）<br>
+      <strong>agents/ = 各部門の専門家</strong>（照明、音声、衣装は別室で準備）<br><br>
+      監督が全部1人でやったら破綻する。専門家に任せるから高品質。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号の実例</div>
+      <p><strong>/kiji-cko</strong>（commands/）= 記事LP制作の指揮官。ユーザーと対話しながら進行<br><br>
+      → <strong>kiji-hook-crew</strong>（agents/）= フック評価を独立CWで実行<br>
+      → <strong>kiji-trust-crew</strong>（agents/）= 信頼構造を独立CWで評価<br>
+      → <strong>kiji-arc-crew</strong>（agents/）= 感情アークを独立CWで分析</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 7つの設計原則 ═══ -->
+<div class="section">
+  <div class="section-label">DESIGN PRINCIPLES</div>
+  <h2>エージェント設計の7つの原則</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📐</span> 7つのルール</h3>
+    <p class="tagline">これを守れば、エージェントは安定して動く</p>
+
+    <div class="story-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>目的・ゴール・行動指針・制約条件を必ず持たせる</h4>
+        <p>人間の組織と同じ。役割が曖昧だと暴走する。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>1エージェント1タスク</h4>
+        <p>複数タスクを持たせるとコンテキストが溢れて品質が落ちる。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>まず1体動かしてから組織を拡大</h4>
+        <p>最初から大組織を作らない。1体が安定してから次を作る。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>新エージェントは上司エージェントにレビューさせる</h4>
+        <p>人間がレビューするより、関連エージェントにレビューさせた方が品質が高い。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>自走ルールを渡す</h4>
+        <p>「3回自分で試してから聞く」等のルールで、不要な確認を減らす。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h4>制約は後入れ</h4>
+        <p>最初は自由に作らせる → 後から法規制等のチェックを入れる。最初から制約をかけると守りに入る。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <h4>データを与える（エンベディング）</h4>
+        <p>200本のデータがあれば十分な精度。データの質（勝ち/負けのラベル）が量より重要。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 分割の判断基準 ═══ -->
+<div class="section">
+  <div class="section-label">SPLITTING SIGNALS</div>
+  <h2>いつエージェントを分割するか — 3つのNG信号</h2>
+
+  <p>1体に全部やらせると品質が崩壊します。以下の信号が出たら分割のサイン。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🚨</span> 3つのNG信号</h3>
+    <p class="tagline">これが出たら、1つに詰め込みすぎ</p>
+
+    <div class="story-step">
+      <div class="step-num">!</div>
+      <div class="step-body">
+        <h4>ループ3回以上NG</h4>
+        <p>同じミスを修正しても3回繰り返す → タスクが複雑すぎるか、CWが圧迫されている</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">!</div>
+      <div class="step-body">
+        <h4>指示忘れが発生</h4>
+        <p>最初に伝えた条件が途中から無視される → CWの初期部分に注意が行き届いていない</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">!</div>
+      <div class="step-body">
+        <h4>ハルシネーションが発生</h4>
+        <p>存在しない情報を「ある」と言い始める → 脳がパンクしている明確なサイン</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏥 病院の例</div>
+      <p>1人の医師が外来・手術・入院管理・書類作成を全部やったら？<br>
+      → ミスが起きる。だから分業する。<br><br>
+      <strong>外来担当 / 手術担当 / 事務 = エージェント分割</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号の分割例</div>
+      <p><strong>記事LP制作</strong>:<br>
+      /kiji-cko が全体を指揮（commands/）<br>
+      → hook-crew / trust-crew / arc-crew / offer-crew / cta-crew が各領域を独立評価（agents/）<br><br>
+      各クルーはTier 3で動くから<strong>親のCWを消費しない</strong>。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Island 05 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🏗️</div>
+    <div class="hl-text">3つの持ち帰り</div>
+    <div class="hl-sub">
+      ① commands/（対話型）と agents/（独立型）の使い分けを覚える<br>
+      ② 7つの設計原則: 1タスク1体、自走ルール、制約は後入れ<br>
+      ③ NG信号3つ（ループ3回NG・指示忘れ・ハルシネーション）が出たら分割する
+    </div>
+  </div>
+</div>
+
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>commands/ = 対話型、agents/ = 独立型。コンテキストの管理方法が違う</li>
+    <li>1エージェント1タスクが基本。欲張らない</li>
+    <li>3つのNG信号（ループ・忘却・ハルシネーション）で分割を判断する</li>
+    <li>まず1体を安定させてから組織を拡大する</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="mission">
+  <h3>🏗️ エージェント組織図を設計しよう</h3>
+  <p class="mission-desc">自分の業務チームをAIエージェントの組織図として設計するハンズオン。<br>
+  starter-kit の <a href="starter-kit/agent-design-principles.md" style="color:var(--accent)">agent-design-principles.md</a> を参考にします。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>自分の業務に必要なエージェント組織図（オーケストレーター + サブエージェント）を設計する</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">Island 01で作った「7パーツの一覧表」を振り返る</li>
+    <li data-step="2">自分の業務タスクを「対話が必要」vs「独立で完結」に分類する</li>
+    <li data-step="3">Claude Codeで以下を実行:
+      <div class="code-block" style="margin-top:8px;">
+        starter-kit/agent-design-principles.md を読んで、<br>
+        以下の業務のエージェント組織図を設計してください。<br>
+        <br>
+        <span class="comment"># 業務内容</span><br>
+        - 部署: [あなたの部署]<br>
+        - 主要タスク: [3-5個列挙]<br>
+        - 使うツール: [Slack, Drive, etc.]<br>
+        <br>
+        <span class="comment"># 出力形式</span><br>
+        - オーケストレーター（commands/）: 何を担当？<br>
+        - サブエージェント（agents/）: 各1タスクで設計<br>
+        - 各エージェントの役割・ゴール・制約を明記
+      </div>
+    </li>
+    <li data-step="4">「7つの設計原則」に照らしてレビュー。特に「1体1タスク」を守れているか確認</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約25分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>エージェント組織図（オーケストレーター1体 + サブエージェント2-3体）。Island 10で実装します。</p>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="ch04-skill-design.html">← Island 04: Skill設計</a>
+  <a href="ch06-context-management.html">Island 06: コンテキストウィンドウ →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 05</p>
+</div>
+
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 5;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>

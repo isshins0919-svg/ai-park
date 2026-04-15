@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 03: MCPツール — AIの手足 — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html" class="active">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Cover -->
+<div class="cover" data-island="3">
+  <div class="cover-badge">ISLAND 03 OF 10</div>
+  <h1>MCPツール<br>AIの手足</h1>
+  <p class="subtitle">Slack、Google、DB に繋がる。AIの能力を10倍に拡張する</p>
+  <span class="time-badge">本編 15分 + ミッション 15分</span>
+</div>
+
+<!-- Recap -->
+<div class="recap">
+  <h3>📌 前の島の振り返り</h3>
+  <ul>
+    <li>AIへの指示は5要素（役割・目的・背景・制約・参考）で書く</li>
+    <li>例（Shot）は正常・異常・境界の3パターンで多様性を確保</li>
+    <li>今回は7パーツの中の「Tools」を深掘りする — AIに手足を与えるMCPの仕組み</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ MCPとは ═══ -->
+<div class="section">
+  <div class="section-label">WHAT IS MCP</div>
+  <h2>MCP — AIが「考えるだけ」から「実行できる」に変わる仕組み</h2>
+
+  <p>MCP（Model Context Protocol）は、AIが外部サービスを操作するための<strong>統一規格</strong>。<br>
+  Anthropicが2024年に策定したオープンプロトコルで、どのAIモデルでも同じ方法で外部ツールに繋げられます。</p>
+
+  <div class="highlight">
+    <div class="hl-emoji">🔌</div>
+    <div class="hl-text">MCPを一言で言うと</div>
+    <div class="hl-sub">
+      <strong>「AIのためのUSB」</strong><br>
+      USB以前は、プリンターもマウスもそれぞれ違う端子だった。<br>
+      USBで統一されて「何でも刺せば使える」になった。<br>
+      MCPも同じ。Slack・Google・Canva…全部同じ規格でAIに繋がる。
+    </div>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🏗️</span> MCPの3つの登場人物</h3>
+  <p class="tagline">ホスト・クライアント・サーバー — レストランで例えると分かりやすい</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">MCPの構造</span><br><br>
+    ┌─────────────┐&emsp;&emsp;&emsp;┌──────────────┐&emsp;&emsp;&emsp;┌──────────────┐<br>
+    │ <span class="a">MCP ホスト</span>&emsp;│ ←→ │ <span class="g">MCP クライアント</span>│ ←→ │ <span class="o">MCP サーバー</span>&emsp;│<br>
+    │ Claude Code │&emsp;&emsp;&emsp;│ （内蔵）&emsp;&emsp;&emsp;&emsp;│&emsp;&emsp;&emsp;│ Slack, Google │<br>
+    └─────────────┘&emsp;&emsp;&emsp;└──────────────┘&emsp;&emsp;&emsp;└──────────────┘<br>
+    <br>
+    &emsp;<span class="p">お客さん</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="p">ウェイター</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="p">厨房</span>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🍽️ レストランの例</div>
+      <p><strong>ホスト（お客さん）</strong> = Claude Code。「Slackに投稿して」とリクエストする<br><br>
+      <strong>クライアント（ウェイター）</strong> = Claude Codeに内蔵。リクエストを適切なサーバーに届ける<br><br>
+      <strong>サーバー（厨房）</strong> = Slack MCP。実際にSlack APIを叩いて投稿する</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ ポイント</div>
+      <p>ユーザーは<strong>ホストとサーバーだけ</strong>意識すればOK。<br><br>
+      クライアント（ウェイター）はClaude Codeが自動でやってくれるので、設定するのは「どのサーバー（厨房）を繋ぐか」だけ。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ MCPサーバーの種類 ═══ -->
+<div class="section">
+  <div class="section-label">SERVER TYPES</div>
+  <h2>MCPサーバーの2つの種類</h2>
+
+  <p>MCPサーバーには「ローカル」と「リモート」の2種類があります。</p>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">💻</span> ローカルサーバー（stdio方式）</h3>
+  <p class="tagline">自分のPCで動くサーバー。セットアップが必要だが自由度が高い</p>
+
+  <p>自分のPCにインストールして使うタイプ。npmやpipでパッケージを入れて、settings.jsonに設定を書きます。</p>
+
+  <div class="code-block">
+    <span class="comment">// settings.json の設定例（ファイルシステムサーバー）</span><br>
+    {<br>
+    &emsp;<span class="string">"mcpServers"</span>: {<br>
+    &emsp;&emsp;<span class="string">"filesystem"</span>: {<br>
+    &emsp;&emsp;&emsp;<span class="string">"command"</span>: <span class="string">"npx"</span>,<br>
+    &emsp;&emsp;&emsp;<span class="string">"args"</span>: [<span class="string">"@anthropic/mcp-fs"</span>, <span class="string">"/Users/me/Documents"</span>]<br>
+    &emsp;&emsp;}<br>
+    &emsp;}<br>
+    }
+  </div>
+
+  <div class="why-box">
+    <div class="label">メリット / デメリット</div>
+    <p>✅ 自由度が高い（カスタムサーバーも作れる）<br>
+    ✅ データが外部に出ない（セキュリティ◎）<br>
+    ❌ 環境構築が必要（Node.js, Python等）<br>
+    ❌ PCが起動していないと使えない</p>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">☁️</span> リモートサーバー（OAuth方式）</h3>
+  <p class="tagline">ワンクリックで繋がる。設定不要だが提供されているものだけ</p>
+
+  <p>Claude Codeの設定画面やclaude.ai上で「Connect」するだけで繋がるタイプ。Google Calendar、Slack、Canvaなど大手サービスはこちら。</p>
+
+  <div class="why-box">
+    <div class="label">メリット / デメリット</div>
+    <p>✅ 設定が超簡単（ワンクリック）<br>
+    ✅ 常時接続（PCが落ちてても動く）<br>
+    ❌ 提供されているサービスに限られる<br>
+    ❌ データが外部サーバーを経由する</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 主要MCPサーバー ═══ -->
+<div class="section">
+  <div class="section-label">POPULAR SERVERS</div>
+  <h2>よく使われるMCPサーバー</h2>
+
+  <table>
+    <tr><th>サーバー</th><th>種類</th><th>できること</th><th>使いどころ</th></tr>
+    <tr><td>Slack</td><td>リモート</td><td>メッセージ送受信、チャンネル読み取り</td><td>日報投稿、通知、チーム連携</td></tr>
+    <tr><td>Google Calendar</td><td>リモート</td><td>予定確認・作成・空き時間検索</td><td>スケジュール管理、会議調整</td></tr>
+    <tr><td>Google Drive</td><td>リモート</td><td>ドキュメント検索・読み取り</td><td>社内資料の参照、分析</td></tr>
+    <tr><td>Canva</td><td>リモート</td><td>デザイン生成・編集・エクスポート</td><td>バナー・プレゼン制作</td></tr>
+    <tr><td>GitHub</td><td>ローカル</td><td>Issue管理、PR操作、コード検索</td><td>開発タスク管理</td></tr>
+    <tr><td>Chrome</td><td>ローカル</td><td>ブラウザ操作、スクリーンショット</td><td>Web調査、テスト自動化</td></tr>
+    <tr><td>Filesystem</td><td>ローカル</td><td>ファイルの読み書き</td><td>ローカルデータ処理</td></tr>
+    <tr><td>PostgreSQL</td><td>ローカル</td><td>DB操作、クエリ実行</td><td>データ分析、レポート生成</td></tr>
+  </table>
+
+  <p style="font-size:13px; color:var(--muted);">※ MCPサーバーは日々増えています。最新の一覧は <code>claude mcp list</code> コマンドで確認できます。</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ MCP設定方法 ═══ -->
+<div class="section">
+  <div class="section-label">HOW TO SETUP</div>
+  <h2>MCPサーバーの繋ぎ方</h2>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">1️⃣</span> リモートサーバーの場合（簡単）</h3>
+
+  <div class="story-step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h4>Claude Codeのチャットで聞く</h4>
+      <p>「Google Calendarを繋ぎたい」と伝えるだけで、Claude Codeが接続ウィザードを案内してくれます。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h4>OAuthで認証する</h4>
+      <p>ブラウザが開くので、Googleアカウントでログインして権限を許可する。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h4>使い始める</h4>
+      <p>「今日の予定は？」と聞くだけで、カレンダーから予定を取得してくれる。</p>
+    </div>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">2️⃣</span> ローカルサーバーの場合</h3>
+
+  <div class="story-step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h4>CLIで追加する</h4>
+      <p><code>claude mcp add サーバー名 -- コマンド 引数</code> で設定を追加します。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h4>設定を確認する</h4>
+      <p><code>claude mcp list</code> で、現在繋がっているサーバーの一覧を確認。</p>
+    </div>
+  </div>
+  <div class="story-step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h4>Claude Codeを再起動</h4>
+      <p>設定変更後はClaude Codeを再起動すると反映されます。</p>
+    </div>
+  </div>
+
+  <div class="code-block">
+    <span class="comment"># MCPサーバーの追加コマンド例</span><br>
+    <br>
+    <span class="comment"># ファイルシステムサーバーを追加</span><br>
+    claude mcp add filesystem -- npx @anthropic/mcp-fs /Users/me/Documents<br>
+    <br>
+    <span class="comment"># 現在の設定を確認</span><br>
+    claude mcp list<br>
+    <br>
+    <span class="comment"># サーバーを削除</span><br>
+    claude mcp remove filesystem
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ MCPの安全性 ═══ -->
+<div class="section">
+  <div class="section-label">SAFETY</div>
+  <h2>MCPを使う上での注意点</h2>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🛡️</span> 権限管理 — AIに何を許可するか</h3>
+  <p class="tagline">MCPは強力だからこそ、安全装置が必要</p>
+
+  <p>MCPでSlackに接続すると、AIは本当にメッセージを送信できます。つまり<strong>間違った相手に間違ったメッセージを送る可能性がある</strong>。</p>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">❌ 危ない使い方</div>
+      <p>・全権限を無条件で許可する<br>
+      ・MCPサーバーの出所を確認しない<br>
+      ・重要な操作をAIに丸投げする<br>
+      ・APIキーをコードに直書きする</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ 安全な使い方</div>
+      <p>・操作ごとにAIに確認させる（デフォルト設定）<br>
+      ・信頼できるサーバーのみ使用する<br>
+      ・重要な操作は人間がレビューする<br>
+      ・APIキーは環境変数で管理する</p>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">Claude Codeの安全設計</div>
+    <p>Claude Codeはデフォルトで<strong>操作のたびにユーザーに確認を求めます</strong>（「Slackにメッセージを送っていいですか？」等）。慣れてきたら、信頼できる操作だけ自動承認に切り替えられます。<strong>最初はデフォルト（都度確認）のままが安全。</strong></p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>MCPは「AIのためのUSB」。外部サービスへの統一的な接続規格</li>
+    <li>ローカル（自分のPC上）とリモート（クラウド経由）の2種類がある</li>
+    <li>権限管理が重要。最初はデフォルト（都度確認）で運用し、慣れてから自動化する</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ ミッション ═══ -->
+<div class="mission">
+  <h3>🔍 港の検査 — MCP接続を棚卸しする</h3>
+  <p class="mission-desc">自分のClaude Codeに何が繋がっているか確認し、足りないものを見つけるハンズオン。<br>「今のAIに何ができて、何ができないか」を可視化する大事なステップです。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>現在のMCP設定を確認し、自分の業務に必要なサーバーを特定する</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">Claude Codeを開く</li>
+    <li data-step="2">以下のコマンドで現在の接続状況を確認する:
+      <div class="code-block" style="margin-top:8px;">
+        今繋がっているMCPサーバーを全部教えて。<br>
+        それぞれ何ができるか一覧表にして。
+      </div>
+    </li>
+    <li data-step="3">Island 01のミッションで作った「7パーツ表」を見返す。「Tools」の欄に書いた必要なツールが、実際に繋がっているか確認する</li>
+    <li data-step="4">足りないサーバーがあれば、以下のように聞く:
+      <div class="code-block" style="margin-top:8px;">
+        [サービス名] のMCPサーバーを繋ぎたい。<br>
+        設定方法を教えて。
+      </div>
+    </li>
+    <li data-step="5">（余裕があれば）1つMCPサーバーを実際に追加してみる</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約15分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>現在のMCP接続一覧 + 追加が必要なサーバーのリスト。これがIsland 05「エージェント設計」で使う材料になります。</p>
+  </div>
+</div>
+
+<!-- ═══ ナビ ═══ -->
+<div class="pagination">
+  <a href="ch02-prompt-engineering.html">← Island 02: AIへの指示の技術</a>
+  <a href="ch04-skill-design.html">Island 04: Skill設計 →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 03</p>
+</div>
+
+<!-- Progress tracking -->
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 3;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>

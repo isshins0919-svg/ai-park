@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 07: ベクトル化 — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html">06</a>
+    <a href="ch07-embedding.html" class="active">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover" data-island="7">
+  <div class="cover-badge">ISLAND 07 OF 10</div>
+  <h1>ベクトル化<br>— AIに「意味」を教える</h1>
+  <p class="subtitle">エンベディングがないと、AIはキーワードマッチしかできない</p>
+  <span class="time-badge">本編 25分 + ミッション 25分</span>
+</div>
+
+<div class="recap">
+  <h3>📌 Island 06の振り返り</h3>
+  <ul>
+    <li>CWは有限。4つの症状（嘘・忘却・ループ・精度低下）で圧迫を検知</li>
+    <li>Tier 0-3の階層管理。CLAUDE.mdは短く。重い処理はTier 3へ</li>
+    <li>プランと実行はセッションを分ける</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 問題提起 ═══ -->
+<div class="section">
+  <div class="section-label">THE PROBLEM</div>
+  <h2>AIは「言葉」をどう理解しているのか？</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🔍</span> ベクトル化なし vs あり</h3>
+    <p class="tagline">同じAIが、理解の深さだけでこれだけ変わる</p>
+
+    <div class="compare">
+      <div class="compare-ng">
+        <div class="label">ベクトル化なし</div>
+        <p>AIは言葉を<strong>「文字列」として処理</strong>する。<br><br>
+        「膝がガクガクする」と「膝が不安定」→ <strong>別の意味</strong>として扱う<br><br>
+        結果: キーワードが一致しないと見つけられない。</p>
+      </div>
+      <div class="compare-ok">
+        <div class="label">ベクトル化あり</div>
+        <p>AIは言葉を<strong>「意味の座標」として処理</strong>する。<br><br>
+        「膝がガクガクする」と「膝が不安定」→ <strong>ほぼ同義</strong>とわかる<br><br>
+        結果: 言い回しが違っても「意味が同じ」を見つけられる。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ ベクトルとは ═══ -->
+<div class="section">
+  <div class="section-label">WHAT IS A VECTOR</div>
+  <h2>ベクトル = 意味を数値に変換したもの</h2>
+
+  <p>「ベクトル化」とは、テキストを<strong>数値の配列（ベクトル）</strong>に変換すること。変換すると、テキスト同士の「意味の近さ」を数値で計算できるようになります。</p>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📍 地図の例</div>
+      <p>東京の位置 = (北緯35.6, 東経139.7)<br>
+      大阪の位置 = (北緯34.6, 東経135.5)<br>
+      ニューヨーク = (北緯40.7, 西経74.0)<br><br>
+      座標があれば「東京と大阪は近い」が<strong>計算でわかる</strong>。<br>
+      ベクトル化は<strong>言葉に座標を与える</strong>こと。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🎨 色の例</div>
+      <p>「赤」= (255, 0, 0)<br>
+      「オレンジ」= (255, 165, 0)<br>
+      「青」= (0, 0, 255)<br><br>
+      数値で表すと「赤とオレンジは近い」が<strong>計算でわかる</strong>。<br>
+      言葉のベクトルは<strong>3,072次元</strong>。微妙な意味の違いまで捉える。</p>
+    </div>
+  </div>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">ベクトルの距離 = 意味の近さ</span><br><br>
+    「膝がガクガクする」←→「膝が不安定」&emsp;= <span class="g">距離 0.15（ほぼ同義）</span><br>
+    「膝がガクガクする」←→「足が痛い」&emsp;&emsp;&emsp;= <span class="y">距離 0.45（関連あり）</span><br>
+    「膝がガクガクする」←→「天気が良い」&emsp;&emsp;= <span class="p">距離 0.92（無関係）</span><br><br>
+    <span class="o">→ この「距離」を使って「似たものを探す」のがベクトル検索</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ キーワード vs ベクトル ═══ -->
+<div class="section">
+  <div class="section-label">KEYWORD VS SEMANTIC</div>
+  <h2>従来の検索 vs ベクトル検索</h2>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📚 図書館の例</div>
+      <p><strong>従来（キーワード一致）</strong><br>
+      「犬の飼い方」で検索 → 同タイトルの本<strong>だけ</strong>ヒット<br><br>
+      <strong>ベクトル検索（意味検索）</strong><br>
+      「犬の飼い方」で検索 → 「はじめてのワンちゃん」「ペットとの暮らし」<strong>もヒット</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🗂️ 社内ファイルの例</div>
+      <p><strong>従来</strong>: 「売上報告」で検索 → ファイル名一致のみ<br><br>
+      <strong>ベクトル</strong>: 「売上報告」で検索 → 「Q3 Revenue Review」「第3四半期実績」もヒット<br>
+      <strong>言語の壁すら超える。</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 広告での活用 ═══ -->
+<div class="section">
+  <div class="section-label">IN PRACTICE</div>
+  <h2>広告クリエイティブでの活用</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📊</span> 売れてるCRの共通点を見つける</h3>
+    <p class="tagline">200本の動画をベクトル化して「勝ちパターン」を発見</p>
+
+    <div class="story-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>データを集める</h4>
+        <p>売れてる動画200本 + 売れてない動画100本を用意する</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>全部ベクトル化する</h4>
+        <p>各動画の台本・コピーを数値の配列に変換する</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>「勝ちゾーン」が見える</h4>
+        <p>ベクトル空間上で、売れてる動画が集まっている場所 = 「勝ちゾーン」</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>新しいCRを「勝ちゾーン」の近くに生成する</h4>
+        <p>勝ちパターンに近い、でもコピーではない新しいCRが生まれる</p>
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>類似度スコア</th><th>意味</th><th>アクション</th></tr>
+    <tr><td><strong>0.8以上</strong></td><td>ほぼ同じ</td><td>差別化が足りない。角度を変える</td></tr>
+    <tr><td><strong>0.7〜0.8</strong></td><td>同じカテゴリ</td><td>良い方向性。微調整で使える</td></tr>
+    <tr><td><strong>0.5〜0.7</strong></td><td>うっすら関連</td><td>新しい切り口として検討価値あり</td></tr>
+    <tr><td><strong>0.5未満</strong></td><td>無関係</td><td>方向が違う。やり直し</td></tr>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ エンベディング2 ═══ -->
+<div class="section">
+  <div class="section-label">EMBEDDING V2</div>
+  <h2>エンベディング v2 — テキストだけじゃなくなった</h2>
+
+  <p>従来はテキストだけだったベクトル化が、<strong>画像・動画・音声にも拡張</strong>されました。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">エンベディングの進化</span><br><br>
+    <span class="g">v1（従来）</span>: テキスト → ベクトル<br><br>
+    <span class="o">v2（最新）</span>: テキスト + 画像 + 動画 + 音声 → <strong>同じベクトル空間</strong><br>
+    &emsp;「おはようの文字」と「おはようと言っている動画」が<br>
+    &emsp;<strong>同じ空間上で近くにプロットされる</strong>
+  </div>
+
+  <div class="why-box">
+    <div class="label">これが何を変えるのか</div>
+    <p>今まで: テキストはテキスト同士でしか比較できなかった。<br>
+    これから: <strong>「この動画に一番合うコピーはどれ？」</strong>が計算で出せる。動画の雰囲気とコピーのトーンの「相性」を、数値で測れるようになる。</p>
+  </div>
+</div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Island 07 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🧲</div>
+    <div class="hl-text">3つの持ち帰り</div>
+    <div class="hl-sub">
+      ① ベクトル化 = 言葉に座標を与えること。意味の近さが計算できる<br>
+      ② 「勝ちパターン」の発見・品質ゲート・新CR生成に直結する技術<br>
+      ③ エンベディング v2 で画像・動画・音声も同じ空間に
+    </div>
+  </div>
+</div>
+
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>ベクトル = 意味を数値の配列に変換したもの。距離 = 意味の近さ</li>
+    <li>キーワード検索（文字列一致）→ ベクトル検索（意味一致）の進化</li>
+    <li>類似度スコアの読み方（0.8以上=ほぼ同じ、0.5未満=無関係）</li>
+    <li>v2で画像・動画・音声もベクトル空間に統合された</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="mission">
+  <h3>🧲 ベクトル検索を体験しよう</h3>
+  <p class="mission-desc">Claude Codeを使って、実際にベクトルの「意味の近さ」を体感するハンズオン。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>3つのテキストペアの「意味的な近さ」をAIに分析させ、ベクトル検索の概念を体感する</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">Claude Codeで以下を実行:
+      <div class="code-block" style="margin-top:8px;">
+        以下の3組のテキストペアについて、<br>
+        「意味的な近さ」を0.0〜1.0で推定してください。<br>
+        <br>
+        <span class="comment"># ペアA</span><br>
+        テキスト1: 「膝が痛くて階段がつらい」<br>
+        テキスト2: 「関節のこわばりで歩行に不安」<br>
+        <br>
+        <span class="comment"># ペアB</span><br>
+        テキスト1: 「膝が痛くて階段がつらい」<br>
+        テキスト2: 「今日はいい天気ですね」<br>
+        <br>
+        <span class="comment"># ペアC</span><br>
+        テキスト1: 「初回半額でお試し」<br>
+        テキスト2: 「まずはワンコインで体験」<br>
+        <br>
+        各ペアの推定スコアと理由を説明して。
+      </div>
+    </li>
+    <li data-step="2">結果を見て「キーワードは違うけど意味は近い」ケースを確認する</li>
+    <li data-step="3">自分の業務に関連するテキストペアを3組作って同じ分析を依頼する</li>
+    <li data-step="4">「この分析を自動で行い、0.7以上のものだけ採用するフローを設計して」と追加指示</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約25分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>ベクトル検索の概念理解 + 自分の業務でのベクトル活用アイデア。</p>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="ch06-context-management.html">← Island 06: コンテキストウィンドウ</a>
+  <a href="ch08-feedback-loops.html">Island 08: フィードバックループ →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 07</p>
+</div>
+
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 7;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>

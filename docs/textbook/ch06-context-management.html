@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island 06: コンテキストウィンドウ — Claude Code Textbook</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html" class="logo">CLAUDE CODE TEXTBOOK</a>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="ch01-agent-anatomy.html">01</a>
+    <a href="ch02-prompt-engineering.html">02</a>
+    <a href="ch03-mcp-tools.html">03</a>
+    <a href="ch04-skill-design.html">04</a>
+    <a href="ch05-agent-architecture.html">05</a>
+    <a href="ch06-context-management.html" class="active">06</a>
+    <a href="ch07-embedding.html">07</a>
+    <a href="ch08-feedback-loops.html">08</a>
+    <a href="ch09-marketing-ai.html">09</a>
+    <a href="ch10-capstone.html">10</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover" data-island="6">
+  <div class="cover-badge">ISLAND 06 OF 10</div>
+  <h1>コンテキストウィンドウ<br>— AIの脳の限界</h1>
+  <p class="subtitle">何を入れて、何を入れないか。この設計が全品質を決める</p>
+  <span class="time-badge">本編 20分 + ミッション 25分</span>
+</div>
+
+<div class="recap">
+  <h3>📌 Island 05の振り返り</h3>
+  <ul>
+    <li>commands/（対話型）と agents/（独立型）の使い分け</li>
+    <li>7つの設計原則: 1タスク1体、自走ルール、制約は後入れ</li>
+    <li>3つのNG信号で分割を判断する</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ CWとは ═══ -->
+<div class="section">
+  <div class="section-label">WHAT IS CW</div>
+  <h2>コンテキストウィンドウ（CW）= AIの「今の頭の中」</h2>
+
+  <p>CWは「AIが一度に処理できる情報量の上限」。人間の短期記憶（ワーキングメモリ）と同じです。<br>
+  Island 01で軽く触れた「7番目のパーツ」を、ここで深掘りします。</p>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📚 机の上の例</div>
+      <p>机の上に<strong>書類を3枚</strong>広げて作業する → 集中できる、全部見える<br>
+      机の上に<strong>書類を50枚</strong>広げて作業する → 大事な書類が埋もれる、間違った書類を見て判断する<br><br>
+      <strong>CW = 机の広さ。広げすぎると作業効率が落ちる。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🎒 通学カバンの例</div>
+      <p>全教科の教科書を毎日持っていく → 重い、使わない教科書ばかり<br>
+      時間割を見て必要な教科書だけ持っていく → 軽い、すぐ出せる<br><br>
+      <strong>「必要なものだけ持つ」がCW管理の本質。</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ CWが溢れると ═══ -->
+<div class="section">
+  <div class="section-label">WHEN CW OVERFLOWS</div>
+  <h2>CWが溢れると起きる4つの症状</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🚨</span> CW圧迫の4症状</h3>
+    <p class="tagline">これが出たら「頭がパンク」しているサイン</p>
+
+    <table>
+      <tr><th>症状</th><th>何が起きているか</th><th>人間で例えると</th></tr>
+      <tr><td><strong>① ハルシネーション</strong></td><td>答えを知らないのに、もっともらしい嘘を生成する</td><td>徹夜明けで記憶が曖昧なのに「たしかそうでした」</td></tr>
+      <tr><td><strong>② 指示忘れ</strong></td><td>最初に伝えた指示が途中から無視される</td><td>10個の頼み事をされて、後半の3個を忘れる</td></tr>
+      <tr><td><strong>③ ループ悪化</strong></td><td>同じミスを何度も繰り返す</td><td>疲れてるときにタイプミスを直しても同じ場所で間違える</td></tr>
+      <tr><td><strong>④ 精度低下</strong></td><td>全体的にアウトプットの質が落ちる</td><td>マルチタスクのしすぎで全部の仕事が雑になる</td></tr>
+    </table>
+
+    <div class="why-box">
+      <div class="label">なぜこうなるのか</div>
+      <p>CWには指示、会話履歴、読んだファイル、生成中のテキスト…が全部入る。<strong>容量が埋まるほど「優先度の低い情報」に注意が行き届かなくなる。</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Tier設計 ═══ -->
+<div class="section">
+  <div class="section-label">TIER DESIGN</div>
+  <h2>CWの4階層管理 — Tier 0 〜 3</h2>
+
+  <p>CWを効率よく使うために、情報を4つの階層（Tier）に分類します。<br>
+  これがClaude Code設計の<strong>最も重要な概念</strong>です。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">CW管理の4階層</span><br><br>
+    <span class="g">Tier 0: CLAUDE.md + rules/</span><br>
+    &emsp;→ <strong>全メッセージに必ず入る。</strong>1行でも減らしたい<br>
+    &emsp;→ 例: セキュリティルール、個人情報保護ルール<br><br>
+    <span class="a">Tier 1: Read（knowledge/ 等）</span><br>
+    &emsp;→ 読んだらセッション中ずっと残る。<strong>必要な時だけ読む</strong><br>
+    &emsp;→ 例: マーケ哲学、フックDB、クライアント情報<br><br>
+    <span class="o">Tier 2: commands/（Skills）</span><br>
+    &emsp;→ /skill で起動すると親に読み込まれる。<strong>重いスキルは注意</strong><br>
+    &emsp;→ 例: /banner-park, /kiji-cko<br><br>
+    <span class="p">Tier 3: agents/（サブエージェント）</span><br>
+    &emsp;→ <strong>独立空間で動く。親のCWを消費しない</strong><br>
+    &emsp;→ 例: kiji-hook-crew, movie-arc-crew<br><br>
+    <span class="y">💡 重い処理はTier 3に任せる = 親のCWを守る</span>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏢 オフィスの例</div>
+      <p><strong>Tier 0</strong> = 会社の全社ルール（全員が常に従う）<br>
+      <strong>Tier 1</strong> = 部署の資料棚（必要な時だけ取り出す）<br>
+      <strong>Tier 2</strong> = 会議に持ち込む資料（持ち込みすぎると机が溢れる）<br>
+      <strong>Tier 3</strong> = 別室で作業する専門チーム（本部の会議室を使わない）</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🎒 遠足の例</div>
+      <p><strong>Tier 0</strong> = お弁当・水筒（絶対持っていく）<br>
+      <strong>Tier 1</strong> = 地図・しおり（目的地で見る）<br>
+      <strong>Tier 2</strong> = おやつ（持っていくけど重い）<br>
+      <strong>Tier 3</strong> = 大型荷物はバスのトランクに（自分のリュックに入れない）</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ CLAUDE.md設計 ═══ -->
+<div class="section">
+  <div class="section-label">CLAUDE.MD</div>
+  <h2>CLAUDE.md — AIの設計図（Tier 0）</h2>
+
+  <p>CLAUDE.mdはClaude Codeが<strong>毎回最初に読む</strong>ファイルです。AIの行動規範・判断基準・ファイル構造を定義します。<br>
+  Tier 0なので、<strong>短くすることが最重要</strong>。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📄</span> CLAUDE.mdの構成要素</h3>
+    <p class="tagline">4つのセクションで必要十分</p>
+
+    <div class="story-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>起動アクション</h4>
+        <p>起動時に実行すること（identity.md読み込み、時刻取得、git pullなど）</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>コンテキストコスト設計</h4>
+        <p>Tier 0-3の定義と、agents/ vs commands/ の判断基準</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>ファイル構造</h4>
+        <p>commands/ / agents/ / knowledge/ / rules/ の役割と配置</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>技術設定</h4>
+        <p>出力先ディレクトリ、環境変数（値は書かない！）、同期コマンド</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">テンプレート</div>
+    <p>starter-kit に <a href="starter-kit/CLAUDE-template.md" style="color:var(--accent)">CLAUDE-template.md</a> があります。ミッションで使います。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ プランモード ═══ -->
+<div class="section">
+  <div class="section-label">PLAN MODE</div>
+  <h2>なぜ「プランモードで考え、次のセッションで実行する」のか</h2>
+
+  <p>これもCWの話です。プランニングと実行を同じセッションでやると、CWが溢れます。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">CWの消費イメージ</span><br><br>
+    <span class="g">【プランニング】</span> 要件整理、設計、シミュレーション → CWの60%を消費<br><br>
+    <span class="o">【実行】</span> コード書き、ファイル作成、テスト → CWの50%が必要<br><br>
+    <span class="p">【両方同じセッション】</span> 60% + 50% = 110% → <strong>CWオーバーフロー</strong><br><br>
+    <span class="y">【分離する】</span><br>
+    &emsp;セッション1: プラン（60%使用）→ ハンドオフ<br>
+    &emsp;セッション2: 実行（50%使用）→ フレッシュなCWで高品質
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏗️ 建築の例</div>
+      <p>設計士が設計図を描きながら同時にレンガを積む人はいない。<br>
+      <strong>設計は設計、施工は施工。</strong>分けるから両方の品質が高い。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">📝 試験勉強の例</div>
+      <p>勉強計画を立てる日と、実際に勉強する日を分けた方が効率がいい。<br>
+      <strong>ハンドオフ = 勉強計画をノートに書いて、翌日の自分に渡す。</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Island 06 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🧠</div>
+    <div class="hl-text">3つの持ち帰り</div>
+    <div class="hl-sub">
+      ① CWは有限。詰め込みすぎるとAIは壊れる（嘘、忘却、精度低下）<br>
+      ② 情報をTier 0〜3に分類して、必要なものだけCWに入れる<br>
+      ③ CLAUDE.mdはTier 0。短く。プランと実行はセッションを分ける
+    </div>
+  </div>
+</div>
+
+<div class="checkpoint">
+  <h3>🏁 チェックポイント — この島で覚えること</h3>
+  <ul>
+    <li>CW圧迫の4症状: ハルシネーション・指示忘れ・ループ・精度低下</li>
+    <li>Tier 0-3の階層管理。重い処理はTier 3（agents/）に任せる</li>
+    <li>CLAUDE.mdは毎回読まれるTier 0。1行でも削る</li>
+    <li>プランと実行はセッションを分ける。ハンドオフで引き継ぐ</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="mission">
+  <h3>🧠 自分のCLAUDE.mdを書こう</h3>
+  <p class="mission-desc">starter-kit の <a href="starter-kit/CLAUDE-template.md" style="color:var(--accent)">CLAUDE-template.md</a> をベースに、自分の業務用CLAUDE.mdを設計するハンズオン。</p>
+
+  <div class="mission-goal">
+    <div class="goal-label">ゴール</div>
+    <p>自分の業務向けCLAUDE.md（Tier 0設計）を完成させる</p>
+  </div>
+
+  <ol class="mission-steps">
+    <li data-step="1">starter-kit/CLAUDE-template.md をClaude Codeに読ませる</li>
+    <li data-step="2">以下の情報を入力:
+      <div class="code-block" style="margin-top:8px;">
+        CLAUDE-template.md を読んで、以下の情報で<br>
+        私用のCLAUDE.mdを作成してください。<br>
+        <br>
+        <span class="comment"># 私の設定</span><br>
+        - 起動時にやりたいこと: [例: 時刻表示、git pull]<br>
+        - 終了時にやりたいこと: [例: git push、ログ保存]<br>
+        - よく使うナレッジ: [例: 顧客リスト、ブランドガイド]<br>
+        - ルール: [例: 個人情報保護、承認フロー]<br>
+        - 出力先: [例: reports/ フォルダ]<br>
+        <br>
+        <span class="comment"># 注意</span><br>
+        Tier 0なので、できるだけ短くしてください。<br>
+        200行以内が理想です。
+      </div>
+    </li>
+    <li data-step="3">出力されたCLAUDE.mdを読んで、不要な行を削る（短さが正義）</li>
+    <li data-step="4">Island 04-05で設計したSkillとエージェント組織図をファイル構造セクションに反映する</li>
+  </ol>
+
+  <span class="mission-time">所要時間: 約25分</span>
+
+  <div class="mission-output">
+    <div class="output-label">成果物</div>
+    <p>自分の業務用CLAUDE.md。Island 10で最終仕上げをしてデプロイします。</p>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="ch05-agent-architecture.html">← Island 05: エージェント設計</a>
+  <a href="ch07-embedding.html">Island 07: ベクトル化 →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — Claude Code Textbook / Island 06</p>
+</div>
+
+<script>
+(function() {
+  const KEY = 'cc-textbook-progress';
+  const CH = 6;
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { return {}; } }
+  function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+  const mission = document.querySelector('.mission');
+  if (mission) {
+    const btn = document.createElement('button');
+    btn.textContent = '✅ この島を完了にする';
+    btn.style.cssText = 'margin-top:16px;padding:10px 24px;border:2px solid var(--green);background:rgba(74,222,128,0.1);color:var(--green);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;transition:0.15s;';
+    btn.onmouseover = function() { btn.style.background = 'rgba(74,222,128,0.2)'; };
+    btn.onmouseout = function() { btn.style.background = 'rgba(74,222,128,0.1)'; };
+    btn.onclick = function() {
+      const d = load(); d['ch' + CH] = true; save(d);
+      btn.textContent = '🏁 完了！次の島へ進もう';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    };
+    if (load()['ch' + CH]) {
+      btn.textContent = '🏁 完了済み';
+      btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)';
+    }
+    mission.appendChild(btn);
+  }
+})();
+</script>
+
+</body>
+</html>
