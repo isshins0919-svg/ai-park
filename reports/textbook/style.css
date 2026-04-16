@@ -433,6 +433,36 @@ details .detail-body { padding: 0 18px 18px; font-size: 14px; color: var(--muted
 }
 
 /* ═══════════════════════════════════════════════════════════
+   Glossary — 航海用語集
+   ═══════════════════════════════════════════════════════════ */
+.glossary {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #93c5fd; border-radius: 20px;
+  padding: 28px; margin: 32px 0;
+}
+.glossary h3 {
+  font-size: 16px; font-weight: 800; color: var(--ocean);
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+.glossary-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+@media (max-width: 640px) { .glossary-grid { grid-template-columns: 1fr; } }
+.glossary-item {
+  background: #fff; border: 1px solid #bfdbfe; border-radius: 10px;
+  padding: 12px 14px;
+}
+.glossary-item .term {
+  font-size: 14px; font-weight: 700; color: var(--ocean-deep);
+  margin-bottom: 2px;
+}
+.glossary-item .term ruby { font-weight: 700; }
+.glossary-item .term rt { font-size: 9px; color: var(--muted); font-weight: 400; }
+.glossary-item .def {
+  font-size: 12px; color: var(--muted); line-height: 1.6; margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
    Code Block
    ═══════════════════════════════════════════════════════════ */
 .code-block {

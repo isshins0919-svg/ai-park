@@ -229,6 +229,36 @@
   </ul>
 </div>
 
+<div class="glossary">
+  <h3>📖 この島の航海用語</h3>
+  <div class="glossary-grid">
+    <div class="glossary-item">
+      <div class="term">agents/</div>
+      <p class="def">サブエージェントの定義ファイルを置くフォルダ。独立コンテキストで動く。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">オーケストレーター</div>
+      <p class="def">全体を指揮するメインのSkill（commands/に置く）。ユーザーと対話する。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">サブエージェント</div>
+      <p class="def">専門タスクを独立で実行するAI。agents/に置く。親のCWを消費しない。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">Tier 2</div>
+      <p class="def">commands/の情報コスト。親のコンテキストに読み込まれる。重いスキルは注意。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">Tier 3</div>
+      <p class="def">agents/の情報コスト。独立空間で動くため、親のCWに影響なし。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">NG信号</div>
+      <p class="def">エージェント分割が必要なサイン。ループ3回NG・指示忘れ・ハルシネーションの3つ。</p>
+    </div>
+  </div>
+</div>
+
 <div class="divider"></div>
 
 <div class="mission">
