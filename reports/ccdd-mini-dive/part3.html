@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 3: コンテキストウィンドウ — CCDD ミニダイブ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <span class="logo">CCDD MINI DIVE</span>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="part1.html">01</a>
+    <a href="part2.html">02</a>
+    <a href="part3.html" class="active">03</a>
+    <a href="part4.html">04</a>
+    <a href="part5.html">05</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover">
+  <div class="cover-badge">PART 3 OF 5</div>
+  <h1>コンテキストウィンドウ<br>— AIの脳の限界</h1>
+  <p class="subtitle">何を入れて、何を入れないか。この設計が全品質を決める</p>
+  <p class="part-num">所要時間: 約10分</p>
+</div>
+
+<div class="highlight">
+  <div class="hl-emoji">📌</div>
+  <div class="hl-text">Part 2の振り返り</div>
+  <div class="hl-sub">指示は5要素で書く。考える必要がない処理はスクリプトに。Skillは使いながら育てる。<br>今回は「なぜAIが嘘をつくのか」「なぜ指示を忘れるのか」の根本原因に迫る。</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ CWとは ═══ -->
+<div class="section">
+  <div class="section-label">WHAT IS CW</div>
+  <h2>コンテキストウィンドウ（CW）= AIの「今の頭の中」</h2>
+
+  <p>CWは「AIが一度に処理できる情報量の上限」。人間の短期記憶（ワーキングメモリ）と同じです。<br>
+  前回の勉強会で森田さんが「コンテキストウィンドウがいっぱいになっちゃう」と言っていたのがこれ。</p>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📚 机の上の例</div>
+      <p>仕事の机を想像してください。<br><br>
+      机の上に<strong>書類を3枚</strong>広げて作業する → 集中できる、全部見える<br>
+      机の上に<strong>書類を50枚</strong>広げて作業する → 探すのに時間がかかる、大事な書類が埋もれる、間違った書類を見て判断する<br><br>
+      <strong>CW = 机の広さ。広げすぎると作業効率が落ちる。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🎒 通学カバンの例</div>
+      <p>全教科の教科書を毎日持っていく → 重い、使わない教科書ばかり<br>
+      時間割を見て必要な教科書だけ持っていく → 軽い、すぐ出せる<br><br>
+      <strong>「必要なものだけ持つ」がCW管理の本質。</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CWが溢れるとどうなるか ═══ -->
+<div class="section">
+  <div class="section-label">WHEN CW OVERFLOWS</div>
+  <h2>CWが溢れると起きる4つの症状</h2>
+
+  <p>前回の勉強会で森田さんが「ハルシネーション」と言っていたのは、CWが圧迫されたときの症状の一つです。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🚨</span> CW圧迫の4症状</h3>
+    <p class="tagline">これが出たら「頭がパンク」しているサイン</p>
+
+    <table>
+      <tr><th>症状</th><th>何が起きているか</th><th>人間で例えると</th></tr>
+      <tr><td><strong>① ハルシネーション</strong><br>（嘘をつく）</td><td>答えを知らないのに、もっともらしい嘘を生成する</td><td>徹夜明けで記憶が曖昧なのに「たしかそうでした」と答えてしまう</td></tr>
+      <tr><td><strong>② 指示忘れ</strong></td><td>最初に伝えた指示が、途中から無視される</td><td>10個の頼み事をされて、後半の3個を忘れる</td></tr>
+      <tr><td><strong>③ ループ悪化</strong></td><td>同じミスを何度も繰り返す。修正しても元に戻る</td><td>疲れてるときにタイプミスを直しても、また同じ場所で間違える</td></tr>
+      <tr><td><strong>④ 精度低下</strong></td><td>全体的にアウトプットの質が落ちる</td><td>マルチタスクのしすぎで全部の仕事が雑になる</td></tr>
+    </table>
+
+    <div class="why-box">
+      <div class="label">なぜこうなるのか</div>
+      <p>CWは「今、頭の中に入っている全情報」。ここに指示、会話履歴、読んだファイル、生成中のテキスト…が全部入る。<strong>容量が埋まるほど「古い情報」や「優先度の低い情報」が実質的に見えなくなる。</strong>消えるわけではないが、AIの注意が行き届かなくなる。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ Tier設計 ═══ -->
+<div class="section">
+  <div class="section-label">TIER DESIGN</div>
+  <h2>CWの4階層管理 — VOYAGE号の設計</h2>
+
+  <p>CWを効率よく使うために、VOYAGE号では情報を4つの階層（Tier）に分類しています。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">CW管理の4階層</span><br><br>
+    <span class="g">Tier 0: CLAUDE.md + rules/</span><br>
+    &emsp;→ <strong>全メッセージに必ず入る。</strong>1行でも減らしたい<br>
+    &emsp;→ 例: セキュリティルール、個人情報保護ルール<br><br>
+    <span class="a">Tier 1: Read（knowledge/ 等）</span><br>
+    &emsp;→ 読んだらセッション中ずっと残る。<strong>必要な時だけ読む</strong><br>
+    &emsp;→ 例: マーケ哲学、フックDB、クライアント情報<br><br>
+    <span class="o">Tier 2: commands/（Skills）</span><br>
+    &emsp;→ /skill で起動すると親に読み込まれる。<strong>重いスキルは注意</strong><br>
+    &emsp;→ 例: /banner-park, /kiji-cko<br><br>
+    <span class="p">Tier 3: agents/（サブエージェント）</span><br>
+    &emsp;→ <strong>独立空間で動く。親のCWを消費しない</strong><br>
+    &emsp;→ 例: kiji-hook-crew, movie-arc-crew<br><br>
+    <span class="y">💡 重い処理はTier 3（エージェント）に任せる = 親のCWを守る</span>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏢 オフィスの例</div>
+      <p><strong>Tier 0</strong> = 会社の全社ルール（全員が常に従う）<br>
+      <strong>Tier 1</strong> = 部署の資料棚（必要な時だけ取り出す）<br>
+      <strong>Tier 2</strong> = 会議に持ち込む資料（持ち込みすぎると机が溢れる）<br>
+      <strong>Tier 3</strong> = 別室で作業する専門チーム（本部の会議室を使わない）</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🎒 遠足の例</div>
+      <p><strong>Tier 0</strong> = お弁当・水筒（絶対持っていく）<br>
+      <strong>Tier 1</strong> = 地図・しおり（目的地で見る）<br>
+      <strong>Tier 2</strong> = おやつ（持っていくけど重い）<br>
+      <strong>Tier 3</strong> = 大型荷物はバスのトランクに（自分のリュックに入れない）</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ エージェント分割 ═══ -->
+<div class="section">
+  <div class="section-label">AGENT SPLITTING</div>
+  <h2>エージェント分割 — いつ分けるか</h2>
+
+  <p>前回の勉強会で森田さんが「1体に全部やらせると制御できなくなる」と言っていたのは、CWの限界が原因です。<br>
+  <strong>解決策は「分ける」こと。</strong>専門タスクごとにエージェントを分割すれば、それぞれのCWが守られます。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">✂️</span> 分割の判断基準 — 3つのNG信号</h3>
+    <p class="tagline">これが出たら、1つのセッションに詰め込みすぎ</p>
+
+    <div class="story-step">
+      <div class="step-num">!</div>
+      <div class="step-body">
+        <h4>ループ3回以上NG</h4>
+        <p>同じミスを修正しても3回繰り返す → タスクが複雑すぎるか、CWが圧迫されている</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">!</div>
+      <div class="step-body">
+        <h4>指示忘れが発生</h4>
+        <p>最初に伝えた条件が途中から無視される → CWの初期部分の情報に注意が行き届いていない</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">!</div>
+      <div class="step-body">
+        <h4>ハルシネーションが発生</h4>
+        <p>存在しない情報を「ある」と言い始める → 脳がパンクしている明確なサイン</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🎬 映画制作の例</div>
+      <p>監督1人が脚本・撮影・照明・音声・編集を全部やったら？<br>
+      → 撮影中に脚本の直しが入って、照明の指示を忘れる<br><br>
+      <strong>各部門にプロを置く = エージェント分割</strong><br>
+      監督（= オーケストレーター）は全体の指揮だけに集中。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号の分割例</div>
+      <p><strong>記事LP制作の場合:</strong><br>
+      /kiji-cko（オーケストレーター）が指揮<br>
+      → kiji-hook-crew（フック評価）<br>
+      → kiji-trust-crew（信頼構造評価）<br>
+      → kiji-arc-crew（感情アーク評価）<br>
+      → kiji-offer-crew（オファー評価）<br><br>
+      各クルーは独立CW（Tier 3）で動くから、<strong>親のCWを使わない</strong>。結果だけ返す。</p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>設計パターン</th><th>役割</th><th>CWへの影響</th></tr>
+    <tr><td>commands/<br><span class="tag b">オーケストレーター</span></td><td>ユーザーと対話。全体の指揮を取る</td><td>親のCWを使う（Tier 2）</td></tr>
+    <tr><td>agents/<br><span class="tag i">サブエージェント</span></td><td>専門タスクを独立で実行</td><td>独立CW（Tier 3）。親に影響なし</td></tr>
+  </table>
+
+  <div class="why-box">
+    <div class="label">前回の勉強会との接続</div>
+    <p>森田さんの「CEO → CMO → サブエージェント」構造がまさにこれ。CEOは全体の方向性だけ考え、CMOはクリエイティブ戦略だけ考え、各サブエージェントは自分の専門だけに集中する。<strong>それぞれのCWに余裕があるから、品質が高い。</strong></p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ プランモードの理由 ═══ -->
+<div class="section">
+  <div class="section-label">PLAN MODE</div>
+  <h2>なぜ「プランモードで考え、次のセッションで実行する」のか</h2>
+
+  <p>前回の勉強会で森田さんが強調していた「プランを立てたセッションで実行はしない」。<br>
+  これもCWの話です。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">CWの消費イメージ</span><br><br>
+    <span class="g">【プランニング】</span><br>
+    &emsp;要件整理、設計、シミュレーション… → CWの60%を消費<br><br>
+    <span class="o">【実行】</span><br>
+    &emsp;コード書き、ファイル作成、テスト… → CWの50%が必要<br><br>
+    <span class="p">【両方同じセッション】</span><br>
+    &emsp;60% + 50% = 110% → <strong>CWオーバーフロー → ハルシネーション発生</strong><br><br>
+    <span class="y">【分離する】</span><br>
+    &emsp;セッション1: プラン（60%使用）→ ハンドオフ<br>
+    &emsp;セッション2: 実行（50%使用）→ フレッシュなCWで高品質
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏗️ 建築の例</div>
+      <p>設計士が設計図を描きながら同時にレンガを積む人はいない。<br><br>
+      <strong>設計は設計、施工は施工。</strong>分けるから両方の品質が高い。<br>
+      AIのプランモードと実行モードも同じ理屈。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">📝 試験勉強の例</div>
+      <p>勉強計画を立てる日と、実際に勉強する日を分けた方が効率がいい。<br><br>
+      計画を立てながら勉強すると、どちらも中途半端になる。<br>
+      <strong>ハンドオフ = 勉強計画をノートに書いて、翌日の自分に渡す。</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Part 3 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🧠</div>
+    <div class="hl-text">3つの持ち帰り</div>
+    <div class="hl-sub">
+      ① CWは有限。詰め込みすぎるとAIは壊れる（嘘、忘却、精度低下）<br>
+      ② 情報をTier 0〜3に分類して、必要なものだけCWに入れる<br>
+      ③ 重い処理はサブエージェント（Tier 3）に任せ、プランと実行はセッションを分ける
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="part2.html">← Part 2: AIへの指示の技術</a>
+  <a href="part4.html">Part 4: ベクトル化 →</a>
+</div>
+
+</div>
+<div class="footer"><p>一進VOYAGE号 — CCDD ミニダイブ Part 3 / 5</p></div>
+</body>
+</html>

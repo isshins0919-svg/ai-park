@@ -1,0 +1,2575 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru LP ビジュアルディレクション — 撮影・デザイン指示書</title>
+<style>
+  :root {
+    --ameru-blue: #29B6E8;
+    --ameru-blue-light: #A8DEFF;
+    --ameru-blue-pale: #EBF8FF;
+    --ameru-pink: #FF6EB4;
+    --ameru-pink-pale: #FFF0F8;
+    --ameru-white: #FFFFFF;
+    --ameru-cream: #FAFAF7;
+    --dark: #0F1923;
+    --mid-dark: #1E2D3D;
+    --text-dark: #1A2535;
+    --text-mid: #4A5568;
+    --text-light: #8A9BAE;
+    --border: #E2EDF5;
+    --woobles-ref: #FF6B9D;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background: #F5F9FC;
+    color: var(--text-dark);
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .doc-header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid-dark) 100%);
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 15% 60%, rgba(41,182,232,0.15) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 40%, rgba(255,110,180,0.12) 0%, transparent 55%);
+  }
+  .doc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(41,182,232,0.15);
+    border: 1px solid rgba(41,182,232,0.35);
+    color: var(--ameru-blue);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    text-transform: uppercase;
+  }
+  .doc-header h1 {
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .doc-header h1 span { color: var(--ameru-blue); }
+  .doc-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .doc-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .doc-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+  .doc-meta-item strong { color: rgba(255,255,255,0.75); }
+
+  /* ── NAV ── */
+  .toc {
+    background: var(--dark);
+    padding: 0 48px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .toc a {
+    display: block;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 14px 18px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .toc a:hover { color: var(--ameru-blue); border-bottom-color: var(--ameru-blue); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+  .section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .section-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--ameru-blue);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .section-label-text {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--ameru-blue);
+    text-transform: uppercase;
+  }
+  h2 {
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .section-desc { font-size: 14px; color: var(--text-light); margin-bottom: 40px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  @media(max-width:768px) { .grid-2,.grid-3 { grid-template-columns: 1fr; } }
+
+  /* ── LP MOCKUP SECTIONS ── */
+  .lp-mockup {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+  }
+  .lp-section-label {
+    background: var(--dark);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .lp-section-label span {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+  }
+  .lp-section-label .lp-sec-name {
+    color: var(--ameru-blue);
+  }
+
+  /* FV MOCKUP */
+  .fv-mockup {
+    background: linear-gradient(160deg, var(--ameru-blue) 0%, #1A96CC 60%, #0F7AB8 100%);
+    min-height: 520px;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .fv-mockup::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 10% 80%, rgba(255,255,255,0.05) 0%, transparent 40%);
+  }
+  .fv-hearts {
+    position: absolute;
+    font-size: 14px;
+    opacity: 0.2;
+    color: #fff;
+  }
+  .fv-left { position: relative; z-index: 1; }
+  .fv-loveis-badge {
+    display: inline-block;
+    background: var(--ameru-pink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .fv-headline {
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .fv-headline .accent { color: var(--ameru-blue-light); }
+  .fv-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .fv-cta {
+    display: inline-block;
+    background: #fff;
+    color: var(--ameru-blue);
+    font-size: 14px;
+    font-weight: 900;
+    padding: 14px 28px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    margin-bottom: 8px;
+  }
+  .fv-price-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+  }
+  .fv-right {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .fv-pkg-container {
+    position: relative;
+    width: 240px;
+  }
+  .fv-pkg-container img {
+    width: 100%;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+  }
+  .fv-float-badge {
+    position: absolute;
+    background: #fff;
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--ameru-blue);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    white-space: nowrap;
+  }
+  .fv-float-1 { top: 10%; right: -20px; }
+  .fv-float-2 { bottom: 15%; left: -20px; }
+
+  /* NOTE BOX */
+  .note-box {
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .note-box.blue { background: var(--ameru-blue-pale); border-left: 3px solid var(--ameru-blue); }
+  .note-box.pink { background: var(--ameru-pink-pale); border-left: 3px solid var(--ameru-pink); }
+  .note-box.dark { background: #F0F4F8; border-left: 3px solid #64748B; }
+  .note-icon { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+  .note-title { font-size: 12px; font-weight: 800; margin-bottom: 3px; }
+  .note-box.blue .note-title { color: var(--ameru-blue); }
+  .note-box.pink .note-title { color: var(--ameru-pink); }
+  .note-box.dark .note-title { color: #475569; }
+  .note-text { font-size: 12px; color: var(--text-mid); line-height: 1.6; }
+
+  /* SECTION MOCKUP (generic) */
+  .sec-mockup {
+    background: #fff;
+    padding: 40px 48px;
+  }
+  .sec-mockup.cream { background: var(--ameru-cream); }
+  .sec-mockup.blue-pale { background: var(--ameru-blue-pale); }
+  .sec-mockup.dark { background: var(--dark); }
+  .sec-mockup.blue { background: linear-gradient(135deg, var(--ameru-blue), #1A8AC0); }
+
+  /* PHOTO DIRECTION */
+  .photo-dir {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px dashed var(--border);
+    margin-bottom: 12px;
+  }
+  .photo-dir-header {
+    background: var(--dark);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .photo-dir-header span {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .photo-dir-tag {
+    background: var(--ameru-blue);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+  .photo-dir-label { color: rgba(255,255,255,0.5); }
+  .photo-dir-body {
+    padding: 16px 20px;
+    background: #FAFCFF;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .pd-item-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .pd-item-value { font-size: 12px; color: var(--text-mid); line-height: 1.6; }
+
+  /* IMAGE PROMPT */
+  .img-prompt {
+    background: #0D1117;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .img-prompt-header {
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .img-prompt-type {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .type-photo { background: rgba(41,182,232,0.2); color: var(--ameru-blue); }
+  .type-ai { background: rgba(255,110,180,0.2); color: var(--ameru-pink); }
+  .type-video { background: rgba(167,139,250,0.2); color: #A78BFA; }
+  .img-prompt-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); }
+  .img-prompt-body {
+    padding: 14px 16px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.9;
+    white-space: pre-wrap;
+  }
+  .pk { color: #79C0FF; }
+  .pv { color: #A5F3BF; }
+  .pc { color: rgba(255,255,255,0.25); font-style: italic; }
+
+  /* PLACEHOLDER IMAGE */
+  .ph-img {
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+  .ph-img-icon { font-size: 28px; opacity: 0.5; }
+
+  /* COPY PLACEHOLDER */
+  .copy-ph {
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    height: 14px;
+    margin-bottom: 6px;
+  }
+  .copy-ph.short { width: 60%; }
+  .copy-ph.medium { width: 80%; }
+  .copy-ph.long { width: 100%; }
+
+  /* STEP */
+  .step-flow {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+  }
+  .step-item {
+    text-align: center;
+    padding: 24px 16px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .step-num-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ameru-blue);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .step-title { font-size: 14px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
+  .step-desc { font-size: 12px; color: var(--text-light); }
+
+  /* COLOR SWATCH SMALL */
+  .swatch-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .sw {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-mid);
+  }
+  .sw-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  /* WOOBLES REF TAG */
+  .woobles-ref-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FFF0F8;
+    border: 1px solid #FFCCE8;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--woobles-ref);
+    letter-spacing: 0.05em;
+  }
+
+  /* OFFER MOCKUP */
+  .offer-box {
+    background: linear-gradient(135deg, var(--ameru-blue), #1A8AC0);
+    border-radius: 20px;
+    padding: 32px;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .offer-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.12) 0%, transparent 60%);
+  }
+  .offer-price-main {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+    position: relative;
+  }
+  .offer-price-sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 20px; position: relative; }
+  .offer-cta-btn {
+    background: #fff;
+    color: var(--ameru-blue);
+    font-size: 16px;
+    font-weight: 900;
+    padding: 16px 40px;
+    border-radius: 50px;
+    display: inline-block;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    margin-bottom: 12px;
+  }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .tag-blue { background: rgba(41,182,232,0.1); color: var(--ameru-blue); }
+  .tag-pink { background: rgba(255,110,180,0.1); color: var(--ameru-pink); }
+  .tag-dark { background: #E2EDF5; color: var(--text-mid); }
+
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* FOOTER */
+  .doc-footer {
+    background: var(--dark);
+    padding: 40px 48px;
+    text-align: center;
+  }
+  .doc-footer-brand { font-size: 12px; font-weight: 800; color: rgba(255,255,255,0.2); letter-spacing: 0.15em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- ══════ HEADER ══════ -->
+<div class="doc-header">
+  <div class="doc-badge">📐 LP Visual Direction</div>
+  <h1>ameru LP<br><span>ビジュアルディレクション</span></h1>
+  <p class="doc-sub">撮影指示書 × デザインイメージ × 画像生成プロンプト — The Woobles参照版</p>
+  <div class="doc-meta">
+    <div class="doc-meta-item">📦 <strong>商品</strong> ameru No.1 ずもっぴ（Love is...コラボ）</div>
+    <div class="doc-meta-item">🎯 <strong>N1</strong> 田中さとみ 38歳 推し活ハイブリッドワーカー</div>
+    <div class="doc-meta-item">📅 <strong>作成</strong> 2026-04-15</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="toc">
+  <a href="#color">01 カラー</a>
+  <a href="#fv">02 FV</a>
+  <a href="#pkg">03 パッケージ</a>
+  <a href="#steps">04 3ステップ</a>
+  <a href="#character">05 キャラ</a>
+  <a href="#collection">06 コレクション</a>
+  <a href="#reviews">07 口コミ</a>
+  <a href="#offer">08 オファー</a>
+  <a href="#shoot">09 撮影指示</a>
+  <a href="#prompts">10 生成プロンプト</a>
+  <a href="#ref-hero">参考A: FV</a>
+  <a href="#ref-product">参考B: 商品</a>
+  <a href="#ref-lifestyle">参考C: ライフ</a>
+  <a href="#ref-collection">参考D: コレクション</a>
+  <a href="#ref-collab">参考E: コラボ</a>
+  <a href="#ref-f">参考F: 糸質感</a>
+  <a href="#ref-g">参考G: かぎ針</a>
+  <a href="#ref-h">参考H: 動画GIF</a>
+  <a href="#ref-i">参考I: バナー8型</a>
+  <a href="#ref-j">参考J: Love is...</a>
+</nav>
+
+<!-- ══════ 01 COLOR ══════ -->
+<section id="color" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">1</div>
+      <div class="section-label-text">Color & Tone</div>
+    </div>
+    <h2>カラー・トーン設計</h2>
+    <p class="section-desc">パッケージのスカイブルー×白を軸に、Love is...のピンクをアクセントに使う</p>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:0.12em;color:var(--text-light);text-transform:uppercase;margin-bottom:16px;">ameruカラーシステム</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
+        <div>
+          <div style="width:100px;height:100px;border-radius:20px;background:#29B6E8;box-shadow:0 4px 20px rgba(41,182,232,0.35);margin-bottom:8px;"></div>
+          <div style="font-size:12px;font-weight:800;color:var(--text-dark);">ameru Blue</div>
+          <div style="font-size:11px;color:var(--text-light);font-family:monospace;">#29B6E8</div>
+          <div style="font-size:10px;color:var(--text-light);">Primary / パッケージ主色</div>
+        </div>
+        <div>
+          <div style="width:100px;height:100px;border-radius:20px;background:#FF6EB4;box-shadow:0 4px 20px rgba(255,110,180,0.25);margin-bottom:8px;"></div>
+          <div style="font-size:12px;font-weight:800;color:var(--text-dark);">Love is... Pink</div>
+          <div style="font-size:11px;color:var(--text-light);font-family:monospace;">#FF6EB4</div>
+          <div style="font-size:10px;color:var(--text-light);">Accent / IP・CTA</div>
+        </div>
+        <div>
+          <div style="width:100px;height:100px;border-radius:20px;background:#FFFFFF;border:1px solid #E2EDF5;box-shadow:0 4px 12px rgba(0,0,0,0.06);margin-bottom:8px;"></div>
+          <div style="font-size:12px;font-weight:800;color:var(--text-dark);">Pure White</div>
+          <div style="font-size:11px;color:var(--text-light);font-family:monospace;">#FFFFFF</div>
+          <div style="font-size:10px;color:var(--text-light);">Background / キャラ主色</div>
+        </div>
+        <div>
+          <div style="width:100px;height:100px;border-radius:20px;background:#EBF8FF;border:1px solid #BEE3F8;margin-bottom:8px;"></div>
+          <div style="font-size:12px;font-weight:800;color:var(--text-dark);">Sky Pale</div>
+          <div style="font-size:11px;color:var(--text-light);font-family:monospace;">#EBF8FF</div>
+          <div style="font-size:10px;color:var(--text-light);">セクション背景</div>
+        </div>
+        <div>
+          <div style="width:100px;height:100px;border-radius:20px;background:#FAFAF7;border:1px solid #E8EDE8;margin-bottom:8px;"></div>
+          <div style="font-size:12px;font-weight:800;color:var(--text-dark);">Warm Cream</div>
+          <div style="font-size:11px;color:var(--text-light);font-family:monospace;">#FAFAF7</div>
+          <div style="font-size:10px;color:var(--text-light);">テキストセクション背景</div>
+        </div>
+        <div>
+          <div style="width:100px;height:100px;border-radius:20px;background:#0F1923;margin-bottom:8px;"></div>
+          <div style="font-size:12px;font-weight:800;color:var(--text-dark);">Deep Navy</div>
+          <div style="font-size:11px;color:var(--text-light);font-family:monospace;">#0F1923</div>
+          <div style="font-size:10px;color:var(--text-light);">オファー・フッター</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--text-light);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">The Woobles との比較</div>
+          <div class="note-box pink">
+            <div class="note-icon">🔍</div>
+            <div>
+              <div class="note-title">参照元（The Woobles）</div>
+              <div class="note-text">マルチカラーパステル（ピンク・黄・ミント・ラベンダー）を並べてカラフルに。彩度高め。</div>
+            </div>
+          </div>
+          <div class="note-box blue" style="margin-top:8px;">
+            <div class="note-icon">✅</div>
+            <div>
+              <div class="note-title">ameru の方向性</div>
+              <div class="note-text">スカイブルー1色を主軸に絞り、白とピンクで整理。日本市場向けに「上品なかわいさ」を意識。The Wooblesより清潔感重視。</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:800;color:var(--text-light);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">LP全体のセクション配色</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--ameru-blue-pale);border-radius:8px;border:1px solid #BEE3F8;">
+              <div style="width:12px;height:12px;border-radius:4px;background:var(--ameru-blue);flex-shrink:0;"></div>
+              <span style="font-size:12px;color:var(--text-mid);">FV / オファー → ameru Blue</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#fff;border-radius:8px;border:1px solid var(--border);">
+              <div style="width:12px;height:12px;border-radius:4px;background:#fff;border:1px solid #ccc;flex-shrink:0;"></div>
+              <span style="font-size:12px;color:var(--text-mid);">商品説明 / ステップ → White</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--ameru-blue-pale);border-radius:8px;border:1px solid #BEE3F8;">
+              <div style="width:12px;height:12px;border-radius:4px;background:#EBF8FF;border:1px solid #BEE3F8;flex-shrink:0;"></div>
+              <span style="font-size:12px;color:var(--text-mid);">キャラ / コレクション → Sky Pale</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#FAFAF7;border-radius:8px;border:1px solid var(--border);">
+              <div style="width:12px;height:12px;border-radius:4px;background:#FAFAF7;border:1px solid #ccc;flex-shrink:0;"></div>
+              <span style="font-size:12px;color:var(--text-mid);">口コミ / 信頼構築 → Warm Cream</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 02 FV ══════ -->
+<section id="fv" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">2</div>
+      <div class="section-label-text">First View</div>
+    </div>
+    <h2>FV（ファーストビュー）</h2>
+    <p class="section-desc">パッケージを主役に。「欲しい」を0.5秒で発生させるビジュアル設計</p>
+
+    <!-- FVモックアップ -->
+    <div class="lp-mockup">
+      <div class="lp-section-label">
+        <span class="lp-sec-name">SECTION 01 — FIRST VIEW</span>
+        <span>LP最上部 / ファーストビュー</span>
+      </div>
+      <div class="fv-mockup">
+        <!-- hearts deco -->
+        <span class="fv-hearts" style="top:8%;left:5%;">♥ ♡ ☆</span>
+        <span class="fv-hearts" style="bottom:10%;right:5%;">♡ ★ ♥</span>
+        <span class="fv-hearts" style="top:50%;left:48%;">✦</span>
+
+        <div class="fv-left">
+          <div class="fv-loveis-badge">🎀 らぶいーず × ameru</div>
+          <div class="fv-headline">
+            ここにメインの<br><span class="accent">キャッチコピー</span><br>が入ります
+          </div>
+          <div class="fv-sub">
+            サブコピー（2〜3行）<br>
+            商品の特長・ベネフィット
+          </div>
+          <div class="fv-cta">はじめる →</div>
+          <div class="fv-price-note">初回 ¥1,980（税込）〜</div>
+        </div>
+
+        <div class="fv-right">
+          <div class="fv-pkg-container">
+            <img src="ameru_pkg_3rd.png" alt="ameruパッケージ ずもっぴ">
+            <div class="fv-float-badge fv-float-1">🌟 ALL INCLUDED</div>
+            <div class="fv-float-badge fv-float-2">📦 すぐ編み始められる</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FV設計ノート -->
+    <div class="grid-2" style="margin-bottom:20px;">
+      <div>
+        <div class="note-box blue">
+          <div class="note-icon">📐</div>
+          <div>
+            <div class="note-title">レイアウト設計</div>
+            <div class="note-text">
+              <strong>左: コピー / 右: パッケージ</strong>の2カラム構成。<br>
+              モバイルは縦積み（パッケージ上・コピー下）。<br>
+              パッケージに浮遊バッジ（「ALL INCLUDED」等）を添えてリッチ感を出す。
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="note-box pink">
+          <div class="note-icon">🎀</div>
+          <div>
+            <div class="note-title">Love is... バッジの役割</div>
+            <div class="note-text">
+              FV最上部に「らぶいーず × ameru」バッジをピンクで配置。<br>
+              IPファンへの「これだ！」シグナルを0.3秒で送る。<br>
+              The Wooblesの「Squid Game × The Woobles」と同じ構造。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box dark">
+      <div class="note-icon">📷</div>
+      <div>
+        <div class="note-title">FV用パッケージ撮影ポイント</div>
+        <div class="note-text">
+          実パッケージを<strong>正面やや斜め（10〜15度）</strong>で撮影。白背景またはブルー背景で切り抜き。
+          影はやや下部に自然な落ち影を付ける。パッケージ内のずもっぴが見えるアングルが最重要。
+          スタジオ感より「届いた」感で撮ると良い。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 03 PACKAGE SHOWCASE ══════ -->
+<section id="pkg" class="section" style="background:var(--ameru-blue-pale);">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">3</div>
+      <div class="section-label-text">Package Showcase</div>
+    </div>
+    <h2>パッケージ全展開ビジュアル</h2>
+    <p class="section-desc">「開けたら全部入ってた」の驚きを視覚化する。同梱物の美しいフラットレイ</p>
+
+    <div class="lp-mockup">
+      <div class="lp-section-label">
+        <span class="lp-sec-name">SECTION 02 — PACKAGE SHOWCASE</span>
+        <span>白背景 / フラットレイ</span>
+      </div>
+      <div class="sec-mockup" style="padding:40px 48px;">
+        <div style="text-align:center;margin-bottom:32px;">
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--ameru-blue);text-transform:uppercase;margin-bottom:8px;">WHAT'S INSIDE</div>
+          <div style="font-size:24px;font-weight:900;color:var(--text-dark);margin-bottom:8px;">セクションタイトル（コピー）</div>
+          <div style="font-size:14px;color:var(--text-light);">サブコピー — 同梱物の説明</div>
+        </div>
+
+        <!-- フラットレイイメージ -->
+        <div style="background:linear-gradient(135deg,#F0F9FF,#E0F4FF);border-radius:20px;padding:40px;margin-bottom:24px;position:relative;min-height:280px;display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;">
+            <div style="font-size:48px;margin-bottom:12px;">📦</div>
+            <div style="font-size:14px;font-weight:800;color:var(--ameru-blue);margin-bottom:4px;">フラットレイ撮影エリア</div>
+            <div style="font-size:12px;color:var(--text-light);">パッケージ開封後の全同梱物を白背景に広げて撮影</div>
+          </div>
+          <!-- 同梱物アイコン -->
+          <div style="position:absolute;top:20px;left:40px;background:#fff;border-radius:50px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--ameru-blue);box-shadow:0 2px 8px rgba(0,0,0,0.1);">🧶 糸</div>
+          <div style="position:absolute;top:20px;right:60px;background:#fff;border-radius:50px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--ameru-blue);box-shadow:0 2px 8px rgba(0,0,0,0.1);">🪡 かぎ針</div>
+          <div style="position:absolute;bottom:20px;left:60px;background:#fff;border-radius:50px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--ameru-blue);box-shadow:0 2px 8px rgba(0,0,0,0.1);">📋 編み図</div>
+          <div style="position:absolute;bottom:20px;right:40px;background:#fff;border-radius:50px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--ameru-blue);box-shadow:0 2px 8px rgba(0,0,0,0.1);">✂️ 副資材</div>
+        </div>
+
+        <!-- 同梱物リスト -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+          <div style="text-align:center;padding:16px;background:var(--ameru-blue-pale);border-radius:12px;border:1px solid #BEE3F8;">
+            <div style="font-size:28px;margin-bottom:6px;">🧶</div>
+            <div style="font-size:13px;font-weight:800;color:var(--text-dark);">専用糸</div>
+            <div style="font-size:11px;color:var(--text-light);">スカイブルー<br>ずもっぴカラー</div>
+          </div>
+          <div style="text-align:center;padding:16px;background:var(--ameru-blue-pale);border-radius:12px;border:1px solid #BEE3F8;">
+            <div style="font-size:28px;margin-bottom:6px;">🪡</div>
+            <div style="font-size:13px;font-weight:800;color:var(--text-dark);">かぎ針</div>
+            <div style="font-size:11px;color:var(--text-light);">初心者向け<br>持ちやすいサイズ</div>
+          </div>
+          <div style="text-align:center;padding:16px;background:var(--ameru-blue-pale);border-radius:12px;border:1px solid #BEE3F8;">
+            <div style="font-size:28px;margin-bottom:6px;">📋</div>
+            <div style="font-size:13px;font-weight:800;color:var(--text-dark);">編み図 + 動画</div>
+            <div style="font-size:11px;color:var(--text-light);">図解 + QRコード<br>で動画アクセス</div>
+          </div>
+          <div style="text-align:center;padding:16px;background:var(--ameru-blue-pale);border-radius:12px;border:1px solid #BEE3F8;">
+            <div style="font-size:28px;margin-bottom:6px;">✅</div>
+            <div style="font-size:13px;font-weight:800;color:var(--text-dark);">副資材一式</div>
+            <div style="font-size:11px;color:var(--text-light);">目・綿・<br>とじ針セット</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-dir">
+      <div class="photo-dir-header">
+        <span class="photo-dir-tag">SHOOT</span>
+        <span class="photo-dir-label">パッケージ開封フラットレイ — 撮影指示</span>
+      </div>
+      <div class="photo-dir-body">
+        <div>
+          <div class="pd-item-label">背景</div>
+          <div class="pd-item-value">ホワイト（撮影用白背景）または淡いスカイブルーの布。The Wooblesのフラットレイ参照。</div>
+        </div>
+        <div>
+          <div class="pd-item-label">配置</div>
+          <div class="pd-item-value">パッケージを中央に。糸・かぎ針・編み図を周囲に「広げた」配置。整然より自然に。</div>
+        </div>
+        <div>
+          <div class="pd-item-label">光源</div>
+          <div class="pd-item-value">真上からのソフトボックス or 曇り日の窓際自然光。影を最小化。</div>
+        </div>
+        <div>
+          <div class="pd-item-label">カメラアングル</div>
+          <div class="pd-item-value">真上（真俯瞰）。9:16縦も同時に撮影（TikTok用）。</div>
+        </div>
+        <div>
+          <div class="pd-item-label">小道具</div>
+          <div class="pd-item-value">小さなハートのシール・星のシール等をパッケージ周囲に散らすとLove is...の世界観が出る。</div>
+        </div>
+        <div>
+          <div class="pd-item-label">The Woobles参照</div>
+          <div class="pd-item-value">The Wooblesの「Everything you need」フラットレイ写真と同じ構図。中身の多さより「揃ってる美しさ」を見せる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 04 3STEPS ══════ -->
+<section id="steps" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">4</div>
+      <div class="section-label-text">How It Works</div>
+    </div>
+    <h2>3ステップ — 「届く→開ける→完成」</h2>
+    <p class="section-desc">複雑さを消す。「これだけ」のシンプルさを視覚で証明するセクション</p>
+
+    <div class="lp-mockup">
+      <div class="lp-section-label">
+        <span class="lp-sec-name">SECTION 03 — HOW IT WORKS</span>
+        <span>白背景 / アイコン + 手元写真</span>
+      </div>
+      <div class="sec-mockup" style="padding:40px 48px;">
+        <div style="text-align:center;margin-bottom:32px;">
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--ameru-blue);text-transform:uppercase;margin-bottom:8px;">HOW TO START</div>
+          <div style="font-size:22px;font-weight:900;color:var(--text-dark);">セクションタイトル（コピー）</div>
+        </div>
+        <div class="step-flow">
+          <div class="step-item">
+            <div style="width:80px;height:80px;border-radius:16px;background:var(--ameru-blue-pale);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:36px;">📦</div>
+            <div class="step-num-badge">1</div>
+            <div class="step-title">届く</div>
+            <div class="step-desc">コピーが入ります<br>（説明文）</div>
+          </div>
+          <div class="step-item">
+            <div style="width:80px;height:80px;border-radius:16px;background:var(--ameru-blue-pale);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:36px;">🎬</div>
+            <div class="step-num-badge">2</div>
+            <div class="step-title">動画を見ながら編む</div>
+            <div class="step-desc">コピーが入ります<br>（説明文）</div>
+          </div>
+          <div class="step-item">
+            <div style="width:80px;height:80px;border-radius:16px;background:var(--ameru-blue-pale);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:36px;">🐰</div>
+            <div class="step-num-badge">3</div>
+            <div class="step-title">完成！</div>
+            <div class="step-desc">コピーが入ります<br>（説明文）</div>
+          </div>
+        </div>
+        <!-- 手元写真エリア -->
+        <div style="margin-top:28px;background:linear-gradient(135deg,#F0F9FF,#E8F4FE);border-radius:16px;padding:28px;display:flex;align-items:center;gap:24px;">
+          <div style="flex:1;background:rgba(41,182,232,0.1);border-radius:12px;height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+            <span style="font-size:28px;">🙌</span>
+            <span style="font-size:11px;font-weight:700;color:var(--ameru-blue);">手元写真 / 制作過程</span>
+          </div>
+          <div style="flex:1;background:rgba(41,182,232,0.1);border-radius:12px;height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+            <span style="font-size:28px;">📱</span>
+            <span style="font-size:11px;font-weight:700;color:var(--ameru-blue);">動画QRコードイメージ</span>
+          </div>
+          <div style="flex:1;background:rgba(41,182,232,0.1);border-radius:12px;height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+            <span style="font-size:28px;">🐰</span>
+            <span style="font-size:11px;font-weight:700;color:var(--ameru-blue);">完成品ずもっぴ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box blue">
+      <div class="note-icon">📷</div>
+      <div>
+        <div class="note-title">ステップ別撮影素材</div>
+        <div class="note-text">
+          Step1: パッケージを持った手 or 郵便ポストから取り出す瞬間（生活感あり）<br>
+          Step2: かぎ針を持つ手元アップ。画面にチュートリアル動画が映っているスマホも映り込ませると◎<br>
+          Step3: 完成したずもっぴを両手で持つ写真。表情は驚き＋嬉しさ。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 05 CHARACTER ══════ -->
+<section id="character" class="section" style="background:var(--ameru-blue-pale);">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">5</div>
+      <div class="section-label-text">Character</div>
+    </div>
+    <h2>ずもっぴ × Love is... 紹介</h2>
+    <p class="section-desc">キャラクターへの愛着を高め、「このキャラを自分で作りたい」に変換するセクション</p>
+
+    <div class="lp-mockup">
+      <div class="lp-section-label">
+        <span class="lp-sec-name">SECTION 04 — CHARACTER</span>
+        <span>Sky Pale背景 / キャラクター大きめ表示</span>
+      </div>
+      <div class="sec-mockup blue-pale" style="padding:48px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+          <div>
+            <!-- ずもっぴキャラエリア -->
+            <div style="background:linear-gradient(135deg,#D1F0FF,#BEE3F8);border-radius:24px;padding:40px;text-align:center;position:relative;">
+              <div style="font-size:80px;margin-bottom:8px;">🐰</div>
+              <div style="font-size:13px;font-weight:800;color:var(--ameru-blue);margin-bottom:4px;">No.1 ずもっぴ</div>
+              <div style="font-size:11px;color:var(--text-light);">Love is... コラボキャラクター</div>
+              <!-- 浮遊要素 -->
+              <div style="position:absolute;top:-12px;right:-12px;background:var(--ameru-pink);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 12px rgba(255,110,180,0.4);">🎀</div>
+            </div>
+          </div>
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:var(--ameru-pink);color:#fff;font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;margin-bottom:16px;">🎀 らぶいーず コラボ</div>
+            <div style="font-size:22px;font-weight:900;color:var(--text-dark);margin-bottom:12px;line-height:1.3;">キャラクター紹介<br>コピーが入ります</div>
+            <div style="font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:20px;">
+              説明文コピーが入ります。Love is...の世界観・ずもっぴのかわいさ・
+              「自分で作る」感動について書くエリア。
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <div style="padding:10px 14px;background:#fff;border-radius:10px;border:1px solid #BEE3F8;font-size:12px;font-weight:700;color:var(--ameru-blue);">😊 スカイブルー×ホワイト</div>
+              <div style="padding:10px 14px;background:#fff;border-radius:10px;border:1px solid #BEE3F8;font-size:12px;font-weight:700;color:var(--ameru-blue);">⏱ 8〜10時間で完成</div>
+              <div style="padding:10px 14px;background:#fff;border-radius:10px;border:1px solid #BEE3F8;font-size:12px;font-weight:700;color:var(--ameru-blue);">⭐ LEVEL 1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="note-box blue">
+        <div class="note-icon">📷</div>
+        <div>
+          <div class="note-title">完成品ずもっぴ 撮影方針</div>
+          <div class="note-text">
+            <strong>正面アップ</strong>を最重要カットに。目・口のクローズアップで「可愛い」を最大化。<br>
+            白い布 or 白いテーブルの上に置き、自然光で撮影。<br>
+            Love is...パッケージを背景に少しだけ映り込ませると世界観が出る。
+          </div>
+        </div>
+      </div>
+      <div class="note-box pink">
+        <div class="note-icon">💝</div>
+        <div>
+          <div class="note-title">IPとの接続ポイント</div>
+          <div class="note-text">
+            「らぶいーず」ロゴをパッケージと一緒に映す。<br>
+            Love is...特有の「愛のカタチ」世界観をキャプション・テロップで補強。<br>
+            「推しキャラを自分の手で作る」という体験の感情的価値を言語化する。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 06 COLLECTION ══════ -->
+<section id="collection" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">6</div>
+      <div class="section-label-text">Collection</div>
+    </div>
+    <h2>シリーズ全5種 — コレクション予告</h2>
+    <p class="section-desc">「続きが欲しい」をビジュアルで設計。F2転換率85%死守のための感情設計</p>
+
+    <div class="lp-mockup">
+      <div class="lp-section-label">
+        <span class="lp-sec-name">SECTION 05 — COLLECTION PREVIEW</span>
+        <span>White背景 / シリーズ横並び</span>
+      </div>
+      <div class="sec-mockup" style="padding:40px 48px;">
+        <div style="text-align:center;margin-bottom:28px;">
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.15em;color:var(--ameru-blue);text-transform:uppercase;margin-bottom:8px;">COLLECTION</div>
+          <div style="font-size:22px;font-weight:900;color:var(--text-dark);margin-bottom:8px;">全5種を順番にコンプリート</div>
+          <div style="font-size:13px;color:var(--text-light);">毎月1種ずつ届く。次号が楽しみになる設計。</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+          <!-- No.1 鮮明 -->
+          <div style="border-radius:16px;overflow:hidden;border:2px solid var(--ameru-blue);position:relative;">
+            <div style="background:linear-gradient(135deg,var(--ameru-blue),#1A8AC0);padding:24px 16px;text-align:center;">
+              <div style="font-size:36px;margin-bottom:4px;">🐰</div>
+              <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,0.7);">No.1</div>
+              <div style="font-size:12px;font-weight:900;color:#fff;">ずもっぴ</div>
+            </div>
+            <div style="position:absolute;top:8px;right:8px;background:var(--ameru-pink);border-radius:20px;padding:3px 8px;font-size:9px;font-weight:800;color:#fff;">NOW</div>
+          </div>
+          <!-- No.2〜5 シルエット -->
+          <div style="border-radius:16px;overflow:hidden;border:1px dashed #BEE3F8;">
+            <div style="background:linear-gradient(135deg,#D1F0FF,#BEE3F8);padding:24px 16px;text-align:center;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+              <div style="font-size:36px;margin-bottom:4px;filter:grayscale(1) opacity(0.3);">❓</div>
+              <div style="font-size:10px;font-weight:800;color:rgba(41,182,232,0.5);">No.2</div>
+              <div style="font-size:11px;color:rgba(41,182,232,0.4);">Coming Soon</div>
+            </div>
+          </div>
+          <div style="border-radius:16px;overflow:hidden;border:1px dashed #BEE3F8;">
+            <div style="background:linear-gradient(135deg,#D1F0FF,#BEE3F8);padding:24px 16px;text-align:center;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+              <div style="font-size:36px;margin-bottom:4px;filter:grayscale(1) opacity(0.3);">❓</div>
+              <div style="font-size:10px;font-weight:800;color:rgba(41,182,232,0.5);">No.3</div>
+              <div style="font-size:11px;color:rgba(41,182,232,0.4);">Coming Soon</div>
+            </div>
+          </div>
+          <div style="border-radius:16px;overflow:hidden;border:1px dashed #BEE3F8;">
+            <div style="background:linear-gradient(135deg,#D1F0FF,#BEE3F8);padding:24px 16px;text-align:center;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+              <div style="font-size:36px;margin-bottom:4px;filter:grayscale(1) opacity(0.3);">❓</div>
+              <div style="font-size:10px;font-weight:800;color:rgba(41,182,232,0.5);">No.4</div>
+              <div style="font-size:11px;color:rgba(41,182,232,0.4);">Coming Soon</div>
+            </div>
+          </div>
+          <div style="border-radius:16px;overflow:hidden;border:1px dashed #BEE3F8;">
+            <div style="background:linear-gradient(135deg,#D1F0FF,#BEE3F8);padding:24px 16px;text-align:center;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+              <div style="font-size:36px;margin-bottom:4px;filter:grayscale(1) opacity(0.3);">❓</div>
+              <div style="font-size:10px;font-weight:800;color:rgba(41,182,232,0.5);">No.5</div>
+              <div style="font-size:11px;color:rgba(41,182,232,0.4);">Coming Soon</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;text-align:center;padding:16px;background:var(--ameru-blue-pale);border-radius:12px;">
+          <span style="font-size:13px;color:var(--text-mid);">コレクションコピーが入ります（5種全部作りたくなる言葉）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box dark">
+      <div class="note-icon">🎯</div>
+      <div>
+        <div class="note-title">デザイン意図</div>
+        <div class="note-text">
+          No.1は鮮明に、No.2〜5はシルエット or「？」でFOMOを設計。The Wooblesの「Like Pokemon, gotta make them all」と同じ仕掛け。
+          「全部並べたら可愛い」が視覚でわかるように、横並びのグリッドで見せる。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 07 REVIEWS ══════ -->
+<section id="reviews" class="section" style="background:#FAFAF7;">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">7</div>
+      <div class="section-label-text">Reviews</div>
+    </div>
+    <h2>口コミ・UGC</h2>
+    <p class="section-desc">一般人の「できた！」声で背中を押す。プロ感より生っぽさが正解</p>
+
+    <div class="lp-mockup">
+      <div class="lp-section-label">
+        <span class="lp-sec-name">SECTION 06 — SOCIAL PROOF</span>
+        <span>Cream背景 / カード型口コミ</span>
+      </div>
+      <div class="sec-mockup cream" style="padding:40px 48px;">
+        <div style="text-align:center;margin-bottom:28px;">
+          <div style="font-size:22px;font-weight:900;color:var(--text-dark);">口コミセクションタイトル（コピー）</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <!-- 口コミカード -->
+          <div style="background:#fff;border-radius:16px;padding:20px;border:1px solid var(--border);">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--ameru-blue-pale);display:flex;align-items:center;justify-content:center;font-size:16px;">👩</div>
+              <div>
+                <div style="font-size:12px;font-weight:800;color:var(--text-dark);">田中さとみさん（38歳）</div>
+                <div style="font-size:10px;color:#FFB800;">★★★★★</div>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-mid);line-height:1.6;font-style:italic;">「口コミコピーが入ります。達成感・かわいさ・簡単さについて。」</div>
+            <!-- 完成品写真エリア -->
+            <div style="margin-top:12px;background:var(--ameru-blue-pale);border-radius:10px;height:80px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:11px;color:var(--ameru-blue);font-weight:700;">完成品写真（UGC）</span>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:16px;padding:20px;border:1px solid var(--border);">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--ameru-pink-pale);display:flex;align-items:center;justify-content:center;font-size:16px;">👩</div>
+              <div>
+                <div style="font-size:12px;font-weight:800;color:var(--text-dark);">山田あかねさん（32歳）</div>
+                <div style="font-size:10px;color:#FFB800;">★★★★★</div>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-mid);line-height:1.6;font-style:italic;">「口コミコピーが入ります。Love is...ファン視点の感想。」</div>
+            <div style="margin-top:12px;background:var(--ameru-pink-pale);border-radius:10px;height:80px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:11px;color:var(--ameru-pink);font-weight:700;">完成品写真（UGC）</span>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:16px;padding:20px;border:1px solid var(--border);">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:#F0F9FF;display:flex;align-items:center;justify-content:center;font-size:16px;">👩</div>
+              <div>
+                <div style="font-size:12px;font-weight:800;color:var(--text-dark);">鈴木みほさん（45歳）</div>
+                <div style="font-size:10px;color:#FFB800;">★★★★★</div>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-mid);line-height:1.6;font-style:italic;">「口コミコピーが入ります。ギフト・プレゼント視点の感想。」</div>
+            <div style="margin-top:12px;background:#F0F9FF;border-radius:10px;height:80px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:11px;color:var(--ameru-blue);font-weight:700;">完成品写真（UGC）</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="note-box pink">
+        <div class="note-icon">📸</div>
+        <div>
+          <div class="note-title">UGC写真の集め方</div>
+          <div class="note-text">
+            F1購入者への完成写真投稿リクエストを<strong>購入直後のメール</strong>で送る。<br>
+            「#ずもっぴ作った で投稿すると公式リポスト！」という動機付けで自然にUGCが集まる。<br>
+            The Wooblesの「Perfectly Imperfect」文化を参照。完璧じゃなくていい。
+          </div>
+        </div>
+      </div>
+      <div class="note-box dark">
+        <div class="note-icon">💬</div>
+        <div>
+          <div class="note-title">口コミの選び方</div>
+          <div class="note-text">
+            ①「編み物未経験だったのに」という挫折→達成の口コミ<br>
+            ②「Love is...が好きで」というIPファン視点の口コミ<br>
+            ③「プレゼントにしたら喜ばれた」というギフト口コミ<br>
+            の3タイプを並べる。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 08 OFFER ══════ -->
+<section id="offer" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">8</div>
+      <div class="section-label-text">Offer</div>
+    </div>
+    <h2>オファーセクション</h2>
+    <p class="section-desc">価格・特典・CTA。ここで「今すぐ」の感情に変換する</p>
+
+    <div class="lp-mockup">
+      <div class="lp-section-label">
+        <span class="lp-sec-name">SECTION 07 — OFFER & CTA</span>
+        <span>ameru Blue / 最後の購買設計</span>
+      </div>
+      <div style="background:linear-gradient(160deg, var(--ameru-blue) 0%, #1A8AC0 100%);padding:48px;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,0.1) 0%,transparent 60%);"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative;">
+          <div>
+            <div style="font-size:11px;font-weight:800;letter-spacing:0.2em;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:12px;">SPECIAL OFFER</div>
+            <div style="font-size:28px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:16px;">オファーコピー<br>が入ります</div>
+            <!-- 価格 -->
+            <div style="background:rgba(255,255,255,0.1);border-radius:16px;padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,0.15);">
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:4px;">初回特別価格</div>
+              <div style="font-size:44px;font-weight:900;color:#fff;line-height:1;">¥1,980<span style="font-size:16px;font-weight:500;">（税込）</span></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px;">F2〜F5 通常 ¥4,200/回</div>
+            </div>
+            <!-- 特典リスト -->
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;gap:10px;align-items:center;">
+                <span style="color:var(--ameru-pink);font-size:16px;">✓</span>
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);">特典・保証コピーが入ります</span>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center;">
+                <span style="color:var(--ameru-pink);font-size:16px;">✓</span>
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);">特典・保証コピーが入ります</span>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center;">
+                <span style="color:var(--ameru-pink);font-size:16px;">✓</span>
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);">特典・保証コピーが入ります</span>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <img src="ameru_pkg_3rd.png" alt="ameru package" style="width:200px;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.3));margin-bottom:20px;">
+            <div>
+              <div style="background:#fff;color:var(--ameru-blue);font-size:18px;font-weight:900;padding:18px 40px;border-radius:50px;display:inline-block;box-shadow:0 8px 28px rgba(0,0,0,0.2);margin-bottom:10px;cursor:pointer;">
+                CTAボタンコピー →
+              </div>
+            </div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">注意書き・保証テキストが入ります</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box blue">
+      <div class="note-icon">🎯</div>
+      <div>
+        <div class="note-title">オファーセクションのビジュアル設計</div>
+        <div class="note-text">
+          The Wooblesのオファーセクション参照：<strong>パッケージを右側に大きく</strong>置き、左でオファー内容を整理。<br>
+          Blue背景でLP前半の白と対比させる。「ここが買いどき」の色のシグナル。<br>
+          CTAボタンは白地×Blueテキストで最高コントラスト。クリック誘引力を最大化。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 09 SHOOT ══════ -->
+<section id="shoot" class="section" style="background:#F5F9FC;">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">9</div>
+      <div class="section-label-text">Photography Direction</div>
+    </div>
+    <h2>撮影指示書 — 全カットリスト</h2>
+    <p class="section-desc">LP全セクションで必要な撮影素材の完全リスト。The Woobles参照アングル付き</p>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+
+      <div class="photo-dir">
+        <div class="photo-dir-header">
+          <span class="photo-dir-tag">MUST</span>
+          <span class="photo-dir-label">カット A — パッケージ正面（FV用）</span>
+        </div>
+        <div class="photo-dir-body">
+          <div><div class="pd-item-label">構図</div><div class="pd-item-value">正面 or やや斜め10度。パッケージ全体が入る。</div></div>
+          <div><div class="pd-item-label">背景</div><div class="pd-item-value">白 or 薄いスカイブルー（切り抜き前提でもOK）</div></div>
+          <div><div class="pd-item-label">光</div><div class="pd-item-value">ソフトボックスまたは曇り日自然光。反射なし。</div></div>
+          <div><div class="pd-item-label">用途</div><div class="pd-item-value">FV右カラム、OGP、バナー広告</div></div>
+        </div>
+      </div>
+
+      <div class="photo-dir">
+        <div class="photo-dir-header">
+          <span class="photo-dir-tag">MUST</span>
+          <span class="photo-dir-label">カット B — 同梱物フラットレイ（開封後）</span>
+        </div>
+        <div class="photo-dir-body">
+          <div><div class="pd-item-label">構図</div><div class="pd-item-value">真俯瞰。パッケージ中央、周囲に糸・かぎ針・編み図・副資材を自然に広げる。</div></div>
+          <div><div class="pd-item-label">背景</div><div class="pd-item-value">白い厚手の紙 or 白い布。影をなるべく出さない。</div></div>
+          <div><div class="pd-item-label">ポイント</div><div class="pd-item-value">「全部入ってる」の安心感を見せる。整然すぎず、届いて開けた感を出す。</div></div>
+          <div><div class="pd-item-label">用途</div><div class="pd-item-value">Package Showcaseセクション</div></div>
+        </div>
+      </div>
+
+      <div class="photo-dir">
+        <div class="photo-dir-header">
+          <span class="photo-dir-tag">MUST</span>
+          <span class="photo-dir-label">カット C — 完成品ずもっぴ 正面アップ</span>
+        </div>
+        <div class="photo-dir-body">
+          <div><div class="pd-item-label">構図</div><div class="pd-item-value">ずもっぴ正面、目線高さ（水平）。顔がフレーム中央。</div></div>
+          <div><div class="pd-item-label">背景</div><div class="pd-item-value">白い布 or 薄いブルーのファブリック。Love is...パッケージを遠景にぼかして映す。</div></div>
+          <div><div class="pd-item-label">ポイント</div><div class="pd-item-value">丸い目・小さな口の「可愛さ」を最大化。The Wooblesのキャラアップ参照。</div></div>
+          <div><div class="pd-item-label">用途</div><div class="pd-item-value">Characterセクション、バナー、SNSサムネ</div></div>
+        </div>
+      </div>
+
+      <div class="photo-dir">
+        <div class="photo-dir-header">
+          <span class="photo-dir-tag">MUST</span>
+          <span class="photo-dir-label">カット D — 手元アップ（制作過程）</span>
+        </div>
+        <div class="photo-dir-body">
+          <div><div class="pd-item-label">構図</div><div class="pd-item-value">手元クローズアップ（縦9:16優先）。かぎ針が糸をとらえる瞬間。</div></div>
+          <div><div class="pd-item-label">モデル</div><div class="pd-item-value">25〜40代女性の一般的な手。ネイル・指輪OK。プロモデル感を出さない。</div></div>
+          <div><div class="pd-item-label">背景</div><div class="pd-item-value">木のテーブル or 白いニット生地の上。コーヒーカップが映り込んでもいい。</div></div>
+          <div><div class="pd-item-label">用途</div><div class="pd-item-value">3ステップセクション、TikTok動画フレーム</div></div>
+        </div>
+      </div>
+
+      <div class="photo-dir">
+        <div class="photo-dir-header">
+          <span class="photo-dir-tag">MUST</span>
+          <span class="photo-dir-label">カット E — 完成品を持って喜ぶ（表情あり）</span>
+        </div>
+        <div class="photo-dir-body">
+          <div><div class="pd-item-label">構図</div><div class="pd-item-value">両手でずもっぴを胸前に持つ。顔も入れる。縦（9:16）。</div></div>
+          <div><div class="pd-item-label">表情</div><div class="pd-item-value">驚き＋嬉しさ。笑顔よりリアクション系の方が強い。「できた！！」の顔。</div></div>
+          <div><div class="pd-item-label">服装</div><div class="pd-item-value">普段着。部屋着OK。プロっぽくしない。</div></div>
+          <div><div class="pd-item-label">用途</div><div class="pd-item-value">口コミセクション、TikTok動画のラストカット</div></div>
+        </div>
+      </div>
+
+      <div class="photo-dir">
+        <div class="photo-dir-header">
+          <span class="photo-dir-tag">WANT</span>
+          <span class="photo-dir-label">カット F — ライフスタイル（コーヒー×編み物）</span>
+        </div>
+        <div class="photo-dir-body">
+          <div><div class="pd-item-label">シーン</div><div class="pd-item-value">ソファ or 床に座り、コーヒーカップと一緒に編んでいる。週末の午後感。</div></div>
+          <div><div class="pd-item-label">光</div><div class="pd-item-value">自然光（窓際）。暖かみのある光。</div></div>
+          <div><div class="pd-item-label">小道具</div><div class="pd-item-value">コーヒーカップ・本・クッション。「手を動かす豊かな時間」の文脈。</div></div>
+          <div><div class="pd-item-label">用途</div><div class="pd-item-value">LP中間セクション、Instagram投稿</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 10 PROMPTS ══════ -->
+<section id="prompts" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num">10</div>
+      <div class="section-label-text">AI Image Prompts</div>
+    </div>
+    <h2>画像生成AIプロンプト集</h2>
+    <p class="section-desc">実写撮影の補完 or 先行ビジュアル確認用。Gemini / Midjourney / FLUX 向け</p>
+
+    <div class="img-prompt">
+      <div class="img-prompt-header">
+        <span class="img-prompt-type type-ai">AI GEN</span>
+        <span class="img-prompt-title">① FVパッケージビジュアル — フラットレイ</span>
+      </div>
+      <div class="img-prompt-body"><span class="pk">Subject:</span> <span class="pv">A sky-blue and white Japanese amigurumi crochet kit package (labeled "ameru") displayed on a pure white surface, surrounded by soft blue yarn balls, a single crochet hook, and small decorative hearts</span>
+
+<span class="pk">Style:</span> <span class="pv">Clean product photography, soft natural window light from the left, minimal shadows, top-down flat lay composition, 4:5 ratio</span>
+
+<span class="pk">Colors:</span> <span class="pv">Primary: sky blue (#29B6E8), white, with small pink heart accents. Background pure white.</span>
+
+<span class="pk">Mood:</span> <span class="pv">Joyful, achievable, gift-worthy, Japanese kawaii aesthetic — clean and organized but NOT sterile</span>
+
+<span class="pk">Key detail:</span> <span class="pv">The package should show a cute white round bunny amigurumi character on front. Small "Love is..." branding visible in pink.</span>
+
+<span class="pc">// 用途: FV右カラム / Package Showcaseセクション</span></div>
+    </div>
+
+    <div class="img-prompt">
+      <div class="img-prompt-header">
+        <span class="img-prompt-type type-ai">AI GEN</span>
+        <span class="img-prompt-title">② 完成品ずもっぴ — 正面アップ</span>
+      </div>
+      <div class="img-prompt-body"><span class="pk">Subject:</span> <span class="pv">A cute hand-crocheted amigurumi character — round, fluffy, snow-white, with small black bead eyes and a tiny smile, bunny-like ears, chubby round body. Sitting upright on a soft sky-blue cloth.</span>
+
+<span class="pk">Style:</span> <span class="pv">Close-up character portrait, eye-level angle, soft diffused natural light, shallow depth of field with Love is... package slightly blurred in background</span>
+
+<span class="pk">Texture:</span> <span class="pv">Handmade crochet texture clearly visible — slightly imperfect stitches give it warmth and authenticity. NOT perfectly smooth.</span>
+
+<span class="pk">Mood:</span> <span class="pv">"I can't believe I made this" warmth. Instantly loveable. The cuteness should make you want to pick it up.</span>
+
+<span class="pk">Size ratio:</span> <span class="pv">Character fills 60% of frame. Background bokeh. Square (1:1) or portrait (4:5).</span>
+
+<span class="pc">// 用途: Characterセクション / SNSサムネイル</span></div>
+    </div>
+
+    <div class="img-prompt">
+      <div class="img-prompt-header">
+        <span class="img-prompt-type type-ai">AI GEN</span>
+        <span class="img-prompt-title">③ 手元クローズアップ — 制作過程</span>
+      </div>
+      <div class="img-prompt-body"><span class="pk">Subject:</span> <span class="pv">Close-up of woman's hands crocheting with sky-blue yarn, using a small crochet hook. Regular hands (not professional model), soft pink nail polish, simple ring visible.</span>
+
+<span class="pk">Setting:</span> <span class="pv">Wooden table surface, warm afternoon light from window on the left. Coffee cup partially visible in background, softly blurred.</span>
+
+<span class="pk">Style:</span> <span class="pv">Lifestyle photography, warm color grade, authentic candid feeling. Vertical 9:16 format optimized for TikTok/Reels.</span>
+
+<span class="pk">Mood:</span> <span class="pv">Relaxing self-care afternoon. "Hand time" away from screens. Therapeutic and calming.</span>
+
+<span class="pk">Text space:</span> <span class="pv">Leave upper 30% of frame clear for text overlay.</span>
+
+<span class="pc">// 用途: TikTok動画フレーム / 3ステップセクション</span></div>
+    </div>
+
+    <div class="img-prompt">
+      <div class="img-prompt-header">
+        <span class="img-prompt-type type-ai">AI GEN</span>
+        <span class="img-prompt-title">④ シリーズ全5種 コレクション並べ</span>
+      </div>
+      <div class="img-prompt-body"><span class="pk">Subject:</span> <span class="pv">Five small amigurumi characters arranged in a horizontal row on a white surface. First character (white fluffy bunny) is clear and sharp. Characters 2-5 are shown as soft silhouettes or blurred, suggesting "coming soon".</span>
+
+<span class="pk">Style:</span> <span class="pv">Clean flat lay, top-down view, soft even lighting. Pastel decorative elements (hearts, stars) scattered around.</span>
+
+<span class="pk">Colors:</span> <span class="pv">Character 1 in white/sky-blue. Others in muted pastel outlines. Background white or very pale blue.</span>
+
+<span class="pk">Mood:</span> <span class="pv">"Gotta collect them all" — the FOMO of an incomplete collection. Pokemon-like collector energy.</span>
+
+<span class="pk">Format:</span> <span class="pv">Landscape 16:9 for LP. Also generate square 1:1 for Instagram.</span>
+
+<span class="pc">// 用途: Collectionセクション / Instagram投稿</span></div>
+    </div>
+
+    <div class="img-prompt">
+      <div class="img-prompt-header">
+        <span class="img-prompt-type type-video">VIDEO</span>
+        <span class="img-prompt-title">⑤ TikTok動画 構成案（フレームごと）</span>
+      </div>
+      <div class="img-prompt-body"><span class="pc">// 15〜30秒ショート動画の構成</span>
+
+<span class="pk">00-03s フック:</span> <span class="pv">ずもっぴの顔アップ（完成品）→ テロップ「これ自分で作ったんだ」</span>
+
+<span class="pk">04-08s 開封:</span> <span class="pv">パッケージを開けると糸・かぎ針・編み図が入っている。テロップ「全部入ってた」</span>
+
+<span class="pk">09-18s 制作過程:</span> <span class="pv">手元タイムラプス。かぎ針が糸をとらえる。BGM: 明るいかわいい系。テロップ「はじめてなのに」</span>
+
+<span class="pk">19-25s 完成:</span> <span class="pv">完成したずもっぴを両手で持つ。表情：驚き。テロップ「できた！！」</span>
+
+<span class="pk">26-30s CTA:</span> <span class="pv">パッケージとずもっぴを並べて。テロップ「#ずもっぴ作った」「リンクから→」</span>
+
+<span class="pk">BGM方針:</span> <span class="pv">ゆったり→盛り上がり系。J-POPまたは著作権フリーのかわいい系インスト。</span></div>
+    </div>
+
+    <!-- Woobles参照まとめ -->
+    <div style="margin-top:28px;background:var(--dark);border-radius:16px;padding:24px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:16px;">The Woobles から参照するビジュアル原則 — ameru版チェックリスト</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;">
+          <span style="color:var(--ameru-blue);font-weight:900;flex-shrink:0;">✓</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.65);">完成品を最初のフレームに。「欲しい」を先行させる。</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;">
+          <span style="color:var(--ameru-blue);font-weight:900;flex-shrink:0;">✓</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.65);">背景は白かパステル一色のみ。ゴチャゴチャさせない。</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;">
+          <span style="color:var(--ameru-blue);font-weight:900;flex-shrink:0;">✓</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.65);">手元は一般人感あるリアルな手。プロモデル感NG。</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;">
+          <span style="color:var(--ameru-blue);font-weight:900;flex-shrink:0;">✓</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.65);">縦（9:16）メインで撮影。TikTok・Reels最優先。</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;">
+          <span style="color:var(--ameru-blue);font-weight:900;flex-shrink:0;">✓</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.65);">完璧な仕上がりより「これ私が作った」感。少し不揃いOK。</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;">
+          <span style="color:var(--ameru-pink);font-weight:900;flex-shrink:0;">★</span>
+          <span style="font-size:12px;color:rgba(255,255,255,0.65);">【ameru独自】Love is...パッケージをビジュアルの一部として積極的に使う。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ REF IMAGES INTRO ══════ -->
+<div style="background:linear-gradient(135deg,#0F1923,#1E2D3D);padding:56px 48px;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(41,182,232,0.15);border:1px solid rgba(41,182,232,0.3);color:#29B6E8;font-size:10px;font-weight:800;letter-spacing:0.2em;padding:6px 16px;border-radius:20px;margin-bottom:20px;text-transform:uppercase;">📸 Reference Images — The Woobles実例</div>
+    <div style="font-size:clamp(22px,3vw,36px);font-weight:900;color:#fff;letter-spacing:-0.02em;margin-bottom:10px;">The Woobles 参考画像集</div>
+    <div style="font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:24px;">実際のウェブサイト・LPから取得。カテゴリ別に3〜5パターン掲載。ameruの撮影・デザイン設計の参考に。</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="#ref-hero" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:700;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);">A: FVヒーロー</a>
+      <a href="#ref-product" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:700;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);">B: 商品・完成品</a>
+      <a href="#ref-lifestyle" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:700;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);">C: ライフスタイル</a>
+      <a href="#ref-collection" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:700;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);">D: フラットレイ</a>
+      <a href="#ref-collab" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);text-decoration:none;font-size:11px;font-weight:700;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);">E: IPコラボ</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ REF A: FV/HERO ══════ -->
+<section id="ref-hero" class="section" style="background:#F0F6FB;">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num" style="background:#0F1923;">A</div>
+      <div class="section-label-text">FV / Hero Visual — 3パターン</div>
+    </div>
+    <h2>FV・ヒーローイメージ参考</h2>
+    <p class="section-desc">The WooblesのトップページFVとAboutページのブランドビジュアル。「世界観の出し方」の参考に。</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;">
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+        <div style="position:relative;overflow:hidden;background:#E8F4FB;">
+          <img src="https://thewoobles.com/cdn/shop/files/About_Us-hero_Desktop.png" alt="The Woobles About Us Hero Desktop" style="width:100%;display:block;object-fit:cover;height:200px;" onerror="this.parentElement.innerHTML='<div style=\'height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><span style=\'font-size:32px;\'>🌐</span><span style=\'font-size:11px;color:#94A3B8;font-weight:700;\'>thewoobles.com より</span></div>'">
+          <div style="position:absolute;top:10px;left:10px;background:rgba(15,25,35,0.75);border-radius:6px;padding:4px 10px;font-size:9px;font-weight:800;color:#fff;letter-spacing:0.1em;backdrop-filter:blur(4px);">PATTERN A-1</div>
+        </div>
+        <div style="padding:16px 18px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:4px;">Our Story ヒーロービジュアル（デスクトップ）</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:10px;">ブランドの世界観をFVで全面的に表現。人物＋キャラクターの組み合わせ。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px 12px;font-size:11px;color:#2C7DA0;line-height:1.6;">
+            💡 <strong>ameru転用：</strong>Love is...の世界観＋ずもっぴをFVで大きく見せる構図の参考に
+          </div>
+        </div>
+      </div>
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+        <div style="position:relative;overflow:hidden;background:#F0F9FF;">
+          <img src="https://thewoobles.com/cdn/shop/files/About_Us-BG_Desktop.png" alt="The Woobles About BG" style="width:100%;display:block;object-fit:cover;height:200px;" onerror="this.parentElement.innerHTML='<div style=\'height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><span style=\'font-size:32px;\'>🎨</span><span style=\'font-size:11px;color:#94A3B8;font-weight:700;\'>thewoobles.com より</span></div>'">
+          <div style="position:absolute;top:10px;left:10px;background:rgba(15,25,35,0.75);border-radius:6px;padding:4px 10px;font-size:9px;font-weight:800;color:#fff;letter-spacing:0.1em;backdrop-filter:blur(4px);">PATTERN A-2</div>
+        </div>
+        <div style="padding:16px 18px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:4px;">背景グラフィック — ブランド装飾パターン</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:10px;">カラフルなキャラクターをちりばめた背景デザイン。ページの世界観を底上げ。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px 12px;font-size:11px;color:#2C7DA0;line-height:1.6;">
+            💡 <strong>ameru転用：</strong>ハート・星・ずもっぴシルエットをLP背景にちりばめるデザイン手法
+          </div>
+        </div>
+      </div>
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+        <div style="position:relative;overflow:hidden;background:#FFF5F9;">
+          <img src="https://thewoobles.com/cdn/shop/files/About_Us-hero_Mobile.png" alt="The Woobles About Us Hero Mobile" style="width:100%;display:block;object-fit:cover;height:200px;" onerror="this.parentElement.innerHTML='<div style=\'height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><span style=\'font-size:32px;\'>📱</span><span style=\'font-size:11px;color:#94A3B8;font-weight:700;\'>thewoobles.com より</span></div>'">
+          <div style="position:absolute;top:10px;left:10px;background:rgba(15,25,35,0.75);border-radius:6px;padding:4px 10px;font-size:9px;font-weight:800;color:#fff;letter-spacing:0.1em;backdrop-filter:blur(4px);">PATTERN A-3</div>
+        </div>
+        <div style="padding:16px 18px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:4px;">モバイル向けヒーロービジュアル</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:10px;">スマホ縦長FVのトリミング・構図。縦長で何をどう見せるかの参考。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px 12px;font-size:11px;color:#2C7DA0;line-height:1.6;">
+            💡 <strong>ameru転用：</strong>モバイルFVでパッケージを縦長に大きく見せる構図設計の参考
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div style="padding:14px 18px;background:#FFF9E6;border-radius:10px;border-left:3px solid #F59E0B;font-size:12px;color:#78350F;">
+      ⚠️ 画像が表示されない場合はThe Wooblesサイトのアクセス制限によるものです。URLを直接ブラウザで開いて確認してください。
+    </div>
+  </div>
+</section>
+
+<!-- ══════ REF B: PRODUCT ══════ -->
+<section id="ref-product" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num" style="background:#0F1923;">B</div>
+      <div class="section-label-text">商品・完成品写真 — 5パターン</div>
+    </div>
+    <h2>商品・完成品の見せ方参考</h2>
+    <p class="section-desc">白背景×ソフトシャドウで完成品を際立たせる。ずもっぴ撮影の構図・品質基準として。</p>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;">
+
+      <div style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+        <div style="position:relative;background:#F8FAFB;">
+          <img src="https://thewoobles.com/cdn/shop/products/pierre_straight_40851ef3-0c8a-4f01-a3eb-1a55ef7c802a.jpg" alt="Pierre the Penguin" style="width:100%;display:block;aspect-ratio:1;object-fit:contain;padding:8px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" >
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🐧</span><span style="font-size:10px;color:#94A3B8;font-weight:700;text-align:center;">Pierre<br>the Penguin</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(15,25,35,0.7);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">B-1</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:var(--text-dark);margin-bottom:3px;">ペンギン 正面（白BG）</div>
+          <div style="font-size:10px;color:var(--text-light);line-height:1.5;">白背景×ソフトシャドウ。キャラ正面アップの基本形。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+        <div style="position:relative;background:#F8FAFB;">
+          <img src="https://thewoobles.com/cdn/shop/products/kiki_straight_ab4ae105-4d87-4c9e-866a-ea411377d6fb.jpg" alt="KiKi" style="width:100%;display:block;aspect-ratio:1;object-fit:contain;padding:8px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🐱</span><span style="font-size:10px;color:#94A3B8;font-weight:700;text-align:center;">KiKi</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(15,25,35,0.7);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">B-2</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:var(--text-dark);margin-bottom:3px;">KiKi 正面（統一スタイル）</div>
+          <div style="font-size:10px;color:var(--text-light);line-height:1.5;">シリーズ全体を統一フォーマットで撮影する見本。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+        <div style="position:relative;background:#F8FAFB;">
+          <img src="https://thewoobles.com/cdn/shop/files/SamTheSlothRetouched.jpg" alt="Sam the Sloth" style="width:100%;display:block;aspect-ratio:1;object-fit:contain;padding:8px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🦥</span><span style="font-size:10px;color:#94A3B8;font-weight:700;text-align:center;">Sam<br>the Sloth</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(15,25,35,0.7);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">B-3</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:var(--text-dark);margin-bottom:3px;">リタッチ済み完成品</div>
+          <div style="font-size:10px;color:var(--text-light);line-height:1.5;">プロ仕上げのリタッチ。色補正・影の処理の基準に。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+        <div style="position:relative;background:#F8FAFB;">
+          <img src="https://thewoobles.com/cdn/shop/files/11PA-PinyaThePineapple-FW-RVT1-WEB.jpg" alt="Pinya the Pineapple" style="width:100%;display:block;aspect-ratio:1;object-fit:contain;padding:8px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🍍</span><span style="font-size:10px;color:#94A3B8;font-weight:700;text-align:center;">Pinya<br>the Pineapple</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(15,25,35,0.7);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">B-4</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:var(--text-dark);margin-bottom:3px;">フルーツ系 カラフルキャラ</div>
+          <div style="font-size:10px;color:var(--text-light);line-height:1.5;">鮮やかな色のキャラを白背景で際立たせる手法。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+        <div style="position:relative;background:#F8FAFB;">
+          <img src="https://thewoobles.com/cdn/shop/files/11DO-03-MochiDonut-FW-RVT3-WEB.jpg" alt="Mochi Donut" style="width:100%;display:block;aspect-ratio:1;object-fit:contain;padding:8px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🍩</span><span style="font-size:10px;color:#94A3B8;font-weight:700;text-align:center;">Mochi<br>Donut</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(15,25,35,0.7);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">B-5</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:var(--text-dark);margin-bottom:3px;">もちドーナツ（女性向け系統）</div>
+          <div style="font-size:10px;color:var(--text-light);line-height:1.5;">フード×かわいいの組み合わせ。SNS映え系の構図。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 共通観察ポイント -->
+    <div style="background:#fff;border-radius:14px;padding:20px 24px;border:1px solid var(--border);">
+      <div style="font-size:11px;font-weight:800;letter-spacing:0.12em;color:var(--text-light);text-transform:uppercase;margin-bottom:14px;">5枚から読み取れる The Woobles の商品撮影ルール</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div style="padding:12px;background:#EBF8FF;border-radius:10px;font-size:12px;color:#1E40AF;"><strong>①白 or 薄い背景</strong><br>完全白or薄いグレー。キャラが主役になる。</div>
+        <div style="padding:12px;background:#EBF8FF;border-radius:10px;font-size:12px;color:#1E40AF;"><strong>②正面・アイレベル構図</strong><br>キャラの目線と同じ高さで正面から。</div>
+        <div style="padding:12px;background:#EBF8FF;border-radius:10px;font-size:12px;color:#1E40AF;"><strong>③ソフトシャドウ</strong><br>底面に薄い落ち影を付けることで浮き感を防ぐ。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ REF C: LIFESTYLE ══════ -->
+<section id="ref-lifestyle" class="section" style="background:#FAFAF7;">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num" style="background:#0F1923;">C</div>
+      <div class="section-label-text">ライフスタイル写真 — 4パターン</div>
+    </div>
+    <h2>ライフスタイルビジュアル参考</h2>
+    <p class="section-desc">「日常に溶け込む」生活感のある見せ方。スクリーンタイム削減・自己ケア訴求のビジュアル設計。</p>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:24px;">
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);display:grid;grid-template-columns:1fr 1fr;">
+        <div style="position:relative;background:#F0F9FF;overflow:hidden;">
+          <img src="https://thewoobles.com/cdn/shop/files/Wooble_CW-1.png" alt="Woobles lifestyle crochet" style="width:100%;display:block;height:200px;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:200px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:32px;">🧶</span><span style="font-size:10px;color:#94A3B8;font-weight:700;">制作シーン</span></div>
+          <div style="position:absolute;top:8px;left:8px;background:rgba(15,25,35,0.75);border-radius:5px;padding:3px 9px;font-size:9px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">C-1</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">編み物制作シーン</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:12px;">手作業・ハンドメイドの温かみを伝えるスタイル。プロ感を出しすぎない。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px;font-size:11px;color:#2C7DA0;line-height:1.6;">💡 かぎ針を持つ手元のアップ。生活感のある背景で「私にもできそう」感</div>
+        </div>
+      </div>
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);display:grid;grid-template-columns:1fr 1fr;">
+        <div style="position:relative;background:#FFF5F0;overflow:hidden;">
+          <img src="https://thewoobles.com/cdn/shop/files/11CM-JoetheCoffeeMug-FW-RCT4-RET.jpg" alt="Joe the Coffee Mug lifestyle" style="width:100%;display:block;height:200px;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:200px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:32px;">☕</span><span style="font-size:10px;color:#94A3B8;font-weight:700;">コーヒーマグ</span></div>
+          <div style="position:absolute;top:8px;left:8px;background:rgba(15,25,35,0.75);border-radius:5px;padding:3px 9px;font-size:9px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">C-2</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">コーヒー×キャラ ライフスタイル</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:12px;">日常の「コーヒータイム」とあみぐるみの組み合わせ。ほっこり感演出。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px;font-size:11px;color:#2C7DA0;line-height:1.6;">💡 ameruでも：コーヒー・本・ずもっぴを並べた「丁寧な暮らし」カット</div>
+        </div>
+      </div>
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);display:grid;grid-template-columns:1fr 1fr;">
+        <div style="position:relative;background:#F5F0FF;overflow:hidden;">
+          <img src="https://thewoobles.com/cdn/shop/files/Zero_To_Hero_Retouched.jpg" alt="Zero to Hero" style="width:100%;display:block;height:200px;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:200px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:32px;">🏆</span><span style="font-size:10px;color:#94A3B8;font-weight:700;">Zero to Hero</span></div>
+          <div style="position:absolute;top:8px;left:8px;background:rgba(15,25,35,0.75);border-radius:5px;padding:3px 9px;font-size:9px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">C-3</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">ゼロ→ヒーローの達成感演出</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:12px;">「できなかった→できた」を1枚の写真で表現するビフォーアフター系。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px;font-size:11px;color:#2C7DA0;line-height:1.6;">💡 完成品を誇らしげに持つ表情カット。fiero（達成感）の視覚化</div>
+        </div>
+      </div>
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);display:grid;grid-template-columns:1fr 1fr;">
+        <div style="position:relative;background:#F0FFF8;overflow:hidden;">
+          <img src="https://thewoobles.com/cdn/shop/files/11IG-PC-web.jpg" alt="Instagram UGC style" style="width:100%;display:block;height:200px;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:200px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:32px;">📸</span><span style="font-size:10px;color:#94A3B8;font-weight:700;">SNS UGC風</span></div>
+          <div style="position:absolute;top:8px;left:8px;background:rgba(15,25,35,0.75);border-radius:5px;padding:3px 9px;font-size:9px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">C-4</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">SNS投稿・コミュニティ感</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:12px;">Instagram的なUGCグリッド表示。「みんなが投稿してる」コミュニティ感。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px;font-size:11px;color:#2C7DA0;line-height:1.6;">💡 口コミセクションにUGC風写真を並べる構成。「#ずもっぴ作った」文化の醸成</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════ REF D: FLATLAY / BUNDLE ══════ -->
+<section id="ref-collection" class="section">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num" style="background:#0F1923;">D</div>
+      <div class="section-label-text">フラットレイ・バンドル写真 — 4パターン</div>
+    </div>
+    <h2>フラットレイ・バンドル展示参考</h2>
+    <p class="section-desc">「全部入ってる」「揃ってる美しさ」を見せるフラットレイとバンドル写真の構図設計。</p>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:24px;">
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+        <div style="position:relative;background:#F0F9F4;overflow:hidden;">
+          <img src="https://thewoobles.com/cdn/shop/files/88ESY-Bundle-PDP-Green-WEB.jpg" alt="Bundle Green" style="width:100%;display:block;height:240px;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:240px;align-items:center;justify-content:center;flex-direction:column;gap:8px;"><span style="font-size:36px;">📦</span><span style="font-size:11px;color:#94A3B8;font-weight:700;">Bundle Green</span></div>
+          <div style="position:absolute;top:10px;left:10px;background:rgba(15,25,35,0.75);border-radius:6px;padding:4px 10px;font-size:9px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">D-1</div>
+        </div>
+        <div style="padding:16px 20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:4px;">グリーンバンドル — 同梱物フラットレイ</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:10px;">パッケージ＋糸＋かぎ針を美しく配置。「全部入ってる」の安心感を視覚化。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px 12px;font-size:11px;color:#2C7DA0;line-height:1.6;">💡 <strong>最重要参考：</strong>ameruのPackage Showcaseセクションはこの構図を直接参照。スカイブルーバージョンで作る。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+        <div style="position:relative;background:#F5F0FF;overflow:hidden;">
+          <img src="https://thewoobles.com/cdn/shop/files/88CRU-Bundle-PDP-Violet-WEB.jpg" alt="Bundle Violet" style="width:100%;display:block;height:240px;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:240px;align-items:center;justify-content:center;flex-direction:column;gap:8px;"><span style="font-size:36px;">💜</span><span style="font-size:11px;color:#94A3B8;font-weight:700;">Bundle Violet</span></div>
+          <div style="position:absolute;top:10px;left:10px;background:rgba(15,25,35,0.75);border-radius:6px;padding:4px 10px;font-size:9px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">D-2</div>
+        </div>
+        <div style="padding:16px 20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:4px;">バイオレットバンドル — 色別展開</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:10px;">同じ構図・カラーバリエーションで展開。キット色変えだけで世界観が変わる。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px 12px;font-size:11px;color:#2C7DA0;line-height:1.6;">💡 ameruのNo.2〜5でキャラクターカラーが変わる際、同じ構図でシリーズ感を統一できる</div>
+        </div>
+      </div>
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+        <div style="position:relative;background:#FFF8F0;overflow:hidden;">
+          <img src="https://thewoobles.com/cdn/shop/files/88ZTH-ZeroToHeroBox-Front-RVT3-WEB.jpg" alt="Zero to Hero Box" style="width:100%;display:block;height:240px;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:240px;align-items:center;justify-content:center;flex-direction:column;gap:8px;"><span style="font-size:36px;">🎁</span><span style="font-size:11px;color:#94A3B8;font-weight:700;">Zero to Hero Box</span></div>
+          <div style="position:absolute;top:10px;left:10px;background:rgba(15,25,35,0.75);border-radius:6px;padding:4px 10px;font-size:9px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">D-3</div>
+        </div>
+        <div style="padding:16px 20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:4px;">ギフトボックス仕様 — プレミアム感</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:10px;">箱型パッケージの正面写真。ギフト訴求・プレゼント需要向けのビジュアル設計。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px 12px;font-size:11px;color:#2C7DA0;line-height:1.6;">💡 ameruのギフト訴求LPでパッケージをギフトボックス的に見せる際の参考</div>
+        </div>
+      </div>
+
+      <div style="border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+        <div style="position:relative;background:#F0F8FF;overflow:hidden;">
+          <img src="https://thewoobles.com/cdn/shop/files/All-Kits--1080x540_1.jpg" alt="All Kits" style="width:100%;display:block;height:240px;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:240px;align-items:center;justify-content:center;flex-direction:column;gap:8px;"><span style="font-size:36px;">🌈</span><span style="font-size:11px;color:#94A3B8;font-weight:700;">全キット一覧</span></div>
+          <div style="position:absolute;top:10px;left:10px;background:rgba(15,25,35,0.75);border-radius:6px;padding:4px 10px;font-size:9px;font-weight:800;color:#fff;backdrop-filter:blur(4px);">D-4</div>
+        </div>
+        <div style="padding:16px 20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:4px;">全キット横並び（ボリューム訴求）</div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.6;margin-bottom:10px;">全ラインナップを1枚で見せる。コレクション感・ブランドの厚みを演出。</div>
+          <div style="background:#EBF8FF;border-radius:8px;padding:10px 12px;font-size:11px;color:#2C7DA0;line-height:1.6;">💡 ameruのシリーズ5種を横並びにしたコレクションセクションの構図参考</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════ REF E: COLLAB ══════ -->
+<section id="ref-collab" class="section" style="background:#0F1923;">
+  <div class="container">
+    <div class="section-eyebrow">
+      <div class="section-num" style="background:var(--ameru-pink);">E</div>
+      <div class="section-label-text" style="color:var(--ameru-pink);">IPコラボビジュアル — 5パターン</div>
+    </div>
+    <h2 style="color:#fff;">IPコラボの見せ方参考</h2>
+    <p class="section-desc" style="color:rgba(255,255,255,0.4);">サンリオ・スポンジボブ・ハリポタ等の外部IPコラボビジュアルの構成。Love is...訴求の参考に。</p>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;">
+
+      <div style="border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);">
+        <div style="position:relative;overflow:hidden;background:rgba(255,110,180,0.1);">
+          <img src="https://thewoobles.com/cdn/shop/files/83SRY-SanrioYouHadMeAtHelloKitty-Bundle-GT2-WEB.jpg" alt="Sanrio Hello Kitty Collab" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🎀</span><span style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:700;text-align:center;">Sanrio<br>Hello Kitty</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(255,110,180,0.8);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;">E-1</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:3px;">サンリオ × Woobles</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);line-height:1.5;">IPのピンク世界観をそのまま活用した構成。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);">
+        <div style="position:relative;overflow:hidden;background:rgba(255,180,50,0.1);">
+          <img src="https://thewoobles.com/cdn/shop/files/83SPG-FromTheBikini_BottomOfOurHearts-Bundle-CT1-WEB.jpg" alt="SpongeBob Collab" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🧽</span><span style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:700;text-align:center;">SpongeBob<br>Collab</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(255,200,0,0.8);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#000;">E-2</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:3px;">スポンジボブ × Woobles</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);line-height:1.5;">IPのイエロー×ブルーをパッケージカラーに反映。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);">
+        <div style="position:relative;overflow:hidden;background:rgba(100,80,200,0.15);">
+          <img src="https://thewoobles.com/cdn/shop/files/HogwartsExpressCollectorsBox_12.jpg" alt="Harry Potter Collab" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">⚡</span><span style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:700;text-align:center;">Harry Potter<br>Collab</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(100,80,200,0.8);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;">E-3</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:3px;">ハリポタ コレクターズ</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);line-height:1.5;">プレミアム感のあるコレクターズボックス仕様。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);">
+        <div style="position:relative;overflow:hidden;background:rgba(255,150,180,0.1);">
+          <img src="https://thewoobles.com/cdn/shop/files/83LPO-MyLittlePonyWelcomeToPonyville-Bundle-RCT3-RET.jpg" alt="My Little Pony Collab" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🦄</span><span style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:700;text-align:center;">My Little Pony<br>Collab</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(255,150,180,0.8);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;">E-4</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:3px;">マイリトルポニー</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);line-height:1.5;">パステルIP×パステルパッケージの統一感。</div>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);">
+        <div style="position:relative;overflow:hidden;background:rgba(100,200,150,0.1);">
+          <img src="https://thewoobles.com/cdn/shop/files/83CBB-CareBears-Bundle-GT2-WEB2.jpg" alt="Care Bears Collab" style="width:100%;display:block;aspect-ratio:1;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;height:140px;align-items:center;justify-content:center;flex-direction:column;gap:6px;"><span style="font-size:28px;">🐻</span><span style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:700;text-align:center;">Care Bears<br>Collab</span></div>
+          <div style="position:absolute;top:6px;left:6px;background:rgba(100,200,150,0.8);border-radius:4px;padding:3px 8px;font-size:8px;font-weight:800;color:#fff;">E-5</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:3px;">ケアベアーズ</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);line-height:1.5;">複数キャラバンドルの見せ方。全色揃えたくなる。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- IPコラボから読む共通法則 -->
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:0.15em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:16px;">5つのIPコラボから読み取れる共通法則 → ameru×Love is...に転用</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div style="padding:14px;background:rgba(255,110,180,0.1);border-radius:10px;border:1px solid rgba(255,110,180,0.2);">
+          <div style="font-size:12px;font-weight:800;color:var(--ameru-pink);margin-bottom:4px;">① IPのカラーをパッケージに反映</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);">サンリオ=ピンク、ハリポタ=パープル。ameruはLove is...のブルーをそのまま使う。✅ 既に実装済み</div>
+        </div>
+        <div style="padding:14px;background:rgba(41,182,232,0.1);border-radius:10px;border:1px solid rgba(41,182,232,0.2);">
+          <div style="font-size:12px;font-weight:800;color:var(--ameru-blue);margin-bottom:4px;">② IPの世界観コピーをタイトルに</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);">「You Had Me At Hello Kitty」「From the Bikini Bottom of Our Hearts」。コピーでIPへの愛を言語化。</div>
+        </div>
+        <div style="padding:14px;background:rgba(255,255,255,0.05);border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
+          <div style="font-size:12px;font-weight:800;color:#fff;margin-bottom:4px;">③ コレクターズボックスでプレミアム化</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);">人気IPは通常キット→コレクターズボックスへアップグレード。ギフト需要×高単価を両立。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- REF F: 糸の質感・テクスチャー表現                          -->
+<!-- ============================================================ -->
+<section id="ref-f" style="padding:60px 40px;background:linear-gradient(135deg,#0d1117 0%,#1a1f2e 100%);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:inline-block;background:linear-gradient(90deg,#FFD166,#FF9F1C);padding:6px 16px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:0.15em;color:#000;margin-bottom:16px;">REF F — YARN TEXTURE 糸の質感表現</div>
+    <h2 style="font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">糸そのものをビジュアルの主役にする</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px;">The Wooblesは「Easy Peasy Yarn」という商品名で糸自体を訴求。色・ふわふわ感・バリエーションを視覚的に証明している。</p>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:32px;">
+      <!-- F-1 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:10px;left:10px;background:#FFD166;color:#000;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;">F-1</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/2-WOOB015_Easy-Peasy-Yarn_FO_f5263bef-1f65-474e-884b-ffacc2a16c81.jpg" alt="Easy Peasy Yarn" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:40px;">🧶</div>
+        </div>
+        <div style="padding:14px;">
+          <div style="font-size:11px;font-weight:800;color:#FFD166;margin-bottom:4px;">Easy Peasy Yarn — 糸単体を主役に</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);line-height:1.5;">スプール状の糸玉を正面撮影。トップライトで繊維が光を拾いふわふわ感を強調。白背景でテクスチャーを際立たせる</div>
+          <div style="margin-top:10px;padding:8px;background:rgba(41,182,232,0.1);border-radius:8px;border-left:2px solid #29B6E8;">
+            <div style="font-size:9px;font-weight:800;color:#29B6E8;margin-bottom:2px;">ameru応用</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">ずもっぴの糸（スカイブルー）を単体撮影。「やわらか糸使用」コピーと組み合わせる</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- F-2 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:10px;left:10px;background:#FFD166;color:#000;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;">F-2</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/3-WOOB015_Kits-compared_FO_1c054ee6-af41-4338-8e0b-7656b2c0b7d3.jpg" alt="Kits compared" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:40px;">🌈</div>
+        </div>
+        <div style="padding:14px;">
+          <div style="font-size:11px;font-weight:800;color:#FFD166;margin-bottom:4px;">Kits Compared — 色の多様性をグリッドで</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);line-height:1.5;">真俯瞰（真上から）撮影。複数キットを統一グリッドで並べ、色の豊かさをフラットレイで証明</div>
+          <div style="margin-top:10px;padding:8px;background:rgba(41,182,232,0.1);border-radius:8px;border-left:2px solid #29B6E8;">
+            <div style="font-size:9px;font-weight:800;color:#29B6E8;margin-bottom:2px;">ameru応用</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">シリーズ5作のキットを並べたコレクション全景。「5つ集めたい」欲求を視覚化</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- F-3 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:10px;left:10px;background:#FFD166;color:#000;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;">F-3</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/33PC-ReginaldThePeacock-FW-RVT3-WEB.jpg" alt="Peacock multicolor" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:40px;">🦚</div>
+        </div>
+        <div style="padding:14px;">
+          <div style="font-size:11px;font-weight:800;color:#FFD166;margin-bottom:4px;">多色糸 — 1体で色の組み合わせを証明</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);line-height:1.5;">複数色の糸を1体で使用するキャラを見せることで、糸の発色と組み合わせ可能性を体現</div>
+          <div style="margin-top:10px;padding:8px;background:rgba(41,182,232,0.1);border-radius:8px;border-left:2px solid #29B6E8;">
+            <div style="font-size:9px;font-weight:800;color:#29B6E8;margin-bottom:2px;">ameru応用</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">ずもっぴのスカイブルー×ホワイトの2色使いを完成品で証明</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- F-4 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:10px;left:10px;background:#FFD166;color:#000;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;">F-4</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/11FW-WillowTheFawn-FW-YOT1-WEB.jpg" alt="Warm tone yarn" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:40px;">🦌</div>
+        </div>
+        <div style="padding:14px;">
+          <div style="font-size:11px;font-weight:800;color:#FFD166;margin-bottom:4px;">YOT（イエローオレンジトーン）背景 — 温かみ演出</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);line-height:1.5;">糸色（ブラウン系）に合わせたウォームトーン背景。背景と糸の色調統一でナチュラルな温かみを演出</div>
+          <div style="margin-top:10px;padding:8px;background:rgba(41,182,232,0.1);border-radius:8px;border-left:2px solid #29B6E8;">
+            <div style="font-size:9px;font-weight:800;color:#29B6E8;margin-bottom:2px;">ameru応用</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">ずもっぴ×スカイブルー背景（CT系）。Love is...コラボ特有の空色世界観に統一</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 背景色コーディネートシステム解説 -->
+    <div style="background:rgba(255,209,102,0.08);border:1px solid rgba(255,209,102,0.2);border-radius:16px;padding:20px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;color:#FFD166;margin-bottom:12px;">🎨 The Woobles 背景色コーディネートシステム（ameruに転用可能）</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+        <div style="text-align:center;padding:10px;background:rgba(100,160,255,0.1);border-radius:8px;"><div style="width:28px;height:28px;background:#6AABDE;border-radius:50%;margin:0 auto 6px;"></div><div style="font-size:10px;font-weight:700;color:#fff;">CT4</div><div style="font-size:9px;color:rgba(255,255,255,0.5);">コールドトーン</div></div>
+        <div style="text-align:center;padding:10px;background:rgba(167,139,250,0.1);border-radius:8px;"><div style="width:28px;height:28px;background:#A78BFA;border-radius:50%;margin:0 auto 6px;"></div><div style="font-size:10px;font-weight:700;color:#fff;">RVT3</div><div style="font-size:9px;color:rgba(255,255,255,0.5);">ラベンダー</div></div>
+        <div style="text-align:center;padding:10px;background:rgba(255,159,28,0.1);border-radius:8px;"><div style="width:28px;height:28px;background:#FF9F1C;border-radius:50%;margin:0 auto 6px;"></div><div style="font-size:10px;font-weight:700;color:#fff;">YOT1</div><div style="font-size:9px;color:rgba(255,255,255,0.5);">イエローオレンジ</div></div>
+        <div style="text-align:center;padding:10px;background:rgba(6,214,160,0.1);border-radius:8px;"><div style="width:28px;height:28px;background:#06D6A0;border-radius:50%;margin:0 auto 6px;"></div><div style="font-size:10px;font-weight:700;color:#fff;">GT2</div><div style="font-size:9px;color:rgba(255,255,255,0.5);">グリーントーン</div></div>
+        <div style="text-align:center;padding:10px;background:rgba(255,107,107,0.1);border-radius:8px;"><div style="width:28px;height:28px;background:#FF6B6B;border-radius:50%;margin:0 auto 6px;"></div><div style="font-size:10px;font-weight:700;color:#fff;">OT1</div><div style="font-size:9px;color:rgba(255,255,255,0.5);">オレンジ</div></div>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:rgba(255,255,255,0.5);">💡 ameruはずもっぴの糸色（スカイブルー）に合わせて <strong style="color:#29B6E8;">CT（コールドトーン）系</strong> を基本背景色に採用推奨。Love is...の空色世界観とも完全一致。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- REF G: かぎ針の見せ方（Hook ショット解剖）                  -->
+<!-- ============================================================ -->
+<section id="ref-g" style="padding:60px 40px;background:#0a0e1a;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:inline-block;background:linear-gradient(90deg,#06D6A0,#1DB954);padding:6px 16px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:0.15em;color:#000;margin-bottom:16px;">REF G — HOOK SHOT かぎ針ショット解剖</div>
+    <h2 style="font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">「かぎ針が入ってる」を視覚で証明する</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px;">The Wooblesは全商品に必ず「Hookショット」を用意。目的は「かぎ針の高級感」ではなく「全部揃ってる安心感」を初心者に伝えること。</p>
+    <div style="display:inline-block;padding:8px 16px;background:rgba(6,214,160,0.1);border:1px solid rgba(6,214,160,0.3);border-radius:8px;font-size:11px;color:#06D6A0;margin-bottom:32px;">⚡ 全製品のファイル名に「Hook」が含まれる → ameruも全キットに同テンプレート導入を推奨</div>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;">
+      <!-- G-1 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#06D6A0;color:#000;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">G-1</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/33DA-RainbowDash-Hook-CT4-RET.jpg" alt="Hook shot Rainbow Dash" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">🪝</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#06D6A0;margin-bottom:3px;">CT4 コールドトーン</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">完成品+かぎ針+糸玉の三点セット。冷色背景でスッキリした印象</div>
+        </div>
+      </div>
+
+      <!-- G-2 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#06D6A0;color:#000;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">G-2</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/33TW-TwilightSparkles-Hook-RVT3-RET.jpg" alt="Hook shot Twilight" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">🪝</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#06D6A0;margin-bottom:3px;">RVT3 ラベンダー</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">ラベンダー背景でやわらかいガーリーな印象。IP世界観と連動</div>
+        </div>
+      </div>
+
+      <!-- G-3 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#06D6A0;color:#000;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">G-3</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/33AJ-Applejack-Hook-OT1-RET.jpg" alt="Hook shot Applejack" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">🪝</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#06D6A0;margin-bottom:3px;">OT1 オレンジトーン</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">ウォームな印象。農場・自然系キャラに合わせた温かみのある色調</div>
+        </div>
+      </div>
+
+      <!-- G-4 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#06D6A0;color:#000;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">G-4</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/33BY-Bluey-Hook-CT4-RET.jpg" alt="Hook shot Bluey" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">🪝</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#06D6A0;margin-bottom:3px;">IP（Bluey）コラボでも同テンプレ</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">IPが変わっても撮影テンプレは統一。ブランド一貫性を保つ重要ポイント</div>
+        </div>
+      </div>
+
+      <!-- G-5 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#06D6A0;color:#000;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">G-5</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/55BRA-CB1-SweetsCharmBracelet-Hook-GT3-RET.jpg" alt="Hook shot charm" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">🪝</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#06D6A0;margin-bottom:3px;">アクセサリー針（細針）の見せ方</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">異なるツールが必要な商品は「違いを見せる」こともHookショットの役割</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hookショット構成図 -->
+    <div style="margin-top:24px;background:rgba(6,214,160,0.06);border:1px solid rgba(6,214,160,0.2);border-radius:16px;padding:20px;">
+      <div style="font-size:11px;font-weight:800;color:#06D6A0;margin-bottom:14px;">📐 The Woobles Hookショット 構成の法則</div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+        <div style="padding:10px 16px;background:rgba(255,255,255,0.05);border-radius:8px;text-align:center;min-width:100px;">
+          <div style="font-size:20px;margin-bottom:4px;">🧸</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">完成品</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">やや斜め上から</div>
+        </div>
+        <div style="font-size:20px;color:rgba(255,255,255,0.3);">+</div>
+        <div style="padding:10px 16px;background:rgba(255,255,255,0.05);border-radius:8px;text-align:center;min-width:100px;">
+          <div style="font-size:20px;margin-bottom:4px;">🪡</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">糸玉</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">使う糸の色で</div>
+        </div>
+        <div style="font-size:20px;color:rgba(255,255,255,0.3);">+</div>
+        <div style="padding:10px 16px;background:rgba(255,255,255,0.05);border-radius:8px;text-align:center;min-width:100px;">
+          <div style="font-size:20px;margin-bottom:4px;">🪝</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">かぎ針</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">シンプルに</div>
+        </div>
+        <div style="font-size:20px;color:rgba(255,255,255,0.3);">=</div>
+        <div style="padding:10px 16px;background:rgba(6,214,160,0.15);border:1px solid rgba(6,214,160,0.3);border-radius:8px;text-align:center;min-width:140px;">
+          <div style="font-size:20px;margin-bottom:4px;">✅</div>
+          <div style="font-size:10px;font-weight:700;color:#06D6A0;">全部揃ってる安心感</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">初心者への心理的ハードル解除</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- REF H: 動画・GIF表現パターン                                -->
+<!-- ============================================================ -->
+<section id="ref-h" style="padding:60px 40px;background:linear-gradient(135deg,#0d1117 0%,#1a1f2e 100%);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:inline-block;background:linear-gradient(90deg,#FF6B9D,#FF4757);padding:6px 16px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:0.15em;color:#fff;margin-bottom:16px;">REF H — VIDEO & GIF MOTION 動画・GIF表現</div>
+    <h2 style="font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">動きのあるビジュアルでスクロールを止める</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px;">The WooblesはPDPにGIFを複数埋め込み。静止画では伝えられない「動く可愛さ」「ミステリー感」「UGCリアリティ」を演出している。</p>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:24px;">
+      <!-- H-1 UGC GIF -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:16/9;background:#1e2433;overflow:hidden;">
+          <span style="position:absolute;top:10px;left:10px;background:#FF6B9D;color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;">H-1 UGC風GIF</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/ORGANIC_April_Fools_UGC_PDP_Gif.gif" alt="UGC GIF" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:48px;">🎬</div>
+        </div>
+        <div style="padding:16px;">
+          <div style="font-size:12px;font-weight:800;color:#FF6B9D;margin-bottom:6px;">ORGANIC UGC GIF — 意図的な「素人感」</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:10px;">「ORGANIC_UGC」という命名が示す通り、意図的に素人っぽく作り込んだGIF。プロ感を下げることで「私にもできる」感を醸成。</div>
+          <div style="padding:8px 12px;background:rgba(255,107,157,0.1);border-radius:8px;border-left:2px solid #FF6B9D;">
+            <div style="font-size:10px;font-weight:800;color:#FF6B9D;margin-bottom:2px;">ameru応用</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">お客様の完成品動画をリポスト。SNSで実際に届いた投稿をLP内にGIF化して埋め込む</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- H-2 Mystery GIF -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:16/9;background:#1e2433;overflow:hidden;">
+          <span style="position:absolute;top:10px;left:10px;background:#FF6B9D;color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;">H-2 ミステリー回転GIF</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/11MY-CAT-RotatingCats-BGT4-GIF.gif" alt="Rotating cats GIF" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:48px;">🎡</div>
+        </div>
+        <div style="padding:16px;">
+          <div style="font-size:12px;font-weight:800;color:#FF6B9D;margin-bottom:6px;">回転するキャラGIF — ガチャ感でコレクター欲を刺激</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:10px;">複数キャラがくるくる回転。「どのキャラが届くかわからない」ミステリー感でコレクター欲を視覚的に演出。</div>
+          <div style="padding:8px 12px;background:rgba(255,107,157,0.1);border-radius:8px;border-left:2px solid #FF6B9D;">
+            <div style="font-size:10px;font-weight:800;color:#FF6B9D;margin-bottom:2px;">ameru応用</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">シリーズ5種を回転GIFで。「次回はどのキャラ？」→ F2継続欲求を視覚化</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- H-3 Flatlay GIF -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:16/9;background:#1e2433;overflow:hidden;">
+          <span style="position:absolute;top:10px;left:10px;background:#FF6B9D;color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;">H-3 フラットレイGIF</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/11MY-CAT-RotatingFlatlays-BGT4-GIF.gif" alt="Rotating flatlays GIF" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:48px;">📸</div>
+        </div>
+        <div style="padding:16px;">
+          <div style="font-size:12px;font-weight:800;color:#FF6B9D;margin-bottom:6px;">フラットレイ回転GIF — セット内容をアニメで見せる</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:10px;">複数バリエーションのフラットレイを順番に表示。「こんなに色の種類がある」を動的に証明。</div>
+          <div style="padding:8px 12px;background:rgba(255,107,157,0.1);border-radius:8px;border-left:2px solid #FF6B9D;">
+            <div style="font-size:10px;font-weight:800;color:#FF6B9D;margin-bottom:2px;">ameru応用</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">キットの中身（糸・針・説明書等）を順に見せるGIF。「全部入ってる」の視覚的証明</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- H-4 Main PDP GIF -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:16/9;background:#1e2433;overflow:hidden;">
+          <span style="position:absolute;top:10px;left:10px;background:#FF6B9D;color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;z-index:2;">H-4 メインPDPアニメ</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/MainPDP-GIF.gif" alt="Main PDP GIF" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:48px;">✨</div>
+        </div>
+        <div style="padding:16px;">
+          <div style="font-size:12px;font-weight:800;color:#FF6B9D;margin-bottom:6px;">PDP用GIF — 完成品が動くことで「生き物感」を演出</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:10px;">静止画でなくGIFにすることで、SNS的な「動き」をECページにも導入。ページ滞在時間増加と「欲しい」感情の増幅。</div>
+          <div style="padding:8px 12px;background:rgba(255,107,157,0.1);border-radius:8px;border-left:2px solid #FF6B9D;">
+            <div style="font-size:10px;font-weight:800;color:#FF6B9D;margin-bottom:2px;">ameru応用</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">ずもっぴが少し揺れる/瞬きするGIFをFVに。「動くとより可愛い」でSNSシェア誘発</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 動画パターン一覧 -->
+    <div style="background:rgba(255,107,157,0.06);border:1px solid rgba(255,107,157,0.2);border-radius:16px;padding:20px;">
+      <div style="font-size:11px;font-weight:800;color:#FF6B9D;margin-bottom:14px;">🎬 The Woobles 動画フックパターン（TikTok/Instagram Reels）</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div style="padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;">
+          <div style="font-size:10px;font-weight:800;color:#fff;margin-bottom:4px;">① チャレンジ型</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">「Can you crochet this in 60 seconds?」スピード感で離脱防止。タイムラプス編集が多い</div>
+        </div>
+        <div style="padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;">
+          <div style="font-size:10px;font-weight:800;color:#fff;margin-bottom:4px;">② 開封→完成 30秒ループ</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">箱を開ける→材料広げる→編む→完成ドーン。「30秒で全体像がわかる」設計</div>
+        </div>
+        <div style="padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;">
+          <div style="font-size:10px;font-weight:800;color:#fff;margin-bottom:4px;">③ 静→動コントラスト</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">完成品の静止→くるっと向きを変える動き→キャラ名テキスト表示。シンプルだが目を引く</div>
+        </div>
+        <div style="padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;">
+          <div style="font-size:10px;font-weight:800;color:#fff;margin-bottom:4px;">④ ビフォーアフター型</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">「初めて触ったのに1時間でできた」系。完成前後の劇的変化を30秒に圧縮。UGC再現系</div>
+        </div>
+        <div style="padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;">
+          <div style="font-size:10px;font-weight:800;color:#fff;margin-bottom:4px;">⑤ ASMR系</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">編む音・糸が通る音をクローズアップ。「手作りの気持ちよさ」を音で伝える。BGMなし</div>
+        </div>
+        <div style="padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;">
+          <div style="font-size:10px;font-weight:800;color:#fff;margin-bottom:4px;">⑥ フィエロ瞬間切り抜き</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">「完成した！」の瞬間の表情クローズアップ。達成感の感情フックが最も強い。ameruのFV訴求と直結</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- REF I: バナー訴求 8パターン                                 -->
+<!-- ============================================================ -->
+<section id="ref-i" style="padding:60px 40px;background:#0a0e1a;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:inline-block;background:linear-gradient(90deg,#A78BFA,#7C3AED);padding:6px 16px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:0.15em;color:#fff;margin-bottom:16px;">REF I — BANNER PATTERNS バナー訴求パターン</div>
+    <h2 style="font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">The Woobles バナー訴求8パターン全解剖</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px;">商品が写ってるかどうかを問わず、どんな「見せ方」で訴求しているかをパターン分類。ameruのバナー制作の型として活用。</p>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+      <!-- I-1 完成品メイン -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#A78BFA;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">I-1</span>
+          <span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:8px;padding:2px 6px;border-radius:6px;z-index:2;">完成品メイン</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/X33DT-DerpyTiger-FW-BS2-WEB.jpg" alt="Finished work main" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">🐯</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#A78BFA;margin-bottom:3px;">① 完成品メイン（FWショット）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">完成キャラを正面から。「こんな可愛いものができる」欲求を喚起。最も多用されるパターン</div>
+        </div>
+      </div>
+
+      <!-- I-2 フラットレイ -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#A78BFA;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">I-2</span>
+          <span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:8px;padding:2px 6px;border-radius:6px;z-index:2;">フラットレイ</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/X33DT-DerpyTiger-Flatlay-BS2-WEB.jpg" alt="Flatlay" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">📦</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#A78BFA;margin-bottom:3px;">② フラットレイ（セット全展開）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">真俯瞰で材料一式を配置。「全部入ってる」安心感訴求。購入障壁を一撃で下げる</div>
+        </div>
+      </div>
+
+      <!-- I-3 45度角 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#A78BFA;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">I-3</span>
+          <span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:8px;padding:2px 6px;border-radius:6px;z-index:2;">45度ショット</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/X33DT-DerpyTiger-34-BS2-WEB.jpg" alt="34 shot" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">📐</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#A78BFA;margin-bottom:3px;">③ 45度斜め（3/4ショット）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">斜め45度から撮影。立体感が出てキャラの「顔」が見える。FWとは異なる角度で多様性確保</div>
+        </div>
+      </div>
+
+      <!-- I-4 バックショット -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#A78BFA;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">I-4</span>
+          <span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:8px;padding:2px 6px;border-radius:6px;z-index:2;">バック</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/X33DT-DerpyTiger-Back-BS2-WEB.jpg" alt="Back shot" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">🔄</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#A78BFA;margin-bottom:3px;">④ 背面ショット（Back）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">背面のディテールを見せる。「後ろもこだわってる」という手作りのこだわりを証明</div>
+        </div>
+      </div>
+
+      <!-- I-5 バンドル -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#A78BFA;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">I-5</span>
+          <span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:8px;padding:2px 6px;border-radius:6px;z-index:2;">バンドル</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/83LPO-MyLittlePonyWelcomeToPonyville-Bundle-RCT3-RET.jpg" alt="Bundle" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">🎁</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#A78BFA;margin-bottom:3px;">⑤ バンドル・ギフト訴求</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">複数キャラを1枚に。「友達と一緒に」「ギフトに最適」訴求。高単価化とLTV向上に直結</div>
+        </div>
+      </div>
+
+      <!-- I-6 キット比較 -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#A78BFA;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">I-6</span>
+          <span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:8px;padding:2px 6px;border-radius:6px;z-index:2;">ライン比較</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/3-WOOB015_Kits-compared_FO_1c054ee6-af41-4338-8e0b-7656b2c0b7d3.jpg" alt="Kits compared" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">📊</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#A78BFA;margin-bottom:3px;">⑥ ラインナップ比較型</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">全商品を横並び比較。「どれが自分に合うか」の選択肢を視覚化。コレクション欲を刺激</div>
+        </div>
+      </div>
+
+      <!-- I-7 テキストバナー -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#A78BFA;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">I-7</span>
+          <span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:8px;padding:2px 6px;border-radius:6px;z-index:2;">テキスト型</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/4-PDP-Banner1x1_V1_bdb986e6-fb9c-4d1a-b0c5-eab08f549553.png" alt="Text banner" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">📝</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#A78BFA;margin-bottom:3px;">⑦ テキスト強調型バナー</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">PDP Banner 1:1 正方形。コピーを大きく見せる。「失敗しない理由」を言語で証明するタイプ</div>
+        </div>
+      </div>
+
+      <!-- I-8 IPコラボ -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;">
+        <div style="position:relative;aspect-ratio:1;background:#1e2433;">
+          <span style="position:absolute;top:8px;left:8px;background:#A78BFA;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:8px;z-index:2;">I-8</span>
+          <span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:#fff;font-size:8px;padding:2px 6px;border-radius:6px;z-index:2;">IPコラボ</span>
+          <img src="https://cdn.shopify.com/s/files/1/0400/0904/0038/files/33BY-Bluey-FW-CT4-WEB.jpg" alt="IP collab" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;align-items:center;justify-content:center;height:100%;font-size:32px;">⭐</div>
+        </div>
+        <div style="padding:10px;">
+          <div style="font-size:10px;font-weight:800;color:#A78BFA;margin-bottom:3px;">⑧ IPコラボ訴求型</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">既存IP（Bluey等）で既存ファンへ直接リーチ。「好きなキャラが作れる」が最強のフック</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ameru 5ショットテンプレート推奨 -->
+    <div style="background:linear-gradient(135deg,rgba(167,139,250,0.1),rgba(124,58,237,0.1));border:1px solid rgba(167,139,250,0.3);border-radius:16px;padding:24px;">
+      <div style="font-size:12px;font-weight:800;color:#A78BFA;margin-bottom:16px;">📋 ameru 推奨撮影テンプレート（The Woobles方式を転用）</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.06);border-radius:10px;border:1px solid rgba(167,139,250,0.2);text-align:center;">
+          <div style="font-size:16px;margin-bottom:4px;">📸</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">Shot A</div>
+          <div style="font-size:9px;color:#A78BFA;font-weight:700;">FW（完成品正面）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">MUST</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.06);border-radius:10px;border:1px solid rgba(167,139,250,0.2);text-align:center;">
+          <div style="font-size:16px;margin-bottom:4px;">📐</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">Shot B</div>
+          <div style="font-size:9px;color:#A78BFA;font-weight:700;">34（45度斜め）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">MUST</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.06);border-radius:10px;border:1px solid rgba(167,139,250,0.2);text-align:center;">
+          <div style="font-size:16px;margin-bottom:4px;">🔝</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">Shot C</div>
+          <div style="font-size:9px;color:#A78BFA;font-weight:700;">Flatlay（真俯瞰）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">MUST</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.06);border-radius:10px;border:1px solid rgba(167,139,250,0.2);text-align:center;">
+          <div style="font-size:16px;margin-bottom:4px;">🪝</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">Shot D</div>
+          <div style="font-size:9px;color:#A78BFA;font-weight:700;">Hook（針+糸+完成品）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">MUST</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.06);border-radius:10px;border:1px solid rgba(167,139,250,0.2);text-align:center;">
+          <div style="font-size:16px;margin-bottom:4px;">🔄</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">Shot E</div>
+          <div style="font-size:9px;color:#A78BFA;font-weight:700;">Back（背面）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">WANT</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,110,180,0.1);border-radius:10px;border:1px solid rgba(255,110,180,0.3);text-align:center;">
+          <div style="font-size:16px;margin-bottom:4px;">✋</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">Shot F</div>
+          <div style="font-size:9px;color:#FF6EB4;font-weight:700;">Hands（編む手元）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">WANT</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,110,180,0.1);border-radius:10px;border:1px solid rgba(255,110,180,0.3);text-align:center;">
+          <div style="font-size:16px;margin-bottom:4px;">🎬</div>
+          <div style="font-size:10px;font-weight:700;color:#fff;">Shot G</div>
+          <div style="font-size:9px;color:#FF6EB4;font-weight:700;">GIF（くるくる回転）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">WANT</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:10px;color:rgba(255,255,255,0.4);">背景色はずもっぴ（スカイブルー）に合わせて CT（コールドトーン）系統一推奨。全Shot同一背景色でブランド一貫性を保つ。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- REF J: Love is... IPビジュアル世界観（調査中プレースホルダー）-->
+<!-- ============================================================ -->
+<section id="ref-j" style="padding:60px 40px;background:linear-gradient(135deg,#0d1117 0%,#1a253a 100%);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:inline-block;background:linear-gradient(90deg,#FF6B9D,#FFD166);padding:6px 16px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:0.15em;color:#000;margin-bottom:16px;">REF J — LOVE IS... IP WORLD VISION</div>
+    <h2 style="font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">Love is... の世界観 × ameruへの転用</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px;">1970年Kim Grove創作。2人の小さな子供が愛を表現するシンプルな線画コミック。50年以上愛されるIPの本質とameruへの応用を解剖。</p>
+
+    <!-- ブランド本質 -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px;">
+      <div style="background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:16px;padding:20px;">
+        <div style="font-size:24px;margin-bottom:10px;">🎨</div>
+        <div style="font-size:13px;font-weight:800;color:#FF6B9D;margin-bottom:8px;">ビジュアルスタイル</div>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・シンプルな線画（輪郭のみ）</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・クリーム〜ベージュの暖かいベース</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・最小限の色数（2〜3色）</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・テキストが絵と同等の役割</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;">・余白が多く清潔感がある</li>
+        </ul>
+      </div>
+      <div style="background:rgba(255,209,102,0.08);border:1px solid rgba(255,209,102,0.2);border-radius:16px;padding:20px;">
+        <div style="font-size:24px;margin-bottom:10px;">💬</div>
+        <div style="font-size:13px;font-weight:800;color:#FFD166;margin-bottom:8px;">コピーパターン</div>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">「Love is... never having to say sorry」</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">「Love is... being there」</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">「Love is... sharing your umbrella」</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">「Love is... making something for them」</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;">「Love is... the little things」</li>
+        </ul>
+      </div>
+      <div style="background:rgba(41,182,232,0.08);border:1px solid rgba(41,182,232,0.2);border-radius:16px;padding:20px;">
+        <div style="font-size:24px;margin-bottom:10px;">💡</div>
+        <div style="font-size:13px;font-weight:800;color:#29B6E8;margin-bottom:8px;">ameru応用コピー案</div>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">「Love is... 手で作ること」</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">「Love is... あなたのために編むこと」</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">「Love is... はじめてでもできること」</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">「Love is... 完成した瞬間の笑顔」</li>
+          <li style="font-size:11px;color:rgba(255,255,255,0.7);padding:4px 0;">「Love is... ずもっぴを作ること」</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Love is...カラーとameru適用 -->
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:0.1em;margin-bottom:16px;">LOVE IS... × ameru カラーシステム統合（リサーチ確定値）</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+        <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:10px;">
+          <div style="width:36px;height:36px;background:#F5E6D3;border-radius:50%;margin:0 auto 6px;border:1px solid rgba(255,255,255,0.2);"></div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">クリームベージュ（ベース）</div>
+          <div style="font-size:9px;font-weight:700;color:#fff;">#F5E6D3</div>
+        </div>
+        <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:10px;">
+          <div style="width:36px;height:36px;background:#FFB6C1;border-radius:50%;margin:0 auto 6px;"></div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">ライトピンク</div>
+          <div style="font-size:9px;font-weight:700;color:#fff;">#FFB6C1</div>
+        </div>
+        <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:10px;">
+          <div style="width:36px;height:36px;background:#FF8C94;border-radius:50%;margin:0 auto 6px;"></div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">コーラルピンク（強調）</div>
+          <div style="font-size:9px;font-weight:700;color:#fff;">#FF8C94</div>
+        </div>
+        <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:10px;">
+          <div style="width:36px;height:36px;background:#4A3728;border-radius:50%;margin:0 auto 6px;"></div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.5);">ウォームブラウン（線画）</div>
+          <div style="font-size:9px;font-weight:700;color:#fff;">#4A3728</div>
+        </div>
+        <div style="font-size:20px;color:rgba(255,255,255,0.3);">×</div>
+        <div style="text-align:center;padding:12px 16px;background:rgba(41,182,232,0.1);border-radius:10px;border:1px solid rgba(41,182,232,0.3);">
+          <div style="width:36px;height:36px;background:#29B6E8;border-radius:50%;margin:0 auto 6px;"></div>
+          <div style="font-size:9px;color:#29B6E8;">ameru スカイブルー</div>
+          <div style="font-size:9px;font-weight:700;color:#fff;">#29B6E8</div>
+        </div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.3);">→</div>
+        <div style="padding:12px 20px;background:linear-gradient(135deg,rgba(245,230,211,0.12),rgba(41,182,232,0.12));border:1px solid rgba(255,255,255,0.2);border-radius:10px;">
+          <div style="font-size:10px;font-weight:800;color:#fff;margin-bottom:4px;">✅ 相性Good（リサーチ確認済み）</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.6);">ベージュ（暖）×スカイブルー（涼）の<br>補完関係。衝突なし。清潔感と<br>温かみを両立できる組み合わせ</div>
+        </div>
+      </div>
+      <div style="padding:10px 14px;background:rgba(255,140,100,0.1);border:1px solid rgba(255,140,100,0.2);border-radius:8px;font-size:10px;color:rgba(255,255,255,0.6);">⚠️ <strong style="color:#FF8C94;">禁止色</strong>: 寒色グレー・高彩度ビビッド色・真っ黒背景。Love is...は常にウォームトーンで統一。ameruのダークUI（#0a0e1a等）はLP専用、Love is...コラボパーツには適用しない</div>
+    </div>
+
+    <!-- コピーパターン実例 -->
+    <div style="background:rgba(255,182,193,0.06);border:1px solid rgba(255,182,193,0.2);border-radius:16px;padding:20px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:800;color:#FFB6C1;margin-bottom:14px;">💬 Love is... コピーパターン実例（構文：Love is... + 動名詞/名詞句）</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:8px;border-left:2px solid #FFB6C1;">
+          <div style="font-size:11px;font-weight:700;color:#fff;font-style:italic;">「Love is... making something with your own hands」</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:4px;">手で作ること → ameru FVに最適</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:8px;border-left:2px solid #FFB6C1;">
+          <div style="font-size:11px;font-weight:700;color:#fff;font-style:italic;">「Love is... giving someone something handmade」</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:4px;">手作りを贈ること → ギフト訴求バナーに</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:8px;border-left:2px solid #FFB6C1;">
+          <div style="font-size:11px;font-weight:700;color:#fff;font-style:italic;">「Love is... the little things」</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:4px;">小さな幸せ → ずもっぴの小ささと連動</div>
+        </div>
+        <div style="padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:8px;border-left:2px solid #FFB6C1;">
+          <div style="font-size:11px;font-weight:700;color:#fff;font-style:italic;">「Love is... being there when they need you」</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:4px;">そこにいること → サポート訴求・定期購読継続に</div>
+        </div>
+      </div>
+      <!-- ameru専用アレンジ -->
+      <div style="padding:12px 16px;background:rgba(41,182,232,0.08);border:1px solid rgba(41,182,232,0.2);border-radius:10px;">
+        <div style="font-size:10px;font-weight:800;color:#29B6E8;margin-bottom:8px;">✏️ ameru × Love is... 専用コピーアレンジ案（ライセンス確認後使用）</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="padding:4px 10px;background:rgba(41,182,232,0.15);border-radius:20px;font-size:10px;color:#fff;font-style:italic;">Love is... 手で作ること</span>
+          <span style="padding:4px 10px;background:rgba(41,182,232,0.15);border-radius:20px;font-size:10px;color:#fff;font-style:italic;">Love is... あなたのために編むこと</span>
+          <span style="padding:4px 10px;background:rgba(41,182,232,0.15);border-radius:20px;font-size:10px;color:#fff;font-style:italic;">Love is... はじめてでもできること</span>
+          <span style="padding:4px 10px;background:rgba(41,182,232,0.15);border-radius:20px;font-size:10px;color:#fff;font-style:italic;">Love is... ずもっぴを完成させた瞬間</span>
+          <span style="padding:4px 10px;background:rgba(41,182,232,0.15);border-radius:20px;font-size:10px;color:#fff;font-style:italic;">Love is... 夜中に編んでも諦めないこと</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- コレクション×コピー設計 -->
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,0.6);margin-bottom:14px;">📦 No.1〜5 コレクション × Love is... コピー設計案</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:140px;padding:12px;background:rgba(255,182,193,0.08);border-radius:10px;text-align:center;border:1px solid rgba(255,182,193,0.15);">
+          <div style="font-size:11px;font-weight:800;color:#FFB6C1;">No. 1</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.8);font-style:italic;margin:4px 0;">Love is...<br>the beginning</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">はじまり</div>
+        </div>
+        <div style="flex:1;min-width:140px;padding:12px;background:rgba(255,182,193,0.08);border-radius:10px;text-align:center;border:1px solid rgba(255,182,193,0.15);">
+          <div style="font-size:11px;font-weight:800;color:#FFB6C1;">No. 2</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.8);font-style:italic;margin:4px 0;">Love is...<br>growing</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">成長</div>
+        </div>
+        <div style="flex:1;min-width:140px;padding:12px;background:rgba(255,182,193,0.08);border-radius:10px;text-align:center;border:1px solid rgba(255,182,193,0.15);">
+          <div style="font-size:11px;font-weight:800;color:#FFB6C1;">No. 3</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.8);font-style:italic;margin:4px 0;">Love is...<br>patience</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">忍耐・丁寧さ</div>
+        </div>
+        <div style="flex:1;min-width:140px;padding:12px;background:rgba(255,182,193,0.08);border-radius:10px;text-align:center;border:1px solid rgba(255,182,193,0.15);">
+          <div style="font-size:11px;font-weight:800;color:#FFB6C1;">No. 4</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.8);font-style:italic;margin:4px 0;">Love is...<br>sharing</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">分かち合い</div>
+        </div>
+        <div style="flex:1;min-width:140px;padding:12px;background:rgba(255,182,193,0.08);border-radius:10px;text-align:center;border:1px solid rgba(255,182,193,0.15);">
+          <div style="font-size:11px;font-weight:800;color:#FFB6C1;">No. 5</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.8);font-style:italic;margin:4px 0;">Love is...<br>forever</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.4);">永遠・完成</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ameruクリエイティブへの転用 -->
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+      <div style="background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:14px;padding:18px;">
+        <div style="font-size:11px;font-weight:800;color:#FF6B9D;margin-bottom:10px;">🎬 バナー・動画への転用（優先度A）</div>
+        <ul style="list-style:none;padding:0;margin:0;font-size:11px;color:rgba(255,255,255,0.7);">
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・Love is...キャラ冒頭 → ずもっぴ完成品へのシームレスな繋ぎ</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・左:ずもっぴ写真（スカイブルー）、右:クリーム背景+Love is...手書きコピー</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・余白60%以上。1バナー1メッセージ原則</li>
+          <li style="padding:5px 0;">・フォント: Caveat / Indie Flower 等の手書き風サンセリフ</li>
+        </ul>
+      </div>
+      <div style="background:rgba(41,182,232,0.08);border:1px solid rgba(41,182,232,0.2);border-radius:14px;padding:18px;">
+        <div style="font-size:11px;font-weight:800;color:#29B6E8;margin-bottom:10px;">📦 パッケージ・LP写真への転用（優先度B）</div>
+        <ul style="list-style:none;padding:0;margin:0;font-size:11px;color:rgba(255,255,255,0.7);">
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・パッケージ天面に Love is... No.○ コピーをプリント</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・LP: Love is...2人キャラ+ずもっぴが同じフレームに並ぶカット</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">・ギフトシーン: Love is...ラッピング紙でプレゼントシーン演出</li>
+          <li style="padding:5px 0;">・SNS: #LoveIsAmeru ハッシュタグ設計で UGC 誘導</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 注意事項 -->
+    <div style="margin-top:16px;padding:12px 16px;background:rgba(255,209,102,0.08);border:1px solid rgba(255,209,102,0.2);border-radius:10px;">
+      <div style="font-size:10px;font-weight:800;color:#FFD166;margin-bottom:4px;">⚠️ ライセンス確認事項</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.6);">loveiscomic.com は2026-04-16時点でダウン中。ライセンス確認は Tribune Content Agency（tribpub.com）経由で行うこと。ameru専用アレンジコピーの使用範囲はIPコラボ契約書で確認必須。</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div class="doc-footer-brand">一進VOYAGE号 — ameru LP Visual Direction 2026-04-16 updated</div>
+</div>
+
+</body>
+</html>

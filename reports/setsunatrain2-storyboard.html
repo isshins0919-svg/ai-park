@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セツナトレイン2 ビジュアルストーリーボード v2.0</title>
+<style>
+  :root {
+    --bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;
+    --blue:#4a90d9;--gold:#d4a44c;--green:#3fb950;--purple:#a371f7;--pink:#f778ba;--cyan:#39d2c0;--orange:#d29922;--red:#f85149;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+  .container{max-width:1400px;margin:0 auto;padding:40px 24px}
+  .hero{background:linear-gradient(135deg,#1a0a2e,#3d1a5a 30%,#7b2d6b 65%,#c4514a);border-radius:16px;padding:52px 40px;margin-bottom:40px;border:1px solid rgba(247,120,186,0.3);position:relative;overflow:hidden}
+  .hero::after{content:'🍰🎂🍭🍡🍮';position:absolute;right:40px;top:50%;transform:translateY(-50%);font-size:48px;opacity:0.15;letter-spacing:8px}
+  .hero h1{font-size:30px;font-weight:800;line-height:1.4}
+  .hero .concept-tag{display:inline-block;background:rgba(247,120,186,0.2);border:1px solid var(--pink);color:var(--pink);font-size:12px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:12px;letter-spacing:1px}
+  .hero .sub{color:#f7b8d6;font-size:15px;margin-top:8px}
+  .hero .date{color:rgba(255,255,255,0.5);font-size:13px;margin-top:8px}
+  .section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;margin-bottom:32px}
+  .section h2{font-size:22px;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+  .section h3{font-size:17px;font-weight:700;margin:24px 0 12px;color:var(--pink)}
+  .section p{margin-bottom:10px}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .persona{display:inline-block;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:16px}
+  .alert{background:rgba(212,164,76,0.1);border:1px solid var(--gold);border-radius:10px;padding:16px 20px;margin:16px 0}
+  .alert-title{font-weight:700;color:var(--gold);margin-bottom:6px}
+  .alert-red{background:rgba(248,81,73,0.08);border:1px solid var(--red);border-radius:10px;padding:16px 20px;margin:16px 0}
+  .alert-red-title{font-weight:700;color:var(--red);margin-bottom:6px}
+  .insight{background:rgba(74,144,217,0.08);border-left:3px solid var(--blue);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+  .insight-pink{background:rgba(247,120,186,0.08);border-left:3px solid var(--pink);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+
+  /* Target badges */
+  .target-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin:16px 0}
+  .target-card{background:rgba(247,120,186,0.06);border:1px solid rgba(247,120,186,0.25);border-radius:10px;padding:16px}
+  .target-card .tc-label{font-size:10px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .target-card .tc-val{font-size:14px;font-weight:600}
+  .target-card .tc-why{font-size:12px;color:var(--muted);margin-top:4px}
+
+  /* Route map */
+  .route{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin:20px 0}
+  .route-stop{background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:12px 16px;min-width:120px;text-align:center;position:relative}
+  .route-stop.start{border-color:var(--blue)}
+  .route-stop.sweets{border-color:var(--pink)}
+  .route-stop.mystery{border-color:var(--purple)}
+  .route-stop.goal{border-color:var(--gold);background:rgba(212,164,76,0.08)}
+  .route-stop .rs-icon{font-size:20px;display:block;margin-bottom:4px}
+  .route-stop .rs-name{font-size:13px;font-weight:700}
+  .route-stop .rs-note{font-size:10px;color:var(--muted);margin-top:2px}
+  .route-arrow{color:var(--muted);font-size:20px;padding:0 6px;flex-shrink:0}
+  @media(max-width:768px){.route{flex-direction:column;align-items:flex-start}.route-arrow{transform:rotate(90deg)}}
+
+  /* Storyboard Grid */
+  .sb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin:20px 0}
+  .sb-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .2s}
+  .sb-card:hover{transform:translateY(-2px);border-color:var(--pink)}
+  .sb-card .sb-img{width:100%;aspect-ratio:9/12;object-fit:cover;display:block}
+  .sb-card .sb-info{padding:16px}
+  .sb-card .sb-time{display:inline-block;background:rgba(247,120,186,0.15);color:var(--pink);font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;margin-bottom:8px}
+  .sb-card .sb-scene{font-weight:700;font-size:15px;margin-bottom:6px}
+  .sb-card .sb-visual{font-size:12px;color:var(--purple);margin-bottom:6px}
+  .sb-card .sb-copy{color:var(--gold);font-weight:600;font-size:14px;margin-bottom:6px}
+  .sb-card .sb-nare{font-size:12px;color:var(--cyan)}
+  .sb-card .sb-note{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic}
+  .sb-card .sb-store{font-size:12px;color:var(--green);font-weight:600;margin-bottom:4px}
+
+  /* Full Width Storyboard Row */
+  .sb-row{display:grid;grid-template-columns:280px 1fr;gap:0;background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:16px 0}
+  .sb-row .sb-img-col{width:100%}
+  .sb-row .sb-img-col img{width:100%;height:100%;object-fit:cover;display:block}
+  .sb-row .sb-text-col{padding:20px 24px;display:flex;flex-direction:column;justify-content:center}
+
+  /* Hook Grid */
+  .hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin:12px 0}
+  .hook-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px}
+  .hook-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:10px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .hook-type{font-size:10px;color:var(--muted);display:block;margin-top:3px}
+  .hook-item.star{border-color:var(--gold);background:rgba(212,164,76,0.06)}
+
+  /* Reference Videos */
+  .ref-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:10px 0}
+  .ref-card .ref-title{font-weight:700;font-size:14px;margin-bottom:4px}
+  .ref-card .ref-meta{font-size:11px;color:var(--muted);margin-bottom:6px}
+  .ref-card a{font-size:12px;word-break:break-all}
+
+  /* Phone Mockup */
+  .phone-mockup{width:280px;margin:0 auto;background:#000;border-radius:32px;padding:12px;border:3px solid #333;position:relative}
+  .phone-mockup .phone-screen{border-radius:20px;overflow:hidden;position:relative}
+  .phone-mockup .phone-screen img{width:100%;display:block}
+  .phone-mockup .phone-overlay{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:space-between;padding:16px}
+  .phone-mockup .phone-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600}
+  .phone-mockup .phone-bottom{text-align:left}
+  .phone-mockup .phone-bottom .ph-copy{font-size:13px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.8);margin-bottom:4px}
+  .phone-mockup .phone-bottom .ph-cta{display:inline-block;background:#06C755;color:#fff;font-size:11px;font-weight:700;padding:6px 16px;border-radius:20px}
+  .phone-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:24px 0}
+
+  /* Story board badge */
+  .badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;margin-left:8px;vertical-align:middle}
+  .badge-new{background:rgba(63,185,80,0.2);color:var(--green);border:1px solid var(--green)}
+  .badge-main{background:rgba(247,120,186,0.2);color:var(--pink);border:1px solid var(--pink)}
+
+  @media(max-width:768px){
+    .hero{padding:28px 20px}
+    .hero h1{font-size:22px}
+    .section{padding:20px}
+    .sb-grid{grid-template-columns:1fr}
+    .sb-row{grid-template-columns:1fr}
+    .phone-row{flex-direction:column;align-items:center}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <div class="concept-tag">NEW CONCEPT v2.0 — 2026-04-15 MTGアップデート</div>
+  <h1>🍰 東京発！特急でいく！<br>謎解きスイーツ巡り旅♬</h1>
+  <div class="sub">セツナトレイン × 伊東お菓子共和国 | スイーツ好き女子2名向け | 5-6月日帰りターゲット</div>
+  <div class="date">2026-04-15 MTG後更新 | 一進AI Creative Team | 撮影：金曜日（伊東ロケ）</div>
+</div>
+
+<!-- ===== CONCEPT UPDATE ===== -->
+<div class="section">
+  <h2>🆕 コンセプトアップデート（MTG内容反映）</h2>
+
+  <div class="alert" style="border-color:var(--pink);background:rgba(247,120,186,0.08)">
+    <div class="alert-title" style="color:var(--pink)">新コンセプト：謎解きスイーツ巡り旅</div>
+    <p style="margin:0">「謎解き体験」単体ではなく、<strong>「スイーツ巡りの旅に謎解きがついてくる」</strong>として訴求する。<br>
+    スイーツ好き女性がターゲットの主軸。謎解きは「旅の案内役」として機能する設計。<br>
+    コンセプトコピー：<strong style="color:var(--gold)">「東京発！特急でいく！謎解きスイーツ巡り旅♬」</strong></p>
+  </div>
+
+  <div class="target-grid">
+    <div class="target-card">
+      <div class="tc-label">主軸ターゲット</div>
+      <div class="tc-val">🍰 スイーツ巡りが好きな女性</div>
+      <div class="tc-why">伊東＝「お菓子共和国」という地域ブランドに乗る</div>
+    </div>
+    <div class="target-card">
+      <div class="tc-label">謎解き経験値</div>
+      <div class="tc-val">🔍 1〜2回経験者</div>
+      <div class="tc-why">ガチ勢でもビギナーでもない。「楽しかった記憶がある」層</div>
+    </div>
+    <div class="target-card">
+      <div class="tc-label">旅のタイミング</div>
+      <div class="tc-val">📅 5月・6月の1日旅行を探してる</div>
+      <div class="tc-why">GW後〜梅雨前。「どこか行きたい」が高まる時期</div>
+    </div>
+    <div class="target-card">
+      <div class="tc-label">参加スタイル</div>
+      <div class="tc-val">👭 女性2名で参加</div>
+      <div class="tc-why">座席向かい合わせ問題なし。2人で謎解きが最適</div>
+    </div>
+    <div class="target-card">
+      <div class="tc-label">年代</div>
+      <div class="tc-val">🎯 20代〜40代（幅広く）</div>
+      <div class="tc-why">台本バリエーションで各年代にリーチ</div>
+    </div>
+    <div class="target-card">
+      <div class="tc-label">動機</div>
+      <div class="tc-val">💡 「計画しなくても旅になる」便利さ</div>
+      <div class="tc-why">謎が全店舗に連れていってくれる。プランニング不要</div>
+    </div>
+  </div>
+
+  <div class="alert">
+    <div class="alert-title">価格訴求ルール（継続）</div>
+    <p style="margin:0">動画内では<strong>価格に一切触れない</strong>。体験の魅力だけで「行きたい！」を作る。<br>
+    CTAは<strong>「詳しくはLINEで」</strong>のみ。</p>
+  </div>
+</div>
+
+<!-- ===== STORY & ROUTE ===== -->
+<div class="section">
+  <h2>🏰 伊東お菓子共和国ストーリー（謎解きの核心）</h2>
+
+  <div class="insight-pink">
+    <strong>ストーリー概要（MTGで確認）：</strong>
+    伊東市は「伊東お菓子共和国」として、市全体でお菓子・スイーツを推進している。<br>
+    この謎解きでは、<strong>「お菓子共和国のお菓子屋さんを貶める偽情報記事を書く謎の団体」</strong>を阻止するミッションが課される。<br>
+    街を歩きながら手がかりを集め、偽情報記事を削除させることでお菓子屋さんを救う。<br>
+    <strong>エンディング：なぎさ公園で夕日を見ながらミッション完了。</strong>
+  </div>
+
+  <h3>📍 伊東ルートマップ（撮影スポット確定版）</h3>
+  <div class="route">
+    <div class="route-stop start">
+      <span class="rs-icon">🚄</span>
+      <div class="rs-name">品川駅</div>
+      <div class="rs-note">特急踊り子 乗車</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop">
+      <span class="rs-icon">🚃</span>
+      <div class="rs-name">車内 90分</div>
+      <div class="rs-note">ドラマ視聴 + 謎解き開始</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop start">
+      <span class="rs-icon">🏣</span>
+      <div class="rs-name">伊東駅到着</div>
+      <div class="rs-note">キット受取・スタート</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop sweets">
+      <span class="rs-icon">🍓</span>
+      <div class="rs-name">フルーツパレス<br>とみた</div>
+      <div class="rs-note">駅前 / 映えスポット#1</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop sweets">
+      <span class="rs-icon">🥐</span>
+      <div class="rs-name">サザ家</div>
+      <div class="rs-note">パン屋 / オレンジ通り</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop sweets">
+      <span class="rs-icon">🍬</span>
+      <div class="rs-name">7色おやつ</div>
+      <div class="rs-note">フィナンシェ等 / 謎あり</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop mystery">
+      <span class="rs-icon">🔮</span>
+      <div class="rs-name">ベニアさん</div>
+      <div class="rs-note">古き良き商店街 / 謎の核心</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop sweets">
+      <span class="rs-icon">🍦</span>
+      <div class="rs-name">スイートハウス<br>若ば</div>
+      <div class="rs-note">レトロ喫茶 / 特殊ソフトクリーム</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop mystery">
+      <span class="rs-icon">🏯</span>
+      <div class="rs-name">東海館</div>
+      <div class="rs-note">歴史的建物 / 外観映え</div>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-stop goal">
+      <span class="rs-icon">🌅</span>
+      <div class="rs-name">なぎさ公園</div>
+      <div class="rs-note">ゴール / 夕日 / ミッション完了</div>
+    </div>
+  </div>
+
+  <h3>🎬 主要撮影スポット評価</h3>
+  <table>
+    <tr><th>スポット</th><th>映え度</th><th>特徴</th><th>撮影優先度</th></tr>
+    <tr><td><strong>フルーツパレスとみた</strong></td><td style="color:var(--gold)">★★★★★</td><td>一番映える。店内きれい。フルーツスイーツ</td><td style="color:var(--green)"><strong>最優先</strong></td></tr>
+    <tr><td><strong>スイートハウス若ば</strong></td><td style="color:var(--gold)">★★★★☆</td><td>レトロな喫茶店。特殊ソフトクリーム。店内雰囲気◎</td><td style="color:var(--green)"><strong>優先</strong></td></tr>
+    <tr><td><strong>東海館（外観）</strong></td><td style="color:var(--gold)">★★★★☆</td><td>歴史的建物。外から見るとかっこいい。映像引き締まる</td><td style="color:var(--green)"><strong>優先</strong></td></tr>
+    <tr><td><strong>なぎさ公園</strong></td><td style="color:var(--gold)">★★★★★</td><td>海が目の前。夕日。オブジェ多数。ドラマとリンク</td><td style="color:var(--green)"><strong>最優先（エンド）</strong></td></tr>
+    <tr><td>オレンジ通り</td><td style="color:var(--gold)">★★★☆☆</td><td>小道に店が並ぶ。七福神温泉水が出るポイントあり</td><td style="color:var(--muted)">あれば使う</td></tr>
+    <tr><td>7色おやつ</td><td style="color:var(--gold)">★★☆☆☆</td><td>店内が狭い。スイーツ自体は映える</td><td style="color:var(--muted)">スイーツ接写のみ</td></tr>
+  </table>
+
+  <div class="alert-red">
+    <div class="alert-red-title">⚠️ 撮影注意事項（MTGで確認）</div>
+    <p style="margin:0">特急内謎解き：<strong>2人席推奨</strong>。向かい合わせ配置だと机がなく作業不可。<br>
+    4人グループで来た場合は座席を回転させる必要あり → 広告では「2人旅」を前面に出す。<br>
+    謎解き難易度：降車までに解けない可能性あり → 「伊東で続きもできる」と動画でフォロー。</p>
+  </div>
+</div>
+
+<!-- ===== AD MOCKUPS ===== -->
+<div class="section">
+  <h2>広告モックアップ（新コンセプト版）</h2>
+  <p>新コンセプト「謎解きスイーツ巡り旅」でのInstagram Reelsイメージ。</p>
+  <div class="phone-row">
+    <div class="phone-mockup">
+      <div class="phone-screen">
+        <img src="setsunatrain2_images/common_05_sweets_shop_1.png" alt="スイーツ主役型">
+        <div class="phone-overlay">
+          <div class="phone-top"><span style="color:#fff">Reel</span><span style="color:#fff">...</span></div>
+          <div class="phone-bottom">
+            <div class="ph-copy">東京から90分で<br>スイーツ5軒巡れる旅がある</div>
+            <div class="ph-cta">LINEで詳しく見る</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-mockup">
+      <div class="phone-screen">
+        <img src="setsunatrain2_images/common_09_puzzle_solving.png" alt="謎案内型">
+        <div class="phone-overlay">
+          <div class="phone-top"><span style="color:#fff">Reel</span><span style="color:#fff">...</span></div>
+          <div class="phone-bottom">
+            <div class="ph-copy">謎を解くたびに<br>次のスイーツ屋さんが現れる</div>
+            <div class="ph-cta">LINEで詳しく見る</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-mockup">
+      <div class="phone-screen">
+        <img src="setsunatrain2_images/common_11_sunset_ito.png" alt="お菓子共和国型">
+        <div class="phone-overlay">
+          <div class="phone-top"><span style="color:#fff">Reel</span><span style="color:#fff">...</span></div>
+          <div class="phone-bottom">
+            <div class="ph-copy">お菓子共和国を守れ<br>謎解き × スイーツ巡りの旅</div>
+            <div class="ph-cta">LINEで答え合わせ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REFERENCE VIDEOS ===== -->
+<div class="section">
+  <h2>参考動画URL（DPro調査 / 撮影前に全部見て！）</h2>
+
+  <h3>最重要リファレンス（構造が同じ）</h3>
+  <div class="ref-card" style="border-color:var(--gold)">
+    <div class="ref-title" style="color:var(--gold)">東武特急 SPACIA X「ファミリーの旅 x コンパートメント篇」(60秒)</div>
+    <div class="ref-meta">YouTube Shorts / 推定広告費+77万円 / 体験者インタビュー+旅先Bロール</div>
+    <a href="https://www.youtube.com/watch?v=EVQE_UN7MZQ" target="_blank">YouTube: https://www.youtube.com/watch?v=EVQE_UN7MZQ</a><br>
+    <a href="https://assets.douga-pro.com/shorts/EVQE_UN7MZQ/video.mp4" target="_blank">MP4直リンク</a>
+  </div>
+  <div class="ref-card" style="border-color:var(--gold)">
+    <div class="ref-title" style="color:var(--gold)">東武特急 SPACIA X「夫婦の旅 x プレミアムシート篇」(60秒)</div>
+    <div class="ref-meta">YouTube Shorts / 推定広告費+75万円 / カップル向け横展開</div>
+    <a href="https://www.youtube.com/watch?v=DgfgR5GeFmc" target="_blank">YouTube: https://www.youtube.com/watch?v=DgfgR5GeFmc</a><br>
+    <a href="https://assets.douga-pro.com/shorts/DgfgR5GeFmc/video.mp4" target="_blank">MP4直リンク</a>
+  </div>
+  <div class="ref-card" style="border-color:var(--gold)">
+    <div class="ref-title" style="color:var(--gold)">東武特急 SPACIA X（X版 60秒）</div>
+    <div class="ref-meta">X / 推定広告費+47万円 / 再生数1,190万回</div>
+    <a href="https://assets.douga-pro.com/x/1994261424559018011/video.mp4" target="_blank">MP4直リンク</a>
+  </div>
+
+  <h3>謎解き×旅行イベント広告（直接競合）</h3>
+  <div class="ref-card" style="border-color:var(--purple)">
+    <div class="ref-title" style="color:var(--purple)">志摩スペイン村 x リアル謎解きゲーム（X版）</div>
+    <div class="ref-meta">X / 15秒 / 推定広告費+34万円 / 再生数413万回</div>
+    <a href="https://assets.douga-pro.com/x/2029406552390557737/video.mp4" target="_blank">MP4直リンク</a>
+  </div>
+  <div class="ref-card" style="border-color:var(--purple)">
+    <div class="ref-title" style="color:var(--purple)">志摩スペイン村 x 謎解き（TikTok版）</div>
+    <div class="ref-meta">TikTok / 15秒 / 推定広告費+14万円 / 120万再生</div>
+    <a href="https://assets.douga-pro.com/tiktok/7611460666834062613/video.mp4" target="_blank">MP4直リンク</a>
+  </div>
+  <div class="ref-card" style="border-color:var(--purple)">
+    <div class="ref-title" style="color:var(--purple)">たぬき探偵ジェリー 関門周遊謎解き</div>
+    <div class="ref-meta">Instagram / 30秒 / 推定広告費+27万円 / 地域周遊型の謎解きイベント ← 構造が最も近い</div>
+    <a href="https://www.instagram.com/p/DRg6BfrAO3i/" target="_blank">Instagram: https://www.instagram.com/p/DRg6BfrAO3i/</a><br>
+    <a href="https://assets.douga-pro.com/instagram/DRg6BfrAO3i/video.mp4" target="_blank">MP4直リンク</a>
+  </div>
+
+  <h3>旅行・体験・UGC風（トーン参考）</h3>
+  <div class="ref-card">
+    <div class="ref-title">シュミタイム 日帰りプチツアー</div>
+    <div class="ref-meta">Instagram / 29秒 / 推定広告費+12万円 / UGC友達口調ナレーション ← 台本Eの参考</div>
+    <a href="https://www.instagram.com/p/DSrxL3JjP_T/" target="_blank">Instagram: https://www.instagram.com/p/DSrxL3JjP_T/</a><br>
+    <a href="https://assets.douga-pro.com/instagram/DSrxL3JjP_T/video.mp4" target="_blank">MP4直リンク</a>
+  </div>
+</div>
+
+<!-- ===== SCRIPT A ===== -->
+<div class="section">
+  <h2>台本A「スイーツ女子Vlog型」<span class="badge badge-main">メイン推奨</span></h2>
+  <div class="persona" style="background:rgba(247,120,186,0.15);color:var(--pink)">N1: あやか＆まい（27〜29歳）都内OL / 毎月「スイーツ巡りの約束」をしている / 5月か6月に1日旅行を検討中 / 謎解きカフェに1回行ったことがある</div>
+
+  <div class="insight-pink">
+    台本の骨格：スイーツ巡りの旅として見せる → 謎解きは「どこに行くか教えてくれる案内役」として登場 → 「全部お任せでいいの！」が最大の刺さりポイント
+  </div>
+
+  <div class="sb-grid">
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/a_01_hook_selfie.png" alt="Hook">
+      <div class="sb-info">
+        <span class="sb-time">0:00-0:03 HOOK</span>
+        <div class="sb-scene">品川駅ホーム、2人でワクワク自撮り</div>
+        <div class="sb-visual">特急踊り子が入線。「行くよ！」テンション</div>
+        <div class="sb-copy">「東京から90分でスイーツ5軒巡れる旅、行ってきた🍰」</div>
+        <div class="sb-note">フック差し替え前提。下記12パターンでABテスト</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_02_train_interior_drama.png" alt="車内">
+      <div class="sb-info">
+        <span class="sb-time">0:03-0:10 車内</span>
+        <div class="sb-scene">特急の中でドラマ視聴 → 謎解きキット開封</div>
+        <div class="sb-visual">並んで座る / スマホでドラマ / パッケージ開封</div>
+        <div class="sb-copy">「電車の中でドラマ見ながら謎解きスタート！」</div>
+        <div class="sb-nare">「なにこれ、新しすぎる！」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_03_window_view_ocean.png" alt="車窓">
+      <div class="sb-info">
+        <span class="sb-time">0:08 インサート</span>
+        <div class="sb-scene">車窓：都会 → 海が広がる瞬間</div>
+        <div class="sb-visual">ビル → トンネル → 一気に海。BGMのドロップに合わせる</div>
+        <div class="sb-copy">「90分でこの景色になるの、ずるくない？」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_04_ito_station_arrival.png" alt="伊東到着">
+      <div class="sb-info">
+        <span class="sb-time">0:10-0:13 到着</span>
+        <div class="sb-scene">伊東駅に降り立つ</div>
+        <div class="sb-visual">電車降りる → 青空 → 「着いたー！」2人ではしゃぐ</div>
+        <div class="sb-copy">「伊東ってお菓子の街なの、知ってた？」</div>
+        <div class="sb-note">「伊東お菓子共和国」という地域の強みをここで紹介</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_05_sweets_shop_1.png" alt="とみた">
+      <div class="sb-info">
+        <span class="sb-time">0:13-0:20 1軒目</span>
+        <div class="sb-scene">フルーツパレスとみた（駅前・映えスポット#1）</div>
+        <div class="sb-store">📍 フルーツパレスとみた</div>
+        <div class="sb-visual">入店 → カラフルなフルーツスイーツ接写 → 「うわっ！」</div>
+        <div class="sb-copy">「1軒目。駅前のこれ、映えすぎる」</div>
+        <div class="sb-nare">「謎が次のお店に連れてってくれるの。もう最高」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_06_sweets_shop_2.png" alt="スイーツ2軒目">
+      <div class="sb-info">
+        <span class="sb-time">0:20-0:28 2〜3軒目</span>
+        <div class="sb-scene">スイーツはしご（サザ家 → 7色おやつ）</div>
+        <div class="sb-store">📍 サザ家（パン屋） → 7色おやつ</div>
+        <div class="sb-visual">パン → マドレーヌ系 → 2人で「可愛い！」「これにする！」</div>
+        <div class="sb-copy">「2軒目・3軒目。選べないー！」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_09_puzzle_solving.png" alt="謎解き">
+      <div class="sb-info">
+        <span class="sb-time">0:28-0:38 街歩き謎解き</span>
+        <div class="sb-scene">オレンジ通りを歩きながら謎を解く</div>
+        <div class="sb-visual">2人でキットを見る / 「あ、これじゃない？」/ ハイタッチ</div>
+        <div class="sb-copy">「謎解くたびに次の店に連れてってくれる仕組み、天才すぎ」</div>
+        <div class="sb-nare">「どこ行こうって悩まなくていいの、これが最高なんだよ」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_07_sweets_shop_3.png" alt="若ば">
+      <div class="sb-info">
+        <span class="sb-time">0:38-0:46 4〜5軒目</span>
+        <div class="sb-scene">スイートハウス若ば → 東海館前</div>
+        <div class="sb-store">📍 スイートハウス若ば（レトロ喫茶）</div>
+        <div class="sb-visual">レトロな店内 → 特殊ソフトクリーム → 東海館の外観</div>
+        <div class="sb-copy">「4軒目。レトロ喫茶のソフトクリームがやばかった」</div>
+        <div class="sb-nare">「帰りたくなくなる」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_11_sunset_ito.png" alt="なぎさ公園">
+      <div class="sb-info">
+        <span class="sb-time">0:46-0:54 クライマックス</span>
+        <div class="sb-scene">なぎさ公園でミッション完了 → 夕日</div>
+        <div class="sb-store">📍 なぎさ公園（ゴール）</div>
+        <div class="sb-visual">海が目の前に広がる。2人で夕日を見る。「やったー！」</div>
+        <div class="sb-copy">「お菓子の街を守れた。なぎさ公園の夕日がご褒美だった」</div>
+        <div class="sb-note">ドラマのエンディングとシンクロ。没入感が最高潮に</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_12_cta_endcard.png" alt="CTA">
+      <div class="sb-info">
+        <span class="sb-time">0:54-1:00 CTA</span>
+        <div class="sb-scene">カメラ目線 → LINE誘導</div>
+        <div class="sb-nare">「品川から90分。スイーツと謎解きの1日旅、まじで最高だった。5月6月に旅行考えてる人、これ絶対行って」</div>
+        <div class="sb-copy">「詳しくはLINEで！」</div>
+        <div class="sb-note">※ 価格には一切触れない</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>テキストフック 16パターン（スイーツ女子向け）</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px">訴求軸：① 東京1h30mアクセス ② 特急踊り子ブランド ③ 謎→ご褒美スイーツ構造 ④ 女友達2人旅痛点 ⑤ シーズン緊急性</p>
+  <div class="hook-grid">
+    <div class="hook-item star"><span class="hook-num" style="background:var(--pink);color:#fff">1</span>東京から1時間半でいける スイーツ5軒食べ歩き謎解き旅！が楽しすぎた<span class="hook-type">★★ 推奨 / アクセス × 数字 × After</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--pink);color:#fff">2</span>謎を解くと・・・スイーツが食べられる？！そんな旅行ある？！<span class="hook-type">★★ 推奨 / 謎→ご褒美構造 × 意外性</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--pink);color:#fff">3</span>東京発！特急「踊り子」で行く スイーツ5軒謎解き旅が楽しすぎた♡<span class="hook-type">★★ 推奨 / 固有名詞 × After × 感情</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--pink);color:#fff">4</span>東京から1h30m！特急「踊り子」で行くスイーツ謎解き旅 最高すぎた♡<span class="hook-type">★★ 推奨 / アクセス × 固有名詞融合</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">5</span>謎を解くたびに 次のスイーツ屋さんが現れる旅 行ってきた<span class="hook-type">謎→ご褒美 / 仕組みの意外性</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">6</span>東京から90分でいける お菓子の街の謎解きイベントがやばすぎた<span class="hook-type">アクセス × 地域ブランド</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">7</span>友達と「どこ行く？」ってなってる人 これ見て。全部謎が連れていってくれた<span class="hook-type">女友達2人痛点 × 解決</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">8</span>「どこ行く？」が5秒で解決する女子旅 東京から1時間半でいけた<span class="hook-type">女友達痛点 × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">9</span>5月6月に行くべき旅 東京から1時間半の謎解きスイーツ旅<span class="hook-type">シーズン緊急性 × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">10</span>東京発！特急「踊り子」に乗ったら スイーツ5軒食べ歩けた話<span class="hook-type">固有名詞 × 体験報告</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">11</span>スイーツ好きな人だけ見て。伊東のお菓子の街がやばすぎた<span class="hook-type">ターゲット絞り × 地域</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">12</span>謎解きしながらスイーツ5軒食べ歩ける旅 東京から1h30m<span class="hook-type">体験内容 × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">13</span>計画ゼロで全部謎が案内してくれる 最高すぎる女子旅<span class="hook-type">手軽さ × ターゲット</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">14</span>東京発！特急「踊り子」で事件発生？！ お菓子の街を謎解きで救ってきた<span class="hook-type">固有名詞 × ドラマ世界観</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">15</span>帰りの電車で「また行こう」ってなった 東京1h30mの謎解きスイーツ旅<span class="hook-type">After × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--pink);color:#fff">16</span>インスタに載せたら「どこ？！」って7人から聞かれた スイーツ謎解き旅<span class="hook-type">社会的証明 × SNS欲求</span></div>
+  </div>
+
+  <h3>ビジュアルフック 12パターン（冒頭0-3秒の映像）</h3>
+  <div class="hook-grid">
+    <div class="hook-item star"><span class="hook-num" style="background:var(--purple);color:#fff">1</span><strong>とみたのスイーツ接写スタート</strong> — フルーツパレスとみたのカラフルなスイーツどアップ。「どこの？」で止まる<span class="hook-type">★推奨</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--purple);color:#fff">2</span><strong>特急入線 × 2人自撮り</strong> — 品川ホームで踊り子号が滑り込む。2人でテンション上がる<span class="hook-type">★推奨</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">3</span><strong>スイーツ5軒分コラージュ</strong> — 0〜3秒に5軒分のスイーツをカットつなぎ。「全部行ったの！？」</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">4</span><strong>車窓タイムラプス</strong> — 都会→トンネル→海が広がる。BGMドロップと合わせる</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">5</span><strong>若ばのソフトクリーム接写</strong> — 特殊なソフトクリームのアップ。「なにこれ？」で止まる</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">6</span><strong>なぎさ公園の夕日</strong> — 海と夕日の広角。非日常感。「どこ？」を引き出す</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">7</span><strong>東海館外観ドラマチック</strong> — 歴史的建物を下から見上げるアングル</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">8</span><strong>謎解きキット開封</strong> — おしゃれパッケージを開封。中身が見える瞬間</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">9</span><strong>2人で走る背中</strong> — オレンジ通りを2人で走る後ろ姿。冒険感</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">10</span><strong>食べる瞬間 × 「うまっ！」表情</strong> — スイーツ一口のリアクション</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">11</span><strong>謎解き問題アップ → 2人でガッツポーズ</strong> — 解いた瞬間のハイタッチ</div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">12</span><strong>「行くよ！」改札通過</strong> — 2人で改札。「今日はこれ行ってくる！」</div>
+  </div>
+</div>
+
+<!-- ===== SCRIPT B ===== -->
+<div class="section">
+  <h2>台本B「お菓子共和国ストーリー型」<span class="badge badge-new">謎解き層向け</span></h2>
+  <div class="persona" style="background:rgba(163,113,247,0.15);color:var(--purple)">N1: ゆき＆りな（25〜30歳）謎解きカフェに1〜2回行ったことがある / 「次どこ行こうか」を探している / 5月のGW明けに日帰り旅行を検討</div>
+
+  <div class="insight-pink">
+    台本の骨格：謎解きストーリーを前面に出す。「お菓子共和国を守るミッション」というユニークな世界観を武器に、謎解き経験者の好奇心を刺激する。
+  </div>
+
+  <div class="sb-grid">
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/c_01_hook_cipher.png" alt="Hook">
+      <div class="sb-info">
+        <span class="sb-time">0:00-0:05 HOOK</span>
+        <div class="sb-scene">ミッション指令が届く演出</div>
+        <div class="sb-visual">スマホに届くメッセージ風テロップ「緊急ミッション：お菓子共和国を守れ」</div>
+        <div class="sb-copy">「お菓子屋さんを潰そうとしてる謎の団体がいる。あなたに止めてほしい」</div>
+        <div class="sb-note">ドラマ的な入り。謎解き好きがざわつく設計</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_02_train_interior_drama.png" alt="車内">
+      <div class="sb-info">
+        <span class="sb-time">0:05-0:15 特急でミッション開始</span>
+        <div class="sb-scene">品川から特急でドラマ視聴 → 謎解きキット開封</div>
+        <div class="sb-visual">特急踊り子乗車 / スマホでドラマ視聴 / キット中身確認</div>
+        <div class="sb-nare">「特急の中でドラマを見て、事件の全貌を知る。そこから謎解きスタート」</div>
+        <div class="sb-copy">「伊東お菓子共和国、偽情報から守れ」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_04_ito_station_arrival.png" alt="伊東到着">
+      <div class="sb-info">
+        <span class="sb-time">0:15-0:20 伊東到着 → 現場へ</span>
+        <div class="sb-scene">駅を出て捜査開始</div>
+        <div class="sb-visual">伊東駅 → オレンジ通り → マップを見る2人</div>
+        <div class="sb-copy">「ここが現場。伊東お菓子共和国」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_05_sweets_shop_1.png" alt="とみた">
+      <div class="sb-info">
+        <span class="sb-time">0:20-0:30 スイーツ店が手がかりの場所</span>
+        <div class="sb-scene">各スイーツ店で謎を解きながらスイーツも堪能</div>
+        <div class="sb-store">📍 フルーツパレスとみた → サザ家 → 7色おやつ</div>
+        <div class="sb-visual">謎を解く → クーポン出現 → スイーツ → 「うまっ！」の繰り返し</div>
+        <div class="sb-nare">「謎が解けるたびに、その場所のスイーツが食べられる。ご褒美システムが天才すぎ」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_09_puzzle_solving.png" alt="謎解き">
+      <div class="sb-info">
+        <span class="sb-time">0:30-0:42 核心の謎</span>
+        <div class="sb-scene">ベニアさん前で犯人に近づく</div>
+        <div class="sb-store">📍 ベニアさん（古き良き商店街）</div>
+        <div class="sb-visual">2人で照合 / 「これじゃない！？」/ 偽情報記事の証拠発見</div>
+        <div class="sb-copy">「犯人、特定した」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_10_eureka_moment.png" alt="解けた">
+      <div class="sb-info">
+        <span class="sb-time">0:42-0:50 クライマックス</span>
+        <div class="sb-scene">偽情報記事を削除させる！ミッション完了</div>
+        <div class="sb-visual">最終答え入力 → 「記事削除完了」テロップ → 2人で「やったー！」</div>
+        <div class="sb-copy">「お菓子屋さん、救えた」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_11_sunset_ito.png" alt="なぎさ公園">
+      <div class="sb-info">
+        <span class="sb-time">0:50-0:57 エンディング</span>
+        <div class="sb-scene">なぎさ公園で夕日を見るご褒美シーン</div>
+        <div class="sb-store">📍 なぎさ公園（ゴール）</div>
+        <div class="sb-visual">海が広がるなぎさ公園 / 夕日 / 達成感の2人</div>
+        <div class="sb-nare">「ミッション完了の先に、こんな景色が待ってた」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_12_cta_endcard.png" alt="CTA">
+      <div class="sb-info">
+        <span class="sb-time">0:57-1:00 CTA</span>
+        <div class="sb-scene">エンドカード</div>
+        <div class="sb-copy">「あなたもミッションを受けますか？詳しくはLINEで」</div>
+        <div class="sb-note">※ 価格に触れない</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>テキストフック 16パターン（謎解き好き向け）</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px">訴求軸：① 特急×ドラマ×謎解きの新体験 ② お菓子共和国ワールド観 ③ 謎→スイーツご褒美構造 ④ アクセス × 固有名詞</p>
+  <div class="hook-grid">
+    <div class="hook-item star"><span class="hook-num" style="background:var(--purple);color:#fff">1</span>東京発！特急「踊り子」で事件発生？！ お菓子の街の謎解きイベント楽しすぎた！<span class="hook-type">★★ 推奨 / 固有名詞 × ドラマ世界観 × After</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--purple);color:#fff">2</span>東京から1時間半でいける 移動式謎解き！？が楽しすぎた<span class="hook-type">★★ 推奨 / アクセス × 新カテゴリ「移動式」意外性</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--purple);color:#fff">3</span>東京から1時間半でいける 特急「踊り子」で行く謎解きイベント楽しすぎた！<span class="hook-type">★★ 推奨 / アクセス × 固有名詞 × After</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--purple);color:#fff">4</span>謎解きしながら・・・景色最高♡「特急 謎解き旅」が楽しすぎた・・・♡<span class="hook-type">★★ 推奨 / ながら体験 × 感情 × 新カテゴリ提案</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">5</span>お菓子屋さんを偽情報から守るミッション、やってきた<span class="hook-type">ユニーク世界観 / お菓子共和国</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">6</span>謎を解くたびにスイーツが現れる仕掛け、天才すぎ<span class="hook-type">謎→ご褒美構造 × 発見</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">7</span>特急の中でドラマ見て、着いた先でお菓子の街の謎を解く<span class="hook-type">新体験 / 3要素の説明型</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">8</span>東京から1h30m！お菓子の街の謎解きイベントがやばすぎた！<span class="hook-type">アクセス × 地域ブランド</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">9</span>謎解き好きに伝えたい。これが今までと全然違う理由<span class="hook-type">ターゲット呼びかけ × 差別化</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">10</span>脱出ゲームの次はこれ。街ごと謎解きステージの旅<span class="hook-type">乗り換え × スケール</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">11</span>5月6月に謎解き旅したい人へ 東京から1h30mにある<span class="hook-type">シーズン × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">12</span>答えは「伊東」にある<span class="hook-type">ミステリアス × 地名 / 短尺向け</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">13</span>謎×スイーツ×特急旅。最強の組み合わせ見つけた<span class="hook-type">3要素の羅列 × 発見</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">14</span>この暗号、3秒で解ける？ 答えは東京から1h30m先にある<span class="hook-type">参加型チャレンジ × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">15</span>全問正解の先に、なぎさ公園の夕日が待ってた<span class="hook-type">After × 報酬 × 具体地名</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--purple);color:#fff">16</span>東京発！特急「踊り子」で行ける 謎解き×スイーツ旅が完璧だった<span class="hook-type">固有名詞 × 新カテゴリ × 断言</span></div>
+  </div>
+</div>
+
+<!-- ===== SCRIPT C ===== -->
+<div class="section">
+  <h2>台本C「5月6月の1日旅シーズン訴求型」<span class="badge badge-new">シーズン特化</span></h2>
+  <div class="persona" style="background:rgba(57,210,192,0.15);color:var(--cyan)">N1: ともみ＆えみ（28〜35歳）/ GW明けの「なんとなく旅行したい」モード / インスタで旅行情報を見ていた / 計画が面倒でいつも後回し</div>
+
+  <div class="insight-pink">
+    台本の骨格：「5月・6月という時期」にフォーカスしたシーズン訴求。「計画しなくていい」「謎が案内してくれる」という手軽さを最大の武器にする。
+  </div>
+
+  <div class="sb-grid">
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/d_01_hook_tired.png" alt="Hook">
+      <div class="sb-info">
+        <span class="sb-time">0:00-0:05 HOOK</span>
+        <div class="sb-scene">「5月って旅行どこ行った？」</div>
+        <div class="sb-visual">2人でスマホを見ながら「どこ行く？」と悩んでいる</div>
+        <div class="sb-copy">「GW明け〜梅雨前、旅行どこにするか迷ってる人へ」</div>
+        <div class="sb-note">シーズン感でスクロール停止を狙う</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/a_01_hook_selfie.png" alt="決断">
+      <div class="sb-info">
+        <span class="sb-time">0:05-0:12 解決提案</span>
+        <div class="sb-scene">品川から特急に乗る瞬間</div>
+        <div class="sb-visual">「これにしよ！」→ 特急乗車 → ワクワク表情</div>
+        <div class="sb-copy">「品川から90分。伊東スイーツ謎解き旅が全部解決してくれた」</div>
+        <div class="sb-nare">「計画ゼロで全部謎が案内してくれるから、行くだけでいい」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_08_sweets_collage.png" alt="スイーツ">
+      <div class="sb-info">
+        <span class="sb-time">0:12-0:30 スイーツ全店一気見せ</span>
+        <div class="sb-scene">5軒分のスイーツをテンポよく連打</div>
+        <div class="sb-visual">とみた・サザ家・7色おやつ・若ば・なぎさ公園のスイーツを30fpsで</div>
+        <div class="sb-copy">「1日5軒のスイーツを、謎解きが連れていってくれる」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_09_puzzle_solving.png" alt="謎解き">
+      <div class="sb-info">
+        <span class="sb-time">0:30-0:42 街歩き謎解き</span>
+        <div class="sb-scene">オレンジ通り → ベニアさん商店街を歩く</div>
+        <div class="sb-visual">地図を見る / 手がかりを発見 / 「ここだ！」ガッツポーズ</div>
+        <div class="sb-nare">「謎解き初心者でも全然大丈夫。ヒントあるし、伊東に着いてからゆっくりできる」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_11_sunset_ito.png" alt="なぎさ">
+      <div class="sb-info">
+        <span class="sb-time">0:42-0:52 ゴール</span>
+        <div class="sb-scene">なぎさ公園 夕日</div>
+        <div class="sb-visual">夕日の海 / 2人で写真を撮り合う / 達成感の笑顔</div>
+        <div class="sb-copy">「6月までに行ってほしい旅、No.1」</div>
+        <div class="sb-nare">「梅雨前のこの時期が、一番気持ちいい。行ける人はまじで行って」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_12_cta_endcard.png" alt="CTA">
+      <div class="sb-info">
+        <span class="sb-time">0:52-1:00 CTA</span>
+        <div class="sb-scene">緊急性あるエンド</div>
+        <div class="sb-copy">「5月・6月限定のシーズンに。詳しくはLINEで！」</div>
+        <div class="sb-note">※ 価格に触れない。シーズン感の緊急性のみ</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>テキストフック 16パターン（シーズン訴求）</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px">訴求軸：① 5-6月シーズン緊急性 ② 東京1h30mアクセス × 特急踊り子 ③ 計画不要の手軽さ ④ 謎→スイーツご褒美</p>
+  <div class="hook-grid">
+    <div class="hook-item star"><span class="hook-num" style="background:var(--cyan);color:#000">1</span>東京から1時間半でいける 特急「踊り子」で行く謎解きイベント 5月6月に行くべきだった<span class="hook-type">★★ 推奨 / アクセス × 固有名詞 × シーズン</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--cyan);color:#000">2</span>GW明けの「どこ行く？」 東京から1h30mの謎解きスイーツ旅で全部解決した<span class="hook-type">★★ 推奨 / シーズン痛点 × アクセス × 解決</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--cyan);color:#000">3</span>梅雨前に行ってよかった旅 東京から1時間半 特急「踊り子」で謎解きスイーツ旅♡<span class="hook-type">★★ 推奨 / シーズン緊急性 × アクセス × 固有名詞 × 感情</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--cyan);color:#000">4</span>謎を解くと・・・スイーツが食べられる？！東京から1h30mの謎解き旅が楽しすぎた<span class="hook-type">★★ 推奨 / 謎→ご褒美 × アクセス × After</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">5</span>5月6月の1日旅、東京発 特急「踊り子」で決まりだった<span class="hook-type">シーズン × 固有名詞 × 断言</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">6</span>GW終わってから行きたいとこ探してる人へ 東京から90分にあった<span class="hook-type">シーズン呼びかけ × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">7</span>「どこ行く？」が5秒で決まる 東京から1h30mの最強女子旅プラン<span class="hook-type">痛点解決 × アクセス × ターゲット</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">8</span>計画ゼロで全部謎が案内してくれる 東京から90分の旅<span class="hook-type">手軽さ × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">9</span>女友達と1日遊べる旅、東京から90分の特急「踊り子」で行けた<span class="hook-type">ターゲット × アクセス × 固有名詞</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">10</span>謎解きしながら・・・スイーツ5軒食べ歩き 最高すぎた♡<span class="hook-type">ながら体験 × 数字 × 感情</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">11</span>東京発！特急「踊り子」で行く お菓子の街の謎解きが5月6月限定でやってた<span class="hook-type">固有名詞 × 地域 × シーズン限定感</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">12</span>何もしたくないけど何かしたい 東京から90分の謎解きスイーツ旅が全部叶えてくれた<span class="hook-type">矛盾フック × アクセス × 解決</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">13</span>帰りの特急「踊り子」で写真見返しながら「また来よう」ってなった<span class="hook-type">After × 固有名詞 × リピート</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">14</span>旅行の計画が面倒な人へ 謎が全部連れていってくれる東京1h30mの旅<span class="hook-type">計画不要 × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">15</span>スイーツ食べながら謎解きできる街が東京から1h30mにあった<span class="hook-type">体験内容 × アクセス × 発見</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--cyan);color:#000">16</span>1日中笑ってた 東京から1時間半の謎解きスイーツ旅<span class="hook-type">感情After × アクセス</span></div>
+  </div>
+</div>
+
+<!-- ===== SCRIPT D ===== -->
+<div class="section">
+  <h2>台本D「30代女性・自分へのご褒美型」</h2>
+  <div class="persona" style="background:rgba(212,164,76,0.1);color:var(--gold)">N1: さやか（33歳）IT企業マネージャー / 平日は忙しく週末がリセットの時間 / スイーツは「自分へのご褒美」文脈 / 謎解きは友達に誘われて1回行ったことがある</div>
+
+  <div class="sb-grid">
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/d_01_hook_tired.png" alt="Hook">
+      <div class="sb-info">
+        <span class="sb-time">0:00-0:05 HOOK</span>
+        <div class="sb-scene">頑張った自分へのご褒美宣言</div>
+        <div class="sb-visual">カメラ目線。自然光。「今日は自分を甘やかす日」</div>
+        <div class="sb-copy">「今週頑張った自分へのご褒美、伊東スイーツ5軒で決まり」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_03_window_view_ocean.png" alt="車窓">
+      <div class="sb-info">
+        <span class="sb-time">0:05-0:15 特急でリセット</span>
+        <div class="sb-scene">車窓をぼんやり → 非日常に切り替わる</div>
+        <div class="sb-visual">都会 → 海 / 表情がほぐれる / ドラマに夢中</div>
+        <div class="sb-nare">「特急の90分で、仕事のことが頭から消えた」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_05_sweets_shop_1.png" alt="とみた">
+      <div class="sb-info">
+        <span class="sb-time">0:15-0:35 スイーツ三昧</span>
+        <div class="sb-scene">フルーツパレスとみた → 若ばへ</div>
+        <div class="sb-store">📍 フルーツパレスとみた → スイートハウス若ば</div>
+        <div class="sb-visual">スイーツ接写 / 一口 / 目を閉じて「幸せ…」/ 東海館前</div>
+        <div class="sb-nare">「甘いものって、ほんとに心が緩む」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_09_puzzle_solving.png" alt="謎解き">
+      <div class="sb-info">
+        <span class="sb-time">0:35-0:45 謎解きで頭を使う快楽</span>
+        <div class="sb-scene">仕事と違う方向に頭を使う快感</div>
+        <div class="sb-nare">「仕事じゃない方向に頭使うの、こんなに気持ちいいんだ」</div>
+        <div class="sb-copy">「謎解いてスイーツ食べて、なんか最高すぎる1日」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_11_sunset_ito.png" alt="なぎさ">
+      <div class="sb-info">
+        <span class="sb-time">0:45-0:55 なぎさ公園 エンディング</span>
+        <div class="sb-scene">海を見ながら達成感</div>
+        <div class="sb-store">📍 なぎさ公園</div>
+        <div class="sb-nare">「お菓子の街を守った達成感と夕日。来週も頑張れる気がした」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_12_cta_endcard.png" alt="CTA">
+      <div class="sb-info">
+        <span class="sb-time">0:55-1:00 CTA</span>
+        <div class="sb-copy">「詳しくはLINEで。頑張った自分へのご褒美に、どうぞ」</div>
+        <div class="sb-note">※ 価格に触れない</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCRIPT E ===== -->
+<div class="section">
+  <h2>台本E「友達口コミ型」（UGC風）</h2>
+  <div class="persona" style="background:rgba(63,185,80,0.15);color:var(--green)">N1: りな（25歳）アパレル店員 / インスタのストーリーが生活の一部 / 「友達が行ってた」で動く / UGCに最も反応する層</div>
+
+  <div class="sb-grid">
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/e_01_hook_talking.png" alt="自撮りトーク">
+      <div class="sb-info">
+        <span class="sb-time">0:00-0:05 HOOK</span>
+        <div class="sb-scene">カメラに話しかける（ストーリーズ感）</div>
+        <div class="sb-visual">自撮り。自然光。「聞いて聞いて！」テンション</div>
+        <div class="sb-nare">「ねぇ聞いて、先週めっちゃいいとこ行ってん。謎解きしながらスイーツ5軒食べ歩くやつ」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/e_02_showing_photos.png" alt="写真見せる">
+      <div class="sb-info">
+        <span class="sb-time">0:05-0:20 旅の説明</span>
+        <div class="sb-scene">写真を見せながら興奮気味に話す</div>
+        <div class="sb-nare">「品川から特急乗ってさ、90分で伊東ってお菓子の街があんの。でそこで謎解きしながらスイーツ屋さん回るの。しかも謎解きが次のお店に連れていってくれるから計画ゼロでいい」</div>
+        <div class="sb-store">📍 フルーツパレスとみた / 若ば / なぎさ公園の写真</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_08_sweets_collage.png" alt="スイーツ">
+      <div class="sb-info">
+        <span class="sb-time">0:20-0:38 写真見せまくり</span>
+        <div class="sb-scene">カメラロールをスクロールして全部見せる</div>
+        <div class="sb-nare">「見て見て！フルーツパレスとみたのこれ、やばくない？で、レトロ喫茶のソフトクリームがまた変な形してて笑えた笑」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/a_02_friends_walking.png" alt="街歩き">
+      <div class="sb-info">
+        <span class="sb-time">0:38-0:48 1番良かったこと</span>
+        <div class="sb-scene">本音を語る</div>
+        <div class="sb-nare">「1番良かったのがさ、謎解きしながら歩くから"どこ行こう"って悩まなくていいの。全部謎が連れてってくれんの。これが一番楽だった」</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_11_sunset_ito.png" alt="最後">
+      <div class="sb-info">
+        <span class="sb-time">0:48-0:55 感情のピーク</span>
+        <div class="sb-scene">なぎさ公園の写真を見せる</div>
+        <div class="sb-nare">「最後たどり着いたなぎさ公園の夕日がまじでやばくて、写真じゃ伝わらないから、行って」</div>
+        <div class="sb-store">📍 なぎさ公園</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <img class="sb-img" src="setsunatrain2_images/common_12_cta_endcard.png" alt="CTA">
+      <div class="sb-info">
+        <span class="sb-time">0:55-1:00 CTA</span>
+        <div class="sb-scene">自然な推薦</div>
+        <div class="sb-nare">「LINE登録したら詳細見れるから。5月6月に旅行考えてるなら絶対これがいい。リンク貼っとくね」</div>
+        <div class="sb-note">※ 価格に触れない</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>テキストフック 16パターン（UGC口コミ向け）</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px">訴求軸：① 友達感UGC口調 × アクセス ② 謎→スイーツご褒美 × 固有名詞 ③ 社会的証明 ④ シーズン × 手軽さ</p>
+  <div class="hook-grid">
+    <div class="hook-item star"><span class="hook-num" style="background:var(--green);color:#000">1</span>ねぇ聞いて、東京から1時間半で行ける 謎解きしながらスイーツ5軒食べ歩く旅 行ってきた<span class="hook-type">★★ 推奨 / 友達感 × アクセス × 体験内容</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--green);color:#000">2</span>スイーツ好きな友達に「東京から1h30mの謎解き旅あるよ」って教えたら全員「行く！」ってなった<span class="hook-type">★★ 推奨 / 社会的証明 × アクセス</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--green);color:#000">3</span>謎を解くと・・・スイーツが食べられる？！ 東京から特急「踊り子」で1h30mの旅 行ってきた<span class="hook-type">★★ 推奨 / 謎→ご褒美 × アクセス × 固有名詞 × 友達感</span></div>
+    <div class="hook-item star"><span class="hook-num" style="background:var(--green);color:#000">4</span>5月6月に「どこ行く？」ってなってる友達に教えたい 東京1h30mの謎解きスイーツ旅<span class="hook-type">★★ 推奨 / シーズン × 友達感 × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">5</span>東京から90分で行ける穴場、まじで スイーツ5軒謎解き旅<span class="hook-type">アクセス × 穴場感 × 体験</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">6</span>インスタに載せたら「どこ？！」って9人から聞かれた 特急「踊り子」の謎解き旅<span class="hook-type">SNS反応 × 固有名詞</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">7</span>正直、人に教えたくないんだけど…東京から1h30mの謎解きスイーツ旅、教える<span class="hook-type">矛盾フック × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">8</span>友達と「何する？」ってなった週末に 東京から特急「踊り子」乗ったら全部解決した<span class="hook-type">シチュエーション × 固有名詞 × 解決</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">9</span>帰りの特急「踊り子」で「また行こう」ってなった 東京1h30mの謎解きスイーツ旅<span class="hook-type">After × 固有名詞 × アクセス × リピート</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">10</span>これ知ってる人まだ少ないから今のうちに 東京から1時間半の謎解きスイーツ旅<span class="hook-type">希少性 × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">11</span>謎解きしながら・・・スイーツ食べ歩きって最高すぎ 東京から1h30m 特急「踊り子」で行けた<span class="hook-type">ながら体験 × アクセス × 固有名詞</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">12</span>フルーツパレスとみた、行ったことある？ ないなら東京から1時間半で行けるから行って<span class="hook-type">店名 × 呼びかけ × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">13</span>「なにこれ最高じゃん」が1日に5回あった 東京から90分の旅<span class="hook-type">感動数字 × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">14</span>全部謎が連れていってくれるから計画ゼロでいい 東京から1h30mの旅<span class="hook-type">計画不要 × アクセス</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">15</span>特急「踊り子」に乗ってる90分も謎解きで楽しくて 1秒も暇じゃなかった旅<span class="hook-type">固有名詞 × 移動時間の価値化</span></div>
+    <div class="hook-item"><span class="hook-num" style="background:var(--green);color:#000">16</span>GW明けにどこ行くか迷ってる人へ 東京から1h30mの謎解きスイーツ旅おすすめすぎる<span class="hook-type">シーズン × アクセス × 推薦</span></div>
+  </div>
+</div>
+
+<!-- ===== SHOOTING CHECKLIST ===== -->
+<div class="section">
+  <h2>📷 金曜日ロケ：撮影チェックリスト</h2>
+
+  <div class="alert" style="border-color:var(--pink);background:rgba(247,120,186,0.06)">
+    <div class="alert-title" style="color:var(--pink)">撮影優先度A（必ず押さえる）</div>
+    <table>
+      <tr><th>場所</th><th>撮るもの</th><th>使用台本</th></tr>
+      <tr><td><strong>フルーツパレスとみた</strong></td><td>スイーツ接写 / 入店・退店 / リアクション / 外観</td><td>A・B・C・D・E 全台本</td></tr>
+      <tr><td><strong>なぎさ公園（夕方）</strong></td><td>夕日 × 2人 / 海広角 / 達成感の顔 / なぎさ公園のオブジェ</td><td>A・B・C・D・E 全台本</td></tr>
+      <tr><td><strong>品川ホーム</strong></td><td>特急入線 / 2人自撮り / 乗り込む瞬間</td><td>A・B・C 全台本</td></tr>
+      <tr><td><strong>車内（2人並び座席）</strong></td><td>ドラマ視聴 / キット開封 / 車窓 / 2人でキット確認</td><td>A・B・C・D・E 全台本</td></tr>
+      <tr><td><strong>車窓</strong></td><td>都会→海に変わる瞬間（動画 / タイムラプス）</td><td>A・B・C 全台本</td></tr>
+    </table>
+  </div>
+
+  <div class="alert">
+    <div class="alert-title">撮影優先度B（あれば使う）</div>
+    <table>
+      <tr><th>場所</th><th>撮るもの</th></tr>
+      <tr><td>スイートハウス若ば</td><td>レトロ店内 / 特殊ソフトクリーム</td></tr>
+      <tr><td>東海館（外観）</td><td>建物全体 / 下から見上げるアングル</td></tr>
+      <tr><td>オレンジ通り</td><td>2人で歩く背中 / 七福神温泉水ポイント</td></tr>
+      <tr><td>サザ家</td><td>パンの接写 / 外観</td></tr>
+    </table>
+  </div>
+
+  <div class="alert-red">
+    <div class="alert-red-title">撮影の注意点（MTGで確認）</div>
+    <ul style="margin:0;padding-left:20px;line-height:2">
+      <li>特急内は<strong>2人並び座席</strong>で撮影。向かい合わせ座席は避ける</li>
+      <li>謎解きキットを解きながら撮影するため、<strong>素材は多めに取る</strong>（澤田さん確認済み）</li>
+      <li>なぎさ公園は<strong>夕方到着</strong>が理想（ドラマのエンディングとリンク）</li>
+      <li>提供素材（既存動画）は使いづらいため、<strong>今回新規撮影が主素材</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center;padding:40px 0;color:var(--muted);font-size:13px">
+  <p>Prepared by 一進AI Creative Team | 2026-04-15 MTGアップデート版</p>
+  <p style="font-size:11px;margin-top:4px">セツナトレイン2 ビジュアルストーリーボード v2.0 | 新コンセプト：東京発！特急でいく！謎解きスイーツ巡り旅♬</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1020,6 +1020,13 @@ def find_clip(clips_dir: str, ref: str) -> str | None:
             p = d / f"{c}{ext}"
             if p.exists():
                 return str(p)
+
+    # サブフォルダ再帰検索（fv/ などのサブディレクトリ対応）
+    for c in candidates:
+        for ext in EXTS:
+            matches = list(d.rglob(f"{c}{ext}"))
+            if matches:
+                return str(matches[0])
     return None
 
 
@@ -1053,6 +1060,29 @@ def make_annotation_overlay(text: str, size: tuple, y_start: int = 30) -> np.nda
         for dx, dy in [(-1,0),(1,0),(0,-1),(0,1)]:
             draw.text((20+dx, y+dy), line, font=font, fill=(0, 0, 0, 200))
         draw.text((20, y), line, font=font, fill=(255, 255, 255, 220))
+    return np.array(img)
+
+
+# ── 上部固定バナー（動画終始表示テキスト） ───────────────────────
+def make_top_banner(text: str, size: tuple) -> np.ndarray:
+    """動画上部に全編表示する固定バナーのRGBAオーバーレイを返す。"""
+    w, h = size
+    img  = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+    font = load_font(54)
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_w = bbox[2] - bbox[0]
+    text_h = bbox[3] - bbox[1]
+    strip_h = text_h + 24
+    # 半透明黒帯
+    draw.rectangle([(0, 0), (w, strip_h)], fill=(0, 0, 0, 180))
+    x = (w - text_w) // 2
+    y = 10
+    # 縁取り
+    for dx, dy in [(-2,0),(2,0),(0,-2),(0,2),(-2,-2),(2,2)]:
+        draw.text((x+dx, y+dy), text, font=font, fill=(0, 0, 0, 220))
+    # 本文（白）
+    draw.text((x, y), text, font=font, fill=(255, 255, 255, 255))
     return np.array(img)
 
 
@@ -1941,15 +1971,33 @@ def main():
                         help="元動画の音声をそのまま使う（TTS不使用）。"
                              "トーキングヘッド素材など、撮影済み音声を活かす場合に使用。"
                              "CSVのナレーション欄が「なし」の場合は自動適用。")
+    parser.add_argument("--top-banner", default=None,
+                        help="動画の上部に全編表示する固定テキスト（例: '18歳がラストチャンス'）")
     args = parser.parse_args()
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     narration_dir = str(Path(args.output).parent / "narrations")
 
-    # APIキー取得
+    # APIキー取得（os.environ優先 → ~/.zshrc 直接パース、シェル不起動）
     def _get_env(key):
-        return subprocess.run(["zsh", "-i", "-c", f"echo ${key}"],
-                              capture_output=True, text=True).stdout.strip()
+        # 1. os.environ に既にあればそれを返す
+        val = os.environ.get(key, "")
+        if val:
+            return val
+        # 2. ~/.zshrc を直接テキスト解析（シェルを起動しない）
+        try:
+            zshrc = Path.home() / ".zshrc"
+            if zshrc.exists():
+                content = zshrc.read_text(encoding="utf-8", errors="replace")
+                m = re.search(
+                    rf'export\s+{re.escape(key)}=["\']?([^"\'\n]+)["\']?',
+                    content
+                )
+                if m:
+                    return m.group(1).strip()
+        except Exception:
+            pass
+        return ""
     fish_key = _get_env("FISH_AUDIO_API_KEY") if not args.no_ai else None
     if not args.no_ai:
         global _GEMINI_KEY_MGR
@@ -2115,6 +2163,16 @@ def main():
                 print(f"  ⚠️  BGMミックス失敗: {e}")
         else:
             print(f"  ⚠️  BGMファイルが見つかりません: {bgm_filename}")
+
+    # ─── 上部固定バナーオーバーレイ ─────────────────────────────
+    if args.top_banner:
+        banner_arr = make_top_banner(args.top_banner, OUTPUT_SIZE)
+        banner_clip = ImageClip(banner_arr, duration=total_sec).set_opacity(1.0)
+        audio_backup = final.audio
+        final = CompositeVideoClip([final, banner_clip])
+        if audio_backup:
+            final = final.set_audio(audio_backup)
+        print(f"  🏷  上部バナー: 「{args.top_banner}」")
 
     print(f"\n💾 出力中: {args.output} （{total_sec:.1f}秒）")
     final.write_videofile(

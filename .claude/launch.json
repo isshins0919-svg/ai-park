@@ -2,25 +2,22 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "rough-cut-remotion",
-      "runtimeExecutable": "/bin/bash",
-      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && npx remotion studio"],
-      "port": 3000,
-      "cwd": "rough-cut/remotion"
+      "name": "camicks-mockup",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "/opt/homebrew/bin/python3.11 -m http.server ${PORT:-8765} -d /Users/ca01224/Desktop/一進VOYAGE号/reports"],
+      "autoPort": true
     },
     {
-      "name": "video-ai-remotion",
-      "runtimeExecutable": "/bin/bash",
-      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && npx remotion studio --port 3100"],
-      "port": 3100,
-      "cwd": "video-ai/remotion"
+      "name": "ccdd-mini-dive",
+      "runtimeExecutable": "/opt/homebrew/bin/python3.11",
+      "runtimeArgs": ["-m", "http.server", "8770", "-d", "/Users/ca01224/Desktop/一進VOYAGE号/reports/ccdd-mini-dive"],
+      "port": 8770
     },
     {
-      "name": "article-banner-maker",
-      "runtimeExecutable": "streamlit",
-      "runtimeArgs": ["run", "app.py", "--server.port", "8501"],
-      "port": 8501,
-      "cwd": "article-banner-maker"
+      "name": "ameru-lp",
+      "runtimeExecutable": "/opt/homebrew/bin/python3.11",
+      "runtimeArgs": ["-m", "http.server", "8766", "-d", "/Users/ca01224/Desktop/一進VOYAGE号/reports"],
+      "port": 8766
     }
   ]
 }

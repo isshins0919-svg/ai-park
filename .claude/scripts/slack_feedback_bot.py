@@ -67,7 +67,12 @@ MAX_VIDEO_WORKERS = 8             # サムネイル並列取得スレッド数
 STATE_FILE     = Path(__file__).parent / "slack_feedback_state.json"
 LOG_FILE       = Path(__file__).parent / "slack_feedback_bot.log"
 
-TRIGGER_KEYWORDS = ["フィードバック", "feedback", "フィードバックください", "fb"]
+# ── トリガーキーワード ─────────────────────────────────────────
+# 【重要】"fb" は短すぎて誤爆（URL・チャンネル名などにも含まれる）→ 削除
+# 「フィードバック」系の日本語のみに絞り込む。英語 "feedback" は残すが単語単位でチェック
+TRIGGER_KEYWORDS = ["フィードバック", "フィードバックください"]
+# 英語トリガーは単語単位マッチのみ（"fb" や "feedback" が文中の別の語に含まれる誤爆を防ぐ）
+TRIGGER_KEYWORDS_WORD = ["feedback"]  # re.search(r'\bfeedback\b') でチェック
 
 # オファーセクション検知キーワード（ここで読み込みを止める）
 OFFER_TRIGGERS = [
@@ -2568,7 +2573,15 @@ def process_message(msg: dict, slack: WebClient, client: anthropic.Anthropic):
 
 # ─── トリガー判定 ─────────────────────────────────────
 def is_trigger(text: str) -> bool:
-    return any(kw in text.lower() for kw in TRIGGER_KEYWORDS)
+    t = text.lower()
+    # 日本語キーワード：部分一致（フィードバック / フィードバックください）
+    if any(kw in t for kw in TRIGGER_KEYWORDS):
+        return True
+    # 英語キーワード：単語単位マッチのみ（"feedback" が URL や別の語に埋まっている誤爆を防ぐ）
+    for kw in TRIGGER_KEYWORDS_WORD:
+        if re.search(r'\b' + re.escape(kw) + r'\b', t):
+            return True
+    return False
 
 
 # ─── メインループ ─────────────────────────────────────
@@ -2597,6 +2610,12 @@ def run():
                     m for m in reversed(messages)
                     if m.get("ts") not in state["processed"]
                     and not m.get("thread_ts")
+                    # ── ボット・アプリ投稿を除外 ──────────────────────────────
+                    # bot_id がある = Slack App / Bot の投稿
+                    # subtype="bot_message" = Bot メッセージ
+                    # username がある = Incoming Webhook など
+                    and not m.get("bot_id")
+                    and m.get("subtype") not in ("bot_message", "slackbot_response")
                 ]
 
                 for msg in new_messages:

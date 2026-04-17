@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 1: AIエージェントの正体 — CCDD ミニダイブ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <span class="logo">CCDD MINI DIVE</span>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="part1.html" class="active">01</a>
+    <a href="part2.html">02</a>
+    <a href="part3.html">03</a>
+    <a href="part4.html">04</a>
+    <a href="part5.html">05</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover">
+  <div class="cover-badge">PART 1 OF 5</div>
+  <h1>AIエージェントの正体</h1>
+  <p class="subtitle">7つのパーツを知れば、全体像が見える</p>
+  <p class="part-num">所要時間: 約10分</p>
+</div>
+
+<!-- ═══ 前提 ═══ -->
+<div class="section">
+  <div class="section-label">BEFORE WE START</div>
+  <h2>そもそも「AIエージェント」って何？</h2>
+
+  <p>「ChatGPTに質問すること」と「AIエージェントを使うこと」は全く違います。</p>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">ChatGPT（チャットAI）</div>
+      <p>人間が質問 → AIが回答 → 人間が次を質問<br><br>
+      <strong>AI = 辞書。聞いたことに答えるだけ。</strong><br>
+      ファイルを読めない。メールを送れない。データベースにアクセスできない。</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">AIエージェント</div>
+      <p>人間が目的を伝える → AIが自分で考え → 自分で実行 → 結果を報告<br><br>
+      <strong>AI = 新入社員。指示を受けて自分で動く。</strong><br>
+      ファイルを読み書き。Slackに投稿。カレンダーを確認。全部自分でやる。</p>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏢 オフィスで例えると</div>
+      <p><strong>ChatGPT</strong> = 百科事典に詳しい人がデスクに座ってるだけ。「これ何？」に答えてくれるけど、電話もメールもできない。<br><br>
+      <strong>エージェント</strong> = PCもSlackもカレンダーも使える新入社員。「この案件の競合調べて、レポートにまとめて、Slackに投げといて」ができる。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号での実例</div>
+      <p>前回の勉強会で見た<strong>「CMOエージェント」</strong>がまさにこれ。<br><br>
+      「大当たりクリエイティブを生み出し続ける」というゴールを持ち、自分でリサーチして、コンセプトを作り、バナーを生成する。人間は最終チェックだけ。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 7つの構成要素 ═══ -->
+<div class="section">
+  <div class="section-label">THE 7 COMPONENTS</div>
+  <h2>AIエージェントは7つのパーツでできている</h2>
+
+  <p>どんなに複雑なAIエージェントも、分解すると7つのパーツに分かれます。<br>
+  これは前回の勉強会で森田さんが見せてくれた「CEO → CMO → サブエージェント」の構造を、もう一段抽象化した見方です。</p>
+
+  <div class="diagram" style="text-align: left;">
+    ┌───────────────────────────────────────┐<br>
+    │&emsp;&emsp;&emsp;&emsp;&emsp;<span class="a">AIエージェントの7パーツ</span>&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="a">1. LLM</span>&emsp;&emsp;&emsp;← 脳（考える力）&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="g">2. Tools</span>&emsp;&emsp;&emsp;← 手足（実行する力）&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="o">3. Trigger</span>&emsp;&emsp;← きっかけ（いつ動くか）&emsp;│<br>
+    │&emsp;<span class="p">4. Instructions</span> ← マニュアル（何をどう）&emsp;│<br>
+    │&emsp;<span class="y">5. Skills</span>&emsp;&emsp;&emsp;← 業務手順書&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="a">6. Memory</span>&emsp;&emsp;&emsp;← 長期記憶&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    │&emsp;<span class="g">7. Context Window</span> ← 今の頭の中&emsp;&emsp;&emsp;&emsp;│<br>
+    └───────────────────────────────────────┘
+  </div>
+</div>
+
+<!-- 1. LLM -->
+<div class="topic-card">
+  <h3><span class="emoji">🧠</span> 1. LLM — 脳みそ</h3>
+  <p class="tagline">考える力そのもの。でも「脳だけ」では何もできない</p>
+
+  <p>LLM（Large Language Model）はAIの「脳」。テキストを理解し、推論し、文章を生成する力の源泉。Claude、GPT、Geminiなどがこれにあたります。</p>
+  <p>ただし、<strong>脳だけでは現実世界に手出しできない</strong>。ファイルを読めない、メールを送れない、データベースにアクセスできない。脳には「手足」が必要です。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>LLMの性能がエージェント全体の「思考力の上限」を決めます。優秀な社長がいても、ツールがなければ事業は回せない。逆にツールだけあっても、判断力がなければ使いこなせない。<strong>脳の能力に合った道具を選ぶのが設計の第一歩。</strong></p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🍳 料理の例</div>
+      <p>世界一のシェフでも、包丁もコンロもない部屋では料理できない。<br>
+      逆に最高のキッチン設備があっても、レシピを知らなければ使えない。<br><strong>脳（シェフの腕前）× 道具（キッチン設備）= 料理の質</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号では</div>
+      <p>Claude Opus 4.6（100万トークンCW）を使用。現時点で最高峰のLLM。<br><br>
+      「脳」が強力なので、複雑な分析・判断・文章生成が1セッションでできる。だからこそ「手足」（MCP）を充実させることで真価を発揮する。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Tools -->
+<div class="topic-card">
+  <h3><span class="emoji">🔧</span> 2. Tools（MCP）— 手足</h3>
+  <p class="tagline">AIが「実際にやる」ための道具。接続先が増えるほど能力が広がる</p>
+
+  <p>MCP（Model Context Protocol）は、AIが外部サービスを操作するための<strong>統一規格</strong>。Slack送信、Google Calendar確認、ファイル操作、ブラウザ操作…AIに「手足」を与える仕組みです。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>ChatGPTに「メール送っといて」と言っても送れません。Claude Codeに「Slackに投稿して」と言ったら<strong>本当に投稿できます</strong>。この差がTools（MCP）。AIが「考えるだけ」から「実行できる」に進化するかどうかの分水嶺です。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📱 スマホの例</div>
+      <p>アプリが入っていないスマホは、電話しかできない。<br>
+      LINEを入れれば連絡できる。カメラアプリを入れれば写真が撮れる。<br>
+      <strong>MCPは「AIにアプリをインストールする」ようなもの。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🔌 USBの例</div>
+      <p>USB以前は、プリンターもマウスもそれぞれ違う端子だった。USBで統一されて「何でも刺せば使える」になった。<br>
+      <strong>MCPも同じ。Slack・Google・Canva…全部同じ規格でAIに繋がる。</strong></p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>うちが繋いでるMCP</th><th>何ができるか</th><th>仕事で例えると</th></tr>
+    <tr><td>Slack</td><td>メッセージ送信・チャンネル読み取り</td><td>社内チャットができるスタッフ</td></tr>
+    <tr><td>Google Calendar</td><td>予定確認・作成・空き時間検索</td><td>秘書</td></tr>
+    <tr><td>Google Drive</td><td>ドキュメント検索・読み取り</td><td>資料室の司書</td></tr>
+    <tr><td>Canva</td><td>デザイン生成・編集・エクスポート</td><td>デザイナー</td></tr>
+    <tr><td>DPro（動画ProMCP）</td><td>広告データ検索・競合分析</td><td>市場調査スタッフ</td></tr>
+    <tr><td>Chrome</td><td>ブラウザ操作・スクリーンショット</td><td>Web調査スタッフ</td></tr>
+  </table>
+</div>
+
+<!-- 3. Trigger -->
+<div class="topic-card">
+  <h3><span class="emoji">⚡</span> 3. Trigger — きっかけ</h3>
+  <p class="tagline">「いつ動くか」を決める。手動 → 自動化の進化ポイント</p>
+
+  <p>Triggerは「AIがいつ動き出すか」のきっかけ。毎回チャットに打ち込む「手動」から、時間指定・イベント検知の「自動」まで段階があります。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>毎朝「今日の予定教えて」と打つのは面倒。「毎朝8時に自動で予定を教えてくれる」なら便利。<strong>人間が起動しなくても動く</strong>のが、ツール→エージェントへの進化です。Triggerはその鍵。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">⏰ 目覚ましの例</div>
+      <p>毎朝自分で時計を見て起きる = <strong>手動</strong><br>
+      アラームが鳴って起きる = <strong>スケジュールトリガー</strong><br>
+      スマートアラームが浅い眠りを検知して起こす = <strong>条件トリガー</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号では</div>
+      <p>現在は<strong>手動が中心</strong>（「/morning」と打つ）。<br><br>
+      ただし<strong>DProニュースクルー</strong>は毎朝8時に広告トレンドを自動取得してSlackに投稿する、スケジュールトリガー型。<br>ここの自動化が今後の進化ポイント。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Instructions -->
+<div class="topic-card">
+  <h3><span class="emoji">🧭</span> 4. Instructions — マニュアル</h3>
+  <p class="tagline">「言わなかったら間違う方向に進むか？」で書くかどうかを判断する</p>
+
+  <p>InstructionsはAIの行動を方向づける「マニュアル」。前回の勉強会で森田さんが言っていた「CL.MD（CLAUDE.md）が必ず読むファイル」がまさにこれです。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>新人に「いい感じにやっといて」と丸投げしたら？ → 自己流で動いて事故る。でも<strong>マニュアルが100ページあったら誰も読まない</strong>。ちょうどいい量を、ちょうどいい具体度で書く。これがInstructions設計の本質。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏗️ 設計図の例</div>
+      <p>「いい感じの家建てて」と言われたら？<br>→ 窓の数も部屋の間取りもバラバラな家ができる。<br><br>
+      設計図があれば、職人は迷わず正確に作れる。<strong>設計図 = Instructions。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号では</div>
+      <p><strong>CLAUDE.md</strong> = 全体のマニュアル（起動ルール、CW管理、行動規範）<br>
+      <strong>identity.md</strong> = AIの人格設定（口調、価値観、判断基準）<br>
+      <strong>rules/</strong> = 個人情報保護、セキュリティ、LP制作の禁止事項<br><br>
+      これらが「言わなかったら事故る」内容だけ厳選して書かれている。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Skills -->
+<div class="topic-card">
+  <h3><span class="emoji">📋</span> 5. Skills — 業務手順書</h3>
+  <p class="tagline">「毎回同じ説明をするなら、手順書にしよう」がSkillの発想</p>
+
+  <p>Skillは「再利用可能な業務手順」。毎回チャットで長い指示を書く代わりに、一度まとめておけば <code>/skill名</code> で呼び出せます。前回の勉強会で出てきた「ハンドオフスキル」「ナイスダイブスキル」もこれ。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>マクドナルドが世界中で同じ味を出せるのは、<strong>全工程がマニュアル化（=Skill化）されている</strong>から。パティの焼き時間、ソースの量、包み方…全部決まっている。属人化していないから、誰でも同品質で出せる。AIのSkillも同じ原理。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📝 チェックリストの例</div>
+      <p>パイロットが離陸前にチェックリストを確認する理由:<br>
+      「毎回全部覚えているはず」は危険。<strong>手順を外出しすることで、ミスを構造的に防ぐ。</strong><br><br>
+      Skillも同じ。品質のバラつきを抑える仕組み。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号のSkill例</div>
+      <p><code>/morning</code> — 毎朝の起動ルーチン<br>
+      <code>/banner-park</code> — バナー制作パイプライン<br>
+      <code>/handoff</code> — セッション引き継ぎ<br>
+      <code>/nice-dive</code> — 学びのログ記録<br>
+      <code>/kiji-cko</code> — 記事LP品質診断<br><br>
+      <strong>現在44個のSkillが稼働中</strong>（Part 2で詳しく）</p>
+    </div>
+  </div>
+</div>
+
+<!-- 6. Memory -->
+<div class="topic-card">
+  <h3><span class="emoji">💾</span> 6. Memory — 長期記憶</h3>
+  <p class="tagline">「前も同じ説明したよね？」をなくす仕組み</p>
+
+  <p>Memoryは「セッションをまたいで覚えておく情報」。ユーザーの好み、過去の判断基準、プロジェクトの背景情報など。セッションが変わっても「いつもの」で通じる状態を作る。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>行きつけのカフェで毎回「カフェラテのミルク多めでお願いします」と説明するのは面倒。常連になれば「いつもの」で通じる。<strong>AIのMemoryも「いつもの」を可能にする仕組み。</strong>なければ毎回初対面。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏥 カルテの例</div>
+      <p>病院に行くたびに「アレルギーありますか？」「既往歴は？」と聞かれたら面倒。<br>
+      カルテがあるから、前回の情報を引き継げる。<br>
+      <strong>Memory = AIのカルテ。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号では</div>
+      <p><strong>knowledge/</strong> = 26ファイルのナレッジDB（マーケ哲学、フックDB、CTAパターン等）<br>
+      <strong>clients/</strong> = クライアント情報（案件着手前に必ず読む）<br>
+      <strong>memory/</strong> = ユーザーの好み・過去の判断記録<br><br>
+      ただし現状は<strong>テキスト検索のみ</strong>。意味検索ができるようになるのがPart 4の話。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 7. Context Window -->
+<div class="topic-card">
+  <h3><span class="emoji">🪟</span> 7. Context Window — 今の頭の中</h3>
+  <p class="tagline">AIの「今、頭の中に入っている量」。これが全ての品質を決める</p>
+
+  <p>Context Window（CW）は「AIが一度に処理できる情報量の上限」。人間の短期記憶（ワーキングメモリ）に相当します。これが<strong>最も重要なパーツ</strong>で、Part 3で深掘りします。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>会議で10個の議題を一気に話されたら、最後の方は覚えていないし、最初の議題の結論も曖昧になる。<strong>AIも同じ。</strong>情報を詰め込みすぎると「嘘をつく」「指示を忘れる」「精度が落ちる」が起きる。前回の勉強会で森田さんが言っていた「ハルシネーション」がまさにこれ。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🧳 スーツケースの例</div>
+      <p>30Lのスーツケースに全部詰め込もうとすると…<br>
+      → 大事なものが奥に埋もれて取り出せない<br>
+      → 入りきらない荷物は落ちていく<br>
+      <strong>CW = スーツケースのサイズ。詰め方の設計が命。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号では</div>
+      <p>CW 100万トークン（業界最大級）。でも無限ではない。<br><br>
+      前回の勉強会で「1体に全部やらせるとコンテキストウィンドウがいっぱいになっちゃう」と森田さんが言ってたのは、このCWの話。<br>
+      <strong>→ だからエージェントを分割する</strong>（Part 3で詳しく）</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Part 1 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🧩</div>
+    <div class="hl-text">7パーツの覚え方</div>
+    <div class="hl-sub">
+      脳（LLM）× 手足（Tools）× きっかけ（Trigger）= 動くAI<br>
+      マニュアル（Instructions）× 手順書（Skills）= 正しく動くAI<br>
+      記憶（Memory）× 頭の容量（CW）= 賢く動くAI
+    </div>
+  </div>
+
+  <table>
+    <tr><th>#</th><th>パーツ</th><th>一言で</th><th>人間で例えると</th></tr>
+    <tr><td>1</td><td>LLM</td><td>考える力</td><td>脳みそ</td></tr>
+    <tr><td>2</td><td>Tools / MCP</td><td>実行する力</td><td>手足 + 道具</td></tr>
+    <tr><td>3</td><td>Trigger</td><td>いつ動くか</td><td>出勤時間 / アラーム</td></tr>
+    <tr><td>4</td><td>Instructions</td><td>何をどうするか</td><td>業務マニュアル</td></tr>
+    <tr><td>5</td><td>Skills</td><td>手順書</td><td>レシピ / チェックリスト</td></tr>
+    <tr><td>6</td><td>Memory</td><td>長期記憶</td><td>カルテ / 引き継ぎノート</td></tr>
+    <tr><td>7</td><td>Context Window</td><td>今の頭の容量</td><td>ワーキングメモリ</td></tr>
+  </table>
+</div>
+
+<!-- ═══ ナビ ═══ -->
+<div class="pagination">
+  <a href="index.html">← TOP に戻る</a>
+  <a href="part2.html">Part 2: AIへの指示の技術 →</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — CCDD ミニダイブ Part 1 / 5</p>
+</div>
+
+</body>
+</html>

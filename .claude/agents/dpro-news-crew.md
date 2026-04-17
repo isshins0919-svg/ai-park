@@ -80,16 +80,24 @@ items_get のパラメータ:
 【📸 Instagram × {ジャンル名}】直近30日トレンド
 
 1. ▲¥X.XM｜{商品名/ブランド}
-   フック: 「{ナレーション冒頭 or コピー冒頭}」
+   フック: 「{ad_start_sentence冒頭60文字}」
+   🎬 動画: {production_url}   ← YouTubeなら直リンク
+   📄 記事LP: {transition_url} ← LP直リンク
 
 2. ▲¥X.XM｜{商品名/ブランド}
-   フック: 「{ナレーション冒頭 or コピー冒頋}」
+   フック: 「{ad_start_sentence冒頭60文字}」
+   🎬 動画: {production_url}
+   📄 記事LP: {transition_url}
 
 3. ▲¥X.XM｜{商品名/ブランド}
-   フック: 「{ナレーション冒頭 or コピー冒頭}」
+   フック: 「{ad_start_sentence冒頭60文字}」
+   🎬 動画: {production_url}
+   📄 記事LP: {transition_url}
 
 🔑 共通パターン: {上位3件に共通するフック/訴求の傾向を1行}
 ```
+
+URLがnullの場合はその行を省略する。
 
 ---
 

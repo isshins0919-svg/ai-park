@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クラウドコード ミニダイブ — CCDD エッセンス編</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .parts-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 32px 0; }
+  .part-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px 28px; display: flex; align-items: flex-start; gap: 20px;
+    text-decoration: none; color: inherit; transition: 0.2s;
+  }
+  .part-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .part-card .part-icon {
+    flex-shrink: 0; width: 56px; height: 56px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center; font-size: 26px;
+  }
+  .part-card .part-icon.p1 { background: rgba(56,189,248,0.12); }
+  .part-card .part-icon.p2 { background: rgba(129,140,248,0.12); }
+  .part-card .part-icon.p3 { background: rgba(244,114,182,0.12); }
+  .part-card .part-icon.p4 { background: rgba(251,146,60,0.12); }
+  .part-card .part-icon.p5 { background: rgba(74,222,128,0.12); }
+  .part-card .part-info { flex: 1; }
+  .part-card .part-info .part-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent); margin-bottom: 2px; }
+  .part-card .part-info h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .part-card .part-info p { font-size: 13px; color: var(--muted); margin: 0; }
+  .part-card .part-info .topics { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .part-card .part-info .topics span { font-size: 11px; background: rgba(56,189,248,0.08); color: var(--muted); padding: 2px 8px; border-radius: 6px; }
+  .part-card .part-time { flex-shrink: 0; font-size: 12px; color: var(--muted); background: var(--dark); padding: 4px 10px; border-radius: 8px; }
+  .recap-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px 28px; margin-bottom: 32px;
+  }
+  .recap-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .recap-box ul { padding-left: 20px; font-size: 14px; color: var(--muted); }
+  .recap-box ul li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <span class="logo">CCDD MINI DIVE</span>
+  <div class="nav-links">
+    <a href="index.html" class="active">TOP</a>
+    <a href="part1.html">01</a>
+    <a href="part2.html">02</a>
+    <a href="part3.html">03</a>
+    <a href="part4.html">04</a>
+    <a href="part5.html">05</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover">
+  <div class="cover-badge">ISSHIN INTERNAL TRAINING</div>
+  <h1>クラウドコード<br>ミニダイブ</h1>
+  <p class="subtitle">CCDD エッセンス編 — 全5パート</p>
+  <p class="part-num">Source: Claude Code DEEP DIVE by AX社 / 2026.04</p>
+</div>
+
+<!-- 前回の勉強会の振り返り -->
+<div class="recap-box">
+  <h3>📋 前回の勉強会（4/1）で学んだこと</h3>
+  <ul>
+    <li><strong>エージェントは「人間の組織」と同じ設計</strong> — CEO、CMO、リサーチ担当…役割を分けて動く</li>
+    <li><strong>エンベディング処理をしないとAIは意味を理解できない</strong> — 「身長」と「伸びノビ」が同じことだと分からない</li>
+    <li><strong>データの質が重要（200本あれば十分）</strong> — 量よりも「売れた/売れてない」の分類が大事</li>
+    <li><strong>プランモードで考え、次のセッションで実行する</strong> — 考えることと実行を分離するのがコツ</li>
+    <li><strong>ハンドオフスキルでセッション引き継ぎ</strong> — 1行コピペで前回の続きから始められる</li>
+  </ul>
+</div>
+
+<div class="highlight">
+  <div class="hl-emoji">🧭</div>
+  <div class="hl-text">この資料の使い方</div>
+  <div class="hl-sub">
+    5つのパートに分かれています。1パート10〜15分。<br>
+    <strong>1パートごとに休憩を入れて、消化してから次に進んでください。</strong><br>
+    各パートは独立して読めますが、順番通りが一番わかりやすいです。
+  </div>
+</div>
+
+<div class="parts-grid">
+
+  <a href="part1.html" class="part-card">
+    <div class="part-icon p1">🧩</div>
+    <div class="part-info">
+      <div class="part-label">PART 1</div>
+      <h3>AIエージェントの正体</h3>
+      <p>AIエージェントは7つのパーツでできている。全体像を掴むことが最初のステップ。</p>
+      <div class="topics">
+        <span>LLM</span><span>Tools / MCP</span><span>Trigger</span><span>Instructions</span>
+        <span>Skills</span><span>Memory</span><span>Context Window</span>
+      </div>
+    </div>
+    <span class="part-time">10 min</span>
+  </a>
+
+  <a href="part2.html" class="part-card">
+    <div class="part-icon p2">✍️</div>
+    <div class="part-info">
+      <div class="part-label">PART 2</div>
+      <h3>AIへの指示の技術</h3>
+      <p>AIは「良い指示」で劇的に賢くなる。5要素テンプレートとSkillの育て方。</p>
+      <div class="topics">
+        <span>指示の5要素</span><span>Shot設計</span><span>Script vs Skill</span><span>Skillの成長過程</span>
+      </div>
+    </div>
+    <span class="part-time">10 min</span>
+  </a>
+
+  <a href="part3.html" class="part-card">
+    <div class="part-icon p3">🧠</div>
+    <div class="part-info">
+      <div class="part-label">PART 3</div>
+      <h3>コンテキストウィンドウ — AIの脳の限界</h3>
+      <p>AIは情報を入れすぎると壊れる。何を入れて何を入れないかの設計が品質の全て。</p>
+      <div class="topics">
+        <span>CW管理</span><span>Tier 0-3設計</span><span>エージェント分割</span><span>NG信号3つ</span>
+      </div>
+    </div>
+    <span class="part-time">10 min</span>
+  </a>
+
+  <a href="part4.html" class="part-card">
+    <div class="part-icon p4">🧲</div>
+    <div class="part-info">
+      <div class="part-label">PART 4</div>
+      <h3>ベクトル化 — AIに「意味」を教える</h3>
+      <p>エンベディングがないとAIはキーワードマッチしかできない。意味の理解が全てを変える。</p>
+      <div class="topics">
+        <span>エンベディング</span><span>意味検索</span><span>類似度スコア</span><span>VOYAGE号の実装</span>
+      </div>
+    </div>
+    <span class="part-time">15 min</span>
+  </a>
+
+  <a href="part5.html" class="part-card">
+    <div class="part-icon p5">🔄</div>
+    <div class="part-info">
+      <div class="part-label">PART 5</div>
+      <h3>フィードバックループ — AIを賢くする仕組み</h3>
+      <p>やりっぱなしのAIは成長しない。自動で賢くなる仕組みの作り方。</p>
+      <div class="topics">
+        <span>3つのループ</span><span>リフレクション</span><span>多層防御</span><span>ベクトルDB蓄積</span>
+      </div>
+    </div>
+    <span class="part-time">10 min</span>
+  </a>
+
+</div>
+
+</div>
+
+<div class="footer">
+  <p>一進VOYAGE号 — クラウドコード ミニダイブ CCDD エッセンス編</p>
+  <p>Internal Training Material</p>
+</div>
+
+</body>
+</html>

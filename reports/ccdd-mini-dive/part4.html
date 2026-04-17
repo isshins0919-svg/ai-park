@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 4: ベクトル化 — CCDD ミニダイブ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <span class="logo">CCDD MINI DIVE</span>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="part1.html">01</a>
+    <a href="part2.html">02</a>
+    <a href="part3.html">03</a>
+    <a href="part4.html" class="active">04</a>
+    <a href="part5.html">05</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover">
+  <div class="cover-badge">PART 4 OF 5</div>
+  <h1>ベクトル化<br>— AIに「意味」を教える</h1>
+  <p class="subtitle">エンベディングがないと、AIはキーワードマッチしかできない</p>
+  <p class="part-num">所要時間: 約15分</p>
+</div>
+
+<div class="highlight">
+  <div class="hl-emoji">📌</div>
+  <div class="hl-text">Part 3の振り返り</div>
+  <div class="hl-sub">CWは有限。詰め込みすぎるとAIは壊れる。Tier設計とエージェント分割で守る。<br>今回は「AIはどうやって意味を理解するのか」の核心に迫る。前回の勉強会で最も反響が大きかった話題。</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 問題提起 ═══ -->
+<div class="section">
+  <div class="section-label">THE PROBLEM</div>
+  <h2>AIは「言葉」をどう理解しているのか？</h2>
+
+  <p>前回の勉強会で森田さんが「ベクトル化処理をせずにクリエイティブ作ると全然いいのができない」と言っていました。なぜでしょう？</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🔍</span> ベクトル化なし vs あり</h3>
+    <p class="tagline">同じAIが、理解の深さだけでこれだけ変わる</p>
+
+    <div class="compare">
+      <div class="compare-ng">
+        <div class="label">ベクトル化なし</div>
+        <p>AIは言葉を<strong>「文字列」として処理</strong>する。<br><br>
+        「身長」と「伸びノビ」→ <strong>別の言葉</strong>として扱う<br>
+        「膝がガクガクする」と「膝が不安定」→ <strong>別の意味</strong><br><br>
+        結果: キーワードが一致しないと見つけられない。人間が「同じ意味じゃん」と思うことを理解できない。</p>
+      </div>
+      <div class="compare-ok">
+        <div class="label">ベクトル化あり</div>
+        <p>AIは言葉を<strong>「意味の座標」として処理</strong>する。<br><br>
+        「身長」と「伸びノビ」→ <strong>意味が近い</strong>とわかる<br>
+        「膝がガクガクする」と「膝が不安定」→ <strong>ほぼ同義</strong><br><br>
+        結果: 言い回しが違っても「意味が同じ」を見つけられる。人間の理解に近づく。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ ベクトルとは ═══ -->
+<div class="section">
+  <div class="section-label">WHAT IS A VECTOR</div>
+  <h2>ベクトル = 意味を数値に変換したもの</h2>
+
+  <p>「ベクトル化」とは、テキストを<strong>数値の配列（ベクトル）</strong>に変換すること。変換すると、テキスト同士の「意味の近さ」を数値で計算できるようになります。</p>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📍 地図の例（一番わかりやすい）</div>
+      <p>東京の位置 = (北緯35.6, 東経139.7)<br>
+      大阪の位置 = (北緯34.6, 東経135.5)<br>
+      ニューヨークの位置 = (北緯40.7, 西経74.0)<br><br>
+      座標があれば「東京と大阪は近い」「東京とNYは遠い」が<strong>計算で分かる</strong>。<br><br>
+      ベクトル化は<strong>言葉に座標を与える</strong>こと。「おはよう」と「Good morning」が意味の地図上で近くにプロットされる。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🎨 色の例</div>
+      <p>「赤」= (255, 0, 0)<br>
+      「オレンジ」= (255, 165, 0)<br>
+      「青」= (0, 0, 255)<br><br>
+      数値で表すと「赤とオレンジは近い」「赤と青は遠い」が<strong>計算でわかる</strong>。<br><br>
+      色は3次元（R, G, B）。言葉のベクトルは<strong>3,072次元</strong>。人間には想像できない次元数で、微妙な意味の違いまで捉える。</p>
+    </div>
+  </div>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">ベクトルの距離 = 意味の近さ</span><br><br>
+    「膝がガクガクする」←→「膝が不安定」&emsp;&emsp;= <span class="g">距離 0.15（ほぼ同義）</span><br>
+    「膝がガクガクする」←→「足が痛い」&emsp;&emsp;&emsp;&emsp;= <span class="y">距離 0.45（関連あり）</span><br>
+    「膝がガクガクする」←→「天気が良い」&emsp;&emsp;&emsp;= <span class="p">距離 0.92（無関係）</span><br><br>
+    <span class="o">→ この「距離」を使って「似たものを探す」のがベクトル検索（セマンティック検索）</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ キーワード検索 vs ベクトル検索 ═══ -->
+<div class="section">
+  <div class="section-label">KEYWORD VS SEMANTIC</div>
+  <h2>従来の検索 vs ベクトル検索</h2>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📚 図書館の例</div>
+      <p><strong>従来の検索（キーワード一致）</strong><br>
+      「犬の飼い方」で検索<br>→「犬の飼い方」というタイトルの本<strong>だけ</strong>ヒット<br><br>
+      <strong>ベクトル検索（意味検索）</strong><br>
+      「犬の飼い方」で検索<br>→「はじめてのワンちゃん」「ペットとの暮らし」<strong>もヒット</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🗂️ 社内ファイルの例</div>
+      <p><strong>従来</strong><br>
+      「売上報告」で検索 → ファイル名に「売上報告」がある資料だけ<br><br>
+      <strong>ベクトル</strong><br>
+      「売上報告」で検索 → 「Q3 Revenue Review」「第3四半期実績」もヒット<br>
+      <strong>言語の壁すら超える。</strong></p>
+    </div>
+  </div>
+
+  <div class="quote">
+    「セマンティック検索ができるからLLMが重要。できないなら今までのPythonと同じ機能」
+    <span class="author">— 文太（AX社代表）</span>
+  </div>
+
+  <div class="why-box">
+    <div class="label">なぜこれが革命的なのか</div>
+    <p>今まで「ファイル名が完全一致しないと見つからない」だった検索が、「意味が近ければ見つかる」に変わる。<br>
+    これは<strong>人間の脳が「連想」で情報を引き出す仕組み</strong>に近い。「あの話、なんだっけ…犬じゃなくてペットの…あ、あの本！」ができるようになる。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 広告での活用 ═══ -->
+<div class="section">
+  <div class="section-label">IN PRACTICE</div>
+  <h2>広告クリエイティブでの活用</h2>
+
+  <p>前回の勉強会で森田さんが見せてくれた「ベクトル化あり/なしの比較」。具体的にどう使うかを解説します。</p>
+
+  <div class="topic-card">
+    <h3><span class="emoji">📊</span> 売れてるクリエイティブの共通点を見つける</h3>
+    <p class="tagline">200本の動画をベクトル化して「勝ちパターン」を発見</p>
+
+    <div class="story-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>データを集める</h4>
+        <p>売れてる動画200本 + 売れてない動画100本を用意する</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>全部ベクトル化する</h4>
+        <p>各動画の台本・コピーを数値の配列に変換する（Gemini Embedding APIで自動）</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>「勝ちゾーン」が見える</h4>
+        <p>ベクトル空間上で、売れてる動画が集まっている場所 = 「勝ちゾーン」。共通する訴求ポイント、トーン、構成が浮かび上がる。</p>
+      </div>
+    </div>
+    <div class="story-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>新しいCRを「勝ちゾーン」の近くに生成する</h4>
+        <p>「このゾーンに近いコピーを作って」とAIに指示。勝ちパターンに近い、でもコピーではない新しいCRが生まれる。</p>
+      </div>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-box">
+        <div class="ex-label real">⚾ 野球の例</div>
+        <p>スコアラーが対戦チームの全打者データを分析。<br>
+        「この打者は外角低めが打率.120」→ 外角低めを狙って投げる。<br><br>
+        <strong>ベクトル分析 = AIのスコアラー</strong>。過去のデータから最適な攻め方を導く。</p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-label voyage">⚓ VOYAGE号での実装</div>
+        <p>Banner Park v7 では:<br>
+        ① N1の需要をベクトル化<br>
+        ② 生成したコピーをベクトル化<br>
+        ③ 両者の距離を計算（コサイン類似度）<br>
+        ④ 0.7以上なら合格、0.5以下なら自動で書き直し<br><br>
+        <strong>「感覚で判断」→「数値で判断」への進化。</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>類似度スコア</th><th>意味</th><th>アクション</th></tr>
+    <tr><td><strong>0.8以上</strong></td><td>ほぼ同じ</td><td>差別化が足りない。角度を変える</td></tr>
+    <tr><td><strong>0.7〜0.8</strong></td><td>同じカテゴリ</td><td>良い方向性。微調整で使える</td></tr>
+    <tr><td><strong>0.5〜0.7</strong></td><td>うっすら関連</td><td>新しい切り口として検討価値あり</td></tr>
+    <tr><td><strong>0.5未満</strong></td><td>無関係</td><td>方向が違う。やり直し</td></tr>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ エンベディング2 ═══ -->
+<div class="section">
+  <div class="section-label">EMBEDDING v2</div>
+  <h2>エンベディング2 — テキストだけじゃなくなった</h2>
+
+  <p>前回の勉強会で森田さんが「エンベディング2が出た」と言っていた技術。従来はテキストだけだったベクトル化が、<strong>画像・動画・音声にも拡張</strong>されました。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">エンベディングの進化</span><br><br>
+    <span class="g">v1（従来）</span>: テキスト → ベクトル<br>
+    &emsp;「おはよう」→ [0.12, -0.34, 0.56, ...]<br><br>
+    <span class="o">v2（最新）</span>: テキスト + 画像 + 動画 + 音声 → <strong>同じベクトル空間</strong><br>
+    &emsp;「おはようの文字」と「おはようと言っている動画」が<br>
+    &emsp;<strong>同じ空間上で近くにプロットされる</strong>
+  </div>
+
+  <div class="why-box">
+    <div class="label">これが何を変えるのか</div>
+    <p>今まで: テキストはテキスト同士、画像は画像同士でしか比較できなかった。<br>
+    これから: <strong>「この動画に一番合うコピーはどれ？」</strong>が計算で出せる。<br>
+    動画の雰囲気とコピーのトーンの「相性」を、数値で測れるようになる。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🎵 音楽の例</div>
+      <p>今まで: 曲名で検索するしかなかった<br>
+      これから: 「この映像の雰囲気に合うBGMを探して」が可能に<br><br>
+      <strong>映像のベクトルとBGMのベクトルの距離が近い = 相性が良い</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">👔 ファッションの例</div>
+      <p>「このジャケットに合うパンツ」を探すとき、<br>
+      ブランド名やカラー名ではなく、<strong>写真の雰囲気で検索</strong>できるようになる。<br><br>
+      テキストと画像が同じベクトル空間にいるから可能。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ まとめ ═══ -->
+<div class="section">
+  <div class="section-label">SUMMARY</div>
+  <h2>Part 4 まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🧲</div>
+    <div class="hl-text">3つの持ち帰り</div>
+    <div class="hl-sub">
+      ① ベクトル化 = 言葉に座標を与えること。意味の近さが計算できるようになる<br>
+      ② 「勝ちパターン」の発見・品質ゲート・新CR生成に直結する技術<br>
+      ③ エンベディング2で画像・動画・音声も同じ空間に。活用の幅が爆発的に広がる
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="part3.html">← Part 3: コンテキストウィンドウ</a>
+  <a href="part5.html">Part 5: フィードバックループ →</a>
+</div>
+
+</div>
+<div class="footer"><p>一進VOYAGE号 — CCDD ミニダイブ Part 4 / 5</p></div>
+</body>
+</html>

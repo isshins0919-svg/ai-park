@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part 5: フィードバックループ — CCDD ミニダイブ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <span class="logo">CCDD MINI DIVE</span>
+  <div class="nav-links">
+    <a href="index.html">TOP</a>
+    <a href="part1.html">01</a>
+    <a href="part2.html">02</a>
+    <a href="part3.html">03</a>
+    <a href="part4.html">04</a>
+    <a href="part5.html" class="active">05</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="cover">
+  <div class="cover-badge">PART 5 OF 5 — FINAL</div>
+  <h1>フィードバックループ<br>— AIを賢くする仕組み</h1>
+  <p class="subtitle">やりっぱなしのAIは成長しない。自動で賢くなる設計</p>
+  <p class="part-num">所要時間: 約10分</p>
+</div>
+
+<div class="highlight">
+  <div class="hl-emoji">📌</div>
+  <div class="hl-text">Part 4の振り返り</div>
+  <div class="hl-sub">ベクトル化で「意味の近さ」を計算できるようになった。勝ちパターン発見・品質ゲートに使える。<br>最終パートでは「AIが自分で改善していく仕組み」を学ぶ。</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ フィードバックループとは ═══ -->
+<div class="section">
+  <div class="section-label">FEEDBACK LOOPS</div>
+  <h2>フィードバックループ = 「やる → 測る → 直す」の自動化</h2>
+
+  <p>前回の勉強会で森田さんが「フィードバックしていってサイクルを作っていくことが一番大事」と言っていました。これがフィードバックループです。</p>
+
+  <div class="why-box">
+    <div class="label">なぜ大事？</div>
+    <p>テスト勉強で「問題を解く → 丸つけしない → また同じ範囲を解く」を繰り返す人はいない。<strong>丸つけ（評価）して間違いを直す（改善）から成績が上がる。</strong>AIも同じ。実行→評価→改善のサイクルがないと、何回やっても同じ品質のまま。</p>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏋️ 筋トレの例</div>
+      <p>❌ 毎日なんとなく腕立て → 3ヶ月後も変化なし<br><br>
+      ✅ 記録つけて → 重量を少しずつ上げて → フォーム動画で確認 → 着実に成長<br><br>
+      <strong>「記録 → 分析 → 調整」のサイクルが成長を生む。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">📊 営業の例</div>
+      <p>❌ テレアポ100件 → 結果を振り返らない → 同じトークで次の100件<br><br>
+      ✅ テレアポ100件 → 「どのトークで何件取れたか」分析 → トーク改善 → 次の100件<br><br>
+      <strong>PDCAが回る営業チームは自然と数字が上がる。</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 3つのループ ═══ -->
+<div class="section">
+  <div class="section-label">THREE LOOPS</div>
+  <h2>VOYAGE号が目指す3つのフィードバックループ</h2>
+
+  <!-- ループA -->
+  <div class="topic-card">
+    <h3><span class="emoji">🔧</span> ループA: スキル自動改善</h3>
+    <p class="tagline">「このSkillのどのステップが弱いか」を自動で見つけて直す</p>
+
+    <div class="diagram" style="text-align: left;">
+      <span class="g">Skillを実行</span> → <span class="a">結果の品質スコアを記録</span> → <span class="o">3回分の傾向を分析</span><br>
+      → 「Step 3で品質が落ちる傾向」を発見 → <span class="p">Step 3だけ自動修正</span>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-box">
+        <div class="ex-label real">🍰 パティシエの例</div>
+        <p>新人パティシエが毎日ケーキを焼く。<br>
+        師匠が「今日のスポンジはちょっと硬い」「今日は完璧」と毎回フィードバック。<br>
+        3回分のフィードバックを見ると「卵の泡立てが甘い日に硬くなる」パターンが見える。<br>
+        <strong>→ 泡立て工程だけを重点的に改善。</strong></p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-label voyage">⚓ VOYAGE号での実装予定</div>
+        <p>各Skillの実行結果を <code>logs/skill_metrics.json</code> に記録。<br>
+        <code>/park-kaizen</code> 実行時にメトリクスを分析 → 弱いステップを特定 → 自動で改善提案。<br><br>
+        <span class="tag i">Phase 3で実装予定</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ループB -->
+  <div class="topic-card">
+    <h3><span class="emoji">📈</span> ループB: CRパフォーマンスフィードバック</h3>
+    <p class="tagline">「実際に売れたCR」のデータが、次のCR生成の精度を上げる</p>
+
+    <div class="diagram" style="text-align: left;">
+      <span class="g">CRを生成</span> → <span class="a">広告配信</span> → <span class="o">DPro MCPで実績取得</span><br>
+      → ベクトルDBに「勝ち/負け」タグ付与 → <span class="p">次回生成時に「勝ちゾーン」を参照</span>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-box">
+        <div class="ex-label real">🎯 ダーツの例</div>
+        <p>1投目: 的の左上に当たった → 「右下にずらす」<br>
+        2投目: 的の中心付近 → 「この力加減を記憶する」<br>
+        3投目: ブルズアイ<br><br>
+        <strong>毎回の結果を次に反映するから精度が上がる。</strong>結果を見ないで投げ続けても、いつまでも当たらない。</p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-label voyage">⚓ VOYAGE号での実装予定</div>
+        <p>① DPro APIでCR実績を取得（cost_difference, digg_rate等）<br>
+        ② 実績 × CRのベクトルを紐付けて蓄積<br>
+        ③ 「勝ちCR」のベクトル重心を計算<br>
+        ④ 新CRは「勝ちゾーン」に近い方向で生成<br><br>
+        <span class="tag a">Phase 4で実装予定</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ループC -->
+  <div class="topic-card">
+    <h3><span class="emoji">🚦</span> ループC: コンテキスト品質監視</h3>
+    <p class="tagline">「AIがパンクしそう」を自動検知して、手遅れになる前に対処</p>
+
+    <div class="diagram" style="text-align: left;">
+      <span class="g">セッション中のNG回数をカウント</span> → <span class="o">3回以上NGが続いたら警告</span><br>
+      → <span class="p">サブエージェントに委譲 or セッション分割を提案</span>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-box">
+        <div class="ex-label real">🚗 車のダッシュボードの例</div>
+        <p>ガソリンが少なくなったら警告ランプが光る。エンジン温度が上がりすぎたら警告が出る。<br><br>
+        <strong>壊れる前に教えてくれるから、事故を防げる。</strong><br>
+        AIも同じ。パンクする前に「そろそろ限界です」と教えてほしい。</p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-label voyage">⚓ 前回の勉強会で起きたこと</div>
+        <p>森田さんがプランモードでエージェントを設計した後、同じセッションで実行しようとした。<br>
+        → 森田さん自身が「あ、やっちゃいけないことしてた」と気づいた。<br><br>
+        <strong>これを自動で検知できるようにするのがループC。</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ リフレクション ═══ -->
+<div class="section">
+  <div class="section-label">REFLECTION</div>
+  <h2>リフレクション — 「振り返って」は曖昧すぎる</h2>
+
+  <p>リフレクションは「AIに自分の出力を振り返らせて修正させる」手法。ただし<strong>「品質を改善して」のような曖昧な指示では機能しない。</strong></p>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">❌ NG — 曖昧なリフレクション</div>
+      <p>「品質を振り返って改善して」<br>
+      「もっと良くして」<br>
+      「前のと比較して」<br><br>
+      → AIは「何をどう改善すればいいか」がわからないから、表面的な変更しかしない</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ OK — 具体的なリフレクション</div>
+      <p>「各ステップの出力を比較して、以下の異常を検出して」<br><br>
+      ・トーンの急変（前ステップと感情スコアが ±30% 以上）<br>
+      ・情報の欠落（前ステップにあった必須項目が消えている）<br>
+      ・矛盾（前ステップの結論と逆の主張が出現）<br><br>
+      「異常があったステップ<strong>のみ</strong>再実行」</p>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📝 作文添削の例</div>
+      <p>❌ 先生「もっと良くしましょう」→ 何を直せばいいかわからない<br><br>
+      ✅ 先生「①主語と述語がねじれている箇所 ②同じ接続詞の3回以上使用 ③段落冒頭の繰り返し表現をチェックして修正して」<br><br>
+      <strong>チェック項目が具体的だから、改善が的確になる。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label real">🏃 スポーツコーチの例</div>
+      <p>❌ コーチ「もっと上手くなれ」<br><br>
+      ✅ コーチ「腕の振りが小さい。肘の角度を90度に。腕を耳の横まで上げろ」<br><br>
+      <strong>測定可能な改善ポイントを示すのがリフレクションの本質。</strong></p>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">前回の勉強会との接続</div>
+    <p>森田さんが「アウトプットに対して『これ違うわ』って具体でフィードバックしちゃってた。本質的に何がいけてないかが模索されずにアウトプットだけ変える努力をしてた」と自己反省していた場面がまさにこれ。<br><br>
+    <strong>表面（アウトプット）を直すのではなく、根本（なぜそうなったか）を直す。</strong>それがリフレクションの正しい使い方。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 多層防御 ═══ -->
+<div class="section">
+  <div class="section-label">MULTI-LAYER DEFENSE</div>
+  <h2>多層防御 — 「AIが間違えても大事故にならない」設計</h2>
+
+  <p>AIは間違えます。これは前提。だから<strong>「間違えても被害が出ない仕組み」</strong>を複数の層で作る。</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">多層防御の3層</span><br><br>
+    <span class="g">第1層: スクリプト検証（機械的チェック）</span><br>
+    &emsp;→ 入力値フォーマット確認、禁止ワードチェック等<br>
+    &emsp;→ LLMを使わない = <strong>100%確実な防波堤</strong><br><br>
+    <span class="a">第2層: AI自己チェック（リフレクション）</span><br>
+    &emsp;→ 自分の出力に矛盾・異常がないか確認<br>
+    &emsp;→ 精度は高いが100%ではない<br><br>
+    <span class="o">第3層: 人間の確認（最終ゲート）</span><br>
+    &emsp;→ 金額が大きい操作、公開する内容、不可逆な操作<br>
+    &emsp;→ 「送信ボタン」を押すのは人間<br><br>
+    <span class="y">原則: 検証はスクリプトで。判断はAIで。最終承認は人間で。</span>
+  </div>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">🏦 銀行ATMの例</div>
+      <p>第1層: カード + 暗証番号（機械的認証）<br>
+      第2層: 異常取引検知AI（パターン照合）<br>
+      第3層: 高額送金は窓口で本人確認（人間チェック）<br><br>
+      <strong>3層全部突破されないと被害が出ない。</strong></p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">⚓ VOYAGE号の多層防御</div>
+      <p>第1層: <code>rules/security.md</code> でAPIキー直書き・強制push等を禁止（機械的ルール）<br>
+      第2層: gate-quality-crew が品質ゲートでPASS/FAILを判定（AIチェック）<br>
+      第3層: Slack投稿・メール送信は人間が最終確認（人間ゲート）<br><br>
+      前回の勉強会でも「アップサイダーの上限10万円で止まった」という話があったが、あれも多層防御の一つ。</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 全体まとめ ═══ -->
+<div class="section">
+  <div class="section-label">GRAND SUMMARY</div>
+  <h2>全5パートの総まとめ</h2>
+
+  <div class="highlight">
+    <div class="hl-emoji">🎯</div>
+    <div class="hl-text">AIエージェント設計の3大原則</div>
+    <div class="hl-sub">
+      ① コンテキストは有限。必要なものだけ持つ<br>
+      ② 考える仕事はAIに、考えない仕事はスクリプトに<br>
+      ③ 間違えても大丈夫な仕組みを複数層で作る
+    </div>
+  </div>
+
+  <table>
+    <tr><th>Part</th><th>テーマ</th><th>一番大事なこと</th></tr>
+    <tr><td>1</td><td>AIエージェントの正体</td><td>7パーツ（脳・手足・きっかけ・マニュアル・手順書・記憶・頭の容量）で構成される</td></tr>
+    <tr><td>2</td><td>AIへの指示の技術</td><td>指示は5要素で。Skillは使いながら育てる。考えない処理はスクリプトに</td></tr>
+    <tr><td>3</td><td>コンテキストウィンドウ</td><td>CWは有限。Tier設計で管理。重い処理はサブエージェントへ。プランと実行は分離</td></tr>
+    <tr><td>4</td><td>ベクトル化</td><td>意味を数値化して「似たものを見つける」技術。品質ゲート・勝ちパターン発見に直結</td></tr>
+    <tr><td>5</td><td>フィードバックループ</td><td>やる→測る→直す の自動化。リフレクションは具体的に。多層防御で安全に</td></tr>
+  </table>
+</div>
+
+<!-- ═══ 次のステップ ═══ -->
+<div class="section">
+  <div class="section-label">NEXT STEPS</div>
+  <h2>明日からやること</h2>
+
+  <div class="topic-card">
+    <h3><span class="emoji">✅</span> 初心者向けアクションリスト</h3>
+    <p class="tagline">一気にやらなくていい。1日1つずつ</p>
+
+    <ul class="checklist">
+      <li><strong>Claude Code をインストールして触ってみる</strong> — まず使う。理論は後から付いてくる</li>
+      <li><strong>CLAUDE.md を読んでみる</strong> — うちのAIがどういう指示で動いているか理解する</li>
+      <li><strong>/morning を実行してみる</strong> — Skillの体験。「指示を書かなくても動く」を体感する</li>
+      <li><strong>簡単なタスクをやらせてみる</strong> — 「この記事を要約して」「この数字をグラフにして」くらいから</li>
+      <li><strong>指示の5要素を意識して書いてみる</strong> — 役割・目的・背景・制約・参考情報を入れてみる</li>
+      <li><strong>MCPで繋がっているツールを確認する</strong> — Slack, Calendar, Drive, Canva, DPro, Chrome</li>
+      <li><strong>agents/ と commands/ のファイルを眺めてみる</strong> — 「こういうのが作れるんだ」のイメージを掴む</li>
+    </ul>
+  </div>
+
+  <div class="topic-card">
+    <h3><span class="emoji">🗺️</span> VOYAGE号の進化ロードマップ</h3>
+    <p class="tagline">今どこにいて、これからどこへ向かうのか</p>
+
+    <table>
+      <tr><th>Phase</th><th>やること</th><th>状態</th></tr>
+      <tr><td>Phase 1</td><td>ベクトルDB構築 + knowledge/ ベクトル化</td><td><span class="tag b">これから</span></td></tr>
+      <tr><td>Phase 2</td><td>Park Skillsの出力をベクトルDB自動保存</td><td><span class="tag i">計画中</span></td></tr>
+      <tr><td>Phase 3</td><td>リフレクションルールを主要Skillに組み込み</td><td><span class="tag i">計画中</span></td></tr>
+      <tr><td>Phase 4</td><td>DPro実績 × ベクトルDBの紐付け</td><td><span class="tag a">将来</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ 最後に ═══ -->
+<div class="highlight" style="background: linear-gradient(135deg, rgba(129,140,248,0.1), rgba(244,114,182,0.1)); border-color: rgba(129,140,248,0.2);">
+  <div class="hl-emoji">⚓</div>
+  <div class="hl-text">Bon Voyage!</div>
+  <div class="hl-sub">
+    AIエージェントは「魔法」ではなく「設計」の産物。<br>
+    正しい設計ができれば、誰でも強力なAIパートナーを作れる。<br>
+    まずは触ってみて、壊して、直して、育てていこう。<br><br>
+    <strong>質問があればいつでも聞いてください。一緒に航海しましょう。</strong>
+  </div>
+</div>
+
+<div class="pagination">
+  <a href="part4.html">← Part 4: ベクトル化</a>
+  <a href="index.html">TOP に戻る →</a>
+</div>
+
+</div>
+<div class="footer">
+  <p>一進VOYAGE号 — クラウドコード ミニダイブ CCDD エッセンス編</p>
+  <p>Source: Claude Code DEEP DIVE by AX社 / 2026.04</p>
+  <p style="margin-top:8px; font-size:11px;">Internal Training Material</p>
+</div>
+</body>
+</html>

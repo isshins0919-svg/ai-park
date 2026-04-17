@@ -1,0 +1,155 @@
+{
+  "name": "DPro デイリーニュース配信",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "id": "node-0001-schedule",
+      "name": "毎朝8:00トリガー",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// ===== DPro デイリーニュース取得 =====\nconst DPRO_BASE = 'https://YOUR_WORKER_NAME.workers.dev'; // ← Cloudflare WorkerのURLに変更\n\nasync function dproGet(path, params) {\n  let qs = '';\n  if (params) {\n    const parts = [];\n    for (const [k, v] of Object.entries(params)) {\n      if (v != null) parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(String(v)));\n    }\n    if (parts.length) qs = '?' + parts.join('&');\n  }\n  const fullUrl = DPRO_BASE + path + qs;\n  const res = await $http.request({ method: 'GET', url: fullUrl });\n  return res;\n}\n\n// 1. 媒体ID取得\nconst appsRaw = await dproGet('/api/v1/apps');\nconst appList = Array.isArray(appsRaw) ? appsRaw : (appsRaw.data || appsRaw.apps || []);\nconst igApp = appList.find(function(a) { return /instagram|facebook/i.test(JSON.stringify(a)); });\nconst ytApp = appList.find(function(a) { return /youtube/i.test(JSON.stringify(a)); });\nconst igId = igApp ? (igApp.id || igApp.app_id) : null;\nconst ytId = ytApp ? (ytApp.id || ytApp.app_id) : null;\n\n// 2. ジャンルID取得\nconst GENRE_QUERIES = [\n  { label: '毛穴/シミ/シワ', q: '毛穴' },\n  { label: 'ヒザ系', q: 'ヒザ' },\n  { label: '子供サプリ', q: '成長' },\n  { label: '女性体臭', q: '体臭' }\n];\nconst genreIds = {};\nfor (const gq of GENRE_QUERIES) {\n  try {\n    const r = await dproGet('/api/v1/genres', { q: gq.q });\n    const list = Array.isArray(r) ? r : (r.data || r.genres || []);\n    genreIds[gq.label] = list.length > 0 ? (list[0].id || list[0].genre_id) : null;\n  } catch(e) {\n    genreIds[gq.label] = null;\n  }\n}\n\n// 3. 各ジャンル x 媒体でTOP3取得\nconst GENRE_LABELS = ['毛穴/シミ/シワ', 'ヒザ系', '子供サプリ', '女性体臭', '全ジャンル'];\nconst MEDIAS = [\n  { label: '📸Instagram', id: igId },\n  { label: '🎬YouTube', id: ytId }\n];\nconst newsData = [];\nfor (const genreLabel of GENRE_LABELS) {\n  for (const media of MEDIAS) {\n    const params = { app_id: media.id, sort: 'ad_cost_diff_desc', limit: 3 };\n    if (genreLabel !== '全ジャンル' && genreIds[genreLabel]) {\n      params.genre_id = genreIds[genreLabel];\n    }\n    let items = [];\n    try {\n      const r = await dproGet('/api/v1/items', params);\n      items = Array.isArray(r) ? r : (r.data || r.items || []);\n    } catch(e) { items = []; }\n    newsData.push({ genre: genreLabel, media: media.label, items: items });\n  }\n}\n\n// 4. 今日のハイライトを算出\nlet hlGenre = '—', hlName = '—', hlDiff = 0;\nfor (const nd of newsData) {\n  for (const item of nd.items) {\n    const diff = Number(item.ad_cost_diff || item.ad_cost_diff_30d || 0);\n    if (diff > hlDiff) {\n      hlDiff = diff;\n      hlGenre = nd.genre;\n      hlName = item.product_name || item.name || '—';\n    }\n  }\n}\n\n// 5. メインメッセージ組み立て\nconst today = new Date().toLocaleDateString('ja-JP', {\n  year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Tokyo'\n});\nfunction topName(genre, media) {\n  const nd = newsData.find(function(d) { return d.genre === genre && d.media === media; });\n  if (!nd || !nd.items.length) return '—';\n  return nd.items[0].product_name || nd.items[0].name || '—';\n}\nconst mainText = '📊 *DPro デイリーニュース｜' + today + '*\\n\\n'\n  + '\\t\\t📸Instagram\\t🎬YouTube\\n'\n  + '━━━━━━━━━━━━━━━━━━━━━━━━\\n'\n  + '毛穴/シミ/シワ\\t▲' + topName('毛穴/シミ/シワ','📸Instagram') + '\\t▲' + topName('毛穴/シミ/シワ','🎬YouTube') + '\\n'\n  + 'ヒザ系\\t\\t▲' + topName('ヒザ系','📸Instagram') + '\\t▲' + topName('ヒザ系','🎬YouTube') + '\\n'\n  + '子供サプリ\\t▲' + topName('子供サプリ','📸Instagram') + '\\t▲' + topName('子供サプリ','🎬YouTube') + '\\n'\n  + '女性体臭\\t\\t▲' + topName('女性体臭','📸Instagram') + '\\t▲' + topName('女性体臭','🎬YouTube') + '\\n'\n  + '━━━━━━━━━━━━━━━━━━━━━━━━\\n'\n  + '💡 今日の注目: *' + hlGenre + '* — ' + hlName + '\\n\\n'\n  + '詳細 → 🧵 スレッドへ';\n\nreturn [{ json: { mainText: mainText, newsData: newsData } }];"
+      },
+      "id": "node-0002-fetch",
+      "name": "DProデータ取得",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://slack.com/api/chat.postMessage",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_SLACK_BOT_TOKEN_HERE"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ channel: 'C0AMYLU2W5D', text: $json.mainText }) }}",
+        "options": {}
+      },
+      "id": "node-0003-post-main",
+      "name": "Slackメイン投稿",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// スレッドメッセージ一覧を生成\nconst newsData = $input.first().json.newsData;\nconst mainTs = $('Slackメイン投稿').first().json.ts;\nconst CHANNEL = 'C0AMYLU2W5D';\n\nconst threadMessages = [];\nfor (const nd of newsData) {\n  if (!nd.items || nd.items.length === 0) continue;\n  const lines = ['【' + nd.media + ' × ' + nd.genre + '】直近30日トレンド', ''];\n  nd.items.forEach(function(item, i) {\n    const name = item.product_name || item.name || '商品名不明';\n    const diff = Number(item.ad_cost_diff || item.ad_cost_diff_30d || 0);\n    const diffStr = diff >= 1000000\n      ? '▲¥' + (diff / 1000000).toFixed(1) + 'M'\n      : '▲¥' + (diff / 1000).toFixed(0) + 'K';\n    const hook = item.narration_text || item.copy_text || item.description || '';\n    lines.push((i + 1) + '. ' + diffStr + '｜' + name);\n    if (hook) lines.push('   フック: 「' + hook.slice(0, 60) + (hook.length > 60 ? '…' : '') + '」');\n  });\n  lines.push('');\n  threadMessages.push({\n    channel: CHANNEL,\n    thread_ts: mainTs,\n    text: lines.join('\\n')\n  });\n}\nreturn threadMessages.map(function(m) { return { json: m }; });"
+      },
+      "id": "node-0004-build-threads",
+      "name": "スレッドメッセージ組み立て",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "node-0005-loop",
+      "name": "ループ処理",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://slack.com/api/chat.postMessage",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_SLACK_BOT_TOKEN_HERE"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ channel: $json.channel, thread_ts: $json.thread_ts, text: $json.text }) }}",
+        "options": {}
+      },
+      "id": "node-0006-post-thread",
+      "name": "Slackスレッド投稿",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 200]
+    }
+  ],
+  "connections": {
+    "毎朝8:00トリガー": {
+      "main": [
+        [
+          { "node": "DProデータ取得", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "DProデータ取得": {
+      "main": [
+        [
+          { "node": "Slackメイン投稿", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Slackメイン投稿": {
+      "main": [
+        [
+          { "node": "スレッドメッセージ組み立て", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "スレッドメッセージ組み立て": {
+      "main": [
+        [
+          { "node": "ループ処理", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "ループ処理": {
+      "main": [
+        [
+          { "node": "Slackスレッド投稿", "type": "main", "index": 0 }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Tokyo"
+  },
+  "tags": ["dpro", "slack", "news"]
+}

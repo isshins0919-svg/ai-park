@@ -1,0 +1,27 @@
+{
+  "lifestyle_office": {
+    "status": "ok",
+    "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/camicks/amazon_final/ai_assets/lifestyle_office.png",
+    "model": "gemini-3-pro"
+  },
+  "lifestyle_casual": {
+    "status": "ok",
+    "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/camicks/amazon_final/ai_assets/lifestyle_casual.png",
+    "model": "gemini-3-pro"
+  },
+  "washi_texture": {
+    "status": "ok",
+    "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/camicks/amazon_final/ai_assets/washi_texture.png",
+    "model": "gemini-3-pro"
+  },
+  "factory_heritage": {
+    "status": "ok",
+    "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/camicks/amazon_final/ai_assets/factory_heritage.png",
+    "model": "gemini-3-pro"
+  },
+  "main_product": {
+    "status": "ok",
+    "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/camicks/amazon_final/ai_assets/main_product.png",
+    "model": "gemini-3-pro"
+  }
+}

@@ -113,12 +113,25 @@ total_score ≥ 80 AND bridge ≥ 75 AND QUALIFY = OK
 
 3ループでGO出なければ EXIT → ユーザーに台本再設計を要請する。
 
-### Step 5: GO → edit_ai_v2.py を自動実行する
+### Step 5: GO → edit_ai_v2.py または gungun_render.py を自動実行する
 
 **GOが出たらBashツールで直接実行する。人間に「渡してください」と言わない。**
 
+#### ぐんぐん習慣 / Letterboxレイアウト案件（gungun_render.py）
 ```bash
-python3 /Users/ca01224/Desktop/AI一進-Claude-Code/video-ai/edit_ai_v2.py \
+python3 /Users/ca01224/Desktop/一進VOYAGE号/video-ai/gungun_render.py \
+  --csv    "<CSVパス>" \
+  --clips  "<素材フォルダパス>" \
+  --output-dir "<出力ディレクトリ>" \
+  --fv all \
+  --whisper-json <Whisper JSONパス（任意）>
+```
+
+**必ず起動前に読む**: `.claude/knowledge/video-edit-kantoku-rules.md`
+
+#### 通常案件（edit_ai_v2.py）
+```bash
+python3 /Users/ca01224/Desktop/一進VOYAGE号/video-ai/edit_ai_v2.py \
   --script  "<CSVパス>" \
   --clips   "<素材フォルダパス>" \
   --output  "<出力mp4パス>"

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セツナトレイン2 マーケティング戦略書</title>
+<style>
+  :root {
+    --blue: #1a3a5c;
+    --sky: #4a90d9;
+    --gold: #d4a44c;
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --green: #3fb950;
+    --red: #f85149;
+    --orange: #d29922;
+    --purple: #a371f7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 50%, #2a5a8c 100%);
+    border-radius: 16px;
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(74,144,217,0.15) 0%, transparent 70%);
+  }
+  .hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; position: relative; }
+  .hero .sub { color: var(--sky); font-size: 18px; font-weight: 600; margin-bottom: 4px; position: relative; }
+  .hero .date { color: var(--muted); font-size: 14px; position: relative; }
+  .hero .badge {
+    display: inline-block;
+    background: var(--gold);
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  /* Section */
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  .section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section h3 { font-size: 17px; font-weight: 700; margin: 20px 0 10px; color: var(--sky); }
+  .section h4 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--gold); }
+  .section p { margin-bottom: 12px; color: var(--text); }
+  .section ul { margin: 8px 0 16px 20px; }
+  .section li { margin-bottom: 6px; }
+
+  /* KPI Grid */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .kpi-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .kpi-card .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .kpi-card .value { font-size: 28px; font-weight: 800; margin: 8px 0 4px; }
+  .kpi-card .note { font-size: 12px; color: var(--muted); }
+  .kpi-card.green .value { color: var(--green); }
+  .kpi-card.gold .value { color: var(--gold); }
+  .kpi-card.sky .value { color: var(--sky); }
+  .kpi-card.purple .value { color: var(--purple); }
+
+  /* Persona Card */
+  .persona-card {
+    background: linear-gradient(135deg, var(--bg) 0%, #1a1f2e 100%);
+    border: 1px solid var(--sky);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .persona-card .name { font-size: 20px; font-weight: 800; color: var(--sky); }
+  .persona-card .tag { display: inline-block; background: rgba(74,144,217,0.15); color: var(--sky); font-size: 11px; padding: 3px 10px; border-radius: 12px; margin: 4px 4px 4px 0; }
+
+  /* Funnel */
+  .funnel { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+  .funnel-step {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    position: relative;
+  }
+  .funnel-step .step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .funnel-step.meta .step-num { background: var(--sky); color: #fff; }
+  .funnel-step.line .step-num { background: #06C755; color: #fff; }
+  .funnel-step.cv .step-num { background: var(--gold); color: #000; }
+  .funnel-step .step-content h4 { margin: 0 0 4px; font-size: 15px; color: var(--text); }
+  .funnel-step .step-content p { margin: 0; font-size: 13px; color: var(--muted); }
+  .funnel-step .step-kpi {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    min-width: 120px;
+  }
+  .funnel-step .step-kpi .num { font-size: 20px; font-weight: 800; }
+  .funnel-step .step-kpi .unit { font-size: 11px; color: var(--muted); }
+
+  /* Script Timeline */
+  .timeline { position: relative; padding-left: 30px; margin: 20px 0; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -23px;
+    top: 20px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sky);
+    border: 2px solid var(--bg);
+  }
+  .timeline-item .time {
+    display: inline-block;
+    background: rgba(74,144,217,0.15);
+    color: var(--sky);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  .timeline-item .scene { font-weight: 700; margin-bottom: 4px; }
+  .timeline-item .desc { font-size: 13px; color: var(--muted); }
+  .timeline-item .copy { color: var(--gold); font-weight: 600; font-style: italic; margin-top: 6px; }
+  .timeline-item .shot { font-size: 12px; color: var(--purple); margin-top: 4px; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Alert box */
+  .alert {
+    background: rgba(212,164,76,0.1);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .alert-title { font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+
+  .insight {
+    background: rgba(74,144,217,0.08);
+    border-left: 3px solid var(--sky);
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .insight strong { color: var(--sky); }
+
+  /* Hypothesis cards */
+  .hypo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin: 16px 0; }
+  .hypo-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .hypo-card .hypo-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .hypo-card .hypo-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .hypo-card .hypo-desc { font-size: 13px; color: var(--muted); }
+
+  @media (max-width: 768px) {
+    .hero { padding: 32px 20px; }
+    .hero h1 { font-size: 24px; }
+    .section { padding: 20px; }
+    .funnel-step { flex-wrap: wrap; }
+    .funnel-step .step-kpi { margin-left: 56px; margin-top: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <div class="badge">CONFIDENTIAL - STRATEGY DOCUMENT</div>
+  <h1>セツナトレイン2 マーケティング戦略書</h1>
+  <div class="sub">「狙われた伊東とお菓子ぃ共和国」集客1,000名達成プラン</div>
+  <div class="date">2026-04-09 | 一進AI Strategy Team | Meta広告 → LINE → CV フルファネル設計</div>
+</div>
+
+<!-- Executive Summary -->
+<div class="section">
+  <h2>Executive Summary</h2>
+  <p>本戦略は「2,750円の謎解きキット」を売るのではなく、<strong>「品川から特急90分で行ける、謎を解きながらスイーツ4店舗を巡る最高の1日旅行体験」</strong>を売る。Meta広告（Instagram中心）で1分間の体験型動画を展開し、LINE公式アカウントへ誘導。LINE内でストーリー仕立てのナーチャリングを経てコンバージョンへ繋げるモデルを採用する。</p>
+
+  <div class="alert">
+    <div class="alert-title">本質的な認識</div>
+    <p style="margin:0">このイベントの最大のネックは「2,750円のキット代」ではない。<strong>「特急代＋飲食代を含めた"1日1万円の旅行"という意思決定の重さ」</strong>にある。つまり、広告で売るのはキットではなく「この1日を過ごしたいという衝動」。ここがクリエイティブの全ての起点。</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card green">
+      <div class="label">目標購入数</div>
+      <div class="value">1,000+</div>
+      <div class="note">損益分岐800 / 理想2,000</div>
+    </div>
+    <div class="kpi-card sky">
+      <div class="label">CPL目標</div>
+      <div class="value">&yen;200</div>
+      <div class="note">LINE友だち追加単価</div>
+    </div>
+    <div class="kpi-card gold">
+      <div class="label">LINE→CVR</div>
+      <div class="value">20%</div>
+      <div class="note">登録→購入転換率</div>
+    </div>
+    <div class="kpi-card purple">
+      <div class="label">CPA目標</div>
+      <div class="value">&yen;1,000</div>
+      <div class="note">上限1,300円</div>
+    </div>
+  </div>
+</div>
+
+<!-- Market Analysis -->
+<div class="section">
+  <h2>1. DPro市場分析サマリー</h2>
+
+  <h3>競合環境：ブルーオーシャン確認</h3>
+  <p>DProで「謎解き × 旅行 × 体験」の組み合わせを調査した結果、<strong>この3要素を掛け合わせた広告はDPro上に皆無</strong>。完全なブルーオーシャンであることを確認。</p>
+
+  <h3>構造的に近い成功事例</h3>
+  <table>
+    <tr><th>事例</th><th>構造</th><th>推定広告費</th><th>学び</th></tr>
+    <tr>
+      <td><strong>某鉄道会社 デジタル周遊きっぷ</strong></td>
+      <td>特急 × エリア巡り × デジタルチケット</td>
+      <td>月3,800万円（+1,870万/月成長）</td>
+      <td>「エリアまるごと体験」訴求が効く。84日継続出稿＝勝ちクリエイティブ</td>
+    </tr>
+    <tr>
+      <td><strong>某写真ツアー</strong></td>
+      <td>LINE登録必須 × ミステリー行程 × 体験</td>
+      <td>353万円/2日間</td>
+      <td><strong>LINE登録を参加条件にした体験ツアー。最も近い事例</strong></td>
+    </tr>
+    <tr>
+      <td><strong>某バルーンフェス</strong></td>
+      <td>地方 × 体験 × 写真映え</td>
+      <td>574万円/月</td>
+      <td>地方体験イベントの上位ゾーン相場観</td>
+    </tr>
+  </table>
+
+  <h3>体験型商品で効いている訴求軸</h3>
+  <table>
+    <tr><th>訴求軸</th><th>効果</th><th>セツナトレイン2への適用</th></tr>
+    <tr><td><strong>「今しか/ここでしか」の限定性</strong></td><td>旅行TOP5のほぼ全てで使用</td><td>9月30日終了 × 伊東でしか体験できない</td></tr>
+    <tr><td><strong>アクセスの気軽さ</strong></td><td>心理的ハードル激減</td><td>品川から特急90分。思ったより近い</td></tr>
+    <tr><td><strong>ミステリー/お楽しみ要素</strong></td><td>フォトツアーで実証済み</td><td>謎解きそのものがコンテンツ</td></tr>
+    <tr><td><strong>五感の没入体験</strong></td><td>体験型で高い効果</td><td>ドラマ視聴 × 街歩き × スイーツ</td></tr>
+    <tr><td><strong>写真映え/SNS共有性</strong></td><td>バルーンフェス等で実証</td><td>スイーツ × 伊東の街並み × 観光地</td></tr>
+  </table>
+
+  <div class="insight">
+    <strong>最重要インサイト：</strong>LINE誘導型広告は旅行・イベントジャンルでは極めて希少。副業系の低品質広告が大半を占める中、「体験イベント × LINE登録」は<strong>正しくやれば競合がほぼいないブルーオーシャン</strong>。
+  </div>
+</div>
+
+<!-- N1 Definition -->
+<div class="section">
+  <h2>2. N1ペルソナ定義</h2>
+  <p>「誰に売るか」を1人に絞る。この1人に刺さるクリエイティブが、同じ需要を持つ層全体に波及する。</p>
+
+  <div class="persona-card">
+    <div class="name">あやか（28歳 / 都内OL / カップル or 女友達2人組）</div>
+    <div style="margin: 8px 0">
+      <span class="tag">週末に「ちょっと特別な体験」をしたい</span>
+      <span class="tag">インスタに載せたい</span>
+      <span class="tag">甘いもの好き</span>
+      <span class="tag">謎解きカフェに1回行ったことある</span>
+      <span class="tag">旅行好きだけど計画が面倒</span>
+    </div>
+    <h4 style="color: var(--sky); margin-top: 16px;">生活と心理</h4>
+    <ul>
+      <li><strong>平日</strong>：デスクワーク中心。金曜夜にインスタのリールを見ながら「週末どこ行こう」と思う</li>
+      <li><strong>深い欲求</strong>：「普通の休日」じゃなくて、「あの日めっちゃ楽しかったよね」って後から語れる体験が欲しい</li>
+      <li><strong>隠れた不満</strong>：旅行は好きだけど、計画するのが面倒。でも「何も考えずに行ける旅」があったら最高</li>
+      <li><strong>トリガーモーメント</strong>：金曜夜〜土曜朝、インスタのリールで「楽しそうな体験」の動画を見た瞬間</li>
+    </ul>
+    <h4 style="color: var(--gold); margin-top: 16px;">購買の心理障壁（順番に崩す）</h4>
+    <ol>
+      <li>「謎解き？ 子供っぽくない？」→ ドラマ連動のオシャレさを見せて崩す</li>
+      <li>「伊東って遠くない？」→ 品川90分のアクセスで崩す</li>
+      <li>「1万円か…」→ スイーツ4店舗＋観光＋謎解き＝1日丸ごと遊べるコスパで崩す</li>
+      <li>「一人じゃ行けない」→ 2人で行く前提のクリエイティブで崩す</li>
+    </ol>
+  </div>
+
+  <div class="persona-card" style="border-color: var(--gold);">
+    <div class="name" style="color: var(--gold);">サブN1：けんた（32歳 / IT企業 / 彼女とのデートプラン探し中）</div>
+    <div style="margin: 8px 0">
+      <span class="tag" style="background:rgba(212,164,76,0.15); color:var(--gold);">彼女に「すごい！」と言われたい</span>
+      <span class="tag" style="background:rgba(212,164,76,0.15); color:var(--gold);">脱・いつものデート</span>
+      <span class="tag" style="background:rgba(212,164,76,0.15); color:var(--gold);">計画上手に見られたい</span>
+    </div>
+    <p style="margin-top: 12px; font-size: 14px;">「いつもの映画→ディナーのデートに飽きた。でも旅行はハードル高い。特急で行ける"ちょうどいい冒険"があったら最高」。このN1は<strong>「デートプランとしての謎解き旅」</strong>という切り口で別仮説の広告を作る。</p>
+  </div>
+</div>
+
+<!-- Concept -->
+<div class="section">
+  <h2>3. コンセプト設計</h2>
+
+  <h3>コンセプト仮説（10文字以内）</h3>
+  <div class="kpi-grid">
+    <div class="kpi-card sky">
+      <div class="label">メインコンセプト</div>
+      <div class="value" style="font-size:22px">90分で届く冒険</div>
+      <div class="note">品川から特急90分。近くて非日常</div>
+    </div>
+    <div class="kpi-card gold">
+      <div class="label">サブコンセプト</div>
+      <div class="value" style="font-size:22px">謎とスイーツの旅</div>
+      <div class="note">体験の魅力を直球で</div>
+    </div>
+  </div>
+
+  <h3>Only1ポジショニング</h3>
+  <div class="insight">
+    <strong>「特急で行く謎解き旅行」</strong>は市場に存在しない。謎解きイベントは室内型が主流、旅行型は街歩きレベル。「特急に乗ってドラマを見ながら謎を解き、着いた先でスイーツを巡る」という体験は<strong>Only1</strong>。
+  </div>
+
+  <h3>ゴールデンサークル</h3>
+  <table>
+    <tr><th>WHY</th><td>いつもの休日を「あの日最高だったよね」に変えたい</td></tr>
+    <tr><th>HOW</th><td>特急に乗ってドラマと謎解きに没入しながら、知らない街のスイーツを巡る</td></tr>
+    <tr><th>WHAT</th><td>セツナトレイン2 — 特急踊り子で行く伊東の謎解き × スイーツ旅</td></tr>
+  </table>
+</div>
+
+<!-- Creative Strategy -->
+<div class="section">
+  <h2>4. クリエイティブ戦略（Meta広告）</h2>
+
+  <h3>配信設計</h3>
+  <table>
+    <tr><th>項目</th><th>設定</th><th>理由</th></tr>
+    <tr><td>媒体</td><td><strong>Instagram Reels + Stories（80%）/ Facebook（20%）</strong></td><td>旅行・イベントジャンルの広告費8割以上がInstagram</td></tr>
+    <tr><td>広告目的</td><td><strong>リード獲得（LINE登録）</strong></td><td>LINE内でナーチャリングしてCVR20%を実現するため</td></tr>
+    <tr><td>ターゲティング</td><td>25-39歳 / 関東1都3県 / 旅行・グルメ・エンタメ興味</td><td>特急で行ける圏内 × N1属性</td></tr>
+    <tr><td>初期予算</td><td><strong>月30-50万円</strong>で検証開始</td><td>CPL200円 × 2,000登録 = 40万円で400CV（目標の40%）</td></tr>
+    <tr><td>クリエイティブ形式</td><td><strong>1分間縦型動画 + 静止画カルーセル（サブ）</strong></td><td>体験型商品は動画の方がCTR高い。カルーセルは検証用</td></tr>
+  </table>
+
+  <h3>クリエイティブ仮説（動画3パターン）</h3>
+  <div class="hypo-grid">
+    <div class="hypo-card">
+      <div class="hypo-label">仮説A（メイン）</div>
+      <div class="hypo-title" style="color:var(--sky)">「体験Vlog型」— 行きたくなる1日</div>
+      <div class="hypo-desc">
+        品川駅→特急→車窓→伊東到着→謎解き→スイーツ巡り→観光地の1日をリアルに見せる。<br>
+        <strong>N1の障壁を映像で順番に崩す：</strong>おしゃれ感→近さ→楽しさ→コスパ。<br>
+        <strong>検証仮説：</strong>「体験の全体像を見せる」ことでCVRが上がるか
+      </div>
+    </div>
+    <div class="hypo-card">
+      <div class="hypo-label">仮説B</div>
+      <div class="hypo-title" style="color:var(--gold)">「デート提案型」— 彼女が喜ぶ休日</div>
+      <div class="hypo-desc">
+        カップルが実際に体験する目線。「今度の休日、これ行かない？」の感覚。<br>
+        <strong>フック：</strong>「次のデート、もう決まった」<br>
+        <strong>検証仮説：</strong>「デートプラン」として訴求するとCPLが下がるか
+      </div>
+    </div>
+    <div class="hypo-card">
+      <div class="hypo-label">仮説C</div>
+      <div class="hypo-title" style="color:var(--green)">「謎解き没入型」— 冒頭で謎を出す</div>
+      <div class="hypo-desc">
+        動画冒頭でいきなり謎を出して「答えは伊東にある」で引っ張る。<br>
+        <strong>フック：</strong>「この暗号、解ける？」→ 解けない → 「答えは特急90分先にある」<br>
+        <strong>検証仮説：</strong>「謎解き要素」を前面に出すとリーチが伸びるか
+      </div>
+    </div>
+  </div>
+
+  <div class="alert">
+    <div class="alert-title">撮影時の最重要ポイント</div>
+    <p style="margin:0">撮影で「3パターン分の素材」を全て押さえること。メインの体験Vlogは通しで撮影しつつ、カップル視点のBロール、謎解きの接写カットを意識的に撮る。<strong>1回の撮影で3仮説分のクリエイティブが作れる素材量</strong>を確保する。</p>
+  </div>
+</div>
+
+<!-- Full Funnel -->
+<div class="section">
+  <h2>5. フルファネル設計（Meta → LINE → CV）</h2>
+
+  <div class="funnel">
+    <div class="funnel-step meta">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Meta広告（Instagram Reels/Stories）</h4>
+        <p>1分間の体験型動画。ラスト5秒で「LINEで特別クーポンもらう」のCTAへ誘導。広告→LINE登録のワンステップ。</p>
+      </div>
+      <div class="step-kpi">
+        <div class="num" style="color:var(--sky)">CPL &yen;200</div>
+        <div class="unit">LINE登録単価</div>
+      </div>
+    </div>
+
+    <div class="funnel-step line">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>LINE登録直後（即時配信）</h4>
+        <p><strong>あいさつメッセージで「限定300円OFFクーポン」即配布。</strong>初速でのCV獲得を狙う。<br>同時に「伊東旅の楽しみ方ガイド」をリッチメニューに設置。</p>
+      </div>
+      <div class="step-kpi">
+        <div class="num" style="color:#06C755">即時CV 8%</div>
+        <div class="unit">登録直後の即購入</div>
+      </div>
+    </div>
+
+    <div class="funnel-step line">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>LINEナーチャリング（3日間シナリオ）</h4>
+        <p>
+          <strong>Day 0（登録直後）：</strong>クーポン + 体験ダイジェスト動画<br>
+          <strong>Day 1（翌日夜）：</strong>「実際に行った人の感想」+ スイーツ写真カルーセル<br>
+          <strong>Day 2（2日後昼）：</strong>「伊東のおすすめルート」+ 「このクーポン、あと3日で終了」<br>
+          <strong>Day 3（3日後夜）：</strong>「最後の案内」+ 限定特典リマインド
+        </p>
+      </div>
+      <div class="step-kpi">
+        <div class="num" style="color:#06C755">追加CV 12%</div>
+        <div class="unit">シナリオ経由のCV</div>
+      </div>
+    </div>
+
+    <div class="funnel-step cv">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>コンバージョン（キット購入）</h4>
+        <p>LINE内のボタンからKAGENAZOオフィシャルショップへ遷移。購入完了。<br>購入者には「謎解き前に見ると2倍楽しくなるヒント」をLINEで配信（満足度UP → 口コミ促進）。</p>
+      </div>
+      <div class="step-kpi">
+        <div class="num" style="color:var(--gold)">合計CVR 20%</div>
+        <div class="unit">CPA &yen;1,000</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>数値シミュレーション（月間予算40万円の場合）</h3>
+  <table>
+    <tr><th>指標</th><th>数値</th><th>計算根拠</th></tr>
+    <tr><td>広告費</td><td>&yen;400,000 / 月</td><td>初期検証フェーズ</td></tr>
+    <tr><td>LINE登録数</td><td>2,000人 / 月</td><td>400,000 &divide; 200 = 2,000</td></tr>
+    <tr><td>購入数</td><td>400人 / 月</td><td>2,000 &times; 20% = 400</td></tr>
+    <tr><td>CPA</td><td>&yen;1,000</td><td>400,000 &divide; 400 = 1,000</td></tr>
+    <tr><td>売上</td><td>&yen;1,100,000 / 月</td><td>400 &times; 2,750 = 1,100,000</td></tr>
+    <tr><td>ROAS</td><td>275%</td><td>1,100,000 &divide; 400,000 = 2.75</td></tr>
+  </table>
+
+  <div class="insight">
+    <strong>3ヶ月で1,200人達成可能。</strong>月40万円 × 3ヶ月 = 120万円の広告費で、1,200人のCV。目標1,000人をクリアし、理想の2,000人にはスケール後の2ヶ月追加で到達圏内。開催期間9/30まで約6ヶ月あるため十分な時間的余裕がある。
+  </div>
+</div>
+
+<!-- LINE Design -->
+<div class="section">
+  <h2>6. LINE導線設計（詳細）</h2>
+
+  <h3>リッチメニュー構成</h3>
+  <table>
+    <tr><th>ボタン位置</th><th>内容</th><th>目的</th></tr>
+    <tr><td>左上（大）</td><td><strong>今すぐキットを購入する</strong></td><td>即CV導線。常にアクセス可能</td></tr>
+    <tr><td>右上</td><td>伊東の楽しみ方ガイド</td><td>旅行の魅力を伝えてCV後押し</td></tr>
+    <tr><td>左下</td><td>よくある質問（FAQ）</td><td>「何時間かかる？」「1人でも？」等の不安解消</td></tr>
+    <tr><td>右下</td><td>体験者の声</td><td>社会的証明でCV後押し</td></tr>
+  </table>
+
+  <h3>あいさつメッセージ（登録直後に自動配信）</h3>
+  <div style="background:var(--bg); border:1px solid #06C755; border-radius:12px; padding:20px; margin:12px 0; font-size:14px;">
+    <p style="margin-bottom:8px"><strong style="color:#06C755">セツナトレイン2 公式</strong></p>
+    <p>友だち追加ありがとう！</p>
+    <p>特急踊り子で行く、伊東の謎解き×スイーツ旅。<br>
+    品川からたった90分で「最高の1日」が待ってるよ。</p>
+    <p style="color:var(--gold); font-weight:700;">今なら LINE限定 300円OFFクーポン配布中！</p>
+    <p style="font-size:12px; color:var(--muted);">※ 先着500名限定 / 有効期限7日間</p>
+    <p style="margin-top:12px;"><strong>[キットを購入する →]</strong></p>
+    <p style="margin-top:8px; font-size:13px; color:var(--muted);">「伊東の楽しみ方ガイド」もメニューから見てみてね！</p>
+  </div>
+
+  <h3>CVR20%を実現するための設計思想</h3>
+  <div class="alert">
+    <div class="alert-title">LINE内CVRの鍵は「実利 × 緊急性 × 安心」の3点セット</div>
+    <ul style="margin-top:8px">
+      <li><strong>実利：</strong>300円OFFクーポン（2,750円 → 2,450円に。特急代の心理的負担を少しでも下げる）</li>
+      <li><strong>緊急性：</strong>先着500名 + 有効期限7日間のダブル制限</li>
+      <li><strong>安心：</strong>FAQ + 体験者の声 + 所要時間・持ち物の明記で「行ってみたけど微妙だった」の不安を潰す</li>
+    </ul>
+  </div>
+
+  <h3>Day別配信シナリオ</h3>
+  <table>
+    <tr><th>タイミング</th><th>配信内容</th><th>心理的役割</th></tr>
+    <tr><td><strong>Day 0 即時</strong></td><td>あいさつ + クーポン + 体験30秒動画</td><td>第一印象 × 即CVの衝動</td></tr>
+    <tr><td><strong>Day 1 19:00</strong></td><td>「スイーツ4店舗全部見せます！」写真カルーセル</td><td>具体的な体験イメージ → 欲しくなる</td></tr>
+    <tr><td><strong>Day 2 12:00</strong></td><td>「品川からの行き方＆おすすめルート」</td><td>「面倒そう」の心理障壁を除去</td></tr>
+    <tr><td><strong>Day 3 20:00</strong></td><td>「クーポン残り3日！」+ 体験者感想1件</td><td>緊急性 × 社会的証明の合わせ技</td></tr>
+    <tr><td><strong>Day 5 19:00</strong></td><td>「明後日でクーポン終了」ラストリマインド</td><td>最終プッシュ</td></tr>
+  </table>
+</div>
+
+<!-- Video Script -->
+<div class="section">
+  <h2>7. 動画台本（1分尺 / 仮説A: 体験Vlog型）</h2>
+
+  <div class="alert">
+    <div class="alert-title">台本のコンセプト</div>
+    <p style="margin:0;">「友達に"これめっちゃ良かった！"って送るストーリーズ」の温度感。作り込みすぎない。リアルな体験を追体験させる。<strong>N1（あやか）が金曜夜にリールで見て「え、行きたい…」となる動画。</strong></p>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="time">0:00 - 0:03（フック / 3秒）</div>
+      <div class="scene">品川駅ホームで特急を待っている</div>
+      <div class="desc">カメラ：スマホ自撮り風。特急が入線してくる音とともに振り返る。</div>
+      <div class="copy">テロップ：「品川から90分で着く"冒険"があるって知ってた？」</div>
+      <div class="shot">画：特急踊り子の入線 → テンション上がってカメラに笑いかける</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="time">0:03 - 0:10（車内 / 7秒）</div>
+      <div class="scene">特急の車内でドラマを見ながら謎解き開始</div>
+      <div class="desc">窓の外の景色が流れる中、スマホでドラマを視聴。謎解きキットを開封する手元。</div>
+      <div class="copy">テロップ：「車内でドラマ見ながら謎解きスタート」</div>
+      <div class="shot">画：車窓の風景（都会→海が見えてくる）/ キット開封のワクワク感 / ドラマ画面チラ見せ</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="time">0:10 - 0:15（到着 / 5秒）</div>
+      <div class="scene">伊東駅に到着。街に出る</div>
+      <div class="desc">電車を降りて、伊東の空気を吸う瞬間。海と空の青が広がる。</div>
+      <div class="copy">テロップ：「着いた！ここから本当の冒険」</div>
+      <div class="shot">画：伊東駅看板 → 駅前の風景 → 空の青さを見上げるカット</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="time">0:15 - 0:35（スイーツ巡り / 20秒 ← ここが尺の核）</div>
+      <div class="scene">4店舗のスイーツをテンポよく巡る</div>
+      <div class="desc">各店5秒ずつ。入店→注文→スイーツのアップ→一口食べてリアクション。BGMのテンポに合わせてカット割り。</div>
+      <div class="copy">
+        テロップ（店ごとに切り替え）：<br>
+        店1:「1軒目。地元で40年のケーキ屋さん」<br>
+        店2:「2軒目。まさかの〇〇！」<br>
+        店3:「3軒目。これが一番好きだった」<br>
+        店4:「4軒目。最後のご褒美」
+      </div>
+      <div class="shot">画：スイーツの接写（湯気・ツヤ感） / 一口食べた瞬間の表情 / 2人で「おいしい！」と言い合うカット / 可愛い店内の雰囲気</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="time">0:35 - 0:45（謎解き × 街歩き / 10秒）</div>
+      <div class="scene">街を歩きながら謎を解く</div>
+      <div class="desc">地図を見ながら「こっちかな？」と歩く。ヒントを見つけて「あ！」となる瞬間。2人で相談しながら進む楽しさ。</div>
+      <div class="copy">テロップ：「謎を解きながら街を歩く。これがめちゃくちゃ楽しい」</div>
+      <div class="shot">画：謎解きキットとスマホを見比べる / 「わかった！」の瞬間 / 街並みの中を歩く2人</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="time">0:45 - 0:52（クライマックス / 7秒）</div>
+      <div class="scene">最後の謎を解いて、観光地にたどり着く</div>
+      <div class="desc">最後の謎が解けた達成感 → 目の前に広がる絶景（or 最終目的地の演出）。</div>
+      <div class="copy">テロップ：「全部解けた時の達成感、やばい」</div>
+      <div class="shot">画：最後の答えを入力する手元 → 顔を上げると絶景 → 2人で「すごい！」</div>
+    </div>
+
+    <div class="timeline-item" style="border-color: var(--gold);">
+      <div class="time">0:52 - 1:00（CTA / 8秒）</div>
+      <div class="scene">エンドカード + LINE誘導</div>
+      <div class="desc">夕暮れの伊東をバックに、カメラに向かって一言。その後、CTAカード。</div>
+      <div class="copy">
+        ナレ：「品川から90分。スイーツと謎解きの1日旅、まじで最高だった」<br>
+        テロップ：「LINE登録で300円OFFクーポンもらえる！」<br>
+        エンドカード：「セツナトレイン2 / 9月30日まで / LINE登録はこちら →」
+      </div>
+      <div class="shot">画：夕暮れの海 or 観光地 → エンドカード（ペニンシュラブルー基調）</div>
+    </div>
+  </div>
+
+  <h3>撮影時の注意点</h3>
+  <ul>
+    <li><strong>縦型撮影必須（9:16）。</strong>Reels/Stories前提のため</li>
+    <li><strong>自撮り棒 or ジンバル推奨。</strong>Vlog感を出しつつブレない映像</li>
+    <li><strong>「うまい！」のリアクションは本物で。</strong>演技しない。小さな嘘をつかない（パク哲学）</li>
+    <li><strong>スイーツは必ず「食べる前のアップ」→「一口」→「リアクション」の3カット。</strong>飯テロの定番構成</li>
+    <li><strong>BGM用の環境音も録る：</strong>特急の走行音、店内の雰囲気、街の音。リアリティが上がる</li>
+    <li><strong>仮説B用に「2人の楽しそうなカット」を多めに。</strong>デート提案型の素材確保</li>
+    <li><strong>仮説C用に「謎解きの接写カット」を多めに。</strong>問題文・考え中・解けた瞬間</li>
+    <li><strong>エンドカード用に「夕暮れの伊東」を必ず撮る。</strong>感情のピークを映像で作る</li>
+  </ul>
+</div>
+
+<!-- Budget Plan -->
+<div class="section">
+  <h2>8. 予算・スケジュール</h2>
+
+  <h3>フェーズ別計画</h3>
+  <table>
+    <tr><th>フェーズ</th><th>期間</th><th>予算</th><th>目標</th><th>施策</th></tr>
+    <tr>
+      <td><strong>Phase 1: 撮影・制作</strong></td>
+      <td>4月中旬（来週）</td>
+      <td>撮影実費のみ</td>
+      <td>3仮説分の素材確保</td>
+      <td>1日撮影 → 1週間で3パターンの動画編集</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 2: 検証</strong></td>
+      <td>4月下旬〜5月</td>
+      <td>月20-30万円</td>
+      <td>勝ちクリエイティブ特定</td>
+      <td>3仮説をABテスト。CPL200円以下のパターンを特定</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 3: スケール</strong></td>
+      <td>6月〜8月</td>
+      <td>月40-80万円</td>
+      <td>月400-800CV</td>
+      <td>勝ちパターンに予算集中。新クリエイティブ追加</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 4: ラストスパート</strong></td>
+      <td>9月</td>
+      <td>月50-100万円</td>
+      <td>駆け込みCV</td>
+      <td>「9/30終了」の緊急性訴求を全面に</td>
+    </tr>
+  </table>
+
+  <h3>目標達成シミュレーション</h3>
+  <table>
+    <tr><th>シナリオ</th><th>月間予算</th><th>月間CV</th><th>6ヶ月累計</th><th>達成ライン</th></tr>
+    <tr><td>保守的</td><td>30万円</td><td>300人</td><td>1,500人</td><td style="color:var(--green)">目標1,000 クリア</td></tr>
+    <tr><td>標準</td><td>50万円</td><td>500人</td><td>2,500人</td><td style="color:var(--green)">理想2,000 クリア</td></tr>
+    <tr><td>攻め</td><td>80万円</td><td>800人</td><td>3,200人</td><td style="color:var(--green)">大幅超過</td></tr>
+  </table>
+
+  <div class="insight">
+    <strong>結論：</strong>CPL200円 × CVR20%が実現できれば、<strong>月30万円の保守的予算でも6ヶ月で1,500人</strong>到達。開催期間が9月末まで約6ヶ月あるため、Phase 2の検証で数字が確認できれば目標達成の確度は高い。
+  </div>
+</div>
+
+<!-- Risk & Mitigation -->
+<div class="section">
+  <h2>9. リスクと対策</h2>
+  <table>
+    <tr><th>リスク</th><th>影響</th><th>対策</th></tr>
+    <tr>
+      <td>CPLが200円を超える</td>
+      <td>CPA目標未達</td>
+      <td>3仮説のABテストで最安パターンを特定。ダメなら静止画カルーセルに切り替え</td>
+    </tr>
+    <tr>
+      <td>LINE→CVRが20%に届かない</td>
+      <td>CPA悪化</td>
+      <td>シナリオ配信の調整 / クーポン金額の増額テスト / リッチメニューのCTA改善</td>
+    </tr>
+    <tr>
+      <td>「1万円の旅行」の価格障壁</td>
+      <td>CVR低下</td>
+      <td>「2人で行けば1人5,000円」「スイーツ4店込みで実質お得」のフレーミング</td>
+    </tr>
+    <tr>
+      <td>天候リスク（雨の日は行かない）</td>
+      <td>CV変動</td>
+      <td>「雨でも楽しめるルート」コンテンツをLINE内に用意</td>
+    </tr>
+    <tr>
+      <td>口コミが広がらない</td>
+      <td>オーガニック成長なし</td>
+      <td>購入者に「#セツナトレイン」投稿キャンペーン。次回クーポン等のインセンティブ</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Next Actions -->
+<div class="section">
+  <h2>10. Next Actions</h2>
+  <table>
+    <tr><th>#</th><th>タスク</th><th>担当</th><th>期限</th></tr>
+    <tr><td>1</td><td>LINE公式アカウント開設 + リッチメニュー設計</td><td>一進</td><td>撮影前</td></tr>
+    <tr><td>2</td><td>撮影実施（台本に沿って3仮説分の素材確保）</td><td>一進チーム</td><td>来週</td></tr>
+    <tr><td>3</td><td>動画編集（3パターン × 縦型1分）</td><td>一進AI + 一進</td><td>撮影後1週間</td></tr>
+    <tr><td>4</td><td>Meta広告アカウント設定 + ピクセル設置</td><td>一進</td><td>撮影後</td></tr>
+    <tr><td>5</td><td>LINE配信シナリオ構築（あいさつ + Day1-5）</td><td>一進AI</td><td>配信開始前</td></tr>
+    <tr><td>6</td><td>Phase 2 ABテスト開始</td><td>一進</td><td>4月下旬</td></tr>
+    <tr><td>7</td><td>初週データレビュー → 勝ちパターン特定</td><td>一進AI</td><td>配信1週間後</td></tr>
+  </table>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; padding:40px 0; color:var(--muted); font-size:13px;">
+  <p>Prepared by 一進AI Strategy Team | 2026-04-09</p>
+  <p style="font-size:11px; margin-top:4px;">セツナトレイン2「狙われた伊東とお菓子ぃ共和国」マーケティング戦略書 v1.0</p>
+</div>
+
+</div>
+</body>
+</html>

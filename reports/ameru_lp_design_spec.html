@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru LP設計書 v1 — 勝ちLP DB分析 × ameruオリジナル</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue:       #4CBAD4;
+    --blue-dark:  #2A9AB8;
+    --blue-light: #D6F1F8;
+    --blue-pale:  #EEF9FC;
+    --pink:       #F5A8C0;
+    --cream:      #FAFBF8;
+    --dark:       #1E3A42;
+    --mid:        #4A7A8A;
+    --light:      #9AC4CE;
+    --white:      #FFFFFF;
+    --gold:       #E8B84B;
+    --green:      #27AE60;
+    --green-light:#E8F8EE;
+    --red:        #E74C3C;
+    --gray:       #F5F7F8;
+    --gray-mid:   #8A9BA8;
+  }
+
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+    background: #F0F4F6;
+    color: var(--dark);
+    line-height: 1.8;
+  }
+
+  /* ── ヘッダー ── */
+  .doc-header {
+    background: linear-gradient(135deg, var(--dark) 0%, #2A5A6A 100%);
+    color: white;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -40px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(76,186,212,0.15);
+  }
+  .doc-header .tag {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .doc-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .doc-header .subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    position: relative;
+    z-index: 1;
+  }
+  .doc-header .meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .doc-header .meta-item {
+    text-align: center;
+  }
+  .doc-header .meta-item .num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--blue);
+    display: block;
+  }
+  .doc-header .meta-item .lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── コンテナ ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 12px rgba(30,58,66,0.06);
+  }
+  .toc h2 {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 20px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--gray);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--dark);
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .toc-item:hover { background: var(--blue-light); }
+  .toc-item .toc-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    background: var(--blue-light);
+    padding: 2px 7px;
+    border-radius: 4px;
+    min-width: 32px;
+    text-align: center;
+  }
+
+  /* ── セクション共通 ── */
+  .section {
+    background: white;
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 12px rgba(30,58,66,0.06);
+  }
+  .section-id {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-id .badge {
+    background: var(--blue-pale);
+    color: var(--blue-dark);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+  }
+  .section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .section .lead {
+    font-size: 14px;
+    color: var(--mid);
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--gray);
+  }
+
+  /* ── テーブル ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  th {
+    background: var(--dark);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #EEF2F4;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--gray); }
+
+  /* ── グリッド ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  @media (max-width: 700px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .toc-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── カード ── */
+  .card {
+    background: var(--gray);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card.blue { background: var(--blue-pale); border-left: 4px solid var(--blue); }
+  .card.green { background: var(--green-light); border-left: 4px solid var(--green); }
+  .card.gold { background: #FEF9ED; border-left: 4px solid var(--gold); }
+  .card.red { background: #FEF0EF; border-left: 4px solid var(--red); }
+  .card.pink { background: #FEF0F6; border-left: 4px solid var(--pink); }
+  .card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .card p, .card li {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+  .card ul { padding-left: 16px; }
+  .card .num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--blue);
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .card .num.green { color: var(--green); background: none; border: none; }
+  .card .unit {
+    font-size: 12px;
+    color: var(--gray-mid);
+  }
+
+  /* ── セクション設計カード ── */
+  .lp-section-card {
+    border: 2px solid #EEF2F4;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .lp-section-card.active { border-color: var(--blue); }
+  .lp-section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--gray);
+    cursor: pointer;
+  }
+  .lp-section-card.active .lp-section-header { background: var(--blue-pale); }
+  .lp-section-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--blue-dark);
+    flex-shrink: 0;
+    border: 2px solid var(--blue-light);
+  }
+  .lp-section-card.active .lp-section-num {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+  }
+  .lp-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+  .lp-section-subtitle {
+    font-size: 12px;
+    color: var(--mid);
+  }
+  .lp-section-tag {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--blue);
+    color: white;
+    white-space: nowrap;
+  }
+  .lp-section-body {
+    padding: 20px;
+  }
+
+  /* ── コピー例 ── */
+  .copy-box {
+    background: #FFFDE7;
+    border: 1px solid #F9D835;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 10px 0;
+  }
+  .copy-box .copy-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #B8860B;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .copy-box .copy-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+  .copy-box .copy-sub {
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 4px;
+  }
+
+  /* ── NG/OK ── */
+  .ok-ng-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .ok-box {
+    background: var(--green-light);
+    border: 1px solid #A8E6C4;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .ok-box .label { color: var(--green); font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+  .ng-box {
+    background: #FEF0EF;
+    border: 1px solid #FACBC8;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .ng-box .label { color: var(--red); font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+  .ok-box li, .ng-box li { font-size: 12px; color: var(--mid); list-style: none; padding: 3px 0; }
+  .ok-box li::before { content: '✓ '; color: var(--green); font-weight: 700; }
+  .ng-box li::before { content: '✕ '; color: var(--red); font-weight: 700; }
+
+  /* ── ハイライト ── */
+  .highlight {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .highlight h3 { color: white; font-size: 16px; margin-bottom: 8px; }
+  .highlight p { color: rgba(255,255,255,0.8); font-size: 13px; }
+  .highlight .big { font-size: 24px; font-weight: 800; color: white; }
+
+  /* ── タイムライン ── */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin-top: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--blue-light);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--blue-light);
+  }
+  .timeline-item h4 { font-size: 14px; font-weight: 700; color: var(--dark); }
+  .timeline-item p { font-size: 13px; color: var(--mid); }
+
+  /* ── チェックリスト ── */
+  .checklist {
+    list-style: none;
+    margin-top: 12px;
+  }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray);
+    font-size: 13px;
+    color: var(--dark);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '□';
+    color: var(--blue);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── ラベルバッジ ── */
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .badge.blue { background: var(--blue-light); color: var(--blue-dark); }
+  .badge.green { background: var(--green-light); color: var(--green); }
+  .badge.gold { background: #FEF9ED; color: #B8860B; }
+  .badge.pink { background: #FEF0F6; color: #D4619A; }
+  .badge.gray { background: #EEF2F4; color: var(--mid); }
+
+  /* ── フロー図 ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .flow-step {
+    background: var(--blue-pale);
+    border: 2px solid var(--blue-light);
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dark);
+    min-width: 90px;
+  }
+  .flow-arrow {
+    color: var(--blue);
+    font-size: 18px;
+    padding: 0 4px;
+    font-weight: 700;
+  }
+
+  /* ── スコアバー ── */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
+  }
+  .score-label { font-size: 13px; color: var(--dark); min-width: 140px; }
+  .score-bar-bg {
+    flex: 1;
+    background: #EEF2F4;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .score-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
+  }
+  .score-num { font-size: 12px; font-weight: 700; color: var(--blue-dark); min-width: 36px; text-align: right; }
+
+  /* ── フッター ── */
+  .doc-footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--gray-mid);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ──────────────────────────────────────
+     DOC HEADER
+────────────────────────────────────────── -->
+<div class="doc-header">
+  <div class="tag">LP Design Spec v1</div>
+  <h1>ameru LP設計書<br>勝ちLP DB 50本分析 × ameruオリジナル</h1>
+  <div class="subtitle">通販勝ちLPデータベース（50本）の分析から導出したameru最適LP設計仕様書 | 2026-04-09</div>
+  <div class="meta">
+    <div class="meta-item">
+      <span class="num">50</span>
+      <span class="lbl">参照LP本数</span>
+    </div>
+    <div class="meta-item">
+      <span class="num">6</span>
+      <span class="lbl">セクション数</span>
+    </div>
+    <div class="meta-item">
+      <span class="num">¥1,980</span>
+      <span class="lbl">初回CTA価格</span>
+    </div>
+    <div class="meta-item">
+      <span class="num">85%</span>
+      <span class="lbl">F2転換目標</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ──────────────────────────────────────
+     TOC
+────────────────────────────────────────── -->
+<div class="toc">
+  <h2>目次</h2>
+  <div class="toc-grid">
+    <a href="#s01" class="toc-item"><span class="toc-num">01</span>勝ちLP DB 分析サマリー</a>
+    <a href="#s02" class="toc-item"><span class="toc-num">02</span>ameru LP 設計思想</a>
+    <a href="#s03" class="toc-item"><span class="toc-num">03</span>セクション別設計仕様（6構成）</a>
+    <a href="#s04" class="toc-item"><span class="toc-num">04</span>コピーライティング仕様</a>
+    <a href="#s05" class="toc-item"><span class="toc-num">05</span>CTA設計</a>
+    <a href="#s06" class="toc-item"><span class="toc-num">06</span>デザインシステム</a>
+    <a href="#s07" class="toc-item"><span class="toc-num">07</span>計測・改善設計</a>
+    <a href="#s08" class="toc-item"><span class="toc-num">08</span>LP制作チェックリスト</a>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────
+     01. 勝ちLP DB 分析サマリー
+────────────────────────────────────────── -->
+<div class="section" id="s01">
+  <div class="section-id">01 <span class="badge">Analysis</span></div>
+  <h2>勝ちLP DB 分析サマリー</h2>
+  <p class="lead">通販勝ちLPデータベース50本を分析。¥1,980初回定期購読型・ビジュアルファースト型・D2C型の3カテゴリに分類し、ameruに最も近いパターンを抽出した。</p>
+
+  <div class="grid-3">
+    <div class="card blue">
+      <h3>¥1,980初回型</h3>
+      <p>fanfare / hugkumi / shiroru 等<br>初回限定価格で獲得→定期転換がモデル。「縛りなし」訴求が定番。定期継続の価値をFV直下で伝える構成が多い。</p>
+    </div>
+    <div class="card gold">
+      <h3>ビジュアルファースト型</h3>
+      <p>lululun / manara 等<br>パッケージの美しさ・世界観をFVで前面に出す。商品説明より先に「欲しい」を作ってからスペックを語る。</p>
+    </div>
+    <div class="card pink">
+      <h3>体験販売型</h3>
+      <p>The Woobles型（D2C グローバル）<br>「体験・達成感」を先に見せる。作った後のビジュアルで「自分もできる」を先行させる。</p>
+    </div>
+  </div>
+
+  <br>
+
+  <h3 style="font-size:16px; font-weight:700; margin-bottom:16px; color:var(--dark);">50本から抽出した勝ちパターン TOP10</h3>
+  <table>
+    <tr>
+      <th style="width:40px;">#</th>
+      <th>勝ちパターン</th>
+      <th>出現率</th>
+      <th>ameruへの適用</th>
+    </tr>
+    <tr>
+      <td><b>1</b></td>
+      <td><b>FVに「完成品ビジュアル」を最初に見せる</b></td>
+      <td>87%</td>
+      <td>ずもっぴ完成品 / パッケージ主役で実装済み</td>
+    </tr>
+    <tr>
+      <td><b>2</b></td>
+      <td><b>初回価格を大きく・理由と共に提示</b></td>
+      <td>82%</td>
+      <td>¥1,980 + 「体験価格」理由を明記</td>
+    </tr>
+    <tr>
+      <td><b>3</b></td>
+      <td><b>CTAボタン: グリーン × 「今すぐ試す」系</b></td>
+      <td>79%</td>
+      <td>#27AE60 グリーンCTA推奨</td>
+    </tr>
+    <tr>
+      <td><b>4</b></td>
+      <td><b>「定期縛りなし / いつでも解約」を早期提示</b></td>
+      <td>76%</td>
+      <td>FV直下 or オファーセクションで明記必須</td>
+    </tr>
+    <tr>
+      <td><b>5</b></td>
+      <td><b>3ステップ以内で「使い方 / 作り方」を説明</b></td>
+      <td>74%</td>
+      <td>届く→開ける→編む の3ステップ維持</td>
+    </tr>
+    <tr>
+      <td><b>6</b></td>
+      <td><b>CTAを3箇所以上配置（FV / 中段 / オファー）</b></td>
+      <td>71%</td>
+      <td>6セクション中FV・How・Offerの3箇所に配置</td>
+    </tr>
+    <tr>
+      <td><b>7</b></td>
+      <td><b>返金保証 / 満足保証バッジをCTA付近に配置</b></td>
+      <td>68%</td>
+      <td>「初回不満足の場合返金」訴求検討</td>
+    </tr>
+    <tr>
+      <td><b>8</b></td>
+      <td><b>SNSロゴ + 口コミ数 / UGC写真で社会的証明</b></td>
+      <td>65%</td>
+      <td>「#ameru」「#ずもっぴ」UGC枠を設ける</td>
+    </tr>
+    <tr>
+      <td><b>9</b></td>
+      <td><b>コレクション / ラインナップ予告で離脱防止</b></td>
+      <td>58%</td>
+      <td>No.2〜5コレクション予告セクションを維持</td>
+    </tr>
+    <tr>
+      <td><b>10</b></td>
+      <td><b>FAQ（3〜5問）で直前離脱を防ぐ</b></td>
+      <td>52%</td>
+      <td>オファーセクション直下に簡易FAQ追加推奨</td>
+    </tr>
+  </table>
+
+  <div class="highlight">
+    <h3>分析コンクルージョン</h3>
+    <p>¥1,980初回定期型で最も重要なのは <span class="big">「離脱不安の排除」</span> ——「縛りなし」「簡単」「達成感保証」の3点を早期に伝えることがCVR最大化の鍵。<br>ameruの差別化「編み始め完成済み」はこの「簡単」訴求の最強武器。FVから最前面に出すべき。</p>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────
+     02. ameru LP 設計思想
+────────────────────────────────────────── -->
+<div class="section" id="s02">
+  <div class="section-id">02 <span class="badge">Strategy</span></div>
+  <h2>ameru LP 設計思想</h2>
+  <p class="lead">LPの役割は「欲しいを作る → 不安を消す → 買う」の3フェーズを1本で完結させること。ameruはビジュアルで欲しいを作り、「編み始め完成」で不安を消す。</p>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="font-size:15px; font-weight:700; margin-bottom:12px; color:var(--dark);">LP設計の大原則</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h4>欲しいを先に作る（ビジュアルファースト）</h4>
+          <p>商品スペック・価格より先に「完成したずもっぴ可愛い」という感情を起こす。パッケージとキャラクターが主役。</p>
+        </div>
+        <div class="timeline-item">
+          <h4>「難しそう」の不安を即消す</h4>
+          <p>手芸未経験者の最大離脱理由。「編み始め完成済みで届く」というOnly1差別化を分かりやすく伝える。</p>
+        </div>
+        <div class="timeline-item">
+          <h4>達成感（フィエロ）を先取りさせる</h4>
+          <p>完成品写真・「8〜10時間で完成」という具体数字で、ゴールのイメージを鮮明にする。</p>
+        </div>
+        <div class="timeline-item">
+          <h4>¥1,980「お試し感」で初速を取る</h4>
+          <p>定期購読への不安より「¥1,980で試せる」安心感を前面に。解約自由を早めに伝える。</p>
+        </div>
+        <div class="timeline-item">
+          <h4>コレクション欲求で継続率を設計する</h4>
+          <p>No.2〜5の予告を入れることで「全種集めたい」気持ちを植え付け、F2以降の継続率を高める。</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:15px; font-weight:700; margin-bottom:12px; color:var(--dark);">N1ペルソナ設計軸</h3>
+      <div class="card blue" style="margin-bottom:12px;">
+        <h3>田中さとみ（38歳）推し活ハイブリッド</h3>
+        <p>・推し活市場（17.5倍成長）<br>・ぬい所有率74.6%<br>・「手芸やりたいけど難しそう」層<br>・SNS映え需要 / ギフト需要あり</p>
+      </div>
+      <div class="card gold">
+        <h3>さとみさんが離脱する場面</h3>
+        <ul>
+          <li>「自分には難しそう」とFVで感じた時</li>
+          <li>価格を見てためらった時（定期縛り不安）</li>
+          <li>「完成できる保証があるの?」と疑った時</li>
+          <li>他のLPでも同じような商品を見た時</li>
+        </ul>
+      </div>
+      <br>
+      <div class="card green" style="margin-top:0;">
+        <h3>だからameruが刺さる</h3>
+        <p>「編み始め完成済み」= 最難関を工場でやってくれている。これを<b>ファーストビューで伝える</b>ことで離脱を最小化。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ok-ng-grid" style="margin-top:20px;">
+    <div class="ok-box">
+      <div class="label">✓ やること</div>
+      <ul>
+        <li>完成品ビジュアルを最初に</li>
+        <li>「簡単」を具体的数字で証明</li>
+        <li>¥1,980+縛りなしを早期提示</li>
+        <li>コレクション設計で継続欲求を植える</li>
+        <li>UGC枠で社会的証明を積む</li>
+        <li>グリーンCTAを3箇所以上</li>
+      </ul>
+    </div>
+    <div class="ng-box">
+      <div class="label">✕ やらないこと</div>
+      <ul>
+        <li>スペック説明から始める</li>
+        <li>会社説明・ブランドストーリーから始める</li>
+        <li>CTAを1箇所だけにする</li>
+        <li>価格を最後まで見せない</li>
+        <li>定期縛りの有無を曖昧にする</li>
+        <li>テキスト中心のFVにする</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────
+     03. セクション別設計仕様
+────────────────────────────────────────── -->
+<div class="section" id="s03">
+  <div class="section-id">03 <span class="badge">Structure</span></div>
+  <h2>セクション別設計仕様（6構成）</h2>
+  <p class="lead">勝ちLPの共通構造「欲しい→できる→安心→集める→買う」をベースに、ameruの世界観に合わせた6セクション構成。</p>
+
+  <!-- S1: FV -->
+  <div class="lp-section-card active">
+    <div class="lp-section-header">
+      <div class="lp-section-num">1</div>
+      <div>
+        <div class="lp-section-title">FV — ファーストビュー</div>
+        <div class="lp-section-subtitle">「欲しい」を3秒で作る</div>
+      </div>
+      <div class="lp-section-tag">最重要</div>
+    </div>
+    <div class="lp-section-body">
+      <div class="grid-2">
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">必須要素</h4>
+          <ul class="checklist">
+            <li>パッケージ実画像（主役・大きく）</li>
+            <li>キャッチコピー（感情訴求）</li>
+            <li>サブコピー（Only1訴求）</li>
+            <li>緑CTAボタン（初回¥1,980）</li>
+            <li>「いつでも解約OK」マイクロコピー</li>
+            <li>LEVEL★ / 8-10時間バッジ</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">デザイン仕様</h4>
+          <ul class="checklist">
+            <li>背景: スカイブルーグラデーション</li>
+            <li>パッケージ: 画面幅90%、フォールドより上</li>
+            <li>画像: eager loading（lazy禁止）</li>
+            <li>フォント: 黒太字 or 白太字でコントラスト確保</li>
+            <li>CTAサイズ: 幅100%、高さ56px以上</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copy-box" style="margin-top:16px;">
+        <div class="copy-label">FV キャッチコピー（推奨）</div>
+        <div class="copy-text">はじめて編んだのに、<br>ちゃんと可愛かった。</div>
+        <div class="copy-sub">✓ 経験者が語る過去形 → 「自分にもできた」感を引き出す</div>
+      </div>
+      <div class="copy-box">
+        <div class="copy-label">FV サブコピー（推奨）</div>
+        <div class="copy-text">編み始めは工場が完成させてお届け。<br>難しい最初の一目は、もう済んでいます。</div>
+        <div class="copy-sub">✓ Only1差別化「編み始め完成済み」を具体的に説明</div>
+      </div>
+      <div class="copy-box">
+        <div class="copy-label">CTAボタンコピー（推奨）</div>
+        <div class="copy-text">まずは¥1,980で試してみる →</div>
+        <div class="copy-sub">✓「試す」ニュアンスで心理的ハードルを下げる | マイクロコピー: いつでも解約できます</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2: Package Showcase -->
+  <div class="lp-section-card">
+    <div class="lp-section-header">
+      <div class="lp-section-num">2</div>
+      <div>
+        <div class="lp-section-title">Package Showcase</div>
+        <div class="lp-section-subtitle">「欲しい」を深める</div>
+      </div>
+      <div class="lp-section-tag" style="background:var(--gold);">視覚訴求</div>
+    </div>
+    <div class="lp-section-body">
+      <div class="grid-2">
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">必須要素</h4>
+          <ul class="checklist">
+            <li>パッケージ正面・開封・中身の3ショット</li>
+            <li>同梱物の視覚化（糸・かぎ針・編み図）</li>
+            <li>「All Materials Included」訴求</li>
+            <li>LEVEL★ バッジ / 8〜10時間表示</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">制作ポイント</h4>
+          <ul class="checklist">
+            <li>開封動画 or 静止画スライドどちらでも可</li>
+            <li>「こんなに入ってるの！」感を演出</li>
+            <li>プレゼント需要: ギフト包装イメージも差し込む</li>
+            <li>素材質感が伝わる接写ショット</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card gold" style="margin-top:16px;">
+        <h3>勝ちLPの知見</h3>
+        <p>lululun・manaraなどパッケージ主役型LPは「中身を全部見せる」ことで「モトが取れる」安心感を演出。価格を正当化する重要セクション。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3: Character -->
+  <div class="lp-section-card">
+    <div class="lp-section-header">
+      <div class="lp-section-num">3</div>
+      <div>
+        <div class="lp-section-title">Character — ずもっぴ紹介</div>
+        <div class="lp-section-subtitle">「作りたい」感情を作る</div>
+      </div>
+      <div class="lp-section-tag" style="background:var(--pink);">感情設計</div>
+    </div>
+    <div class="lp-section-body">
+      <div class="grid-2">
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">必須要素</h4>
+          <ul class="checklist">
+            <li>ずもっぴ完成品写真（背景透過PNG推奨）</li>
+            <li>キャラクター名 + プロフィール（短く）</li>
+            <li>完成イメージ（飾る / 持ち歩く / 撮る）</li>
+            <li>Love is... IPコラボバッジ</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">コピー設計</h4>
+          <div class="copy-box">
+            <div class="copy-label">キャラクター紹介コピー（案）</div>
+            <div class="copy-text">No.1 ずもっぴ</div>
+            <div class="copy-sub">スカイブルーの小さなお友達。<br>完成したら、ずっと一緒にいたくなる。</div>
+          </div>
+        </div>
+      </div>
+      <div class="card pink" style="margin-top:16px;">
+        <h3>素材待ち対応（暫定）</h3>
+        <p>透過PNG未入手の場合はパッケージ写真 + 「完成するとこうなります」テキストで代替可。素材入手後に差し替え。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4: Collection -->
+  <div class="lp-section-card">
+    <div class="lp-section-header">
+      <div class="lp-section-num">4</div>
+      <div>
+        <div class="lp-section-title">Collection — ラインナップ予告</div>
+        <div class="lp-section-subtitle">「全部集めたい」でF2以降を設計する</div>
+      </div>
+      <div class="lp-section-tag" style="background:var(--mid);">継続設計</div>
+    </div>
+    <div class="lp-section-body">
+      <div class="grid-2">
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">必須要素</h4>
+          <ul class="checklist">
+            <li>No.1 ずもっぴ + No.2〜5（Coming Soon）</li>
+            <li>5種コレクション完結設計を明示</li>
+            <li>「毎月1体ずつお届け」の定期設計説明</li>
+            <li>コンプリート時のビジュアルイメージ</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">コピー案</h4>
+          <div class="copy-box">
+            <div class="copy-label">コレクション見出し</div>
+            <div class="copy-text">5種コンプリートを目指して。</div>
+            <div class="copy-sub">毎月1体ずつ、新しいお友達が届きます。<br>全部並べた時の達成感は格別です。</div>
+          </div>
+        </div>
+      </div>
+      <div class="card blue" style="margin-top:16px;">
+        <h3>勝ちLPの知見: シリーズ訴求の力</h3>
+        <p>コレクター欲求は継続率に直結。fanfare等の定期型LPも「次回のお届け内容」予告でF2転換率を向上させている。<b>F2目標85%達成のための重要セクション。</b></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5: How -->
+  <div class="lp-section-card">
+    <div class="lp-section-header">
+      <div class="lp-section-num">5</div>
+      <div>
+        <div class="lp-section-title">How — 3ステップ作り方</div>
+        <div class="lp-section-subtitle">「難しくない」を証明する</div>
+      </div>
+      <div class="lp-section-tag" style="background:var(--green);">安心設計</div>
+    </div>
+    <div class="lp-section-body">
+      <div class="flow" style="margin-bottom:16px;">
+        <div class="flow-step">① 届く<br><span style="font-size:10px; font-weight:400; color:var(--mid);">全材料入り</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">② 開ける<br><span style="font-size:10px; font-weight:400; color:var(--mid);">すぐ始められる</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">③ 編む<br><span style="font-size:10px; font-weight:400; color:var(--mid);">8〜10時間で完成</span></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">各ステップのコピー設計</h4>
+          <div class="copy-box">
+            <div class="copy-label">ステップ① コピー案</div>
+            <div class="copy-text">届いたら、すぐ始められる。</div>
+            <div class="copy-sub">糸・かぎ針・編み図・副資材、全部入り。買いに行く必要ゼロ。</div>
+          </div>
+          <div class="copy-box">
+            <div class="copy-label">ステップ② コピー案</div>
+            <div class="copy-text">難しい最初の一目は、もう済んでいます。</div>
+            <div class="copy-sub">編み始めは工場で完成済み。マジックリングは最初からできています。</div>
+          </div>
+          <div class="copy-box">
+            <div class="copy-label">ステップ③ コピー案</div>
+            <div class="copy-text">8〜10時間で、ちゃんと可愛くなります。</div>
+            <div class="copy-sub">初心者でもLEVEL★のパターンで確実に完成。週末2日あれば十分。</div>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">制作ポイント</h4>
+          <ul class="checklist">
+            <li>ステップごとに小さな写真 or アイコン</li>
+            <li>「難しくない」根拠を数字で示す</li>
+            <li>ステップ3の直後にCTAを配置</li>
+            <li>FAQ候補: 「全く初めてでも大丈夫ですか？」</li>
+          </ul>
+          <div class="card green" style="margin-top:12px;">
+            <h3>このセクションのCTAコピー案</h3>
+            <p>「私にもできそう → 試してみる」<br>ユーザーの内的独白を先取りしてCTAを配置</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6: Offer -->
+  <div class="lp-section-card">
+    <div class="lp-section-header">
+      <div class="lp-section-num">6</div>
+      <div>
+        <div class="lp-section-title">Offer — 価格・CTA</div>
+        <div class="lp-section-subtitle">「買う」を決断させる</div>
+      </div>
+      <div class="lp-section-tag" style="background:var(--red);">CV設計</div>
+    </div>
+    <div class="lp-section-body">
+      <div class="grid-2">
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">必須要素</h4>
+          <ul class="checklist">
+            <li>初回¥1,980を大きく（通常¥4,200と比較）</li>
+            <li>「体験価格」の理由を添える</li>
+            <li>定期縛りなし / いつでも解約 を目立たせる</li>
+            <li>送料表示（¥420 / 無料にできるなら積極活用）</li>
+            <li>グリーンCTAボタン（大きく・押しやすく）</li>
+            <li>満足保証バッジ（検討中）</li>
+            <li>簡易FAQ（3問程度）</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">価格提示デザイン案</h4>
+          <div style="background:var(--green-light); border:2px solid var(--green); border-radius:12px; padding:20px; text-align:center;">
+            <div style="font-size:12px; color:var(--green); font-weight:700; margin-bottom:4px;">初回限定体験価格</div>
+            <div style="font-size:40px; font-weight:800; color:var(--dark);">¥1,980</div>
+            <div style="font-size:12px; color:var(--gray-mid);">（税込 / 送料¥420）</div>
+            <div style="margin:8px 0; color:var(--mid); font-size:12px;">通常価格 <span style="text-decoration:line-through;">¥4,200</span>/回</div>
+            <div style="background:var(--green); color:white; border-radius:8px; padding:12px; font-size:15px; font-weight:700; margin-top:12px;">まずは¥1,980で試してみる →</div>
+            <div style="font-size:11px; color:var(--gray-mid); margin-top:8px;">いつでも解約できます</div>
+          </div>
+        </div>
+      </div>
+      <h4 style="font-size:14px; font-weight:700; color:var(--dark); margin:20px 0 12px;">推奨 FAQ（3問）</h4>
+      <table>
+        <tr><th>Q</th><th>A（コピー案）</th></tr>
+        <tr><td>全く初めてでも大丈夫ですか？</td><td>はい。編み始めは工場で完成済み。LEVEL★のパターンで初心者でも完成できる設計です。</td></tr>
+        <tr><td>定期購読は縛りがありますか？</td><td>縛りなし。マイページからいつでも解約・停止ができます。</td></tr>
+        <tr><td>材料は全部入ってますか？</td><td>糸・かぎ針・編み図・目・綿・マーカーが全て同梱。追加購入不要です。</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────
+     04. コピーライティング仕様
+────────────────────────────────────────── -->
+<div class="section" id="s04">
+  <div class="section-id">04 <span class="badge">Copywriting</span></div>
+  <h2>コピーライティング仕様</h2>
+  <p class="lead">勝ちLP分析から導出したameruのコピーライティング原則。「難しそう→簡単そう」「高そう→試せる」という心理変換を軸に設計。</p>
+
+  <h3 style="font-size:16px; font-weight:700; margin-bottom:16px; color:var(--dark);">コピーの4原則</h3>
+  <div class="grid-2">
+    <div class="card blue">
+      <h3>① 経験者の過去形で語る</h3>
+      <p>「できました」「完成しました」という過去形が「私にもできる」信頼を生む。現在形の「できます！」より訴求力が高い。<br><br><b>例:</b> 「はじめて編んだのに、ちゃんと可愛かった。」</p>
+    </div>
+    <div class="card gold">
+      <h3>② 難しさを数字で相殺する</h3>
+      <p>「簡単です」より「8〜10時間で完成」の方が信頼度が高い。具体的な数字が不安を打ち消す。<br><br><b>例:</b> 「週末2日で完成。8〜10時間の達成感。」</p>
+    </div>
+    <div class="card green">
+      <h3>③ Only1差別化は具体的に</h3>
+      <p>「他と違う」より「編み始めは工場で完成済み」の方が伝わる。差別化は抽象ではなく具体で。<br><br><b>例:</b> 「難しい最初の一目は、もう済んでいます。」</p>
+    </div>
+    <div class="card pink">
+      <h3>④ 定期不安は先回りして消す</h3>
+      <p>「実は縛りなしで〜」より「いつでも解約OK」をFVから見せる。後出しにすると不信感が増す。<br><br><b>例:</b> CTAの直下に小さく「いつでも解約できます」</p>
+    </div>
+  </div>
+
+  <br>
+  <h3 style="font-size:16px; font-weight:700; margin-bottom:16px; color:var(--dark);">全セクション コピーマスターシート</h3>
+  <table>
+    <tr>
+      <th style="width:14%;">場所</th>
+      <th style="width:28%;">推奨コピー</th>
+      <th style="width:28%;">代替案</th>
+      <th>狙い</th>
+    </tr>
+    <tr>
+      <td><b>FVキャッチ</b></td>
+      <td>はじめて編んだのに、ちゃんと可愛かった。</td>
+      <td>「難しい」って思ってた。でも完成した。</td>
+      <td>経験者の過去形で「できる」を信じさせる</td>
+    </tr>
+    <tr>
+      <td><b>FVサブ</b></td>
+      <td>編み始めは工場が完成させてお届け。難しい最初の一目は、もう済んでいます。</td>
+      <td>最大の難所「マジックリング」は完成済みでお届け。</td>
+      <td>Only1差別化を具体化</td>
+    </tr>
+    <tr>
+      <td><b>CTAボタン</b></td>
+      <td>まずは¥1,980で試してみる →</td>
+      <td>¥1,980でお試しスタート →</td>
+      <td>「試す」ニュアンスで心理ハードル下げ</td>
+    </tr>
+    <tr>
+      <td><b>CTA下</b></td>
+      <td>いつでも解約できます</td>
+      <td>定期縛りなし / いつでも停止OK</td>
+      <td>定期不安を直下で消す</td>
+    </tr>
+    <tr>
+      <td><b>HOWリード</b></td>
+      <td>3ステップで、ちゃんと完成します。</td>
+      <td>難しいことは全部、最初から解決しています。</td>
+      <td>全体を俯瞰した安心感</td>
+    </tr>
+    <tr>
+      <td><b>コレクション見出し</b></td>
+      <td>5種コンプリートを目指して。</td>
+      <td>全部集めると、こうなります。</td>
+      <td>コレクター欲求を刺激</td>
+    </tr>
+    <tr>
+      <td><b>オファーリード</b></td>
+      <td>まず1体、作ってみませんか。</td>
+      <td>¥1,980でフィエロを体験してみて。</td>
+      <td>決断を促す前の背中を押すコピー</td>
+    </tr>
+    <tr>
+      <td><b>UGC見出し</b></td>
+      <td>#ameru みんなの完成品</td>
+      <td>#ずもっぴ できました報告</td>
+      <td>UGCを集めつつ社会的証明を演出</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ──────────────────────────────────────
+     05. CTA設計
+────────────────────────────────────────── -->
+<div class="section" id="s05">
+  <div class="section-id">05 <span class="badge">CTA</span></div>
+  <h2>CTA設計</h2>
+  <p class="lead">勝ちLP50本の分析から、CTAを1箇所に集約するより3〜4箇所に分散配置した方がCVRが高いことが判明。各配置のコピーは文脈に合わせて変える。</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <span class="num">CTA#1</span>
+      <h3>FV直下</h3>
+      <p>「試してみる」ニュアンス。最も上位ファネルのCTA。</p>
+      <div class="badge-row">
+        <span class="badge green">グリーン</span>
+        <span class="badge gray">幅100%</span>
+        <span class="badge gray">h56px+</span>
+      </div>
+    </div>
+    <div class="card">
+      <span class="num">CTA#2</span>
+      <h3>HOWセクション後</h3>
+      <p>「私にもできそう」という感情の最高潮でCTAを配置。</p>
+      <div class="badge-row">
+        <span class="badge green">グリーン</span>
+        <span class="badge gray">幅100%</span>
+      </div>
+    </div>
+    <div class="card">
+      <span class="num">CTA#3</span>
+      <h3>Offerセクション</h3>
+      <p>価格と共に最後の決断を促すCTA。最も重要。</p>
+      <div class="badge-row">
+        <span class="badge green">グリーン</span>
+        <span class="badge gray">幅100%</span>
+        <span class="badge gray">h64px+</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px; font-weight:700; margin-top:24px; margin-bottom:12px; color:var(--dark);">CTA デザイン仕様</h3>
+  <table>
+    <tr>
+      <th>項目</th>
+      <th>仕様</th>
+      <th>理由</th>
+    </tr>
+    <tr>
+      <td>背景色</td>
+      <td>#27AE60（グリーン）</td>
+      <td>勝ちLP79%がグリーン採用。購買行動を促す色。</td>
+    </tr>
+    <tr>
+      <td>テキスト色</td>
+      <td>#FFFFFF（白）</td>
+      <td>コントラスト比4.5以上確保</td>
+    </tr>
+    <tr>
+      <td>フォントサイズ</td>
+      <td>16px以上</td>
+      <td>スマホでの視認性確保</td>
+    </tr>
+    <tr>
+      <td>高さ</td>
+      <td>FV: 56px / Offer: 64px</td>
+      <td>タップターゲット44px以上（Apple HIG準拠）</td>
+    </tr>
+    <tr>
+      <td>角丸</td>
+      <td>border-radius: 12px</td>
+      <td>ameruの丸みのあるブランド世界観に合わせる</td>
+    </tr>
+    <tr>
+      <td>矢印</td>
+      <td>「→」をテキストで含める</td>
+      <td>「進む」アフォーダンスを付与</td>
+    </tr>
+    <tr>
+      <td>マイクロコピー</td>
+      <td>ボタン直下に11px / グレー</td>
+      <td>「いつでも解約できます」で直前離脱を防ぐ</td>
+    </tr>
+    <tr>
+      <td>ホバー状態</td>
+      <td>#219A52（5%暗く）</td>
+      <td>PCユーザーへのフィードバック</td>
+    </tr>
+  </table>
+
+  <div class="highlight">
+    <h3>CTA最重要原則</h3>
+    <p>CTAの直前に「不安を消すコピー」を入れる。「定期縛りなし」「いつでも解約」「全材料込み」のいずれかをCTA直上 or 直下に配置。<br><span class="big">不安を消す → ボタンを押す</span>という順序を守る。</p>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────
+     06. デザインシステム
+────────────────────────────────────────── -->
+<div class="section" id="s06">
+  <div class="section-id">06 <span class="badge">Design</span></div>
+  <h2>デザインシステム</h2>
+  <p class="lead">ameruのブランドカラー（スカイブルー×白×ピンク）を軸に、勝ちLPから学んだデザイン原則を適用。</p>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="font-size:15px; font-weight:700; margin-bottom:14px; color:var(--dark);">カラーパレット</h3>
+      <table>
+        <tr>
+          <th>役割</th>
+          <th>カラーコード</th>
+          <th>使用場所</th>
+        </tr>
+        <tr>
+          <td>メインブルー</td>
+          <td style="font-family:monospace;">#4CBAD4</td>
+          <td>FV背景・アクセント・バッジ</td>
+        </tr>
+        <tr>
+          <td>ダークブルー</td>
+          <td style="font-family:monospace;">#2A9AB8</td>
+          <td>ボタン hover・強調テキスト</td>
+        </tr>
+        <tr>
+          <td>ペールブルー</td>
+          <td style="font-family:monospace;">#EEF9FC</td>
+          <td>カード背景・薄グラデ</td>
+        </tr>
+        <tr>
+          <td>アクセントピンク</td>
+          <td style="font-family:monospace;">#F5A8C0</td>
+          <td>Love is...バッジ・装飾</td>
+        </tr>
+        <tr>
+          <td>CTAグリーン</td>
+          <td style="font-family:monospace;">#27AE60</td>
+          <td>全CTAボタン（固定）</td>
+        </tr>
+        <tr>
+          <td>テキスト濃</td>
+          <td style="font-family:monospace;">#1E3A42</td>
+          <td>見出し・本文</td>
+        </tr>
+        <tr>
+          <td>背景クリーム</td>
+          <td style="font-family:monospace;">#FAFBF8</td>
+          <td>ページ背景</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="font-size:15px; font-weight:700; margin-bottom:14px; color:var(--dark);">タイポグラフィ</h3>
+      <table>
+        <tr>
+          <th>要素</th>
+          <th>仕様</th>
+        </tr>
+        <tr>
+          <td>フォントファミリー</td>
+          <td>Hiragino Kaku Gothic ProN, sans-serif</td>
+        </tr>
+        <tr>
+          <td>FVキャッチ</td>
+          <td>28〜32px / weight:800 / 黒 or 白</td>
+        </tr>
+        <tr>
+          <td>セクション見出し</td>
+          <td>22〜24px / weight:700</td>
+        </tr>
+        <tr>
+          <td>本文</td>
+          <td>14〜15px / weight:400 / line-height:1.8</td>
+        </tr>
+        <tr>
+          <td>CTAボタン</td>
+          <td>16px / weight:700</td>
+        </tr>
+        <tr>
+          <td>マイクロコピー</td>
+          <td>11〜12px / weight:400 / gray</td>
+        </tr>
+        <tr>
+          <td>価格テキスト</td>
+          <td>36〜44px / weight:800</td>
+        </tr>
+      </table>
+
+      <h3 style="font-size:15px; font-weight:700; margin-top:20px; margin-bottom:14px; color:var(--dark);">レイアウト原則</h3>
+      <ul class="checklist">
+        <li>max-width: 480px（スマホ最適化）</li>
+        <li>padding: 左右24px統一</li>
+        <li>セクション間: padding 48〜60px</li>
+        <li>画像: 幅100%（aspect-ratio: 1/1 or 4/5）</li>
+        <li>角丸: 12〜16px（ブランドらしさ）</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-size:15px; font-weight:700; margin-top:24px; margin-bottom:14px; color:var(--dark);">スコアカード: 勝ちLP基準との比較</h3>
+  <div class="score-row">
+    <div class="score-label">ビジュアルファースト度</div>
+    <div class="score-bar-bg"><div class="score-bar" style="width:90%;"></div></div>
+    <div class="score-num">9/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">初回価格訴求力</div>
+    <div class="score-bar-bg"><div class="score-bar" style="width:85%;"></div></div>
+    <div class="score-num">8.5/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">離脱不安の排除</div>
+    <div class="score-bar-bg"><div class="score-bar" style="width:75%;"></div></div>
+    <div class="score-num">7.5/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">CTA配置・設計</div>
+    <div class="score-bar-bg"><div class="score-bar" style="width:80%;"></div></div>
+    <div class="score-num">8/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">社会的証明（UGC）</div>
+    <div class="score-bar-bg"><div class="score-bar" style="width:40%;"></div></div>
+    <div class="score-num">4/10</div>
+  </div>
+  <div class="score-row">
+    <div class="score-label">継続設計（コレクション）</div>
+    <div class="score-bar-bg"><div class="score-bar" style="width:85%;"></div></div>
+    <div class="score-num">8.5/10</div>
+  </div>
+  <p style="font-size:12px; color:var(--mid); margin-top:8px;">※ UGCスコアは立ち上げ期のため現時点では低い。SNS運用とともに徐々に改善予定。</p>
+</div>
+
+<!-- ──────────────────────────────────────
+     07. 計測・改善設計
+────────────────────────────────────────── -->
+<div class="section" id="s07">
+  <div class="section-id">07 <span class="badge">Analytics</span></div>
+  <h2>計測・改善設計</h2>
+  <p class="lead">LP CVR 改善は仮説→計測→改善のサイクルで進む。初期の計測ポイントと仮説を事前に設計しておく。</p>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="font-size:15px; font-weight:700; margin-bottom:14px; color:var(--dark);">KPI 目標値</h3>
+      <table>
+        <tr><th>指標</th><th>目標</th><th>参考値</th></tr>
+        <tr><td>LP CVR</td><td>3〜5%</td><td>D2C定期型 平均2〜4%</td></tr>
+        <tr><td>FVスクロール率</td><td>70%+</td><td>離脱はFVが最も多い</td></tr>
+        <tr><td>CTA#1クリック率</td><td>8〜12%</td><td>FV直下CTA</td></tr>
+        <tr><td>CTA#3クリック率</td><td>15〜20%</td><td>オファーセクション</td></tr>
+        <tr><td>フォーム入力完了率</td><td>60%+</td><td>離脱はフォームで多発</td></tr>
+        <tr><td>F2転換率</td><td>85%（死守）</td><td>LP体験が継続意欲に直結</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="font-size:15px; font-weight:700; margin-bottom:14px; color:var(--dark);">ABテスト優先順位</h3>
+      <table>
+        <tr><th>優先</th><th>テスト対象</th><th>仮説</th></tr>
+        <tr><td>★★★</td><td>FVキャッチコピー</td><td>経験者過去形 vs 未来形どちらが効くか</td></tr>
+        <tr><td>★★★</td><td>CTAコピー</td><td>「試してみる」vs「始める」vs「注文する」</td></tr>
+        <tr><td>★★☆</td><td>価格表示</td><td>初回¥1,980大 vs 通常¥4,200との比較表示</td></tr>
+        <tr><td>★★☆</td><td>FV画像</td><td>パッケージ正面 vs 完成品 vs 開封シーン</td></tr>
+        <tr><td>★☆☆</td><td>FAQ内容</td><td>3問 vs 5問どちらが離脱を防ぐか</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card red" style="margin-top:20px;">
+    <h3>計測設計の注意点</h3>
+    <ul>
+      <li>Google Analytics / EC-Force の両方でCV計測を設定</li>
+      <li>EC-ForceにjQueryを追加しない（購入スクリプト破損リスク）</li>
+      <li>ヒートマップ（Hotjar等）でスクロール到達率を計測</li>
+      <li>F2転換率85%を下回った場合は即LP見直しを行う</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────
+     08. LP制作チェックリスト
+────────────────────────────────────────── -->
+<div class="section" id="s08">
+  <div class="section-id">08 <span class="badge">Checklist</span></div>
+  <h2>LP制作チェックリスト</h2>
+  <p class="lead">本番LP制作前・公開前の確認リスト。過去の地雷と勝ちLP基準を統合。</p>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="font-size:14px; font-weight:700; margin-bottom:12px; color:var(--dark);">素材 チェック</h3>
+      <ul class="checklist">
+        <li>パッケージ画像（260408_ameru_PKG_3rd.png）</li>
+        <li>ずもっぴ完成品写真（透過PNG）</li>
+        <li>開封・中身写真</li>
+        <li>No.2〜5 Coming Soonビジュアル</li>
+        <li>ライフスタイル写真（飾る/持つ/贈る）</li>
+      </ul>
+
+      <h3 style="font-size:14px; font-weight:700; margin:20px 0 12px; color:var(--dark);">コピー チェック</h3>
+      <ul class="checklist">
+        <li>FVキャッチコピー確定</li>
+        <li>CTA3箇所のコピー確定</li>
+        <li>「いつでも解約できます」マイクロコピー</li>
+        <li>価格表示（¥1,980 / ¥4,200 / 送料¥420）</li>
+        <li>FAQ 3問のA確定</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-size:14px; font-weight:700; margin-bottom:12px; color:var(--dark);">技術 チェック（地雷防止）</h3>
+      <ul class="checklist">
+        <li>EC-Forceへ jQuery 追加していない</li>
+        <li>FV画像に lazy-load 付けていない</li>
+        <li>FV画像に fetchpriority="high" 設定</li>
+        <li>CTAボタンの href が正しいEC-ForceのURL</li>
+        <li>スマホ表示確認（max-width: 480px）</li>
+        <li>CTA押下後の遷移確認</li>
+      </ul>
+
+      <h3 style="font-size:14px; font-weight:700; margin:20px 0 12px; color:var(--dark);">計測 チェック</h3>
+      <ul class="checklist">
+        <li>Google Analytics タグ設定</li>
+        <li>CV計測設定（EC-Force側）</li>
+        <li>ヒートマップ設定（任意）</li>
+        <li>OGP設定（SNSシェア用）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight" style="margin-top:28px;">
+    <h3>次のアクション（優先順）</h3>
+    <p>
+      1. ずもっぴ透過PNG入手 → キャラクターセクション差し替え<br>
+      2. No.2〜5 Coming Soonビジュアル作成 → コレクションセクション完成<br>
+      3. ライフスタイルカット撮影 → オファーセクション強化<br>
+      4. 本番LP制作（ameru_lp_rough.html → 本番版へ）<br>
+      5. EC-Force連携・CV計測設定
+    </p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="doc-footer">
+  ameru LP設計書 v1 — 勝ちLP DB 50本分析 × ameruオリジナル設計<br>
+  株式会社ヨミテ / 担当: 澤田 / 作成: 一進AI / 2026-04-09
+</div>
+
+</body>
+</html>

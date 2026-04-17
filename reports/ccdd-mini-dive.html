@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クラウドコード ミニダイブ — CCDD エッセンス編</title>
+<style>
+  :root {
+    --navy: #0f1b2d;
+    --dark: #1a2332;
+    --card: #1e293b;
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --accent3: #f472b6;
+    --green: #4ade80;
+    --orange: #fb923c;
+    --yellow: #facc15;
+    --red: #f87171;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Hiragino Sans', 'Noto Sans JP', -apple-system, sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* ── Cover ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(56,189,248,0.15);
+    color: var(--accent);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(56,189,248,0.25);
+  }
+  .cover h1 {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #818cf8, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+  }
+  .cover .subtitle {
+    font-size: clamp(16px, 3vw, 22px);
+    color: var(--muted);
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+  .cover-meta {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .cover-meta span { margin: 0 12px; }
+
+  /* ── Layout ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  /* ── Section Headers ── */
+  .section-header {
+    text-align: center;
+    padding: 60px 20px 40px;
+  }
+  .section-number {
+    display: inline-block;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    line-height: 48px;
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  .section-number.blue { background: rgba(56,189,248,0.2); color: var(--accent); }
+  .section-number.purple { background: rgba(129,140,248,0.2); color: var(--accent2); }
+  .section-number.pink { background: rgba(244,114,182,0.2); color: var(--accent3); }
+  .section-number.green { background: rgba(74,222,128,0.2); color: var(--green); }
+  .section-number.orange { background: rgba(251,146,60,0.2); color: var(--orange); }
+  .section-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .section-header .section-sub {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* ── Topic Card ── */
+  .topic-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .topic-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .topic-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topic-card h3 .emoji { font-size: 24px; }
+  .topic-card .topic-tagline {
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  /* ── Why Box ── */
+  .why-box {
+    background: rgba(56,189,248,0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .why-box .why-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .why-box p {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  /* ── Example boxes ── */
+  .example-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  @media (max-width: 600px) {
+    .example-grid { grid-template-columns: 1fr; }
+  }
+  .example-box {
+    background: rgba(30,41,59,0.8);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .example-box .ex-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .example-box .ex-label.real { color: var(--green); }
+  .example-box .ex-label.ai { color: var(--accent2); }
+  .example-box p, .example-box ul {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .example-box ul { padding-left: 16px; }
+  .example-box ul li { margin-bottom: 4px; }
+
+  /* ── Highlight card ── */
+  .highlight {
+    background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(129,140,248,0.08));
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 16px;
+    padding: 28px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .highlight .hl-emoji { font-size: 36px; margin-bottom: 8px; }
+  .highlight .hl-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .highlight .hl-sub {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* ── Diagram / Visual ── */
+  .diagram {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    text-align: center;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 2;
+    color: var(--muted);
+    overflow-x: auto;
+  }
+  .diagram .accent { color: var(--accent); font-weight: 700; }
+  .diagram .green { color: var(--green); font-weight: 700; }
+  .diagram .pink { color: var(--accent3); font-weight: 700; }
+  .diagram .orange { color: var(--orange); font-weight: 700; }
+  .diagram .yellow { color: var(--yellow); font-weight: 700; }
+
+  /* ── Table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  th {
+    background: var(--dark);
+    color: var(--accent);
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  tr:hover td { background: rgba(56,189,248,0.03); }
+
+  /* ── Quote ── */
+  .quote {
+    border-left: 3px solid var(--accent3);
+    padding: 12px 20px;
+    margin: 16px 0;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .quote .author {
+    display: block;
+    margin-top: 8px;
+    font-style: normal;
+    font-size: 12px;
+    color: var(--accent3);
+    font-weight: 600;
+  }
+
+  /* ── Checklist ── */
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
+  .checklist li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    font-size: 14px;
+  }
+  .checklist li::before {
+    content: '□';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── Tags ── */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .tag.beginner { background: rgba(74,222,128,0.15); color: var(--green); }
+  .tag.intermediate { background: rgba(56,189,248,0.15); color: var(--accent); }
+  .tag.advanced { background: rgba(244,114,182,0.15); color: var(--accent3); }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 48px 0;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .footer .logo { font-size: 24px; margin-bottom: 8px; }
+
+  /* ── NG/OK comparison ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+  .compare-ng {
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .compare-ok {
+    background: rgba(74,222,128,0.06);
+    border: 1px solid rgba(74,222,128,0.2);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .compare-ng .label { color: var(--red); font-weight: 700; font-size: 12px; letter-spacing: 1px; margin-bottom: 8px; }
+  .compare-ok .label { color: var(--green); font-weight: 700; font-size: 12px; letter-spacing: 1px; margin-bottom: 8px; }
+  .compare-ng p, .compare-ok p { font-size: 13px; }
+
+  /* ── Accordion ── */
+  details {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  details summary {
+    padding: 14px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    list-style: none;
+  }
+  details summary::before { content: '▶ '; color: var(--accent); font-size: 11px; }
+  details[open] summary::before { content: '▼ '; }
+  details .detail-body { padding: 0 20px 20px; font-size: 14px; color: var(--muted); }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; color: #1a1a1a; }
+    .cover { min-height: auto; padding: 40px 20px; background: #fff; }
+    .cover h1 { -webkit-text-fill-color: #1a1a1a; }
+    .topic-card, .example-box, .diagram { border-color: #ddd; background: #f9fafb; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  COVER                                                        -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">ISSHIN INTERNAL TRAINING</div>
+  <h1>クラウドコード<br>ミニダイブ</h1>
+  <p class="subtitle">CCDD エッセンス編<br>— AIエージェント設計の15原則 —</p>
+  <p class="cover-meta">
+    <span>2026.04</span>
+    <span>|</span>
+    <span>Source: Claude Code DEEP DIVE by 文太（AX社）</span>
+  </p>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  INTRO                                                        -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="highlight">
+  <div class="hl-emoji">🧭</div>
+  <div class="hl-text">この資料の使い方</div>
+  <div class="hl-sub">15トピックを「なんで大事か」「AI以外の例」「Claude Code での使い方」の3層で解説。<br>初心者は「なんで大事か」だけ読めばOK。実装は後からでいい。</div>
+</div>
+
+<div class="diagram" style="text-align:left; padding: 20px 28px;">
+  <span class="accent">■ 前提知識</span><br>
+  この資料を読む前に知っておくと良いこと:<br><br>
+  <span class="green">Claude Code</span> = Anthropic社のAIコーディングツール（CLI/デスクトップ/Web）<br>
+  <span class="green">MCP</span> = Model Context Protocol。AIが外部ツールを使う仕組み<br>
+  <span class="green">エージェント</span> = AIが自律的にタスクを遂行する仕組み（指示→判断→実行→検証）<br>
+  <span class="green">コンテキストウィンドウ</span> = AIが一度に読める情報量の上限（人間の「ワーキングメモリ」）<br>
+  <span class="green">ベクトル</span> = テキストを数値の配列に変換したもの（意味の近さを計算できる）
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PART 1: 7つの構成要素                                        -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section-header">
+  <div class="section-number blue">1</div>
+  <h2>AIエージェントの7つの構成要素</h2>
+  <p class="section-sub">すべてはここから始まる。7つのパーツを理解すれば、エージェント設計の全体像が見える。</p>
+</div>
+
+<div class="diagram">
+  ┌─────────────────────────────────────────┐<br>
+  │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="accent">AIエージェント全体像</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  │&nbsp;&nbsp;<span class="accent">🧠 LLM</span>&nbsp;&nbsp;← 脳&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  │&nbsp;&nbsp;<span class="green">🔧 Tools</span>&nbsp;&nbsp;← 手足&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  │&nbsp;&nbsp;<span class="orange">⚡ Trigger</span>&nbsp;← きっかけ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  │&nbsp;&nbsp;<span class="pink">🧭 Instructions</span>&nbsp;← マニュアル&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  │&nbsp;&nbsp;<span class="yellow">📋 Skills</span>&nbsp;&nbsp;← 業務手順書&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  │&nbsp;&nbsp;<span class="accent">💾 Memory</span>&nbsp;&nbsp;← 長期記憶&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  │&nbsp;&nbsp;<span class="green">🪟 Context</span>&nbsp;← ワーキングメモリ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+  └─────────────────────────────────────────┘
+</div>
+
+<!-- Topic 1: LLM -->
+<div class="topic-card" data-num="TOPIC 01">
+  <h3><span class="emoji">🧠</span> LLM — 脳みそ</h3>
+  <p class="topic-tagline">考える力そのもの。でも「脳だけ」では何もできない</p>
+
+  <p>LLM（Large Language Model）はAIエージェントの「脳」。テキストを理解し、推論し、生成する能力の源泉。でも<strong>脳だけでは現実世界に手出しできない</strong>。ファイルを読み書きしたり、検索したり、メールを送ったりする「手足」が必要。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>どんなに優秀な人でも、手足を縛られたら仕事はできない。逆にどんなにツールが揃っていても、判断力がなければ使いこなせない。<strong>脳の能力に合った道具を選ぶ</strong>のが設計の第一歩。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🏢 仕事の例</div>
+      <p>新入社員に「自由にやっていいよ」と言っても、PCのログインIDすら渡されていなければ何もできない。<br>逆に全ツールへのアクセス権があっても、業務知識がなければ暴走する。</p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🍳 料理の例</div>
+      <p>世界一のシェフでも、包丁もコンロもない部屋では料理できない。<br>逆に最高の調理器具を持っていても、レシピを知らなければ使えない。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Topic 2: Tools -->
+<div class="topic-card" data-num="TOPIC 02">
+  <h3><span class="emoji">🔧</span> Tools（MCP）— 手足</h3>
+  <p class="topic-tagline">AIが「実際にやる」ための道具。接続先が増えるほど能力が広がる</p>
+
+  <p>MCP（Model Context Protocol）は、AIが外部サービスを操作するための統一規格。Slack送信、Google Calendar確認、ファイル操作、ブラウザ操作…AIに「手足」を与える仕組み。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>ChatGPTに「メール送っといて」と言っても送れない。Claude Codeに「Slackに投稿して」と言ったら本当に投稿できる。<strong>この差がツール（MCP）</strong>。
+    AIが「考えるだけ」から「実行できる」に進化するかどうかの分水嶺。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">📱 スマホの例</div>
+      <p>アプリがインストールされていないスマホは、電話しかできない。<br>LINEを入れれば連絡できる。カメラアプリを入れれば写真が撮れる。<br><strong>MCPは「AIにアプリを入れる」ようなもの。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🔌 USBの例</div>
+      <p>USBは「どのメーカーのデバイスでも統一規格で繋がる」仕組み。<br>MCPも同じ。Slack・Google・Canva…全部同じ仕組みでAIに繋がる。<br><strong>バラバラのAPIを覚える必要がない。</strong></p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>うちで繋いでるMCP</th><th>何ができるか</th></tr>
+    <tr><td>Slack</td><td>メッセージ送信・チャンネル読み取り</td></tr>
+    <tr><td>Google Calendar</td><td>予定確認・作成・調整</td></tr>
+    <tr><td>Google Drive</td><td>ドキュメント検索・読み取り</td></tr>
+    <tr><td>Canva</td><td>デザイン生成・編集・エクスポート</td></tr>
+    <tr><td>DPro（動画ProMCP）</td><td>広告データ検索・競合分析</td></tr>
+    <tr><td>Chrome</td><td>ブラウザ操作・スクリーンショット</td></tr>
+  </table>
+</div>
+
+<!-- Topic 3: Trigger -->
+<div class="topic-card" data-num="TOPIC 03">
+  <h3><span class="emoji">⚡</span> Trigger — きっかけ</h3>
+  <p class="topic-tagline">「いつ動くか」を決める。手動 → 自動化の進化ポイント</p>
+
+  <p>Triggerは「AIがいつ動き出すか」のきっかけ。人間がチャットに打ち込む「手動」から、時間指定・イベント検知の「自動」まで段階がある。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>毎朝「今日の予定教えて」と打つのは面倒。「毎朝8時に自動で予定を教えてくれる」なら便利。<strong>人間が起動しなくても動くのが、ツール→エージェントへの進化</strong>。Triggerはその鍵。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">⏰ 目覚まし時計の例</div>
+      <p>毎朝自分で時計を見て起きる = 手動<br>アラームが鳴って起きる = 自動トリガー<br>スマートアラームが睡眠の浅い時に起こす = 条件付きトリガー</p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">📧 メール通知の例</div>
+      <p>自分でメールアプリを開いて確認 = 手動<br>新着メールが来たら通知 = イベントトリガー<br>重要なメールだけ通知 = フィルター付きトリガー</p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>トリガーの種類</th><th>例</th><th>自動化レベル</th></tr>
+    <tr><td>手動（ユーザー起動）</td><td>チャットで「/morning」と打つ</td><td>⭐</td></tr>
+    <tr><td>スケジュール（cron）</td><td>毎朝8時にニュースを自動投稿</td><td>⭐⭐</td></tr>
+    <tr><td>イベント駆動</td><td>Slackにメンションが来たら返答</td><td>⭐⭐⭐</td></tr>
+    <tr><td>条件付き自動</td><td>広告CPAが閾値超えたらアラート</td><td>⭐⭐⭐⭐</td></tr>
+  </table>
+</div>
+
+<!-- Topic 4: Instructions -->
+<div class="topic-card" data-num="TOPIC 04">
+  <h3><span class="emoji">🧭</span> Instructions — マニュアル</h3>
+  <p class="topic-tagline">「言わなかったら間違う方向に進むか？」で書くかどうかを判断する</p>
+
+  <p>Instructionsは、AIの行動を方向づける「マニュアル」。CLAUDE.mdやidentity.md、rules/ に書かれている指示がこれに当たる。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>「新人に仕事を教えるマニュアル」と同じ。マニュアルがなければ自己流で動いてしまう。でも<strong>マニュアルが長すぎると誰も読まない</strong>。「書かなかったら事故るか？」がYESの項目だけ書く。</p>
+  </div>
+
+  <details>
+    <summary>指示の5要素チェックリスト</summary>
+    <div class="detail-body">
+      <table>
+        <tr><th>要素</th><th>意味</th><th>書かないとどうなるか</th></tr>
+        <tr><td>役割</td><td>「あなたは○○です」</td><td>AIが自分の立場を判断できずトーンがブレる</td></tr>
+        <tr><td>目的</td><td>「○○を達成する」</td><td>手段が目的化する（コードを書くことが目的に）</td></tr>
+        <tr><td>背景</td><td>「この仕事の文脈は…」</td><td>的外れな提案をする</td></tr>
+        <tr><td>制約</td><td>「○○はしないで」</td><td>やらかす（機密漏洩、データ削除等）</td></tr>
+        <tr><td>参考情報</td><td>「このファイルを参照して」</td><td>自分の知識だけで判断→古い情報で回答</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🏗️ 建築現場の例</div>
+      <p>設計図なしで「いい感じの家を建てて」と言ったら？<br>→ 窓の位置も部屋の数もバラバラな家ができる。<br>設計図 = Instructions。<strong>「良い指示」は誤解の余地を消す。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🎯 上司への報告の例</div>
+      <p>上司に「この資料作って」と言われて「目的は？誰向け？」を聞かないと、<br>的外れな資料ができあがる。<br><strong>AIも同じ。「背景」と「目的」がないと間違った方向に走る。</strong></p>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-ng">
+      <div class="label">❌ NG — 曖昧な指示</div>
+      <p>「いい感じのバナーを作って」<br>「品質を改善して」<br>「ユーザーが喜ぶようにして」</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ OK — 明確な指示</div>
+      <p>「30代女性向け・健康食品・初回半額を訴求するバナー」<br>「CTRが3%未満のコピーを、N1の語彙に書き換えて」<br>「カート完了率が70%を下回ったらアラートを出して」</p>
+    </div>
+  </div>
+</div>
+
+<!-- Topic 5: Skills -->
+<div class="topic-card" data-num="TOPIC 05">
+  <h3><span class="emoji">📋</span> Skills — 業務手順書</h3>
+  <p class="topic-tagline">「毎回同じ説明をするなら、手順書にしよう」がSkillの発想</p>
+
+  <p>Skillは「再利用可能な業務手順」。毎回チャットで長い指示を書く代わりに、一度まとめておけば `/skill名` で呼び出せる。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>料理のレシピと同じ。毎回「卵を割って…フライパンに油を…」と考えるのは非効率。レシピにまとめれば、<strong>誰でも同じ品質で再現できる</strong>。AIのSkillも同じ。一度作れば何度でも使える。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🍔 ファストフードの例</div>
+      <p>マクドナルドが世界中で同じ味を出せるのは、<strong>全工程がマニュアル化</strong>されているから。<br>パティの焼き時間、ソースの量、包み方…全部「Skill」。<br>属人化していないから、誰でも同品質で出せる。</p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">📝 チェックリストの例</div>
+      <p>パイロットが離陸前にチェックリストを確認する理由：<br>「毎回全部覚えているはず」は危険。<strong>手順を外出しすることで、ミスを構造的に防ぐ。</strong><br>Skillも同じ。品質のバラつきを抑える仕組み。</p>
+    </div>
+  </div>
+
+  <details>
+    <summary>Skillの品質を上げるコツ — Shot（具体例）の設計</summary>
+    <div class="detail-body">
+      <p>Skillに「こういうアウトプットを出して」の<strong>具体例（Shot）</strong>を入れると、精度が劇的に上がる。</p>
+      <p>ポイントは<strong>「数より多様性」</strong>:</p>
+      <ul>
+        <li>正常系の例 × 1（典型的なケース）</li>
+        <li>異常系の例 × 1（エラー時・例外ケース）</li>
+        <li>境界ケースの例 × 1（判断に迷うケース）</li>
+      </ul>
+      <p>3つの例で90%のケースをカバーできる。10個の似た例より、3つの多様な例の方がはるかに効果的。</p>
+      <br>
+      <p><strong>料理で例えると:</strong> レシピに「完成写真」が1枚あるだけで、文章だけのレシピより格段にわかりやすくなる。さらに「失敗例」（焦がした写真）と「ギリギリOK」（焼き色薄めでもOK）の写真があれば、判断基準がクリアになる。</p>
+    </div>
+  </details>
+</div>
+
+<!-- Topic 6: Memory -->
+<div class="topic-card" data-num="TOPIC 06">
+  <h3><span class="emoji">💾</span> Memory — 長期記憶</h3>
+  <p class="topic-tagline">「前も同じ説明したよね？」をなくす仕組み</p>
+
+  <p>Memoryは「セッションをまたいで覚えておく情報」。ユーザーの好み、過去の判断基準、プロジェクトの背景情報など。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>行きつけのカフェで毎回「私はカフェラテのミルク多めで…」と説明するのは面倒。常連になれば「いつもの」で通じる。<strong>AIのMemoryも「いつもの」を可能にする仕組み</strong>。なければ毎回初対面。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🏥 カルテの例</div>
+      <p>病院に行くたびに「アレルギーありますか？」「既往歴は？」と聞かれたら？<br>カルテがあるから、前回の情報を引き継げる。<br><strong>Memoryは「AIのカルテ」。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">📓 引き継ぎノートの例</div>
+      <p>バイトのシフト交代で「引き継ぎノート」がなかったら？<br>「○○さんが来たら冷蔵庫のケーキを取り置いてある」みたいな情報が消える。<br><strong>Memory = シフト交代でも情報が消えない仕組み。</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- Topic 7: Context Window -->
+<div class="topic-card" data-num="TOPIC 07">
+  <h3><span class="emoji">🪟</span> Context Window — ワーキングメモリ</h3>
+  <p class="topic-tagline">AIの「今、頭の中に入っている量」。これが全ての品質を決める</p>
+
+  <p>Context Windowは「AIが一度に処理できる情報量の上限」。人間の短期記憶（ワーキングメモリ）に相当する。情報を詰め込みすぎると、古い情報を忘れたり、精度が落ちたりする。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>会議で10個の議題を一気に話されたら、最後の方は覚えていないし、最初の議題の結論も曖昧になる。<strong>AIも同じ</strong>。情報を詰め込みすぎると「ハルシネーション（嘘をつく）」「指示忘れ」「精度低下」が起きる。<strong>だから何を入れて何を入れないかの設計が命</strong>。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🧳 スーツケースの例</div>
+      <p>30Lのスーツケースに全部詰め込もうとすると…<br>→ 大事なものが奥に埋もれて取り出せなくなる<br>→ 入りきらない荷物は落ちていく<br><strong>Context Window = スーツケースのサイズ。詰め方の設計が重要。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🎒 通学カバンの例</div>
+      <p>全教科の教科書を毎日持っていく → 重い、使わない教科書ばかり<br>時間割を見て必要な教科書だけ持っていく → 軽い、すぐ出せる<br><strong>「必要なものだけ持つ」がCW管理の本質。</strong></p>
+    </div>
+  </div>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="accent">CW管理の4階層（うちの設計）</span><br><br>
+    <span class="green">Tier 0</span>: CLAUDE.md + rules/ → 常に入っている。1行でも減らしたい<br>
+    <span class="accent">Tier 1</span>: Read（knowledge等） → 読んだらセッション中残る<br>
+    <span class="orange">Tier 2</span>: commands/ → /skill で読み込み。重いスキルは注意<br>
+    <span class="pink">Tier 3</span>: agents/ → 独立空間で動く。親のCWを消費しない<br><br>
+    <span class="yellow">💡 重い処理はTier 3（エージェント）に任せる = 親のCWを守る</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PART 2: 設計原則                                              -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section-header">
+  <div class="section-number purple">2</div>
+  <h2>設計の原則</h2>
+  <p class="section-sub">7つの構成要素を「どう組み合わせるか」の原則。ここからが腕の見せどころ。</p>
+</div>
+
+<!-- Topic 8: Script vs Skill -->
+<div class="topic-card" data-num="TOPIC 08">
+  <h3><span class="emoji">⚖️</span> スクリプト vs スキル — 考える必要ある？</h3>
+  <p class="topic-tagline">「考える必要がない処理」にAIを使うのは無駄遣い</p>
+
+  <p>全てをAI（Skill）でやる必要はない。<strong>考える必要がない定型処理</strong>は、Pythonスクリプトの方が速い・安い・確実。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>電卓で計算できることをわざわざ数学者に頼む人はいない。<strong>「AIじゃなくてもできること」にAIを使うと、コスト・速度・信頼性の全てで損をする</strong>。判断基準は「考える必要があるか？」だけ。</p>
+  </div>
+
+  <table>
+    <tr><th>処理の内容</th><th>判断</th><th>理由</th></tr>
+    <tr><td>ファイル名の一括リネーム</td><td>🐍 スクリプト</td><td>ルールが決まっている。考える余地なし</td></tr>
+    <tr><td>CSVの集計・グラフ化</td><td>🐍 スクリプト</td><td>計算は機械の仕事。LLMに計算させると間違う</td></tr>
+    <tr><td>広告コピーの生成</td><td>🤖 スキル</td><td>「刺さるコピー」は判断力が必要</td></tr>
+    <tr><td>競合分析レポート作成</td><td>🤖 スキル</td><td>データの解釈・洞察に思考力が要る</td></tr>
+    <tr><td>画像のリサイズ</td><td>🐍 スクリプト</td><td>ピクセル計算に思考は不要</td></tr>
+    <tr><td>ブランドガイドに沿った色チェック</td><td>🤖 スキル</td><td>「ガイドの意図」を理解する必要がある</td></tr>
+  </table>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🏭 工場の例</div>
+      <p>ネジを締める作業 → ロボットアーム（正確・速い・安い）<br>
+      新製品のデザイン → 人間のデザイナー（創造力が必要）<br>
+      <strong>定型作業を人間にやらせるのは「もったいない」。AIでも同じ。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🧮 経理の例</div>
+      <p>請求書の合計金額計算 → Excel（= スクリプト）<br>
+      予算配分の判断 → 経理部長（= スキル/AI）<br>
+      <strong>計算は道具に、判断は頭脳に。</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- Topic 9: Agent Splitting -->
+<div class="topic-card" data-num="TOPIC 09">
+  <h3><span class="emoji">✂️</span> エージェント分割 — いつ分けるか</h3>
+  <p class="topic-tagline">1人に全部やらせたら、パンクする。人間もAIも。</p>
+
+  <p>1つのセッション（= 1人のAI）に複雑なタスクを全部任せると、Context Windowが溢れて品質が崩壊する。<strong>「分ける」判断</strong>がエージェント設計の核心。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>1人の営業が「テレアポ・提案書作成・契約書確認・入金管理」全部やったら？ → ミスが増え、どれも中途半端になる。<strong>AIも同じ。専門タスクごとに分けた方が、それぞれの品質が上がる。</strong></p>
+  </div>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="accent">分割の判断基準（3つのNG信号）</span><br><br>
+    ❌ <span class="pink">ループ3回以上NG</span> → 同じミスを3回繰り返したら、タスクが複雑すぎる合図<br>
+    ❌ <span class="orange">指示忘れが発生</span> → CWが圧迫されて、前の方の指示を忘れ始めている<br>
+    ❌ <span class="pink">ハルシネーション発生</span> → 「嘘をつく」＝脳がパンクしている明確なサイン<br><br>
+    <span class="green">→ この3つが出たら、サブエージェントに分割 or セッションを分ける</span>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🏥 病院の例</div>
+      <p>1人の医師が内科・外科・眼科・歯科を全部やったら？<br>→ 専門性が薄まって全部中途半端になる<br><strong>「専門医を分ける」のが、エージェント分割の発想。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🎬 映画制作の例</div>
+      <p>監督1人が脚本・撮影・照明・音声・編集を全部やったら？<br>→ 撮影中に脚本の直しが入って、照明の指示を忘れる<br><strong>各部門にプロを置く = エージェント分割</strong></p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>うちの分割設計</th><th>役割</th></tr>
+    <tr><td>commands/<br><span class="tag beginner">オーケストレーター</span></td><td>ユーザーと対話。全体の指揮を取る（映画の「監督」）</td></tr>
+    <tr><td>agents/<br><span class="tag intermediate">サブエージェント</span></td><td>専門タスクを独立で実行（「照明」「音声」「編集」チーム）<br>親のCWを使わない = 本隊の頭脳を守る</td></tr>
+  </table>
+</div>
+
+<!-- Topic 10: Vectorization -->
+<div class="topic-card" data-num="TOPIC 10">
+  <h3><span class="emoji">🧲</span> ベクトル化 — 意味で検索する</h3>
+  <p class="topic-tagline">「キーワード一致」から「意味が近い」への進化</p>
+
+  <p>ベクトル化とは、テキストを「数値の配列（ベクトル）」に変換すること。変換すると、テキスト同士の「意味の近さ」を数値で計算できるようになる。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>従来の検索は「完全一致」。「犬」で検索しても「ワンちゃん」はヒットしない。ベクトル検索なら<strong>「犬」と「ワンちゃん」が意味的に近いことを理解して</strong>両方ヒットする。<br>これがないと、AIは「書いてあること」しか見つけられない。書いてあるのに見つけられない、は最悪。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">📚 図書館の例</div>
+      <p><strong>従来の検索（キーワード一致）</strong><br>
+      「犬の飼い方」で検索 → 「犬の飼い方」というタイトルの本だけヒット<br><br>
+      <strong>ベクトル検索（意味検索）</strong><br>
+      「犬の飼い方」で検索 → 「はじめてのワンちゃん」「ペットとの暮らし」もヒット</p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🗂️ 社内ファイル検索の例</div>
+      <p><strong>従来</strong>: 「売上報告」で検索 → ファイル名に「売上報告」がある資料だけ<br><br>
+      <strong>ベクトル</strong>: 「売上報告」で検索 → 「Q3 Revenue Review」「第3四半期実績サマリー」も出てくる<br>
+      <strong>言語の壁すら超える。</strong></p>
+    </div>
+  </div>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="accent">ベクトルの距離 = 意味の近さ</span><br><br>
+    「膝がガクガクする」 ←→ 「膝が不安定」 = <span class="green">距離0.15（ほぼ同じ意味）</span><br>
+    「膝がガクガクする」 ←→ 「足が痛い」&emsp;&nbsp; = <span class="yellow">距離0.45（関連あり）</span><br>
+    「膝がガクガクする」 ←→ 「天気が良い」 = <span class="pink">距離0.92（無関係）</span><br><br>
+    <span class="orange">→ この「距離」を使って「似たものを探す」のがベクトル検索</span>
+  </div>
+
+  <div class="quote">
+    「セマンティック検索ができるからLLMが重要。できないなら今までのPythonと同じ機能」
+    <span class="author">— 文太（AX社代表）</span>
+  </div>
+</div>
+
+<!-- Topic 11: Feedback Loop -->
+<div class="topic-card" data-num="TOPIC 11">
+  <h3><span class="emoji">🔄</span> フィードバックループ — 自動で賢くなる仕組み</h3>
+  <p class="topic-tagline">「やりっぱなし」を「やる→測る→直す→やる」に変える</p>
+
+  <p>フィードバックループとは、「実行結果を評価して、次の実行を改善する」自動サイクルのこと。AIが一発で終わるのではなく、<strong>自分で振り返って良くなっていく構造</strong>。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>テスト勉強で「問題を解く → 丸つけしない → また同じ範囲を解く」を繰り返す人はいない。<strong>丸つけ（評価）して間違いを直す（改善）から成績が上がる</strong>。AIも同じ。実行→評価→改善のサイクルがないと、何回やっても同じ品質のまま。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🏋️ 筋トレの例</div>
+      <p>❌ 毎日なんとなく腕立て → 3ヶ月後も変化なし<br>
+      ✅ 記録つけて、重量を少しずつ上げて、フォーム確認 → 着実に成長<br>
+      <strong>「記録 → 分析 → 調整」のサイクルが成長を生む。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">📊 営業の例</div>
+      <p>❌ テレアポ100件 → 結果を見ない → また同じトークで100件<br>
+      ✅ テレアポ100件 → 「どのトークで何件取れたか」分析 → トーク改善<br>
+      <strong>PDCAが回る営業チームは自然と数字が上がる。AIも同じ。</strong></p>
+    </div>
+  </div>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="accent">うちで目指す3つのループ</span><br><br>
+    <span class="green">ループA: スキル自動改善</span><br>
+    &emsp;スキル実行 → 品質スコア記録 → 3回分析 → 弱いステップを特定・修正<br><br>
+    <span class="accent">ループB: CRパフォーマンス</span><br>
+    &emsp;広告CR生成 → 配信 → 実績データ取得 → 「勝ちパターン」を次回に反映<br><br>
+    <span class="orange">ループC: コンテキスト監視</span><br>
+    &emsp;NGが3回続いたら → 自動で警告 → サブエージェントに分割提案
+  </div>
+</div>
+
+<!-- Topic 12: Reflection -->
+<div class="topic-card" data-num="TOPIC 12">
+  <h3><span class="emoji">🪞</span> リフレクション — 振り返りの技術</h3>
+  <p class="topic-tagline">「振り返って」だけでは曖昧。何をどう振り返るかまで指定する</p>
+
+  <p>リフレクションは「AIに自分の出力を振り返らせて修正させる」手法。ただし「品質を改善して」のような曖昧な指示では機能しない。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>上司が新人に「もっとちゃんとやって」と言っても何も改善されない。<strong>「具体的にどこがダメで、どう直すか」まで示して初めて改善される</strong>。AIのリフレクションも同じ。</p>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-ng">
+      <div class="label">❌ NG — 曖昧なリフレクション指示</div>
+      <p>「品質を振り返って改善して」<br>「もっと良くして」<br>「前のと比較して」</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ OK — 具体的なリフレクション指示</div>
+      <p>「各ステップの出力を比較し、以下の異常を検出して」<br>
+      ・トーンの急変（前ステップと感情スコア ±30%以上）<br>
+      ・情報の欠落（前ステップにあった必須項目が消えている）<br>
+      ・矛盾（前の結論と逆の主張が出現）<br>
+      「異常があったステップのみ再実行」</p>
+    </div>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">📝 作文添削の例</div>
+      <p>❌「この作文をもっと良くしてください」<br>
+      ✅「この作文の①主語と述語のねじれ ②同じ接続詞の3回以上使用 ③段落冒頭の繰り返し表現をチェックして修正して」<br>
+      <strong>チェック項目が具体的だから、改善が的確になる。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🏃 スポーツの例</div>
+      <p>❌ コーチ「もっと上手くなれ」<br>
+      ✅ コーチ「腕の振りが小さい。肘の角度を90度にして、腕を耳の横まで上げろ」<br>
+      <strong>測定可能な改善ポイントを示すのがリフレクションの本質。</strong></p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PART 3: 実践Tips                                              -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section-header">
+  <div class="section-number green">3</div>
+  <h2>実践Tips</h2>
+  <p class="section-sub">明日から使える、具体的なテクニック。</p>
+</div>
+
+<!-- Topic 13: Instruction 5 Elements -->
+<div class="topic-card" data-num="TOPIC 13">
+  <h3><span class="emoji">✍️</span> 指示の書き方 5要素</h3>
+  <p class="topic-tagline">「言わなかったらAIが間違う方向に進むか？」がYESなら書く</p>
+
+  <p>AIへの指示は「過不足なく」書くのが理想。多すぎると読まれない。少なすぎると誤解される。判断基準は「これを書かなかったら、AIが間違った方向に進むか？」</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="accent">5要素テンプレート</span><br><br>
+    <span class="green">① 役割</span>: あなたは[○○の専門家]です<br>
+    <span class="accent">② 目的</span>: [○○]を達成してください<br>
+    <span class="orange">③ 背景</span>: この案件は[○○]の文脈で[○○]なクライアント向けです<br>
+    <span class="pink">④ 制約</span>: [○○]はしないでください / [○○]の範囲内で<br>
+    <span class="yellow">⑤ 参考</span>: [○○.md]を読んでから始めてください
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🍕 ピザ注文の例</div>
+      <p>❌「ピザ頼んで」<br>
+      → サイズは？トッピングは？届け先は？<br><br>
+      ✅「マルゲリータのLサイズ、チーズ多め、○○町の自宅に30分以内で」<br>
+      → 迷わず注文できる。<strong>曖昧さを消すことで速度が上がる。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">🏠 引越しの例</div>
+      <p>❌「来週引越し手伝って」<br>
+      → いつ？どこから？荷物の量は？<br><br>
+      ✅「来週土曜9時に渋谷のワンルームから新宿の2LDKに。段ボール20箱くらい。」<br>
+      <strong>5W1Hが揃ってるから、すぐ動ける。</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- Topic 14: Multi-layer Defense -->
+<div class="topic-card" data-num="TOPIC 14">
+  <h3><span class="emoji">🛡️</span> 多層防御 — セキュリティ設計</h3>
+  <p class="topic-tagline">「AIが間違えても被害が出ない」設計が多層防御</p>
+
+  <p>AIは間違える。これは前提。だから<strong>「間違えても大事故にならない仕組み」</strong>を複数の層で作る。AIに全てを任せず、要所で人間や機械的チェックを挟む。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>飛行機が安全なのは、パイロットが優秀だからだけじゃない。自動操縦 + 副操縦士 + 管制塔 + 機体センサー…<strong>何重もの安全装置が「1つ壊れても大丈夫」を実現してる</strong>。AIエージェントも同じ。1層だけに頼ったらいつか事故る。</p>
+  </div>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="accent">多層防御の設計パターン</span><br><br>
+    <span class="green">第1層: スクリプト検証（機械的チェック）</span><br>
+    &emsp;→ 入力値のフォーマット確認、禁止ワードチェック等<br>
+    &emsp;→ LLMを使わない = 100%確実な防波堤<br><br>
+    <span class="accent">第2層: AI自己チェック（リフレクション）</span><br>
+    &emsp;→ 自分の出力に矛盾・異常がないか確認<br>
+    &emsp;→ 精度は高いが100%ではない<br><br>
+    <span class="orange">第3層: 人間の確認（最終ゲート）</span><br>
+    &emsp;→ 金額が大きい操作、公開する内容、不可逆な操作<br>
+    &emsp;→ 「送信ボタン」を押すのは人間<br><br>
+    <span class="yellow">原則: バリデーション(検証)はスクリプトで。判断はAIで。最終承認は人間で。</span>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🏦 銀行ATMの例</div>
+      <p>第1層: カード + 暗証番号（機械的認証）<br>
+      第2層: 異常取引検知AI（パターン照合）<br>
+      第3層: 高額送金は窓口で本人確認（人間チェック）<br>
+      <strong>3層全部突破されないと被害が出ない設計。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">📮 郵便の例</div>
+      <p>第1層: 郵便番号チェック（機械的 — 数字7桁か？）<br>
+      第2層: 住所と郵便番号の整合性（ルールベース）<br>
+      第3層: 配達員が「この住所おかしくない？」と判断（人間）<br>
+      <strong>各層の役割が違う。全部同じチェックでは意味がない。</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- Topic 15: Embedding Strategy -->
+<div class="topic-card" data-num="TOPIC 15">
+  <h3><span class="emoji">🗄️</span> ベクトルDBの活用 — データを資産にする</h3>
+  <p class="topic-tagline">使い捨てにしない。蓄積して、未来の判断に活かす</p>
+
+  <p>ベクトル化したデータを「セッションごとに消す」のではなく、<strong>永続的なDBに蓄積</strong>する。すると「過去に成功したパターン」「失敗したパターン」が意味で検索できるようになる。</p>
+
+  <div class="why-box">
+    <div class="why-label">なぜ大事？</div>
+    <p>経験豊富なベテラン営業は「このタイプの顧客にはこの提案が刺さる」と分かっている。なぜか？ <strong>過去の成功・失敗パターンが頭に蓄積されている</strong>から。ベクトルDBは「AIにベテランの経験値を与える」仕組み。</p>
+  </div>
+
+  <div class="example-grid">
+    <div class="example-box">
+      <div class="ex-label real">🍽️ レストランの例</div>
+      <p>❌ 毎日メニューを考える。前に何が人気だったか覚えていない<br>
+      ✅ 売上データを蓄積。「秋は和食の注文が1.5倍」と分かっている<br>
+      <strong>データの蓄積 = 経験値の蓄積。過去のデータが未来の判断を助ける。</strong></p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label real">⚾ 野球の例</div>
+      <p>打者の過去データから「この投手の外角低めは打率.120」が分かれば、<br>外角低めを狙って投げる判断ができる。<br>
+      <strong>ベクトルDBは「AIのスコアラー」。過去の記録から最適解を導く。</strong></p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>ベクトルの類似度</th><th>意味</th><th>判断</th></tr>
+    <tr><td>0.8以上</td><td>ほぼ同じ</td><td>差別化不足。角度を変える</td></tr>
+    <tr><td>0.7〜0.8</td><td>同じカテゴリ</td><td>良い方向性。微調整で使える</td></tr>
+    <tr><td>0.5〜0.7</td><td>うっすら関連</td><td>新しい切り口として検討価値あり</td></tr>
+    <tr><td>0.5未満</td><td>無関係</td><td>方向が違う</td></tr>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  PART 4: まとめ                                                -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section-header">
+  <div class="section-number orange">4</div>
+  <h2>まとめ — 明日からやること</h2>
+  <p class="section-sub">15トピックを「結局何をすればいいの？」に凝縮</p>
+</div>
+
+<div class="highlight">
+  <div class="hl-emoji">🎯</div>
+  <div class="hl-text">エージェント設計の3大原則</div>
+  <div class="hl-sub">
+    ① コンテキストは有限。必要なものだけ持つ<br>
+    ② 考える仕事はAIに、考えない仕事はスクリプトに<br>
+    ③ 間違えても大丈夫な仕組みを複数層で作る
+  </div>
+</div>
+
+<div class="topic-card" data-num="ACTION">
+  <h3><span class="emoji">✅</span> 初心者向けアクションリスト</h3>
+
+  <ul class="checklist">
+    <li><strong>Claude Code をインストールして触ってみる</strong> — まず使う。理論は後</li>
+    <li><strong>CLAUDE.md を読んでみる</strong> — うちのAIがどういう指示で動いているか理解する</li>
+    <li><strong>/morning を実行してみる</strong> — Skillの体験。「指示を書かなくても動く」を体感</li>
+    <li><strong>簡単なタスクをClaude Codeにやらせてみる</strong> — 「ファイルの中身を要約して」くらいから</li>
+    <li><strong>指示の5要素を意識して書いてみる</strong> — 役割・目的・背景・制約・参考情報</li>
+    <li><strong>MCPで繋がっているツールを確認する</strong> — Slack, Calendar, Drive, Canva, DPro, Chrome</li>
+    <li><strong>agents/ と commands/ のファイルを眺めてみる</strong> — 「こういうのが作れるんだ」のイメージを掴む</li>
+  </ul>
+</div>
+
+<div class="topic-card" data-num="REFERENCE">
+  <h3><span class="emoji">📖</span> 15トピック早見表</h3>
+
+  <table>
+    <tr><th>#</th><th>トピック</th><th>一言で</th><th>レベル</th></tr>
+    <tr><td>01</td><td>LLM</td><td>AIの脳。考える力の源泉</td><td><span class="tag beginner">入門</span></td></tr>
+    <tr><td>02</td><td>Tools / MCP</td><td>AIの手足。実行能力</td><td><span class="tag beginner">入門</span></td></tr>
+    <tr><td>03</td><td>Trigger</td><td>いつ動くか。手動→自動</td><td><span class="tag beginner">入門</span></td></tr>
+    <tr><td>04</td><td>Instructions</td><td>マニュアル。方向を示す</td><td><span class="tag beginner">入門</span></td></tr>
+    <tr><td>05</td><td>Skills</td><td>再利用可能な手順書</td><td><span class="tag beginner">入門</span></td></tr>
+    <tr><td>06</td><td>Memory</td><td>長期記憶。セッションを超える</td><td><span class="tag beginner">入門</span></td></tr>
+    <tr><td>07</td><td>Context Window</td><td>ワーキングメモリ。全品質を決める</td><td><span class="tag intermediate">中級</span></td></tr>
+    <tr><td>08</td><td>Script vs Skill</td><td>考える必要があるかで分ける</td><td><span class="tag intermediate">中級</span></td></tr>
+    <tr><td>09</td><td>エージェント分割</td><td>1人にやらせすぎない</td><td><span class="tag intermediate">中級</span></td></tr>
+    <tr><td>10</td><td>ベクトル化</td><td>意味で検索する技術</td><td><span class="tag intermediate">中級</span></td></tr>
+    <tr><td>11</td><td>フィードバックループ</td><td>やる→測る→直すの自動化</td><td><span class="tag advanced">上級</span></td></tr>
+    <tr><td>12</td><td>リフレクション</td><td>AIに具体的に振り返らせる</td><td><span class="tag advanced">上級</span></td></tr>
+    <tr><td>13</td><td>指示の5要素</td><td>AIへの指示の書き方テンプレ</td><td><span class="tag beginner">入門</span></td></tr>
+    <tr><td>14</td><td>多層防御</td><td>間違えても安全な仕組み</td><td><span class="tag intermediate">中級</span></td></tr>
+    <tr><td>15</td><td>ベクトルDB</td><td>データを資産として蓄積</td><td><span class="tag advanced">上級</span></td></tr>
+  </table>
+</div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  FOOTER                                                       -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="footer">
+  <div class="logo">⚓</div>
+  <p>一進VOYAGE号 — クラウドコード ミニダイブ CCDD エッセンス編</p>
+  <p>Source: Claude Code DEEP DIVE by 文太（AX社代表）2026.04.11-12</p>
+  <p style="margin-top:8px; font-size:12px;">Internal Training Material — Not for Distribution</p>
+</div>
+
+</body>
+</html>

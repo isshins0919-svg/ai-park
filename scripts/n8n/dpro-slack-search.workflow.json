@@ -1,0 +1,183 @@
+{
+  "name": "DPro Slack 検索・回答ボット",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dpro-slack-events",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-1001-webhook",
+      "name": "Slack Webhook受信",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "dpro-slack-events"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true },
+          "conditions": [
+            {
+              "id": "cond-url-verify",
+              "leftValue": "={{ $json.body.type }}",
+              "rightValue": "url_verification",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-1002-is-challenge",
+      "name": "URL検証チェック",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ challenge: $json.body.challenge }) }}",
+        "options": {}
+      },
+      "id": "node-1003-respond-challenge",
+      "name": "チャレンジ応答",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [680, 180]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true },
+          "conditions": [
+            {
+              "id": "cond-msg-type",
+              "leftValue": "={{ $json.body.event.type }}",
+              "rightValue": "message",
+              "operator": { "type": "string", "operation": "equals" }
+            },
+            {
+              "id": "cond-no-bot",
+              "leftValue": "={{ $json.body.event.bot_id }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "equals" }
+            },
+            {
+              "id": "cond-no-subtype",
+              "leftValue": "={{ $json.body.event.subtype }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-1004-is-valid-msg",
+      "name": "有効メッセージ判定",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 380]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"ok\": true}",
+        "options": { "responseCode": 200 }
+      },
+      "id": "node-1005-ack",
+      "name": "Slack即時応答 (200 OK)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 280]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// ===== 質問解析 + DPro検索 + 回答生成 =====\nconst event = $input.first().json.body.event;\nconst userText = event.text || '';\nconst threadTs = event.thread_ts || event.ts;\nconst CHANNEL = event.channel || 'C0AMYLU2W5D';\n\nconst DPRO_BASE = 'https://YOUR_WORKER_NAME.workers.dev'; // ← Cloudflare WorkerのURLに変更\n\nasync function dproGet(path, params) {\n  let qs = '';\n  if (params) {\n    const parts = [];\n    for (const [k, v] of Object.entries(params)) {\n      if (v != null) parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(String(v)));\n    }\n    if (parts.length) qs = '?' + parts.join('&');\n  }\n  const fullUrl = DPRO_BASE + path + qs;\n  const res = await $http.request({ method: 'GET', url: fullUrl });\n  return res;\n}\n\n// 1. 本質思考: 質問からジャンル・媒体・タイプを抽出\nconst GENRE_MAP = [\n  { labels: ['ヒザ', '膝', '関節'], q: 'ヒザ', name: 'ヒザ系' },\n  { labels: ['毛穴', 'シミ', 'シワ', '美肌', '肌'], q: '毛穴', name: '毛穴/シミ/シワ' },\n  { labels: ['子供', '成長', 'サプリ', '身長', '育ち'], q: '成長', name: '子供サプリ' },\n  { labels: ['体臭', 'ワキガ', 'デオドラント', '臭い', 'におい'], q: '体臭', name: '女性体臭' }\n];\nconst MEDIA_MAP = [\n  { labels: ['Instagram', 'インスタ', 'IG', 'インスタグラム'], key: 'instagram' },\n  { labels: ['YouTube', 'ユーチューブ', 'YT', 'ようつべ'], key: 'youtube' }\n];\nconst QUERY_TYPES = {\n  hook: ['フック', 'ナレーション', '冒頭', 'コピー', '文句', '言葉'],\n  lp: ['LP', 'ランディング', '記事', '着地'],\n  compare: ['比較', 'どっち', '比べ', 'vs'],\n  trend: ['トレンド', '伸びてる', '人気', '最新', 'ランキング', 'TOP']\n};\n\nfunction detect(text, labels) {\n  return labels.some(function(l) { return text.includes(l); });\n}\n\n// ジャンル検出\nlet detectedGenre = null;\nfor (const gm of GENRE_MAP) {\n  if (detect(userText, gm.labels)) { detectedGenre = gm; break; }\n}\n\n// 媒体検出\nlet detectedMedias = [];\nfor (const mm of MEDIA_MAP) {\n  if (detect(userText, mm.labels)) detectedMedias.push(mm.key);\n}\nif (detectedMedias.length === 0) detectedMedias = ['instagram', 'youtube'];\n\n// クエリタイプ検出\nlet queryType = 'trend';\nfor (const [type, words] of Object.entries(QUERY_TYPES)) {\n  if (detect(userText, words)) { queryType = type; break; }\n}\n\n// 2. DPro API検索\nconst appsRaw = await dproGet('/api/v1/apps');\nconst appList = Array.isArray(appsRaw) ? appsRaw : (appsRaw.data || []);\nconst mediaIds = {};\nfor (const app of appList) {\n  const s = JSON.stringify(app);\n  if (/instagram|facebook/i.test(s)) mediaIds['instagram'] = app.id || app.app_id;\n  if (/youtube/i.test(s)) mediaIds['youtube'] = app.id || app.app_id;\n}\n\nlet genreId = null;\nif (detectedGenre) {\n  try {\n    const gr = await dproGet('/api/v1/genres', { q: detectedGenre.q });\n    const gl = Array.isArray(gr) ? gr : (gr.data || gr.genres || []);\n    genreId = gl.length > 0 ? (gl[0].id || gl[0].genre_id) : null;\n  } catch(e) {}\n}\n\nconst results = [];\nfor (const mediaKey of detectedMedias) {\n  const appId = mediaIds[mediaKey];\n  const params = { app_id: appId, sort: 'ad_cost_diff_desc', limit: 5 };\n  if (genreId) params.genre_id = genreId;\n  try {\n    const r = await dproGet('/api/v1/items', params);\n    const items = Array.isArray(r) ? r : (r.data || r.items || []);\n    results.push({ media: mediaKey === 'instagram' ? '📸Instagram' : '🎬YouTube', items: items });\n  } catch(e) {\n    results.push({ media: mediaKey === 'instagram' ? '📸Instagram' : '🎬YouTube', items: [] });\n  }\n}\n\n// 3. 本質思考: 回答文を組み立て\nconst genreName = detectedGenre ? detectedGenre.name : '全ジャンル';\nconst mediaNames = results.map(function(r) { return r.media; }).join(' & ');\n\nconst lines = [];\nlines.push('おっ、いい質問！🔍');\nlines.push('*【質問の本質】* ' + genreName + ' × ' + mediaNames + ' の直近トレンドですね。調べました！');\nlines.push('');\n\nfor (const result of results) {\n  if (!result.items.length) {\n    lines.push('*' + result.media + '*: 該当データなし');\n    continue;\n  }\n  lines.push('*' + result.media + ' × ' + genreName + '* 直近30日 TOP' + Math.min(result.items.length, 3));\n  result.items.slice(0, 3).forEach(function(item, i) {\n    const name = item.product_name || item.name || '商品名不明';\n    const diff = Number(item.ad_cost_diff || item.ad_cost_diff_30d || 0);\n    const diffStr = diff >= 1000000\n      ? '▲¥' + (diff / 1000000).toFixed(1) + 'M'\n      : '▲¥' + (diff / 1000).toFixed(0) + 'K';\n    lines.push((i + 1) + '. ' + diffStr + '｜' + name);\n    if (queryType === 'hook') {\n      const hook = item.narration_text || item.copy_text || item.description || '';\n      if (hook) lines.push('   💬 「' + hook.slice(0, 60) + (hook.length > 60 ? '…' : '') + '」');\n    }\n  });\n  lines.push('');\n}\n\n// パターン分析（TOP3のフックから傾向を抽出）\nconst allItems = results.flatMap(function(r) { return r.items.slice(0, 3); });\nlines.push('*💡 解釈・示唆*');\nlines.push(genreName + 'では現在、上位広告が集中して配信されています。');\nlines.push('より深く調べる場合は「' + genreName + ' LPのコピーを見せて」などもOKです！');\n\nreturn [{ json: { slackReply: { channel: CHANNEL, thread_ts: threadTs, text: lines.join('\\n') } } }];"
+      },
+      "id": "node-1006-query-dpro",
+      "name": "DPro検索・回答組み立て",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 280]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://slack.com/api/chat.postMessage",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_SLACK_BOT_TOKEN_HERE"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.slackReply) }}",
+        "options": {}
+      },
+      "id": "node-1007-post-answer",
+      "name": "Slack回答投稿",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 280]
+    }
+  ],
+  "connections": {
+    "Slack Webhook受信": {
+      "main": [
+        [
+          { "node": "URL検証チェック", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "URL検証チェック": {
+      "main": [
+        [
+          { "node": "チャレンジ応答", "type": "main", "index": 0 }
+        ],
+        [
+          { "node": "有効メッセージ判定", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "有効メッセージ判定": {
+      "main": [
+        [
+          { "node": "Slack即時応答 (200 OK)", "type": "main", "index": 0 }
+        ],
+        []
+      ]
+    },
+    "Slack即時応答 (200 OK)": {
+      "main": [
+        [
+          { "node": "DPro検索・回答組み立て", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "DPro検索・回答組み立て": {
+      "main": [
+        [
+          { "node": "Slack回答投稿", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Tokyo"
+  },
+  "tags": ["dpro", "slack", "search", "qa"]
+}

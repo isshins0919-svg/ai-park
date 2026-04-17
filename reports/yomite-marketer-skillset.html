@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ヨミテ マーケティング担当 スキル評価シート v4.0</title>
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #161a24;
+    --surface2: #1e2436;
+    --border: #2a3048;
+    --accent: #4f8ef7;
+    --accent2: #7c5cfc;
+    --green: #2ecc71;
+    --yellow: #f39c12;
+    --red: #e74c3c;
+    --text: #e8ecf4;
+    --text2: #8b95b0;
+    --text3: #5a6380;
+    --eval-bg: #111620;
+    --eval-border: #232b40;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #1a1040 50%, #0d1628 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 48px 36px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-80px; right:-80px; width:500px; height:500px; background:radial-gradient(circle, rgba(79,142,247,0.07) 0%, transparent 70%); }
+  .hero-tag { display:inline-block; background:rgba(79,142,247,0.15); border:1px solid rgba(79,142,247,0.4); color:var(--accent); font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:14px; }
+  .hero h1 { font-size:28px; font-weight:800; letter-spacing:-0.02em; line-height:1.2; margin-bottom:10px; }
+  .hero h1 span { background:linear-gradient(90deg, #4f8ef7, #7c5cfc); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero-sub { color:var(--text2); font-size:13px; margin-bottom:28px; max-width:680px; line-height:1.8; }
+  .hero-meta { display:flex; gap:32px; flex-wrap:wrap; }
+  .hero-meta-item { display:flex; flex-direction:column; gap:3px; }
+  .hero-meta-label { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:0.1em; }
+  .hero-meta-value { font-size:20px; font-weight:800; }
+  .hero-meta-value.accent { color:var(--accent); }
+  .hero-meta-value.purple { color:var(--accent2); }
+  .hero-meta-value.green { color:var(--green); }
+
+  /* ─── Scope / CPA ─── */
+  .scope-strip { background:var(--surface); border-bottom:1px solid var(--border); padding:12px 48px; display:flex; gap:20px; flex-wrap:wrap; align-items:center; }
+  .scope-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); white-space:nowrap; }
+  .scope-item { display:flex; align-items:center; gap:6px; font-size:12px; }
+  .scope-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .scope-in { color:var(--text); } .scope-in .scope-dot { background:var(--accent); }
+  .scope-out { color:var(--text3); text-decoration:line-through; } .scope-out .scope-dot { background:var(--text3); }
+  .cpa-bar { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 22px; margin:20px 48px 0; display:flex; gap:24px; flex-wrap:wrap; align-items:center; }
+  .cpa-item { display:flex; flex-direction:column; gap:2px; }
+  .cpa-label { font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:0.08em; }
+  .cpa-val { font-size:16px; font-weight:800; color:var(--green); }
+  .cpa-desc { font-size:11px; color:var(--text2); }
+  .cpa-divider { width:1px; background:var(--border); height:34px; }
+
+  /* ─── Eval legend ─── */
+  .eval-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .eval-legend-item { display:flex; flex-direction:column; gap:4px; }
+  .eval-mark { font-size:22px; font-weight:900; line-height:1; }
+  .eval-mark.maru2 { color:#4f8ef7; }
+  .eval-mark.maru  { color:#52d68a; }
+  .eval-mark.sank  { color:#f5a623; }
+  .eval-mark.batu  { color:#e8735a; }
+  .eval-def { font-size:12px; color:var(--text); font-weight:600; }
+  .eval-sub { font-size:11px; color:var(--text2); line-height:1.5; }
+
+  /* ─── Container ─── */
+  .container { max-width:1600px; margin:0 auto; padding:32px 48px; }
+
+  /* ─── Section ─── */
+  .section { margin-bottom:44px; }
+  .section-header { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; padding-bottom:10px; border-bottom:2px solid var(--border); }
+  .section-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:19px; flex-shrink:0; }
+  .section-info { flex:1; }
+  .section-title { font-size:16px; font-weight:700; }
+  .section-desc { color:var(--text2); font-size:12px; margin-top:2px; line-height:1.6; }
+  .section-num { font-size:11px; color:var(--text3); background:var(--surface2); padding:3px 10px; border-radius:20px; align-self:flex-start; white-space:nowrap; flex-shrink:0; }
+
+  /* ─── Skill Table ─── */
+  .skill-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; border:1px solid var(--border); }
+  .skill-table thead th { background:var(--surface2); padding:10px 14px; text-align:left; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); border-bottom:1px solid var(--border); white-space:nowrap; }
+  .skill-table thead th.eval-th { text-align:center; background:#111826; color:var(--text3); border-left:1px solid var(--border); }
+  .skill-table tbody tr { border-bottom:1px solid rgba(42,48,72,0.6); transition:background 0.15s; }
+  .skill-table tbody tr:hover { background:rgba(79,142,247,0.03); }
+  .skill-table tbody tr:last-child { border-bottom:none; }
+  .skill-table td { padding:11px 14px; vertical-align:top; }
+  .skill-table td.num { color:var(--text3); font-size:12px; font-weight:600; width:32px; text-align:center; white-space:nowrap; }
+  .skill-table td.name { font-weight:700; color:var(--text); min-width:160px; max-width:200px; }
+  .skill-table td.detail { color:var(--text2); font-size:12.5px; line-height:1.75; }
+  .skill-table td.imp { text-align:center; width:82px; }
+
+  /* ─── Eval cells ─── */
+  .skill-table td.eval-cell {
+    background: var(--eval-bg);
+    border-left: 1px solid var(--eval-border);
+    text-align: center;
+    width: 80px;
+    min-width: 80px;
+    vertical-align: middle;
+    padding: 8px 10px;
+  }
+  .eval-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .eval-options {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+  }
+  .eval-opt {
+    width: 22px; height: 22px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    color: var(--text3);
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .eval-opt:hover { border-color: var(--accent); }
+
+  /* ─── Group row ─── */
+  .group-row td { background:rgba(79,142,247,0.05) !important; padding:7px 14px; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(79,142,247,0.8); border-top:1px solid rgba(79,142,247,0.15); }
+  .group-row td.eval-cell { background:rgba(79,142,247,0.05) !important; border-left:1px solid rgba(79,142,247,0.15); }
+
+  /* ─── Core row ─── */
+  .core-row { background:rgba(124,92,252,0.035) !important; }
+  .core-row td.name { color:#c9a8ff; }
+  .core-badge { display:inline-block; font-size:10px; font-weight:700; color:#a07ef7; background:rgba(124,92,252,0.15); border:1px solid rgba(124,92,252,0.3); padding:1px 5px; border-radius:4px; margin-left:5px; vertical-align:middle; }
+
+  /* ─── Law row ─── */
+  .law-row { background:rgba(231,76,60,0.04) !important; }
+  .law-row td.name { color:#f0a090; }
+  .law-badge { display:inline-block; font-size:10px; font-weight:700; color:#e8735a; background:rgba(231,76,60,0.15); border:1px solid rgba(231,76,60,0.3); padding:1px 5px; border-radius:4px; margin-left:5px; vertical-align:middle; }
+
+  /* ─── Impact ─── */
+  .imp-h { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700; background:rgba(231,76,60,0.15); color:#e8735a; }
+  .imp-m { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700; background:rgba(243,156,18,0.12); color:#f5a623; }
+  .imp-l { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700; background:rgba(90,99,128,0.15); color:var(--text3); }
+
+  /* ─── Callout ─── */
+  .callout { background:rgba(79,142,247,0.06); border:1px solid rgba(79,142,247,0.22); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; color:var(--text2); line-height:1.8; }
+  .callout strong { color:var(--text); }
+  .callout-purple { background:rgba(124,92,252,0.06); border-color:rgba(124,92,252,0.25); border-left-color:var(--accent2); }
+  .callout-red { background:rgba(231,76,60,0.06); border-color:rgba(231,76,60,0.25); border-left-color:var(--red); }
+
+  /* ─── Score summary ─── */
+  .sum-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(195px,1fr)); gap:12px; margin-bottom:36px; }
+  .sum-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+  .sum-card-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .sum-card-emoji { font-size:16px; }
+  .sum-card-title { font-size:11.5px; color:var(--text2); line-height:1.4; }
+  .sum-bar-bg { height:5px; background:var(--border); border-radius:3px; overflow:hidden; margin-bottom:5px; }
+  .sum-bar-fill { height:100%; border-radius:3px; }
+  .sum-score { font-size:11.5px; font-weight:700; }
+
+  /* ─── Footer ─── */
+  footer { border-top:1px solid var(--border); padding:18px 48px; color:var(--text3); font-size:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+
+  @media (max-width:768px) {
+    .hero, .container, .scope-strip { padding-left:16px; padding-right:16px; }
+    .cpa-bar { margin-left:16px; margin-right:16px; }
+    .hero h1 { font-size:20px; }
+    .eval-legend { grid-template-columns:repeat(2,1fr); }
+  }
+
+  @media print {
+    body { background:white; color:#111; font-size:11px; }
+    .hero { background:#f4f6fb; border-bottom:2px solid #ddd; padding:24px; }
+    .hero h1 span { -webkit-text-fill-color:#3a6fd8; }
+    .skill-table td, .skill-table th { border:1px solid #ddd !important; }
+    .eval-cell { background:#f9f9fb !important; border:1px solid #ccc !important; }
+    .callout, .callout-purple, .callout-red { border:1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Hero ─── -->
+<div class="hero">
+  <div class="hero-tag">Yomite · Web-Ad Marketing · Skill Evaluation Sheet v4.0</div>
+  <h1>ヨミテ マーケティング担当<br><span>スキル評価シート</span></h1>
+  <p class="hero-sub">
+    Web広告（有料媒体）に特化したインハウスマーケター評価基準。<br>
+    本シートはメンバーの自己評価→上長評価のチェックリストとして運用する。LTV/CRM/SNSオーガニックは対象外。
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><span class="hero-meta-label">Total Skills</span><span class="hero-meta-value accent">60</span></div>
+    <div class="hero-meta-item"><span class="hero-meta-label">Categories</span><span class="hero-meta-value">9</span></div>
+    <div class="hero-meta-item"><span class="hero-meta-label">Day Target</span><span class="hero-meta-value green">100件/日</span></div>
+    <div class="hero-meta-item"><span class="hero-meta-label">Version</span><span class="hero-meta-value purple">v4.0</span></div>
+    <div class="hero-meta-item"><span class="hero-meta-label">Eval Format</span><span class="hero-meta-value" style="font-size:16px;margin-top:4px;">◎ ○ △ ×</span></div>
+  </div>
+</div>
+
+<!-- ─── Scope ─── -->
+<div class="scope-strip">
+  <span class="scope-label">IN SCOPE</span>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>Meta広告</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>Google広告</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>TikTok広告</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>YouTube広告</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>リターゲ（ロジカド/SMS）</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>記事LP</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>商品LP / チャットボット</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>動画クリエイティブ</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>静止画</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>内製撮影</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>顧客インタビュー</div>
+  <div class="scope-item scope-in"><span class="scope-dot"></span>競合分析</div>
+  <span style="width:1px;background:var(--border);height:18px;margin:0 4px;"></span>
+  <span class="scope-label">OUT</span>
+  <div class="scope-item scope-out"><span class="scope-dot"></span>LTV/CRM</div>
+  <div class="scope-item scope-out"><span class="scope-dot"></span>ステップメール</div>
+  <div class="scope-item scope-out"><span class="scope-dot"></span>SNSオーガニック</div>
+</div>
+
+<!-- ─── CPA ─── -->
+<div class="cpa-bar">
+  <div class="cpa-item"><span class="cpa-label">共通KPI</span><span class="cpa-val" style="color:var(--accent);">Day 100件</span><span class="cpa-desc">全商品の日次獲得目標</span></div>
+  <div class="cpa-divider"></div>
+  <div class="cpa-item"><span class="cpa-label">ぐんぐん</span><span class="cpa-val">¥12,000〜14,000</span><span class="cpa-desc">このレンジ内で必ず獲得</span></div>
+  <div class="cpa-divider"></div>
+  <div class="cpa-item"><span class="cpa-label">プルースト</span><span class="cpa-val">¥12,000以下</span><span class="cpa-desc">上限目標</span></div>
+  <div class="cpa-divider"></div>
+  <div class="cpa-item"><span class="cpa-label">on:my skin</span><span class="cpa-val">¥12,000以下</span><span class="cpa-desc">上限目標</span></div>
+</div>
+
+<div class="container">
+
+  <!-- ─── Eval Legend ─── -->
+  <div style="margin-bottom:10px;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">評価基準</div>
+  <div class="eval-legend">
+    <div class="eval-legend-item">
+      <div class="eval-mark maru2">◎</div>
+      <div class="eval-def">完全にできる</div>
+      <div class="eval-sub">高水準で自走できる。成果を出している実績がある</div>
+    </div>
+    <div class="eval-legend-item">
+      <div class="eval-mark maru">○</div>
+      <div class="eval-def">おおむねできる</div>
+      <div class="eval-sub">ほぼ自走できる。一部確認・サポートがあれば対応可能</div>
+    </div>
+    <div class="eval-legend-item">
+      <div class="eval-mark sank">△</div>
+      <div class="eval-def">理解しているが不十分</div>
+      <div class="eval-sub">概念は理解しているが実践が足りない。成果に繋げられていない</div>
+    </div>
+    <div class="eval-legend-item">
+      <div class="eval-mark batu">×</div>
+      <div class="eval-def">現状できない</div>
+      <div class="eval-sub">未経験または知識が不十分。習得・強化が必要</div>
+    </div>
+  </div>
+
+  <!-- ─── 使い方 ─── -->
+  <div class="callout callout-purple" style="margin-bottom:32px;">
+    <strong>【運用方法】</strong>
+    ①メンバーが「自己評価」列に◎/○/△/×を記入 →
+    ②チームリーダー（上長）が「上長評価」列に記入 →
+    ③ズレのある項目を1on1で確認 →
+    ④定期的に再評価してスコアの変化を追う
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 0: コピー力・法規制活用・訴求開発（全制作物横断）
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(124,92,252,0.2);">💡</div>
+      <div class="section-info">
+        <div class="section-title">0. コピー力・法規制活用・訴求開発力（全制作物横断）</div>
+        <div class="section-desc">記事LP・商品LP・動画台本・バナーすべての質を決める根幹スキル。ここのスコアが低い場合、他カテゴリーの制作スキルがあってもCVRは改善しない。</div>
+      </div>
+      <div class="section-num">6 items</div>
+    </div>
+    <div class="callout callout-purple">
+      <strong>なぜ独立カテゴリーか：</strong>コピー力は「センスの問題」と諦められがちだが、実態は「何パターン考えたか」「どれだけ顧客目線に立ち戻れるか」の<strong>量と姿勢</strong>の問題。法規制の活用も同様——「法律を知っているかどうか」ではなく「法律を武器にして強い表現を作れるかどうか」が差を生む。
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr>
+          <th style="width:32px;">#</th>
+          <th style="width:180px;">スキル</th>
+          <th>評価基準（このレベルが「◎」）</th>
+          <th style="width:80px;">重要度</th>
+          <th class="eval-th" style="width:80px;">自己評価</th>
+          <th class="eval-th" style="width:80px;">上長評価</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="core-row">
+          <td class="num">0-1</td>
+          <td class="name">訴求の手数<span class="core-badge">CORE</span></td>
+          <td class="detail">1テーマに対して「悩み訴求/比較訴求/権威訴求/感情訴求/数字訴求…」と多角的に展開できる。同じ訴求軸に固執せず「まだ試していない角度」を常に問い続けられる。30パターン以上を量産できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="core-row">
+          <td class="num">0-2</td>
+          <td class="name">言葉の選択と精度<span class="core-badge">CORE</span></td>
+          <td class="detail">「効果的」ではなく「3週間後の朝に鏡で驚く」——抽象を具体的な生活シーンに変換できる。語尾・助詞・リズムを意識した精度の高い言葉選び。「この言葉でなければならない理由」を語れる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="law-row">
+          <td class="num">0-3</td>
+          <td class="name">法規制を活用した強い訴求設計<span class="law-badge">LAW</span></td>
+          <td class="detail">薬機法・景表法・特商法の規制範囲を正確に理解した上で、「アウトではなくギリギリセーフの最大表現」を設計できる。例：「めちゃくちゃ伸びるんです（※栄養素の摂取量のこと）」のように、読者に購買意欲を起こしつつ法的に問題のない表現の抜け道を発見できる。「規制で表現できない」と諦める人と、「規制の中で最強の表現を作る」人の差</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="law-row">
+          <td class="num">0-4</td>
+          <td class="name">法律×コピーの即時判断<span class="law-badge">LAW</span></td>
+          <td class="detail">作ったコピーを見て「アウト/グレー/セーフ」を即座に判断できる。薬機法（効果効能の直接表現）・景表法（優良誤認・有利誤認）・特商法（定期縛り表示）のどれに抵触するかを分類して説明できる。「なんとなく怖いから弱い表現にする」ではなく「ここまでは出せる」の根拠を持って動ける</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="core-row">
+          <td class="num">0-5</td>
+          <td class="name">エビデンスを取りに行く姿勢<span class="core-badge">CORE</span></td>
+          <td class="detail">「こういうコピーにしたいから、このエビデンスが必要だ」と逆算して動ける。外部アンケート調査の委託・クラウドワークスでの口コミ収集・成分データ調査など「表現したいことを裏付ける証拠」を自ら調達できる。素材がなければ作りに行く</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">0-6</td>
+          <td class="name">インタビュー発言のコピー化</td>
+          <td class="detail">顧客インタビューで出た言葉を「そのまま使えるコピー候補」として聞き取れる。「自分が作ったコピー」より「顧客が実際に使った言葉」をフックや見出しに組み込む習慣がある。インタビュー翌週に制作物に反映できている</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 1: 広告運用
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(79,142,247,0.15);">📊</div>
+      <div class="section-info">
+        <div class="section-title">1. 広告運用</div>
+        <div class="section-desc">媒体ロジック理解 × 予算コントロール × 計測設定。ここが弱いと制作への投資がすべて無駄になる</div>
+      </div>
+      <div class="section-num">8 items</div>
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:32px;">#</th><th style="width:180px;">スキル</th><th>評価基準（このレベルが「◎」）</th><th style="width:80px;">重要度</th><th class="eval-th" style="width:80px;">自己評価</th><th class="eval-th" style="width:80px;">上長評価</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">1-1</td>
+          <td class="name">媒体ロジック理解</td>
+          <td class="detail">Meta/Google/TikTok/LINE/Yahoo/SmartNewsの各媒体がどういうロジックで配信・最適化されるかを説明できる。媒体ごとの得意不得意を商品特性と紐づけて判断できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">1-2</td>
+          <td class="name">アカウント設定・構造設計</td>
+          <td class="detail">キャンペーン/広告セット/広告のレイヤー設計。テスト用・スケール用・リターゲ用の目的別構造設計。新媒体への初期設定・石コースト連携等の作業が自走できる</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">1-3</td>
+          <td class="name">タグ設置・計測連携</td>
+          <td class="detail">Metaピクセル/GA4/GTMのCVタグ設置・確認。EC-Forceとの計測連携。「今の計測は本当に正確か」を常に疑える。計測漏れによるCPA誤認を起こさない</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">1-4</td>
+          <td class="name">予算コントロール（伸縮判断）</td>
+          <td class="detail">CPAが安い時に素早く予算を伸ばし、高騰時に適切に抑える判断力。「今日の数字」を見て午前中に動ける。Day100件を軸にした日次の予算判断基準を持っている</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">1-5</td>
+          <td class="name">オーディエンス設計</td>
+          <td class="detail">Meta類似/インタレスト/リターゲの組み合わせ設計。Advantage+活用の判断。健康食品・美容ターゲットへのセグメント精度と、テスト→スケールへの切り替え判断</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">1-6</td>
+          <td class="name">広告審査・リジェクト対応</td>
+          <td class="detail">健康食品・スキンケア領域の各媒体ポリシー理解。リジェクト時に「どこを変えれば通るか」を即判断。薬機法×媒体ポリシーの両軸で最大限のCTRを出せる表現を選べる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">1-7</td>
+          <td class="name">クリエイティブ疲弊検知・入れ替え</td>
+          <td class="detail">CTR/CPAの推移からクリエイティブ疲弊を検知する数値基準を持っている。「次に何を入れるか」の方向性判断までセット。疲弊前に次を用意しておける先回り力</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">1-8</td>
+          <td class="name">リターゲ施策設計</td>
+          <td class="detail">ロジカド・SMSリマーケティング・商標リスティング等のリターゲ媒体活用。CVに至らなかったユーザーへの再アプローチ設計。SMS文言・件名の最適化も含む</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 2: 記事LP
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(124,92,252,0.18);">📝</div>
+      <div class="section-info">
+        <div class="section-title">2. 記事LP</div>
+        <div class="section-desc">広告からの最初の着地。mCVRを最も左右する最重要制作物。難度が最も高い領域のため詳細評価（12項目）</div>
+      </div>
+      <div class="section-num">12 items</div>
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:32px;">#</th><th style="width:180px;">スキル</th><th>評価基準（このレベルが「◎」）</th><th style="width:80px;">重要度</th><th class="eval-th" style="width:80px;">自己評価</th><th class="eval-th" style="width:80px;">上長評価</th></tr>
+      </thead>
+      <tbody>
+        <tr class="group-row"><td></td><td colspan="3">■ 戦略・コンテンツ設計</td><td class="eval-cell"></td><td class="eval-cell"></td></tr>
+        <tr class="core-row">
+          <td class="num">2-1</td>
+          <td class="name">コンテンツ戦略設計<span class="core-badge">CORE</span></td>
+          <td class="detail">「何を言うべきか」の上流設計。競合と比べて権威性が弱い・証拠が足りないギャップを特定し「何を作れば勝てるか」を考え抜ける。既存素材の活用だけでなく、不足しているものを自ら動いて埋める姿勢がある</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">2-2</td>
+          <td class="name">記事LP全体構成設計</td>
+          <td class="detail">フック→共感→問題→新認識→解決策→証拠→オファー→CTAの全体ワイヤー設計。訴求軸の選定・情報の順番・各ブロックの長さ配分まで設計できる。モバイルスクロールの動線を意識した構成</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">2-3</td>
+          <td class="name">権威性の調達・創出</td>
+          <td class="detail">権威性が弱い時に「あるもので誤魔化す」のではなく「権威性を作りに行く」。外部アンケート調査の委託・クラウドワークスでの使用感レポート収集・質の高い口コミのための人探し・インタビュー依頼まで動ける</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="group-row"><td></td><td colspan="3">■ ライティング・表現力</td><td class="eval-cell"></td><td class="eval-cell"></td></tr>
+        <tr>
+          <td class="num">2-4</td>
+          <td class="name">フック設計（冒頭200字）</td>
+          <td class="detail">「これ私のことだ」と思わせる冒頭の言語設計。ターゲットの悩みを当人より解像度高く言語化できる。数字・ネガティブ・問いかけの使い方を自在に選べる。読み飛ばしを許さない引力がある</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="core-row">
+          <td class="num">2-5</td>
+          <td class="name">構成内の具体的表現力<span class="core-badge">CORE</span></td>
+          <td class="detail">「腸内環境が乱れる」ではなく「毎朝お腹が張って、出かける前に不安になる」——抽象を生活の具体シーンに変換する力。各ブロックでの表現密度が高い。「読んでいて映像が浮かぶ」レベルの描写ができる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">2-6</td>
+          <td class="name">感情アーク・全文ライティング</td>
+          <td class="detail">読者の感情温度を「共感の谷→希望の山→決断」と設計するアーク構成力。全文を一人で書き切れる。書いた後に「ここでどんな感情になっているか」を自分で確認できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="group-row"><td></td><td colspan="3">■ UI/UX・離脱防止設計</td><td class="eval-cell"></td><td class="eval-cell"></td></tr>
+        <tr>
+          <td class="num">2-7</td>
+          <td class="name">スマホUI・離脱防止設計</td>
+          <td class="detail">スマホで見た時の実際の読者体験を常に想像して制作できる。見出しの文字サイズ・ハイライト・囲み枠・アイコン・ウィジェット活用で読者を次の行に引き込む。キャッチーな見出しワードの選定で「縦スクロールで離脱されない」仕掛けを意図的に設計できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">2-8</td>
+          <td class="name">記事LP内画像・ビジュアル設計</td>
+          <td class="detail">記事LP内に挿入する画像（グラフ・Before-After・表・図解）をスマホ表示を前提に設計できる。「この画像がここにあることでCVRが上がるか」を問える。デザイナーブリーフ精度・AI生成の活用含む</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="group-row"><td></td><td colspan="3">■ 信頼・CTA・薬機法</td><td class="eval-cell"></td><td class="eval-cell"></td></tr>
+        <tr>
+          <td class="num">2-9</td>
+          <td class="name">信頼構造設計</td>
+          <td class="detail">監修者・成分エビデンス・口コミ・数字の配置設計。「いつ・どこで信頼を作るか」の構造判断。早期権威配置の効果・口コミの見せ方（星評価/文章/顔写真）の最適化ができる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">2-10</td>
+          <td class="name">CTA設計（数・配置・文言）</td>
+          <td class="detail">CTAの本数・スクロール到達率に合わせた配置・ボタン文言・前後誘導文の設計。「今申し込まないと損だと感じさせる」必然性のあるCTA設計。各CTAの前後で感情が高まっているか確認できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="law-row">
+          <td class="num">2-11</td>
+          <td class="name">薬機法・景表法の表現設計<span class="law-badge">LAW</span></td>
+          <td class="detail">ぐんぐん/プルースト/on:my skin 各商品の表現規制を商品ごとに把握。「アウト/グレー/セーフ」を即判断し、CVRを下げずにリスクゼロを保てる。規制ギリギリの最大訴求を複数の代替表現として提示できる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">2-12</td>
+          <td class="name">記事LP PDCA</td>
+          <td class="detail">フック/構成/CTA/オファー表現の変数設定とABテスト設計。「勝ちの理由」を言語化して次の仮説に繋げられる。ヒートマップ・スクロール到達率でのボトルネック特定と改善サイクルを週次で回せる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 3: 商品LP・チャットボット
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(46,204,113,0.15);">🛒</div>
+      <div class="section-info">
+        <div class="section-title">3. 商品LP・チャットボット</div>
+        <div class="section-desc">記事LPとは別物。申込ボタンに最も近い制作物。EC-Force仕様の理解とオファー設計の巧みさが直接CPAに効く</div>
+      </div>
+      <div class="section-num">6 items</div>
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:32px;">#</th><th style="width:180px;">スキル</th><th>評価基準（このレベルが「◎」）</th><th style="width:80px;">重要度</th><th class="eval-th" style="width:80px;">自己評価</th><th class="eval-th" style="width:80px;">上長評価</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">3-1</td>
+          <td class="name">商品LP全体構成・コピー設計</td>
+          <td class="detail">FV→特徴訴求→成分→使い方→口コミ→FAQ→CTAの各セクション設計。FVキャッチ・サブコピーを単独で書けてデザイナーブリーフに落とせる。各セクションに「ここでどんな疑問/不安を消すか」の意図がある</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">3-2</td>
+          <td class="name">チャットボットシナリオ設計</td>
+          <td class="detail">分岐フロー設計・各分岐の文言・離脱防止ライン設計。申込前の最後の疑問を潰すシナリオ構成。初回価格/特典/緊急性の見せ方設計。記事LPからの流入温度を考慮した語調設計</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">3-3</td>
+          <td class="name">オファー・価格設計</td>
+          <td class="detail">初回価格・割引率・特典のセット設計。「高すぎず安すぎない」申込衝動を引き出す価格と、継続率を下げない特典設計。キャンペーン設計でCVRをブーストする戦略思考</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">3-4</td>
+          <td class="name">EC-Force仕様理解・LP高速化</td>
+          <td class="detail">EC-Forceの申込フォーム・定期設定の理解。jQuery二重読み込み等の禁忌を把握。画像最適化/preload/fetchpriorityによる高速化の技術判断。表示速度がCVRに直結することを数値で理解している</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">3-5</td>
+          <td class="name">デザイナー・コーダーブリーフ</td>
+          <td class="detail">「なんかいい感じに」を使わずに、ターゲット感情/色温度/情報優先度/視線誘導まで言語化したブリーフ。初稿から8割合格品質を引き出す指示精度。修正ループ2回以内で完成させる力</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">3-6</td>
+          <td class="name">商品LP・CB PDCA</td>
+          <td class="detail">FV/CTA/オファー表現/チャットボット分岐のABテスト設計と結果判断。ヒートマップ・セッション分析でボトルネックを特定。「何を変えたらどれだけ動いたか」を定量で語れる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 4: 動画クリエイティブ
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(231,76,60,0.15);">🎬</div>
+      <div class="section-info">
+        <div class="section-title">4. 動画クリエイティブ</div>
+        <div class="section-desc">制作の95%が動画。企画→台本→キャスティング→編集ディレクション→PDCAまでの一気通貫力。台本のコピー力が勝敗を分ける</div>
+      </div>
+      <div class="section-num">8 items</div>
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:32px;">#</th><th style="width:180px;">スキル</th><th>評価基準（このレベルが「◎」）</th><th style="width:80px;">重要度</th><th class="eval-th" style="width:80px;">自己評価</th><th class="eval-th" style="width:80px;">上長評価</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">4-1</td>
+          <td class="name">動画企画・訴求軸設計</td>
+          <td class="detail">UGC/解説/Before-After/比較/証言等の「型」選定と最適型適用。どの訴求軸がこの商品・このタイミングで勝つかの仮説設計。メタの勝ちクリエイティブのTikTok転用判断</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr class="core-row">
+          <td class="num">4-2</td>
+          <td class="name">動画台本ライティング<span class="core-badge">CORE</span></td>
+          <td class="detail">冒頭3秒フック→共感→問題→解決→証拠→CTAの感情アーク構成。60秒尺で視聴維持率を最大化する構成力。既存情報を動画に適した言葉・テンポ・リズムに「噛み砕いて変換」するコピー力が中核。デスマス調・連続トークの使い分けができる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">4-3</td>
+          <td class="name">キャスティング（モデル選定・管理）</td>
+          <td class="detail">月1回以上のモデル手配実績。ターゲットが「自分に近い」「憧れる」と感じるモデル選定基準を持っている。モデル事務所・代行会社との交渉・スタジオ予約まで一人でできる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">4-4</td>
+          <td class="name">素材収集・AI生成活用</td>
+          <td class="detail">クラウドワークスでの素材収集・ストック動画ツール活用。Gemini画像生成→Runway/Kling動画化のワークフロー。AIと実写の使い分け判断。「この品質なら出稿できる」の基準を持っている</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">4-5</td>
+          <td class="name">編集ディレクション</td>
+          <td class="detail">カット割り/テロップ設計/BGM方針/エフェクト/テンポを指示書に落とせる。修正ループを最小化する初回指示力。「なぜこのカットがNGか」を感情的でなく論理的に伝えられる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">4-6</td>
+          <td class="name">動画品質判断・GO判定</td>
+          <td class="detail">「この動画は出稿していいか」の最終判断。フック強度/テンポ/信頼構造/CTAの4軸で評価できる。「良さそう」ではなく「なぜ勝つか」を言語化して判定できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">4-7</td>
+          <td class="name">動画クリエイティブ PDCA</td>
+          <td class="detail">フック違い/CTA違い/尺違い/訴求軸違いの変数設定。媒体データからの勝ちパターン抽出と横展開。「何をどう変えたか→数字がどう動いたか」の記録と次回仮説化</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">4-8</td>
+          <td class="name">勝ちクリエイティブの量産設計</td>
+          <td class="detail">過去CVデータから共通項を抽出しパターン化して量産指示できる。週何百本レベルの制作量を担保する仕組み設計。新規/横展開の適切な仕事振り分けと品質管理</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 5: 静止画
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(243,156,18,0.15);">🖼️</div>
+      <div class="section-info">
+        <div class="section-title">5. 静止画クリエイティブ</div>
+        <div class="section-desc">on:my skin で比率高め。「1枚で完結させる」情報設計力が問われる</div>
+      </div>
+      <div class="section-num">5 items</div>
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:32px;">#</th><th style="width:180px;">スキル</th><th>評価基準（このレベルが「◎」）</th><th style="width:80px;">重要度</th><th class="eval-th" style="width:80px;">自己評価</th><th class="eval-th" style="width:80px;">上長評価</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">5-1</td>
+          <td class="name">バナーコンセプト設計</td>
+          <td class="detail">「何を言うか×誰に届けるか×どう見せるか」の3軸設計。悩み/効果/比較/権威訴求の選定と優先順位付け。1テーマから多角的な訴求バリエーションを量産できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">5-2</td>
+          <td class="name">バナーコピーライティング</td>
+          <td class="detail">「止まる・読む・クリックする」3段階を起こすフックコピー設計。媒体別の文字量制限・表現規制を理解したコピー作成。「この言葉でなければならない理由」を持って書ける</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">5-3</td>
+          <td class="name">デザイナーブリーフ・品質判断</td>
+          <td class="detail">視線誘導/コントラスト/情報優先度を含む制作ブリーフ作成。「なぜこのデザインが勝つ/負けるか」を言語化して修正指示できる。AI画像生成のプロンプト設計も含む</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">5-4</td>
+          <td class="name">媒体別フォーマット最適化</td>
+          <td class="detail">Meta/Google/TikTok各媒体のサイズ・縦横比・文字量規定の理解と、媒体別最適化されたバナー設計。テキストオーバーレイ率等のポリシー対応の実務知識</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">5-5</td>
+          <td class="name">静止画 PDCA</td>
+          <td class="detail">訴求軸/ビジュアル/コピーの変数設定とABテスト。勝ちバナーの共通項抽出と横展開設計。動画との効果比較分析。「今の静止画と動画のCPAの差」を説明できる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 6: 撮影・制作ディレクション
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(46,204,113,0.18);">🎥</div>
+      <div class="section-info">
+        <div class="section-title">6. 撮影・制作ディレクション</div>
+        <div class="section-desc">ヨミテの競争優位の核。マーケ担当・クリエイティブ担当に関係なく、全員がS水準を目指すべき領域</div>
+      </div>
+      <div class="section-num">6 items</div>
+    </div>
+    <div class="callout">
+      <strong>評価方針：</strong>撮影ディレクションは「できたらいいスキル」ではなく<strong>全員が習得すべき最重要スキル</strong>として定義。職種を問わず◎を目指す。
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:32px;">#</th><th style="width:180px;">スキル</th><th>評価基準（このレベルが「◎」）</th><th style="width:80px;">重要度</th><th class="eval-th" style="width:80px;">自己評価</th><th class="eval-th" style="width:80px;">上長評価</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">6-1</td>
+          <td class="name">撮影企画・指示書作成</td>
+          <td class="detail">完成動画から逆算した撮影計画。カット割り/アングル/照明/背景/衣装/小道具/表情の指示書作成。「この構図が売れる理由」を説明して紙に落とせる。撮影前に完成イメージが頭の中にある状態</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">6-2</td>
+          <td class="name">撮影現場リアルタイム指示</td>
+          <td class="detail">現場でモデル・カメラマンに「今のはOK/NG、こう変えて」が即座に言える。表情・セリフ・動き・視線方向への具体的な修正指示。「なんとなくいい感じ」ではなく「なぜこの表情が刺さるか」を説明しながらディレクションできる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">6-3</td>
+          <td class="name">社内メンバー出演の設計・実施</td>
+          <td class="detail">CTR/CVRの高い「社内モデル候補」を見極める眼。社員への出演依頼・世界観説明・撮影指示。社内撮影のスケジュール調整・素材管理。外部モデルとのコスト対品質比較判断</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">6-4</td>
+          <td class="name">モデル事務所・スタジオ管理</td>
+          <td class="detail">月1回以上のモデル手配・スタジオ予約の実務。「いいモデル」と「この商品の動画に映えるモデル」を見分ける選定基準。コスト感覚を持ちながら品質を担保。スムーズな当日進行まで責任を持てる</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">6-5</td>
+          <td class="name">AI生成・素材収集の実務活用</td>
+          <td class="detail">Gemini画像生成→Runway/Kling動画化のワークフローを実務で使える。ストック素材ツール・クラウドワークス活用。AIと実写の品質差を判断できる。「AIで作れるもの/作れないもの」の基準がある</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">6-6</td>
+          <td class="name">外部パートナー管理</td>
+          <td class="detail">クラウドワークス等での素材調達・品質管理。動画編集者への指示精度と納期管理。外部コストを管理しながらスループットを最大化する。「いいパートナー」の見極め眼も含む</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 7: 顧客インタビュー・インサイト
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(79,142,247,0.15);">🎤</div>
+      <div class="section-info">
+        <div class="section-title">7. 顧客インタビュー・インサイト抽出</div>
+        <div class="section-desc">ヨミテが特に力を入れている領域。「感覚で作ったコピー」と「顧客の声から作ったコピー」では刺さり方が根本的に違う</div>
+      </div>
+      <div class="section-num">5 items</div>
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:32px;">#</th><th style="width:180px;">スキル</th><th>評価基準（このレベルが「◎」）</th><th style="width:80px;">重要度</th><th class="eval-th" style="width:80px;">自己評価</th><th class="eval-th" style="width:80px;">上長評価</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">7-1</td>
+          <td class="name">インタビュー設計・推進</td>
+          <td class="detail">依頼メール文の作成・送付・回収の実務。インタビュー質問設計（購買動機/比較検討/不安点/使用感）。ファシリテーション。「どんな質問をすれば本音が出るか」の設計力</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">7-2</td>
+          <td class="name">インサイト抽出・言語化</td>
+          <td class="detail">複数インタビューから「購買の本当の理由」を抽出できる。「〇〇のため」という機能理由ではなく「〇〇という感情が動いた」まで掘り下げられる。「なんとなく悩んでいた→この言葉で言語化された」という顧客体験を設計できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">7-3</td>
+          <td class="name">口コミ・証言の調達</td>
+          <td class="detail">質の高い口コミを集めるためのリサーチ・人探し。アンケート調査の外部委託設計・クラウドワークスでのレポート収集。「使えるレベルの口コミ」と「使えないレベルの口コミ」を判断できる</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">7-4</td>
+          <td class="name">顧客の声のコピー転用</td>
+          <td class="detail">インタビューで出てきた「顧客の言葉そのもの」をフック/記事LP/台本に組み込む力。「自分が作ったコピー」より「顧客が実際に使った言葉」を優先する習慣がある。転用する際の薬機法チェックも含む</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">7-5</td>
+          <td class="name">N1ペルソナ定義・更新</td>
+          <td class="detail">「30代女性」ではなく「なぜその人が今日申し込むのか」まで解像度を上げたペルソナ定義。インタビューとデータを組み合わせて定期更新できる。全制作物の「誰に向けて書くか」の基準を常にアップデートする</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════
+       CAT 8: 競合分析・市場調査
+  ══════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(231,76,60,0.15);">🔭</div>
+      <div class="section-info">
+        <div class="section-title">8. 競合分析・市場調査</div>
+        <div class="section-desc">「できてる人とできてない人で大きな差が出る」（澤田）。全カテゴリーの質を底上げするクロスカット能力</div>
+      </div>
+      <div class="section-num">5 items</div>
+    </div>
+    <table class="skill-table">
+      <thead>
+        <tr><th style="width:32px;">#</th><th style="width:180px;">スキル</th><th>評価基準（このレベルが「◎」）</th><th style="width:80px;">重要度</th><th class="eval-th" style="width:80px;">自己評価</th><th class="eval-th" style="width:80px;">上長評価</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">8-1</td>
+          <td class="name">競合広告モニタリング</td>
+          <td class="detail">動画Pro等のツールを使った競合広告の常時モニタリング。「今どんな訴求が増えているか」「どんな型が疲弊しているか」を週次でキャッチできる。ツール活用+自力調査の組み合わせ力</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">8-2</td>
+          <td class="name">競合LP・オファー分析</td>
+          <td class="detail">競合の記事LP/商品LP/チャットボット/オファー設計を読み解く。「なぜ競合がこの設計をしているか」の意図まで言語化できる。自社との差分を「強み/弱み/やれること」に整理できる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">8-3</td>
+          <td class="name">業界トレンドキャッチアップ</td>
+          <td class="detail">D2C健康食品・スキンケア領域の広告トレンド変化を感知する。「この訴求が増えてきた」「この型が疲弊してきた」を早期に察知して自社施策に反映できる。流行り始めた時に乗り、飽和前に離れられる</td>
+          <td class="imp"><span class="imp-m">CVR</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">8-4</td>
+          <td class="name">情報収集ネットワーク活用</td>
+          <td class="detail">業界のつながり・コミュニティ・勉強会等から競合の内部情報を収集できる。公開情報だけに頼らない情報収集力。「知っている人を知っている」ネットワークの構築と活用</td>
+          <td class="imp"><span class="imp-l">基盤</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+        <tr>
+          <td class="num">8-5</td>
+          <td class="name">調査→施策転用</td>
+          <td class="detail">競合調査を「面白い情報収集」で終わらせず「だから次はこれをやる」に繋げられる。クリエイティブ/記事LP/商品LP/チャットボットへの具体的な転用提案ができる。「競合が最近やり始めたこと」を翌週の施策に落とせる速度感</td>
+          <td class="imp"><span class="imp-h">CPA直結</span></td>
+          <td class="eval-cell"></td>
+          <td class="eval-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── Summary ─── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(79,142,247,0.15);">🎯</div>
+      <div class="section-info">
+        <div class="section-title">カテゴリー別スコアサマリー</div>
+        <div class="section-desc">強み・成長領域の俯瞰マップ（v3.0時点のヨミテ基準）</div>
+      </div>
+    </div>
+    <div class="sum-grid">
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">💡</span><div class="sum-card-title">0. コピー力・法規制活用（横断）</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:95%;background:linear-gradient(90deg,#7c5cfc,#4f8ef7);"></div></div>
+        <div class="sum-score" style="color:#a07ef7;">最重要横断スキル — 全項目◎を目指す</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">📊</span><div class="sum-card-title">1. 広告運用</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:92%;background:linear-gradient(90deg,#4f8ef7,#7c5cfc);"></div></div>
+        <div class="sum-score" style="color:#6ba3ff;">予算判断・疲弊検知が突出</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">📝</span><div class="sum-card-title">2. 記事LP（12項目）</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:97%;background:linear-gradient(90deg,#4f8ef7,#7c5cfc);"></div></div>
+        <div class="sum-score" style="color:#6ba3ff;">最強領域。構成〜薬機法まで自走</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">🛒</span><div class="sum-card-title">3. 商品LP・チャットボット</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:88%;background:linear-gradient(90deg,#4f8ef7,#7c5cfc);"></div></div>
+        <div class="sum-score" style="color:#6ba3ff;">オファー設計が特に強い</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">🎬</span><div class="sum-card-title">4. 動画クリエイティブ</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:85%;background:linear-gradient(90deg,#f39c12,#e67e22);"></div></div>
+        <div class="sum-score" style="color:#f5a623;">台本コピー力が差を生む</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">🖼️</span><div class="sum-card-title">5. 静止画</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:88%;background:linear-gradient(90deg,#4f8ef7,#7c5cfc);"></div></div>
+        <div class="sum-score" style="color:#6ba3ff;">コンセプト・コピーが強い</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">🎥</span><div class="sum-card-title">6. 撮影・制作ディレクション</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:90%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="sum-score" style="color:#52d68a;">全員◎を目指す会社方針</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">🎤</span><div class="sum-card-title">7. 顧客インタビュー</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:85%;background:linear-gradient(90deg,#4f8ef7,#7c5cfc);"></div></div>
+        <div class="sum-score" style="color:#6ba3ff;">転用力まで繋げられるかが鍵</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-card-head"><span class="sum-card-emoji">🔭</span><div class="sum-card-title">8. 競合分析・市場調査</div></div>
+        <div class="sum-bar-bg"><div class="sum-bar-fill" style="width:88%;background:linear-gradient(90deg,#4f8ef7,#7c5cfc);"></div></div>
+        <div class="sum-score" style="color:#6ba3ff;">モニタリング習慣が強み</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div>ヨミテ × 一進AI — Marketing Skill Evaluation Sheet v4.0</div>
+  <div>60 skills / 9 categories (0〜8) / ◎○△× 4段階評価</div>
+  <div>音声メモ（澤田）+ フィードバックを元に構築 — 2026-04-16</div>
+</footer>
+
+</body>
+</html>

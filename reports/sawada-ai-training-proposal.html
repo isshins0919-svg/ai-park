@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>澤田株式会社 AI活用研修 提案書</title>
+<style>
+  :root {
+    --primary: #1a365d;
+    --accent: #2b6cb0;
+    --accent-light: #ebf4ff;
+    --success: #276749;
+    --success-light: #f0fff4;
+    --warn: #975a16;
+    --warn-light: #fffff0;
+    --gray-50: #f7fafc;
+    --gray-100: #edf2f7;
+    --gray-200: #e2e8f0;
+    --gray-600: #718096;
+    --gray-800: #2d3748;
+    --free: #38a169;
+    --paid: #d69e2e;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    color: var(--gray-800);
+    background: var(--gray-50);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  /* ===== COVER ===== */
+  .cover {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: #fff;
+    padding: 80px 40px;
+    border-radius: var(--radius);
+    text-align: center;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .cover h1 {
+    font-size: 2.2em;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+  .cover .subtitle {
+    font-size: 1.15em;
+    opacity: 0.9;
+    margin-bottom: 24px;
+  }
+  .cover .meta {
+    font-size: 0.9em;
+    opacity: 0.7;
+  }
+
+  /* ===== TOC ===== */
+  .toc {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+  .toc h2 {
+    font-size: 1.2em;
+    color: var(--primary);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .toc ol {
+    padding-left: 24px;
+  }
+  .toc li {
+    margin-bottom: 6px;
+  }
+  .toc a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .toc a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+  section h2 {
+    font-size: 1.4em;
+    color: var(--primary);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--accent);
+  }
+  section h3 {
+    font-size: 1.15em;
+    color: var(--accent);
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  section h4 {
+    font-size: 1em;
+    color: var(--gray-800);
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+  p { margin-bottom: 12px; }
+
+  /* ===== TOOL CARDS ===== */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .tool-card {
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 20px;
+    background: var(--gray-50);
+    transition: box-shadow 0.2s;
+  }
+  .tool-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .tool-card .tool-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .tool-card .tool-name {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .tool-card .tool-badges {
+    display: flex;
+    gap: 6px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .badge-free { background: #c6f6d5; color: #276749; }
+  .badge-freemium { background: #fefcbf; color: #975a16; }
+  .badge-paid { background: #fed7d7; color: #9b2c2c; }
+  .badge-win { background: #bee3f8; color: #2a4365; }
+  .badge-jp { background: #e9d8fd; color: #553c9a; }
+  .badge-recommended {
+    background: linear-gradient(135deg, #2b6cb0, #4299e1);
+    color: #fff;
+    font-size: 0.8em;
+    padding: 3px 12px;
+  }
+
+  .tool-card .tool-desc {
+    color: var(--gray-600);
+    font-size: 0.92em;
+    margin-bottom: 8px;
+  }
+  .tool-card .tool-use {
+    font-size: 0.88em;
+    color: var(--gray-800);
+  }
+  .tool-card .tool-use strong {
+    color: var(--accent);
+  }
+
+  /* ===== COMPARISON TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.92em;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  th {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.88em;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  tr:nth-child(even) { background: var(--gray-50); }
+  tr:hover { background: var(--accent-light); }
+
+  /* ===== CALLOUTS ===== */
+  .callout {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 16px 0;
+    border-left: 4px solid;
+  }
+  .callout-info {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+  .callout-success {
+    background: var(--success-light);
+    border-color: var(--success);
+  }
+  .callout-warn {
+    background: var(--warn-light);
+    border-color: var(--warn);
+  }
+  .callout-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin: 20px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-date {
+    font-size: 0.85em;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .timeline-content {
+    background: var(--gray-50);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+  }
+
+  /* ===== IMPACT METER ===== */
+  .impact-meter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+  }
+  .impact-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--gray-200);
+    flex: 1;
+    max-width: 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .impact-bar .fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), #4299e1);
+  }
+  .impact-label {
+    font-size: 0.8em;
+    color: var(--gray-600);
+    min-width: 60px;
+  }
+
+  /* ===== DEPT CARDS ===== */
+  .dept-card {
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .dept-card-header {
+    background: var(--primary);
+    color: #fff;
+    padding: 16px 20px;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .dept-card-body {
+    padding: 20px;
+  }
+
+  /* ===== ROI BOX ===== */
+  .roi-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .roi-item {
+    text-align: center;
+    padding: 24px 16px;
+    background: linear-gradient(135deg, var(--accent-light), #fff);
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+  }
+  .roi-number {
+    font-size: 2.2em;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .roi-label {
+    font-size: 0.85em;
+    color: var(--gray-600);
+    margin-top: 4px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--gray-600);
+    font-size: 0.85em;
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    .container { padding: 0; }
+    section { break-inside: avoid; border: 1px solid #ddd; }
+    .cover { padding: 40px 20px; }
+    .tool-card:hover { box-shadow: none; }
+  }
+
+  ul { padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+  <h1>澤田株式会社<br>AI活用研修 提案書</h1>
+  <div class="subtitle">ミニコンサル型 業務効率化プログラム<br>〜 導入するだけで変わる、現場のAI活用術 〜</div>
+  <div class="meta">
+    2026年4月 | 作成: 澤田一進<br>
+    対象期間: 2026年4月中旬〜5月
+  </div>
+</div>
+
+<!-- ==================== TOC ==================== -->
+<div class="toc">
+  <h2>目次</h2>
+  <ol>
+    <li><a href="#overview">本提案の概要と狙い</a></li>
+    <li><a href="#principles">ツール選定の基本方針</a></li>
+    <li><a href="#companywide">全社共通 — まず全員に入れるべきツール</a></li>
+    <li><a href="#dept">部門別 AI活用提案</a></li>
+    <li><a href="#tools-catalog">推奨ツール カタログ</a></li>
+    <li><a href="#comparison">主要AIチャット 比較表</a></li>
+    <li><a href="#cost">コスト試算</a></li>
+    <li><a href="#rollout">導入ロードマップ</a></li>
+    <li><a href="#risk">リスクと対策</a></li>
+    <li><a href="#next">次のステップ</a></li>
+  </ol>
+</div>
+
+<!-- ==================== 1. OVERVIEW ==================== -->
+<section id="overview">
+  <h2>1. 本提案の概要と狙い</h2>
+
+  <h3>背景</h3>
+  <p>AIツールは2024〜2026年にかけて劇的に進化し、<strong>「専門知識がなくても、導入するだけで業務が効率化できる」</strong>段階に到達しました。これまでのIT導入とは異なり、大規模なシステム開発は不要。適切なツールを選び、正しい使い方を覚えるだけで即効果が出ます。</p>
+
+  <h3>本提案の形式</h3>
+  <div class="callout callout-info">
+    <div class="callout-title">ミニコンサル型研修</div>
+    従来の「講義を聞いて終わり」の研修ではなく、<strong>各チームの実際の業務を把握した上で、「これをこうすれば効率化できる」を個別に提案し、小さく実行していく形式</strong>です。
+  </div>
+
+  <h3>期待効果（概算）</h3>
+  <div class="roi-box">
+    <div class="roi-item">
+      <div class="roi-number">30〜50%</div>
+      <div class="roi-label">文書作成時間の削減</div>
+    </div>
+    <div class="roi-item">
+      <div class="roi-number">70%</div>
+      <div class="roi-label">議事録作成の自動化</div>
+    </div>
+    <div class="roi-item">
+      <div class="roi-number">2〜3x</div>
+      <div class="roi-label">情報検索の高速化</div>
+    </div>
+    <div class="roi-item">
+      <div class="roi-number">月5〜10h</div>
+      <div class="roi-label">一人あたりの節約時間</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. PRINCIPLES ==================== -->
+<section id="principles">
+  <h2>2. ツール選定の基本方針</h2>
+
+  <h3>3つの選定基準</h3>
+  <table>
+    <tr>
+      <th>基準</th>
+      <th>内容</th>
+    </tr>
+    <tr>
+      <td><strong>即効性</strong></td>
+      <td>導入したその日から効果が出るか。学習コストが低いか</td>
+    </tr>
+    <tr>
+      <td><strong>コスト</strong></td>
+      <td>無料 or 低コストで始められるか。費用対効果は明確か</td>
+    </tr>
+    <tr>
+      <td><strong>環境適合</strong></td>
+      <td>Windows対応か。日本語で使えるか。既存業務に馴染むか</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">重要: PC環境はWindows</div>
+    Mac専用ツール（Clipy等）は除外。Windows標準機能 + ブラウザベースのツールを中心に構成しています。
+  </div>
+
+  <h3>導入の3段階</h3>
+  <table>
+    <tr>
+      <th>段階</th>
+      <th>内容</th>
+      <th>コスト</th>
+    </tr>
+    <tr>
+      <td><strong>STEP 1</strong></td>
+      <td>無料ツールの全社導入（今すぐ）</td>
+      <td>0円</td>
+    </tr>
+    <tr>
+      <td><strong>STEP 2</strong></td>
+      <td>有料ツールの部門別トライアル（1〜2ヶ月後）</td>
+      <td>月額数千円〜/人</td>
+    </tr>
+    <tr>
+      <td><strong>STEP 3</strong></td>
+      <td>効果検証後の全社展開（3ヶ月後〜）</td>
+      <td>ROIに応じて判断</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ==================== 3. COMPANYWIDE ==================== -->
+<section id="companywide">
+  <h2>3. 全社共通 — まず全員に入れるべきツール</h2>
+  <p>以下は部門を問わず、<strong>全社員が今すぐ使い始めるべきツール</strong>です。すべて無料で始められます。</p>
+
+  <div class="tool-grid">
+
+    <!-- Tool 1: Windows Clipboard -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Windows クリップボード履歴（Win + V）</span>
+        <div class="tool-badges">
+          <span class="badge badge-free">無料</span>
+          <span class="badge badge-win">Windows標準</span>
+          <span class="badge badge-recommended">最優先</span>
+        </div>
+      </div>
+      <div class="tool-desc">Windowsに標準搭載されているクリップボード履歴機能。コピーした内容を最大25件まで記録し、いつでも呼び出せる。Mac版「Clipy」のWindows版に相当。</div>
+      <div class="tool-use">
+        <strong>設定方法:</strong> 「設定」→「システム」→「クリップボード」→「クリップボード履歴」をON<br>
+        <strong>使い方:</strong> Win + V を押すだけ。コピーした画像・テキストの一覧が表示される<br>
+        <strong>効果:</strong> よく使うテキスト（定型文、住所、品番等）をピン留めして即呼び出し
+      </div>
+    </div>
+
+    <!-- Tool 2: Voice Input -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Windows 音声入力（Win + H）</span>
+        <div class="tool-badges">
+          <span class="badge badge-free">無料</span>
+          <span class="badge badge-win">Windows標準</span>
+          <span class="badge badge-jp">日本語対応</span>
+          <span class="badge badge-recommended">最優先</span>
+        </div>
+      </div>
+      <div class="tool-desc">Windows 11に標準搭載の音声入力。タイピングせずに話すだけで文章を作成できる。日本語の精度も実用レベル。</div>
+      <div class="tool-use">
+        <strong>使い方:</strong> 任意のテキスト入力欄で Win + H を押し、話すだけ<br>
+        <strong>適用場面:</strong> メール下書き、チャット、議事メモ、報告書の初稿作成<br>
+        <strong>効果:</strong> タイピングが苦手な方でも、話すスピードで文章作成可能（入力速度2〜3倍）
+      </div>
+    </div>
+
+    <!-- Tool 3: Typeless -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Typeless（AI音声入力）</span>
+        <div class="tool-badges">
+          <span class="badge badge-freemium">フリーミアム</span>
+          <span class="badge badge-win">Win対応</span>
+          <span class="badge badge-jp">日本語対応</span>
+        </div>
+      </div>
+      <div class="tool-desc">AIベースの音声入力ツール。Windows標準よりも高い精度で、「えーと」「あのー」などのフィラーを自動除去。句読点も自動挿入。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 無料プランあり（月60分）。Pro版は月額約$8<br>
+        <strong>強み:</strong> 話し言葉を「書き言葉」に自動変換してくれる<br>
+        <strong>適用:</strong> 長文メール、報告書、議事録の初稿を声で作成 → 後から修正
+      </div>
+    </div>
+
+    <!-- Tool 4: Gemini -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Google Gemini（旧Bard）</span>
+        <div class="tool-badges">
+          <span class="badge badge-free">無料</span>
+          <span class="badge badge-win">ブラウザ</span>
+          <span class="badge badge-jp">日本語対応</span>
+          <span class="badge badge-recommended">最優先</span>
+        </div>
+      </div>
+      <div class="tool-desc">Googleが提供するAIチャット。Googleアカウントがあれば無料で利用可能。Google Workspaceとの連携が強力。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 無料（Gemini 2.5 Flash利用可能）。Advanced版は月額2,900円<br>
+        <strong>適用:</strong> 質問応答、文書要約、アイデア出し、翻訳、メール文面作成<br>
+        <strong>強み:</strong> Googleドライブ・Gmail・Googleスプレッドシートとの連携
+      </div>
+    </div>
+
+    <!-- Tool 5: ChatGPT -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">ChatGPT</span>
+        <div class="tool-badges">
+          <span class="badge badge-freemium">フリーミアム</span>
+          <span class="badge badge-win">ブラウザ / アプリ</span>
+          <span class="badge badge-jp">日本語対応</span>
+        </div>
+      </div>
+      <div class="tool-desc">OpenAIが提供する最も普及したAIチャット。文章生成・要約・翻訳・コード作成など幅広く対応。Windowsデスクトップアプリも提供。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 無料版あり（GPT-4o mini）。Plus版は月額$20<br>
+        <strong>特徴:</strong> 画像認識・ファイルアップロード・Webブラウジングにも対応<br>
+        <strong>適用:</strong> あらゆるテキスト業務の効率化、データ分析、画像からの情報抽出
+      </div>
+    </div>
+
+    <!-- Tool 6: Microsoft Copilot -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Microsoft Copilot（旧 Bing Chat）</span>
+        <div class="tool-badges">
+          <span class="badge badge-free">無料</span>
+          <span class="badge badge-win">Windows統合</span>
+          <span class="badge badge-jp">日本語対応</span>
+          <span class="badge badge-recommended">最優先</span>
+        </div>
+      </div>
+      <div class="tool-desc">MicrosoftがWindows 11に統合したAIアシスタント。タスクバーから直接アクセス可能。Edgeブラウザとの連携が強力。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> ブラウザ版・タスクバー版は無料。Microsoft 365 Copilot（Office統合版）は月額約3,200円/ユーザー<br>
+        <strong>使い方:</strong> タスクバーの Copilot アイコンをクリック、または Win + C<br>
+        <strong>適用:</strong> Web検索+AI回答、文書の要約、画像生成、Windows操作の補助<br>
+        <strong>注意（2026年4月最新）:</strong> Word/Excel/PowerPoint内の無料Copilot Chatは廃止済み。Office内でのAI利用にはM365 Copilotライセンスが必要。ただし<strong>ブラウザ版・タスクバー版は引き続き無料</strong>
+      </div>
+    </div>
+
+    <!-- Tool 7: NotebookLM -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Google NotebookLM</span>
+        <div class="tool-badges">
+          <span class="badge badge-free">無料</span>
+          <span class="badge badge-win">ブラウザ</span>
+          <span class="badge badge-jp">日本語対応</span>
+          <span class="badge badge-recommended">最優先</span>
+        </div>
+      </div>
+      <div class="tool-desc">Googleが提供するAIリサーチアシスタント。PDF・ドキュメント・Webページ等を読み込ませると、その内容に基づいてQ&A・要約・構成案を生成。音声概要（ポッドキャスト風）の自動生成も可能。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 無料（Googleアカウントがあれば利用可能）。Plus版は月額2,900円（Gemini Advancedに含まれる）<br>
+        <strong>革命的な使い方:</strong><br>
+        ・会議の文字起こしを読み込ませる → プレゼン構成に自動変換<br>
+        ・マニュアル類を読み込ませる → 社内Q&Aボットとして活用<br>
+        ・競合資料を読み込ませる → 比較分析を自動生成
+      </div>
+    </div>
+
+    <!-- Tool 8: Ditto -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Ditto Clipboard Manager</span>
+        <div class="tool-badges">
+          <span class="badge badge-free">無料・OSS</span>
+          <span class="badge badge-win">Win対応</span>
+        </div>
+      </div>
+      <div class="tool-desc">Windows用の高機能クリップボードマネージャー。Windows標準のクリップボード履歴をさらに強化。検索・グループ化・ネットワーク共有にも対応。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 完全無料（オープンソース）<br>
+        <strong>Win+Vとの違い:</strong> 履歴件数が無制限、テキスト検索が可能、起動キーのカスタマイズ<br>
+        <strong>適用:</strong> 定型文管理、品番・住所等のよく使う文字列の管理
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. DEPT ==================== -->
+<section id="dept">
+  <h2>4. 部門別 AI活用提案</h2>
+  <p>以下は各部門の想定業務に合わせた提案です。実際のヒアリング後に調整します。</p>
+
+  <!-- 営業部門 -->
+  <div class="dept-card">
+    <div class="dept-card-header">営業部門</div>
+    <div class="dept-card-body">
+      <h4>想定される課題</h4>
+      <ul>
+        <li>提案書・見積書の作成に時間がかかる</li>
+        <li>顧客情報の整理・検索が非効率</li>
+        <li>訪問後の報告書作成が負担</li>
+      </ul>
+
+      <h4>提案するAI活用</h4>
+      <table>
+        <tr><th>課題</th><th>ツール</th><th>効果</th></tr>
+        <tr>
+          <td>提案書の作成</td>
+          <td><strong>Gemini / ChatGPT</strong> + <strong>Gamma</strong></td>
+          <td>骨子を口頭で伝える → AI が構成・文章を生成 → Gammaでプレゼン資料化。作成時間 1/3 に</td>
+        </tr>
+        <tr>
+          <td>訪問報告書</td>
+          <td><strong>音声入力（Win+H / Typeless）</strong></td>
+          <td>帰社後に話すだけで報告書の初稿完成。タイピング不要</td>
+        </tr>
+        <tr>
+          <td>メール文面</td>
+          <td><strong>Microsoft Copilot</strong></td>
+          <td>「○○様への提案フォロー」と伝えるだけでビジネスメール生成</td>
+        </tr>
+        <tr>
+          <td>顧客・競合調査</td>
+          <td><strong>NotebookLM</strong></td>
+          <td>顧客企業のIR資料・ニュース記事を読み込ませ、要点を即把握</td>
+        </tr>
+      </table>
+
+      <div class="callout callout-success">
+        <div class="callout-title">即効インパクト</div>
+        音声入力 + AIメール生成だけで、営業一人あたり<strong>週3〜5時間</strong>の削減が見込めます。
+      </div>
+    </div>
+  </div>
+
+  <!-- 総務・経理部門 -->
+  <div class="dept-card">
+    <div class="dept-card-header">総務・経理部門</div>
+    <div class="dept-card-body">
+      <h4>想定される課題</h4>
+      <ul>
+        <li>定型文書（通達・規程・報告書）の作成が多い</li>
+        <li>Excelでのデータ集計・分析が手作業</li>
+        <li>問い合わせ対応が属人化している</li>
+      </ul>
+
+      <h4>提案するAI活用</h4>
+      <table>
+        <tr><th>課題</th><th>ツール</th><th>効果</th></tr>
+        <tr>
+          <td>定型文書の作成</td>
+          <td><strong>Gemini / ChatGPT</strong></td>
+          <td>過去の文書をテンプレとして学習させ、新規文書を自動生成</td>
+        </tr>
+        <tr>
+          <td>Excel集計・分析</td>
+          <td><strong>ChatGPT（Advanced Data Analysis）</strong></td>
+          <td>Excelファイルをアップロード → 「売上の推移をグラフにして」で自動分析</td>
+        </tr>
+        <tr>
+          <td>社内問い合わせ</td>
+          <td><strong>NotebookLM</strong></td>
+          <td>就業規則・マニュアル等を読み込ませ、社内FAQとして活用</td>
+        </tr>
+        <tr>
+          <td>議事録作成</td>
+          <td><strong>Notta / CLOVA Note</strong></td>
+          <td>会議を録音 → 自動文字起こし＋要点整理。議事録作成の70%自動化</td>
+        </tr>
+      </table>
+
+      <div class="callout callout-info">
+        <div class="callout-title">特にオススメ: NotebookLM × 社内規程</div>
+        就業規則・経理マニュアル・各種規程をNotebookLMに全部読み込ませると、「有給の申請方法は？」「出張精算の手順は？」等の問い合わせにAIが即回答。問い合わせ対応の大幅削減が可能。
+      </div>
+    </div>
+  </div>
+
+  <!-- 製造・品質管理部門 -->
+  <div class="dept-card">
+    <div class="dept-card-header">製造・品質管理部門</div>
+    <div class="dept-card-body">
+      <h4>想定される課題</h4>
+      <ul>
+        <li>報告書・日報の記入が手間</li>
+        <li>品質基準の確認・参照が非効率</li>
+        <li>不具合発生時の原因調査に時間がかかる</li>
+      </ul>
+
+      <h4>提案するAI活用</h4>
+      <table>
+        <tr><th>課題</th><th>ツール</th><th>効果</th></tr>
+        <tr>
+          <td>日報・報告書</td>
+          <td><strong>音声入力（Win+H）</strong></td>
+          <td>現場で口頭入力 → 後で軽く修正。キーボード不要</td>
+        </tr>
+        <tr>
+          <td>品質基準の参照</td>
+          <td><strong>NotebookLM</strong></td>
+          <td>品質マニュアル・JIS規格等を読み込ませ、必要箇所を即検索</td>
+        </tr>
+        <tr>
+          <td>不具合原因の分析</td>
+          <td><strong>ChatGPT + Excel分析</strong></td>
+          <td>不具合データをアップロード → パターン分析・要因の候補を提示</td>
+        </tr>
+        <tr>
+          <td>作業手順の共有</td>
+          <td><strong>ChatGPT / Gemini</strong></td>
+          <td>ベテランの知見を対話形式で整理し、マニュアルとして体系化</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 企画・マーケティング -->
+  <div class="dept-card">
+    <div class="dept-card-header">企画・マーケティング部門</div>
+    <div class="dept-card-body">
+      <h4>想定される課題</h4>
+      <ul>
+        <li>市場調査・競合分析に時間がかかる</li>
+        <li>企画書・プレゼン資料の作成負荷</li>
+        <li>SNS運用やコンテンツ作成のリソース不足</li>
+      </ul>
+
+      <h4>提案するAI活用</h4>
+      <table>
+        <tr><th>課題</th><th>ツール</th><th>効果</th></tr>
+        <tr>
+          <td>市場調査</td>
+          <td><strong>Gemini（Web検索連携）/ ChatGPT</strong></td>
+          <td>「○○業界の2026年トレンドを調べて」→ レポート形式で自動出力</td>
+        </tr>
+        <tr>
+          <td>プレゼン資料</td>
+          <td><strong>Gamma</strong></td>
+          <td>テキストを入力するだけでプロ品質のプレゼン資料を自動生成</td>
+        </tr>
+        <tr>
+          <td>バナー・SNS画像</td>
+          <td><strong>Canva（AI機能付き）</strong></td>
+          <td>テンプレ + AIデザイン提案で、デザイナー不要のビジュアル作成</td>
+        </tr>
+        <tr>
+          <td>コピーライティング</td>
+          <td><strong>Claude / ChatGPT</strong></td>
+          <td>ターゲット・訴求軸を伝える → 複数パターンのコピー案を即生成</td>
+        </tr>
+      </table>
+
+      <div class="callout callout-success">
+        <div class="callout-title">Gamma がマジで革命</div>
+        テキストや箇条書きを入力するだけで、デザイン済みのプレゼン資料が自動生成されます。PowerPointで1時間かかっていた資料が、10分で完成。無料プランで月10枚まで作成可能。
+      </div>
+    </div>
+  </div>
+
+  <!-- 経営層 -->
+  <div class="dept-card">
+    <div class="dept-card-header">経営層・管理職</div>
+    <div class="dept-card-body">
+      <h4>想定される課題</h4>
+      <ul>
+        <li>経営判断に必要な情報の収集・整理が遅い</li>
+        <li>会議が多く、要点を振り返る時間がない</li>
+        <li>新規事業・戦略検討の情報インプットが不足</li>
+      </ul>
+
+      <h4>提案するAI活用</h4>
+      <table>
+        <tr><th>課題</th><th>ツール</th><th>効果</th></tr>
+        <tr>
+          <td>情報の収集・整理</td>
+          <td><strong>NotebookLM</strong></td>
+          <td>業界レポート・IR資料を読み込ませ、経営判断に必要な情報を対話形式で即取得</td>
+        </tr>
+        <tr>
+          <td>会議の振り返り</td>
+          <td><strong>Notta</strong></td>
+          <td>会議を自動録音・文字起こし → 要点を箇条書きで自動整理</td>
+        </tr>
+        <tr>
+          <td>戦略検討の壁打ち</td>
+          <td><strong>Claude / ChatGPT</strong></td>
+          <td>ビジネス戦略の壁打ち相手として活用。SWOT分析・3C分析等を瞬時に整理</td>
+        </tr>
+        <tr>
+          <td>日程調整・メール処理</td>
+          <td><strong>Gemini × Google Workspace</strong></td>
+          <td>Gmail内でAIがメール返信を提案。カレンダーとの連携で日程候補も自動生成</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================== 5. TOOLS CATALOG ==================== -->
+<section id="tools-catalog">
+  <h2>5. 推奨ツール カタログ</h2>
+
+  <h3>5-1. AIチャット（全社必須）</h3>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Google Gemini</span>
+        <div class="tool-badges"><span class="badge badge-free">無料</span><span class="badge badge-recommended">全社推奨</span></div>
+      </div>
+      <div class="tool-desc">全社のスタンダードAIとして最適。Googleアカウントさえあれば無料。Google Workspace連携が強力。</div>
+      <div class="tool-use">
+        <div class="impact-meter"><span class="impact-label">導入容易さ</span><div class="impact-bar"><div class="fill" style="width:95%"></div></div><span>95%</span></div>
+        <div class="impact-meter"><span class="impact-label">業務効果</span><div class="impact-bar"><div class="fill" style="width:85%"></div></div><span>85%</span></div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Microsoft Copilot</span>
+        <div class="tool-badges"><span class="badge badge-free">基本無料</span><span class="badge badge-win">Windows統合</span></div>
+      </div>
+      <div class="tool-desc">Windows環境との親和性No.1。タスクバーから即アクセス。Edgeブラウザとの連携で、閲覧中のページの要約やQ&Aが可能。</div>
+      <div class="tool-use">
+        <div class="impact-meter"><span class="impact-label">導入容易さ</span><div class="impact-bar"><div class="fill" style="width:98%"></div></div><span>98%</span></div>
+        <div class="impact-meter"><span class="impact-label">業務効果</span><div class="impact-bar"><div class="fill" style="width:80%"></div></div><span>80%</span></div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">ChatGPT</span>
+        <div class="tool-badges"><span class="badge badge-freemium">フリーミアム</span></div>
+      </div>
+      <div class="tool-desc">最も情報が多く学習資料が豊富。困ったらChatGPTに聞く習慣がつけば、多くの業務が自己解決可能に。</div>
+      <div class="tool-use">
+        <div class="impact-meter"><span class="impact-label">導入容易さ</span><div class="impact-bar"><div class="fill" style="width:90%"></div></div><span>90%</span></div>
+        <div class="impact-meter"><span class="impact-label">業務効果</span><div class="impact-bar"><div class="fill" style="width:90%"></div></div><span>90%</span></div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Claude（Anthropic）</span>
+        <div class="tool-badges"><span class="badge badge-freemium">フリーミアム</span></div>
+      </div>
+      <div class="tool-desc">長文の分析・要約に最も強い。20万文字以上の文書でも一度に読み込み可能。契約書・規程・レポートの分析に最適。</div>
+      <div class="tool-use">
+        <div class="impact-meter"><span class="impact-label">導入容易さ</span><div class="impact-bar"><div class="fill" style="width:85%"></div></div><span>85%</span></div>
+        <div class="impact-meter"><span class="impact-label">業務効果</span><div class="impact-bar"><div class="fill" style="width:92%"></div></div><span>92%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>5-2. 音声入力・文字起こし</h3>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Notta</span>
+        <div class="tool-badges"><span class="badge badge-freemium">フリーミアム</span><span class="badge badge-jp">日本語特化</span><span class="badge badge-recommended">議事録推奨</span></div>
+      </div>
+      <div class="tool-desc">日本語の文字起こし精度が非常に高い。リアルタイム文字起こし + AI要約。Zoom/Teams/Google Meetとの連携可能。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 無料プラン（月120分）/ Pro 月額1,317円 / Business 月額2,508円<br>
+        <strong>機能:</strong> リアルタイム文字起こし、話者識別、AI要約、翻訳<br>
+        <strong>適用:</strong> 会議の自動議事録作成、1on1の記録、商談の振り返り
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">CLOVA Note（LINE）</span>
+        <div class="tool-badges"><span class="badge badge-free">無料</span><span class="badge badge-jp">日本語特化</span></div>
+      </div>
+      <div class="tool-desc">LINEが提供する無料の文字起こしアプリ。スマホで録音するだけで高精度な文字起こし。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 無料（月300分まで）<br>
+        <strong>強み:</strong> 完全無料で300分/月は破格。日本語の精度が高い<br>
+        <strong>適用:</strong> 社内ミーティング、電話メモ、現場での音声メモ
+      </div>
+    </div>
+  </div>
+
+  <h3>5-3. プレゼン・デザイン</h3>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Gamma</span>
+        <div class="tool-badges"><span class="badge badge-freemium">フリーミアム</span><span class="badge badge-jp">日本語対応</span><span class="badge badge-recommended">プレゼン推奨</span></div>
+      </div>
+      <div class="tool-desc">テキストを入力するだけでプロ品質のプレゼン資料を自動生成するAIツール。PowerPointへのエクスポートも可能。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 無料プラン（月10枚まで）/ Plus 月額$10 / Pro 月額$20<br>
+        <strong>革命ポイント:</strong> 箇条書き → プレゼン資料が10分で完成。デザインスキル不要<br>
+        <strong>適用:</strong> 社内プレゼン、提案書、研修資料、会議資料
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Canva</span>
+        <div class="tool-badges"><span class="badge badge-freemium">フリーミアム</span><span class="badge badge-jp">日本語対応</span></div>
+      </div>
+      <div class="tool-desc">デザイン初心者でもプロレベルのビジュアルを作成可能。テンプレート数25万以上。AI機能で写真加工・テキスト生成もできる。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 無料プラン / Pro 月額1,500円 / Teams 月額1,800円/人<br>
+        <strong>適用:</strong> SNS投稿画像、名刺、チラシ、プレゼン資料、社内ポスター
+      </div>
+    </div>
+  </div>
+
+  <h3>5-4. 業務自動化（応用編）</h3>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Microsoft Power Automate</span>
+        <div class="tool-badges"><span class="badge badge-freemium">M365に含む</span><span class="badge badge-win">Windows統合</span><span class="badge badge-recommended">自動化推奨</span></div>
+      </div>
+      <div class="tool-desc">Microsoft公式の業務自動化ツール。「メールが届いたらExcelに記録」「フォルダにファイルが追加されたら通知」等のルーティン自動化が可能。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> Microsoft 365に含まれる（既存ライセンスで利用可能な場合あり）<br>
+        <strong>適用:</strong> メール → Excel転記の自動化、承認フローの自動化、定型通知の自動送信<br>
+        <strong>注意:</strong> 導入にはIT部門の協力が必要。Phase 2以降の施策として推奨
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-header">
+        <span class="tool-name">Manus</span>
+        <div class="tool-badges"><span class="badge badge-paid">有料</span><span class="badge badge-win">ブラウザ</span></div>
+      </div>
+      <div class="tool-desc">AIエージェントツール。指示を出すだけでAIが自律的にWeb調査・データ収集・レポート作成を実行。</div>
+      <div class="tool-use">
+        <strong>料金:</strong> 招待制 / 月額$39〜<br>
+        <strong>適用:</strong> 市場調査の自動化、競合分析、データ収集タスクの自動化<br>
+        <strong>注意:</strong> 比較的新しいツール。経営企画・マーケ部門でのトライアルを推奨
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 6. COMPARISON ==================== -->
+<section id="comparison">
+  <h2>6. 主要AIチャット 比較表</h2>
+  <p>「どのAIを使えばいいの？」という質問への回答です。</p>
+
+  <table>
+    <tr>
+      <th>項目</th>
+      <th>Google Gemini</th>
+      <th>ChatGPT</th>
+      <th>Microsoft Copilot</th>
+      <th>Claude</th>
+    </tr>
+    <tr>
+      <td><strong>無料版の実用度</strong></td>
+      <td>◎ 十分使える</td>
+      <td>○ 制限あり</td>
+      <td>◎ 十分使える</td>
+      <td>○ 制限あり</td>
+    </tr>
+    <tr>
+      <td><strong>日本語の自然さ</strong></td>
+      <td>◎</td>
+      <td>◎</td>
+      <td>○</td>
+      <td>◎</td>
+    </tr>
+    <tr>
+      <td><strong>文書作成</strong></td>
+      <td>◎</td>
+      <td>◎</td>
+      <td>○</td>
+      <td>◎ 最強</td>
+    </tr>
+    <tr>
+      <td><strong>データ分析</strong></td>
+      <td>○</td>
+      <td>◎ 最強</td>
+      <td>○</td>
+      <td>◎</td>
+    </tr>
+    <tr>
+      <td><strong>Web検索連携</strong></td>
+      <td>◎ Google統合</td>
+      <td>◎</td>
+      <td>◎ Bing統合</td>
+      <td>◎</td>
+    </tr>
+    <tr>
+      <td><strong>ファイル読み込み</strong></td>
+      <td>○</td>
+      <td>◎</td>
+      <td>△</td>
+      <td>◎ 最強（超長文OK）</td>
+    </tr>
+    <tr>
+      <td><strong>Windows親和性</strong></td>
+      <td>○ ブラウザ</td>
+      <td>○ デスクトップアプリ</td>
+      <td>◎ OS統合</td>
+      <td>○ ブラウザ</td>
+    </tr>
+    <tr>
+      <td><strong>画像生成</strong></td>
+      <td>◎ Imagen統合</td>
+      <td>◎ DALL-E統合</td>
+      <td>○ Designer統合</td>
+      <td>△</td>
+    </tr>
+    <tr>
+      <td><strong>有料版 月額</strong></td>
+      <td>2,900円</td>
+      <td>$20（約3,000円）</td>
+      <td>4,497円/人(M365)</td>
+      <td>$20（約3,000円）</td>
+    </tr>
+    <tr>
+      <td><strong>推奨用途</strong></td>
+      <td>全社スタンダード</td>
+      <td>企画・分析・応用</td>
+      <td>Windows連携</td>
+      <td>長文分析・専門文書</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-info">
+    <div class="callout-title">結論: 使い分けが最適</div>
+    <strong>日常使い → Gemini（無料）</strong>を全社スタンダードに。<br>
+    <strong>Windows操作の補助 → Copilot（無料）</strong>を併用。<br>
+    <strong>高度な分析・企画 → ChatGPT / Claude</strong>を必要な人だけ有料版導入。
+  </div>
+</section>
+
+<!-- ==================== 7. COST ==================== -->
+<section id="cost">
+  <h2>7. コスト試算</h2>
+
+  <h3>Phase 1: 無料施策（今すぐ・コスト0円）</h3>
+  <table>
+    <tr><th>ツール</th><th>対象</th><th>費用</th></tr>
+    <tr><td>Windows クリップボード履歴（Win+V）</td><td>全社</td><td>0円</td></tr>
+    <tr><td>Windows 音声入力（Win+H）</td><td>全社</td><td>0円</td></tr>
+    <tr><td>Google Gemini（無料版）</td><td>全社</td><td>0円</td></tr>
+    <tr><td>Microsoft Copilot（無料版）</td><td>全社</td><td>0円</td></tr>
+    <tr><td>NotebookLM（無料版）</td><td>全社</td><td>0円</td></tr>
+    <tr><td>CLOVA Note（無料版）</td><td>全社</td><td>0円</td></tr>
+    <tr><td>Ditto（フリーウェア）</td><td>希望者</td><td>0円</td></tr>
+    <tr><td>Gamma（無料版）</td><td>企画・営業</td><td>0円</td></tr>
+    <tr><td>Canva（無料版）</td><td>企画・マーケ</td><td>0円</td></tr>
+    <tr><td><strong>合計</strong></td><td></td><td><strong>0円</strong></td></tr>
+  </table>
+
+  <h3>Phase 2: 有料ツール導入（効果検証後）</h3>
+  <table>
+    <tr><th>ツール</th><th>対象</th><th>月額（概算）</th></tr>
+    <tr><td>ChatGPT Plus（5名分）</td><td>企画・営業・経営</td><td>約15,000円</td></tr>
+    <tr><td>Notta Pro（5名分）</td><td>営業・管理職</td><td>約6,600円</td></tr>
+    <tr><td>Gamma Plus（3名分）</td><td>企画・営業</td><td>約4,500円</td></tr>
+    <tr><td>Typeless Pro（5名分）</td><td>営業・総務</td><td>約6,000円</td></tr>
+    <tr><td><strong>合計</strong></td><td></td><td><strong>約32,100円/月</strong></td></tr>
+  </table>
+
+  <div class="callout callout-success">
+    <div class="callout-title">費用対効果</div>
+    Phase 2の月額約3.2万円に対し、10名が月5時間ずつ削減できれば <strong>月50時間 × 時給2,000円 = 月10万円相当の効率化</strong>。ROI 約3倍。
+  </div>
+</section>
+
+<!-- ==================== 8. ROLLOUT ==================== -->
+<section id="rollout">
+  <h2>8. 導入ロードマップ</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">4月下旬（Week 1-2）</div>
+      <div class="timeline-content">
+        <strong>Phase 1: ヒアリング＋無料ツール導入</strong>
+        <ul>
+          <li>各部門へのヒアリング実施（現在の業務フロー・困りごとの把握）</li>
+          <li>全社PCにWin+V / Win+H の設定を有効化</li>
+          <li>Googleアカウントの確認 → Gemini / NotebookLMのアクセス確認</li>
+          <li>AIチャットの基本的な使い方研修（1回 60分 × 2回）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">5月前半（Week 3-4）</div>
+      <div class="timeline-content">
+        <strong>Phase 2: 部門別ミニコンサル</strong>
+        <ul>
+          <li>各部門の業務に合わせた具体的なAI活用方法を個別提案</li>
+          <li>「この業務をこうすれば効率化できる」を小さく実証</li>
+          <li>音声入力の活用研修（営業・製造部門中心）</li>
+          <li>NotebookLMに社内文書を読み込ませる実習</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">5月後半（Week 5-6）</div>
+      <div class="timeline-content">
+        <strong>Phase 3: 効果測定＋有料ツール検討</strong>
+        <ul>
+          <li>各部門での活用状況・効果のヒアリング</li>
+          <li>有料ツールの必要性判断（Notta、ChatGPT Plus等）</li>
+          <li>次の四半期の活用計画策定</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">6月以降（継続）</div>
+      <div class="timeline-content">
+        <strong>Phase 4: 定着・応用</strong>
+        <ul>
+          <li>社内AI活用事例の共有会（月1回）</li>
+          <li>Power Automate による業務自動化の検討</li>
+          <li>各部門のAIチャンピオン（推進役）の育成</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 9. RISK ==================== -->
+<section id="risk">
+  <h2>9. リスクと対策</h2>
+
+  <table>
+    <tr>
+      <th>リスク</th>
+      <th>影響度</th>
+      <th>対策</th>
+    </tr>
+    <tr>
+      <td><strong>機密情報の漏洩</strong></td>
+      <td style="color: #c53030;">高</td>
+      <td>
+        <strong>ルール策定が必須。</strong>顧客名・個人情報・取引条件等の機密情報はAIに入力しない。社内ガイドラインを策定し、研修で周知。
+        <br>※ NotebookLMはGoogleアカウント内で処理されデータは学習に使用されないが、念のため機密度の高い文書は控える。
+      </td>
+    </tr>
+    <tr>
+      <td><strong>AIの回答の誤り</strong></td>
+      <td style="color: #d69e2e;">中</td>
+      <td>AIの出力は必ず人間が確認する。特に数値・法律・契約に関する内容は、AI出力をそのまま使用せず事実確認を行う習慣をつける</td>
+    </tr>
+    <tr>
+      <td><strong>利用の定着が進まない</strong></td>
+      <td style="color: #d69e2e;">中</td>
+      <td>各部門にAIチャンピオン（推進役）を設定。小さな成功体験を積み重ねる。「便利だった事例」を社内で共有する文化を作る</td>
+    </tr>
+    <tr>
+      <td><strong>著作権・ライセンス問題</strong></td>
+      <td style="color: #d69e2e;">中</td>
+      <td>AI生成コンテンツの商用利用ルールを確認。画像生成AI（DALL-E等）で作成した画像は商用利用の条件を事前に確認</td>
+    </tr>
+    <tr>
+      <td><strong>コスト増</strong></td>
+      <td style="color: #38a169;">低</td>
+      <td>Phase 1は完全無料。有料ツールはPhase 3で効果検証後に導入判断</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">最重要: 機密情報の取り扱いガイドライン</div>
+    AIツール導入と同時に、以下のガイドラインを全社に周知する必要があります:
+    <ul style="margin-top: 8px;">
+      <li><strong>入力禁止:</strong> 顧客の個人情報、取引先の非公開情報、社内の人事情報、未公開の経営情報</li>
+      <li><strong>入力OK:</strong> 一般的なビジネス文書の作成補助、公開情報に基づく調査、社内マニュアルの整理（機密を除く）</li>
+      <li><strong>判断に迷う場合:</strong> 上長に確認してから入力する</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 10. NEXT ==================== -->
+<section id="next">
+  <h2>10. 次のステップ</h2>
+
+  <div class="callout callout-info">
+    <div class="callout-title">まず最初にやること（3つ）</div>
+    <ol style="margin-top: 8px;">
+      <li><strong>全社PCでWin+V（クリップボード履歴）を有効化する</strong> — 5分で完了。即効果あり</li>
+      <li><strong>全社員にGoogleアカウントを配布し、Geminiへのアクセスを確保する</strong> — AIチャットの第一歩</li>
+      <li><strong>各部門リーダーと30分のヒアリングを実施する</strong> — 現場の「面倒な業務」を特定し、個別の改善策を提案</li>
+    </ol>
+  </div>
+
+  <h3>研修スケジュール案</h3>
+  <table>
+    <tr><th>回</th><th>テーマ</th><th>内容</th><th>時間</th></tr>
+    <tr>
+      <td>第1回</td>
+      <td>AI基礎 + 全社ツール導入</td>
+      <td>Win+V / Win+H / Gemini / Copilot の設定と基本操作</td>
+      <td>60分</td>
+    </tr>
+    <tr>
+      <td>第2回</td>
+      <td>AIチャット活用術</td>
+      <td>効果的な質問の仕方（プロンプト）、業務での具体的な使い方</td>
+      <td>60分</td>
+    </tr>
+    <tr>
+      <td>第3回</td>
+      <td>部門別ミニコンサル</td>
+      <td>各部門の課題に合わせた個別ツール・活用法の提案</td>
+      <td>各部門30分</td>
+    </tr>
+    <tr>
+      <td>第4回</td>
+      <td>応用編: NotebookLM + Gamma</td>
+      <td>文書のAI活用（NotebookLM）、プレゼン自動生成（Gamma）</td>
+      <td>60分</td>
+    </tr>
+    <tr>
+      <td>第5回</td>
+      <td>振り返り + 次の一手</td>
+      <td>活用事例の共有、有料ツール導入の検討、継続計画</td>
+      <td>60分</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ==================== APPENDIX ==================== -->
+<section>
+  <h2>付録: 全推奨ツール一覧</h2>
+  <table>
+    <tr>
+      <th>ツール名</th>
+      <th>カテゴリ</th>
+      <th>費用</th>
+      <th>Win対応</th>
+      <th>日本語</th>
+      <th>導入段階</th>
+    </tr>
+    <tr><td>Win クリップボード (Win+V)</td><td>OS機能</td><td>無料</td><td>◎</td><td>◎</td><td>Phase 1</td></tr>
+    <tr><td>Win 音声入力 (Win+H)</td><td>OS機能</td><td>無料</td><td>◎</td><td>◎</td><td>Phase 1</td></tr>
+    <tr><td>Google Gemini</td><td>AIチャット</td><td>無料</td><td>◎</td><td>◎</td><td>Phase 1</td></tr>
+    <tr><td>Microsoft Copilot</td><td>AIチャット</td><td>無料</td><td>◎</td><td>◎</td><td>Phase 1</td></tr>
+    <tr><td>ChatGPT</td><td>AIチャット</td><td>無料/有料</td><td>◎</td><td>◎</td><td>Phase 1-2</td></tr>
+    <tr><td>Claude</td><td>AIチャット</td><td>無料/有料</td><td>◎</td><td>◎</td><td>Phase 2</td></tr>
+    <tr><td>NotebookLM</td><td>AIリサーチ</td><td>無料</td><td>◎</td><td>◎</td><td>Phase 1</td></tr>
+    <tr><td>Notta</td><td>文字起こし</td><td>無料/有料</td><td>◎</td><td>◎</td><td>Phase 1-2</td></tr>
+    <tr><td>CLOVA Note</td><td>文字起こし</td><td>無料</td><td>◎</td><td>◎</td><td>Phase 1</td></tr>
+    <tr><td>Typeless</td><td>音声入力</td><td>無料/有料</td><td>◎</td><td>◎</td><td>Phase 1-2</td></tr>
+    <tr><td>Ditto</td><td>クリップボード</td><td>無料</td><td>◎</td><td>○</td><td>Phase 1</td></tr>
+    <tr><td>Gamma</td><td>プレゼン生成</td><td>無料/有料</td><td>◎</td><td>◎</td><td>Phase 1</td></tr>
+    <tr><td>Canva</td><td>デザイン</td><td>無料/有料</td><td>◎</td><td>◎</td><td>Phase 1-2</td></tr>
+    <tr><td>Power Automate</td><td>業務自動化</td><td>M365含む</td><td>◎</td><td>◎</td><td>Phase 3-4</td></tr>
+    <tr><td>Manus</td><td>AIエージェント</td><td>有料</td><td>◎</td><td>○</td><td>Phase 3-4</td></tr>
+  </table>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+  <p>澤田株式会社 AI活用研修 提案書 | 2026年4月 | 作成: 澤田一進</p>
+  <p style="margin-top: 8px; font-size: 0.8em;">本提案書に記載の料金・機能は2026年4月時点の情報です。最新の情報は各サービスの公式サイトをご確認ください。</p>
+</div>
+
+</div>
+</body>
+</html>
