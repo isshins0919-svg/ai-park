@@ -343,6 +343,18 @@ textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid 
             </div>
           </div>
 
+          <!-- 商品セレクタ（プロファイル駆動） -->
+          <div class="form-group">
+            <label>商品プロファイル <span style="font-size:0.7rem; color:#6d28d9; font-weight:700;">推奨</span></label>
+            <select id="fvgen-product-key"
+              style="border-radius:12px; padding:12px; border:1.5px solid #c4b5fd; font-family:inherit; width:100%; font-size:0.85rem; background:#fff; cursor:pointer;">
+              <option value="">— 商品を選ばず汎用モードで生成 —</option>
+            </select>
+            <div id="fvgen-product-hint" style="margin-top:6px; font-size:0.7rem; color:var(--text-tertiary); line-height:1.6;">
+              商品を選ぶとペルソナ・薬機法NG表現・優先フック・モデル年齢が自動反映されます。未選択でも動きますが精度は落ちます。
+            </div>
+          </div>
+
           <!-- 動画アップロード -->
           <div class="form-group">
             <label>完成動画（1本丸ごとアップロード）</label>
@@ -718,6 +730,40 @@ function switchMode(mode) {
 // ─── FV自動生成モード ────────────────────────────────────────
 let fvgenVideoFilename = null;
 
+// 商品プロファイル一覧を取得してセレクタを埋める（初回）
+(async function loadKosuriProducts(){
+  try {
+    const res = await fetch('/kosuri-products');
+    if (!res.ok) return;
+    const data = await res.json();
+    const sel = document.getElementById('fvgen-product-key');
+    if (!sel || !data.products) return;
+    data.products.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.product_key;
+      opt.textContent = `${p.client} / ${p.product_name}`;
+      sel.appendChild(opt);
+    });
+    // 商品変更時にヒント更新
+    const hintEl = document.getElementById('fvgen-product-hint');
+    sel.addEventListener('change', () => {
+      if (!hintEl) return;
+      if (sel.value) {
+        const picked = data.products.find(p => p.product_key === sel.value);
+        hintEl.innerHTML = picked
+          ? `✨ <b>${picked.product_name}</b>のプロファイルを使います。ペルソナ・薬機法NG・優先フック・モデル年齢を自動反映。`
+          : '';
+        hintEl.style.color = '#6d28d9';
+      } else {
+        hintEl.innerHTML = '商品を選ぶとペルソナ・薬機法NG表現・優先フック・モデル年齢が自動反映されます。未選択でも動きますが精度は落ちます。';
+        hintEl.style.color = '';
+      }
+    });
+  } catch (e) {
+    console.warn('[KOSURI] product list load failed:', e);
+  }
+})();
+
 setupZone('zone-fvgen-video', 'input-fvgen-video', 'base');
 document.getElementById('input-fvgen-video').onchange = async (e) => {
   if (!e.target.files.length) return;
@@ -759,6 +805,7 @@ async function startFvGenerate() {
   updateFvGenStep('動画を解析中');
   toast('AIがFVパターンを設計中...');
 
+  const productKey = (document.getElementById('fvgen-product-key') || {}).value || '';
   const res = await fetch('/fv-generate', {
     method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
@@ -766,6 +813,7 @@ async function startFvGenerate() {
       prompt: prompt,
       fv_end_sec: endSec,
       video_filename: fvgenVideoFilename,
+      product_key: productKey,
     }),
   });
   const data = await res.json();

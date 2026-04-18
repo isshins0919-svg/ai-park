@@ -17,8 +17,45 @@ import uuid
 import zipfile
 from pathlib import Path
 
+from typing import Optional
+
 from flask import Flask, jsonify, render_template, request, send_file
 from PIL import Image, ImageDraw, ImageFont
+
+# ─── KOSURI 商品プロファイル・ローダー ─────────────────────
+# `.claude/clients/{client}/{product}/kosuri-profile.yaml` を読み込み、
+# FV自動生成のシステムプロンプト・画像プロンプト・履歴ログを差分注入する。
+try:
+    from profile_loader import (
+        append_history as _append_kosuri_history,
+        build_image_prompt_suffix as _build_kosuri_image_suffix,
+        build_profile_injection as _build_kosuri_injection,
+        filter_hook_patterns as _filter_kosuri_hooks,
+        list_available_products as _list_kosuri_products,
+        load_profile as _load_kosuri_profile,
+    )
+    _PROFILE_LOADER_AVAILABLE = True
+except Exception as _e:
+    print(f"[KOSURI profile_loader] unavailable — fallback to generic mode: {_e}")
+    _PROFILE_LOADER_AVAILABLE = False
+
+    def _list_kosuri_products():  # type: ignore[no-redef]
+        return []
+
+    def _load_kosuri_profile(*_a, **_k):  # type: ignore[no-redef]
+        return None
+
+    def _build_kosuri_injection(*_a, **_k):  # type: ignore[no-redef]
+        return ""
+
+    def _filter_kosuri_hooks(patterns, *_a, **_k):  # type: ignore[no-redef]
+        return patterns
+
+    def _build_kosuri_image_suffix(*_a, **_k):  # type: ignore[no-redef]
+        return ""
+
+    def _append_kosuri_history(*_a, **_k):  # type: ignore[no-redef]
+        return
 
 app = Flask(__name__)
 
@@ -64,7 +101,7 @@ def _get_gcs_client():
         print(f"[GCS] client error: {e}")
         return None
 
-def gcs_signed_url(filename: str, content_type: str, expires_minutes: int = 15) -> dict | None:
+def gcs_signed_url(filename: str, content_type: str, expires_minutes: int = 15):
     """署名付きアップロードURLを生成。失敗したらNone。"""
     client = _get_gcs_client()
     if not client:
@@ -170,14 +207,29 @@ def _find_bin(name: str) -> str:
 FFMPEG  = _find_bin("ffmpeg")
 FFPROBE = _find_bin("ffprobe")
 
+# ─── フォント解決: 「BODY動画より弱くならない」極太優先 ─────
+# W3/Regular は広告として細すぎる。Black/Boldを優先探索し、なければRegularにフォールバック。
+_FONT_CANDIDATES_BOLD = [
+    "/System/Library/Fonts/ヒラギノ角ゴシック W9.ttc",               # macOS 最重
+    "/System/Library/Fonts/ヒラギノ角ゴシック W8.ttc",               # macOS 極太
+    "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc",               # macOS 太
+    "/usr/share/fonts/opentype/noto/NotoSansCJK-Black.ttc",           # Docker (fonts-noto-cjk)
+    "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",            # Docker 太
+    "/usr/share/fonts/noto-cjk/NotoSansCJK-Black.ttc",
+    "/usr/share/fonts/truetype/noto/NotoSansCJK-Bold.ttc",
+]
 _FONT_CANDIDATES = [
-    "/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc",               # macOS
+    "/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc",               # macOS fallback
     "/System/Library/Fonts/Hiragino Sans GB.ttc",                     # macOS sub
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",         # Linux (Debian/Ubuntu)
-    "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",              # Linux alt
-    "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",         # Linux alt2
+    "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",
+    "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
 ]
-FONT_PATH = next((f for f in _FONT_CANDIDATES if Path(f).exists()), "")
+FONT_PATH_BOLD = next((f for f in _FONT_CANDIDATES_BOLD if Path(f).exists()), "")
+FONT_PATH = next((f for f in _FONT_CANDIDATES if Path(f).exists()), "") or FONT_PATH_BOLD
+# Boldが無ければRegularで代用、Regularすら無ければBoldに戻る
+if not FONT_PATH_BOLD:
+    FONT_PATH_BOLD = FONT_PATH
 
 UPLOAD_DIR = Path(__file__).parent / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
@@ -1016,13 +1068,41 @@ def presign_url():
     gcs_filename = f"sessions/{session_id}/{upload_type}/{filename}"
     result = gcs_signed_url(gcs_filename, content_type)
     if not result:
-        return jsonify({"error": "GCS未設定またはエラー"}), 500
+        # GCS未設定時はローカル直接アップロードにフォールバック
+        return jsonify({
+            "session_id": session_id,
+            "upload_url": f"/upload-local/{session_id}/{upload_type}/{filename}",
+            "gcs_path": f"local://{session_id}/{upload_type}/{filename}",
+            "filename": filename,
+            "local_mode": True,
+        })
     return jsonify({
         "session_id": session_id,
         "upload_url": result["url"],
         "gcs_path": result["gcs_path"],
         "filename": filename,
     })
+
+@app.route("/upload-local/<session_id>/<upload_type>/<filename>", methods=["PUT"])
+def upload_local(session_id, upload_type, filename):
+    """GCS未設定時のローカル直接アップロード用エンドポイント。"""
+    sess_dir = get_session_dir(session_id)
+    if upload_type in ("fv",):
+        dest_dir = sess_dir / "fv"
+    elif upload_type == "body":
+        dest_dir = sess_dir / "body"
+    elif upload_type == "packed":
+        dest_dir = sess_dir / "packed"
+    elif upload_type == "base":
+        dest_dir = sess_dir / "base"
+    else:
+        dest_dir = sess_dir
+    dest_dir.mkdir(exist_ok=True)
+    dest = dest_dir / filename
+    dest.write_bytes(request.data)
+    print(f"[LocalUpload] saved {dest} ({dest.stat().st_size//1024}KB)")
+    return jsonify({"ok": True})
+
 
 @app.route("/register-gcs", methods=["POST"])
 def register_gcs():
@@ -1051,7 +1131,13 @@ def register_gcs():
     dest_dir.mkdir(exist_ok=True)
     dest = dest_dir / filename
 
-    ok = gcs_download_to_local(gcs_path, dest)
+    # ローカルモード（GCS未設定時）: /upload-local で既にファイル保存済み
+    if gcs_path.startswith("local://"):
+        if not dest.exists():
+            return jsonify({"error": "ローカルアップロードが見つかりません"}), 500
+        ok = True
+    else:
+        ok = gcs_download_to_local(gcs_path, dest)
     if not ok:
         return jsonify({"error": "GCSからのダウンロードに失敗"}), 500
 
@@ -1549,6 +1635,46 @@ def _build_motion_filter(motion_type: str, duration: float, w: int = 1080, h: in
             f"zoompan=z='min(zoom+0.002,1.2)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
             f":d={d}:s={w}x{h}:fps=30"
         ),
+        # ─── DPro学習モーション (M10-M13) ─────────────────────────
+        # M10: flash_cut_zoom — RKL系Quick Cut (0.3s静止→瞬間1.4倍→0.5s静止)
+        # 前半 d/3 は静止、中盤 d/3 で急激ズーム、後半 d/3 は保持
+        "flash_cut_zoom": (
+            f"zoompan=z='if(lte(on,{d//3}),1.0,if(lte(on,{d*2//3}),"
+            f"min(1.0 + 0.4*((on-{d//3})/{d//3}),1.4),1.4))'"
+            f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={d}:s={w}x{h}:fps=30"
+        ),
+        # M11: talking_head_subtle — gungun系 ほぼ静止+呼吸ズーム (1.0-1.03の微動)
+        "talking_head_subtle": (
+            f"zoompan=z='1.0 + 0.03*sin(on/30)':x='iw/2-(iw/zoom/2)'"
+            f":y='ih/2-(ih/zoom/2) + 4*sin(on/25)':d={d}:s={w}x{h}:fps=30"
+        ),
+        # M12: macro_asmr_glide — proust系 超スロー斜めパン+微ズーム (メタファー訴求向け)
+        "macro_asmr_glide": (
+            f"zoompan=z='1.05 + 0.03*(on/{d})'"
+            f":x='iw/2-(iw/zoom/2) + iw*0.05*(on/{d})'"
+            f":y='ih/2-(ih/zoom/2) + ih*0.03*(on/{d})'"
+            f":d={d}:s={w}x{h}:fps=30"
+        ),
+        # M13: native_feed_scroll — onmyskin系 SNS擬態 (最初下に180px、上へスライド→静止)
+        # 前半 d/4 でスクロール、後半は静止に見せる
+        "native_feed_scroll": (
+            f"zoompan=z=1.02"
+            f":x='iw/2-(iw/zoom/2)'"
+            f":y='ih/2-(ih/zoom/2) + if(lte(on,{d//4}),180*(1-on/{d//4}),0)'"
+            f":d={d}:s={w}x{h}:fps=30"
+        ),
+        # ─── 補助モーション ───────────────────────────────────────
+        # zoom_punch_hold — ガッとズーム+静止 (RKLカット点模倣・パンチライン用)
+        "zoom_punch_hold": (
+            f"zoompan=z='if(lte(on,{d//6}),1.0 + 0.3*(on/{d//6}),1.3)'"
+            f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={d}:s={w}x{h}:fps=30"
+        ),
+        # snap_focus_reveal — 全体からズームアウト+上下揺れ (V9対比アクセント)
+        "snap_focus_reveal": (
+            f"zoompan=z='1.3 - 0.2*(on/{d})'"
+            f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2) + 6*sin(on/8)'"
+            f":d={d}:s={w}x{h}:fps=30"
+        ),
     }
     return motion_map.get(motion_type, motion_map["static_no_motion"])
 
@@ -1557,7 +1683,7 @@ def _gemini_generate_image(prompt: str, api_key: str, out_path: Path) -> bool:
     """Gemini Imagen APIで画像生成。成功したらTrue。"""
     import base64, urllib.request
     try:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key={api_key}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key={api_key}"
         payload = json.dumps({
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"responseModalities": ["TEXT", "IMAGE"]},
@@ -1592,11 +1718,22 @@ def _analyze_video_for_fv(video_path: str, api_key: str) -> dict:
                 return {}
 
             parts = [{"text": (
-                "この動画広告の冒頭フレームを解析してください。\n"
-                "以下をJSONで返してください:\n"
+                "この動画広告の冒頭フレームを時系列で解析してください。\n"
+                "各フレームには [X.X秒] のタイムスタンプが付いています。\n"
+                "\n"
+                "特に重要: フレーム間でテロップ(画面内に映る文字)が切り替わる瞬間を正確に捉え、\n"
+                "caption_segments に「開始秒・終了秒・そのセグメントで表示されているテロップ文字列」を順に記録してください。\n"
+                "例: 0〜2.3秒は『遺伝型ワキガ10年以上放置してる人』、2.3〜4.8秒は『絶対見て』のように、\n"
+                "テロップが切り替わるたびに別セグメントに分けます。\n"
+                "画面に全く文字が出ていない区間はセグメントに含めません。\n"
+                "\n"
+                "以下のJSON形式で返してください:\n"
                 "{\n"
                 "  \"fv_end_sec\": FV終点の秒数,\n"
-                "  \"captions\": [\"テロップ文字のリスト\"],\n"
+                "  \"captions\": [\"後方互換用・主要テロップ文字列のリスト\"],\n"
+                "  \"caption_segments\": [\n"
+                "    {\"start\": 開始秒(float), \"end\": 終了秒(float), \"text\": \"そのセグメントの実テロップ文字列\"}\n"
+                "  ],\n"
                 "  \"target\": \"ターゲット層（例: 産後ママ、30代男性）\",\n"
                 "  \"product\": \"商品・サービス名\",\n"
                 "  \"category\": \"カテゴリ（健康/美容/食品等）\",\n"
@@ -1626,15 +1763,27 @@ def _analyze_video_for_fv(video_path: str, api_key: str) -> dict:
         return {}
 
 
-def _design_10_patterns(video_info: dict, user_prompt: str, api_key: str) -> list[dict]:
-    """Geminiがビジュアルフック法則 × 動画情報 × プロンプトから10パターンを設計。"""
+def _design_10_patterns(video_info: dict, user_prompt: str, api_key: str,
+                        profile: Optional[dict] = None) -> list[dict]:
+    """Geminiがビジュアルフック法則 × 動画情報 × プロンプト × 商品プロファイルから10パターンを設計。
+
+    profile を渡すと VISUAL_HOOK_PATTERNS から avoid されたフックを除外し、
+    システムプロンプトにペルソナ・NG表現・優先フック・勝ちコピーを差し込む。
+    """
     import urllib.request
 
+    # プロファイルで使用禁止フックを除外した後のリストで LLM に提示
+    available_patterns = _filter_kosuri_hooks(VISUAL_HOOK_PATTERNS, profile)
+    if not available_patterns:
+        available_patterns = VISUAL_HOOK_PATTERNS
+
     patterns_desc = "\n".join([
-        f"V{i+1}({p['id']}): {p['name']} — {p['psychology']}"
-        for i, p in enumerate(VISUAL_HOOK_PATTERNS)
+        f"{p['id']}: {p['name']} — {p['psychology']}"
+        for p in available_patterns
     ])
     face_rules = "\n".join([f"{k}: {v}" for k, v in FACE_EXPRESSION_RULES.items()])
+
+    profile_block = _build_kosuri_injection(profile) if profile else ""
 
     system_prompt = f"""あなたは動画広告のFV（ファーストビュー）映像の専門クリエイティブディレクターです。
 
@@ -1645,11 +1794,12 @@ def _design_10_patterns(video_info: dict, user_prompt: str, api_key: str) -> lis
 悩み: {video_info.get('problem', '不明')}
 体の部位: {video_info.get('body_part', 'skin')}
 性別: {video_info.get('gender', 'female')}
+{profile_block}
 
 【ユーザーの意図】
 {user_prompt}
 
-【使用する10のビジュアルフック法則】
+【使用可能なビジュアルフック法則（この中から選べ。他は存在しないものと扱え）】
 {patterns_desc}
 
 【表情ルール（顔ありパターンに必ず適用）】
@@ -1657,23 +1807,41 @@ def _design_10_patterns(video_info: dict, user_prompt: str, api_key: str) -> lis
 
 【画像生成の絶対ルール】
 - 縦型9:16、被写体が画面の60%以上
-- 広告っぽい完璧さを避ける（SNS投稿風）
+- 広告っぽい完璧さを避ける（SNS投稿風・ドキュメンタリー感）
 - 人物は1人か0人
-- 画像内にテキストを入れない
+- 画像内にテキスト・ロゴ・UI要素・ウォーターマークを一切入れない（最重要）
 - コントラストを強く
 - 「瞬間」を切り取る（状態でなくモーメント）
+- 偽物感のある化学式・英字ブランド名・架空UIを描写しない
 
-以下のJSON形式で10パターンを返してください。各パターンは対応するビジュアルフック(V1〜V10)を1つずつ使うこと:
+【テロップの重要制約】
+- テロップの文字列は一切「新規生成するな」。元動画から抽出される文字列だけを使う。
+- あなたが決めるのは「見せ方」のみ: 配置(placement)・サイズ(size)・スタイル(style)・強調ワード(emphasis_words)
+- emphasis_words は元テロップ内に実際に含まれる単語だけ指定。含まれない語を書いたら無効扱い
+
+【利用可能な見せ方パラメータ】
+- caption_placement: "note_top" | "hook_top" | "mid" | "kick_bottom" | "footer"
+- caption_size: "xl"(最大140px) | "l"(108px) | "m"(80px) | "s"(52px)
+- caption_style: "bold"(白字+黒厚縁) | "highlight"(黄色背景+黒字) | "double_stroke"(白字+黒+外白の三重)
+- caption_kick_placement / caption_kick_size / caption_kick_style: キッカー用（下段サブテロップ）
+
+以下のJSON形式で最大10パターンを返してください。各パターンは「使用可能なビジュアルフック」を1つずつ使うこと。
+各パターンで画像・モーションと「テロップの見せ方」だけを変え、テロップの文字列は変えない:
 {{
   "patterns": [
     {{
       "hook_id": "V1",
       "concept": "このパターンのコンセプト1行",
       "why_stop": "なぜ視聴者の目が止まるか（心理的根拠）",
-      "image_prompt": "Gemini画像生成用の英語プロンプト（具体的・詳細に）",
+      "image_prompt": "Gemini画像生成用の英語プロンプト。NO text, NO logos, NO Japanese characters, NO watermarks を必ず含める",
       "face_expression": "使う表情ルールのID（顔なしならnull）",
-      "caption_placement": "テロップの配置（top/middle/bottom）",
-      "caption_size": "テロップサイズ（large/medium/small）"
+      "caption_placement": "hook_top|note_top|mid|kick_bottom|footer のいずれか",
+      "caption_size": "xl|l|m|s のいずれか",
+      "caption_style": "bold|highlight|double_stroke のいずれか",
+      "caption_kick_placement": "kick_bottom|mid|footer など（キッカーの位置）",
+      "caption_kick_size": "xl|l|m|s",
+      "caption_kick_style": "bold|highlight|double_stroke",
+      "emphasis_words": ["元テロップに含まれる単語のみ。新規生成禁止"]
     }}
   ]
 }}"""
@@ -1695,45 +1863,376 @@ def _design_10_patterns(video_info: dict, user_prompt: str, api_key: str) -> lis
         return []
 
 
-def _build_fv_video(image_path: Path, audio_path: Path, captions: list[str],
+# ─── テロップ描画: 極太フォント + セーフエリア準拠 ─────
+# Meta Reels / TikTok の両方でUIに被らないY配置:
+#   上14%はハンドル・広告ラベル、下22%はCTAボタンで隠れる → 中央約64%が安全圏
+_CAPTION_Y_MAP = {
+    "note_top":    0.08,   # 広告ラベルより下、だがhookより上
+    "hook_top":    0.20,   # セーフエリア内の上寄り（SNS共通で安全）
+    "mid":         0.45,   # 真ん中
+    "kick_bottom": 0.72,   # CTAボタンより上の安全下部
+    "footer":      0.85,   # TikTok投稿者名の上、ギリギリ見える
+}
+_CAPTION_SIZE_MAP = {"xl": 140, "l": 108, "m": 80, "s": 52}
+
+
+def _draw_caption_layers_on_canvas(canvas, caption_layers: list[dict]) -> None:
+    """指定キャンバス(RGBA)にテロップレイヤーを描画する共通ロジック。
+
+    caption_layers の各要素:
+      {text, placement, size, style, emphasis_words}
+    """
+    from PIL import Image, ImageDraw, ImageFont
+    w, h = canvas.size
+    scale = w / 1080.0
+    draw = ImageDraw.Draw(canvas, "RGBA")
+
+    for layer in caption_layers or []:
+        text = (layer.get("text") or "").strip()
+        if not text:
+            continue
+        size_key = layer.get("size", "m")
+        font_size = int(_CAPTION_SIZE_MAP.get(size_key, 80) * scale)
+        placement = layer.get("placement", "kick_bottom")
+        y_ratio = _CAPTION_Y_MAP.get(placement, 0.72)
+        style = layer.get("style", "bold")
+        emphasis_words = [w_ for w_ in (layer.get("emphasis_words") or []) if w_]
+
+        # フォント: 極太優先、なければRegularにフォールバック
+        font_path = FONT_PATH_BOLD or FONT_PATH
+        try:
+            font = ImageFont.truetype(font_path, font_size) if font_path else ImageFont.load_default()
+        except Exception:
+            font = ImageFont.load_default()
+
+        lines = text.split("\n")
+
+        # Auto-fit: 各行が画面幅の92%を超えないよう、font_sizeを段階的に縮小
+        MAX_WIDTH_RATIO = 0.92
+        max_width_px = int(w * MAX_WIDTH_RATIO)
+        min_font_size = 36
+        if font_path:
+            for _iter in range(20):  # 最大20回縮小
+                measure_draw = ImageDraw.Draw(Image.new("RGBA", (10, 10)))
+                max_line_w = 0
+                for ln in lines:
+                    bb = measure_draw.textbbox((0, 0), ln, font=font)
+                    max_line_w = max(max_line_w, bb[2] - bb[0])
+                if max_line_w <= max_width_px or font_size <= min_font_size:
+                    break
+                font_size = max(min_font_size, int(font_size * 0.93))
+                try:
+                    font = ImageFont.truetype(font_path, font_size)
+                except Exception:
+                    break
+
+        line_h = int(font_size * 1.25)
+        total_h = line_h * len(lines)
+        y_start = int(h * y_ratio) - total_h // 2
+
+        # スタイル別パラメータ
+        if style == "highlight":
+            fill = (30, 20, 0, 255)          # 濃い黒字
+            bg = (255, 230, 0, 245)          # 黄色看板
+            border_mode = None
+        elif style == "double_stroke":
+            fill = (255, 255, 255, 255)      # 白字
+            bg = None
+            border_mode = "double"
+        else:  # "bold" 標準
+            fill = (255, 255, 255, 255)
+            bg = None
+            border_mode = "thick"
+
+        inner_stroke = max(6, font_size // 12)   # 黒縁厚（xl=140なら~11px）
+        outer_stroke = max(3, font_size // 28)   # 外側白縁
+
+        for i, line in enumerate(lines):
+            bbox = draw.textbbox((0, 0), line, font=font)
+            tw = bbox[2] - bbox[0]
+            th = bbox[3] - bbox[1]
+            x = (w - tw) // 2
+            y = y_start + i * line_h
+
+            # 背景ハイライト（highlight スタイル）
+            if bg is not None:
+                pad_x = int(font_size * 0.30)
+                pad_y = int(font_size * 0.18)
+                draw.rectangle(
+                    [x - pad_x, y - pad_y, x + tw + pad_x, y + th + pad_y],
+                    fill=bg,
+                )
+
+            # 縁取り描画
+            if border_mode == "double":
+                # 外側白縁（極太）
+                ring = inner_stroke + outer_stroke
+                for dx in range(-ring, ring + 1, 2):
+                    for dy in range(-ring, ring + 1, 2):
+                        draw.text((x + dx, y + dy), line, font=font, fill=(255, 255, 255, 255))
+                # 内側黒縁
+                for dx in range(-inner_stroke, inner_stroke + 1, 2):
+                    for dy in range(-inner_stroke, inner_stroke + 1, 2):
+                        draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 255))
+            elif border_mode == "thick":
+                for dx in range(-inner_stroke, inner_stroke + 1, 2):
+                    for dy in range(-inner_stroke, inner_stroke + 1, 2):
+                        if dx == 0 and dy == 0:
+                            continue
+                        draw.text((x + dx, y + dy), line, font=font, fill=(0, 0, 0, 255))
+
+            # 本体描画
+            draw.text((x, y), line, font=font, fill=fill)
+
+            # emphasis_words: 元テロップ内の単語を黄色で上書き（テキスト新規生成ではなく強調のみ）
+            for ew in emphasis_words:
+                if ew not in line:
+                    continue
+                idx = line.find(ew)
+                if idx < 0:
+                    continue
+                pre = line[:idx]
+                pre_bbox = draw.textbbox((0, 0), pre, font=font)
+                pre_w = pre_bbox[2] - pre_bbox[0]
+                ex = x + pre_w
+                if border_mode in ("thick", "double"):
+                    # 強調語の縁も厚めに引き直し
+                    for dx in range(-inner_stroke, inner_stroke + 1, 2):
+                        for dy in range(-inner_stroke, inner_stroke + 1, 2):
+                            draw.text((ex + dx, y + dy), ew, font=font, fill=(0, 0, 0, 255))
+                draw.text((ex, y), ew, font=font, fill=(255, 230, 0, 255))
+
+
+def _render_caption_layers_png(caption_layers: list[dict], w: int = 1080, h: int = 1920,
+                                out_path: Optional[Path] = None) -> Optional[Path]:
+    """透明背景にテロップだけ描画したPNGを生成して返す。
+
+    ffmpeg overlayで動画に時間指定で重ねるための素材として使う。
+    動画の zoompan とは独立しているので、画像が動いてもテロップはピクセル固定される。
+    """
+    if not caption_layers:
+        return None
+    from PIL import Image
+    canvas = Image.new("RGBA", (w, h), (0, 0, 0, 0))  # 完全透明背景
+    _draw_caption_layers_on_canvas(canvas, caption_layers)
+
+    if out_path is None:
+        import tempfile, uuid as _uuid
+        out_path = Path(tempfile.gettempdir()) / f"kosuri_cap_{_uuid.uuid4().hex[:10]}.png"
+    canvas.save(str(out_path))
+    return out_path
+
+
+def _burn_captions_to_image(image_path: Path, caption_layers: list[dict]) -> Path:
+    """[レガシー互換] 画像そのものにテロップを焼き込む。
+
+    新しい実装では overlay 方式を推奨（_render_caption_layers_png + ffmpeg overlay）。
+    この関数は旧呼び出し経路のために保持している。
+    """
+    from PIL import Image
+    img = Image.open(image_path).convert("RGBA")
+    _draw_caption_layers_on_canvas(img, caption_layers)
+    out_img = img.convert("RGB")
+    tmp_path = image_path.parent / (image_path.stem + "_captioned.jpg")
+    out_img.save(str(tmp_path), quality=92)
+    return tmp_path
+
+
+def _build_caption_timeline_from_pattern(
+    base_segments: list[dict],
+    pattern: dict,
+    fv_duration: float,
+    profile: Optional[dict] = None,  # 互換のため残す（現在は注釈自動追加しない）
+) -> list[dict]:
+    """元動画のテロップタイムライン × パターン見せ方 → 時間軸レイヤー配列。
+
+    重要原則（ユーザー指示・決してブレてはいけない）:
+    - テロップの「文字列」「出現タイミング」「切替順序」は元動画から完全固定。
+      base_segments = [{"start": 0.0, "end": 2.3, "text": "..."}, ...] をそのまま使う。
+    - パターン間で変わるのは「見せ方」のみ: placement / size / style / emphasis_words
+    - 注釈（legal_notes）は今回自動追加しない。ユーザーが後で別手段で加える方針。
+    - セグメントの奇数番目は hook_top（上）、偶数番目は kick_bottom（下）に配置してリズム作る。
+
+    戻り値: [{"start": 0.0, "end": 2.3, "layers": [layer_dict, ...]}]
+    """
+    timeline: list[dict] = []
+    if not base_segments:
+        return timeline
+
+    hook_placement = pattern.get("caption_placement", "hook_top")
+    hook_size = pattern.get("caption_size", "xl")
+    hook_style = pattern.get("caption_style", "double_stroke")
+    kick_placement = pattern.get("caption_kick_placement", "kick_bottom")
+    kick_size = pattern.get("caption_kick_size", "l")
+    kick_style = pattern.get("caption_kick_style", "bold")
+    emphasis_all = pattern.get("emphasis_words") or []
+
+    for i, seg in enumerate(base_segments):
+        text = (seg.get("text") or "").strip()
+        if not text:
+            continue
+        start = float(seg.get("start", 0.0))
+        end = float(seg.get("end", fv_duration))
+        # FV区間外はスキップ、末尾は fv_duration でクランプ
+        if start >= fv_duration:
+            continue
+        end = min(end, fv_duration)
+
+        # 奇数番目=hook配置、偶数番目=kick配置で上下リズム
+        use_hook = (i % 2 == 0)
+        placement = hook_placement if use_hook else kick_placement
+        size = hook_size if use_hook else kick_size
+        style = hook_style if use_hook else kick_style
+
+        emphasis_words = [w_ for w_ in emphasis_all if w_ and w_ in text]
+
+        layer = {
+            "text": text,
+            "placement": placement,
+            "size": size,
+            "style": style,
+            "emphasis_words": emphasis_words,
+        }
+        timeline.append({
+            "start": start,
+            "end": end,
+            "layers": [layer],
+        })
+
+    return timeline
+
+
+def _build_caption_layers_from_pattern(
+    base_captions: list[str],
+    pattern: dict,
+    profile: Optional[dict] = None,
+) -> list[dict]:
+    """[レガシー互換] 単一フレーム向けのレイヤー配列（時間軸なし）。
+
+    注釈自動追加は廃止。タイムライン対応は _build_caption_timeline_from_pattern を使う。
+    """
+    layers: list[dict] = []
+    if base_captions:
+        main_text = base_captions[0]
+        emphasis_words = [w_ for w_ in (pattern.get("emphasis_words") or []) if w_ and w_ in main_text]
+        layers.append({
+            "text": main_text,
+            "placement": pattern.get("caption_placement", "hook_top"),
+            "size": pattern.get("caption_size", "xl"),
+            "style": pattern.get("caption_style", "double_stroke"),
+            "emphasis_words": emphasis_words,
+        })
+    if len(base_captions) > 1 and base_captions[1]:
+        kick_text = base_captions[1]
+        kick_emph = [w_ for w_ in (pattern.get("emphasis_words") or []) if w_ and w_ in kick_text]
+        layers.append({
+            "text": kick_text,
+            "placement": pattern.get("caption_kick_placement", "kick_bottom"),
+            "size": pattern.get("caption_kick_size", "l"),
+            "style": pattern.get("caption_kick_style", "bold"),
+            "emphasis_words": kick_emph,
+        })
+    return layers
+
+
+def _build_fv_video(image_path: Path, audio_path: Path,
+                    caption_timeline: list[dict],
                     fv_duration: float, motion_type: str,
-                    caption_placement: str, caption_size: str,
                     output_path: Path) -> bool:
-    """画像 + モーション + テロップ + 音声 でFV動画を生成。"""
+    """画像にzoompanで動きを付与、テロップは透明PNGをoverlay時間指定で固定配置。
+
+    caption_timeline = [{"start": float, "end": float, "layers": [layer, ...]}]
+    各セグメントは透明背景PNGに焼いて、ffmpeg overlayで `enable='between(t, start, end)'`
+    によって指定時刻のみ表示する。これで画像が動いてもテロップはピクセル固定される。
+    """
     try:
         w, h = 1080, 1920
         motion_filter = _build_motion_filter(motion_type, fv_duration, w, h)
 
-        # テロップのフォントサイズ
-        font_size = {"large": 72, "medium": 56, "small": 42}.get(caption_size, 56)
+        # 1) 各セグメントのテロップを透明背景PNGに焼き出し
+        import tempfile as _tempfile
+        tmp_caption_dir = Path(_tempfile.mkdtemp(prefix="kosuri_captions_"))
+        segment_pngs: list[tuple[float, float, Path]] = []
+        for idx, seg in enumerate(caption_timeline or []):
+            layers = seg.get("layers") or []
+            if not layers:
+                continue
+            png_path = tmp_caption_dir / f"seg_{idx:02d}.png"
+            out = _render_caption_layers_png(layers, w, h, png_path)
+            if out and out.exists():
+                segment_pngs.append((float(seg["start"]), float(seg["end"]), out))
 
-        # テロップのY位置
-        y_pos = {"top": "h*0.12", "middle": "h*0.45", "bottom": "h*0.78"}.get(caption_placement, "h*0.78")
-
-        # テロップ文字列（複数行をNewlineで結合）
-        caption_text = "\\n".join(captions[:3]) if captions else ""
-
-        if caption_text:
-            # フォントパス
-            font_path = FONT_PATH or "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
-            drawtext = (
-                f"drawtext=text='{caption_text}'"
-                f":fontfile='{font_path}'"
-                f":fontsize={font_size}"
-                f":fontcolor=white"
-                f":borderw=4:bordercolor=black"
-                f":x=(w-text_w)/2:y={y_pos}"
-                f":line_spacing=8"
-            )
-            vf = f"{motion_filter},{drawtext}"
+        # 2) ffmpeg filter_complex を構築
+        # [0:v]zoompan=...[bg]
+        # [bg][1:v]overlay=0:0:enable='between(t,s1,e1)'[v1]
+        # [v1][2:v]overlay=0:0:enable='between(t,s2,e2)'[v]
+        if segment_pngs:
+            filter_parts = [f"[0:v]{motion_filter}[bg]"]
+            current_label = "bg"
+            for i, (start, end, _png) in enumerate(segment_pngs):
+                input_idx = i + 1  # 画像が0、PNG群が1..N、音声は最後
+                next_label = f"v{i}" if i < len(segment_pngs) - 1 else "vout"
+                filter_parts.append(
+                    f"[{current_label}][{input_idx}:v]overlay=0:0:enable='between(t\\,{start:.3f}\\,{end:.3f})'[{next_label}]"
+                )
+                current_label = next_label
+            filter_complex = ";".join(filter_parts)
+            map_video = f"[{current_label}]"
+            audio_input_idx = len(segment_pngs) + 1
         else:
-            vf = motion_filter
+            # テロップ無しの場合は画像に motion だけ
+            filter_complex = f"[0:v]{motion_filter}[vout]"
+            map_video = "[vout]"
+            audio_input_idx = 1
+
+        # 3) ffmpegコマンド組み立て
+        cmd = [FFMPEG, "-y", "-loop", "1", "-i", str(image_path)]
+        for _, _, png in segment_pngs:
+            cmd.extend(["-i", str(png)])
+        cmd.extend([
+            "-i", str(audio_path),
+            "-filter_complex", filter_complex,
+            "-map", map_video,
+            "-map", f"{audio_input_idx}:a",
+            "-t", str(fv_duration),
+            "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23",
+            "-c:a", "aac", "-b:a", "192k",
+            "-pix_fmt", "yuv420p",
+            "-shortest",
+            str(output_path),
+        ])
+
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        if r.returncode != 0:
+            print(f"[FV Build] ffmpeg error: {r.stderr[-800:]}")
+
+        # 一時PNGディレクトリは残しておく（ジョブ終了時にセッションごと削除される）
+        return r.returncode == 0
+    except Exception as ex:
+        print(f"[FV Build] error: {ex}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
+# 旧シグネチャ(caption_layers)の fallback を_deprecatedルートで提供
+def _build_fv_video_legacy(image_path: Path, audio_path: Path,
+                            caption_layers: list[dict],
+                            fv_duration: float, motion_type: str,
+                            output_path: Path) -> bool:
+    """[レガシー] テロップ焼き込み→zoompan方式（画像と一緒に動くため非推奨）。"""
+    try:
+        w, h = 1080, 1920
+        motion_filter = _build_motion_filter(motion_type, fv_duration, w, h)
+        src_image = image_path
+        if caption_layers:
+            src_image = _burn_captions_to_image(image_path, caption_layers)
 
         cmd = [
             FFMPEG, "-y",
-            "-loop", "1", "-i", str(image_path),
+            "-loop", "1", "-i", str(src_image),
             "-i", str(audio_path),
-            "-vf", vf,
+            "-vf", motion_filter,
             "-t", str(fv_duration),
             "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23",
             "-c:a", "aac", "-b:a", "192k",
@@ -1751,13 +2250,29 @@ def _build_fv_video(image_path: Path, audio_path: Path, captions: list[str],
 
 
 def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
-                        fv_end_sec: float, user_prompt: str):
-    """バックグラウンドでFV生成ジョブを実行。"""
+                        fv_end_sec: float, user_prompt: str,
+                        product_key: str = ""):
+    """バックグラウンドでFV生成ジョブを実行。
+
+    product_key='yomite_rkl' のように渡すと、該当商品プロファイルを
+    `.claude/clients/{client}/{product}/kosuri-profile.yaml` から読み込み、
+    ペルソナ・NG表現・優先フック・画像トーンを反映する。
+    未指定・読込失敗時は従来の汎用モードで動作する。
+    """
     job = jobs[job_id]
     api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY_1", "")
     sess_dir = get_session_dir(session_id)
     fv_gen_dir = sess_dir / "fv_generated"
     fv_gen_dir.mkdir(exist_ok=True)
+
+    # 商品プロファイル読み込み（失敗してもジョブは続行）
+    profile = _load_kosuri_profile(product_key) if product_key else None
+    if product_key and not profile:
+        print(f"[FV Gen] profile not found for product_key={product_key} — generic mode")
+    elif profile:
+        print(f"[FV Gen] profile loaded: {profile.get('product_name', product_key)}")
+    job["product_key"] = product_key
+    job["product_name"] = (profile or {}).get("product_name", "")
 
     try:
         # Step1: 動画解析
@@ -1770,9 +2285,9 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
         video_info["fv_end_sec"] = fv_end_sec
         print(f"[FV Gen] 解析完了: {video_info}")
 
-        # Step2: 10パターン設計
+        # Step2: 10パターン設計（プロファイル注入）
         job["current_name"] = "10パターンをAIが設計中..."
-        patterns = _design_10_patterns(video_info, user_prompt, api_key)
+        patterns = _design_10_patterns(video_info, user_prompt, api_key, profile=profile)
         if not patterns:
             job["status"] = "error"; job["error"] = "パターン設計失敗"
             return
@@ -1786,13 +2301,17 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
             capture_output=True,
         )
 
-        # Step4: ボディ部分を切り出し（音声+映像）
+        # Step4: ボディ部分を切り出し（1080x1920 @ 30fps に正規化、xfade継ぎ目合わせのため）
         body_path = fv_gen_dir / "body.mp4"
         subprocess.run(
             [FFMPEG, "-y", "-i", video_path,
              "-ss", str(fv_end_sec),
+             "-vf", "scale=1080:1920:force_original_aspect_ratio=decrease,"
+                    "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black,setsar=1",
+             "-r", "30",
              "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23",
              "-c:a", "aac", "-b:a", "192k",
+             "-pix_fmt", "yuv420p",
              str(body_path)],
             capture_output=True,
         )
@@ -1814,13 +2333,28 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
             if face_id and face_id in FACE_EXPRESSION_RULES:
                 img_prompt += f" Expression detail: {FACE_EXPRESSION_RULES[face_id]}"
 
-            # 日本向け広告: アジア系/日本人の指定を追加（外人顔防止）
-            if "Asian" not in img_prompt and "Japanese" not in img_prompt:
+            # 商品プロファイルのサフィックス（年齢・世界観）で上書き優先
+            profile_img_suffix = _build_kosuri_image_suffix(profile) if profile else ""
+            if profile_img_suffix:
+                img_prompt += ", " + profile_img_suffix
+            elif "Asian" not in img_prompt and "Japanese" not in img_prompt:
+                # プロファイル未指定時のフォールバック: 日本向け広告の既定
                 img_prompt += (
                     " Japanese or Asian woman model, "
                     "natural Japanese beauty standard, "
                     "suitable for Japanese beauty/health advertisement"
                 )
+
+            # 【重要】no-text強制語彙: 画像内に文字/ロゴ/UI要素/透かしを入れさせない
+            # Imagenは日本語を正しく描画できないため、テロップはffmpeg焼き込みで別途付与する
+            img_prompt += (
+                ", plain documentary photo with ABSOLUTELY NO text, NO writing, "
+                "NO Japanese characters, NO kanji, NO hiragana, NO katakana, "
+                "NO logos, NO watermarks, NO brand names, NO product labels with text, "
+                "NO UI elements, NO social media icons, NO like buttons, NO share buttons, "
+                "NO subtitles, NO captions, NO signatures, "
+                "clean image only with subject and background"
+            )
 
             ok = _gemini_generate_image(img_prompt, api_key, img_path)
             if not ok:
@@ -1835,20 +2369,51 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
             job["current_name"] = f"{hook_id} — 動画合成中..."
             fv_hook_path = fv_gen_dir / f"fv_{i+1:02d}.mp4"
             hook_pattern = next((p for p in VISUAL_HOOK_PATTERNS if p["id"] == hook_id), VISUAL_HOOK_PATTERNS[i % 10])
-            motion_type = hook_pattern["motion"]
+
+            # モーション: プロファイルの motion_priority があれば優先、なければフック既定
+            motion_type = pattern.get("motion_type") or hook_pattern.get("motion", "static_no_motion")
+            if profile:
+                mot_priority = (profile.get("hooks", {}) or {}).get("motion_priority") or []
+                # パターンindexに応じて優先モーションから割り当て
+                if mot_priority and i < len(mot_priority):
+                    motion_type = mot_priority[i]
+
+            # テロップタイムラインを構築:
+            # - テキスト・出現タイミングは元動画(video_info.caption_segments)に完全固定
+            # - パターン間で変わるのは「見せ方」のみ（placement / size / style / emphasis_words）
+            # - 注釈(legal_notes)は自動追加しない（ユーザーが後工程で付与）
+            base_segments = video_info.get("caption_segments") or []
+            if not base_segments:
+                # 後方互換: caption_segments が無ければ captions から等分割セグメントを構築
+                base_segments = []
+                caps_list = [c for c in (captions or []) if c]
+                if caps_list:
+                    n = len(caps_list)
+                    per = max(1.0, fv_end_sec / n)
+                    for k, t in enumerate(caps_list):
+                        base_segments.append({
+                            "start": k * per,
+                            "end": min(fv_end_sec, (k + 1) * per),
+                            "text": t,
+                        })
+            caption_timeline = _build_caption_timeline_from_pattern(
+                base_segments=base_segments,
+                pattern=pattern,
+                fv_duration=fv_end_sec,
+                profile=profile,
+            )
 
             _build_fv_video(
                 image_path=img_path,
                 audio_path=audio_path,
-                captions=captions[:2],
+                caption_timeline=caption_timeline,
                 fv_duration=fv_end_sec,
                 motion_type=motion_type,
-                caption_placement=pattern.get("caption_placement", "bottom"),
-                caption_size=pattern.get("caption_size", "medium"),
                 output_path=fv_hook_path,
             )
 
-            # Step7: FV + ボディ 結合
+            # Step7: FV + ボディ を単純concat（音声固定・継ぎ目フェードは不要というユーザー指示）
+            # 機能本質: FVの「映像のみ」を複数検証する。音声/テロップ/タイミングは固定。
             job["current_name"] = f"{hook_id} — ボディと結合中..."
             final_path = fv_gen_dir / f"final_{i+1:02d}_{hook_id}.mp4"
             concat_list = fv_gen_dir / f"concat_{i+1:02d}.txt"
@@ -1860,6 +2425,7 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
                  "-i", str(concat_list),
                  "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23",
                  "-c:a", "aac", "-b:a", "192k",
+                 "-pix_fmt", "yuv420p",
                  str(final_path)],
                 capture_output=True,
             )
@@ -1884,6 +2450,22 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
             len(results), user_prompt, "", "", session_id[:8],
         ])
 
+        # プロファイル連動: ジョブ履歴を .claude/clients/{client}/{product}/kosuri-history.md に追記。
+        # 次回のジョブ時に同loaderから参照可能（将来的な学習材料）。
+        if product_key and profile:
+            try:
+                _append_kosuri_history(product_key, {
+                    "job_id": job_id,
+                    "product_name": profile.get("product_name", product_key),
+                    "user_prompt": user_prompt,
+                    "target": video_info.get("target", ""),
+                    "problem": video_info.get("problem", ""),
+                    "count": len(results),
+                    "hook_ids": [r.get("hook_id", "") for r in results],
+                })
+            except Exception as _he:
+                print(f"[FV Gen] history append failed: {_he}")
+
     except Exception as ex:
         print(f"[FV Gen] job error: {ex}")
         job["status"] = "error"
@@ -1898,6 +2480,7 @@ def fv_generate():
     user_prompt = data.get("prompt", "").strip()
     fv_end_sec = float(data.get("fv_end_sec", 5.0))
     video_filename = data.get("video_filename", "")
+    product_key = (data.get("product_key") or "").strip()
 
     if not user_prompt:
         return jsonify({"error": "プロンプトは必須です"}), 400
@@ -1925,11 +2508,30 @@ def fv_generate():
     }
     threading.Thread(
         target=run_fv_generate_job,
-        args=(job_id, session_id, video_path, fv_end_sec, user_prompt),
+        args=(job_id, session_id, video_path, fv_end_sec, user_prompt, product_key),
         daemon=True,
     ).start()
 
-    return jsonify({"job_id": job_id, "session_id": session_id})
+    return jsonify({
+        "job_id": job_id,
+        "session_id": session_id,
+        "product_key": product_key,
+    })
+
+
+@app.route("/kosuri-products", methods=["GET"])
+def kosuri_products():
+    """利用可能な KOSURI 商品プロファイル一覧を返す（フロントの商品セレクタ用）。
+
+    返却例:
+      [{"product_key": "yomite_rkl", "client": "yomite", "product_name": "RKL 膝サポーター"}, ...]
+    """
+    try:
+        products = _list_kosuri_products()
+    except Exception as e:
+        print(f"[kosuri-products] error: {e}")
+        products = []
+    return jsonify({"products": products})
 
 
 @app.route("/fv-generated/<session_id>/<filename>")
@@ -1987,9 +2589,11 @@ def kosuri_chat():
 """,
         "fvgen": """
 【FV自動生成 モードの注意点】（今このモードを使っている）
-- ⚠️ ベータ版なので生成結果にばらつきがある！気に入らない場合は何度か試してみて
-- プロンプトはできるだけ具体的に書くと精度UP。「〇〇というサプリ、30〜40代女性向け、健康・美容訴求」みたいに書いてね
-- 商品の特徴・ターゲット層・訴求ポイントをプロンプトに含めると10パターンの差別化が出やすくなる
+- ⚠️ ベータ版だけど「商品」を選ぶと精度が段違いに上がる！ヨミテ4商品（gungun / proust / onmyskin / RKL）はプロファイル搭載済み
+- 商品を選ぶと → その商品のペルソナ・薬機法NG表現・勝ちコピー・モデル年齢を自動反映してくれる
+- RKLはシニア女性モデル・権威（デューク更家さん）を自動で盛り込む。gungunは薬機法strictで「身長が伸びる」等のNG表現を自動回避
+- 商品未選択でも動くけど汎用モードになる。最大精度で使うなら商品セレクタを使って
+- プロンプトはそれに追加する具体指示（今回の狙い・訴求軸など）を書いて。「今回はギフト需要狙い」みたいに
 - 「FV終了時刻」は動画のFVパートが終わる秒数。わからなければ目安で入れてOK
 - 生成された画像FVは静止画ベースになってる（現在仕様）。動画化は今後対応予定
 - 処理時間は5〜10分かかる。タブは閉じないで別タブで作業してて

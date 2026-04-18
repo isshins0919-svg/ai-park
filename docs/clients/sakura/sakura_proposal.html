@@ -292,6 +292,133 @@
     font-size: 14px; color: #d0ccd8; line-height: 1.9;
   }
 
+  /* ─── TikTokパターン比較 ─── */
+  .pattern-section {
+    padding: 56px 24px 64px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: #0d0b18;
+  }
+
+  .pattern-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .pattern-scene-label {
+    font-size: 10px; letter-spacing: 4px;
+    color: var(--pink); text-transform: uppercase;
+    display: block; margin-bottom: 10px;
+  }
+
+  .pattern-scene-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px; font-weight: 300;
+    color: #f8f4f0; margin-bottom: 6px;
+  }
+
+  .pattern-scene-caption {
+    font-size: 13px; color: var(--muted);
+  }
+
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .pattern-card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.02);
+    position: relative;
+  }
+
+  .pattern-phone-frame {
+    position: relative;
+    aspect-ratio: 9/16;
+    overflow: hidden;
+    background: #111;
+  }
+
+  .pattern-phone-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* TikTok UI overlay */
+  .tiktok-ui {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .tiktok-ui-right {
+    position: absolute;
+    right: 10px; bottom: 80px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 18px;
+  }
+
+  .tiktok-icon {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .tiktok-count {
+    font-size: 9px; color: rgba(255,255,255,0.8);
+    text-align: center; margin-top: -14px;
+    font-weight: 600;
+  }
+
+  .tiktok-ui-bottom {
+    position: absolute;
+    left: 12px; right: 60px; bottom: 12px;
+  }
+
+  .tiktok-username {
+    font-size: 11px; font-weight: 700;
+    color: #fff; margin-bottom: 4px;
+  }
+
+  .tiktok-desc {
+    font-size: 9px; color: rgba(255,255,255,0.75);
+    line-height: 1.5;
+  }
+
+  .tiktok-music {
+    font-size: 9px; color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+  }
+
+  .pattern-info {
+    padding: 14px 16px;
+  }
+
+  .pattern-id {
+    font-size: 10px; letter-spacing: 2px;
+    color: var(--gold); margin-bottom: 4px;
+  }
+
+  .pattern-label {
+    font-size: 12px; color: #d0ccd8; line-height: 1.6;
+  }
+
+  .prompt-toggle {
+    padding: 10px 16px 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .prompt-text {
+    font-size: 10px; color: #5a5570;
+    line-height: 1.7; font-family: monospace;
+  }
+
   /* ─── 投稿計画テーブル ─── */
   table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
 
@@ -369,10 +496,94 @@
   </p>
 </div>
 
-<!-- ─── P2: イメージ画像1 ─── -->
-<div class="page pg-img1">
-  <img src="sakura_images/sakura_img1.png" class="img-full" alt="さくらイメージ1">
-  <div class="img-caption">「深夜、ベッドで一人、発声練習してる。」</div>
+<!-- ─── P2: シーン1 パターン比較 ─── -->
+<div class="pattern-section">
+  <div class="pattern-header">
+    <span class="pattern-scene-label">Scene 01 — Shooting Patterns</span>
+    <p class="pattern-scene-title">深夜、ベッドで一人、発声練習してる。</p>
+    <p class="pattern-scene-caption">画角・距離・ライティング3パターン — TikTok縦型イメージ</p>
+  </div>
+  <div class="pattern-grid">
+
+    <!-- Pattern A -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene1_patternA.png" alt="Scene1 Pattern A">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">24.1K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">893</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">深夜の発声練習 🎙 #ウグイス嬢 #裏アカ</div>
+            <div class="tiktok-music">♪ lofi bgm - midnight study</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN A</div>
+        <div class="pattern-label">超クローズアップ — 唇と声<br>顔をフレームいっぱいに。声が聞こえてきそうな緊張感。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">extreme close-up · script in hand · warm bedside lamp · off-shoulder cream top</div>
+      </div>
+    </div>
+
+    <!-- Pattern B -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene1_patternB.png" alt="Scene1 Pattern B">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">38.7K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">1.2K</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">明日の試合、完璧にしないと 🌙 #練習</div>
+            <div class="tiktok-music">♪ ambient night - lo-fi chill</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN B</div>
+        <div class="pattern-label">横顔ドラマチックライト — 陰と光<br>ノワール調の明暗。プロとしての横顔を魅せる。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">3/4 side profile · chiaroscuro · amber shadow · satin camisole · phone mic</div>
+      </div>
+    </div>
+
+    <!-- Pattern C -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene1_patternC.png" alt="Scene1 Pattern C">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">19.4K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">640</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">この部屋だけが、本音の場所 ✨ #深夜</div>
+            <div class="tiktok-music">♪ bedroom session vol.3</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN C</div>
+        <div class="pattern-label">引き画 — 部屋ごと見せる<br>ベッドルーム全体の空気感。生活感がリアルさを生む。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">medium full-body · cross-legged · fairy lights bokeh · oversized knit · notepad</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- ─── P3: キャラクター設計 ─── -->
@@ -462,10 +673,94 @@
   </div>
 </div>
 
-<!-- ─── P5: イメージ画像2 ─── -->
-<div class="page pg-img2">
-  <img src="sakura_images/sakura_img2.png" class="img-full" alt="さくらイメージ2">
-  <div class="img-caption">声と肌と、深夜だけの空気。</div>
+<!-- ─── P5: シーン2 パターン比較 ─── -->
+<div class="pattern-section">
+  <div class="pattern-header">
+    <span class="pattern-scene-label">Scene 02 — Shooting Patterns</span>
+    <p class="pattern-scene-title">声と肌と、深夜だけの空気。</p>
+    <p class="pattern-scene-caption">体勢・ライト・視線の角度 3パターン</p>
+  </div>
+  <div class="pattern-grid">
+
+    <!-- Pattern A -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene2_patternA.png" alt="Scene2 Pattern A">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">51.2K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">2.1K</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">仕事終わり、ようやく一人になれた 🌙</div>
+            <div class="tiktok-music">♪ night air - ambient</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN A</div>
+        <div class="pattern-label">寝転び — 夢見る眼差し<br>真上からのPOV。視聴者が覗き込む没入感。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">lying on back · POV angle · half-lidded gaze · silk camisole · candlelight glow</div>
+      </div>
+    </div>
+
+    <!-- Pattern B -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene2_patternB.png" alt="Scene2 Pattern B">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">44.8K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">1.8K</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">声って、こんなにも正直なんだって思う #ASMR</div>
+            <div class="tiktok-music">♪ 深夜のささやき</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN B</div>
+        <div class="pattern-label">起き上がり × キャンドル<br>下からのアップライト。顔に立体感、印象的に。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">sitting upright · leaning forward · candle uplight · lace camisole · direct gaze</div>
+      </div>
+    </div>
+
+    <!-- Pattern C -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene2_patternC.png" alt="Scene2 Pattern C">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">62.3K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">3.4K</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">振り返ったら、全部バレちゃうから 🌙✨</div>
+            <div class="tiktok-music">♪ moonlight session</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN C</div>
+        <div class="pattern-label">振り返り — ミステリアス<br>後ろ姿→表情。「見てしまった」感が保存を生む。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">back-turned · glancing over shoulder · moonlight rim light · bare shoulder</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- ─── P6: 撮影の進め方 ─── -->
@@ -526,10 +821,94 @@
   </div>
 </div>
 
-<!-- ─── P7: イメージ画像3 ─── -->
-<div class="page pg-img3">
-  <img src="sakura_images/sakura_img3.png" class="img-full" alt="さくらイメージ3">
-  <div class="img-caption">この部屋だけで、本音を話す。</div>
+<!-- ─── P7: シーン3 パターン比較 ─── -->
+<div class="pattern-section">
+  <div class="pattern-header">
+    <span class="pattern-scene-label">Scene 03 — Shooting Patterns</span>
+    <p class="pattern-scene-title">この部屋だけで、本音を話す。</p>
+    <p class="pattern-scene-caption">表情・感情温度・リアリティ 3パターン</p>
+  </div>
+  <div class="pattern-grid">
+
+    <!-- Pattern A -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene3_patternA.png" alt="Scene3 Pattern A">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">87.1K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">4.9K</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">本当のことだけ、ここで話す。 #本音 #深夜</div>
+            <div class="tiktok-music">♪ silence - rainy night</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN A</div>
+        <div class="pattern-label">正面直視 — 感情の瞬間<br>涙が滲む瞳。スクロールが絶対に止まる。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">direct eye contact · glistening tears · no makeup · trembling lip · raw confession</div>
+      </div>
+    </div>
+
+    <!-- Pattern B -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene3_patternB.png" alt="Scene3 Pattern B">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">73.6K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">3.7K</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">言えないことが、一番伝わる気がする 🌙</div>
+            <div class="tiktok-music">♪ 3am thoughts</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN B</div>
+        <div class="pattern-label">俯き→カメラ目線 — 葛藤<br>目が合う瞬間を捉えた構図。映画的な余白。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">eyes just opening · conflicted · blue-grey midnight · loose bun · art film still</div>
+      </div>
+    </div>
+
+    <!-- Pattern C -->
+    <div class="pattern-card">
+      <div class="pattern-phone-frame">
+        <img src="sakura_images/pattern/scene3_patternC.png" alt="Scene3 Pattern C">
+        <div class="tiktok-ui">
+          <div class="tiktok-ui-right">
+            <div><div class="tiktok-icon">❤️</div><div class="tiktok-count">96.4K</div></div>
+            <div><div class="tiktok-icon">💬</div><div class="tiktok-count">5.8K</div></div>
+            <div><div class="tiktok-icon">↗️</div><div class="tiktok-count">シェア</div></div>
+          </div>
+          <div class="tiktok-ui-bottom">
+            <div class="tiktok-username">@sakura_ura</div>
+            <div class="tiktok-desc">誰にも言えなくて、でも誰かに聞いてほしくて。</div>
+            <div class="tiktok-music">♪ phone recording - ambient</div>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-info">
+        <div class="pattern-id">PATTERN C</div>
+        <div class="pattern-label">スマホ録画風 — セルフィー告白<br>TikTokネイティブ最高値。「本物感」が刺さる。</div>
+      </div>
+      <div class="prompt-toggle">
+        <div class="prompt-text">selfie-style · phone glow highlight · slight pout · dark room · native TikTok aesthetic</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- ─── P8: 台本の型 ─── -->
