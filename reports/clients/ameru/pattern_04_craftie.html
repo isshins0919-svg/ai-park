@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 04 · Craftie型手芸王道</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Shippori+Mincho:wght@500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing: border-box; }
+:root {
+  --off-white: #F9F6F0;
+  --warm: #F0E8D8;
+  --wood: #D9C4A3;
+  --wood-deep: #B8955F;
+  --sage: #94B596;
+  --rust: #C88868;
+  --ink: #3D3428;
+  --ink-sub: #7A6E5A;
+  --mid: #B5A88F;
+  --f-round: 'Zen Maru Gothic', sans-serif;
+  --f-min: 'Shippori Mincho', serif;
+  --f-hand: 'Caveat', cursive;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-round);
+  font-weight: 500;
+  background: var(--off-white);
+  color: var(--ink);
+  line-height: 2;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+
+.pattern-tag {
+  position: fixed;
+  top: 12px; left: 12px;
+  font-family: var(--f-hand);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--wood-deep);
+  z-index: 100;
+  background: rgba(249, 246, 240, 0.9);
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* FV */
+.fv {
+  position: relative;
+  padding: 28px 24px 60px;
+  background: var(--off-white);
+}
+.fv__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--warm);
+}
+.fv__logo {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--ink);
+  letter-spacing: 0.06em;
+}
+.fv__logo small {
+  display: block;
+  font-family: var(--f-round);
+  font-weight: 500;
+  font-size: 9px;
+  color: var(--ink-sub);
+  letter-spacing: 0.3em;
+  margin-top: 2px;
+}
+.fv__meta {
+  text-align: right;
+  font-family: var(--f-hand);
+  color: var(--wood-deep);
+  font-size: 14px;
+  line-height: 1.3;
+}
+.fv__meta b { display: block; color: var(--ink); font-weight: 500; font-size: 11px; letter-spacing: 0.25em; font-family: var(--f-round); }
+
+.fv__hero {
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.fv__hero img { width: 100%; height: 100%; object-fit: cover; }
+
+.fv__title {
+  text-align: center;
+  padding: 0 4px;
+}
+.fv__kicker {
+  font-family: var(--f-hand);
+  font-size: 18px;
+  color: var(--rust);
+  margin-bottom: 6px;
+}
+.fv__hd {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: clamp(24px, 7vw, 30px);
+  line-height: 1.75;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+}
+.fv__hd em {
+  font-style: normal;
+  color: var(--wood-deep);
+}
+.fv__lead {
+  font-size: 13px;
+  color: var(--ink-sub);
+  line-height: 2.1;
+  margin-bottom: 32px;
+}
+.fv__cta-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.fv__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 260px;
+  background: var(--ink);
+  color: var(--off-white);
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 18px 28px;
+  border-radius: 2px;
+  text-decoration: none;
+  letter-spacing: 0.12em;
+}
+.fv__cta-price {
+  font-family: var(--f-min);
+  font-weight: 600;
+  color: var(--wood);
+  font-size: 17px;
+}
+.fv__note {
+  font-family: var(--f-hand);
+  font-size: 14px;
+  color: var(--wood-deep);
+}
+
+/* Section */
+.sec {
+  padding: 80px 24px;
+}
+.sec--warm { background: var(--warm); }
+.sec--white { background: var(--off-white); }
+.sec--wood {
+  background: var(--wood);
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.04) 0, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 40px);
+}
+
+.sec__kicker {
+  font-family: var(--f-hand);
+  font-size: 18px;
+  color: var(--rust);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.sec__kicker--sage { color: var(--sage); }
+.sec__num {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: var(--ink-sub);
+  text-align: center;
+  margin-bottom: 8px;
+}
+.sec__hd {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-align: center;
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+}
+.sec__sub {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-sub);
+  line-height: 2.1;
+  margin-bottom: 36px;
+}
+.sec__img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+.sec__img img { width: 100%; height: 100%; object-fit: cover; }
+
+.sec__caption {
+  font-family: var(--f-hand);
+  font-size: 16px;
+  color: var(--wood-deep);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* Flow 3-step (Craftie signature) */
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.flow__item {
+  background: var(--off-white);
+  border: 1px solid var(--warm);
+  border-radius: 4px;
+  padding: 22px 20px;
+}
+.flow__item-num {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: var(--rust);
+  margin-bottom: 10px;
+}
+.flow__item-num b {
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--ink);
+  margin-right: 6px;
+  letter-spacing: 0;
+}
+.flow__item-t {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.flow__item-d {
+  font-size: 12px;
+  color: var(--ink-sub);
+  line-height: 1.95;
+}
+.flow__item-img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: 4px;
+  margin: 12px 0 10px;
+}
+.flow__item-img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Collection card grid */
+.coll {
+  margin-top: 8px;
+  background: var(--off-white);
+  padding: 28px 18px;
+  border-radius: 4px;
+  border: 1px solid var(--warm);
+}
+.coll__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+.coll__cell { text-align: center; }
+.coll__cell-dot {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 2px solid var(--off-white);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 4px;
+}
+.coll__cell-name {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 10px;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.coll__cell-no {
+  display: block;
+  font-family: var(--f-hand);
+  font-size: 11px;
+  color: var(--wood-deep);
+}
+
+/* Offer */
+.offer {
+  padding: 100px 24px;
+  background: var(--ink);
+  color: var(--off-white);
+  text-align: center;
+}
+.offer__kicker {
+  font-family: var(--f-hand);
+  font-size: 20px;
+  color: var(--wood);
+  margin-bottom: 6px;
+}
+.offer__hd {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  letter-spacing: 0.04em;
+}
+.offer__card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(217, 196, 163, 0.25);
+  border-radius: 4px;
+  padding: 32px 24px;
+  margin-bottom: 24px;
+}
+.offer__price-label {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--wood);
+  margin-bottom: 10px;
+}
+.offer__price-strike {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(217, 196, 163, 0.5);
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+.offer__price {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 68px;
+  line-height: 1;
+  color: var(--off-white);
+  letter-spacing: 0.02em;
+}
+.offer__price small {
+  font-size: 22px;
+  margin-left: 2px;
+}
+.offer__price-sub {
+  font-family: var(--f-round);
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--wood);
+  letter-spacing: 0.2em;
+  margin-top: 8px;
+}
+.offer__cta {
+  display: inline-block;
+  background: var(--wood);
+  color: var(--ink);
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  padding: 20px 40px;
+  text-decoration: none;
+  border-radius: 2px;
+  text-indent: 0.2em;
+}
+.offer__fine {
+  font-size: 10px;
+  color: rgba(217, 196, 163, 0.5);
+  line-height: 1.9;
+  margin-top: 22px;
+}
+
+/* Footer */
+.f {
+  padding: 60px 24px 50px;
+  background: var(--warm);
+  text-align: center;
+}
+.f__logo {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.f__tag {
+  font-family: var(--f-hand);
+  font-size: 14px;
+  color: var(--wood-deep);
+}
+
+/* Reveal */
+.rv { opacity: 0; transform: translateY(14px); transition: opacity 1.0s ease, transform 1.0s ease; }
+.rv.on { opacity: 1; transform: none; }
+.rv-2 { transition-delay: 0.12s; }
+.rv-3 { transition-delay: 0.24s; }
+</style>
+</head>
+<body>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 04 · craft kit</a></div>
+
+<!-- FV -->
+<section class="fv">
+  <div class="fv__bar rv">
+    <div class="fv__logo">ameru<small>手 芸 キ ッ ト</small></div>
+    <p class="fv__meta"><b>VOL. 01</b>はじめてさんの<br>あみぐるみ定期便</p>
+  </div>
+
+  <div class="fv__hero rv rv-2">
+    <img src="images/05_lifestyle_finished.png" alt="完成を手に" loading="eager">
+  </div>
+
+  <div class="fv__title rv rv-3">
+    <p class="fv__kicker">for the very first time.</p>
+    <h1 class="fv__hd">
+      編みものは、<br>
+      <em>はじめてさん</em>が、<br>
+      ちょうど楽しめる分量で。
+    </h1>
+    <p class="fv__lead">
+      月1、ポストに届くキット。<br>
+      ぜんぶ入っていて、動画を観るだけで進められる。
+    </p>
+
+    <div class="fv__cta-row">
+      <a href="#offer" class="fv__cta">
+        <span class="fv__cta-price">¥1,980〜</span>
+        はじめてみる
+      </a>
+      <p class="fv__note">— 送料無料／ いつでも解約</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- What's inside -->
+<section class="sec sec--warm">
+  <p class="sec__kicker rv">what's inside —</p>
+  <p class="sec__num rv">01 ／ ameru の中身</p>
+  <h2 class="sec__hd rv rv-2">ぜんぶ、<br>入っています。</h2>
+  <p class="sec__sub rv rv-3">
+    オリジナル糸、かぎ針、とじ針、目パーツ、わた、<br>
+    編み始め完成済みのパーツ、動画QR。<br>
+    買い足しは、要りません。
+  </p>
+  <div class="sec__img rv rv-3" style="aspect-ratio: 4/5;">
+    <img src="images/03_unboxing_flatlay.png" alt="全道具" loading="lazy">
+  </div>
+  <p class="sec__caption rv">all materials included ✓</p>
+</section>
+
+
+<!-- 3-step flow (Craftie signature) -->
+<section class="sec sec--white">
+  <p class="sec__kicker sec__kicker--sage rv">how to enjoy —</p>
+  <p class="sec__num rv">02 ／ 月1の、ながれ</p>
+  <h2 class="sec__hd rv rv-2">届いて、編んで、<br>飾る。</h2>
+
+  <div class="flow">
+    <div class="flow__item rv">
+      <p class="flow__item-num"><b>01</b>ARRIVE</p>
+      <h3 class="flow__item-t">月初、ポストに届く</h3>
+      <p class="flow__item-d">大きな段ボールは来ません。ポストに入る薄さでお届け。</p>
+      <div class="flow__item-img"><img src="images/02_package_lifestyle.png" alt="届く"></div>
+    </div>
+    <div class="flow__item rv">
+      <p class="flow__item-num"><b>02</b>CRAFT</p>
+      <h3 class="flow__item-t">動画を観ながら、編む</h3>
+      <p class="flow__item-d">難しい編み図は使いません。スマホで動画を観ながら手を動かすだけ。</p>
+      <div class="flow__item-img"><img src="images/04_hands_crafting.png" alt="編む"></div>
+    </div>
+    <div class="flow__item rv">
+      <p class="flow__item-num"><b>03</b>DISPLAY</p>
+      <h3 class="flow__item-t">飾るか、誰かに渡す</h3>
+      <p class="flow__item-d">棚に並べても、プレゼントにしても。ずもっぴは、あなたの作品。</p>
+      <div class="flow__item-img"><img src="images/06_shelf_display.png" alt="飾る"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Collection -->
+<section class="sec sec--wood">
+  <p class="sec__kicker rv" style="color: var(--ink);">the family —</p>
+  <p class="sec__num rv" style="color: var(--ink);">03 ／ 全5体</p>
+  <h2 class="sec__hd rv rv-2">ひと月ひとり、<br>家族が増えていく。</h2>
+
+  <div class="sec__img rv rv-3" style="aspect-ratio: 5/3;">
+    <img src="images/07_collection_preview.png" alt="5体" loading="lazy">
+  </div>
+
+  <div class="coll rv">
+    <div class="coll__grid">
+      <div class="coll__cell"><div class="coll__cell-dot" style="background:linear-gradient(135deg,#FFF,#EEE4D0);"></div><p class="coll__cell-name">ずもっぴ<span class="coll__cell-no">No.1</span></p></div>
+      <div class="coll__cell"><div class="coll__cell-dot" style="background:linear-gradient(135deg,#D0E5EF,#7FB5C8);"></div><p class="coll__cell-name">そら<span class="coll__cell-no">No.2</span></p></div>
+      <div class="coll__cell"><div class="coll__cell-dot" style="background:linear-gradient(135deg,#FBD3DC,#E8899F);"></div><p class="coll__cell-name">さくら<span class="coll__cell-no">No.3</span></p></div>
+      <div class="coll__cell"><div class="coll__cell-dot" style="background:linear-gradient(135deg,#DCEFD8,#94C59D);"></div><p class="coll__cell-name">もり<span class="coll__cell-no">No.4</span></p></div>
+      <div class="coll__cell"><div class="coll__cell-dot" style="background:linear-gradient(135deg,#EAD9F0,#B896D0);"></div><p class="coll__cell-name">ゆめ<span class="coll__cell-no">No.5</span></p></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Offer -->
+<section class="offer" id="offer">
+  <p class="offer__kicker rv">a gentle beginning —</p>
+  <h2 class="offer__hd rv rv-2">まず、<br>1体だけ、編んでみる。</h2>
+
+  <div class="offer__card rv rv-2">
+    <p class="offer__price-label">FIRST DELIVERY</p>
+    <div>
+      <span class="offer__price-strike">¥4,200</span>
+    </div>
+    <p class="offer__price">¥1,980<small>〜</small></p>
+    <p class="offer__price-sub">SEND FREE · CANCEL ANYTIME</p>
+  </div>
+
+  <a href="#" class="offer__cta rv rv-3">¥1,980 で、はじめる</a>
+
+  <p class="offer__fine rv rv-3">
+    2回目以降 ¥4,200 ／ いつでも解約・一時停止できます<br>
+    送料は初回無料、2回目以降 ¥420
+  </p>
+</section>
+
+<footer class="f">
+  <p class="f__logo">ameru</p>
+  <p class="f__tag">— a gentle amigurumi kit —</p>
+</footer>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 40 && r.bottom > -40) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive: true });
+  addEventListener('resize', on, { passive: true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>

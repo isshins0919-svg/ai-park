@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — 10 LP Patterns Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Bodoni+Moda:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: #F5F2ED;
+  color: #2E4A52;
+  padding: 60px 20px 80px;
+  min-height: 100vh;
+}
+.wrap { max-width: 1200px; margin: 0 auto; }
+h1 {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 600;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.4;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.lead {
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  color: #8FCFDD;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+.sub {
+  font-size: 13px;
+  color: #6B8590;
+  line-height: 1.9;
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+.nav-back {
+  display: inline-block;
+  font-size: 11px;
+  color: #8FA5AE;
+  margin-bottom: 20px;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+}
+.nav-back:hover { color: #2E4A52; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+}
+.card {
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(46, 74, 82, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(46, 74, 82, 0.15);
+}
+.card__num {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 22px;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 2;
+}
+.card__hero {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.card__hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.card:hover .card__hero img { transform: scale(1.05); }
+.card__body {
+  padding: 20px 22px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card__pattern-tag {
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #8FCFDD;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.card__title {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  color: #2E4A52;
+}
+.card__ref {
+  font-size: 11px;
+  color: #6B8590;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.card__ref b { color: #3A5F6A; }
+.card__dna {
+  font-size: 11.5px;
+  line-height: 1.8;
+  color: #7A8B93;
+  margin-top: auto;
+}
+.note {
+  margin-top: 56px;
+  padding: 20px 24px;
+  background: #FFF8F3;
+  border-left: 3px solid #8FCFDD;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: #6B8590;
+}
+.note b { color: #2E4A52; }
+/* Gradient hero fallback */
+.hero-gradient {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="ameru_lp_v5_masterpiece.html" class="nav-back">← v5 Masterpiece に戻る</a>
+  <p class="lead">ameru — 10 LP Patterns</p>
+  <h1>本物のLPを、<br>根本から研究してパクった10本。</h1>
+  <p class="sub">
+    SHIRO・snaq.me・FUJIMI・Craftie・BASE FOOD・The Woobles・北欧 暮らしの道具店・MEDULLA・BAKE・D2Cインタビュー。<br>
+    日本と海外の実在ブランドLPを、設計DNAレベルで再現しameruに翻訳しています。<br>
+    各パターンは独立した世界観で、同じ画像資産から別のLPが建つ実証です。
+  </p>
+
+  <div class="grid">
+
+    <a class="card" href="pattern_01_shiro.html">
+      <div class="card__hero">
+        <span class="card__num">01</span>
+        <img src="images/01_zumoppi_hero.png" alt="SHIRO型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">MINIMAL</p>
+        <h3 class="card__title">SHIRO型 — 極ミニマル</h3>
+        <p class="card__ref">参考: <b>SHIRO</b> / meeth</p>
+        <p class="card__dna">極細明朝 · 80%白 · 1画面1要素 · 引き算の極地</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_02_snaqme.html">
+      <div class="card__hero">
+        <span class="card__num">02</span>
+        <img src="images/03_unboxing_flatlay.png" alt="snaq.me型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">FLAT LAY</p>
+        <h3 class="card__title">snaq.me型 — 開封体験</h3>
+        <p class="card__ref">参考: <b>snaq.me</b> / lp.snaq.me</p>
+        <p class="card__dna">パステル色面 · 俯瞰フラットレイ · 丸ゴシック · confetti</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_03_fujimi.html">
+      <div class="card__hero">
+        <span class="card__num">03</span>
+        <img src="images/02_package_lifestyle.png" alt="FUJIMI型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">MAGAZINE</p>
+        <h3 class="card__title">FUJIMI型 — ピンクベージュ雑誌</h3>
+        <p class="card__ref">参考: <b>FUJIMI</b> / meeth</p>
+        <p class="card__dna">ピンクベージュ · パッケージ主役 · Serif+Italic · カタログ</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_04_craftie.html">
+      <div class="card__hero">
+        <span class="card__num">04</span>
+        <img src="images/05_lifestyle_finished.png" alt="Craftie型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">CRAFT KIT</p>
+        <h3 class="card__title">Craftie型 — 手芸王道</h3>
+        <p class="card__ref">参考: <b>Craftie Home Box</b></p>
+        <p class="card__dna">木目+オフホワイト · 完成→BOX→暮らし · 丸ゴシック</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_05_basefood.html">
+      <div class="card__hero">
+        <span class="card__num">05</span>
+        <img src="images/03_unboxing_flatlay.png" alt="BASE FOOD型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">LONG FORM</p>
+        <h3 class="card__title">BASE FOOD型 — 情報CVR長尺</h3>
+        <p class="card__ref">参考: <b>BASE FOOD</b> / PHOEBE BEAUTY UP</p>
+        <p class="card__dna">長尺 · 図解・比較表・Q&A · ゴシック強 · CVR型</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_06_woobles.html">
+      <div class="card__hero">
+        <span class="card__num">06</span>
+        <img src="images/04_hands_crafting.png" alt="Woobles型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">VIDEO FIRST</p>
+        <h3 class="card__title">Woobles型 — プロセス動画主役</h3>
+        <p class="card__ref">参考: <b>The Woobles</b> / Allbirds</p>
+        <p class="card__dna">動画FV · 英語×和 · Before/After · モダン余白</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_07_hokuoh.html">
+      <div class="card__hero">
+        <span class="card__num">07</span>
+        <img src="images/06_shelf_display.png" alt="北欧型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">MEDIA</p>
+        <h3 class="card__title">北欧、暮らしの道具店型 — 記事LP</h3>
+        <p class="card__ref">参考: <b>北欧、暮らしの道具店</b></p>
+        <p class="card__dna">A1明朝 · ブログ記事構造 · ドロップキャップ · エッセイ</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_08_medulla.html">
+      <div class="card__hero">
+        <span class="card__num">08</span>
+        <img src="images/07_collection_preview.png" alt="MEDULLA型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">QUIZ</p>
+        <h3 class="card__title">MEDULLA型 — 診断LP</h3>
+        <p class="card__ref">参考: <b>MEDULLA</b> / HOTARU / FUJIMI診断</p>
+        <p class="card__dna">3問診断 · 結果表示 · インタラクティブ · モダン</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_09_bake.html">
+      <div class="card__hero">
+        <span class="card__num">09</span>
+        <img src="images/01_zumoppi_hero.png" alt="BAKE型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">ART DIRECTION</p>
+        <h3 class="card__title">BAKE型 — アート写真×大胆コピー</h3>
+        <p class="card__ref">参考: <b>BAKE</b> / minimal / UNIQLO LifeWear</p>
+        <p class="card__dna">低彩度 · Serif Display · 美術館モード · 余白</p>
+      </div>
+    </a>
+
+    <a class="card" href="pattern_10_interview.html">
+      <div class="card__hero">
+        <span class="card__num">10</span>
+        <img src="images/04_hands_crafting.png" alt="創業ストーリー型">
+      </div>
+      <div class="card__body">
+        <p class="card__pattern-tag">NARRATIVE</p>
+        <h3 class="card__title">創業ストーリー型 — D2C Letter</h3>
+        <p class="card__ref">参考: <b>BAKE About</b> / minimal Concept / WWD JP</p>
+        <p class="card__dna">創業者Q&A · 手紙調 · 明朝重め · 署名 · LTV特化</p>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="note">
+    <p><b>⚠ 読み方 ·</b> 各パターンはFV + 主要3〜5セクションで設計DNAを示しています。同じ画像を使い、タイポ・配色・リズムだけで「別のLP」として成立することを実証しています。</p>
+    <p style="margin-top: 10px;">作戦的には、広告媒体・ターゲット層ごとに最適な1本を選ぶ or A/Bテストで回すのがベストです。Y（CVR派）・E（編集派）・X（UX派）の3専門家が合議で選定した10本構成です。</p>
+  </div>
+</div>
+</body>
+</html>

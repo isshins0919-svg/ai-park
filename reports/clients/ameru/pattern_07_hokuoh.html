@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 07 · 北欧暮らしの道具店型メディア</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500&family=Bodoni+Moda:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing: border-box; }
+:root {
+  --paper: #F7F4EE;
+  --cream: #FBF8F2;
+  --sand: #E8DFCE;
+  --stone: #C5BAA6;
+  --accent: #7A9575;
+  --terra: #B5785A;
+  --ink: #2B2620;
+  --ink-body: #3E3A34;
+  --ink-sub: #7A7266;
+  --mid: #B8B0A3;
+  --line: #E0D8C8;
+  --f-min: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  --f-sans: 'Noto Sans JP', sans-serif;
+  --f-italic: 'Bodoni Moda', serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-min);
+  font-weight: 400;
+  background: var(--paper);
+  color: var(--ink-body);
+  line-height: 2.1;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt" 1;
+}
+img { display: block; max-width: 100%; }
+
+.pattern-tag {
+  position: fixed;
+  top: 12px; left: 12px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--accent);
+  z-index: 100;
+  background: rgba(247, 244, 238, 0.9);
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* Site header */
+.site {
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+  background: var(--cream);
+}
+.site__logo {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.site__tag {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-sub);
+  letter-spacing: 0.2em;
+}
+.breadcrumb {
+  font-family: var(--f-sans);
+  font-size: 10px;
+  color: var(--ink-sub);
+  letter-spacing: 0.15em;
+  padding: 14px 24px 8px;
+  text-align: center;
+}
+.breadcrumb a { color: inherit; text-decoration: none; }
+.breadcrumb span { color: var(--stone); margin: 0 6px; }
+
+/* Article hero */
+.art-hero {
+  padding: 24px 32px 32px;
+  text-align: center;
+}
+.art-hero__category {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.25em;
+  margin-bottom: 8px;
+}
+.art-hero__title {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: clamp(24px, 7vw, 30px);
+  line-height: 1.75;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+.art-hero__lead {
+  font-size: 13px;
+  color: var(--ink-sub);
+  line-height: 2.1;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.art-hero__meta {
+  margin-top: 20px;
+  font-family: var(--f-sans);
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: 0.15em;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+}
+.art-hero__meta span { height: 1px; width: 16px; background: var(--stone); display: inline-block; }
+
+/* Cover image */
+.cover {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.cover img { width: 100%; height: 100%; object-fit: cover; }
+.cover__caption {
+  padding: 10px 32px 20px;
+  font-family: var(--f-sans);
+  font-size: 10px;
+  color: var(--ink-sub);
+  letter-spacing: 0.1em;
+  text-align: center;
+  line-height: 1.6;
+  background: var(--cream);
+}
+.cover__caption b { color: var(--ink-body); font-weight: 500; }
+
+/* Article body */
+.article {
+  padding: 40px 32px 0;
+  background: var(--cream);
+}
+.article p {
+  font-size: 14.5px;
+  line-height: 2.15;
+  color: var(--ink-body);
+  letter-spacing: 0.02em;
+  margin-bottom: 28px;
+}
+.article p:first-child::first-letter {
+  font-family: var(--f-min);
+  font-weight: 700;
+  font-size: 56px;
+  float: left;
+  line-height: 0.9;
+  padding: 6px 8px 0 0;
+  color: var(--terra);
+}
+.article h2 {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin: 38px 0 16px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.article h2::before {
+  content: '§';
+  position: absolute;
+  top: -12px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--cream);
+  padding: 0 12px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--terra);
+  font-size: 22px;
+}
+.article h2 .small {
+  display: block;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-sub);
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+.article__img {
+  width: calc(100% + 64px);
+  margin: 20px -32px 28px;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.article__img img { width: 100%; height: 100%; object-fit: cover; }
+.article__img-cap {
+  font-family: var(--f-sans);
+  font-size: 10px;
+  color: var(--ink-sub);
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin: -18px -32px 28px;
+  padding: 0 32px;
+}
+.article__pullquote {
+  position: relative;
+  border: none;
+  padding: 32px 24px 32px 48px;
+  margin: 32px -12px;
+  background: var(--paper);
+  border-radius: 2px;
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.95;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+}
+.article__pullquote::before {
+  content: '"';
+  position: absolute;
+  top: 8px; left: 12px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 64px;
+  color: var(--terra);
+  line-height: 1;
+}
+.article__pullquote cite {
+  display: block;
+  font-family: var(--f-sans);
+  font-size: 11px;
+  color: var(--ink-sub);
+  font-style: normal;
+  margin-top: 12px;
+  letter-spacing: 0.1em;
+}
+.article__pullquote cite::before { content: '— '; }
+
+/* Inline note */
+.note-block {
+  background: var(--paper);
+  border-left: 3px solid var(--accent);
+  padding: 18px 22px;
+  margin: 28px 0;
+  font-size: 13px;
+  line-height: 2;
+  color: var(--ink-body);
+  border-radius: 2px;
+}
+.note-block b {
+  color: var(--accent);
+  font-weight: 600;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 6px;
+  letter-spacing: 0.1em;
+}
+
+/* 2-col gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0 -8px 28px;
+}
+.gallery__img {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+.gallery__img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Author card */
+.author {
+  padding: 32px;
+  margin: 48px -32px 0;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.author__photo {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 12px;
+  background: var(--sand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--terra);
+  font-weight: 700;
+}
+.author__name {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+.author__role {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-sub);
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+}
+.author__bio {
+  font-size: 12px;
+  color: var(--ink-sub);
+  line-height: 2;
+  letter-spacing: 0.02em;
+}
+
+/* Product CTA — 記事の最後に自然に出現 */
+.product {
+  margin: 0;
+  background: var(--cream);
+  padding: 56px 32px 60px;
+  border-top: 1px solid var(--line);
+}
+.product__tag {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.product__hd {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.8;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin-bottom: 22px;
+}
+.product__card {
+  background: var(--paper);
+  padding: 28px 22px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+}
+.product__card-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.product__card-img img { width: 100%; height: 100%; object-fit: cover; }
+.product__card-name {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.product__card-sub {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-sub);
+  letter-spacing: 0.15em;
+  text-align: center;
+  margin-bottom: 18px;
+}
+.product__card-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.product__card-price-strike {
+  font-family: var(--f-min);
+  font-size: 13px;
+  color: var(--mid);
+  text-decoration: line-through;
+}
+.product__card-price {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 32px;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.product__card-price small {
+  font-size: 14px;
+  margin-left: 2px;
+}
+.product__card-note {
+  font-family: var(--f-sans);
+  font-size: 10px;
+  color: var(--ink-sub);
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.product__cta {
+  display: block;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-align: center;
+  padding: 18px;
+  text-decoration: none;
+  text-indent: 0.3em;
+}
+.product__fine {
+  font-size: 10.5px;
+  color: var(--ink-sub);
+  line-height: 2;
+  text-align: center;
+  margin-top: 18px;
+}
+
+/* Footer */
+.f {
+  padding: 50px 32px 40px;
+  background: var(--paper);
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+.f__logo {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.f__tag {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-sub);
+  letter-spacing: 0.2em;
+}
+
+.rv { opacity: 0; transform: translateY(14px); transition: opacity 1.0s ease, transform 1.0s ease; }
+.rv.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 07 · media</a></div>
+
+<header class="site">
+  <p class="site__logo">ameru</p>
+  <p class="site__tag">journal / amigurumi of every day</p>
+</header>
+
+<p class="breadcrumb">
+  <a href="#">HOME</a> <span>›</span> <a href="#">JOURNAL</a> <span>›</span> <a href="#">CRAFT</a> <span>›</span> Vol. 01
+</p>
+
+<div class="art-hero">
+  <p class="art-hero__category rv">— A gentle essay / craft —</p>
+  <h1 class="art-hero__title rv">
+    編みものなんて、<br>
+    きっと縁がないと思っていた。
+  </h1>
+  <p class="art-hero__lead rv">
+    そんな私が、月1で届く「ameru」を始めてから、少しだけ、時間の過ごし方が変わりました。完成させるたび、家族が増えていくような。
+  </p>
+  <p class="art-hero__meta rv">
+    <span></span>2026.04.19<span></span>by YOMITE
+  </p>
+</div>
+
+<div class="cover rv">
+  <img src="images/04_hands_crafting.png" alt="編んでいる手元" loading="eager">
+</div>
+<p class="cover__caption">
+  <b>写真 ·</b> 窓辺で編む、ある土曜日の午後。<br>光と糸と、手の時間。
+</p>
+
+<article class="article">
+  <p>
+    たぶん私は、手芸が得意な側の人間ではない、とずっと思っていました。小学校のクロスステッチで針を折り、中学の家庭科で雑巾を縫って以来、糸や針を手に取ったことがなかった。
+  </p>
+
+  <p>
+    そんな私が、あみぐるみを始めることになったのは、ある金曜の夜、推しのぬいぐるみを見ていて、「これ、自分で作れたら、もっと特別なのに」とふと思ったからでした。
+  </p>
+
+  <div class="article__img">
+    <img src="images/02_package_lifestyle.png" alt="届いた箱" loading="lazy">
+  </div>
+  <p class="article__img-cap">— 届いたパッケージ。思っていたより、小さかった。</p>
+
+  <h2><span class="small">01 / UNBOX</span>届いたのは、思っていたより小さな箱でした</h2>
+
+  <p>
+    ameruは、ポストに入る薄さで届きます。大きな段ボールは来ません。開けたら、糸と、かぎ針と、目パーツと、わた。それから「編み始め完成済み」と書かれたパーツと、QRコードのついた動画の案内。
+  </p>
+
+  <p>
+    説明書は、ありません。QRを読み込んで、動画を観ながら、手を動かす。それだけです。<em>編み図を読めないから始められない</em>、という言い訳の入口を、先に塞いでくれていました。
+  </p>
+
+  <div class="article__pullquote">
+    最初の一目は、<br>
+    わたしが、いりませんでした。
+    <cite>ameru Journal より</cite>
+  </div>
+
+  <h2><span class="small">02 / START</span>最初の一目は、すでに編まれていました</h2>
+
+  <p>
+    私がずっと挫折していたのは、編み始めの「輪の作り目」のところだったのだ、と、あとから知りました。ameruは、いちばん難しいそこを、あらかじめ編んでおいてくれる。だから届いたときにはもう、半分、ずもっぴになっている。
+  </p>
+
+  <div class="note-block">
+    <b>editor's note</b>
+    「編み始め完成済み」の工程は、ameru創業メンバーが初心者100人に聞き取りをして、「最初の数段がいちばん挫折する」と分かったことから生まれた設計です。
+  </div>
+
+  <p>
+    動画を観ながら、細編みを一目一目、増やしていきます。失敗しても、大丈夫。動画は、何度でも戻せます。分からなくなったら、少し休んで、また続ける。
+  </p>
+
+  <div class="gallery">
+    <div class="gallery__img"><img src="images/04_hands_crafting.png" alt="編む1" loading="lazy"></div>
+    <div class="gallery__img"><img src="images/05_lifestyle_finished.png" alt="完成1" loading="lazy"></div>
+  </div>
+
+  <h2><span class="small">03 / FINISH</span>3日目の夜、ずもっぴができあがりました</h2>
+
+  <p>
+    2日目は、お茶を飲みながら、音楽をかけて、ゆっくり編みました。3日目の夜、最後のひと針を縫って、顔のパーツをつけたら、急に、机の上にずもっぴが現れました。
+  </p>
+
+  <p>
+    自分の手で、こんなに可愛い子が生まれるのか、と、泣きそうになりました。
+  </p>
+
+  <div class="article__img" style="aspect-ratio: 4/5;">
+    <img src="images/05_lifestyle_finished.png" alt="完成したずもっぴを持つ" loading="lazy">
+  </div>
+  <p class="article__img-cap">— 手の中にできた、わたしのずもっぴ。</p>
+
+  <h2><span class="small">04 / LIFE</span>毎月1体、家族が増えていきます</h2>
+
+  <p>
+    ameruは、月に1度、次のずもっぴが届きます。ずもっぴ、そら、さくら、もり、ゆめ。全5体。棚に並べると、家族が育っていくような気持ちになります。
+  </p>
+
+  <p>
+    次は、そら、です。水色の子。次の土曜日が、楽しみです。
+  </p>
+
+  <div class="article__img" style="aspect-ratio: 4/3;">
+    <img src="images/06_shelf_display.png" alt="棚のずもっぴ" loading="lazy">
+  </div>
+  <p class="article__img-cap">— 棚の上に、増えていく家族。</p>
+
+  <div class="author rv">
+    <div class="author__photo">Y</div>
+    <p class="author__name">yomite</p>
+    <p class="author__role">editor / ameru journal</p>
+    <p class="author__bio">
+      ameruの編集とデザインを担当。編みものは大人になってから始めた、という人こそ、ameruの最初のお客様です。
+    </p>
+  </div>
+</article>
+
+
+<!-- Product block -->
+<section class="product">
+  <p class="product__tag">— FOR THE READER —</p>
+  <h2 class="product__hd">
+    記事でご紹介した<br>
+    ameruの定期便
+  </h2>
+
+  <div class="product__card rv">
+    <div class="product__card-img">
+      <img src="images/01_zumoppi_hero.png" alt="ameruキット">
+    </div>
+    <p class="product__card-name">ameru あみぐるみ定期便</p>
+    <p class="product__card-sub">— No. 01 / Zumoppi —</p>
+
+    <div class="product__card-price-row">
+      <span class="product__card-price-strike">¥4,200</span>
+      <span class="product__card-price">¥1,980<small>〜</small></span>
+    </div>
+    <p class="product__card-note">First delivery / Free shipping</p>
+
+    <a href="#" class="product__cta">¥1,980 で、はじめる</a>
+
+    <p class="product__fine">
+      2回目以降 ¥4,200 ／ いつでも解約できます<br>
+      送料は初回無料、2回目以降 ¥420
+    </p>
+  </div>
+</section>
+
+<footer class="f">
+  <p class="f__logo">ameru</p>
+  <p class="f__tag">journal / amigurumi of every day</p>
+</footer>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 60 && r.bottom > -60) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive: true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>

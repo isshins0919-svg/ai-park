@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 08 · MEDULLA型診断LP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing: border-box; }
+:root {
+  --bg: #FAFAF8;
+  --card: #FFFFFF;
+  --soft: #F0EEEA;
+  --line: #E8E5DF;
+  --ink: #1F1F1F;
+  --ink-sub: #6B6B6B;
+  --mid: #A8A8A8;
+  --accent: #4A4A4A;
+  --highlight: #D4B896;
+  --highlight-soft: #F3E9D7;
+  --f-sans: 'Noto Sans JP', 'Inter', sans-serif;
+  --f-en: 'Inter', sans-serif;
+  --f-display: 'Playfair Display', serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+
+.pattern-tag {
+  position: fixed;
+  top: 12px; left: 12px;
+  font-family: var(--f-en);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--highlight);
+  z-index: 100;
+  background: rgba(250, 250, 248, 0.9);
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* Top brand */
+.top {
+  padding: 22px 24px 12px;
+  text-align: center;
+}
+.top__logo {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+}
+.top__tag {
+  font-family: var(--f-en);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--mid);
+  letter-spacing: 0.2em;
+  margin-top: 2px;
+}
+
+/* FV */
+.fv {
+  padding: 30px 28px 50px;
+  text-align: center;
+}
+.fv__kicker {
+  font-family: var(--f-en);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--highlight);
+  letter-spacing: 0.2em;
+  margin-bottom: 14px;
+}
+.fv__hd {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: clamp(24px, 6.5vw, 30px);
+  line-height: 1.75;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin-bottom: 14px;
+}
+.fv__hd em {
+  font-style: italic;
+  font-family: var(--f-display);
+  font-weight: 500;
+  color: var(--highlight);
+  font-size: 115%;
+  padding: 0 4px;
+}
+.fv__lead {
+  font-size: 13px;
+  color: var(--ink-sub);
+  line-height: 2;
+  margin-bottom: 30px;
+}
+.fv__hero {
+  width: 72%;
+  aspect-ratio: 1/1;
+  margin: 0 auto 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(31, 31, 31, 0.08);
+}
+.fv__hero img { width: 100%; height: 100%; object-fit: cover; }
+.fv__cta-primary {
+  display: inline-block;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  padding: 20px 44px;
+  text-decoration: none;
+  border-radius: 60px;
+  text-indent: 0.25em;
+  transition: transform 0.1s ease;
+}
+.fv__cta-primary:active { transform: scale(0.98); }
+.fv__cta-sub {
+  display: block;
+  font-family: var(--f-en);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--mid);
+  letter-spacing: 0.15em;
+  margin-top: 14px;
+}
+.fv__cta-sub b { color: var(--ink); font-weight: 600; font-style: normal; }
+
+/* Progress bar (visual cue) */
+.progress {
+  padding: 24px 28px 16px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  background: var(--card);
+}
+.progress__step {
+  font-family: var(--f-en);
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: 0.3em;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.progress__step b { color: var(--ink); font-weight: 700; }
+.progress__bar {
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress__bar-fill {
+  height: 100%;
+  background: var(--highlight);
+  width: 33%;
+  transition: width 0.6s ease;
+}
+
+/* Quiz section */
+.quiz {
+  padding: 40px 28px 32px;
+  background: var(--card);
+}
+.quiz__qnum {
+  font-family: var(--f-en);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--highlight);
+  letter-spacing: 0.3em;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.quiz__q {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 1.7;
+  text-align: center;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin-bottom: 28px;
+}
+.quiz__options { display: flex; flex-direction: column; gap: 10px; }
+.quiz__opt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.quiz__opt:hover {
+  background: var(--highlight-soft);
+  border-color: var(--highlight);
+  transform: translateX(4px);
+}
+.quiz__opt-icon {
+  width: 36px; height: 36px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--f-en);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--highlight);
+}
+.quiz__opt-t {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.quiz__opt-t small {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--ink-sub);
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+/* Result (preview) */
+.result {
+  padding: 60px 28px 40px;
+  text-align: center;
+  background:
+    linear-gradient(180deg, var(--highlight-soft) 0%, var(--bg) 100%);
+}
+.result__kicker {
+  font-family: var(--f-en);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--highlight);
+  letter-spacing: 0.3em;
+  margin-bottom: 6px;
+}
+.result__hd {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.75;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.result__hd em {
+  font-style: italic;
+  font-family: var(--f-display);
+  font-weight: 500;
+  color: var(--highlight);
+  font-size: 120%;
+}
+.result__sub {
+  font-family: var(--f-en);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--mid);
+  letter-spacing: 0.2em;
+  margin-bottom: 26px;
+}
+.result__card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 16px 40px rgba(31, 31, 31, 0.08);
+  margin: 20px 0;
+  text-align: left;
+}
+.result__card-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: -60px auto 16px;
+  width: 128px;
+  height: 128px;
+  border: 4px solid var(--card);
+  box-shadow: 0 10px 24px rgba(31, 31, 31, 0.12);
+  display: block;
+}
+.result__card-img img { width: 100%; height: 100%; object-fit: cover; }
+.result__card-label {
+  font-family: var(--f-en);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--highlight);
+  letter-spacing: 0.3em;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.result__card-name {
+  font-family: var(--f-sans);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+  text-align: center;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+.result__card-name span {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--highlight);
+  font-size: 120%;
+}
+.result__card-desc {
+  font-size: 12.5px;
+  color: var(--ink-sub);
+  line-height: 2;
+  text-align: center;
+  margin-bottom: 18px;
+}
+.result__card-attrs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  margin-bottom: 18px;
+}
+.result__attr { text-align: center; }
+.result__attr-label {
+  font-family: var(--f-en);
+  font-size: 9px;
+  color: var(--mid);
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.result__attr-val {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.result__cta {
+  display: block;
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  padding: 18px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 50px;
+  text-indent: 0.25em;
+}
+.result__cta em {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--highlight);
+  letter-spacing: 0;
+  margin-right: 4px;
+  font-size: 120%;
+}
+.result__fine {
+  font-family: var(--f-en);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: 0.1em;
+  margin-top: 12px;
+}
+
+/* 5 types preview */
+.types {
+  padding: 50px 28px;
+  background: var(--card);
+}
+.types__hd {
+  text-align: center;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.types__sub {
+  text-align: center;
+  font-family: var(--f-en);
+  font-size: 11px;
+  color: var(--mid);
+  letter-spacing: 0.25em;
+  margin-bottom: 28px;
+}
+.types__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+.types__cell { text-align: center; }
+.types__dot {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  margin-bottom: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+.types__name {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--ink);
+}
+.types__no {
+  display: block;
+  font-family: var(--f-en);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: 0.05em;
+}
+
+/* Explain */
+.explain {
+  padding: 40px 28px 50px;
+  background: var(--bg);
+  text-align: center;
+}
+.explain__hd {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+.explain__body {
+  font-size: 12.5px;
+  color: var(--ink-sub);
+  line-height: 2.1;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* Footer */
+.f {
+  padding: 40px 28px 32px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  background: var(--card);
+}
+.f__logo {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+.f__tag {
+  font-family: var(--f-en);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: 0.2em;
+}
+
+.rv { opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.rv.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 08 · quiz</a></div>
+
+<header class="top">
+  <p class="top__logo">ameru</p>
+  <p class="top__tag">— find your zumoppi —</p>
+</header>
+
+<!-- FV -->
+<section class="fv">
+  <p class="fv__kicker rv">— A GENTLE DIAGNOSIS —</p>
+  <h1 class="fv__hd rv">
+    あなたの最初の<br>
+    <em>ずもっぴ</em>は、<br>
+    どの子ですか？
+  </h1>
+  <p class="fv__lead rv">
+    3つの質問で、あなたに合う No.01〜05 のずもっぴを<br>
+    静かに選んでお届けします。
+  </p>
+
+  <div class="fv__hero rv">
+    <img src="images/01_zumoppi_hero.png" alt="ずもっぴ">
+  </div>
+
+  <a href="#q1" class="fv__cta-primary rv">診 断 を は じ め る</a>
+  <p class="fv__cta-sub rv">— 所要時間 <b>30秒</b> · 診断無料 —</p>
+</section>
+
+
+<!-- Quiz intro with progress -->
+<div class="progress" id="q1">
+  <p class="progress__step">STEP <b>01</b> / 03</p>
+  <div class="progress__bar"><div class="progress__bar-fill"></div></div>
+</div>
+
+<section class="quiz">
+  <p class="quiz__qnum rv">— Q U E S T I O N  0 1 —</p>
+  <h2 class="quiz__q rv">
+    いまの気分にいちばん<br>近い色は、どれですか？
+  </h2>
+
+  <div class="quiz__options rv">
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">A</div>
+      <div class="quiz__opt-t">やわらかい白<small>pure · quiet · simple</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">B</div>
+      <div class="quiz__opt-t">澄んだ水色<small>calm · open · fresh</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">C</div>
+      <div class="quiz__opt-t">桜のピンク<small>soft · romantic · warm</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">D</div>
+      <div class="quiz__opt-t">森のみどり<small>grounded · natural · still</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">E</div>
+      <div class="quiz__opt-t">夢見るパープル<small>poetic · dream · deep</small></div>
+    </div>
+  </div>
+</section>
+
+
+<div class="progress">
+  <p class="progress__step">STEP <b>02</b> / 03</p>
+  <div class="progress__bar"><div class="progress__bar-fill" style="width: 66%;"></div></div>
+</div>
+
+<section class="quiz">
+  <p class="quiz__qnum rv">— Q U E S T I O N  0 2 —</p>
+  <h2 class="quiz__q rv">
+    編みあがったら、<br>
+    どこに置きたいですか？
+  </h2>
+
+  <div class="quiz__options rv">
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">A</div>
+      <div class="quiz__opt-t">仕事のデスクに<small>every day company</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">B</div>
+      <div class="quiz__opt-t">寝室の棚に<small>nightly companion</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">C</div>
+      <div class="quiz__opt-t">リビングの本棚に<small>a warm view</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">D</div>
+      <div class="quiz__opt-t">大切な人にプレゼント<small>a thoughtful gift</small></div>
+    </div>
+  </div>
+</section>
+
+
+<div class="progress">
+  <p class="progress__step">STEP <b>03</b> / 03</p>
+  <div class="progress__bar"><div class="progress__bar-fill" style="width: 100%;"></div></div>
+</div>
+
+<section class="quiz">
+  <p class="quiz__qnum rv">— Q U E S T I O N  0 3 —</p>
+  <h2 class="quiz__q rv">
+    編むときの音楽、<br>
+    どれを選びますか？
+  </h2>
+
+  <div class="quiz__options rv">
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">A</div>
+      <div class="quiz__opt-t">lo-fi ビート<small>quiet focus</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">B</div>
+      <div class="quiz__opt-t">推しの新曲<small>excitement</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">C</div>
+      <div class="quiz__opt-t">Podcast<small>gentle company</small></div>
+    </div>
+    <div class="quiz__opt">
+      <div class="quiz__opt-icon">D</div>
+      <div class="quiz__opt-t">雨の音<small>still silence</small></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- RESULT -->
+<section class="result">
+  <p class="result__kicker rv">— YOUR RESULT —</p>
+  <h2 class="result__hd rv">
+    あなたの最初の<br>
+    ずもっぴは、<em>Zumoppi</em>。
+  </h2>
+  <p class="result__sub rv">— NO. 01 · pure &amp; quiet —</p>
+
+  <div class="result__card rv">
+    <div class="result__card-img">
+      <img src="images/01_zumoppi_hero.png" alt="ずもっぴ">
+    </div>
+    <p class="result__card-label">— NO. 01 —</p>
+    <p class="result__card-name">Zumoppi <span>/</span> ず も っ ぴ</p>
+    <p class="result__card-desc">
+      いちばん最初に生まれた、ameruの顔。<br>
+      白くて、ふわふわで、控えめ。<br>
+      はじめての編みものに、いちばん優しい子です。
+    </p>
+
+    <div class="result__card-attrs">
+      <div class="result__attr">
+        <p class="result__attr-label">COLOR</p>
+        <p class="result__attr-val">Pure</p>
+      </div>
+      <div class="result__attr">
+        <p class="result__attr-label">MOOD</p>
+        <p class="result__attr-val">Quiet</p>
+      </div>
+      <div class="result__attr">
+        <p class="result__attr-label">LEVEL</p>
+        <p class="result__attr-val">★</p>
+      </div>
+    </div>
+
+    <a href="#" class="result__cta"><em>¥1,980</em>で、はじめる</a>
+    <p class="result__fine">— free shipping · cancel anytime —</p>
+  </div>
+</section>
+
+
+<!-- Full line up -->
+<section class="types">
+  <h2 class="types__hd rv">the five.</h2>
+  <p class="types__sub rv">— ALL 5 TYPES OF ZUMOPPI —</p>
+  <div class="types__grid rv">
+    <div class="types__cell">
+      <div class="types__dot" style="background: linear-gradient(135deg, #fff, #F0EAD9); border: 1px solid var(--line);"></div>
+      <p class="types__name">Zumoppi<span class="types__no">No. 01</span></p>
+    </div>
+    <div class="types__cell">
+      <div class="types__dot" style="background: linear-gradient(135deg, #D8E8F0, #7FB5C8);"></div>
+      <p class="types__name">Sora<span class="types__no">No. 02</span></p>
+    </div>
+    <div class="types__cell">
+      <div class="types__dot" style="background: linear-gradient(135deg, #FBD3DC, #E8899F);"></div>
+      <p class="types__name">Sakura<span class="types__no">No. 03</span></p>
+    </div>
+    <div class="types__cell">
+      <div class="types__dot" style="background: linear-gradient(135deg, #DCEFD8, #94C59D);"></div>
+      <p class="types__name">Mori<span class="types__no">No. 04</span></p>
+    </div>
+    <div class="types__cell">
+      <div class="types__dot" style="background: linear-gradient(135deg, #EAD9F0, #B896D0);"></div>
+      <p class="types__name">Yume<span class="types__no">No. 05</span></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Explain -->
+<section class="explain">
+  <h2 class="explain__hd rv">why this quiz?</h2>
+  <p class="explain__body rv">
+    ameruは、「あなたに合う1体」から始めてほしい。だから30秒の診断だけ、お願いしています。5色5体のどの子から編むかが、編みものの体験そのものを少しだけ変えます。
+  </p>
+</section>
+
+<footer class="f">
+  <p class="f__logo">ameru</p>
+  <p class="f__tag">— find your zumoppi —</p>
+</footer>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 40 && r.bottom > -40) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive: true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>

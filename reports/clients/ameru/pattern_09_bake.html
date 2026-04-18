@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 09 · BAKE型アート写真</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing: border-box; }
+:root {
+  --bg: #F5F2ED;
+  --paper: #EEE9DF;
+  --ink: #141414;
+  --ink-sub: #6E6E6E;
+  --mid: #B3B0A9;
+  --line: #DAD5CC;
+  --warm-accent: #B08960;
+  --f-display: 'Playfair Display', serif;
+  --f-italic: 'Cormorant Garamond', serif;
+  --f-jp: 'Noto Sans JP', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-display);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; filter: saturate(0.92) contrast(1.02); }
+
+.pattern-tag {
+  position: fixed;
+  top: 12px; left: 12px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--warm-accent);
+  z-index: 100;
+  background: rgba(245, 242, 237, 0.88);
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* Topbar */
+.top {
+  padding: 30px 32px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.top__logo {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--ink);
+  letter-spacing: 0.15em;
+}
+.top__meta {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-sub);
+  letter-spacing: 0.2em;
+  text-align: right;
+  line-height: 1.5;
+}
+.top__meta b { color: var(--ink); font-weight: 500; }
+
+/* FV — art piece */
+.fv {
+  position: relative;
+  padding: 40px 32px 140px;
+  min-height: 100vh;
+}
+.fv__hero {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  margin-bottom: 32px;
+  filter: grayscale(0.1);
+}
+.fv__hero img { width: 100%; height: 100%; object-fit: cover; }
+.fv__title-block {
+  padding: 0 12px;
+}
+.fv__kicker {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--warm-accent);
+  letter-spacing: 0.3em;
+  margin-bottom: 16px;
+}
+.fv__headline {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(48px, 14vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.fv__headline em {
+  font-style: italic;
+  font-family: var(--f-italic);
+  font-weight: 300;
+  color: var(--warm-accent);
+}
+.fv__sub {
+  font-family: var(--f-jp);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--ink-sub);
+  line-height: 2.2;
+  letter-spacing: 0.05em;
+  max-width: 320px;
+  margin-bottom: 0;
+}
+
+/* Section — 1 image = 1 statement */
+.poster {
+  position: relative;
+  padding: 120px 32px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.poster--paper { background: var(--paper); }
+.poster--dark {
+  background: var(--ink);
+  color: var(--bg);
+}
+.poster--dark .poster__kicker { color: var(--warm-accent); }
+
+.poster__no {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--ink-sub);
+  letter-spacing: 0.3em;
+  margin-bottom: 6px;
+}
+.poster__kicker {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--warm-accent);
+  letter-spacing: 0.35em;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+.poster__img {
+  width: calc(100% + 64px);
+  margin: 0 -32px 40px;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+}
+.poster__img--wide { aspect-ratio: 16/10; }
+.poster__img--square { aspect-ratio: 1/1; }
+.poster__img img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85) contrast(1.05); }
+
+.poster__quote {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(38px, 11vw, 54px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.poster--dark .poster__quote { color: var(--bg); }
+.poster__quote em {
+  font-style: italic;
+  font-family: var(--f-italic);
+  font-weight: 300;
+  color: var(--warm-accent);
+}
+.poster__quote-jp {
+  font-family: var(--f-jp);
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--ink-sub);
+  letter-spacing: 0.08em;
+  line-height: 2;
+}
+.poster--dark .poster__quote-jp { color: rgba(245, 242, 237, 0.6); }
+
+.poster__caption {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 11px;
+  color: var(--mid);
+  letter-spacing: 0.25em;
+  margin-top: 40px;
+}
+.poster--dark .poster__caption { color: rgba(245, 242, 237, 0.5); }
+
+/* Spread — 写真集的2画像 */
+.spread {
+  padding: 80px 0;
+  background: var(--bg);
+}
+.spread__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 40px;
+}
+.spread__img {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+.spread__img img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.88) contrast(1.03); }
+.spread__text {
+  padding: 0 32px;
+  text-align: center;
+}
+.spread__text p {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.spread__text em {
+  font-style: italic;
+  font-family: var(--f-italic);
+  color: var(--warm-accent);
+}
+
+/* Offer — 美術館の看板 */
+.offer {
+  padding: 140px 32px;
+  background: var(--paper);
+  text-align: center;
+}
+.offer__kicker {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--warm-accent);
+  letter-spacing: 0.3em;
+  margin-bottom: 14px;
+}
+.offer__hd {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(52px, 14vw, 68px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-bottom: 40px;
+}
+.offer__hd em { font-style: italic; font-family: var(--f-italic); color: var(--warm-accent); }
+.offer__divider {
+  width: 50px; height: 1px;
+  background: var(--ink);
+  margin: 0 auto 40px;
+}
+.offer__price-block {
+  margin-bottom: 40px;
+}
+.offer__price-label {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-sub);
+  letter-spacing: 0.3em;
+  margin-bottom: 8px;
+}
+.offer__price {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 80px;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.offer__price small {
+  font-size: 22px;
+  margin-left: 4px;
+}
+.offer__price-sub {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-sub);
+  letter-spacing: 0.2em;
+  margin-top: 8px;
+}
+.offer__cta {
+  display: inline-block;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.4em;
+  padding: 22px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  min-width: 260px;
+  text-indent: 0.4em;
+  transition: all 0.3s ease;
+}
+.offer__cta:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+.offer__fine {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--mid);
+  letter-spacing: 0.15em;
+  margin-top: 32px;
+  line-height: 1.9;
+}
+
+/* Footer */
+.f {
+  padding: 60px 32px 50px;
+  background: var(--ink);
+  color: var(--bg);
+  text-align: center;
+}
+.f__logo {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+  color: var(--bg);
+}
+.f__tag {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--warm-accent);
+  letter-spacing: 0.3em;
+}
+
+.rv { opacity: 0; transform: translateY(20px); transition: opacity 1.4s ease, transform 1.4s ease; }
+.rv.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 09 · art direction</a></div>
+
+<header class="top">
+  <p class="top__logo">A M E R U</p>
+  <p class="top__meta"><b>— VOL. 01 —</b><br>Zumoppi, 2026</p>
+</header>
+
+<!-- FV -->
+<section class="fv">
+  <div class="fv__hero rv">
+    <img src="images/01_zumoppi_hero.png" alt="ずもっぴ" loading="eager">
+  </div>
+
+  <div class="fv__title-block">
+    <p class="fv__kicker rv">— EXHIBITION —</p>
+    <h1 class="fv__headline rv">
+      The <em>Quiet</em><br>
+      Amigurumi.
+    </h1>
+    <p class="fv__sub rv">
+      はじめての手でも、完成させられるあみぐるみ。<br>
+      ameruは、「作品」として届くキットです。
+    </p>
+  </div>
+</section>
+
+
+<!-- Poster 01 -->
+<section class="poster poster--paper">
+  <p class="poster__no rv">— 01 —</p>
+  <p class="poster__kicker rv">A Beginning</p>
+
+  <div class="poster__img poster__img--wide rv">
+    <img src="images/04_hands_crafting.png" alt="編む手">
+  </div>
+
+  <h2 class="poster__quote rv">
+    The first stitch is<br>
+    <em>already done.</em>
+  </h2>
+  <p class="poster__quote-jp rv">— 最初の一目は、わたしが、いりません。</p>
+  <p class="poster__caption rv">PHOTOGRAPHED IN NATURAL LIGHT · 2026 SPRING</p>
+</section>
+
+
+<!-- Poster 02 -->
+<section class="poster poster--dark">
+  <p class="poster__no rv" style="color: rgba(245,242,237,0.6);">— 02 —</p>
+  <p class="poster__kicker rv">A Silence</p>
+
+  <h2 class="poster__quote rv">
+    <em>Eight</em> hours<br>
+    becomes a<br>
+    friend.
+  </h2>
+  <p class="poster__quote-jp rv">
+    — 8時間、手を動かすと、<br>
+    ひとつの家族ができあがる。
+  </p>
+
+  <div class="poster__img poster__img--square rv" style="margin-top: 40px; margin-bottom: 0;">
+    <img src="images/05_lifestyle_finished.png" alt="完成を持つ">
+  </div>
+  <p class="poster__caption rv" style="margin-top: 24px;">— A HANDHELD COMPANION —</p>
+</section>
+
+
+<!-- Spread -->
+<section class="spread">
+  <div class="spread__row rv">
+    <div class="spread__img"><img src="images/02_package_lifestyle.png" alt="package"></div>
+    <div class="spread__img"><img src="images/03_unboxing_flatlay.png" alt="materials"></div>
+  </div>
+
+  <div class="spread__text rv">
+    <p>
+      Packaging as <em>object</em>.<br>
+      道具さえ、作品の一部。
+    </p>
+  </div>
+</section>
+
+
+<!-- Poster 03 -->
+<section class="poster poster--paper">
+  <p class="poster__no rv">— 03 —</p>
+  <p class="poster__kicker rv">A Family</p>
+
+  <div class="poster__img rv" style="aspect-ratio: 5/3;">
+    <img src="images/07_collection_preview.png" alt="5体">
+  </div>
+
+  <h2 class="poster__quote rv">
+    Five by<br>
+    <em>five</em>.
+  </h2>
+  <p class="poster__quote-jp rv">— 5ヶ月で、5体の家族ができあがる。</p>
+  <p class="poster__caption rv">— FIVE CHARACTERS, FIVE MONTHS —</p>
+</section>
+
+
+<!-- Poster 04 -->
+<section class="poster poster--dark">
+  <div class="poster__img poster__img--wide rv" style="margin-bottom: 40px;">
+    <img src="images/06_shelf_display.png" alt="棚">
+  </div>
+
+  <p class="poster__no rv" style="color: rgba(245,242,237,0.6);">— 04 —</p>
+  <p class="poster__kicker rv">A Display</p>
+
+  <h2 class="poster__quote rv">
+    Your shelf,<br>
+    a <em>little</em><br>
+    museum.
+  </h2>
+  <p class="poster__quote-jp rv">— 棚が、小さな、美術館になる。</p>
+</section>
+
+
+<!-- Offer -->
+<section class="offer" id="offer">
+  <p class="offer__kicker rv">— FIRST DELIVERY / BEGIN HERE —</p>
+  <h2 class="offer__hd rv">
+    Begin with <em>one</em>.
+  </h2>
+  <div class="offer__divider rv"></div>
+
+  <div class="offer__price-block rv">
+    <p class="offer__price-label">FROM</p>
+    <p class="offer__price">¥1,980<small>〜</small></p>
+    <p class="offer__price-sub">FREE SHIPPING · CANCEL ANYTIME</p>
+  </div>
+
+  <a href="#" class="offer__cta rv">BEGIN</a>
+
+  <p class="offer__fine rv">
+    2回目以降 ¥4,200 ／ いつでも解約できます<br>
+    送料は初回無料、2回目以降 ¥420
+  </p>
+</section>
+
+<footer class="f">
+  <p class="f__logo">A M E R U</p>
+  <p class="f__tag">— AMIGURUMI AS QUIET OBJECT —</p>
+</footer>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 40 && r.bottom > -40) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive: true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>

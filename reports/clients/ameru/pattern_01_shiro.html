@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 01 · SHIRO型ミニマル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500&family=Bodoni+Moda:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing: border-box; }
+:root {
+  --off-white: #F9F6F1;
+  --paper: #FAF9F5;
+  --sand: #E8E2D6;
+  --ink: #2A2A2A;
+  --ink-sub: #8A8680;
+  --stone: #B8B0A3;
+  --accent: #B8A788;
+  --f-serif: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+  --f-sans: 'Noto Sans JP', sans-serif;
+  --f-italic: 'Bodoni Moda', serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-sans);
+  font-weight: 300;
+  background: var(--off-white);
+  color: var(--ink);
+  line-height: 2;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt" 1;
+}
+img { display: block; max-width: 100%; height: auto; }
+
+.pattern-tag {
+  position: fixed;
+  top: 12px; left: 12px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--stone);
+  letter-spacing: 0.15em;
+  z-index: 100;
+  background: rgba(249, 246, 241, 0.8);
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* ── FV ── */
+.fv {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 60px 40px 40px;
+}
+.fv__top {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--stone);
+  letter-spacing: 0.4em;
+  text-align: center;
+}
+.fv__top b { font-weight: 400; color: var(--ink); }
+.fv__hero {
+  align-self: center;
+  width: 84%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+.fv__hero img { width: 100%; height: 100%; object-fit: cover; }
+.fv__logo-box { text-align: center; }
+.fv__logo {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: 38px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.fv__tag {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--stone);
+  letter-spacing: 0.3em;
+}
+
+/* ── Section (全セクション共通) ── */
+section.s {
+  min-height: 100vh;
+  padding: 120px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.s--split {
+  padding: 100px 0;
+  min-height: auto;
+}
+.s__num {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--stone);
+  letter-spacing: 0.3em;
+  margin-bottom: 36px;
+  text-align: center;
+}
+.s__q {
+  font-family: var(--f-serif);
+  font-weight: 200;
+  font-size: clamp(22px, 6vw, 28px);
+  line-height: 2.1;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.s__a {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 2.2;
+  color: var(--ink-sub);
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+.s__img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  margin: 60px 0;
+}
+.s__img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Caption below image ── */
+.s__cap {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--stone);
+  letter-spacing: 0.25em;
+  text-align: center;
+  margin-top: -40px;
+  margin-bottom: 60px;
+}
+
+/* ── Rule (細い罫線) ── */
+.rule {
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+  margin: 40px auto;
+}
+
+/* ── Offer (最後のみCTA) ── */
+.offer {
+  padding: 160px 40px 120px;
+  text-align: center;
+  border-top: 1px solid var(--sand);
+}
+.offer__hd {
+  font-family: var(--f-serif);
+  font-weight: 200;
+  font-size: clamp(22px, 6vw, 26px);
+  line-height: 2;
+  margin-bottom: 80px;
+  letter-spacing: 0.04em;
+}
+.offer__price {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--ink-sub);
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+}
+.offer__amount {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 58px;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.offer__amount small {
+  font-size: 18px;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  margin-left: 2px;
+}
+.offer__note {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--stone);
+  letter-spacing: 0.2em;
+  margin-bottom: 56px;
+}
+.offer__cta {
+  display: inline-block;
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.35em;
+  padding: 20px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  min-width: 280px;
+  transition: all 0.3s ease;
+  text-indent: 0.35em;
+}
+.offer__cta:hover {
+  background: var(--ink);
+  color: var(--off-white);
+}
+.offer__fine {
+  font-size: 10px;
+  color: var(--stone);
+  letter-spacing: 0.15em;
+  margin-top: 28px;
+  line-height: 2;
+}
+
+/* ── Footer ── */
+.f {
+  text-align: center;
+  padding: 80px 40px 60px;
+  border-top: 1px solid var(--sand);
+}
+.f__logo {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: 26px;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.f__tag {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--stone);
+  letter-spacing: 0.3em;
+}
+
+/* ── Reveal ── */
+.rv { opacity: 0; transform: translateY(16px); transition: opacity 1.4s ease, transform 1.4s ease; }
+.rv.on { opacity: 1; transform: none; }
+.rv-2 { transition-delay: 0.2s; }
+.rv-3 { transition-delay: 0.4s; }
+</style>
+</head>
+<body>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 01 · minimal</a></div>
+
+<!-- FV -->
+<section class="fv">
+  <p class="fv__top rv"><b>ameru</b>  ·  A M I G U R U M I  K I T</p>
+  <div class="fv__hero rv rv-2"><img src="images/01_zumoppi_hero.png" alt="ずもっぴ"></div>
+  <div class="fv__logo-box rv rv-3">
+    <p class="fv__logo">ameru</p>
+    <p class="fv__tag">for your quiet hours</p>
+  </div>
+</section>
+
+<!-- S1 -->
+<section class="s">
+  <p class="s__num rv">— 01 —</p>
+  <h2 class="s__q rv rv-2">
+    手芸、やったことがなくても、<br>
+    きっと編めるということ。
+  </h2>
+  <div class="rule"></div>
+  <p class="s__a rv rv-3">
+    最初の一目は、<br>わたしたちが編んでおきました。
+  </p>
+</section>
+
+<!-- S2 image quote -->
+<section class="s s--split">
+  <div class="s__img rv"><img src="images/04_hands_crafting.png" alt="編む手元" loading="lazy"></div>
+  <p class="s__cap rv rv-2">q u i e t   h o u r s</p>
+  <p class="s__a rv rv-3" style="padding: 0 40px;">
+    編みものは、<br>気分転換の、少しだけ先にある時間。
+  </p>
+</section>
+
+<!-- S3 -->
+<section class="s">
+  <p class="s__num rv">— 02 —</p>
+  <h2 class="s__q rv rv-2">
+    届くのは、<br>
+    ひと月にひとり。
+  </h2>
+  <div class="rule"></div>
+  <p class="s__a rv rv-3">
+    全5体。<br>あなたの棚に、家族が育っていきます。
+  </p>
+</section>
+
+<!-- S4 image -->
+<section class="s s--split">
+  <div class="s__img rv" style="aspect-ratio: 5/4;"><img src="images/06_shelf_display.png" alt="棚のずもっぴ" loading="lazy"></div>
+  <p class="s__cap rv rv-2">a   f a m i l y   o f   f i v e</p>
+</section>
+
+<!-- S5 -->
+<section class="s">
+  <p class="s__num rv">— 03 —</p>
+  <h2 class="s__q rv rv-2">
+    届いたら、<br>
+    すぐに。
+  </h2>
+  <div class="rule"></div>
+  <p class="s__a rv rv-3">
+    糸、針、目パーツ、わた、<br>動画教材。<br>買い足しは、要りません。
+  </p>
+</section>
+
+<!-- Offer -->
+<section class="offer">
+  <h2 class="offer__hd rv">
+    まず、一体だけ、<br>
+    編んでみませんか。
+  </h2>
+  <p class="offer__price rv rv-2">First Delivery</p>
+  <p class="offer__amount rv rv-2">¥1,980<small>〜</small></p>
+  <p class="offer__note rv rv-2">free shipping · cancel anytime</p>
+  <a href="#" class="offer__cta rv rv-3">BEGIN</a>
+  <p class="offer__fine rv rv-3">
+    2回目以降 ¥4,200 ／ いつでも解約可<br>
+    送料は初回無料、2回目以降 ¥420
+  </p>
+</section>
+
+<footer class="f">
+  <p class="f__logo">ameru</p>
+  <p class="f__tag">amigurumi for everyone</p>
+</footer>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 40 && r.bottom > -40) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive: true });
+  addEventListener('resize', on, { passive: true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>
