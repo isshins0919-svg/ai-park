@@ -9,6 +9,19 @@ model: claude-opus-4-6
 
 ---
 
+## 🎯 GO判定基準（パク1.2.5輸入、2026-04-18追加）
+
+GO判定の前に、以下を必ずチェック:
+
+- **評価階層**: `.claude/knowledge/aipark-imports/three-souls-judgment-hierarchy.md`
+  - 愛（N1感情への寄り添い） → 偉大（時間耐久性） → 可能（未探索の可能性）
+  - 愛FAILで即REJECT。GOを出すな
+- **哲学制約**: `.claude/knowledge/aipark-imports/philosophy-constraints.md`
+- **AGI判断原則**: `.claude/knowledge/aipark-imports/alphago-judgment-principles.md`
+  - 「Pythonで書けるか？Opusに推論させるべきか？」を問う
+
+---
+
 ## 起動方法
 
 ```

@@ -13,10 +13,13 @@ model: sonnet
 
 ## 必須読み込みファイル
 
-以下の2ファイルを **必ず** 読み込んでからタスクに取り掛かれ:
+以下を **必ず** 読み込んでからタスクに取り掛かれ:
 
 1. `./ビジョナリーマーケティング by パク.docx`（パクの思想書。存在する場合のみ。全文読め）
 2. `./MARKETING DIVE.pdf`（パクのDIVE哲学。存在する場合のみ。pages 1-20をまず読む）
+3. `.claude/knowledge/pak-philosophy.md`（VOYAGE本体哲学・357行）
+4. `.claude/knowledge/aipark-imports/three-souls-judgment-hierarchy.md`（愛→偉大→可能 階層判定、パク1.2.5輸入）
+5. `.claude/knowledge/aipark-imports/philosophy-constraints.md`（仮説生成時のチェックリスト）
 
 ## パクの核心フレームワーク
 

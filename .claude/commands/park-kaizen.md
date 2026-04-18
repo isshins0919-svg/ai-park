@@ -9,6 +9,23 @@
 
 ---
 
+## 🎯 改善判断の基準（パク1.2.5輸入、2026-04-18追加）
+
+スキル改善を検討する際、以下を必ず適用:
+
+- **5本質問**: `.claude/knowledge/aipark-imports/agent-requirements-5-questions.md`
+  1. それ、本当にSkill/Agentか？既存の拡張で済まないか？
+  2. 最悪の失敗は何か？ガードは張られたか？
+  3. KPIは2週間で測れるか？
+  4. 何を捨てるか？Non-goals 明示
+  5. 誰がいつ動かすか？孤児になっていないか？
+- **Vector-First憲法**: `.claude/knowledge/aipark-imports/vector-first-constitution.md`
+  - 新しい説明を増やす前に、データ接続を太くする
+
+**既存スキルを新規作成する前に、この5問をクリアしているか確認する**。孤児スキル・Swiss Army化したスキルは断捨離候補。
+
+---
+
 ## 起動時の行動（必ずこの順序で実行）
 
 ### Step 1: 記憶の読み込み

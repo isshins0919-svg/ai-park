@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一進VOYAGE号 — 全クルーマップ V2 (進化版)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #0a0e27;
+    color: #e0e0e0;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ── Ocean background ── */
+  .ocean-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, #0a0e27 0%, #0d1b3e 30%, #162d5a 60%, #1a3a6e 100%);
+    z-index: -2;
+  }
+  .stars {
+    position: fixed; top: 0; left: 0; width: 100%; height: 50%;
+    background:
+      radial-gradient(1px 1px at 10% 10%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 30% 20%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 50% 5%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 70% 15%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 90% 8%, #fff 0.5px, transparent 1px),
+      radial-gradient(1.5px 1.5px at 20% 25%, #ffd700 1px, transparent 1.5px),
+      radial-gradient(1px 1px at 80% 30%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 45% 18%, #fff 0.5px, transparent 1px),
+      radial-gradient(1px 1px at 65% 28%, #fff 0.5px, transparent 1px),
+      radial-gradient(1.5px 1.5px at 55% 12%, #87ceeb 1px, transparent 1.5px),
+      radial-gradient(1px 1px at 15% 35%, #fff 0.4px, transparent 1px),
+      radial-gradient(1px 1px at 85% 40%, #fff 0.4px, transparent 1px),
+      radial-gradient(2px 2px at 40% 45%, #ffd700 1px, transparent 2px);
+    z-index: -1;
+  }
+
+  /* ── Waves ── */
+  .wave-container {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 120px; z-index: -1; pointer-events: none;
+  }
+  .wave {
+    position: absolute; bottom: 0; width: 200%; height: 100%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 Q150,0 300,60 T600,60 T900,60 T1200,60 V120 H0 Z' fill='%23162d5a' opacity='0.4'/%3E%3C/svg%3E") repeat-x;
+    animation: waveAnim 8s linear infinite;
+  }
+  .wave:nth-child(2) {
+    bottom: -10px; opacity: 0.6;
+    animation: waveAnim 12s linear infinite reverse;
+  }
+  @keyframes waveAnim {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── Container ── */
+  .container { max-width: 1320px; margin: 0 auto; padding: 60px 20px; }
+
+  /* ── Hero ── */
+  .hero { text-align: center; padding: 80px 20px 40px; position: relative; }
+  .version-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ffd700 100%);
+    color: #0a0e27;
+    padding: 4px 14px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .ship-icon { font-size: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 30px #ffd700); }
+  .hero h1 {
+    font-size: 62px; font-weight: 900; letter-spacing: 4px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff6b6b 50%, #87ceeb 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; margin-bottom: 12px;
+  }
+  .hero .sub { font-size: 15px; color: #87ceeb; letter-spacing: 6px; margin-bottom: 8px; }
+  .hero .motto { font-size: 18px; color: #ffd700; font-weight: 300; margin-bottom: 40px; }
+  .stats {
+    display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+    border-top: 1px solid rgba(255,215,0,0.2); border-bottom: 1px solid rgba(255,215,0,0.2);
+    padding: 24px; max-width: 900px; margin: 0 auto;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 40px; font-weight: 900; color: #ffd700;
+    line-height: 1; display: block;
+  }
+  .stat-label { font-size: 10px; color: #87ceeb; letter-spacing: 2px; margin-top: 4px; }
+  .stat-growth { font-size: 10px; color: #4ecdc4; margin-top: 2px; }
+
+  /* ── Sections ── */
+  section { margin: 80px 0; }
+  .section-header { text-align: center; margin-bottom: 50px; }
+  .section-label {
+    display: inline-block; font-size: 11px; color: #87ceeb;
+    letter-spacing: 4px; margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 38px; font-weight: 900; color: #ffd700;
+    letter-spacing: 2px; margin-bottom: 10px;
+  }
+  .section-desc { color: #aaa; font-size: 14px; max-width: 720px; margin: 0 auto; }
+
+  /* ── Mission ── */
+  .mission-card {
+    background: rgba(255,215,0,0.05); border: 2px solid rgba(255,215,0,0.3);
+    padding: 40px 50px; border-radius: 18px; text-align: center;
+    max-width: 900px; margin: 0 auto; font-size: 18px;
+    animation: missionGlow 6s ease-in-out infinite;
+  }
+  @keyframes missionGlow {
+    0%,100% { box-shadow: 0 0 30px rgba(255,215,0,0.1); }
+    50% { box-shadow: 0 0 60px rgba(255,215,0,0.3); }
+  }
+  .mission-card .h { color:#ff6b6b; font-weight:900; }
+  .mission-card .p { color:#4ecdc4; font-weight:700; }
+  .mission-card .y { color:#ffd700; font-weight:700; }
+  .mission-card .o { color:#f97316; font-weight:700; }
+
+  /* ── Evolution Timeline (V2 NEW) ── */
+  .evo-wrap { position: relative; padding: 20px 0; }
+  .evo-line {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(180deg, #4ecdc4, #ffd700, #ff6b6b);
+    border-radius: 3px;
+  }
+  .evo-event {
+    position: relative; width: 45%; padding: 20px 24px;
+    background: rgba(255,255,255,0.04); border-radius: 14px;
+    margin-bottom: 28px; border: 1px solid rgba(135,206,235,0.2);
+  }
+  .evo-event::before {
+    content: ''; position: absolute; top: 28px; width: 16px; height: 16px;
+    border-radius: 50%; background: #ffd700; border: 3px solid #0a0e27;
+    box-shadow: 0 0 0 2px #ffd700;
+  }
+  .evo-left { margin-left: 0; }
+  .evo-left::before { right: -53px; }
+  .evo-right { margin-left: 55%; }
+  .evo-right::before { left: -53px; }
+  .evo-date { font-size: 11px; color: #4ecdc4; letter-spacing: 2px; margin-bottom: 6px; }
+  .evo-title { font-size: 16px; color: #ffd700; font-weight: 700; margin-bottom: 8px; }
+  .evo-body { font-size: 13px; color: #bbb; }
+  .evo-tag {
+    display: inline-block; font-size: 10px; padding: 2px 8px;
+    background: rgba(255,215,0,0.2); color: #ffd700; border-radius: 10px;
+    margin-right: 4px; margin-top: 6px;
+  }
+  .evo-event.latest { border-color: #ffd700; background: rgba(255,215,0,0.08); }
+  .evo-event.latest::before { background: #ff6b6b; box-shadow: 0 0 0 4px rgba(255,107,107,0.4); }
+
+  /* ── Before/After Integration ── */
+  .ba-grid {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px;
+    align-items: center; max-width: 1100px; margin: 0 auto;
+  }
+  .ba-col {
+    background: rgba(255,255,255,0.04); padding: 30px; border-radius: 14px;
+    border: 1px solid rgba(135,206,235,0.2);
+  }
+  .ba-col.before { border-color: rgba(255,107,107,0.4); }
+  .ba-col.after  { border-color: rgba(76,205,196,0.4); }
+  .ba-label {
+    font-size: 11px; letter-spacing: 3px; margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .before .ba-label { color: #ff6b6b; }
+  .after .ba-label  { color: #4ecdc4; }
+  .ba-list { list-style: none; font-size: 13px; color: #ccc; }
+  .ba-list li { padding: 6px 0; padding-left: 20px; position: relative; }
+  .before .ba-list li::before { content: '✗'; position: absolute; left: 0; color: #ff6b6b; font-weight: 700; }
+  .after  .ba-list li::before { content: '✓'; position: absolute; left: 0; color: #4ecdc4; font-weight: 700; }
+  .ba-arrow { font-size: 40px; color: #ffd700; text-align: center; }
+
+  /* ── Philosophy Stack ── */
+  .stack-wrap { max-width: 900px; margin: 0 auto; }
+  .stack-layer {
+    background: rgba(255,255,255,0.04); padding: 22px 28px;
+    border-radius: 12px; margin-bottom: 16px;
+    border-left: 4px solid #ffd700;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .stack-layer .tier {
+    min-width: 80px; font-size: 11px; letter-spacing: 2px;
+    padding: 6px 12px; background: rgba(255,215,0,0.15);
+    color: #ffd700; border-radius: 20px; text-align: center;
+    font-weight: 700;
+  }
+  .stack-layer .content { flex: 1; }
+  .stack-layer .h { color: #ffd700; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .stack-layer .d { color: #bbb; font-size: 12px; }
+  .stack-layer.new { border-left-color: #4ecdc4; background: rgba(76,205,196,0.05); }
+  .stack-layer.new .tier { background: rgba(76,205,196,0.15); color: #4ecdc4; }
+  .stack-layer.new .h { color: #4ecdc4; }
+
+  /* ── Voyages ── */
+  .voyages { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 22px; }
+  .voyage-card {
+    background: rgba(255,255,255,0.04); padding: 28px; border-radius: 14px;
+    border: 1px solid rgba(135,206,235,0.2); position: relative; overflow: hidden;
+    transition: all 0.3s;
+  }
+  .voyage-card:hover { border-color: #ffd700; transform: translateY(-3px); }
+  .voyage-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(180deg, var(--c1), var(--c2));
+  }
+  .voyage-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .voyage-num {
+    background: rgba(255,215,0,0.2); color: #ffd700;
+    padding: 4px 10px; border-radius: 8px; font-weight: 900; font-size: 12px; letter-spacing: 2px;
+  }
+  .voyage-title { font-size: 18px; color: #ffd700; font-weight: 700; }
+  .voyage-tag { font-size: 11px; color: #87ceeb; margin-left: auto; }
+  .voyage-desc { color: #bbb; font-size: 13px; margin-bottom: 14px; }
+  .voyage-flow {
+    font-size: 11px; color: #aaa; font-family: monospace;
+    background: rgba(0,0,0,0.2); padding: 10px 14px; border-radius: 8px; margin-bottom: 10px;
+  }
+  .voyage-treasure {
+    background: rgba(255,215,0,0.08); padding: 10px 14px; border-radius: 8px;
+    font-size: 12px; color: #ffd700; border: 1px dashed rgba(255,215,0,0.3);
+  }
+
+  /* ── Ship Decks ── */
+  .decks { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 22px; }
+  .deck {
+    background: rgba(255,255,255,0.04); padding: 28px; border-radius: 14px;
+    border: 1px solid rgba(135,206,235,0.2);
+  }
+  .deck-head {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
+    padding-bottom: 14px; border-bottom: 1px solid rgba(135,206,235,0.15);
+  }
+  .deck-icon { font-size: 32px; }
+  .deck-name { font-size: 18px; color: #ffd700; font-weight: 700; }
+  .deck-count { font-size: 11px; color: #87ceeb; margin-left: auto; }
+  .deck-crews { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .crew {
+    background: rgba(0,0,0,0.2); padding: 10px 12px; border-radius: 8px;
+    font-size: 12px; display: flex; flex-direction: column; gap: 2px;
+    border-left: 3px solid transparent; transition: all 0.2s;
+  }
+  .crew:hover { background: rgba(255,215,0,0.08); border-left-color: #ffd700; }
+  .crew-icon { font-size: 14px; }
+  .crew-name { color: #e0e0e0; font-weight: 500; }
+  .crew-role { font-size: 10px; color: #888; }
+  .crew.agent { border-left-color: #87ceeb; }
+  .crew.skill { border-left-color: #4ecdc4; }
+  .crew.new { border-left-color: #ff6b6b; background: rgba(255,107,107,0.1); }
+
+  /* ── Phase Roadmap ── */
+  .phases { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 20px; }
+  .phase {
+    background: rgba(255,255,255,0.04); padding: 18px 12px; border-radius: 10px;
+    text-align: center; font-size: 12px; color: #aaa;
+    border: 1px solid rgba(135,206,235,0.2); position: relative;
+  }
+  .phase.done {
+    border-color: #4ecdc4; background: rgba(76,205,196,0.1);
+  }
+  .phase-letter { font-size: 32px; font-weight: 900; color: #ffd700; display: block; margin-bottom: 6px; }
+  .phase.done .phase-letter { color: #4ecdc4; }
+  .phase-name { font-size: 11px; font-weight: 700; color: #ddd; margin-bottom: 4px; }
+  .phase-status {
+    display: inline-block; padding: 2px 6px; border-radius: 6px;
+    font-size: 10px; margin-top: 4px;
+  }
+  .phase.done .phase-status { background: #4ecdc4; color: #0a0e27; font-weight: 700; }
+  .phase.pending .phase-status { background: rgba(255,255,255,0.1); color: #aaa; }
+
+  /* ── Directory Tree ── */
+  .tree {
+    background: rgba(0,0,0,0.3); padding: 24px 28px; border-radius: 12px;
+    font-family: monospace; font-size: 12px; color: #ddd;
+    white-space: pre-wrap; line-height: 1.9;
+    border: 1px solid rgba(135,206,235,0.2);
+  }
+  .tree .hl { color: #ffd700; font-weight: 700; }
+  .tree .hl2 { color: #4ecdc4; }
+  .tree .comm { color: #888; }
+  .tree .new { color: #ff6b6b; font-weight: 700; }
+
+  /* ── Context Tiers ── */
+  .tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tier-card {
+    background: rgba(255,255,255,0.04); padding: 20px; border-radius: 12px;
+    border-top: 4px solid;
+    text-align: center; font-size: 12px;
+  }
+  .tier-card:nth-child(1) { border-top-color: #ff6b6b; }
+  .tier-card:nth-child(2) { border-top-color: #ffd700; }
+  .tier-card:nth-child(3) { border-top-color: #4ecdc4; }
+  .tier-card:nth-child(4) { border-top-color: #8b5cf6; }
+  .tier-name { font-size: 11px; letter-spacing: 2px; color: #87ceeb; margin-bottom: 8px; }
+  .tier-title { font-size: 14px; color: #ffd700; font-weight: 700; margin-bottom: 10px; }
+  .tier-body { color: #bbb; font-size: 11px; }
+
+  /* ── 🚢 Ship Identity (V2.1 NEW) ── */
+  .ship-icon {
+    display: inline-block; animation: rock 4.5s ease-in-out infinite;
+    transform-origin: 50% 90%;
+  }
+  @keyframes rock {
+    0%, 100% { transform: rotate(-4deg) translateY(0); }
+    50% { transform: rotate(4deg) translateY(-4px); }
+  }
+
+  /* Ship's Papers */
+  .ship-papers {
+    max-width: 920px; margin: 0 auto; position: relative;
+    background: linear-gradient(145deg, rgba(245, 217, 163, 0.08), rgba(201, 150, 81, 0.04));
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 14px; padding: 40px 50px 30px;
+    box-shadow: 0 0 60px rgba(255,215,0,0.08), inset 0 0 30px rgba(255,215,0,0.03);
+  }
+  .papers-seal {
+    position: absolute; top: -28px; right: 40px;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffe066, #b8860b 70%, #7a5a10);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; color: #0a0e27; font-weight: 900;
+    border: 3px solid #0a0e27;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 25px rgba(255,215,0,0.4);
+  }
+  .papers-title {
+    text-align: center; color: #ffd700;
+    font-size: 13px; letter-spacing: 5px; margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .papers-sub {
+    text-align: center; color: #87ceeb;
+    font-size: 10px; letter-spacing: 3px; margin-bottom: 28px;
+    padding-bottom: 16px; border-bottom: 1px dashed rgba(255,215,0,0.3);
+  }
+  .papers-grid {
+    display: grid; grid-template-columns: 140px 1fr;
+    gap: 12px 24px; font-size: 13px;
+  }
+  .paper-label {
+    color: #87ceeb; font-weight: 700; text-align: right;
+    letter-spacing: 1px; border-right: 1px solid rgba(135,206,235,0.25);
+    padding-right: 18px; font-size: 11px;
+  }
+  .paper-value { color: #e0e0e0; padding-top: 1px; }
+  .paper-value em { color: #ffd700; font-style: normal; font-weight: 700; }
+  .paper-value strong { color: #ff6b6b; font-weight: 700; }
+  .paper-creed {
+    margin-top: 28px; padding: 16px 20px;
+    background: rgba(255,215,0,0.08); border-radius: 10px;
+    text-align: center; color: #ffd700;
+    font-size: 15px; font-weight: 700; letter-spacing: 2px;
+    border: 1px dashed rgba(255,215,0,0.4);
+  }
+  .papers-stamp {
+    margin-top: 24px; text-align: center;
+    color: #888; font-size: 10px; font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  /* Ship Blueprint */
+  .blueprint-wrap {
+    max-width: 1250px; margin: 0 auto;
+    background: linear-gradient(180deg, rgba(10,14,39,0.85), rgba(22,45,90,0.65));
+    border: 1px solid rgba(255,215,0,0.25);
+    border-radius: 16px; padding: 20px 16px 12px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.4);
+  }
+  .blueprint-svg { width: 100%; height: auto; display: block; }
+  .blueprint-caption {
+    text-align: center; color: #888; font-size: 11px;
+    margin-top: 8px; font-style: italic; letter-spacing: 1px;
+  }
+
+  /* Navigation Chart */
+  .chart-wrap {
+    max-width: 1250px; margin: 0 auto;
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.6);
+    border: 3px solid #5a3a1a;
+  }
+  .chart-svg { width: 100%; height: auto; display: block; }
+  .chart-legend {
+    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+    margin-top: 14px; font-size: 11px; color: #aaa;
+  }
+  .chart-legend span strong { color: #ffd700; }
+
+  /* Pulse animation for current location */
+  @keyframes pulseRing {
+    0%, 100% { opacity: 0.8; r: 22; }
+    50% { opacity: 0.2; r: 38; }
+  }
+  .pulse-ring { animation: pulseRing 2.2s ease-in-out infinite; }
+
+  @keyframes sailWave {
+    0%, 100% { transform: skewY(0deg); }
+    50% { transform: skewY(-1.5deg); }
+  }
+  .sail { animation: sailWave 5s ease-in-out infinite; transform-origin: top; }
+
+  /* ── Footer ── */
+  footer { text-align: center; padding: 80px 20px 40px; }
+  .footer-big { font-size: 40px; color: #ffd700; margin-bottom: 10px; font-weight: 900; letter-spacing: 4px; }
+  .footer-sub { color: #87ceeb; font-size: 12px; letter-spacing: 3px; margin-bottom: 10px; }
+  .footer-gen { color: #666; font-size: 11px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 38px; letter-spacing: 2px; }
+    .stats { gap: 16px; }
+    .stat-num { font-size: 28px; }
+    .section-title { font-size: 26px; }
+    .voyages, .decks { grid-template-columns: 1fr; }
+    .phases { grid-template-columns: repeat(3, 1fr); }
+    .tiers { grid-template-columns: repeat(2, 1fr); }
+    .ba-grid { grid-template-columns: 1fr; }
+    .ba-arrow { transform: rotate(90deg); margin: 0 auto; }
+    .evo-line { left: 20px; }
+    .evo-event { width: calc(100% - 40px); margin-left: 40px !important; }
+    .evo-event::before { left: -33px !important; right: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg"></div>
+<div class="stars"></div>
+<div class="wave-container">
+  <div class="wave"></div>
+  <div class="wave"></div>
+</div>
+
+<!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
+<div class="hero">
+  <div class="version-badge">V2 — EVOLVED EDITION</div>
+  <div class="ship-icon">⛵</div>
+  <h1>一進VOYAGE号</h1>
+  <div class="sub">ISSHIN VOYAGE — CREW MAP v2.0</div>
+  <div class="motto">⚓ Bon Voyage!</div>
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-num">85</span>
+      <div class="stat-label">TOTAL CREW</div>
+      <div class="stat-growth">▲ +19 from V1</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">29</span>
+      <div class="stat-label">AGENTS</div>
+      <div class="stat-growth">▲ +6 from V1</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">45</span>
+      <div class="stat-label">SKILLS</div>
+      <div class="stat-growth">▲ +2 from V1</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">31</span>
+      <div class="stat-label">KNOWLEDGE</div>
+      <div class="stat-growth">▲ +9 (aipark)</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">10</span>
+      <div class="stat-label">CLIENTS</div>
+      <div class="stat-growth">実戦運用中</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">7</span>
+      <div class="stat-label">DEPARTMENTS</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════ V2.1 NEW: SHIP'S PAPERS ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">SHIP'S PAPERS — 艦籍証書</div>
+    <div class="section-title">⚓ 一進VOYAGE号とは何者か</div>
+    <div class="section-desc">この船のスペックと魂</div>
+  </div>
+
+  <div class="ship-papers">
+    <div class="papers-seal">⚓</div>
+    <div class="papers-title">VESSEL REGISTRATION</div>
+    <div class="papers-sub">一 進 V O Y A G E 号 艦 籍 証 書</div>
+
+    <div class="papers-grid">
+      <div class="paper-label">船 名</div>
+      <div class="paper-value"><em>一進VOYAGE号</em>（ISSHIN VOYAGE）</div>
+
+      <div class="paper-label">艦 種</div>
+      <div class="paper-value">AGI Galleon — 戦略翻訳型マーケティング艦</div>
+
+      <div class="paper-label">全 長</div>
+      <div class="paper-value">85クルー級（29 Agents + 45 Skills + 11 support）</div>
+
+      <div class="paper-label">船 長</div>
+      <div class="paper-value">🧭 一進AI <em>（AIイッシン）</em>／ 本質 × 速度を操舵</div>
+
+      <div class="paper-label">航海哲学者</div>
+      <div class="paper-value">🧙‍♂️ pak-sensei <em>（パク師匠）</em>／ 方角を決める男</div>
+
+      <div class="paper-label">建 造</div>
+      <div class="paper-value">2025 / 大改装: <em>2026-04-18</em>（AIパクくん1.2.5 統合）</div>
+
+      <div class="paper-label">母 港</div>
+      <div class="paper-value">⚓ Claude Code Harbor</div>
+
+      <div class="paper-label">寄港実績</div>
+      <div class="paper-value">10港（sawada / ameru / gungun / proust / mauri / yomite / camicks / onmyskin / sakura / sawada-co）</div>
+
+      <div class="paper-label">艦 隊 編 成</div>
+      <div class="paper-value">
+        🏴‍☠️ 船長室(7) ／ 🔭 見張り台(10) ／ 📝 記事甲板(14)<br>
+        🎬 動画甲板(12) ／ 📱 SNS甲板(6) ／ 🏴‍☠️ Amazon航路(2) ／ 🏭 制作ドック(7) ／ 🔧 機関室(8)
+      </div>
+
+      <div class="paper-label">主 砲</div>
+      <div class="paper-value">🎨 <em>Nano Banana Pro</em>（gemini-3-pro-image-preview）／ バナー & 画像</div>
+
+      <div class="paper-label">副 砲</div>
+      <div class="paper-value">🎬 Grok Imagine Video ／ 🎙️ Fish Audio TTS</div>
+
+      <div class="paper-label">羅 針 盤</div>
+      <div class="paper-value">🧭 DPro MCP ／ Meta広告ライブラリ ／ 10社実戦データ</div>
+
+      <div class="paper-label">船 倉（弾薬）</div>
+      <div class="paper-value">31ナレッジ（pak-philosophy 366行 + aipark-imports 8ファイル 他）</div>
+
+      <div class="paper-label">旗 印</div>
+      <div class="paper-value">⚓ <strong>Bon Voyage!</strong> — 金地に錨と航海</div>
+
+      <div class="paper-label">次 の 目 的 地</div>
+      <div class="paper-value">Phase B島（DNA 2層化）→ Phase E島（Vector-First 本番実装）</div>
+    </div>
+
+    <div class="paper-creed">
+      信条 — 「本質 × 速度」「見た瞬間えぐい」「3つの魂を宿す」
+    </div>
+
+    <div class="papers-stamp">
+      — Sealed at Claude Code Harbor, 2026-04-18 / Captain: 一進AI —
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ V2.1 NEW: SHIP BLUEPRINT ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">SHIP BLUEPRINT — 船の構造図</div>
+    <div class="section-title">🚢 僕らが乗っている船</div>
+    <div class="section-desc">85クルーがどこに配置されているか、一枚絵で。</div>
+  </div>
+
+  <div class="blueprint-wrap">
+    <svg class="blueprint-svg" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hullGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#8b5a2b"/>
+          <stop offset="50%" stop-color="#6b4423"/>
+          <stop offset="100%" stop-color="#3d2510"/>
+        </linearGradient>
+        <linearGradient id="sailGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#f5e6c8"/>
+          <stop offset="100%" stop-color="#d4b897"/>
+        </linearGradient>
+        <linearGradient id="flagGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff6b6b"/>
+          <stop offset="100%" stop-color="#c83030"/>
+        </linearGradient>
+        <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffd700" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#ffd700" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#1a3a6e"/>
+          <stop offset="100%" stop-color="#0a1a3e"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Sky stars -->
+      <circle cx="100" cy="80" r="1.2" fill="#fff" opacity="0.8"/>
+      <circle cx="200" cy="120" r="1" fill="#87ceeb" opacity="0.6"/>
+      <circle cx="330" cy="60" r="1.5" fill="#ffd700" opacity="0.9"/>
+      <circle cx="460" cy="100" r="1" fill="#fff" opacity="0.7"/>
+      <circle cx="750" cy="70" r="1.3" fill="#fff" opacity="0.8"/>
+      <circle cx="900" cy="110" r="1" fill="#87ceeb" opacity="0.6"/>
+      <circle cx="1050" cy="80" r="1.5" fill="#ffd700" opacity="0.9"/>
+      <circle cx="1120" cy="140" r="1" fill="#fff" opacity="0.7"/>
+
+      <!-- Moon glow behind main mast -->
+      <circle cx="600" cy="180" r="120" fill="url(#moonGlow)"/>
+
+      <!-- ═══ FLAG (船旗) ═══ -->
+      <line x1="600" y1="50" x2="600" y2="180" stroke="#3d2510" stroke-width="4"/>
+      <path d="M 600 60 L 700 68 L 670 86 L 700 104 L 600 112 Z" fill="url(#flagGrad)" stroke="#3d2510" stroke-width="1.5"/>
+      <text x="648" y="90" fill="#ffd700" font-size="18" font-weight="900" text-anchor="middle">⚓</text>
+
+      <!-- ═══ THREE MASTS (三本マスト) ═══ -->
+      <!-- Fore mast (左) -->
+      <line x1="340" y1="170" x2="340" y2="470" stroke="#3d2510" stroke-width="5"/>
+      <line x1="280" y1="220" x2="400" y2="220" stroke="#3d2510" stroke-width="3"/>
+      <line x1="290" y1="320" x2="390" y2="320" stroke="#3d2510" stroke-width="3"/>
+      <!-- Main mast (中央) -->
+      <line x1="600" y1="120" x2="600" y2="470" stroke="#3d2510" stroke-width="6"/>
+      <line x1="520" y1="180" x2="680" y2="180" stroke="#3d2510" stroke-width="3.5"/>
+      <line x1="530" y1="290" x2="670" y2="290" stroke="#3d2510" stroke-width="3.5"/>
+      <!-- Mizzen mast (右) -->
+      <line x1="860" y1="170" x2="860" y2="470" stroke="#3d2510" stroke-width="5"/>
+      <line x1="800" y1="220" x2="920" y2="220" stroke="#3d2510" stroke-width="3"/>
+      <line x1="810" y1="320" x2="910" y2="320" stroke="#3d2510" stroke-width="3"/>
+
+      <!-- ═══ SAILS (帆) ═══ -->
+      <g class="sail">
+        <!-- Fore upper sail -->
+        <path d="M 290 220 Q 340 250 390 220 L 390 310 Q 340 325 290 310 Z" fill="url(#sailGrad)" stroke="#a8845a" stroke-width="1" opacity="0.95"/>
+        <!-- Main upper sail -->
+        <path d="M 530 180 Q 600 220 670 180 L 680 280 Q 600 300 520 280 Z" fill="url(#sailGrad)" stroke="#a8845a" stroke-width="1" opacity="0.95"/>
+        <!-- Mizzen upper sail -->
+        <path d="M 810 220 Q 860 250 910 220 L 910 310 Q 860 325 810 310 Z" fill="url(#sailGrad)" stroke="#a8845a" stroke-width="1" opacity="0.95"/>
+        <!-- Lower sails -->
+        <path d="M 300 320 Q 340 345 380 320 L 385 410 Q 340 425 295 410 Z" fill="url(#sailGrad)" stroke="#a8845a" stroke-width="1" opacity="0.9"/>
+        <path d="M 540 290 Q 600 325 660 290 L 670 410 Q 600 430 530 410 Z" fill="url(#sailGrad)" stroke="#a8845a" stroke-width="1" opacity="0.9"/>
+        <path d="M 820 320 Q 860 345 900 320 L 905 410 Q 860 425 815 410 Z" fill="url(#sailGrad)" stroke="#a8845a" stroke-width="1" opacity="0.9"/>
+      </g>
+
+      <!-- ═══ CROW'S NEST (見張り台) ═══ -->
+      <ellipse cx="600" cy="170" rx="36" ry="8" fill="#3d2510"/>
+      <rect x="572" y="140" width="56" height="32" fill="#6b4423" stroke="#3d2510" stroke-width="2" rx="4"/>
+      <text x="600" y="162" fill="#ffd700" font-size="14" text-anchor="middle">🔭</text>
+
+      <!-- ═══ HULL (船体) ═══ -->
+      <path d="M 120 470
+               Q 100 520 150 570
+               L 280 605
+               L 920 605
+               Q 1100 605 1080 530
+               Q 1080 490 1050 470
+               L 920 460
+               L 260 460
+               Z"
+            fill="url(#hullGrad)" stroke="#1a0f04" stroke-width="2.5"/>
+
+      <!-- Deck top line (甲板) -->
+      <line x1="160" y1="470" x2="1050" y2="470" stroke="#1a0f04" stroke-width="2"/>
+      <!-- Gold trim -->
+      <line x1="170" y1="500" x2="1050" y2="500" stroke="#ffd700" stroke-width="1.5" opacity="0.6"/>
+
+      <!-- Gun ports / portholes -->
+      <circle cx="260" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="340" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="420" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="500" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="580" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="660" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="740" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="820" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="900" cy="530" r="8" fill="#0a0e27" stroke="#1a0f04" stroke-width="2"/>
+
+      <!-- Stern castle (船尾楼・船長室) -->
+      <rect x="960" y="420" width="100" height="50" fill="#6b4423" stroke="#1a0f04" stroke-width="2" rx="3"/>
+      <rect x="975" y="432" width="14" height="16" fill="#ffd700" opacity="0.9"/>
+      <rect x="1000" y="432" width="14" height="16" fill="#ffd700" opacity="0.9"/>
+      <rect x="1025" y="432" width="14" height="16" fill="#ffd700" opacity="0.9"/>
+
+      <!-- Anchor hanging from bow -->
+      <line x1="155" y1="495" x2="140" y2="540" stroke="#1a0f04" stroke-width="2"/>
+      <circle cx="138" cy="548" r="7" fill="none" stroke="#1a0f04" stroke-width="2.5"/>
+      <path d="M 132 548 L 130 560 M 144 548 L 146 560" stroke="#1a0f04" stroke-width="2"/>
+
+      <!-- ═══ WATER (海) ═══ -->
+      <path d="M 0 600 Q 100 585 200 600 T 400 600 T 600 600 T 800 600 T 1000 600 T 1200 600 V 720 H 0 Z"
+            fill="url(#seaGrad)" opacity="0.9"/>
+      <path d="M 0 620 Q 80 605 160 620 T 320 620 T 480 620 T 640 620 T 800 620 T 960 620 T 1120 620 T 1200 625 V 720 H 0 Z"
+            fill="#0a1a3e"/>
+      <!-- Foam -->
+      <path d="M 140 610 Q 165 603 185 610" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+      <path d="M 1040 608 Q 1065 602 1085 608" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+
+      <!-- ═══ LABELS (部門ラベル) ═══ -->
+      <!-- Crow's Nest = Gate部門 (upper right) -->
+      <line x1="620" y1="150" x2="890" y2="70" stroke="#87ceeb" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="620" cy="150" r="4" fill="#87ceeb"/>
+      <rect x="880" y="50" width="220" height="46" fill="rgba(10,14,39,0.85)" stroke="#87ceeb" rx="6"/>
+      <text x="990" y="70" fill="#87ceeb" font-size="13" font-weight="700" text-anchor="middle">🔭 Gate部門 — 見張り台</text>
+      <text x="990" y="86" fill="#aaa" font-size="10" text-anchor="middle">10 agents ／ 法規・N1・品質・CVR 等</text>
+
+      <!-- Main Mast / Flag = Bridge (top) -->
+      <line x1="600" y1="180" x2="460" y2="50" stroke="#ffd700" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="600" cy="180" r="4" fill="#ffd700"/>
+      <rect x="250" y="30" width="220" height="46" fill="rgba(10,14,39,0.85)" stroke="#ffd700" rx="6"/>
+      <text x="360" y="50" fill="#ffd700" font-size="13" font-weight="700" text-anchor="middle">🏴‍☠️ Bridge — 船長室</text>
+      <text x="360" y="66" fill="#aaa" font-size="10" text-anchor="middle">7 ／ 一進AI ・ pak-sensei ・ morning 他</text>
+
+      <!-- Fore Deck = 記事甲板 -->
+      <line x1="340" y1="450" x2="175" y2="380" stroke="#4ecdc4" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="340" cy="450" r="4" fill="#4ecdc4"/>
+      <rect x="50" y="358" width="200" height="46" fill="rgba(10,14,39,0.85)" stroke="#4ecdc4" rx="6"/>
+      <text x="150" y="378" fill="#4ecdc4" font-size="13" font-weight="700" text-anchor="middle">📝 Kiji — 記事甲板</text>
+      <text x="150" y="394" fill="#aaa" font-size="10" text-anchor="middle">14 ／ kiji-cko 統率</text>
+
+      <!-- Main Deck = 動画甲板 -->
+      <line x1="600" y1="470" x2="600" y2="670" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="600" cy="470" r="4" fill="#ff6b6b"/>
+      <rect x="500" y="660" width="200" height="46" fill="rgba(10,14,39,0.85)" stroke="#ff6b6b" rx="6"/>
+      <text x="600" y="680" fill="#ff6b6b" font-size="13" font-weight="700" text-anchor="middle">🎬 Movie — 動画甲板</text>
+      <text x="600" y="696" fill="#aaa" font-size="10" text-anchor="middle">12 ／ カントクが差配</text>
+
+      <!-- Mizzen Deck = SNS部門 -->
+      <line x1="860" y1="450" x2="1020" y2="380" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="860" cy="450" r="4" fill="#8b5cf6"/>
+      <rect x="950" y="358" width="200" height="46" fill="rgba(10,14,39,0.85)" stroke="#8b5cf6" rx="6"/>
+      <text x="1050" y="378" fill="#8b5cf6" font-size="13" font-weight="700" text-anchor="middle">📱 SNS — SNS甲板</text>
+      <text x="1050" y="394" fill="#aaa" font-size="10" text-anchor="middle">6 ／ sns-marketer 他</text>
+
+      <!-- Stern Castle = 船長室 accent (右下) -->
+      <line x1="1010" y1="420" x2="1140" y2="510" stroke="#ffd700" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="1010" cy="420" r="4" fill="#ffd700"/>
+      <rect x="1010" y="490" width="180" height="46" fill="rgba(10,14,39,0.85)" stroke="#ffd700" rx="6"/>
+      <text x="1100" y="510" fill="#ffd700" font-size="12" font-weight="700" text-anchor="middle">🏴‍☠️ Amazon航路</text>
+      <text x="1100" y="526" fill="#aaa" font-size="10" text-anchor="middle">2 ／ キャプテン統率</text>
+
+      <!-- Hull = 機関室 (左下) -->
+      <line x1="200" y1="560" x2="100" y2="640" stroke="#f97316" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="200" cy="560" r="4" fill="#f97316"/>
+      <rect x="20" y="620" width="200" height="46" fill="rgba(10,14,39,0.85)" stroke="#f97316" rx="6"/>
+      <text x="120" y="640" fill="#f97316" font-size="13" font-weight="700" text-anchor="middle">🔧 機関室 / 制作ドック</text>
+      <text x="120" y="656" fill="#aaa" font-size="10" text-anchor="middle">15 ／ Park群 + Utility</text>
+
+    </svg>
+    <div class="blueprint-caption">— 一進VOYAGE号 断面図 ／ 各部門がどこに配置されているか —</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ V2.1 NEW: NAVIGATION CHART ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">NAVIGATION CHART — 航海図</div>
+    <div class="section-title">🗺️ どこから来て、どこへ行くのか</div>
+    <div class="section-desc">母港 → 寄港地10港 → 現在地 → 6つの未踏島（Phase A-F）</div>
+  </div>
+
+  <div class="chart-wrap">
+    <svg class="chart-svg" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="parchGrad" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#f5d9a3"/>
+          <stop offset="70%" stop-color="#d4a574"/>
+          <stop offset="100%" stop-color="#a67940"/>
+        </radialGradient>
+        <pattern id="paperTexture" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+          <rect width="100" height="100" fill="none"/>
+          <circle cx="20" cy="20" r="0.5" fill="#8b5a2b" opacity="0.2"/>
+          <circle cx="60" cy="40" r="0.5" fill="#8b5a2b" opacity="0.2"/>
+          <circle cx="80" cy="80" r="0.5" fill="#8b5a2b" opacity="0.2"/>
+          <circle cx="30" cy="70" r="0.5" fill="#8b5a2b" opacity="0.2"/>
+        </pattern>
+      </defs>
+
+      <!-- Parchment background -->
+      <rect width="1200" height="720" fill="url(#parchGrad)"/>
+      <rect width="1200" height="720" fill="url(#paperTexture)"/>
+      <!-- Aged edges -->
+      <rect width="1200" height="720" fill="rgba(80,50,20,0.12)"/>
+
+      <!-- Border frames -->
+      <rect x="15" y="15" width="1170" height="690" fill="none" stroke="#3d2510" stroke-width="4"/>
+      <rect x="28" y="28" width="1144" height="664" fill="none" stroke="#5a3a1a" stroke-width="1.5"/>
+      <rect x="40" y="40" width="1120" height="640" fill="none" stroke="#8b5a2b" stroke-width="0.8"/>
+
+      <!-- Corner decorations -->
+      <text x="55" y="75" font-size="28" fill="#5a3a1a" opacity="0.6">❦</text>
+      <text x="1145" y="75" font-size="28" fill="#5a3a1a" opacity="0.6" text-anchor="end">❦</text>
+      <text x="55" y="695" font-size="28" fill="#5a3a1a" opacity="0.6">❦</text>
+      <text x="1145" y="695" font-size="28" fill="#5a3a1a" opacity="0.6" text-anchor="end">❦</text>
+
+      <!-- Title cartouche -->
+      <rect x="380" y="55" width="440" height="60" fill="rgba(61,37,16,0.08)" stroke="#5a3a1a" stroke-width="1.5" rx="4"/>
+      <text x="600" y="85" fill="#3d2510" text-anchor="middle" font-size="22" font-weight="900" letter-spacing="2">一進VOYAGE号 — 航海図</text>
+      <text x="600" y="105" fill="#5a3a1a" text-anchor="middle" font-size="10" letter-spacing="6">VOYAGE  CHART  2026</text>
+
+      <!-- ═══ COMPASS ROSE (羅針盤) ═══ -->
+      <g transform="translate(1060, 180)">
+        <circle r="70" fill="rgba(245,217,163,0.3)" stroke="#3d2510" stroke-width="2"/>
+        <circle r="55" fill="none" stroke="#5a3a1a" stroke-width="1"/>
+        <circle r="40" fill="none" stroke="#5a3a1a" stroke-width="0.5"/>
+        <!-- 4 main points -->
+        <path d="M 0 -70 L -10 0 L 10 0 Z" fill="#c83030"/>
+        <path d="M 0 70 L -10 0 L 10 0 Z" fill="#3d2510"/>
+        <path d="M -70 0 L 0 -10 L 0 10 Z" fill="#3d2510"/>
+        <path d="M 70 0 L 0 -10 L 0 10 Z" fill="#3d2510"/>
+        <!-- 4 diagonal points -->
+        <path d="M 49 -49 L 0 -5 L 5 0 Z" fill="#5a3a1a" opacity="0.7"/>
+        <path d="M -49 -49 L 0 -5 L -5 0 Z" fill="#5a3a1a" opacity="0.7"/>
+        <path d="M 49 49 L 0 5 L 5 0 Z" fill="#5a3a1a" opacity="0.7"/>
+        <path d="M -49 49 L 0 5 L -5 0 Z" fill="#5a3a1a" opacity="0.7"/>
+        <!-- Labels -->
+        <text x="0" y="-78" text-anchor="middle" font-size="14" font-weight="900" fill="#3d2510">N</text>
+        <text x="82" y="5" font-size="14" font-weight="900" fill="#3d2510">E</text>
+        <text x="0" y="90" text-anchor="middle" font-size="14" font-weight="900" fill="#3d2510">S</text>
+        <text x="-82" y="5" text-anchor="end" font-size="14" font-weight="900" fill="#3d2510">W</text>
+        <!-- Center -->
+        <circle r="5" fill="#3d2510"/>
+      </g>
+
+      <!-- Decorative waves (sea squiggles) -->
+      <g opacity="0.35" stroke="#5a3a1a" fill="none" stroke-width="0.8">
+        <path d="M 80 440 Q 120 430 160 440 T 240 440"/>
+        <path d="M 200 520 Q 240 510 280 520 T 360 520"/>
+        <path d="M 100 580 Q 140 570 180 580 T 260 580"/>
+        <path d="M 380 440 Q 420 430 460 440"/>
+        <path d="M 520 590 Q 560 580 600 590"/>
+        <path d="M 820 620 Q 860 610 900 620"/>
+        <path d="M 920 450 Q 960 440 1000 450"/>
+      </g>
+
+      <!-- Decorative whale -->
+      <text x="950" y="600" font-size="40" opacity="0.35">🐋</text>
+      <text x="280" y="655" font-size="28" opacity="0.3">🦑</text>
+      <text x="500" y="210" font-size="22" opacity="0.4">☁️</text>
+      <text x="250" y="180" font-size="22" opacity="0.4">☁️</text>
+
+      <!-- ═══ HOME PORT (母港) ═══ -->
+      <g transform="translate(120, 420)">
+        <circle r="4" fill="#5a3a1a" opacity="0.4"/>
+        <circle r="18" fill="#4ecdc4" stroke="#3d2510" stroke-width="2.5"/>
+        <text x="0" y="5" text-anchor="middle" font-size="16" fill="#fff">⚓</text>
+        <text x="0" y="-28" text-anchor="middle" font-size="11" fill="#3d2510" font-weight="900">母港</text>
+        <text x="0" y="38" text-anchor="middle" font-size="10" fill="#5a3a1a" font-weight="700">Claude Code</text>
+        <text x="0" y="50" text-anchor="middle" font-size="9" fill="#5a3a1a">Harbor</text>
+      </g>
+
+      <!-- ═══ VISITED PORTS (寄港地10港) ═══ -->
+      <g>
+        <!-- sawada -->
+        <g transform="translate(250, 240)">
+          <circle r="9" fill="#ffd700" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">⚓</text>
+          <text x="0" y="-16" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">sawada</text>
+        </g>
+        <!-- sawada-co -->
+        <g transform="translate(290, 300)">
+          <circle r="9" fill="#ffd700" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">⚓</text>
+          <text x="0" y="22" text-anchor="middle" font-size="9" font-weight="700" fill="#3d2510">sawada-co</text>
+        </g>
+        <!-- ameru -->
+        <g transform="translate(350, 470)">
+          <circle r="9" fill="#ffd700" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">⚓</text>
+          <text x="0" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">ameru</text>
+        </g>
+        <!-- gungun -->
+        <g transform="translate(420, 350)">
+          <circle r="9" fill="#ffd700" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">⚓</text>
+          <text x="0" y="-16" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">gungun</text>
+        </g>
+        <!-- proust -->
+        <g transform="translate(500, 220)">
+          <circle r="9" fill="#ffd700" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">⚓</text>
+          <text x="0" y="-16" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">proust</text>
+        </g>
+        <!-- mauri -->
+        <g transform="translate(470, 530)">
+          <circle r="9" fill="#ffd700" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">⚓</text>
+          <text x="0" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">mauri</text>
+        </g>
+        <!-- yomite -->
+        <g transform="translate(540, 430)">
+          <circle r="9" fill="#ffd700" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">⚓</text>
+          <text x="0" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">yomite</text>
+        </g>
+        <!-- camicks (Amazon) -->
+        <g transform="translate(620, 290)">
+          <circle r="9" fill="#ff9444" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">🏴‍☠️</text>
+          <text x="0" y="-16" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">camicks</text>
+        </g>
+        <!-- onmyskin -->
+        <g transform="translate(380, 600)">
+          <circle r="9" fill="#ffd700" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">⚓</text>
+          <text x="0" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">onmyskin</text>
+        </g>
+        <!-- sakura -->
+        <g transform="translate(640, 510)">
+          <circle r="9" fill="#ff9dbb" stroke="#3d2510" stroke-width="2"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9">🌸</text>
+          <text x="0" y="22" text-anchor="middle" font-size="10" font-weight="700" fill="#3d2510">sakura</text>
+        </g>
+      </g>
+
+      <!-- ═══ JOURNEY PATH (航路) ═══ -->
+      <path d="M 140 420
+               Q 200 330 250 240
+               Q 280 270 290 300
+               Q 320 390 350 470
+               Q 395 420 420 350
+               Q 470 290 500 220
+               Q 520 400 540 430
+               Q 510 490 470 530
+               Q 540 600 620 290
+               Q 510 590 380 600
+               Q 480 550 640 510
+               Q 700 500 740 450"
+            fill="none" stroke="#c83030" stroke-width="2" stroke-dasharray="6,5" opacity="0.75"/>
+
+      <!-- ═══ CURRENT POSITION (現在地 Phase A 完了直後) ═══ -->
+      <g transform="translate(740, 450)">
+        <circle class="pulse-ring" r="22" fill="none" stroke="#c83030" stroke-width="2.5"/>
+        <circle r="20" fill="#c83030" stroke="#3d2510" stroke-width="2.5"/>
+        <text x="0" y="6" text-anchor="middle" font-size="18">⛵</text>
+        <text x="0" y="-32" text-anchor="middle" font-size="13" font-weight="900" fill="#3d2510">現 在 地</text>
+        <text x="0" y="-18" text-anchor="middle" font-size="10" fill="#5a3a1a">Phase A ✓ 完了</text>
+      </g>
+
+      <!-- ═══ DESTINATION ISLANDS (未踏島 Phase B-F) ═══ -->
+      <!-- Phase B -->
+      <g transform="translate(850, 310)">
+        <path d="M -38 0 Q -38 -22 0 -22 Q 38 -22 38 0 Z" fill="#8fa876" stroke="#3d2510" stroke-width="1.5"/>
+        <text x="-6" y="-3" font-size="14">🌴</text>
+        <text x="12" y="-3" font-size="10">🌴</text>
+        <text x="0" y="-28" text-anchor="middle" font-size="12" font-weight="900" fill="#3d2510">Phase B</text>
+        <text x="0" y="13" text-anchor="middle" font-size="9" fill="#5a3a1a">DNA 2層化</text>
+      </g>
+      <!-- Phase C -->
+      <g transform="translate(950, 400)">
+        <path d="M -38 0 Q -38 -22 0 -22 Q 38 -22 38 0 Z" fill="#8fa876" stroke="#3d2510" stroke-width="1.5"/>
+        <text x="-6" y="-3" font-size="14">🌴</text>
+        <text x="12" y="-3" font-size="10">🌴</text>
+        <text x="0" y="-28" text-anchor="middle" font-size="12" font-weight="900" fill="#3d2510">Phase C</text>
+        <text x="0" y="13" text-anchor="middle" font-size="9" fill="#5a3a1a">strategy.json</text>
+      </g>
+      <!-- Phase D -->
+      <g transform="translate(1030, 490)">
+        <path d="M -38 0 Q -38 -22 0 -22 Q 38 -22 38 0 Z" fill="#8fa876" stroke="#3d2510" stroke-width="1.5"/>
+        <text x="-6" y="-3" font-size="14">🌴</text>
+        <text x="12" y="-3" font-size="10">🌴</text>
+        <text x="0" y="-28" text-anchor="middle" font-size="12" font-weight="900" fill="#3d2510">Phase D</text>
+        <text x="0" y="13" text-anchor="middle" font-size="9" fill="#5a3a1a">Director層</text>
+      </g>
+      <!-- Phase E — 本命 -->
+      <g transform="translate(1085, 360)">
+        <path d="M -45 0 Q -45 -30 0 -30 Q 45 -30 45 0 Z" fill="#ffd700" stroke="#c83030" stroke-width="2"/>
+        <text x="-14" y="-6" font-size="16">🗻</text>
+        <text x="8" y="-6" font-size="14">🌴</text>
+        <text x="0" y="-36" text-anchor="middle" font-size="13" font-weight="900" fill="#c83030">⭐ Phase E ⭐</text>
+        <text x="0" y="15" text-anchor="middle" font-size="9" fill="#3d2510" font-weight="700">Vector-First 本命</text>
+      </g>
+      <!-- Phase F -->
+      <g transform="translate(1010, 580)">
+        <path d="M -38 0 Q -38 -22 0 -22 Q 38 -22 38 0 Z" fill="#8fa876" stroke="#3d2510" stroke-width="1.5"/>
+        <text x="-6" y="-3" font-size="14">🌴</text>
+        <text x="12" y="-3" font-size="10">🌴</text>
+        <text x="0" y="-28" text-anchor="middle" font-size="12" font-weight="900" fill="#3d2510">Phase F</text>
+        <text x="0" y="13" text-anchor="middle" font-size="9" fill="#5a3a1a">OODA自動化</text>
+      </g>
+
+      <!-- Future path (dotted, subtle) -->
+      <path d="M 760 450 Q 810 380 850 310 Q 900 350 950 400 Q 990 445 1030 490 Q 1060 420 1085 360"
+            fill="none" stroke="#5a3a1a" stroke-width="1.5" stroke-dasharray="2,4" opacity="0.5"/>
+
+      <!-- Legend -->
+      <g transform="translate(60, 620)">
+        <rect width="340" height="60" fill="rgba(245,217,163,0.5)" stroke="#5a3a1a" stroke-width="1" rx="4"/>
+        <text x="170" y="20" text-anchor="middle" font-size="10" font-weight="900" fill="#3d2510" letter-spacing="2">LEGEND — 凡例</text>
+        <circle cx="20" cy="38" r="5" fill="#4ecdc4" stroke="#3d2510"/>
+        <text x="32" y="42" font-size="9" fill="#3d2510">母港</text>
+        <circle cx="85" cy="38" r="5" fill="#ffd700" stroke="#3d2510"/>
+        <text x="97" y="42" font-size="9" fill="#3d2510">寄港地</text>
+        <circle cx="155" cy="38" r="5" fill="#c83030" stroke="#3d2510"/>
+        <text x="167" y="42" font-size="9" fill="#3d2510">現在地</text>
+        <path d="M 215 33 Q 220 28 225 33 Q 220 38 215 33 Z" fill="#8fa876" stroke="#3d2510"/>
+        <text x="232" y="42" font-size="9" fill="#3d2510">未踏島</text>
+        <line x1="20" y1="52" x2="40" y2="52" stroke="#c83030" stroke-width="2" stroke-dasharray="3,2"/>
+        <text x="48" y="55" font-size="9" fill="#3d2510">航路</text>
+        <line x1="90" y1="52" x2="110" y2="52" stroke="#5a3a1a" stroke-width="1.5" stroke-dasharray="2,3"/>
+        <text x="118" y="55" font-size="9" fill="#3d2510">予定航路</text>
+      </g>
+
+    </svg>
+    <div class="chart-legend">
+      <span>⚓ <strong>母港</strong> Claude Code Harbor</span>
+      <span>⚓ <strong>10寄港地</strong> 実戦中のクライアント</span>
+      <span>⛵ <strong>現在地</strong> Phase A 完了</span>
+      <span>🌴 <strong>未踏島</strong> Phase B-F</span>
+      <span>⭐ <strong>Phase E</strong> 本命の目的地</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ MISSION ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">OUR MISSION</div>
+    <div class="section-title">航海の目的</div>
+  </div>
+  <div class="mission-card">
+    <span class="h">広告マーケティング</span>という<span class="p">冒険</span>において、<br>
+    <span class="y">N1の需要のニュアンス</span>という<span class="p">地図</span>を読み、<br>
+    <span class="y">コンセプトに一貫したコミュニケーション</span>という<span class="p">航海</span>を通じ、<br>
+    <span class="o">大当たりCR</span>という<span class="p">財宝</span>を見つけ続ける。<br><br>
+    <span style="color:#ccc; font-size:15px;">
+      本質 × 速度。表面を削る → 本質を見つける → 最速で動く。<br>
+      走りながら磨く。
+    </span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ V2 NEW: EVOLUTION TIMELINE ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">V2 NEW — EVOLUTION TIMELINE</div>
+    <div class="section-title">進化の航海日誌</div>
+    <div class="section-desc">VOYAGE号がどう進化してきたか。最新は 2026-04-18 の大統合。</div>
+  </div>
+  <div class="evo-wrap">
+    <div class="evo-line"></div>
+
+    <div class="evo-event evo-left latest">
+      <div class="evo-date">2026-04-18 ── 最新</div>
+      <div class="evo-title">🎈 AIパクくん1.2.5 統合 × 全資料整備</div>
+      <div class="evo-body">
+        パクCMO SaaSを完全解析。哲学・判断階層・Vector-First憲法を統合。<br>
+        reports/ 58ファイル → 10ディレクトリ構造化。CLAUDE.md 0章追加。
+      </div>
+      <span class="evo-tag">+8 ナレッジ</span>
+      <span class="evo-tag">+INDEX体制</span>
+      <span class="evo-tag">+CHANGELOG誕生</span>
+    </div>
+
+    <div class="evo-event evo-right">
+      <div class="evo-date">2026-04-17</div>
+      <div class="evo-title">KOSURI案件進行 × yomite整備</div>
+      <div class="evo-body">
+        kosuri進化レポート作成。yomite AIポリシー改訂。sakura クライアント追加。
+      </div>
+    </div>
+
+    <div class="evo-event evo-left">
+      <div class="evo-date">2026-04-11〜12</div>
+      <div class="evo-title">🧠 CCDD勉強会インプット</div>
+      <div class="evo-body">
+        文太氏のClaude Code DEEP DIVEから学習。ccdd-strategy.md作成。<br>
+        Phase 1-4構想（knowledge ベクトル化・ループ閉じ）を記録。
+      </div>
+      <span class="evo-tag">ベクトル化構想</span>
+      <span class="evo-tag">Phase 1-4</span>
+    </div>
+
+    <div class="evo-event evo-right">
+      <div class="evo-date">2026-04-03</div>
+      <div class="evo-title">📚 4哲学追記</div>
+      <div class="evo-body">
+        制約・クリエイティブ / フィードバック品質 / プランモード / ベクトル空間指定。
+      </div>
+    </div>
+
+    <div class="evo-event evo-left">
+      <div class="evo-date">2026-04-01</div>
+      <div class="evo-title">💎 エンベディング哲学 + 組織設計哲学</div>
+      <div class="evo-body">
+        「エンベディングなしで良いクリエイティブは作れない」原則。<br>
+        1エージェント1タスクの組織設計思想。
+      </div>
+    </div>
+
+    <div class="evo-event evo-right">
+      <div class="evo-date">2026-03-29</div>
+      <div class="evo-title">🌊 CEO/CMO分離思想</div>
+      <div class="evo-body">
+        リフレクションループ Lv.4 概念。CKOパターンの原型。
+      </div>
+    </div>
+
+    <div class="evo-event evo-left">
+      <div class="evo-date">2026-03-26</div>
+      <div class="evo-title">🚀 AGI最大レバレッジ原則</div>
+      <div class="evo-body">
+        「Opus 4.6以降はAGI。if文で電卓化しない。」の原則確立。
+      </div>
+    </div>
+
+    <div class="evo-event evo-right">
+      <div class="evo-date">2026-02-25</div>
+      <div class="evo-title">⚓ クリエイティブの3つの魂 確立</div>
+      <div class="evo-body">
+        KV魂 / キラーコピー魂 / 仮説魂。戦略翻訳の思想。<br>
+        ベクトルは守護神。VOYAGE号の哲学の礎が完成。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ V2 NEW: BEFORE / AFTER ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">V2 NEW — 2026-04-18 INTEGRATION</div>
+    <div class="section-title">Before / After</div>
+    <div class="section-desc">パク1.2.5 統合 × 全資料整備による変化</div>
+  </div>
+
+  <div class="ba-grid">
+    <div class="ba-col before">
+      <div class="ba-label">⚠️ BEFORE (V1期)</div>
+      <ul class="ba-list">
+        <li>reports/ に58ファイルがフラット配置</li>
+        <li>.DS_Store ゴミが7箇所残存</li>
+        <li>古いhandoffが12件フラット</li>
+        <li>CLAUDE.md は101行、本質指令は分散</li>
+        <li>README が旧構造（8スキル表示）</li>
+        <li>park-architecture.md は35行の骨格</li>
+        <li>ccdd-strategy Phase 1-4 は構想のみ</li>
+        <li>CHANGELOG なし、進化の記憶なし</li>
+        <li>パク哲学と運用チェックリストが未接続</li>
+        <li>knowledge/ に INDEX なし、迷子化</li>
+      </ul>
+    </div>
+    <div class="ba-arrow">➜</div>
+    <div class="ba-col after">
+      <div class="ba-label">✨ AFTER (V2期)</div>
+      <ul class="ba-list">
+        <li>reports/ 10ディレクトリ + INDEX.md</li>
+        <li>ゴミ掃除完了（.DS_Store 0箇所）</li>
+        <li>archive/ に11件移動、active 1件</li>
+        <li>CLAUDE.md 124行、0章に本質指令5項目</li>
+        <li>README 全面改訂（220行、45スキル実態）</li>
+        <li>park-architecture 189行（5.4倍拡張）</li>
+        <li>パク側実装発見、Phase A完了、B-F計画化</li>
+        <li>CHANGELOG 誕生、時系列進化記録</li>
+        <li>aipark-imports/ 8ファイルと相互参照</li>
+        <li>knowledge/INDEX + reports/INDEX 新設</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ V2 NEW: PHILOSOPHY STACK ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">V2 NEW — JUDGMENT STACK</div>
+    <div class="section-title">判断の5層スタック</div>
+    <div class="section-desc">一進AIが判断する時、上から順に参照する</div>
+  </div>
+  <div class="stack-wrap">
+
+    <div class="stack-layer">
+      <div class="tier">TIER 0</div>
+      <div class="content">
+        <div class="h">CLAUDE.md 0章 — 本質指令</div>
+        <div class="d">本質を見抜く / AGI最大レバレッジ / 意図を汲む / 黙って突っ走らない / degraded mode報告</div>
+      </div>
+    </div>
+
+    <div class="stack-layer">
+      <div class="tier">TIER 1</div>
+      <div class="content">
+        <div class="h">identity.md — 一進AIの人格</div>
+        <div class="d">ギャル口調 / 関西弁 / 本質突っ込み / 仮説を持って動く / 3回自走ルール</div>
+      </div>
+    </div>
+
+    <div class="stack-layer">
+      <div class="tier">TIER 2</div>
+      <div class="content">
+        <div class="h">pak-philosophy.md — マーケ哲学の核（366行）</div>
+        <div class="d">3価値観・3つの魂・戦略翻訳・KV哲学・エンベディング哲学・ポメ太DIVE9原則</div>
+      </div>
+    </div>
+
+    <div class="stack-layer new">
+      <div class="tier">TIER 3 ✨</div>
+      <div class="content">
+        <div class="h">aipark-imports/ — 運用チェックリスト（V2新設）</div>
+        <div class="d">愛→偉大→可能 階層判定 / Vector-First憲法 / AGI判断原則 / CR運用4原則 / 5本質問 / 哲学制約 / degraded mode</div>
+      </div>
+    </div>
+
+    <div class="stack-layer">
+      <div class="tier">OUT</div>
+      <div class="content">
+        <div class="h">「見た瞬間えぐい」納品</div>
+        <div class="d">感情が動かなければ出さない。仮説を持って動く。事後レビューで磨く。</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ V2 NEW: AIPARK IMPORTS ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">V2 NEW — IMPORTED KNOWLEDGE</div>
+    <div class="section-title">🎈 aipark-imports/ 8ファイル</div>
+    <div class="section-desc">AIパクくん1.2.5 配布版から輸入した運用チェックリスト群</div>
+  </div>
+  <div class="decks" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">⚖️</div>
+        <div>
+          <div class="deck-name">3つの魂（判断階層）</div>
+          <div style="font-size:10px;color:#87ceeb;">three-souls-judgment-hierarchy.md</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#bbb;">
+        愛 → 偉大 → 可能 の階層で評価。<br>
+        下位FAILなら上位評価しない。<br><br>
+        <strong style="color:#ff6b6b;">愛FAIL = 即REJECT</strong>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🧭</div>
+        <div>
+          <div class="deck-name">Vector-First 憲法</div>
+          <div style="font-size:10px;color:#87ceeb;">vector-first-constitution.md</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#bbb;">
+        仮説は vector-addressable に。<br>
+        テキストだけの仮説は補助メモ、<br>主記録はベクトル座標。<br><br>
+        <strong style="color:#4ecdc4;">7主審スコア</strong>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">♟️</div>
+        <div>
+          <div class="deck-name">AlphaGo判断原則</div>
+          <div style="font-size:10px;color:#87ceeb;">alphago-judgment-principles.md</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#bbb;">
+        Pythonで書けるか？<br>Opusに推論させるべきか？<br><br>
+        フェーズ別武器選択。<br>CV数に応じた道具選び。
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🌸</div>
+        <div>
+          <div class="deck-name">CR運用4原則</div>
+          <div style="font-size:10px;color:#87ceeb;">cr-pdca-philosophy.md</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#bbb;">
+        毎日新CR / 予算固定 /<br>
+        勝ちCR復活2回まで /<br>
+        学びを蓄積して複利化。<br><br>
+        「CRは花。咲いて枯れる。」
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🙋</div>
+        <div>
+          <div class="deck-name">Agent/Skill 5本質問</div>
+          <div style="font-size:10px;color:#87ceeb;">agent-requirements-5-questions.md</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#bbb;">
+        ①本当にAgentか？<br>
+        ②最悪の失敗は？<br>
+        ③KPIは2週間で測れる？<br>
+        ④何を捨てる？<br>
+        ⑤誰がいつ動かす？
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">✅</div>
+        <div>
+          <div class="deck-name">哲学制約チェック</div>
+          <div style="font-size:10px;color:#87ceeb;">philosophy-constraints.md</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#bbb;">
+        CR仮説生成後、配信前に通す。<br>
+        3つの魂 × ビジュアル × コピー<br>
+        制約を機械的にチェック。
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">⚠️</div>
+        <div>
+          <div class="deck-name">degraded mode 報告</div>
+          <div style="font-size:10px;color:#87ceeb;">degraded-mode-reporting.md</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#bbb;">
+        本来の力を出せなかった時は<br>必ず報告。<br><br>
+        <strong style="color:#ff6b6b;">静かな劣化禁止。</strong><br>
+        「小さな嘘をつかない」の具体化。
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🗺️</div>
+        <div>
+          <div class="deck-name">輸入マップ</div>
+          <div style="font-size:10px;color:#87ceeb;">README.md</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#bbb;">
+        輸入ポリシーと全体マップ。<br>
+        どのスキルが何を参照するかの<br>一覧ガイド。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ SHIP STRUCTURE ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">SHIP STRUCTURE</div>
+    <div class="section-title">船の全クルー構成</div>
+    <div class="section-desc">7部門・85クルー（29 Agents + 45 Skills + 11 support）</div>
+  </div>
+  <div class="decks">
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🏴‍☠️</div>
+        <div>
+          <div class="deck-name">Bridge — 船長室</div>
+        </div>
+        <div class="deck-count">7</div>
+      </div>
+      <div class="deck-crews">
+        <div class="crew agent"><span><span class="crew-icon">🧭</span> 一進AI</span><span class="crew-role">船長</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🧙‍♂️</span> pak-sensei</span><span class="crew-role">哲学者</span></div>
+        <div class="crew skill"><span><span class="crew-icon">☀️</span> /morning</span><span class="crew-role">朝ルーティン</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📘</span> /coach</span><span class="crew-role">コーチ</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🤝</span> /work-mentor</span><span class="crew-role">仕事支援</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📅</span> /meeting-prep</span><span class="crew-role">会議準備</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📋</span> /secretary-crew</span><span class="crew-role">秘書</span></div>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🔭</div>
+        <div>
+          <div class="deck-name">Gate部門 — 見張り台</div>
+        </div>
+        <div class="deck-count">10</div>
+      </div>
+      <div class="deck-crews">
+        <div class="crew agent"><span><span class="crew-icon">⚖️</span> gate-legal</span><span class="crew-role">法規</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🛡️</span> gate-brand</span><span class="crew-role">ブランド</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🚦</span> gate-quality</span><span class="crew-role">品質</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🎯</span> gate-n1</span><span class="crew-role">N1</span></div>
+        <div class="crew agent"><span><span class="crew-icon">📈</span> cvr-crew</span><span class="crew-role">CVR</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🪝</span> gate-hook</span><span class="crew-role">フック</span></div>
+        <div class="crew agent"><span><span class="crew-icon">📊</span> gate-marketing</span><span class="crew-role">マーケ</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🔤</span> gate-typography</span><span class="crew-role">文字</span></div>
+        <div class="crew agent"><span><span class="crew-icon">👁️</span> gate-visual</span><span class="crew-role">ビジュアル</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🎨</span> gate-image-prompt</span><span class="crew-role">画像プロンプト</span></div>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">📝</div>
+        <div>
+          <div class="deck-name">Kiji部門 — 記事甲板</div>
+        </div>
+        <div class="deck-count">14</div>
+      </div>
+      <div class="deck-crews">
+        <div class="crew skill new"><span><span class="crew-icon">🧭</span> /kiji-cko</span><span class="crew-role">CKO統括</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🎣</span> kiji-hook</span><span class="crew-role">フック</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🌊</span> kiji-arc</span><span class="crew-role">アーク</span></div>
+        <div class="crew agent"><span><span class="crew-icon">⚓</span> kiji-trust</span><span class="crew-role">トラスト</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🔔</span> kiji-cta</span><span class="crew-role">CTA</span></div>
+        <div class="crew agent"><span><span class="crew-icon">💎</span> kiji-offer</span><span class="crew-role">オファー</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🧭</span> kiji-compass</span><span class="crew-role">コンパス</span></div>
+        <div class="crew skill"><span><span class="crew-icon">✍️</span> /kiji-rewriter</span><span class="crew-role">書き換え</span></div>
+        <div class="crew skill"><span><span class="crew-icon">✅</span> /kiji-validator</span><span class="crew-role">検証</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🧪</span> /kiji-tester</span><span class="crew-role">ABテスト</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🌊</span> /kiji-flow</span><span class="crew-role">流れ評価</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📝</span> /記事LP-park</span><span class="crew-role">LP生成v3</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🎨</span> /kakou-lp</span><span class="crew-role">加工LP</span></div>
+        <div class="crew skill"><span><span class="crew-icon">⚡</span> /lp-speed</span><span class="crew-role">高速化</span></div>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🎬</div>
+        <div>
+          <div class="deck-name">Movie部門 — 動画甲板</div>
+        </div>
+        <div class="deck-count">12</div>
+      </div>
+      <div class="deck-crews">
+        <div class="crew skill new"><span><span class="crew-icon">🎬</span> /movie-kantoku</span><span class="crew-role">カントク</span></div>
+        <div class="crew agent"><span><span class="crew-icon">⚡</span> movie-hook</span><span class="crew-role">フック</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🎢</span> /movie-arc</span><span class="crew-role">感情アーク</span></div>
+        <div class="crew agent"><span><span class="crew-icon">📣</span> movie-cta</span><span class="crew-role">CTA</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🎨</span> movie-visual</span><span class="crew-role">ビジュアル</span></div>
+        <div class="crew agent"><span><span class="crew-icon">📜</span> movie-script</span><span class="crew-role">台本</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📉</span> /movie-retention</span><span class="crew-role">リテンション</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🥁</span> /movie-tempo</span><span class="crew-role">テンポ</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🎨</span> /movie-style</span><span class="crew-role">スタイル</span></div>
+        <div class="crew skill"><span><span class="crew-icon">⚖️</span> /movie-judge</span><span class="crew-role">ジャッジ</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🌉</span> /movie-bridge</span><span class="crew-role">ブリッジ</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🧩</span> /movie-match</span><span class="crew-role">マッチ</span></div>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">📱</div>
+        <div>
+          <div class="deck-name">SNS部門（V2拡張）</div>
+        </div>
+        <div class="deck-count">6</div>
+      </div>
+      <div class="deck-crews">
+        <div class="crew skill new"><span><span class="crew-icon">🎯</span> /sns-marketer</span><span class="crew-role">戦略</span></div>
+        <div class="crew agent"><span><span class="crew-icon">📝</span> sns-script</span><span class="crew-role">台本</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🎬</span> sns-edit</span><span class="crew-role">編集</span></div>
+        <div class="crew agent"><span><span class="crew-icon">🎯</span> sns-retake</span><span class="crew-role">テイク選定</span></div>
+        <div class="crew agent"><span><span class="crew-icon">📱</span> sns-post</span><span class="crew-role">投稿</span></div>
+        <div class="crew agent"><span><span class="crew-icon">📊</span> sns-analytics</span><span class="crew-role">分析</span></div>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🏴‍☠️</div>
+        <div>
+          <div class="deck-name">Amazon航路</div>
+        </div>
+        <div class="deck-count">2</div>
+      </div>
+      <div class="deck-crews">
+        <div class="crew skill"><span><span class="crew-icon">🏴‍☠️</span> /amazon-captain</span><span class="crew-role">キャプテン</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📦</span> /amazon-park</span><span class="crew-role">出店・画像</span></div>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🏭</div>
+        <div>
+          <div class="deck-name">Park群 — 制作ドック</div>
+        </div>
+        <div class="deck-count">7</div>
+      </div>
+      <div class="deck-crews">
+        <div class="crew skill"><span><span class="crew-icon">🔬</span> /research-park</span><span class="crew-role">リサーチ</span></div>
+        <div class="crew skill"><span><span class="crew-icon">💡</span> /concept-park</span><span class="crew-role">コンセプト</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🖼️</span> /banner-park</span><span class="crew-role">バナーv7</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🎬</span> /shortad-park</span><span class="crew-role">動画v7</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📺</span> /youtube-research</span><span class="crew-role">YT戦略</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📄</span> /proposal-park</span><span class="crew-role">提案書</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🔁</span> /weekly-review</span><span class="crew-role">週次</span></div>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="deck-head">
+        <div class="deck-icon">🔧</div>
+        <div>
+          <div class="deck-name">機関室 — Utility</div>
+        </div>
+        <div class="deck-count">8</div>
+      </div>
+      <div class="deck-crews">
+        <div class="crew skill"><span><span class="crew-icon">🔐</span> /anonymize</span><span class="crew-role">匿名化</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🔄</span> /park-kaizen</span><span class="crew-role">壁打ち</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🤖</span> /park-patrol</span><span class="crew-role">自動進化</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🤿</span> /nice-dive</span><span class="crew-role">学びログ</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📦</span> /handoff</span><span class="crew-role">引継ぎ</span></div>
+        <div class="crew skill"><span><span class="crew-icon">👤</span> /client-context</span><span class="crew-role">クライアント</span></div>
+        <div class="crew skill"><span><span class="crew-icon">📞</span> /chuka-log</span><span class="crew-role">中華ログ</span></div>
+        <div class="crew skill"><span><span class="crew-icon">🎈</span> bots</span><span class="crew-role">slack常駐</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ V2 NEW: PHASE ROADMAP ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">V2 NEW — PHASE ROADMAP</div>
+    <div class="section-title">進化のロードマップ</div>
+    <div class="section-desc">CCDD Strategy × パク1.2.5 の段階移植計画</div>
+  </div>
+  <div class="phases">
+
+    <div class="phase done">
+      <span class="phase-letter">A</span>
+      <div class="phase-name">哲学輸入</div>
+      <div style="font-size:10px;color:#aaa;">aipark-imports 8ファイル</div>
+      <div class="phase-status">✅ 完了</div>
+    </div>
+
+    <div class="phase pending">
+      <span class="phase-letter">B</span>
+      <div class="phase-name">DNA 2層化</div>
+      <div style="font-size:10px;color:#aaa;">hook/cta-db 構造化</div>
+      <div class="phase-status">🔲 次回</div>
+    </div>
+
+    <div class="phase pending">
+      <span class="phase-letter">C</span>
+      <div class="phase-name">strategy.json</div>
+      <div style="font-size:10px;color:#aaa;">clients/ 段階移行</div>
+      <div class="phase-status">🔲 待機</div>
+    </div>
+
+    <div class="phase pending">
+      <span class="phase-letter">D</span>
+      <div class="phase-name">Director層</div>
+      <div style="font-size:10px;color:#aaa;">契約ベース再編</div>
+      <div class="phase-status">🔲 待機</div>
+    </div>
+
+    <div class="phase pending">
+      <span class="phase-letter">E</span>
+      <div class="phase-name">Vector-First</div>
+      <div style="font-size:10px;color:#aaa;">Embedding 2 + ChromaDB</div>
+      <div class="phase-status">🔲 本命</div>
+    </div>
+
+    <div class="phase pending">
+      <span class="phase-letter">F</span>
+      <div class="phase-name">OODA自動化</div>
+      <div style="font-size:10px;color:#aaa;">night-brain / reflection</div>
+      <div class="phase-status">🔲 本番</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ V2 NEW: DIRECTORY TREE ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">V2 NEW — DIRECTORY</div>
+    <div class="section-title">整理後の船内マップ</div>
+    <div class="section-desc">2026-04-18 の大整理で生まれた新構造</div>
+  </div>
+  <div class="tree">
+<span class="hl">一進VOYAGE号/</span>
+├── <span class="hl2">README.md</span>                  <span class="comm"># 全面改訂 (220行, 45スキル反映)</span>
+├── <span class="new">CHANGELOG.md</span>               <span class="comm"># V2新規 — 進化の記録</span>
+├── <span class="hl2">CLAUDE.md</span>                  <span class="comm">(124行 — 0章に本質指令追加)</span>
+├── <span class="comm">CLAUDE.md.backup-20260418  # バックアップ</span>
+│
+├── <span class="hl">.claude/</span>
+│   ├── identity.md              <span class="comm"># 一進AIの人格 (221行, 判断5層スタック追記)</span>
+│   ├── <span class="hl">agents/</span>  (29体)        <span class="comm"># Gate/Kiji/Movie/SNS クルー群</span>
+│   ├── <span class="hl">commands/</span> (45スキル)   <span class="comm"># Park/CKO/カントク/キャプテン等</span>
+│   ├── <span class="hl">knowledge/</span> (31ファイル)
+│   │   ├── <span class="new">INDEX.md</span>          <span class="comm"># V2新規 — 30ファイル目次</span>
+│   │   ├── pak-philosophy.md    <span class="comm"># マーケ哲学 (366行)</span>
+│   │   ├── park-architecture.md <span class="comm"># 189行 (5.4倍拡張)</span>
+│   │   ├── ccdd-strategy.md     <span class="comm"># Phaseステータス追記</span>
+│   │   └── <span class="new">aipark-imports/</span>    <span class="comm"># V2新設 — パク1.2.5輸入 (8ファイル)</span>
+│   │       ├── three-souls-judgment-hierarchy.md
+│   │       ├── vector-first-constitution.md
+│   │       ├── alphago-judgment-principles.md
+│   │       ├── cr-pdca-philosophy.md
+│   │       ├── agent-requirements-5-questions.md
+│   │       ├── philosophy-constraints.md
+│   │       └── degraded-mode-reporting.md
+│   ├── <span class="hl">clients/</span> (10社)        <span class="comm"># sawada,ameru,gungun,proust,mauri,yomite,</span>
+│   │                            <span class="comm">  camicks,onmyskin,sakura,sawada-co</span>
+│   ├── rules/                   <span class="comm"># anonymize / security / lp-rules</span>
+│   ├── <span class="hl">handoff/</span>
+│   │   ├── handoff_2026-04-17_kosuri.md  <span class="comm"># active 1件</span>
+│   │   └── <span class="new">archive/</span> (11件)    <span class="comm"># V2整理 — 古いhandoff</span>
+│   └── scripts/                 <span class="comm"># slack常駐bot等</span>
+│
+├── <span class="hl">reports/</span>
+│   ├── <span class="new">INDEX.md</span>               <span class="comm"># V2新規 — 全レポート目次</span>
+│   ├── <span class="new">aipark/</span>                <span class="comm"># V2新設 — パク解析 (8ファイル)</span>
+│   │   ├── aipark_1.2.5_SUMMARY.md
+│   │   ├── aipark_1.2.5_diff_map.md
+│   │   ├── aipark_deep_dive_alphago.md
+│   │   ├── aipark_deep_dive_vector_first.md
+│   │   ├── aipark_deep_dive_director_layer.md
+│   │   ├── aipark_pdf_manual_summary.md
+│   │   ├── aipark_claude_md_merge_proposal.md
+│   │   └── evolution_20260418_SUMMARY.md  <span class="new">◄ 最新</span>
+│   ├── <span class="new">clients/</span>               <span class="comm"># V2再編 — 10社別</span>
+│   │   ├── ameru/     (LP群+images)
+│   │   ├── sawada/    (提案書)
+│   │   ├── gungun/    (記事LP+インサイト)
+│   │   ├── proust/    (LP最適化)
+│   │   ├── mauri/     (LP診断)
+│   │   ├── yomite/    (AIポリシー+スキル評価)
+│   │   ├── camicks/   (Amazonモックアップ)
+│   │   ├── the-woobles/ (研究+ビジュアル)
+│   │   ├── kosuri/    (GCPアーキ+進化レポ)
+│   │   └── sakura/
+│   ├── <span class="new">projects/</span>              <span class="comm"># V2再編 — 横断プロジェクト</span>
+│   │   ├── setsunatrain2/
+│   │   ├── ccdd-mini-dive/
+│   │   └── world-trip/
+│   ├── archive/                 <span class="comm"># 古いレポート</span>
+│   └── scripts/                 <span class="comm"># 生成スクリプト</span>
+│
+└── <span class="hl2">docs/voyage-crew-map-v2.html</span>  <span class="new">◄ このページ</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ CONTEXT TIERS ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">ARCHITECTURE</div>
+    <div class="section-title">コンテキストコスト設計</div>
+    <div class="section-desc">Claude Code の性能はコンテキスト管理で決まる</div>
+  </div>
+  <div class="tiers">
+    <div class="tier-card">
+      <div class="tier-name">TIER 0</div>
+      <div class="tier-title">常駐</div>
+      <div class="tier-body">
+        CLAUDE.md<br>+ rules/<br>(全メッセージに入る)<br><br>
+        <strong style="color:#ff6b6b;">1行でも減らす</strong>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-name">TIER 1</div>
+      <div class="tier-title">セッション中残る</div>
+      <div class="tier-body">
+        knowledge/<br>(必要時に読む)<br><br>
+        起動時は読まない<br><strong style="color:#ffd700;">INDEX経由で賢く</strong>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-name">TIER 2</div>
+      <div class="tier-title">Skill (親と共有)</div>
+      <div class="tier-body">
+        commands/<br>(/skill起動で親に読込)<br><br>
+        <strong style="color:#4ecdc4;">対話型・重いスキル</strong>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-name">TIER 3</div>
+      <div class="tier-title">独立エージェント</div>
+      <div class="tier-body">
+        agents/<br>(親にコスト0)<br><br>
+        <strong style="color:#8b5cf6;">並列可、レビュー専門</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ CLIENTS ══════════════════════════════════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">ACTIVE CLIENTS</div>
+    <div class="section-title">実戦運用中の10クライアント</div>
+    <div class="section-desc">VOYAGE号の独自優位性 — 実戦データを積み上げている</div>
+  </div>
+  <div class="deck-crews" style="max-width:1100px;margin:0 auto;">
+    <div class="crew agent"><span class="crew-name">sawada</span><span class="crew-role">AI training</span></div>
+    <div class="crew agent"><span class="crew-name">sawada-co</span><span class="crew-role">会社版</span></div>
+    <div class="crew agent"><span class="crew-name">ameru</span><span class="crew-role">LP制作群</span></div>
+    <div class="crew agent"><span class="crew-name">gungun</span><span class="crew-role">記事LP・薬機法</span></div>
+    <div class="crew agent"><span class="crew-name">onmyskin</span><span class="crew-role">ビューティー</span></div>
+    <div class="crew agent"><span class="crew-name">proust</span><span class="crew-role">LP最適化</span></div>
+    <div class="crew agent"><span class="crew-name">camicks</span><span class="crew-role">Amazon航路</span></div>
+    <div class="crew agent"><span class="crew-name">mauri</span><span class="crew-role">LP診断</span></div>
+    <div class="crew agent"><span class="crew-name">yomite</span><span class="crew-role">マーケタースキル</span></div>
+    <div class="crew agent"><span class="crew-name">sakura</span><span class="crew-role">ブランド整備</span></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
+<footer>
+  <div class="footer-big">⚓ Bon Voyage!</div>
+  <div class="footer-sub">ISSHIN VOYAGE — CREW MAP V2.0</div>
+  <div class="footer-gen">
+    本質 × 速度 / 戦略翻訳型マーケティングAI航海船<br>
+    Generated: 2026-04-18 / Evolution: Phase A Complete / Next: Phase B (DNA 2層化)
+  </div>
+</footer>
+
+</div>
+
+</body>
+</html>

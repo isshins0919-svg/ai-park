@@ -8,6 +8,21 @@ CKO（Chief Kiji Officer）が**診断だけでなく、治療指示→治療レ
 
 ---
 
+## 🎯 判定基準（パク1.2.5輸入、2026-04-18追加）
+
+診断時に以下を必ず参照する:
+
+- **評価階層**: `.claude/knowledge/aipark-imports/three-souls-judgment-hierarchy.md`
+  - 愛→偉大→可能 の順で評価。下位FAILなら上位評価しない
+- **哲学制約チェック**: `.claude/knowledge/aipark-imports/philosophy-constraints.md`
+  - 仮説生成時の3つの魂 × ビジュアル × コピー制約リスト
+- **AGI判断原則**: `.claude/knowledge/aipark-imports/alphago-judgment-principles.md`
+  - 「Pythonで書けるか？ Opusに推論させるべきか？」の判断規律
+
+診断Phase 1の前処理で、これら3ファイルを読んでから8エージェント並列に入る。
+
+---
+
 ## 起動時表示
 
 ```

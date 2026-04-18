@@ -6,6 +6,21 @@
 
 ---
 
+## 🎯 振り返りの深さ基準（パク1.2.5輸入、2026-04-18追加）
+
+振り返りが「感想」で終わらないため、以下を必ず適用:
+
+- **Vector-First憲法（第4条: reflection は感想ではなく空間更新）**: `.claude/knowledge/aipark-imports/vector-first-constitution.md`
+  - WINは「どの空間が支配的だったか」、LOSEは「どの空間でズレたか」を更新
+- **CR PDCA哲学**: `.claude/knowledge/aipark-imports/cr-pdca-philosophy.md`
+  - 週次は Lv.3 リフレクション相当。Agent/Skillの改善提案まで出す
+- **5本質問（Skill改善判断）**: `.claude/knowledge/aipark-imports/agent-requirements-5-questions.md`
+  - 今週使わなかったスキルがあれば、孤児化していないか点検
+
+「今週の気づき」で終わらせず、「どのスキルをどう進化させるか」まで踏み込む。
+
+---
+
 ## 発動トリガー
 
 - 「週次レビューして」

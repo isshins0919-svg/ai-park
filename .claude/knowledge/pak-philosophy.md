@@ -2,6 +2,16 @@
 
 全スキル共通で使用するパクのマーケティング思想。
 
+> **📌 2026-04-18 追記**: 本ファイルは VOYAGE号の **思想の本体**。
+> 運用レベルのチェックリストは `.claude/knowledge/aipark-imports/` を併用すること:
+> - `three-souls-judgment-hierarchy.md` — 愛→偉大→可能 階層判定（評価時）
+> - `philosophy-constraints.md` — CR仮説チェックリスト（配信前）
+> - `vector-first-constitution.md` — Vector-First 憲法（データ・仮説設計時）
+> - `cr-pdca-philosophy.md` — CR運用4原則（日次/週次PDCA）
+> - `alphago-judgment-principles.md` — AGI判断原則（運用判断時）
+>
+> 本ファイル（哲学）× aipark-imports/（運用） = 完全な判断基準。
+
 ---
 
 ## ★★★ 目的 ★★★

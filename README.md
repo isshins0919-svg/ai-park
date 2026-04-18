@@ -1,192 +1,220 @@
-# AI Park — 広告クリエイティブ自動生成システム
+# 一進VOYAGE号
 
-> Claude Code で動く、マーケティング戦略 → クリエイティブ自動生成の統合スキルセット
+> ⚓ **Bon Voyage!** — 広告クリエイティブ × マーケティング戦略の統合AI航海船
+> Claude Code 上で動く、10クライアント運用中の本番環境
 
-## アーキテクチャ
+最終更新: 2026-04-18
+
+---
+
+## この船は何者か
+
+**一進VOYAGE号** は、広告マーケティングの戦略〜制作〜運用を一気通貫で自動化する Claude Code 統合システム。
+
+- 🧭 **船長**: 一進AI（`.claude/identity.md` 参照）
+- ⚓ **クルー**: 29体の専門AI（gate-* / kiji-* / movie-* / sns-* / 他）
+- 📋 **スキル**: 45種の Park Skills（`/banner-park`, `/kiji-cko` 等）
+- 📚 **ナレッジ**: 30ファイル（pak-philosophy + aipark-imports 含む）
+- 🏢 **クライアント**: 10社を実戦運用
+
+---
+
+## アーキテクチャ（2026-04-18 現行）
 
 ```
-Research Park → strategy.json v1（商品理解 × 3層N1需要 × ベクトルインテリジェンス）
-                    |
-Concept Park  → strategy.json v2（+ コンセプト × KV × セールスコピー × フック角度）
-  ver.1.2         |
-        +---------+---------+
-        |         |         |
-  Banner Park  ShortAd    記事LP Park
-  v7.0         Park v7.0  v3.0
+[ 船長: 一進AI ]
+    │
+    ├─ 見張り台（Gate部門）: 10クルー — 横断的品質評価
+    │    gate-* : legal / brand / quality / n1 / hook / marketing / typography / visual / image-prompt
+    │    cvr-crew : CVR評価
+    │
+    ├─ 記事甲板（Kiji部門）: 8クルー — 記事LP評価・制作
+    │    kiji-cko（CKO・カントクパターン）
+    │    kiji-hook / arc / trust / cta / offer / compass
+    │    kiji-rewriter / kiji-validator / kiji-tester
+    │
+    ├─ 動画甲板（Movie部門）: 11クルー — 動画制作全工程
+    │    movie-kantoku（カントク）
+    │    movie-hook / arc / cta / visual / script / retention / tempo / style
+    │    movie-judge / movie-bridge / movie-match
+    │
+    ├─ SNS甲板: 5クルー — SNS運用
+    │    sns-script / edit / retake / post / analytics + sns-marketer
+    │
+    ├─ Amazon航路: amazon-captain（キャプテン）+ amazon-park
+    │
+    └─ 哲学: pak-sensei（師匠）+ pak-philosophy.md
 ```
 
-**設計思想**: クリエイティブは「生成」ではなく戦略の「翻訳」
+---
+
+## 主要スキル（`.claude/commands/` 配下 45スキル）
+
+### 戦略・リサーチ
+- `/research-park` v1.0 — 商材リサーチ → strategy.json v1
+- `/concept-park` v1.2 — コンセプト壁打ち → strategy.json v2
+- `/youtube-research` v1.0 — YouTubeチャンネル戦略
+
+### 制作系（3パーク）
+- `/banner-park` v7.0 — Nano Banana Pro画像生成 × ベクトル品質ゲート
+- `/shortad-park` v7.0 — DNA転用 × Grok動画 × Fish Audio
+- `/記事LP-park` v3.0 — 戦略翻訳型 × PDFレポート
+
+### 記事LP特化（CKOパターン）
+- `/kiji-cko` v3.0 — 診断→治療→テスト設計 一気通貫
+- `/kiji-hook` / `/kiji-arc` / `/kiji-trust` / `/kiji-cta` / `/kiji-offer` / `/kiji-compass` / `/kiji-flow`
+- `/kiji-rewriter` / `/kiji-validator` / `/kiji-tester`
+
+### 動画特化（カントクパターン）
+- `/movie-kantoku` — GO判定 + 自動実行
+- `/movie-hook` / `/movie-arc` / `/movie-cta` / `/movie-retention` / `/movie-tempo` / `/movie-style` / `/movie-judge` / `/movie-bridge` / `/movie-match`
+
+### Amazon
+- `/amazon-captain` v3.0 — Amazon航路総指揮
+- `/amazon-park` v1.0 — 商品ページ × 画像生成一気通貫
+
+### 運用・改善
+- `/weekly-review` v1.0 — 週次振り返り
+- `/park-kaizen` — パクの鏡 × 改善壁打ち
+- `/park-patrol` — スキル自動進化パトロール
+- `/nice-dive` — セッション学びログ
+- `/handoff` — 次セッション引き継ぎ
+- `/lp-speed` v1.0 — LP高速化自動診断
+- `/coach` / `/work-mentor` / `/meeting-prep` — 仕事支援
+
+### セッション運用
+- `/morning` — 朝のルーティン（AIニュース3選 + ゴール設定）
+- `/client-context` — クライアントコンテキスト読込
+- `/secretary-crew` — 秘書クルー（航路整理）
+- `/anonymize` — 個人情報匿名化
+- `/proposal-park` v1.0 — 提案書生成
+- `/sns-marketer` v1.0 — SNS戦略
+- `/chuka-log` — 中華調理ログ（生活記録）
+
+---
+
+## ナレッジ（`.claude/knowledge/` 30ファイル）
+
+**目次**: `.claude/knowledge/INDEX.md`
+
+### 核心哲学
+- `pak-philosophy.md`（357行） — マーケ哲学の全体像。3価値観・3つの魂・戦略翻訳・ベクトル哲学等
+- `park-architecture.md` — Park Skills設計原則
+- `ccdd-strategy.md` — CCDD勉強会からのAI活用方針（Phase 1-4構想）
+
+### パク1.2.5 輸入ナレッジ（`aipark-imports/` 配下8ファイル）
+2026-04-18 に AIパクくん1.2.5 配布版から輸入した判断階層・Vector-First憲法:
+- `three-souls-judgment-hierarchy.md` — 愛→偉大→可能 階層判定
+- `vector-first-constitution.md` — Vector-First Learning 憲法
+- `alphago-judgment-principles.md` — AGI判断原則
+- `cr-pdca-philosophy.md` — CR運用4原則
+- `agent-requirements-5-questions.md` — Agent/Skill 5本質問
+- `philosophy-constraints.md` — 哲学制約チェックリスト
+- `degraded-mode-reporting.md` — degraded mode 報告義務
+
+### コピー・DNA・ブランド
+- `hook-db.md` / `cta-db.md` / `banner-dna-templates.md` / `shortad-dna-templates.md`
+- `sakura-brand-guide.md` / `sakura-edit-guide.md` / `sakura-post-guide.md` / `sakura-script-guide.md`
+- `sawada-article-lp-philosophy.md` / `amazon-algorithm.md`
+
+### 動画・ビジュアル
+- `scene-role-tags.md` / `motion-patterns.md` / `fv-detection-revolution.md` / `article-lp-rules.md`
+- `creative-reference.md` / `shortad-reference.md` / `ai-video-pipeline.md`
+- `telop-platform-guidelines.md` / `video-edit-kantoku-rules.md`
+- `asset-guide.md` / `music-selection.md` / `bgm-catalog.md`
+
+### 技術・運用
+- `vector-utils.md` / `google-slides-recipe.md` / `slack-error-notification.md`
+
+---
+
+## クライアント（`.claude/clients/` 10社）
+
+登録済み: `sawada` / `sawada-co` / `ameru` / `gungun` / `onmyskin` / `proust` / `camicks` / `mauri` / `yomite` / `sakura`
+
+各クライアントの過去レポート・LP・提案書は `reports/clients/{slug}/` に整理。
 
 ---
 
 ## クイックスタート
 
-### 1. 前提条件
-- [Claude Code](https://claude.ai/claude-code) がインストール済み
-- Git がインストール済み
-- Python 3.9+
-- FFmpeg（動画生成に必要）
+### 1. 前提
+- Claude Code（[claude.ai/claude-code](https://claude.com/download)）
+- Python 3.12+ 推奨（video-ai系含む場合）
+- FFmpeg（動画生成）
+- 環境変数（`~/.zshrc`）:
+  - `GEMINI_API_KEY_1` / `_2` / `_3`（Nano Banana Pro）
+  - `XAI_API_KEY`（Grok動画）
+  - `FISH_AUDIO_API_KEY`（TTS）
 
-### 2. セットアップ
-
+### 2. 起動
 ```bash
-# 1. このフォルダをプロジェクトルートに配置
-#    例: ~/Desktop/my-project/
-
-# 2. Claude Codeのプロジェクトとして開く
-cd ~/Desktop/my-project
+cd ~/Desktop/一進VOYAGE号
 claude
-
-# 3. 環境変数を設定（~/.zshrc に追加）
-export GEMINI_API_KEY_1="your-gemini-api-key"
-export XAI_API_KEY="your-xai-api-key"
-export FISH_AUDIO_API_KEY="your-fish-audio-key"
-
-# 4. Python依存ライブラリ
-pip install moviepy Pillow requests
 ```
 
-### 3. 初回設定
-
-1. `.claude/identity.md` を作成してAIの個性を定義
-2. `CLAUDE.md` を自社プロジェクトに合わせてカスタマイズ
-3. APIキーを環境変数に設定
-
-### 4. 使い方
-
-Claude Code内でスキルをスラッシュコマンドで呼び出す:
+### 3. 基本フロー
 
 ```
-/research-park    — 商材リサーチ → strategy.json v1
-/concept-park     — コンセプト壁打ち → strategy.json v2
-/banner-park      — バナー自動生成（Nano Banana Pro）
-/shortad-park     — ショート動画自動生成（Grok + NanoBanana）
-/記事LP-park      — 記事LP自動生成
-/youtube-research — YouTubeチャンネルリサーチ
-/park-kaizen      — 改善壁打ち
-/park-patrol      — スキル自動進化パトロール
+1. /research-park で商材リサーチ → strategy.json v1
+2. /concept-park でコンセプト確定 → strategy.json v2
+3. /banner-park or /shortad-park or /記事LP-park で制作
+4. gate-* クルーが品質評価
+5. 納品 → クライアント別 reports/clients/{slug}/ に保存
 ```
 
 ---
 
-## ファイル構成
+## 運用資産
 
-### スキル（`.claude/commands/`）
-| ファイル | バージョン | 説明 |
-|---------|-----------|------|
-| `research-park.md` | v1.0 | 商品理解 × 3層N1需要 × ベクトルインテリジェンス × マーケ戦略 |
-| `concept-park.md` | v1.2 | 壁打ち型コンセプト確定。KV × セールスコピー × フック角度 |
-| `banner-park.md` | v7.0 | Nano Banana Pro画像生成 × 仮説駆動 × ベクトル品質ゲート × PDFレポート |
-| `shortad-park.md` | v7.0 | DNA転用 × デスマス調連続トーク × デュアル素材（Grok + NanoBanana） |
-| `記事LP-park.md` | v3.0 | 戦略翻訳型 × ベクトル品質ゲート × hookVector × PDFレポート |
-| `youtube-research.md` | v1.0 | チャンネル戦略 × 100chリサーチ × 企画設計 × サムネイル生成 |
-| `park-kaizen.md` | — | 改善壁打ちパートナー |
-| `park-patrol.md` | — | スキル自動進化パトロール |
+### MCP接続
+- **DPro MCP**: 競合広告データ（スコアリング付き）
+- **Slack MCP**: 通知・コミュニケーション
+- **Google Calendar / Canva / Drive**: 業務連携
+- **Chrome**: ブラウザ操作
 
-### ナレッジ（`.claude/knowledge/`）
-| ファイル | 説明 |
-|---------|------|
-| `pak-philosophy.md` | マーケティング哲学全文（全クリエイティブの判断基準） |
-| `hook-db.md` | フックコピーDB（BH1〜BH8パターン） |
-| `cta-db.md` | CTAコピーDB（BC1〜BC8パターン） |
-| `banner-dna-templates.md` | バナー勝ちDNAテンプレート（BN-A〜F） |
-| `shortad-dna-templates.md` | 動画勝ちDNAテンプレート |
-| `scene-role-tags.md` | シーン役割タグ定義 |
-| `motion-patterns.md` | モーションパターン集 |
-| `article-lp-rules.md` | 記事LPルール |
-| `asset-guide.md` | 素材収集ガイド |
-| `google-slides-recipe.md` | Googleスライド制作レシピ |
-| `slack-error-notification.md` | エラー通知テンプレート |
+### 常駐Bot（`scripts/` 配下）
+- `slack_dpro_bot.py` — DProデータの定期Slack配信
+- `slack_feedback_bot.py` — FB収集Bot
 
-### エージェント（`.claude/agents/`）— 一進VOYAGE号クルー
-
-**見張り台（Gate部門）**
-| ファイル | アイコン | 説明 |
-|---------|---------|------|
-| `gate-legal-crew.md` | ⚖️ | 法規クルー |
-| `gate-brand-crew.md` | 🛡️ | ブランドクルー |
-| `gate-quality-crew.md` | 🚦 | 品質クルー |
-| `gate-n1-crew.md` | 🎯 | N1クルー |
-| `cvr-crew.md` | 📈 | CVRクルー |
-| `gate-hook-crew.md` | 🪝 | フック監査クルー |
-| `gate-marketing-crew.md` | 📊 | マーケ監査クルー |
-| `gate-typography-crew.md` | 🔤 | 文字クルー |
-| `gate-visual-crew.md` | 👁️ | ビジュアルクルー |
-| `gate-image-prompt-crew.md` | 🎨 | 画像プロンプトクルー |
-
-**記事甲板（Kiji部門）**
-| ファイル | アイコン | 説明 |
-|---------|---------|------|
-| `kiji-hook-crew.md` | 🎣 | 記事フッククルー |
-| `kiji-arc-crew.md` | 🌊 | 記事アーククルー |
-| `kiji-trust-crew.md` | ⚓ | 記事トラストクルー |
-| `kiji-cta-crew.md` | 🔔 | 記事CTAクルー |
-| `kiji-offer-crew.md` | 💎 | 記事オファークルー |
-| `kiji-compass-crew.md` | 🧭 | 記事コンパスクルー |
-
-**動画甲板（Movie部門）**
-| ファイル | アイコン | 説明 |
-|---------|---------|------|
-| `movie-cta-crew.md` | 📣 | 動画CTAクルー |
-| `movie-hook-crew.md` | ⚡ | 動画フッククルー |
-| `movie-script-crew.md` | 📜 | 動画スクリプトクルー |
-| `movie-visual-crew.md` | 🎨 | 動画ビジュアルクルー |
-
-**その他**
-| ファイル | アイコン | 説明 |
-|---------|---------|------|
-| `pak-sensei.md` | 🧙‍♂️ | パク師匠（航海哲学者） |
-| `brand-collector.md` | — | ブランド素材収集 |
-| `research-dive.md` | — | リサーチDIVE |
-
-### その他
-| ファイル | 説明 |
-|---------|------|
-| `CLAUDE.md` | プロジェクト設定テンプレート（カスタマイズ用） |
-| `sync.sh` | 2台同期スクリプト（pull/push/status） |
-
----
-
-## 生成エンジン
-
-| エンジン | 用途 | APIキー |
-|---------|------|---------|
-| Nano Banana Pro（`gemini-3-pro-image-preview`） | 画像生成 | `GEMINI_API_KEY_1/2/3` |
-| Grok Imagine Video | 動画生成 | `XAI_API_KEY` |
-| Fish Audio TTS | ナレーション音声 | `FISH_AUDIO_API_KEY` |
-
----
-
-## 基本ワークフロー
-
-```
-1. /research-park で商材を深掘り → strategy.json v1 出力
-2. /concept-park でコンセプトを壁打ち確定 → strategy.json v2 出力
-3. 各アウトプットスキルで制作:
-   - /banner-park → バナー画像 10枚 + PDFレポート
-   - /shortad-park → ショート動画 30秒 × 3フック
-   - /記事LP-park → 記事LP HTML
+### 2台同期
+```bash
+./sync.sh [pull|push|status]
 ```
 
 ---
 
-## カスタマイズ
+## 進化の記録
 
-### 自社ナレッジの追加
-`.claude/knowledge/` に自社のマーケティングナレッジをMarkdownで追加。
-CLAUDE.mdの「ナレッジ読み込み」セクションに追記すれば、毎セッション自動で読み込まれます。
+**CHANGELOG**: `CHANGELOG.md` 参照
 
-### スキルの拡張
-`.claude/commands/` に新しいスキルファイルを追加すると、`/スキル名` で呼び出せます。
+直近の主要進化:
+- 2026-04-18 — AIパクくん1.2.5 解析 + 哲学統合 + reports/ 完全構造化（詳細: `reports/aipark/evolution_20260418_SUMMARY.md`）
 
 ---
 
 ## 注意事項
 
-- APIキーは環境変数で管理。ファイルに直書きしない
-- `strategy.json` は商材ごとに出力フォルダを分けて管理推奨
-- Grok動画は常に横型（848x480）で出力 → FFmpegでポートレート変換が必要（スキル内で自動処理）
+- APIキーは必ず環境変数。`.env` / コードに直書きしない
+- `clients/` のクライアント情報は機密。外部送信前に `/anonymize` で匿名化
+- Grok動画は横型（848x480）で出力 → FFmpegでポートレート変換（スキル内自動）
+- 破壊的操作（`rm -rf` / `git push --force`）は `.claude/rules/security.md` で禁止
 
 ---
 
-Built with Claude Code
+## ドキュメント
+
+| ファイル | 用途 |
+|---|---|
+| [CLAUDE.md](CLAUDE.md) | プロジェクト基本設定・起動ルール |
+| [CHANGELOG.md](CHANGELOG.md) | VOYAGE号の進化記録 |
+| [.claude/identity.md](.claude/identity.md) | 一進AIの人格定義 |
+| [.claude/knowledge/INDEX.md](.claude/knowledge/INDEX.md) | ナレッジ30ファイルの目次 |
+| [.claude/knowledge/pak-philosophy.md](.claude/knowledge/pak-philosophy.md) | マーケ哲学全文 |
+| [reports/INDEX.md](reports/INDEX.md) | 全レポート目次 |
+| [reports/aipark/aipark_1.2.5_SUMMARY.md](reports/aipark/aipark_1.2.5_SUMMARY.md) | AIパクくん1.2.5 解析サマリー |
+| [reports/aipark/evolution_20260418_SUMMARY.md](reports/aipark/evolution_20260418_SUMMARY.md) | 2026-04-18 進化レポート |
+
+---
+
+> ⚓ **本質 × 速度** — 一進VOYAGE号の航海哲学
