@@ -39,3 +39,10 @@ scripts/knowledge_vectors.db
 # VOYAGE号 backup files
 CLAUDE.md.backup-*
 *.backup-*
+
+# 動画AIの作業・出力領域（ローカル専用、git管理外）
+# - uploads/: ユーザーアップロード動画 + AI中間生成物（100MB超の.mov等含む）
+# - output/: edit_ai_v2等のAI生成動画（再生成可能）
+video-ai/fv_studio/uploads/
+video-ai/output/
+video-ai/fv_studio/feedback.json
