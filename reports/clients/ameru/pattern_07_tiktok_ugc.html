@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 07 · TikTok UGC縦動画</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Bodoni+Moda:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg: #0A0A0A;
+  --bg-2: #141414;
+  --ink: #FFFFFF;
+  --ink-sub: #C5C5C5;
+  --mid: #7A7A7A;
+  --pink: #FD8798;
+  --pink-deep: #FA5E75;
+  --cyan: #24D4F3;
+  --yellow: #FFD166;
+  --accent-red: #FF3B4B;
+  --line: rgba(255,255,255,0.1);
+  --f-round: 'Zen Maru Gothic', sans-serif;
+  --f-sans: 'Noto Sans JP', sans-serif;
+  --f-pop: 'Cherry Bomb One', cursive;
+  --f-italic: 'Bodoni Moda', serif;
+}
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--f-round);
+  font-weight: 500;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display:block; max-width:100%; }
+
+.pattern-tag {
+  position:fixed; top:10px; left:10px; z-index:200;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--pink);
+  background: rgba(0,0,0,0.7);
+  padding: 5px 12px; border-radius: 20px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(253,135,152,0.3);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* ── TOP NAV (TikTok風) ── */
+.nav {
+  position: sticky; top: 0; z-index: 80;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(16px);
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.nav a {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink-sub);
+  text-decoration: none;
+  position: relative;
+  padding: 4px 0;
+}
+.nav a.active {
+  color: var(--ink);
+  font-weight: 900;
+}
+.nav a.active::after {
+  content:'';
+  position: absolute;
+  left: 0; right: 0; bottom: -8px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+}
+.nav__logo {
+  position: absolute;
+  left: 16px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--f-pop);
+  font-size: 18px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.02em;
+}
+.nav__cta {
+  position: absolute;
+  right: 16px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--f-sans);
+  font-weight: 900;
+  font-size: 11px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  color: var(--ink);
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+/* ── HERO: カジュアル導入 ── */
+.hero {
+  padding: 30px 20px 26px;
+  text-align: center;
+}
+.hero__eyebrow {
+  display: inline-block;
+  font-family: var(--f-pop);
+  font-size: 10px;
+  color: var(--pink);
+  background: rgba(253,135,152,0.1);
+  border: 1px solid rgba(253,135,152,0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.15em;
+  margin-bottom: 14px;
+}
+.hero__eyebrow::before { content: '🔥 '; }
+.hero__hd {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: clamp(24px, 7vw, 30px);
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 12px;
+  letter-spacing: 0.01em;
+}
+.hero__hd em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero__sub {
+  font-size: 13px;
+  color: var(--ink-sub);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.hero__tags span {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--cyan);
+  background: rgba(36,212,243,0.1);
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+.hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--ink-sub);
+}
+.hero__stats b {
+  color: var(--ink);
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 15px;
+}
+
+/* ── FEED: 縦動画が並ぶ ── */
+.feed {
+  padding: 10px 20px 60px;
+}
+
+.post {
+  background: var(--bg-2);
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+}
+.post__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.post__avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pink), var(--cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-sans);
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.post__id {
+  flex: 1;
+}
+.post__user {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.post__meta {
+  font-size: 10px;
+  color: var(--mid);
+}
+.post__follow {
+  font-family: var(--f-sans);
+  font-weight: 900;
+  font-size: 10px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--pink);
+  color: var(--pink);
+  background: transparent;
+}
+
+/* Video canvas (vertical) */
+.post__vid {
+  position: relative;
+  aspect-ratio: 9/13;
+  overflow: hidden;
+  background: #000;
+}
+.post__vid img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  animation: kb 14s ease-in-out infinite alternate;
+}
+@keyframes kb {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+.post__vid-overlay-top {
+  position: absolute;
+  top: 12px; left: 12px; right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 3;
+}
+.post__live {
+  font-family: var(--f-sans);
+  font-weight: 900;
+  font-size: 10px;
+  background: var(--accent-red);
+  color: var(--ink);
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.post__live::before {
+  content: ''; width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ink);
+  animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 50% { opacity: 0.3; } }
+.post__sound {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 10px;
+  background: rgba(0,0,0,0.5);
+  color: var(--ink);
+  padding: 4px 8px;
+  border-radius: 16px;
+  backdrop-filter: blur(4px);
+}
+
+/* Sticker copy on top of video */
+.post__sticker {
+  position: absolute;
+  font-family: var(--f-pop);
+  font-size: clamp(18px, 5.5vw, 24px);
+  line-height: 1.3;
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  border: 2px solid rgba(255,255,255,0.15);
+  z-index: 3;
+  max-width: 76%;
+  letter-spacing: 0.02em;
+  transform: rotate(-2deg);
+}
+.post__sticker--bottom { bottom: 80px; left: 18px; }
+.post__sticker--mid { top: 45%; left: 50%; transform: translate(-50%, -50%) rotate(-3deg); text-align: center; }
+.post__sticker--top { top: 60px; left: 20px; }
+.post__sticker-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.post__sticker em {
+  font-style: normal;
+  background: var(--yellow);
+  color: #2A1A0F;
+  padding: 0 6px;
+  border-radius: 6px;
+}
+.post__sticker-small {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+/* Right-side UI (heart/comment/share) */
+.post__side {
+  position: absolute;
+  right: 12px; bottom: 100px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+.post__side-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.post__side-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.post__side-count {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--ink);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Bottom overlay: user + caption */
+.post__caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 56px;
+  padding: 0 16px 12px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%);
+  z-index: 3;
+}
+.post__caption-user {
+  font-family: var(--f-sans);
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.post__caption-text {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--ink);
+  line-height: 1.6;
+  opacity: 0.95;
+}
+.post__caption-tags {
+  margin-top: 4px;
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--cyan);
+  line-height: 1.5;
+}
+
+/* Pinned comment */
+.post__comments {
+  padding: 10px 14px;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+.post__comment {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 6px 0;
+  font-family: var(--f-sans);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+.post__comment-av {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900;
+  font-size: 11px;
+  color: var(--ink);
+}
+.post__comment-body b {
+  color: var(--ink);
+  font-weight: 700;
+  margin-right: 5px;
+}
+.post__comment-body span {
+  color: var(--ink-sub);
+}
+.post__comment-hearts {
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--mid);
+}
+.post__comment-hearts::before { content: '♡ '; color: var(--pink); }
+.post__comments-more {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--mid);
+  padding-top: 4px;
+}
+
+/* ── SECTIONAL CTA inside feed ── */
+.cta-post {
+  background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+  border-radius: 18px;
+  padding: 26px 22px;
+  margin-bottom: 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-post::before {
+  content: '🎀';
+  position: absolute;
+  top: 12px; right: 14px;
+  font-size: 28px;
+  opacity: 0.5;
+}
+.cta-post__label {
+  font-family: var(--f-pop);
+  font-size: 11px;
+  color: var(--yellow);
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+.cta-post__hd {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.cta-post__hd em {
+  font-style: normal;
+  background: var(--yellow);
+  color: #2A1A0F;
+  padding: 0 6px;
+  border-radius: 4px;
+}
+.cta-post__price-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.cta-post__strike {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+  text-decoration: line-through;
+}
+.cta-post__price {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 44px;
+  color: var(--yellow);
+  line-height: 1;
+}
+.cta-post__price small { font-size: 18px; }
+.cta-post__btn {
+  display: block;
+  background: var(--ink);
+  color: var(--yellow);
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 15px;
+  padding: 18px;
+  border-radius: 60px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.4);
+}
+.cta-post__fine {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: 10px;
+  color: rgba(255,255,255,0.85);
+  margin-top: 10px;
+}
+
+/* ── End Offer ── */
+.offer {
+  background: var(--bg-2);
+  padding: 60px 20px 80px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.offer__title {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 24px;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.offer__title em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.offer__sub {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  color: var(--ink-sub);
+  line-height: 1.9;
+  margin-bottom: 28px;
+}
+.offer__card {
+  background: var(--bg);
+  border: 1px solid rgba(253,135,152,0.3);
+  border-radius: 18px;
+  padding: 28px 22px;
+  margin-bottom: 22px;
+}
+.offer__card-label {
+  font-family: var(--f-pop);
+  font-size: 11px;
+  color: var(--pink);
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+.offer__card-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+}
+.offer__card-strike {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--mid);
+  text-decoration: line-through;
+}
+.offer__card-price {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 52px;
+  color: var(--ink);
+  line-height: 1;
+}
+.offer__card-price small { font-size: 20px; color: var(--pink); }
+.offer__card-sub {
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--ink-sub);
+  letter-spacing: 0.15em;
+  margin-top: 8px;
+}
+.offer__btn {
+  display: block;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  color: var(--ink);
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 16px;
+  padding: 20px;
+  border-radius: 60px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  box-shadow: 0 8px 24px rgba(253,135,152,0.35);
+}
+
+.f {
+  padding: 32px 20px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+.f__logo {
+  font-family: var(--f-pop);
+  font-size: 20px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+.f__tag {
+  font-family: var(--f-sans);
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: 0.1em;
+}
+</style>
+</head>
+<body>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 07 · TikTok UGC</a></div>
+
+<!-- Top nav TikTok風 -->
+<nav class="nav">
+  <span class="nav__logo">ameru</span>
+  <a href="#" class="active">For You</a>
+  <a href="#">#ameru</a>
+  <a href="#offer" class="nav__cta">Shop</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <span class="hero__eyebrow">TRENDING NOW</span>
+  <h1 class="hero__hd">
+    みんなが<em>編んでる</em>、<br>
+    ameru のずもっぴ。
+  </h1>
+  <p class="hero__sub">
+    はじめてさんが手芸にハマった<br>
+    TikTok投稿、まとめて見る？
+  </p>
+  <div class="hero__tags">
+    <span>#ameru</span><span>#ずもっぴ</span><span>#らぶいーず</span>
+    <span>#推し活</span><span>#はじめての手芸</span><span>#編んでみた</span>
+  </div>
+  <div class="hero__stats">
+    <span><b>12.4M</b> views</span>
+    <span><b>184K</b> posts</span>
+    <span><b>4.8</b> ★</span>
+  </div>
+</section>
+
+
+<!-- Feed: 縦動画投稿 -->
+<section class="feed">
+
+  <!-- Post 01 -->
+  <article class="post">
+    <div class="post__head">
+      <div class="post__avatar">A</div>
+      <div class="post__id">
+        <p class="post__user">@ameru_a_chan ✓</p>
+        <p class="post__meta">2日前 · 東京</p>
+      </div>
+      <a class="post__follow" href="#">Follow</a>
+    </div>
+
+    <div class="post__vid">
+      <img src="images/05_lifestyle_finished.png" alt="post01">
+      <div class="post__vid-overlay-top">
+        <span class="post__live">● LIVE</span>
+        <span class="post__sound">♪ lofi beats</span>
+      </div>
+
+      <div class="post__sticker post__sticker--top">
+        <div class="post__sticker-row">
+          <div>編んでみたら <em>ガチで完成</em>してて</div>
+          <div class="post__sticker-small">まじで泣きそうになった件 🥹</div>
+        </div>
+      </div>
+
+      <div class="post__side">
+        <div class="post__side-btn"><div class="post__side-icon">🤍</div><span class="post__side-count">12.4K</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">💬</div><span class="post__side-count">486</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">🔖</div><span class="post__side-count">2.1K</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">↗</div><span class="post__side-count">Share</span></div>
+      </div>
+
+      <div class="post__caption">
+        <p class="post__caption-user">@ameru_a_chan</p>
+        <p class="post__caption-text">
+          「どうせ途中でやめる」と思ってたのに気付いたら完成してた、、<br>
+          動画見ながらだと迷う場面ゼロなのが神。
+        </p>
+        <p class="post__caption-tags">
+          #ameru #ずもっぴ #はじめての手芸 #らぶいーず #推し活
+        </p>
+      </div>
+    </div>
+
+    <div class="post__comments">
+      <div class="post__comment">
+        <div class="post__comment-av">M</div>
+        <div>
+          <p class="post__comment-body"><b>@mii_crochet</b><span>わかる、、編み始めすでに編んであるとこ天才すぎる</span></p>
+          <p class="post__comment-hearts">842</p>
+        </div>
+      </div>
+      <div class="post__comment">
+        <div class="post__comment-av">R</div>
+        <div>
+          <p class="post__comment-body"><b>@ru_uuuu</b><span>すもっぴ好きすぎる、絶対買う🩷</span></p>
+          <p class="post__comment-hearts">412</p>
+        </div>
+      </div>
+      <p class="post__comments-more">コメント486件を見る</p>
+    </div>
+  </article>
+
+
+  <!-- Post 02 -->
+  <article class="post">
+    <div class="post__head">
+      <div class="post__avatar" style="background:linear-gradient(135deg, var(--yellow), var(--pink));">B</div>
+      <div class="post__id">
+        <p class="post__user">@b_chan.knit ✓</p>
+        <p class="post__meta">5日前 · 大阪</p>
+      </div>
+      <a class="post__follow" href="#">Follow</a>
+    </div>
+
+    <div class="post__vid">
+      <img src="images/04_hands_crafting.png" alt="post02">
+      <div class="post__vid-overlay-top">
+        <span class="post__live">● LIVE</span>
+        <span class="post__sound">♪ Billie Eilish - happier</span>
+      </div>
+
+      <div class="post__sticker post__sticker--mid">
+        <div class="post__sticker-row">
+          <div>娘の誕生日プレ、の</div>
+          <div>はずが <em>自分用</em>に、、</div>
+          <div class="post__sticker-small">だって可愛すぎるんだもん 🫠</div>
+        </div>
+      </div>
+
+      <div class="post__side">
+        <div class="post__side-btn"><div class="post__side-icon">🤍</div><span class="post__side-count">8.9K</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">💬</div><span class="post__side-count">312</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">🔖</div><span class="post__side-count">1.4K</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">↗</div><span class="post__side-count">Share</span></div>
+      </div>
+
+      <div class="post__caption">
+        <p class="post__caption-user">@b_chan.knit</p>
+        <p class="post__caption-text">
+          編み始めが完成済みで届くから糸玉から挫折する心配なし<br>
+          これ考えた人、天才では？？
+        </p>
+        <p class="post__caption-tags">#ameru #ずもっぴ #手芸初心者 #推し活ハマる</p>
+      </div>
+    </div>
+  </article>
+
+
+  <!-- CTA-Post interrupt -->
+  <div class="cta-post">
+    <p class="cta-post__label">🌟 LIMITED 初回限定</p>
+    <h3 class="cta-post__hd">
+      あなたも <em>ずもっぴ</em> を編もう！
+    </h3>
+    <div class="cta-post__price-row">
+      <span class="cta-post__strike">¥4,200</span>
+      <span class="cta-post__price">¥1,980<small>〜</small></span>
+    </div>
+    <a href="#offer" class="cta-post__btn">¥1,980 で、はじめる ♡</a>
+    <p class="cta-post__fine">送料無料 · いつでも解約OK</p>
+  </div>
+
+
+  <!-- Post 03 -->
+  <article class="post">
+    <div class="post__head">
+      <div class="post__avatar" style="background:linear-gradient(135deg, var(--cyan), var(--pink));">C</div>
+      <div class="post__id">
+        <p class="post__user">@c_love_eez ✓</p>
+        <p class="post__meta">1週間前 · 福岡</p>
+      </div>
+      <a class="post__follow" href="#">Follow</a>
+    </div>
+
+    <div class="post__vid">
+      <img src="images/06_shelf_display.png" alt="post03">
+      <div class="post__vid-overlay-top">
+        <span class="post__live">● LIVE</span>
+        <span class="post__sound">♪ オリジナル楽曲</span>
+      </div>
+
+      <div class="post__sticker post__sticker--bottom">
+        <div class="post__sticker-row">
+          <div>5体そろうと、、</div>
+          <div><em>家族</em>ができる 😭🩷</div>
+          <div class="post__sticker-small">らぶいーずの全員 × 自分の手</div>
+        </div>
+      </div>
+
+      <div class="post__side">
+        <div class="post__side-btn"><div class="post__side-icon">🤍</div><span class="post__side-count">22.1K</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">💬</div><span class="post__side-count">1.2K</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">🔖</div><span class="post__side-count">5.4K</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">↗</div><span class="post__side-count">Share</span></div>
+      </div>
+
+      <div class="post__caption">
+        <p class="post__caption-user">@c_love_eez</p>
+        <p class="post__caption-text">
+          毎月1体届くから5ヶ月続けたらこうなった<br>
+          らぶいーず5人衆、わたしの棚に集結🥹
+        </p>
+        <p class="post__caption-tags">#ameru #らぶいーず #コンプリートパック #ずもっぴ家族</p>
+      </div>
+    </div>
+
+    <div class="post__comments">
+      <div class="post__comment">
+        <div class="post__comment-av">Y</div>
+        <div>
+          <p class="post__comment-body"><b>@yuu_knit_lover</b><span>これめちゃくちゃ可愛い、、、、即ポチりました</span></p>
+          <p class="post__comment-hearts">1.8K</p>
+        </div>
+      </div>
+      <p class="post__comments-more">コメント1,234件を見る</p>
+    </div>
+  </article>
+
+
+  <!-- Post 04 -->
+  <article class="post">
+    <div class="post__head">
+      <div class="post__avatar" style="background:linear-gradient(135deg, #A78BFA, var(--pink));">D</div>
+      <div class="post__id">
+        <p class="post__user">@d_unbox ✓</p>
+        <p class="post__meta">3日前 · 京都</p>
+      </div>
+      <a class="post__follow" href="#">Follow</a>
+    </div>
+
+    <div class="post__vid">
+      <img src="images/02_package_lifestyle.png" alt="post04">
+      <div class="post__vid-overlay-top">
+        <span class="post__live">● LIVE</span>
+        <span class="post__sound">♪ 開封動画BGM</span>
+      </div>
+
+      <div class="post__sticker post__sticker--top">
+        <div class="post__sticker-row">
+          <div>この <em>パッケージ</em> の可愛さ</div>
+          <div>にやられて購入、、🎀</div>
+        </div>
+      </div>
+
+      <div class="post__side">
+        <div class="post__side-btn"><div class="post__side-icon">🤍</div><span class="post__side-count">5.6K</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">💬</div><span class="post__side-count">198</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">🔖</div><span class="post__side-count">892</span></div>
+        <div class="post__side-btn"><div class="post__side-icon">↗</div><span class="post__side-count">Share</span></div>
+      </div>
+
+      <div class="post__caption">
+        <p class="post__caption-user">@d_unbox</p>
+        <p class="post__caption-text">
+          ポストに入る薄さで届くの地味に嬉しい<br>
+          パッケージ自体インテリアになる説 ✨
+        </p>
+        <p class="post__caption-tags">#ameru #開封動画 #unboxing #パケ買い</p>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+
+<!-- OFFER -->
+<section class="offer" id="offer">
+  <h2 class="offer__title">投稿見て、<em>買ってる人続出</em>。</h2>
+  <p class="offer__sub">あなたも次の #ameru 投稿者に、<br>なるかもしれません。</p>
+
+  <div class="offer__card">
+    <p class="offer__card-label">🌟 FIRST DELIVERY 初回限定</p>
+    <div class="offer__card-row">
+      <span class="offer__card-strike">¥4,200</span>
+      <span class="offer__card-price">¥1,980<small>〜</small></span>
+    </div>
+    <p class="offer__card-sub">FREE SHIPPING · CANCEL ANYTIME</p>
+  </div>
+
+  <a href="#" class="offer__btn">はじめる 💕</a>
+</section>
+
+
+<footer class="f">
+  <p class="f__logo">ameru</p>
+  <p class="f__tag">#ameru · #ずもっぴ · #らぶいーず</p>
+</footer>
+</body>
+</html>

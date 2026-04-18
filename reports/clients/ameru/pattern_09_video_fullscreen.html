@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 09 · 動画フルスクリーン没入</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Bodoni+Moda:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg: #000000;
+  --bg-2: #0A0A0A;
+  --bg-3: #141414;
+  --ink: #FFFFFF;
+  --ink-sub: #A8A8A8;
+  --mid: #6A6A6A;
+  --accent: #8FCFDD;
+  --accent-warm: #F5BEC9;
+  --gold: #D4A574;
+  --f-min: 'Shippori Mincho', serif;
+  --f-sans: 'Noto Sans JP', sans-serif;
+  --f-italic: 'Bodoni Moda', serif;
+}
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--f-sans);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display:block; max-width:100%; }
+
+.pattern-tag {
+  position:fixed; top:10px; left:10px; z-index:100;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(0,0,0,0.7);
+  padding: 5px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* Top brand bar */
+.bar {
+  position:fixed; top:0; left:50%; transform:translateX(-50%);
+  width:100%; max-width:480px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7), transparent);
+  z-index: 80;
+}
+.bar__logo {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+}
+.bar__ctrl {
+  display:flex; gap:8px; align-items:center;
+}
+.bar__ctrl-btn {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-sub);
+  background: rgba(255,255,255,0.08);
+  padding: 6px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  text-decoration:none;
+  letter-spacing: 0.1em;
+}
+.bar__ctrl-btn.primary {
+  background: var(--accent);
+  color: var(--bg);
+  font-style:normal;
+  font-family: var(--f-sans);
+  font-weight: 700;
+}
+
+/* Section = 1 full-screen cinematic frame */
+.scene {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+.scene__media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: kenburns 22s ease-in-out infinite alternate;
+}
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0,0); }
+  100% { transform: scale(1.12) translate(-3%, -2%); }
+}
+.scene__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.85) 100%);
+}
+.scene__overlay--bottom {
+  background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0.95) 100%);
+}
+.scene__overlay--full {
+  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.55) 100%);
+}
+
+/* Video UI elements */
+.scene__playing {
+  position: absolute;
+  top: 76px; left: 20px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--ink);
+  letter-spacing: 0.2em;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,0,0,0.35);
+  padding: 5px 10px;
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+}
+.scene__playing::before {
+  content:''; width:8px; height:8px; border-radius:50%;
+  background: #FF3B4B;
+  animation: blink 1.3s ease-in-out infinite;
+}
+@keyframes blink { 50% { opacity:0.3; } }
+.scene__ch {
+  position: absolute;
+  top: 76px; right: 20px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-sub);
+  letter-spacing: 0.3em;
+  z-index: 4;
+}
+.scene__ch b { color: var(--ink); font-weight: 700; }
+.scene__time {
+  position: absolute;
+  bottom: 20px; right: 20px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink);
+  letter-spacing: 0.15em;
+  z-index: 4;
+  background: rgba(0,0,0,0.35);
+  padding: 4px 10px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+/* Scene content */
+.scene__cnt {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 96px 28px 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+}
+.scene__cnt--center {
+  justify-content: center;
+}
+.scene__kicker {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  margin-bottom: 10px;
+}
+.scene__headline {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: clamp(40px, 11vw, 52px);
+  line-height: 1.18;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+.scene__headline em {
+  font-style: italic;
+  font-family: var(--f-italic);
+  color: var(--accent);
+  font-weight: 400;
+}
+.scene__headline em.warm { color: var(--accent-warm); }
+.scene__headline em.gold { color: var(--gold); }
+.scene__sub {
+  font-family: var(--f-min);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ink-sub);
+  max-width: 340px;
+  letter-spacing: 0.03em;
+}
+.scene__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  padding: 16px 28px;
+  text-decoration: none;
+  border-radius: 40px;
+  text-indent: 0.2em;
+  transition: transform 0.2s ease;
+  align-self: flex-start;
+  max-width: max-content;
+}
+.scene__cta:hover { transform: translateY(-2px); }
+.scene__cta-arrow { font-family: var(--f-italic); font-style: italic; font-size: 16px; text-indent:0; }
+
+/* Giant display copy (no image, typography-only） */
+.typo {
+  background: var(--bg);
+  padding: 100px 32px 120px;
+}
+.typo__kicker {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  margin-bottom: 20px;
+}
+.typo__display {
+  font-family: var(--f-italic);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(64px, 18vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-bottom: 30px;
+}
+.typo__display .accent { color: var(--accent); }
+.typo__jp {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.95;
+  color: var(--ink-sub);
+  letter-spacing: 0.04em;
+}
+
+/* Video thumbnail grid */
+.episodes {
+  background: var(--bg);
+  padding: 80px 24px;
+}
+.episodes__head {
+  margin-bottom: 28px;
+}
+.episodes__label {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  margin-bottom: 6px;
+}
+.episodes__title {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.5;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+}
+.episodes__title em { font-style: italic; font-family: var(--f-italic); color: var(--accent); font-weight: 400; }
+
+.ep {
+  margin-bottom: 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-3);
+}
+.ep__thumb {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.ep__thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.ep:hover .ep__thumb img { transform: scale(1.04); }
+.ep__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.ep__play::before {
+  content:''; border: 8px solid transparent; border-left: 12px solid var(--ink);
+  margin-left: 3px;
+}
+.ep__duration {
+  position: absolute;
+  bottom: 8px; right: 8px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--ink);
+  background: rgba(0,0,0,0.6);
+  padding: 3px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.1em;
+}
+.ep__ep-num {
+  position: absolute;
+  top: 8px; left: 8px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--ink);
+  background: rgba(0,0,0,0.55);
+  padding: 4px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.15em;
+}
+.ep__meta {
+  padding: 12px 16px 16px;
+}
+.ep__title {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+}
+.ep__desc {
+  font-family: var(--f-sans);
+  font-size: 11px;
+  color: var(--ink-sub);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+}
+
+/* Offer scene */
+.offer {
+  position: relative;
+  min-height: 100vh;
+  padding: 120px 28px 80px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(143, 207, 221, 0.08), transparent 60%),
+    var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.offer__kicker {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.35em;
+  margin-bottom: 14px;
+}
+.offer__hd {
+  font-family: var(--f-min);
+  font-weight: 500;
+  font-size: clamp(36px, 9vw, 44px);
+  line-height: 1.3;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.offer__hd em { font-style: italic; font-family: var(--f-italic); color: var(--accent); font-weight: 400; }
+.offer__display {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.offer__strike {
+  display: inline-block;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--mid);
+  text-decoration: line-through;
+  margin-bottom: 6px;
+}
+.offer__price {
+  display: block;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(80px, 22vw, 110px);
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.offer__price small {
+  font-size: 35%;
+  -webkit-text-fill-color: var(--gold);
+}
+.offer__sub {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-sub);
+  letter-spacing: 0.25em;
+  margin-top: 10px;
+}
+.offer__cta {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--f-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.35em;
+  padding: 20px 40px;
+  text-decoration: none;
+  border-radius: 60px;
+  min-width: 260px;
+  text-align: center;
+  text-indent: 0.35em;
+  transition: transform 0.2s ease;
+}
+.offer__cta:hover { transform: translateY(-2px); }
+.offer__fine {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--mid);
+  letter-spacing: 0.15em;
+  margin-top: 28px;
+  line-height: 2;
+  text-align: center;
+}
+
+/* Footer cinematic */
+.f {
+  padding: 50px 28px 40px;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: var(--bg);
+}
+.f__logo {
+  font-family: var(--f-min);
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.f__tag {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-sub);
+  letter-spacing: 0.25em;
+}
+
+.rv { opacity: 0; transform: translateY(18px); transition: opacity 1.2s ease, transform 1.2s ease; }
+.rv.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 09 · immersive</a></div>
+
+<div class="bar">
+  <div class="bar__logo">ameru</div>
+  <div class="bar__ctrl">
+    <a href="#offer" class="bar__ctrl-btn primary">Start →</a>
+  </div>
+</div>
+
+<!-- SCENE 01 — HERO VIDEO -->
+<section class="scene">
+  <div class="scene__media" style="background-image: url('images/01_zumoppi_hero.png');"></div>
+  <div class="scene__overlay scene__overlay--bottom"></div>
+  <span class="scene__playing">NOW PLAYING</span>
+  <span class="scene__ch"><b>CH.01</b> · INTRO</span>
+  <span class="scene__time">0:00 — 0:32</span>
+
+  <div class="scene__cnt">
+    <p class="scene__kicker rv">— AMIGURUMI CINEMA —</p>
+    <h1 class="scene__headline rv">
+      The <em>Quiet</em><br>
+      Amigurumi.
+    </h1>
+    <p class="scene__sub rv">
+      編み物は、もっと静かに、美しく、<br>
+      はじまっていい。
+    </p>
+    <a href="#offer" class="scene__cta rv">Watch the film <span class="scene__cta-arrow">→</span></a>
+  </div>
+</section>
+
+
+<!-- SCENE 02 — 編む手元 -->
+<section class="scene">
+  <div class="scene__media" style="background-image: url('images/04_hands_crafting.png');"></div>
+  <div class="scene__overlay scene__overlay--bottom"></div>
+  <span class="scene__playing">NOW PLAYING</span>
+  <span class="scene__ch"><b>CH.02</b> · HANDS</span>
+  <span class="scene__time">0:32 — 1:14</span>
+
+  <div class="scene__cnt">
+    <p class="scene__kicker rv">— SCENE 02 · THE HANDS —</p>
+    <h2 class="scene__headline rv">
+      The first stitch<br>
+      <em>is already done.</em>
+    </h2>
+    <p class="scene__sub rv">
+      最初の一目は、<br>
+      わたしたちが編んでおきました。
+    </p>
+  </div>
+</section>
+
+
+<!-- TYPO-ONLY SCENE (休符) -->
+<section class="typo">
+  <p class="typo__kicker rv">— INTERLUDE —</p>
+  <h2 class="typo__display rv">
+    Eight<br>
+    <span class="accent">hours.</span>
+  </h2>
+  <p class="typo__jp rv">
+    8時間、手を動かす。<br>
+    編む人の、小さな、映画のような時間。
+  </p>
+</section>
+
+
+<!-- SCENE 03 — 抱く -->
+<section class="scene">
+  <div class="scene__media" style="background-image: url('images/05_lifestyle_finished.png');"></div>
+  <div class="scene__overlay scene__overlay--bottom"></div>
+  <span class="scene__playing">NOW PLAYING</span>
+  <span class="scene__ch"><b>CH.03</b> · HOLD</span>
+  <span class="scene__time">1:14 — 1:58</span>
+
+  <div class="scene__cnt">
+    <p class="scene__kicker rv">— SCENE 03 · TO HOLD —</p>
+    <h2 class="scene__headline rv">
+      Made by<br>
+      <em class="warm">your own</em><br>
+      hands.
+    </h2>
+    <p class="scene__sub rv">
+      完成した瞬間、<br>
+      ちょっと泣きそうになります。
+    </p>
+  </div>
+</section>
+
+
+<!-- SCENE 04 — 棚に飾る -->
+<section class="scene">
+  <div class="scene__media" style="background-image: url('images/06_shelf_display.png');"></div>
+  <div class="scene__overlay scene__overlay--bottom"></div>
+  <span class="scene__playing">NOW PLAYING</span>
+  <span class="scene__ch"><b>CH.04</b> · FAMILY</span>
+  <span class="scene__time">1:58 — 2:42</span>
+
+  <div class="scene__cnt">
+    <p class="scene__kicker rv">— SCENE 04 · A FAMILY —</p>
+    <h2 class="scene__headline rv">
+      Five by<br>
+      <em class="gold">five.</em>
+    </h2>
+    <p class="scene__sub rv">
+      5ヶ月で、ずもっぴの家族が、<br>
+      あなたの棚にそろう。
+    </p>
+  </div>
+</section>
+
+
+<!-- EPISODES list -->
+<section class="episodes">
+  <div class="episodes__head">
+    <p class="episodes__label rv">— ALSO WATCH —</p>
+    <h2 class="episodes__title rv">
+      もっと見る<br>
+      <em>— related episodes —</em>
+    </h2>
+  </div>
+
+  <div class="ep">
+    <div class="ep__thumb">
+      <span class="ep__ep-num">EP.01</span>
+      <img src="images/02_package_lifestyle.png" alt="package">
+      <div class="ep__play"></div>
+      <span class="ep__duration">0:38</span>
+    </div>
+    <div class="ep__meta">
+      <p class="ep__title">箱が、開く</p>
+      <p class="ep__desc">ポストに薄い箱で届きます。開封の動画。</p>
+    </div>
+  </div>
+
+  <div class="ep">
+    <div class="ep__thumb">
+      <span class="ep__ep-num">EP.02</span>
+      <img src="images/03_unboxing_flatlay.png" alt="unbox">
+      <div class="ep__play"></div>
+      <span class="ep__duration">0:46</span>
+    </div>
+    <div class="ep__meta">
+      <p class="ep__title">すべての道具が、そろう</p>
+      <p class="ep__desc">糸・針・目パーツ・わた・編み始め済パーツ・動画QR。</p>
+    </div>
+  </div>
+
+  <div class="ep">
+    <div class="ep__thumb">
+      <span class="ep__ep-num">EP.03</span>
+      <img src="images/07_collection_preview.png" alt="collection">
+      <div class="ep__play"></div>
+      <span class="ep__duration">1:12</span>
+    </div>
+    <div class="ep__meta">
+      <p class="ep__title">全5体、らぶいーずコラボ</p>
+      <p class="ep__desc">ずもっぴ・そら・さくら・もり・ゆめ。月1体、5ヶ月で。</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- OFFER -->
+<section class="offer" id="offer">
+  <p class="offer__kicker rv">— BEGIN —</p>
+  <h2 class="offer__hd rv">Start your own<br><em>amigurumi film</em>.</h2>
+
+  <div class="offer__display rv">
+    <p class="offer__strike">¥4,200</p>
+    <p class="offer__price">¥1,980<small>〜</small></p>
+    <p class="offer__sub">FREE SHIPPING · CANCEL ANYTIME</p>
+  </div>
+
+  <a href="#" class="offer__cta rv">BEGIN</a>
+
+  <p class="offer__fine rv">
+    初回限定 -52%OFF ／ 2回目以降 ¥4,200<br>
+    いつでも解約・一時停止できます
+  </p>
+</section>
+
+
+<footer class="f">
+  <p class="f__logo">ameru</p>
+  <p class="f__tag">— AMIGURUMI CINEMA —</p>
+</footer>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 40 && r.bottom > -40) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive:true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>

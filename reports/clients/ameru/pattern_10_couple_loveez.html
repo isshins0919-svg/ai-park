@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru × らぶいーず — Couple Pack / ふたりで、編む。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Zen+Maru+Gothic:wght@500;700;900&family=Caveat:wght@500;700&family=Bodoni+Moda:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg: #FFE3F6;
+  --bg-2: #FFF0F9;
+  --bg-3: #FFF5FA;
+  --pink: #FD8798;
+  --pink-deep: #FA5E75;
+  --coral: #FF7A8E;
+  --cyan: #24D4F3;
+  --cyan-light: #B5F5FE;
+  --yellow: #FFE066;
+  --ink: #3D2440;
+  --ink-sub: #8A6A8F;
+  --mid: #B09AB8;
+  --white: #FFFFFF;
+  --f-pop: 'Cherry Bomb One', cursive;
+  --f-round: 'Zen Maru Gothic', sans-serif;
+  --f-hand: 'Caveat', cursive;
+  --f-italic: 'Bodoni Moda', serif;
+}
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--f-round);
+  font-weight: 500;
+  background: var(--bg-2);
+  color: var(--ink);
+  line-height: 1.8;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(253,135,152,0.2), transparent 60%),
+    radial-gradient(circle at 10% 70%, rgba(36,212,243,0.08), transparent 50%);
+}
+img { display:block; max-width:100%; }
+
+.pattern-tag {
+  position:fixed; top:10px; left:10px; z-index:200;
+  font-family: var(--f-pop);
+  font-size: 11px;
+  color: var(--pink-deep);
+  background: rgba(255,240,249,0.9);
+  padding: 5px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(253,135,152,0.3);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* ── HERO FULL-SCREEN VIDEO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, var(--cyan-light), transparent 45%),
+    radial-gradient(ellipse at 75% 75%, var(--pink), transparent 45%),
+    var(--bg);
+  z-index: 0;
+}
+.hero__bg::before {
+  content: '💕 🩷 💗 💞 🎀 ✨';
+  position: absolute;
+  top: 25%; left: 0; right: 0;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 2em;
+  opacity: 0.4;
+  animation: float 16s linear infinite;
+}
+@keyframes float {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-60px); }
+}
+
+.hero__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; z-index: 2;
+}
+.hero__logos {
+  font-family: var(--f-pop);
+  font-size: 16px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero__logos .x {
+  font-family: var(--f-italic);
+  font-style: italic;
+  color: var(--pink-deep);
+}
+.hero__logos .loveez { color: var(--pink-deep); }
+.hero__logos .ameru { color: #29B6E8; }
+.hero__ticker {
+  font-family: var(--f-pop);
+  font-size: 10px;
+  background: var(--pink-deep);
+  color: var(--white);
+  padding: 5px 11px;
+  border-radius: 20px;
+  letter-spacing: 0.1em;
+  box-shadow: 0 4px 10px rgba(250,94,117,0.3);
+}
+
+/* Hero main — 2キャラ並び */
+.hero__main {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px 0;
+}
+.hero__pairvid {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 9/11;
+  background: linear-gradient(170deg, var(--cyan-light) 0%, var(--pink) 100%);
+  box-shadow: 0 24px 60px rgba(253,135,152,0.35);
+  margin-bottom: 24px;
+}
+.hero__pairvid-badge {
+  position: absolute;
+  top: 16px; left: 16px;
+  font-family: var(--f-pop);
+  font-size: 10px;
+  color: var(--white);
+  background: var(--pink-deep);
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.12em;
+  display: flex; align-items: center; gap: 5px;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.hero__pairvid-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--white);
+  animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 50% { opacity: 0.3; } }
+.hero__pairvid-time {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-family: var(--f-pop);
+  font-size: 10px;
+  color: var(--white);
+  background: rgba(61,36,64,0.7);
+  padding: 4px 10px;
+  border-radius: 14px;
+  z-index: 3;
+}
+.hero__pairvid-pair {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 18px;
+}
+.hero__char {
+  text-align: center;
+  animation: bobA 3s ease-in-out infinite;
+  flex: 1;
+}
+.hero__char:nth-child(2) { animation: bobB 3s ease-in-out infinite; animation-delay: -1.5s; }
+@keyframes bobA {
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(-4deg); }
+}
+@keyframes bobB {
+  0%,100% { transform: translateY(0) rotate(2deg); }
+  50% { transform: translateY(-12px) rotate(4deg); }
+}
+.hero__char-img {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 14px 32px rgba(0,0,0,0.15);
+  border: 5px solid var(--white);
+  background: var(--white);
+  margin: 0 auto 10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 60px;
+}
+.hero__char-img img { width: 100%; height: 100%; object-fit: cover; }
+.hero__char-label {
+  font-family: var(--f-pop);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+}
+.hero__char-label.cy { color: var(--cyan); }
+.hero__char-label.pk { color: var(--pink-deep); }
+.hero__char-name {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--ink);
+  margin-top: 4px;
+}
+
+.hero__pairvid-heart {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 72px;
+  filter: drop-shadow(0 10px 24px rgba(253,135,152,0.5));
+  animation: beat 1.2s ease-in-out infinite;
+  z-index: 2;
+}
+@keyframes beat {
+  0%,100% { transform: translate(-50%,-50%) scale(1); }
+  50% { transform: translate(-50%,-50%) scale(1.18); }
+}
+
+.hero__pairvid-caption {
+  position: absolute;
+  bottom: 16px; left: 16px; right: 16px;
+  padding: 14px 16px;
+  background: rgba(61,36,64,0.75);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  color: var(--white);
+  z-index: 3;
+}
+.hero__pairvid-caption .t {
+  font-family: var(--f-pop);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+.hero__pairvid-caption .t em { font-style: normal; color: var(--yellow); }
+.hero__pairvid-caption .s {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 10px;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+/* Hero copy block */
+.hero__copy {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+.hero__kicker {
+  font-family: var(--f-hand);
+  font-size: 22px;
+  color: var(--pink-deep);
+  transform: rotate(-2deg);
+  margin-bottom: 8px;
+}
+.hero__hd {
+  font-family: var(--f-pop);
+  font-size: clamp(30px, 9vw, 38px);
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin-bottom: 10px;
+}
+.hero__hd em {
+  font-style: normal;
+  background: var(--yellow);
+  padding: 0 8px;
+  border-radius: 6px;
+  transform: rotate(-1deg);
+  display: inline-block;
+}
+.hero__sub {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--f-pop);
+  font-size: 16px;
+  padding: 18px 32px;
+  border-radius: 60px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  box-shadow: 0 10px 24px rgba(61,36,64,0.25);
+}
+.hero__cta-price {
+  color: var(--yellow);
+  font-family: var(--f-pop);
+  font-size: 18px;
+}
+
+/* ── Section ── */
+.section {
+  position: relative;
+  padding: 60px 20px 70px;
+}
+.sec__kicker {
+  font-family: var(--f-pop);
+  font-size: 11px;
+  color: var(--pink-deep);
+  letter-spacing: 0.25em;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.sec__hd {
+  font-family: var(--f-pop);
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1.3;
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
+}
+.sec__hd em {
+  font-style: normal;
+  color: var(--pink-deep);
+}
+.sec__sub {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink-sub);
+  text-align: center;
+  line-height: 1.9;
+  margin-bottom: 32px;
+}
+
+/* ── 01 LOVE STORY ── */
+.story {
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 100%);
+}
+.story__video {
+  position: relative;
+  aspect-ratio: 16/11;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 22px;
+  box-shadow: 0 14px 30px rgba(253,135,152,0.2);
+}
+.story__video img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.story__video-over {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(253,135,152,0.25) 0%, rgba(61,36,64,0.8) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 22px;
+  color: var(--white);
+}
+.story__video-tag {
+  font-family: var(--f-pop);
+  font-size: 10px;
+  background: var(--pink-deep);
+  padding: 4px 10px;
+  border-radius: 12px;
+  align-self: flex-start;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.story__video-text {
+  font-family: var(--f-pop);
+  font-size: 20px;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+.story__video-text em { font-style: normal; color: var(--yellow); }
+.story__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 58px; height: 58px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+.story__play::before {
+  content:''; border: 10px solid transparent; border-left: 16px solid var(--pink-deep);
+  margin-left: 4px;
+}
+
+.story__text {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 2.1;
+  color: var(--ink);
+  text-align: center;
+  padding: 20px 14px;
+  background: var(--white);
+  border-radius: 20px;
+  border: 2px dashed var(--pink);
+}
+.story__text em {
+  font-style: normal;
+  background: var(--yellow);
+  padding: 0 4px;
+  border-radius: 3px;
+  font-weight: 900;
+}
+
+/* ── 02 COUPLE CARDS ── */
+.couple { background: var(--white); }
+.couple__row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.couple__card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  box-shadow: 0 10px 24px rgba(253,135,152,0.2);
+}
+.couple__card-bg { position: absolute; inset: 0; }
+.couple__card--blue .couple__card-bg {
+  background: linear-gradient(160deg, var(--cyan-light) 0%, #7FC5D4 100%);
+}
+.couple__card--pink .couple__card-bg {
+  background: linear-gradient(160deg, var(--bg) 0%, var(--pink) 100%);
+}
+.couple__card-img {
+  position: absolute;
+  left: 50%; top: 48%;
+  transform: translate(-50%,-50%);
+  width: 70%;
+  aspect-ratio: 1/1;
+}
+.couple__card-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.couple__card-emoji {
+  position: absolute;
+  left: 50%; top: 48%;
+  transform: translate(-50%,-50%);
+  font-size: 100px;
+}
+.couple__card-label {
+  position: absolute;
+  bottom: 14px; left: 0; right: 0;
+  text-align: center;
+  color: var(--white);
+}
+.couple__card-label .n {
+  font-family: var(--f-pop);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  line-height: 1.2;
+}
+.couple__card-label .s {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  opacity: 0.92;
+}
+.couple__card-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--f-pop);
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.1em;
+}
+
+.couple__plus {
+  font-family: var(--f-pop);
+  font-size: 36px;
+  color: var(--pink-deep);
+  text-align: center;
+  animation: beat 1.2s ease-in-out infinite;
+}
+
+.couple__meta {
+  background: linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+  border-radius: 20px;
+  padding: 22px 20px;
+  text-align: center;
+  border: 2px solid var(--pink);
+}
+.couple__meta-kicker {
+  font-family: var(--f-hand);
+  font-size: 20px;
+  color: var(--pink-deep);
+  margin-bottom: 6px;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+.couple__meta-title {
+  font-family: var(--f-pop);
+  font-size: 18px;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.couple__meta-title em {
+  font-style: normal;
+  background: var(--yellow);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+.couple__meta-text {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.95;
+  color: var(--ink-sub);
+}
+
+/* ── 03 GIFT OCCASIONS ── */
+.gift { background: var(--bg); }
+.gift__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.gift__card {
+  position: relative;
+  background: var(--white);
+  border-radius: 18px;
+  overflow: hidden;
+  padding: 0;
+  box-shadow: 0 6px 16px rgba(253,135,152,0.18);
+}
+.gift__card-img {
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  position: relative;
+}
+.gift__card-img img { width: 100%; height: 100%; object-fit: cover; }
+.gift__card-img-over {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(61,36,64,0.75) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px;
+  color: var(--white);
+}
+.gift__card-tag {
+  font-family: var(--f-pop);
+  font-size: 9px;
+  background: var(--pink-deep);
+  color: var(--white);
+  padding: 2px 6px;
+  border-radius: 6px;
+  align-self: flex-start;
+  margin-bottom: 6px;
+  letter-spacing: 0.1em;
+}
+.gift__card-title {
+  font-family: var(--f-pop);
+  font-size: 12px;
+  line-height: 1.3;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+.gift__card-body {
+  padding: 10px 14px 14px;
+}
+.gift__card-body .t {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+.gift__card-body .d {
+  font-size: 10.5px;
+  color: var(--ink-sub);
+  line-height: 1.65;
+}
+
+/* ── 04 CALENDAR ── */
+.cal {
+  background: var(--white);
+}
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+.cal__cell {
+  text-align: center;
+  background: var(--bg-3);
+  border-radius: 12px;
+  padding: 12px 6px;
+  position: relative;
+}
+.cal__cell--high {
+  background: var(--pink-deep);
+  color: var(--white);
+}
+.cal__cell-date {
+  font-family: var(--f-pop);
+  font-size: 11px;
+  color: var(--pink-deep);
+  letter-spacing: 0.05em;
+}
+.cal__cell--high .cal__cell-date { color: var(--yellow); }
+.cal__cell-name {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 11px;
+  color: var(--ink);
+  margin-top: 3px;
+}
+.cal__cell--high .cal__cell-name { color: var(--white); }
+.cal__cell-star { position: absolute; top: 4px; right: 6px; font-size: 10px; }
+
+.cal__note {
+  margin-top: 20px;
+  background: var(--bg);
+  border-left: 3px solid var(--pink-deep);
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.85;
+  color: var(--ink);
+}
+.cal__note b { color: var(--pink-deep); }
+
+/* ── OFFER: Couple Pack ── */
+.offer {
+  padding: 60px 20px 90px;
+  background:
+    radial-gradient(circle at 50% 0%, var(--pink) 0%, var(--bg) 50%, var(--bg-2) 100%);
+}
+.offer__pack {
+  background: var(--white);
+  border-radius: 28px;
+  padding: 30px 22px;
+  box-shadow: 0 24px 60px rgba(253,135,152,0.3);
+  border: 3px solid var(--pink-deep);
+  position: relative;
+  overflow: hidden;
+}
+.offer__pack::before {
+  content: '💕';
+  position: absolute;
+  top: 16px; right: 18px;
+  font-size: 28px;
+}
+.offer__pack-label {
+  font-family: var(--f-pop);
+  font-size: 11px;
+  color: var(--pink-deep);
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+.offer__pack-title {
+  font-family: var(--f-pop);
+  font-size: 22px;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 18px;
+}
+.offer__pack-title em {
+  font-style: normal;
+  background: var(--yellow);
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+.offer__pack-preview {
+  position: relative;
+  background: linear-gradient(170deg, var(--cyan-light) 0%, var(--pink) 100%);
+  border-radius: 18px;
+  aspect-ratio: 16/10;
+  margin-bottom: 22px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 12px;
+}
+.offer__pack-preview .char {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 3px solid var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 42px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+.offer__pack-preview .char img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.offer__pack-preview .heart {
+  font-size: 30px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+  animation: beat 1.2s ease-in-out infinite;
+}
+
+.offer__pack-bundle {
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.offer__pack-bundle-t {
+  font-family: var(--f-pop);
+  font-size: 11px;
+  color: var(--pink-deep);
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+.offer__pack-bundle ul {
+  list-style: none;
+}
+.offer__pack-bundle li {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ink);
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.offer__pack-bundle li::before {
+  content: '✓';
+  width: 16px; height: 16px;
+  background: var(--pink-deep);
+  color: var(--white);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.offer__pack-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.offer__pack-strike {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--mid);
+  text-decoration: line-through;
+}
+.offer__pack-price {
+  font-family: var(--f-pop);
+  font-size: 54px;
+  color: var(--pink-deep);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.offer__pack-price small { font-size: 22px; margin-left: 2px; }
+.offer__pack-price-sub {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--ink-sub);
+  letter-spacing: 0.1em;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.offer__cta {
+  display: block;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  color: var(--white);
+  font-family: var(--f-pop);
+  font-size: 17px;
+  padding: 20px;
+  border-radius: 60px;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 0.04em;
+  box-shadow: 0 12px 30px rgba(250,94,117,0.35);
+  animation: pulsePink 2s ease-in-out infinite;
+}
+@keyframes pulsePink {
+  0%,100% { box-shadow: 0 12px 30px rgba(250,94,117,0.35); }
+  50% { box-shadow: 0 14px 40px rgba(250,94,117,0.55); }
+}
+
+.offer__fine {
+  font-family: var(--f-round);
+  font-weight: 500;
+  font-size: 10px;
+  color: var(--ink-sub);
+  line-height: 1.8;
+  text-align: center;
+  margin-top: 14px;
+}
+
+/* Footer */
+.f {
+  padding: 40px 20px 36px;
+  text-align: center;
+  background: var(--white);
+  border-top: 2px solid var(--bg);
+}
+.f__co {
+  font-family: var(--f-pop);
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.f__co .loveez { color: var(--pink-deep); }
+.f__co .ameru { color: #29B6E8; }
+.f__tag {
+  font-family: var(--f-hand);
+  font-size: 16px;
+  color: var(--pink-deep);
+  transform: rotate(-1deg);
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.f__copy {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 9px;
+  color: var(--mid);
+  letter-spacing: 0.05em;
+}
+
+.rv { opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.rv.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 10 · couple</a></div>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero__bg"></div>
+
+  <div class="hero__top">
+    <div class="hero__logos">
+      <span class="loveez">Love is...</span>
+      <span class="x">×</span>
+      <span class="ameru">ameru</span>
+    </div>
+    <span class="hero__ticker">💕 COUPLE PACK</span>
+  </div>
+
+  <div class="hero__main">
+    <!-- 2キャラ並びの動画フレーム -->
+    <div class="hero__pairvid">
+      <span class="hero__pairvid-badge">● LOVE STORY VIDEO</span>
+      <span class="hero__pairvid-time">0:22</span>
+
+      <div class="hero__pairvid-pair">
+        <div class="hero__char">
+          <div class="hero__char-img" style="background:linear-gradient(135deg,#B5F5FE,#24D4F3);">🩵</div>
+          <p class="hero__char-label cy">SMOPPI · すもっぴ</p>
+          <p class="hero__char-name">ずもっぴ</p>
+        </div>
+        <div class="hero__char">
+          <div class="hero__char-img" style="background:linear-gradient(135deg,#FBD3DC,#FA5E75);">🩷</div>
+          <p class="hero__char-label pk">PYONCHI · ぴょんちー</p>
+          <p class="hero__char-name">さくら</p>
+        </div>
+      </div>
+
+      <span class="hero__pairvid-heart">💕</span>
+
+      <div class="hero__pairvid-caption">
+        <p class="t">ふたり <em>揃えて</em>、<br>置きたくない？</p>
+        <p class="s">らぶいーずのメインカップルが、ameruで。</p>
+      </div>
+    </div>
+
+    <div class="hero__copy">
+      <p class="hero__kicker">the couple, in your hands.</p>
+      <h1 class="hero__hd">
+        ふたりで、<br>
+        <em>編む</em>。
+      </h1>
+      <p class="hero__sub">
+        すもっぴ × ぴょんちー、<br>
+        らぶいーずの"主役カップル"が、<br>
+        ameruで並ぶ。
+      </p>
+      <a href="#offer" class="hero__cta">
+        カップルパックを見る
+        <span class="hero__cta-price">¥5,980〜</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════ 01 LOVE STORY ═══════ -->
+<section class="section story">
+  <p class="sec__kicker rv">— THE LOVE STORY —</p>
+  <h2 class="sec__hd rv">
+    すもっぴと、<em>ぴょんちー</em>。<br>
+    らぶいーずのメインカップル。
+  </h2>
+
+  <div class="story__video rv">
+    <img src="images/07_collection_preview.png" alt="couple">
+    <div class="story__play"></div>
+    <div class="story__video-over">
+      <span class="story__video-tag">● LOVE STORY · 0:38</span>
+      <p class="story__video-text">らぶらぶで、<br><em>たまーにせつない</em>毎日を。</p>
+    </div>
+  </div>
+
+  <p class="story__text rv">
+    NTV公式 <em>らぶいーず</em> のメインカップル、<br>
+    すもっぴ（彼氏）とぴょんちー（彼女）。<br>
+    そのふたりが、ameru で <em>あなたの手</em> の中で、<br>
+    はじめて並びます。
+  </p>
+</section>
+
+
+<!-- ═══════ 02 COUPLE CARDS ═══════ -->
+<section class="section couple">
+  <p class="sec__kicker rv">— IN YOUR HANDS —</p>
+  <h2 class="sec__hd rv">
+    <em>ずもっぴ</em> × <em>さくら</em>
+  </h2>
+  <p class="sec__sub rv">スカイブルーの彼氏と、ピンクの彼女。</p>
+
+  <div class="couple__row rv">
+    <div class="couple__card couple__card--blue">
+      <div class="couple__card-bg"></div>
+      <span class="couple__card-badge">💙 No.1</span>
+      <div class="couple__card-emoji">🩵</div>
+      <div class="couple__card-label">
+        <p class="n">ずもっぴ</p>
+        <p class="s">SMOPPI · 彼氏</p>
+      </div>
+    </div>
+    <span class="couple__plus">💕</span>
+    <div class="couple__card couple__card--pink">
+      <div class="couple__card-bg"></div>
+      <span class="couple__card-badge">🩷 No.3</span>
+      <div class="couple__card-emoji">🩷</div>
+      <div class="couple__card-label">
+        <p class="n">さくら</p>
+        <p class="s">PYONCHI · 彼女</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="couple__meta rv">
+    <span class="couple__meta-kicker">★ couple pack only ★</span>
+    <p class="couple__meta-title">ふたり<em>まとめて</em>、<br>カップル割で。</p>
+    <p class="couple__meta-text">
+      通常は単品購入（¥1,980＋¥4,200）ですが、<br>
+      カップルパックなら <b style="color:var(--pink-deep);">¥5,980</b> に。<br>
+      さらに、初回と2回目のお届けに<br>
+      ふたりまとめて届きます。
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════ 03 GIFT OCCASIONS ═══════ -->
+<section class="section gift">
+  <p class="sec__kicker rv">— FOR EVERY OCCASION —</p>
+  <h2 class="sec__hd rv">ふたり揃うと、<br><em>贈れる瞬間</em>が増える。</h2>
+
+  <div class="gift__grid rv">
+    <div class="gift__card">
+      <div class="gift__card-img">
+        <img src="images/05_lifestyle_finished.png" alt="anniversary">
+        <div class="gift__card-img-over">
+          <span class="gift__card-tag">ANNIVERSARY</span>
+          <p class="gift__card-title">記念日に</p>
+        </div>
+      </div>
+      <div class="gift__card-body">
+        <p class="t">手作りの記念日ギフト</p>
+        <p class="d">カップルで揃える、ameruの1セット。</p>
+      </div>
+    </div>
+
+    <div class="gift__card">
+      <div class="gift__card-img">
+        <img src="images/06_shelf_display.png" alt="birthday">
+        <div class="gift__card-img-over">
+          <span class="gift__card-tag">BIRTHDAY</span>
+          <p class="gift__card-title">誕生日に</p>
+        </div>
+      </div>
+      <div class="gift__card-body">
+        <p class="t">推しの誕生日プレゼント</p>
+        <p class="d">すもっぴ11/7・ぴょんちー3/25。</p>
+      </div>
+    </div>
+
+    <div class="gift__card">
+      <div class="gift__card-img">
+        <img src="images/02_package_lifestyle.png" alt="valentine">
+        <div class="gift__card-img-over">
+          <span class="gift__card-tag">VALENTINE</span>
+          <p class="gift__card-title">バレンタイン</p>
+        </div>
+      </div>
+      <div class="gift__card-body">
+        <p class="t">お菓子より、手作り</p>
+        <p class="d">2月に向けて、12月スタートがおすすめ。</p>
+      </div>
+    </div>
+
+    <div class="gift__card">
+      <div class="gift__card-img">
+        <img src="images/04_hands_crafting.png" alt="selfuse">
+        <div class="gift__card-img-over">
+          <span class="gift__card-tag">SELF LOVE</span>
+          <p class="gift__card-title">自分に</p>
+        </div>
+      </div>
+      <div class="gift__card-body">
+        <p class="t">自分のためのカップル</p>
+        <p class="d">推しのカップルを、自分の棚に並べる。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════ 04 BIRTHDAY CALENDAR ═══════ -->
+<section class="section cal">
+  <p class="sec__kicker rv">— BIRTHDAY CALENDAR —</p>
+  <h2 class="sec__hd rv">5人の<em>誕生日</em>に、<br>合わせて。</h2>
+
+  <div class="cal__grid rv">
+    <div class="cal__cell">
+      <p class="cal__cell-date">1/24</p>
+      <p class="cal__cell-name">うるる</p>
+    </div>
+    <div class="cal__cell">
+      <p class="cal__cell-date">3/25</p>
+      <p class="cal__cell-name">ぴょんちー</p>
+    </div>
+    <div class="cal__cell">
+      <p class="cal__cell-date">5/2</p>
+      <p class="cal__cell-name">ぱおぱお</p>
+    </div>
+    <div class="cal__cell">
+      <p class="cal__cell-date">9/18</p>
+      <p class="cal__cell-name">にゃぽ</p>
+    </div>
+    <div class="cal__cell cal__cell--high">
+      <span class="cal__cell-star">🌟</span>
+      <p class="cal__cell-date">11/7</p>
+      <p class="cal__cell-name">すもっぴ</p>
+    </div>
+  </div>
+
+  <div class="cal__note rv">
+    <b>💡 誕生日前に注文を</b><br>
+    誕生日月に合わせて届くよう調整できます。推しの誕生日に、手編みのずもっぴを隣に飾って、お祝いしましょう。
+  </div>
+</section>
+
+
+<!-- ═══════ OFFER: COUPLE PACK ═══════ -->
+<section class="offer" id="offer">
+  <p class="sec__kicker rv">— COUPLE STARTER PACK —</p>
+  <h2 class="sec__hd rv" style="margin-bottom:32px;">
+    <em>ふたり</em>、<br>同時に届く。
+  </h2>
+
+  <div class="offer__pack rv">
+    <p class="offer__pack-label">💕 LIMITED · COUPLE PACK</p>
+    <p class="offer__pack-title">
+      ずもっぴ + さくら<br>
+      <em>カップルスタート</em>
+    </p>
+
+    <div class="offer__pack-preview">
+      <div class="char">🩵</div>
+      <span class="heart">💕</span>
+      <div class="char">🩷</div>
+    </div>
+
+    <div class="offer__pack-bundle">
+      <p class="offer__pack-bundle-t">WHAT'S INSIDE</p>
+      <ul>
+        <li>ずもっぴキット（No.1 · すもっぴモデル）</li>
+        <li>さくらキット（No.3 · ぴょんちーモデル）</li>
+        <li>カップル限定パッケージ</li>
+        <li>全工程 動画QR教材</li>
+        <li>らぶいーず特典カード × 2</li>
+      </ul>
+    </div>
+
+    <div class="offer__pack-price-row">
+      <span class="offer__pack-strike">¥8,400</span>
+      <span class="offer__pack-price">¥5,980<small>〜</small></span>
+    </div>
+    <p class="offer__pack-price-sub">-29% COUPLE DISCOUNT · FREE SHIPPING</p>
+
+    <a href="#" class="offer__cta">カップルで、はじめる 💕</a>
+
+    <p class="offer__fine">
+      3回目以降 単品定期 ¥4,200 ／ いつでも解約・一時停止OK<br>
+      送料は初回無料、2回目以降 ¥420
+    </p>
+  </div>
+</section>
+
+
+<footer class="f">
+  <p class="f__co"><span class="loveez">Love is...</span> × <span class="ameru">ameru</span></p>
+  <p class="f__tag">love is… a couple in your hands.</p>
+  <p class="f__copy">© NTV (Love Eez) ／ 株式会社ヨミテ — ameru 2026</p>
+</footer>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 40 && r.bottom > -40) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive:true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>
