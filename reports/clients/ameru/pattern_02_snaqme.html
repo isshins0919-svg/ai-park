@@ -639,6 +639,133 @@ img { display: block; max-width: 100%; }
 }
 .ig-band__footer strong { color: #FA5E75; }
 
+/* 5ヶ月の物語（月ごとの達成感を時系列で） */
+.timeline {
+  background: linear-gradient(180deg, #FFF5E8 0%, #FFE8E3 100%);
+  padding: 48px 22px 60px;
+  position: relative;
+}
+.timeline__title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  text-align: center;
+  color: #4A3F36;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.timeline__title em {
+  font-style: normal;
+  color: #FA5E75;
+}
+.timeline__lead {
+  text-align: center;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #7F7267;
+  margin-bottom: 24px;
+}
+.tl-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tl-row {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 14px rgba(74, 63, 54, 0.08);
+  border: 2px solid transparent;
+}
+.tl-row--peak {
+  border-color: #FD8798;
+  background: linear-gradient(135deg, #FFFAF2 0%, #FFE8EF 100%);
+  box-shadow: 0 6px 16px rgba(253, 135, 152, 0.18);
+  transform: translateX(4px);
+}
+.tl-row--final {
+  border-color: #06D6A0;
+  background: linear-gradient(135deg, #FFFAF2 0%, #E8FAEF 100%);
+  box-shadow: 0 6px 16px rgba(6, 214, 160, 0.2);
+}
+.tl-chip {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.1;
+  padding: 4px;
+}
+.tl-body {
+  min-width: 0;
+}
+.tl-month {
+  font-family: 'Pacifico', cursive;
+  font-size: 11px;
+  color: #B09AB8;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.tl-name {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  color: #4A3F36;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+.tl-event {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #7F7267;
+  line-height: 1.5;
+}
+.tl-event strong {
+  color: #FA5E75;
+  font-weight: 900;
+}
+.tl-row--final .tl-event strong { color: #06A87F; }
+.tl-badge {
+  display: inline-block;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  margin-top: 3px;
+  letter-spacing: 0.03em;
+}
+.tl-badge--couple { background: #FD8798; color: #fff; }
+.tl-badge--final { background: #06D6A0; color: #fff; }
+.tl-peak-note {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: rgba(253,135,152,0.1);
+  border: 2px dashed #FD8798;
+  border-radius: 12px;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #4A3F36;
+  line-height: 1.7;
+  text-align: center;
+}
+.tl-peak-note strong { color: #FA5E75; }
+
 /* 口コミ吹き出し（snaq.meでよく見るやつ） */
 .voice-bubble {
   background: #fff;
@@ -701,7 +828,7 @@ img { display: block; max-width: 100%; }
 
   <div class="fv__hero rv rv-2">
     <span class="fv__ribbon">NEW · FROM ¥1,980</span>
-    <img class="fv__hero-img" src="images/01_zumoppi_hero.png" alt="ずもっぴ">
+    <img class="fv__hero-img" src="images/01_zumoppi_hero.png" alt="すもっぴ">
     <div class="fv__sticker fv__sticker--1"><b>52%</b>OFF</div>
   </div>
 
@@ -713,7 +840,7 @@ img { display: block; max-width: 100%; }
     </h1>
     <p class="fv__lead">
       月1、ポストに届く。<br>
-      ずもっぴ、ひとりずつ編みあがる。
+      らぶいーずの5人が、ひとりずつ編みあがる。
     </p>
   </div>
 
@@ -739,10 +866,10 @@ img { display: block; max-width: 100%; }
   <span class="confetti confetti--star" style="top:40px;left:20px;color:#E88BA0;">✦</span>
   <span class="confetti confetti--dot" style="top:120px;right:30px;color:var(--ink);"></span>
   <p class="block__num rv"><b>01</b>WHAT IS IT?</p>
-  <h2 class="block__hd rv rv-2"><span class="sc">every month,</span><br>あなたの <em>ずもっぴ</em> が、<br>ひとりずつ、編みあがる。</h2>
+  <h2 class="block__hd rv rv-2"><span class="sc">every month,</span><br>らぶいーずの <em>5人</em> が、<br>ひとりずつ、編みあがる。</h2>
   <p class="block__sub rv rv-3">手芸やったことない人のために、ぜんぶ設計しました。</p>
   <div class="block__img rv rv-3">
-    <img src="images/05_lifestyle_finished.png" alt="完成ずもっぴを持つ" loading="lazy">
+    <img src="images/05_lifestyle_finished.png" alt="完成したすもっぴを持つ" loading="lazy">
     <span class="block__caption">monthly amigurumi</span>
   </div>
 </section>
@@ -789,7 +916,7 @@ img { display: block; max-width: 100%; }
 <section class="block block--butter">
   <p class="block__num rv"><b>03</b>COLLECTION</p>
   <h2 class="block__hd rv rv-2"><span class="sc">meet the family.</span><br><em>全5体、家族になる。</em></h2>
-  <p class="block__sub rv rv-3">ずもっぴ · そら · さくら · もり · ゆめ。</p>
+  <p class="block__sub rv rv-3">すもっぴ · ぴょんちー · にゃぽ · うるる · ぱおぱお。</p>
   <div class="block__img rv rv-3" style="aspect-ratio: 16/10;">
     <img src="images/07_collection_preview.png" alt="5体" loading="lazy">
     <span class="block__caption">a family of five ♡</span>
@@ -809,7 +936,7 @@ img { display: block; max-width: 100%; }
   <span class="confetti confetti--star" style="top:18px;right:24px;color:#FD8798;">📸</span>
   <span class="confetti confetti--star" style="top:28px;left:26px;color:#FA5E75;">✨</span>
   <h3 class="ig-band__title rv"><em>#ameru</em> で、みんなが編んでる</h3>
-  <p class="ig-band__tags rv rv-2">#ameru  #ずもっぴ  #らぶいーず  #推し活</p>
+  <p class="ig-band__tags rv rv-2">#ameru  #すもっぴ  #らぶいーず  #推し活</p>
 
   <div class="ig-band__grid rv rv-3">
     <div class="ig-band__post">
@@ -841,9 +968,86 @@ img { display: block; max-width: 100%; }
   <p class="block__num rv"><b>04</b>IN YOUR ROOM</p>
   <h2 class="block__hd rv rv-2"><em>5体そろった日</em>、<br><span class="sc">you'll smile.</span></h2>
   <div class="block__img rv rv-3" style="aspect-ratio: 4/5;">
-    <img src="images/06_shelf_display.png" alt="棚の5体" loading="lazy">
+    <img src="images/06_shelf_display.png" alt="棚の5人" loading="lazy">
     <span class="block__caption">on your shelf ♡</span>
   </div>
+</section>
+
+
+<!-- Timeline · 5ヶ月の物語（案A：カップル完成ピーク設計） -->
+<section class="timeline">
+  <h2 class="timeline__title rv">
+    5ヶ月で、<em>3回</em>、<br>
+    "完成"の瞬間が来ます。
+  </h2>
+  <p class="timeline__lead rv rv-2">
+    月1体、5ヶ月。ただの定期便じゃない、物語です。
+  </p>
+
+  <div class="tl-list">
+    <div class="tl-row rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#E8F7FB,#B5E5F0);color:#4A7089;">1<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 01</p>
+        <p class="tl-name">すもっぴ</p>
+        <p class="tl-event">主人公、あなたの手に登場。</p>
+      </div>
+    </div>
+
+    <div class="tl-row tl-row--peak rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#FFD4E0,#FA5E75);">2<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 02</p>
+        <p class="tl-name">ぴょんちー</p>
+        <p class="tl-event">
+          <strong>①組目カップル完成🎉</strong><br>
+          すもっぴ×ぴょんちー、棚に並ぶ日。
+        </p>
+        <span class="tl-badge tl-badge--couple">♡ カップル達成</span>
+      </div>
+    </div>
+
+    <div class="tl-row rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#FFF4D6,#E8B860);">3<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 03</p>
+        <p class="tl-name">にゃぽ</p>
+        <p class="tl-event">ぴょんちーの友だち。女子が増えていく。</p>
+      </div>
+    </div>
+
+    <div class="tl-row tl-row--peak rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#E8DCF2,#8D7AB8);">4<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 04</p>
+        <p class="tl-name">うるる</p>
+        <p class="tl-event">
+          <strong>②組目カップル完成🎉</strong><br>
+          にゃぽ×うるる、もう1組が揃う。
+        </p>
+        <span class="tl-badge tl-badge--couple">♡ カップル達成</span>
+      </div>
+    </div>
+
+    <div class="tl-row tl-row--final rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#D4F0E4,#06D6A0);">5<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 05</p>
+        <p class="tl-name">ぱおぱお</p>
+        <p class="tl-event">
+          <strong>家族コンプリート🎉</strong><br>
+          5人揃って、らぶいーずが勢ぞろい。
+        </p>
+        <span class="tl-badge tl-badge--final">✨ ALL COMPLETE</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="tl-peak-note rv">
+    2ヶ月目・4ヶ月目は <strong>カップルが揃う</strong>日。<br>
+    5ヶ月目は <strong>家族が揃う</strong>日。<br>
+    毎月、ちゃんと"完成の瞬間"があります。
+  </p>
 </section>
 
 
