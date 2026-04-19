@@ -3,1317 +3,1420 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ameru × らぶいーず — Complete Pack / 5ヶ月で、全員そろう。</title>
+<title>ameru × らぶいーず — 全5キャラ、自分の手で。</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Zen+Maru+Gothic:wght@500;700;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Zen+Maru+Gothic:wght@500;700;900&family=Cherry+Bomb+One&family=Bodoni+Moda:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 :root {
-  --p-main: #FD8798;
-  --p-deep: #FA5E75;
-  --p-bg: #FFE3F6;
-  --p-light: #FFF0F9;
+  --bg: #FFF5FA;
+  --bg-2: #FFE3F6;
+  --pink: #FD8798;
+  --pink-deep: #FA5E75;
+  --pink-soft: #FFD4E0;
   --cyan: #24D4F3;
-  --cyan-light: #B5F5FE;
-  --ameru: #29B6E8;
-  --yellow: #FFD166;
+  --cyan-soft: #B5F5FE;
+  --cyan-deep: #1BAFCB;
   --mint: #06D6A0;
   --purple: #A78BFA;
-  --white: #FFFFFF;
+  --yellow: #FFE066;
+  --cream: #FFF4D6;
   --ink: #3D2440;
   --ink-sub: #8A6A8F;
   --mid: #B09AB8;
+  --white: #FFFFFF;
   --f-pop: 'Cherry Bomb One', cursive;
   --f-round: 'Zen Maru Gothic', sans-serif;
-  --f-hand: 'Caveat', cursive;
+  --f-hand: 'Hachi Maru Pop', sans-serif;
+  --f-italic: 'Bodoni Moda', serif;
 }
 html { scroll-behavior:smooth; }
 body {
-  font-family:var(--f-round);
-  font-weight:500;
-  background:var(--p-light);
-  color:var(--ink);
-  line-height:1.8;
-  max-width:480px;
-  margin:0 auto;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+  font-family: var(--f-round);
+  font-weight: 700;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
   background-image:
-    radial-gradient(circle at 10% 0%, rgba(253,135,152,0.12), transparent 40%),
-    radial-gradient(circle at 90% 100%, rgba(36,212,243,0.08), transparent 40%);
+    radial-gradient(circle at 10% 0%, rgba(253,135,152,0.2), transparent 40%),
+    radial-gradient(circle at 90% 100%, rgba(36,212,243,0.12), transparent 45%);
 }
 img { display:block; max-width:100%; }
 
 .pattern-tag {
-  position:fixed; top:10px; left:10px; z-index:100;
-  font-family:var(--f-pop); font-size:11px;
-  color:var(--p-deep);
-  background:rgba(255,240,249,0.9);
-  padding:5px 12px; border-radius:20px;
-  backdrop-filter:blur(6px);
-  border:1px solid rgba(253,135,152,0.3);
+  position: fixed; top: 10px; left: 10px; z-index: 200;
+  font-family: var(--f-hand);
+  font-size: 12px;
+  color: var(--pink-deep);
+  background: rgba(255,245,250,0.9);
+  padding: 5px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(253,135,152,0.3);
 }
-.pattern-tag a { color:inherit; text-decoration:none; }
+.pattern-tag a { color: inherit; text-decoration: none; }
 
-/* ── TOP BAR ── */
+/* ─── TOP BAR ─── */
 .top {
-  display:flex; justify-content:space-between; align-items:center;
-  padding:14px 18px;
-  background:rgba(255,255,255,0.7);
-  backdrop-filter:blur(12px);
-  border-bottom:2px solid rgba(253,135,152,0.2);
-  position:sticky; top:0; z-index:50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid rgba(253,135,152,0.2);
+  position: sticky; top: 0; z-index: 50;
 }
 .top__logos {
-  display:flex; align-items:center; gap:10px;
-  font-family:var(--f-pop);
-  font-size:15px;
-  color:var(--ink);
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--f-hand);
+  font-size: 15px;
+  color: var(--ink);
+}
+.top__logos .labu {
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 17px;
 }
 .top__logos .x {
-  color:var(--p-main);
-  font-size:10px;
-  padding:0 2px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  color: var(--ink-sub);
+  font-size: 12px;
 }
-.top__logos .loveez { color:var(--p-deep); }
-.top__logos .ameru { color:var(--ameru); }
+.top__logos .ameru { color: var(--cyan-deep); font-family: var(--f-pop); font-size: 14px; }
 .top__pill {
-  font-family:var(--f-pop);
-  font-size:10px;
-  color:var(--white);
-  background:linear-gradient(90deg, var(--p-main), var(--p-deep));
-  padding:6px 12px; border-radius:20px;
-  letter-spacing:0.05em;
+  font-family: var(--f-hand);
+  font-size: 11px;
+  color: var(--white);
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  padding: 6px 12px; border-radius: 20px;
+  letter-spacing: 0.04em;
 }
 
-/* ── FV — IPコラボの顔 ── */
+/* ─── FV ─── */
 .fv {
-  position:relative;
-  padding:30px 20px 40px;
-  overflow:hidden;
+  position: relative;
+  padding: 24px 18px 36px;
+  overflow: hidden;
 }
-/* 背景にキラキラ＋ハート */
-.fv::before {
-  content:'🩷 💕 🎀 ✨ 🩷 💕 🎀 ✨';
-  position:absolute;
-  top:18px; left:0; right:0;
-  text-align:center;
-  font-size:10px;
-  letter-spacing:1em;
-  opacity:0.5;
+.fv__hearts {
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 1em;
+  opacity: 0.5;
+  margin-bottom: 12px;
 }
-.fv__badge-row {
-  display:flex; justify-content:center; gap:8px;
-  margin-top:18px; margin-bottom:14px;
+.fv__badges {
+  display: flex; justify-content: center; gap: 6px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
 }
-.fv__badge-row span {
-  font-family:var(--f-pop);
-  font-size:9px;
-  padding:4px 10px;
-  border-radius:20px;
-  letter-spacing:0.1em;
+.fv__badges span {
+  font-family: var(--f-hand);
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
 }
-.fv__badge-row .b1 { background:var(--p-deep); color:var(--white); }
-.fv__badge-row .b2 { background:var(--white); color:var(--p-deep); border:1.5px solid var(--p-deep); }
-.fv__badge-row .b3 { background:var(--cyan); color:var(--white); }
+.fv__badges .b1 { background: var(--pink-deep); color: var(--white); }
+.fv__badges .b2 { background: var(--white); color: var(--pink-deep); border: 1.5px solid var(--pink-deep); }
+.fv__badges .b3 { background: var(--cyan); color: var(--white); }
 
 .fv__catch {
-  font-family:var(--f-pop);
-  text-align:center;
-  line-height:1.15;
-  margin:8px 0 18px;
+  text-align: center;
+  margin-bottom: 18px;
 }
-.fv__catch .en {
-  font-size:36px;
-  background:linear-gradient(90deg, var(--p-main), var(--p-deep));
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-  letter-spacing:0.02em;
-  display:block;
-  margin-bottom:4px;
+.fv__catch-labu {
+  font-family: var(--f-hand);
+  font-size: 28px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  display: inline-block;
+  transform: rotate(-2deg);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
 }
-.fv__catch .jp {
-  font-family:var(--f-round);
-  font-weight:900;
-  font-size:18px;
-  color:var(--ink);
-  display:block;
+.fv__catch-hd {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: clamp(28px, 8vw, 34px);
+  line-height: 1.4;
+  color: var(--ink);
+  letter-spacing: 0.01em;
 }
-.fv__catch .jp em {
-  font-style:normal;
-  color:var(--p-deep);
-  background:var(--yellow);
-  padding:0 6px;
-  border-radius:4px;
-  transform:rotate(-2deg);
-  display:inline-block;
-}
-
-/* FVのメインビジュアル：動画風フレーム＋2キャラ */
-.fv__video {
-  position:relative;
-  border-radius:24px;
-  overflow:hidden;
-  aspect-ratio:9/14;
-  background:linear-gradient(180deg, var(--cyan-light) 0%, var(--p-bg) 100%);
-  box-shadow:0 20px 50px rgba(253,135,152,0.25);
-  margin:0 -4px;
-}
-.fv__video-bg {
-  position:absolute; inset:0;
-  background-image:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7) 0%, transparent 45%),
-    radial-gradient(circle at 70% 80%, rgba(255,255,255,0.5) 0%, transparent 40%);
-}
-.fv__video-badge {
-  position:absolute; top:14px; left:14px;
-  font-family:var(--f-pop);
-  font-size:10px;
-  background:var(--p-deep);
-  color:var(--white);
-  padding:5px 12px;
-  border-radius:20px;
-  letter-spacing:0.1em;
-  display:flex; align-items:center; gap:5px;
-  z-index:3;
-  box-shadow:0 4px 10px rgba(250,94,117,0.3);
-}
-.fv__video-badge::before {
-  content:''; width:7px; height:7px; border-radius:50%;
-  background:var(--white);
-  animation:blink 1.4s ease-in-out infinite;
-}
-@keyframes blink { 50% { opacity:0.3; } }
-.fv__video-time {
-  position:absolute; top:14px; right:14px;
-  font-family:var(--f-pop);
-  font-size:10px;
-  background:rgba(61,36,64,0.7);
-  color:var(--white);
-  padding:4px 10px;
-  border-radius:12px;
-  letter-spacing:0.1em;
-  z-index:3;
-}
-.fv__video-chars {
-  position:absolute; inset:0;
-  display:flex; align-items:center; justify-content:center;
-  gap:30px;
-  padding:0 20px;
-}
-.fv__video-char {
-  text-align:center;
-  animation:bob 3s ease-in-out infinite;
-}
-.fv__video-char:nth-child(2) { animation-delay:-1.5s; }
-@keyframes bob {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(-8px); }
-}
-.fv__video-char-label {
-  font-family:var(--f-pop);
-  font-size:11px;
-  color:var(--p-deep);
-  margin-bottom:8px;
-  letter-spacing:0.1em;
-}
-.fv__video-char-label.cy { color:var(--cyan); }
-.fv__video-char-img {
-  width:130px; height:130px;
-  border-radius:50%;
-  overflow:hidden;
-  box-shadow:0 12px 30px rgba(0,0,0,0.15);
-  border:4px solid var(--white);
-  background:var(--white);
-}
-.fv__video-char-img img { width:100%; height:100%; object-fit:cover; }
-.fv__video-char-name {
-  font-family:var(--f-round);
-  font-weight:900;
-  font-size:13px;
-  color:var(--ink);
-  margin-top:8px;
-}
-.fv__video-heart {
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  font-size:44px;
-  filter:drop-shadow(0 8px 20px rgba(253,135,152,0.5));
-  animation:beat 1.3s ease-in-out infinite;
-}
-@keyframes beat {
-  0%,100% { transform:translate(-50%,-50%) scale(1); }
-  50% { transform:translate(-50%,-50%) scale(1.15); }
-}
-.fv__video-bottom {
-  position:absolute; bottom:0; left:0; right:0;
-  padding:20px 20px 18px;
-  background:linear-gradient(180deg, transparent 0%, rgba(61,36,64,0.85) 80%);
-  color:var(--white);
-}
-.fv__video-bottom-title {
-  font-family:var(--f-pop);
-  font-size:16px;
-  letter-spacing:0.05em;
-  margin-bottom:4px;
-}
-.fv__video-bottom-sub {
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:11px;
-  opacity:0.85;
-}
-.fv__video-bottom-hashtags {
-  margin-top:8px;
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:10px;
-  opacity:0.8;
-  letter-spacing:0.05em;
+.fv__catch-hd em {
+  font-style: normal;
+  background: var(--yellow);
+  color: var(--ink);
+  padding: 0 6px;
+  border-radius: 6px;
+  transform: rotate(-1deg);
+  display: inline-block;
 }
 
-/* FV Sub section: Tagline + CTA */
-.fv__sub {
-  margin-top:24px;
-  padding:22px 20px;
-  background:var(--white);
-  border-radius:22px;
-  box-shadow:0 16px 40px rgba(253,135,152,0.15);
-  border:2px solid var(--p-bg);
-  position:relative;
+/* メインビジュアル: 5キャラ × ameru */
+.fv__main {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  background:
+    linear-gradient(165deg, var(--cyan-soft) 0%, var(--pink-soft) 60%, var(--yellow) 100%);
+  box-shadow: 0 20px 48px rgba(253,135,152,0.28);
+  margin-bottom: 22px;
 }
-.fv__sub::before {
-  content:'🎀';
-  position:absolute; top:-14px; left:20px;
-  font-size:28px;
+.fv__main-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-family: var(--f-hand);
+  font-size: 10px;
+  background: var(--pink-deep);
+  color: var(--white);
+  padding: 5px 12px;
+  border-radius: 20px;
+  display: flex; align-items: center; gap: 5px;
+  z-index: 3;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
 }
-.fv__sub-label {
-  font-family:var(--f-pop);
-  font-size:11px;
-  color:var(--p-deep);
-  letter-spacing:0.2em;
-  margin-bottom:8px;
+.fv__main-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--white);
+  animation: blink 1.3s ease-in-out infinite;
 }
-.fv__sub-text {
-  font-family:var(--f-round);
-  font-weight:900;
-  font-size:16px;
-  color:var(--ink);
-  line-height:1.8;
-  margin-bottom:16px;
+@keyframes blink { 50% { opacity: 0.3; } }
+.fv__main-time {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--white);
+  background: rgba(61,36,64,0.7);
+  padding: 4px 10px;
+  border-radius: 14px;
+  z-index: 3;
 }
-.fv__sub-text em {
-  font-style:normal;
-  color:var(--p-deep);
-  background:var(--p-bg);
-  padding:0 4px;
-  border-radius:3px;
+.fv__main-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.fv__sub-cta {
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  background:linear-gradient(90deg, var(--p-main), var(--p-deep));
-  color:var(--white);
-  font-family:var(--f-pop);
-  font-size:15px;
-  padding:18px;
-  border-radius:60px;
-  text-decoration:none;
-  letter-spacing:0.08em;
-  box-shadow:0 10px 24px rgba(250,94,117,0.35);
-  animation:pulseP 2s ease-in-out infinite;
+.fv__main-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(61,36,64,0.78) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  color: var(--white);
+}
+.fv__main-title {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.fv__main-title em {
+  font-style: normal;
+  color: var(--yellow);
+}
+.fv__main-sub {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 12px;
+  opacity: 0.92;
+}
+.fv__main-hashtags {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 11px;
+  opacity: 0.85;
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+}
+
+/* FVの下のアクション */
+.fv__cta-card {
+  background: var(--white);
+  border-radius: 22px;
+  padding: 22px 20px;
+  box-shadow: 0 14px 32px rgba(253,135,152,0.18);
+  border: 2.5px solid var(--pink-soft);
+  position: relative;
+}
+.fv__cta-card::before {
+  content: '🎀';
+  position: absolute;
+  top: -14px; left: 20px;
+  font-size: 28px;
+}
+.fv__cta-label {
+  font-family: var(--f-hand);
+  font-size: 11px;
+  color: var(--pink-deep);
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+}
+.fv__cta-text {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--ink);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.fv__cta-text em {
+  font-style: normal;
+  color: var(--pink-deep);
+  background: var(--pink-soft);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+.fv__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  color: var(--white);
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 16px;
+  padding: 18px;
+  border-radius: 60px;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  box-shadow: 0 10px 22px rgba(250,94,117,0.35);
+  animation: pulseP 2s ease-in-out infinite;
 }
 @keyframes pulseP {
-  0%,100% { box-shadow:0 10px 24px rgba(250,94,117,0.35); }
-  50% { box-shadow:0 12px 36px rgba(250,94,117,0.55); }
+  0%,100% { box-shadow: 0 10px 22px rgba(250,94,117,0.35); }
+  50% { box-shadow: 0 12px 34px rgba(250,94,117,0.55); }
 }
-.fv__sub-cta-price {
-  font-family:var(--f-pop);
-  font-size:18px;
-  color:var(--yellow);
+.fv__cta-price {
+  font-family: var(--f-hand);
+  font-size: 18px;
+  color: var(--yellow);
 }
-.fv__sub-note {
-  text-align:center;
-  font-family:var(--f-hand);
-  font-size:14px;
-  color:var(--p-deep);
-  margin-top:10px;
-  transform:rotate(-1deg);
+.fv__cta-note {
+  font-family: var(--f-hand);
+  font-size: 13px;
+  color: var(--pink-deep);
+  text-align: center;
+  margin-top: 10px;
+  transform: rotate(-1deg);
 }
 
-/* ── SECTION ── */
+/* ─── セクション共通 ─── */
 .section {
-  padding:70px 20px;
-  position:relative;
+  padding: 60px 18px 70px;
+  position: relative;
+  overflow: hidden;
 }
 .sec__kicker {
-  font-family:var(--f-pop);
-  font-size:11px;
-  color:var(--p-deep);
-  letter-spacing:0.25em;
-  text-align:center;
-  margin-bottom:6px;
+  font-family: var(--f-hand);
+  font-size: 13px;
+  color: var(--pink-deep);
+  letter-spacing: 0.15em;
+  text-align: center;
+  margin-bottom: 6px;
 }
 .sec__hd {
-  font-family:var(--f-pop);
-  font-size:28px;
-  color:var(--ink);
-  line-height:1.3;
-  text-align:center;
-  letter-spacing:0.02em;
-  margin-bottom:10px;
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1.35;
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
 }
 .sec__hd em {
-  font-style:normal;
-  color:var(--p-deep);
+  font-style: normal;
+  color: var(--pink-deep);
+  background: var(--yellow);
+  padding: 0 6px;
+  border-radius: 5px;
 }
 .sec__sub {
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:13px;
-  color:var(--ink-sub);
-  text-align:center;
-  line-height:1.9;
-  margin-bottom:36px;
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink-sub);
+  text-align: center;
+  line-height: 1.85;
+  margin-bottom: 30px;
 }
 
-/* ── 01 STORY: ずもっぴ＝すもっぴの我が子版 ── */
-.story { background:var(--p-bg); }
-.story__mini-vid {
-  position:relative;
-  aspect-ratio:16/11;
-  border-radius:20px;
-  overflow:hidden;
-  margin:0 -8px 22px;
-  box-shadow:0 12px 28px rgba(253,135,152,0.2);
+/* ─── 01 5キャラ紹介（ビジュアル最優先・大型） ─── */
+.cast { background: var(--bg-2); }
+.cast__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
 }
-.story__mini-vid img {
-  width:100%; height:100%;
-  object-fit:cover;
+.cast__card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 1/1.15;
+  box-shadow: 0 10px 24px rgba(253,135,152,0.2);
 }
-.story__mini-vid-overlay {
-  position:absolute; inset:0;
-  background:linear-gradient(180deg, transparent 40%, rgba(61,36,64,0.8) 100%);
-  display:flex; flex-direction:column; justify-content:flex-end;
-  padding:20px;
-  color:var(--white);
+.cast__card-bg { position: absolute; inset: 0; }
+.cast__card-emoji {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 70px;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.18));
 }
-.story__mini-vid-overlay .tag {
-  font-family:var(--f-pop);
-  font-size:10px;
-  background:var(--p-deep);
-  padding:4px 10px;
-  border-radius:12px;
-  align-self:flex-start;
-  margin-bottom:8px;
+.cast__card-over {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(61,36,64,0.85) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px;
+  color: var(--white);
 }
-.story__mini-vid-overlay .title {
-  font-family:var(--f-pop);
-  font-size:20px;
-  line-height:1.3;
-  letter-spacing:0.02em;
+.cast__card-no {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--yellow);
+  letter-spacing: 0.15em;
 }
-.story__mini-vid-overlay .title em {
-  font-style:normal;
-  color:var(--yellow);
+.cast__card-name {
+  font-family: var(--f-hand);
+  font-size: 22px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
 }
-.story__mini-vid .play {
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  width:60px; height:60px;
-  background:rgba(255,255,255,0.95);
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 6px 16px rgba(0,0,0,0.25);
+.cast__card-trait {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 10px;
+  opacity: 0.9;
+  margin-top: 4px;
+  line-height: 1.4;
 }
-.story__mini-vid .play::before {
-  content:''; border:10px solid transparent; border-left:16px solid var(--p-deep);
-  margin-left:4px;
+.cast__card-pair {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-family: var(--f-hand);
+  font-size: 9px;
+  background: rgba(255,255,255,0.95);
+  color: var(--pink-deep);
+  padding: 3px 8px;
+  border-radius: 10px;
+  z-index: 2;
+}
+.cast__card--featured {
+  grid-column: 1 / -1;
+  aspect-ratio: 16/10;
+}
+.cast__card--featured .cast__card-emoji { font-size: 90px; }
+.cast__card--featured .cast__card-name { font-size: 28px; }
+
+/* 相関図セクション */
+.rel-map {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 18px 16px;
+  box-shadow: 0 6px 16px rgba(253,135,152,0.12);
+}
+.rel-map__title {
+  font-family: var(--f-hand);
+  font-size: 16px;
+  color: var(--pink-deep);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.rel-map__list {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.rel-map__row {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ink);
+}
+.rel-map__row .badge {
+  font-family: var(--f-hand);
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+.rel-map__row .badge--cp { background: var(--pink); color: var(--white); }
+.rel-map__row .badge--bf { background: var(--mint); color: var(--white); }
+.rel-map__row .badge--fr { background: var(--yellow); color: var(--ink); }
+.rel-map__row .badge--bs { background: var(--purple); color: var(--white); }
+
+/* ─── 02 5ステップフロー（届く→動画→編む→完成→集合） ─── */
+.flow { background: var(--white); }
+.flow__lane {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.flow__step {
+  position: relative;
+  background: var(--bg);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(253,135,152,0.12);
+}
+.flow__step-img {
+  position: relative;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+.flow__step-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.flow__step-tag {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-family: var(--f-hand);
+  font-size: 11px;
+  color: var(--white);
+  background: var(--pink-deep);
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  z-index: 3;
+  display: flex; align-items: center; gap: 4px;
+}
+.flow__step-tag--video { background: var(--ink); }
+.flow__step-tag--video::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--pink);
+  animation: blink 1.3s ease-in-out infinite;
+}
+.flow__step-num {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--white);
+  line-height: 1;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.35);
+  z-index: 3;
+}
+.flow__step-play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 56px; height: 56px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+.flow__step-play::before {
+  content: ''; border: 10px solid transparent; border-left: 15px solid var(--pink-deep);
+  margin-left: 4px;
+}
+.flow__step-body {
+  padding: 14px 18px 18px;
+}
+.flow__step-title {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 17px;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.flow__step-title em {
+  font-style: normal;
+  background: var(--yellow);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+.flow__step-desc {
+  font-family: var(--f-round);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--ink-sub);
+  line-height: 1.8;
 }
 
-.story__vs {
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  gap:12px;
-  align-items:center;
-  margin-bottom:26px;
+/* 完成2: 5体集合 特別な見せ方 */
+.flow__step--final {
+  background: linear-gradient(135deg, var(--mint), var(--cyan));
+  color: var(--white);
+  border: 3px solid var(--mint);
 }
-.story__vs-cell {
-  background:var(--white);
-  border-radius:18px;
-  padding:18px 14px;
-  text-align:center;
-  box-shadow:0 6px 18px rgba(253,135,152,0.15);
-  position:relative;
+.flow__step--final .flow__step-tag {
+  background: var(--ink);
+  color: var(--yellow);
 }
-.story__vs-cell-img {
-  width:100%; aspect-ratio:1/1;
-  border-radius:50%;
-  overflow:hidden;
-  background:var(--p-bg);
-  margin-bottom:10px;
-  border:3px solid var(--p-bg);
+.flow__step--final .flow__step-title {
+  color: var(--white);
+  font-size: 19px;
 }
-.story__vs-cell-img img { width:100%; height:100%; object-fit:cover; }
-.story__vs-cell-label {
-  font-family:var(--f-pop);
-  font-size:11px;
-  color:var(--p-deep);
-  letter-spacing:0.1em;
-  margin-bottom:2px;
+.flow__step--final .flow__step-title em {
+  background: var(--yellow);
+  color: var(--ink);
 }
-.story__vs-cell-label.cy { color:var(--cyan); }
-.story__vs-cell-name {
-  font-family:var(--f-pop);
-  font-size:14px;
-  color:var(--ink);
-  letter-spacing:0.02em;
-}
-.story__vs-cell-sub {
-  font-size:10px;
-  color:var(--mid);
-  margin-top:2px;
-}
-.story__vs-arrow {
-  font-family:var(--f-pop);
-  font-size:20px;
-  color:var(--p-main);
-}
-.story__vs-note {
-  background:rgba(255,255,255,0.8);
-  border:2px dashed var(--p-main);
-  border-radius:16px;
-  padding:16px 18px;
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:13px;
-  color:var(--ink);
-  text-align:center;
-  line-height:1.9;
-}
-.story__vs-note em {
-  font-style:normal;
-  color:var(--p-deep);
-  font-weight:900;
+.flow__step--final .flow__step-desc {
+  color: rgba(255,255,255,0.92);
 }
 
-/* ── 02 COMPLETE CALENDAR: 5ヶ月5体 ── */
-.cal { background:var(--white); }
-.cal__timeline {
-  position:relative;
-  padding:10px 0;
+/* ─── 03 5ヶ月タイムライン（案A カップル完成ピーク） ─── */
+.journey { background: var(--bg-2); }
+.journey__list {
+  display: flex; flex-direction: column; gap: 10px;
+  position: relative;
 }
-.cal__timeline::before {
-  content:'';
-  position:absolute;
-  left:34px; top:0; bottom:0;
-  width:3px;
-  background:linear-gradient(180deg, var(--p-main), var(--cyan), var(--purple), var(--mint), var(--p-deep));
-  border-radius:2px;
+.journey__list::before {
+  content: '';
+  position: absolute;
+  left: 34px; top: 12px; bottom: 12px;
+  width: 3px;
+  background: repeating-linear-gradient(to bottom, var(--pink) 0 6px, transparent 6px 10px);
+  z-index: 0;
 }
-.cal__month {
-  display:grid;
-  grid-template-columns:68px 1fr;
-  gap:12px;
-  align-items:center;
-  padding:12px 0;
-  position:relative;
+.journey__row {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 10px;
+  align-items: stretch;
+  position: relative;
+  z-index: 1;
 }
-.cal__month-tag {
-  background:var(--white);
-  border:3px solid var(--p-main);
-  border-radius:50%;
-  width:68px; height:68px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  position:relative;
-  z-index:1;
+.journey__chip {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: var(--white);
+  border: 3px solid var(--pink);
+  position: relative;
 }
-.cal__month-tag .m {
-  font-family:var(--f-pop);
-  font-size:9px;
-  color:var(--mid);
-  letter-spacing:0.1em;
+.journey__chip .m {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 9px;
+  color: var(--ink-sub);
+  letter-spacing: 0.1em;
 }
-.cal__month-tag .n {
-  font-family:var(--f-pop);
-  font-size:22px;
-  color:var(--p-deep);
-  line-height:1;
+.journey__chip .n {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--pink-deep);
+  line-height: 1;
 }
-.cal__month:nth-child(2) .cal__month-tag { border-color:var(--cyan); }
-.cal__month:nth-child(2) .cal__month-tag .n { color:var(--cyan); }
-.cal__month:nth-child(3) .cal__month-tag { border-color:var(--p-deep); }
-.cal__month:nth-child(3) .cal__month-tag .n { color:var(--p-deep); }
-.cal__month:nth-child(4) .cal__month-tag { border-color:var(--mint); }
-.cal__month:nth-child(4) .cal__month-tag .n { color:var(--mint); }
-.cal__month:nth-child(5) .cal__month-tag { border-color:var(--purple); }
-.cal__month:nth-child(5) .cal__month-tag .n { color:var(--purple); }
+.journey__card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 12px rgba(253,135,152,0.14);
+  display: flex; align-items: center; gap: 12px;
+}
+.journey__card-emoji {
+  font-size: 34px;
+  flex-shrink: 0;
+}
+.journey__card-body { flex: 1; }
+.journey__card-name {
+  font-family: var(--f-hand);
+  font-size: 17px;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+.journey__card-event {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--ink-sub);
+  line-height: 1.5;
+}
+.journey__card-event strong { color: var(--pink-deep); }
+.journey__card-badge {
+  font-family: var(--f-hand);
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-top: 4px;
+  display: inline-block;
+}
+.journey__card-badge--cp { background: var(--pink); color: var(--white); }
+.journey__card-badge--final { background: var(--mint); color: var(--white); }
 
-.cal__month-card {
-  display:grid;
-  grid-template-columns:60px 1fr auto;
-  gap:12px; align-items:center;
-  background:var(--p-light);
-  border-radius:16px;
-  padding:12px 14px;
-}
-.cal__month-card-chip {
-  width:50px; height:50px;
-  border-radius:50%;
-  border:2px solid var(--white);
-  box-shadow:0 3px 10px rgba(0,0,0,0.08);
-}
-.cal__month-card-body {}
-.cal__month-card-name {
-  font-family:var(--f-pop);
-  font-size:15px;
-  color:var(--ink);
-  letter-spacing:0.02em;
-  line-height:1.1;
-}
-.cal__month-card-sub {
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:10px;
-  color:var(--ink-sub);
-  letter-spacing:0.05em;
-  margin-top:2px;
-}
-.cal__month-card-bd {
-  font-family:var(--f-pop);
-  font-size:9px;
-  background:var(--yellow);
-  color:var(--ink);
-  padding:2px 6px;
-  border-radius:8px;
-  letter-spacing:0.05em;
-  margin-top:4px;
-  display:inline-block;
-}
-.cal__month-card-price {
-  font-family:var(--f-pop);
-  font-size:15px;
-  color:var(--p-deep);
-  text-align:right;
-}
-.cal__month-card-price small {
-  display:block;
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:9px;
-  color:var(--mid);
-}
-.cal__month--first .cal__month-card {
-  background:linear-gradient(90deg, var(--yellow), #FFE599);
-  border:2px dashed var(--p-deep);
-}
-.cal__month--first .cal__month-card-price { color:var(--p-deep); }
-.cal__month--first .cal__month-card-price::before {
-  content:'¥1,980';
-  display:block;
-  font-size:18px;
-}
-.cal__month--first .cal__month-card-price-hide { display:none; }
+.journey__row--peak .journey__card { border: 2px solid var(--pink); }
+.journey__row--peak .journey__chip { border-color: var(--pink-deep); border-width: 4px; }
+.journey__row--final .journey__card { border: 2px solid var(--mint); background: linear-gradient(135deg, var(--cream), #E6F9EC); }
+.journey__row--final .journey__chip { border-color: var(--mint); border-width: 4px; }
+.journey__row--final .journey__chip .n { color: var(--mint); }
 
-.cal__total {
-  margin-top:22px;
-  background:var(--ink);
-  color:var(--white);
-  border-radius:18px;
-  padding:16px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.journey__note {
+  margin-top: 24px;
+  background: var(--white);
+  border: 2px dashed var(--pink);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--ink);
+  line-height: 1.85;
 }
-.cal__total-l {
-  font-family:var(--f-pop);
-  font-size:11px;
-  letter-spacing:0.15em;
-  color:var(--yellow);
-}
-.cal__total-l small {
-  display:block;
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:10px;
-  color:rgba(255,255,255,0.7);
-  letter-spacing:0.05em;
-  margin-top:2px;
-}
-.cal__total-r {
-  font-family:var(--f-pop);
-  font-size:28px;
-  color:var(--yellow);
-  letter-spacing:-0.01em;
-}
+.journey__note strong { color: var(--pink-deep); }
 
-/* ── 03 5人の島（舞台設定） ── */
-.islands { background:var(--p-bg); position:relative; overflow:hidden; }
-.islands::before {
-  content:'☁️ ☁️ ☁️';
-  position:absolute; top:20px; left:0; right:0;
-  text-align:center;
-  font-size:16px;
-  letter-spacing:30px;
-  opacity:0.6;
+/* ─── 04 UGC/投稿風 ─── */
+.ugc { background: var(--bg); }
+.ugc__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
 }
-.islands__quote {
-  text-align:center;
-  font-family:var(--f-hand);
-  font-size:20px;
-  color:var(--p-deep);
-  line-height:1.7;
-  margin:0 20px 32px;
-  padding:18px;
-  background:var(--white);
-  border-radius:20px;
-  box-shadow:0 6px 20px rgba(253,135,152,0.12);
-  transform:rotate(-1deg);
+.ugc__post {
+  position: relative;
+  aspect-ratio: 9/13;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 3px solid var(--white);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
 }
-.islands__quote b {
-  color:var(--ink);
-  font-family:var(--f-round);
-  font-weight:900;
-  font-size:12px;
-  display:block;
-  margin-top:6px;
-  letter-spacing:0.1em;
-  transform:rotate(1deg);
+.ugc__post img {
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
-.islands__grid {
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:8px;
+.ugc__post-over {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.72) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8px;
+  color: var(--white);
 }
-.islands__island {
-  background:var(--white);
-  border-radius:16px;
-  padding:14px 10px;
-  text-align:center;
-  box-shadow:0 4px 14px rgba(253,135,152,0.12);
+.ugc__post-live {
+  position: absolute;
+  top: 6px; left: 6px;
+  font-family: var(--f-hand);
+  font-size: 8px;
+  background: var(--pink-deep);
+  color: var(--white);
+  padding: 2px 6px;
+  border-radius: 6px;
+  display: flex; align-items: center; gap: 3px;
 }
-.islands__island .emoji {
-  font-size:30px;
-  margin-bottom:4px;
+.ugc__post-live::before {
+  content: ''; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--white);
+  animation: blink 1.4s ease-in-out infinite;
 }
-.islands__island .name {
-  font-family:var(--f-pop);
-  font-size:11px;
-  color:var(--p-deep);
-  letter-spacing:0.02em;
-  line-height:1.2;
+.ugc__post-heart {
+  position: absolute;
+  top: 6px; right: 6px;
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 9px;
+  background: rgba(255,255,255,0.95);
+  color: var(--pink-deep);
+  padding: 2px 6px;
+  border-radius: 10px;
 }
-.islands__island .desc {
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:9px;
-  color:var(--ink-sub);
-  margin-top:4px;
-  line-height:1.5;
+.ugc__post-heart::before { content: '♡ '; }
+.ugc__post-text {
+  font-family: var(--f-hand);
+  font-size: 11px;
+  line-height: 1.35;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
-/* ── 04 UNBOX VIDEO GALLERY ── */
-.unbox { background:var(--white); }
-.unbox__scroller {
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:8px;
-  margin:0 -4px;
+.ugc__voice {
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 3px 3px 0 var(--ink);
+  position: relative;
+  margin-bottom: 14px;
 }
-.unbox__vid {
-  position:relative;
-  aspect-ratio:9/14;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 8px 20px rgba(253,135,152,0.15);
+.ugc__voice::before {
+  content: '';
+  position: absolute;
+  top: -10px; left: 22px;
+  width: 14px; height: 14px;
+  background: var(--white);
+  border-left: 2px solid var(--ink);
+  border-top: 2px solid var(--ink);
+  transform: rotate(45deg);
 }
-.unbox__vid img {
-  width:100%; height:100%;
-  object-fit:cover;
+.ugc__voice-name {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 11px;
+  color: var(--pink-deep);
+  margin-bottom: 4px;
 }
-.unbox__vid-overlay {
-  position:absolute; inset:0;
-  background:linear-gradient(180deg, transparent 40%, rgba(61,36,64,0.85) 100%);
-  display:flex; flex-direction:column; justify-content:space-between;
-  padding:10px;
-  color:var(--white);
+.ugc__voice-name::before {
+  content: '★★★★★';
+  color: var(--yellow);
+  margin-right: 6px;
+  font-size: 10px;
+  letter-spacing: 1px;
 }
-.unbox__vid-tag {
-  font-family:var(--f-pop);
-  font-size:9px;
-  background:var(--p-deep);
-  padding:3px 8px;
-  border-radius:10px;
-  align-self:flex-start;
-  letter-spacing:0.1em;
-  display:flex; align-items:center; gap:4px;
+.ugc__voice-text {
+  font-family: var(--f-round);
+  font-weight: 500;
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--ink);
 }
-.unbox__vid-tag::before {
-  content:'';
-  width:5px; height:5px;
-  border-radius:50%;
-  background:var(--white);
-  animation:blink 1.4s ease-in-out infinite;
-}
-.unbox__vid-text {
-  font-family:var(--f-pop);
-  font-size:12px;
-  line-height:1.3;
-  letter-spacing:0.02em;
-}
-.unbox__vid-heart {
-  position:absolute; top:12px; right:12px;
-  background:rgba(255,255,255,0.95);
-  border-radius:20px;
-  padding:3px 8px;
-  font-family:var(--f-round);
-  font-weight:900;
-  font-size:10px;
-  color:var(--p-deep);
-}
-.unbox__vid-heart::before { content:'♡ '; }
-
-/* ── 05 SMOPPI MOMENT (IP Quote) ── */
-.smomo { background:linear-gradient(135deg, var(--p-main) 0%, var(--p-deep) 100%); color:var(--white); }
-.smomo::after {
-  content:'🩷 💕 🎀 💗 🩷';
-  display:block;
-  text-align:center;
-  letter-spacing:20px;
-  margin-top:22px;
-  opacity:0.4;
-}
-.smomo .sec__kicker { color:var(--yellow); }
-.smomo .sec__hd { color:var(--white); }
-.smomo .sec__hd em { color:var(--yellow); }
-.smomo__msg {
-  background:rgba(255,255,255,0.15);
-  border:2px solid rgba(255,255,255,0.3);
-  border-radius:18px;
-  padding:22px 20px;
-  backdrop-filter:blur(6px);
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:14px;
-  line-height:2;
-  text-align:center;
-}
-.smomo__msg em {
-  font-style:normal;
-  font-family:var(--f-pop);
-  font-size:16px;
-  color:var(--yellow);
+.ugc__voice-text em {
+  font-style: normal;
+  background: var(--yellow);
+  padding: 0 4px;
+  font-weight: 700;
 }
 
-/* ── OFFER ── */
-.offer { background:var(--p-light); padding:60px 20px 80px; }
-.offer__pack {
-  background:var(--white);
-  border-radius:24px;
-  padding:30px 22px;
-  box-shadow:0 20px 50px rgba(253,135,152,0.2);
-  border:3px solid var(--p-main);
-  position:relative;
-  overflow:hidden;
+/* ─── OFFER ─── */
+.offer {
+  padding: 60px 18px 80px;
+  background:
+    radial-gradient(circle at 50% 0%, var(--pink) 0%, var(--bg-2) 50%, var(--bg) 100%);
 }
-.offer__pack::before {
-  content:'';
-  position:absolute;
-  top:-40%; right:-40%;
-  width:80%; height:80%;
-  background:radial-gradient(circle, rgba(253,135,152,0.15), transparent 60%);
-  pointer-events:none;
+.offer__card {
+  background: var(--white);
+  border-radius: 26px;
+  padding: 28px 22px;
+  box-shadow: 0 18px 44px rgba(253,135,152,0.25);
+  border: 3px solid var(--pink-deep);
+  position: relative;
+  overflow: hidden;
 }
-.offer__pack-stamp {
-  position:absolute;
-  top:10px; right:10px;
-  width:72px; height:72px;
-  background:var(--yellow);
-  border:2px solid var(--p-deep);
-  color:var(--p-deep);
-  border-radius:50%;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  font-family:var(--f-pop);
-  font-size:10px;
-  line-height:1.1;
-  transform:rotate(10deg);
-  box-shadow:0 6px 14px rgba(253,135,152,0.35);
-  z-index:2;
+.offer__card::before {
+  content: '🎀';
+  position: absolute;
+  top: 14px; right: 18px;
+  font-size: 32px;
+  z-index: 2;
 }
-.offer__pack-stamp b {
-  font-family:var(--f-pop);
-  font-size:18px;
-  line-height:1;
-  letter-spacing:-0.02em;
+.offer__label {
+  font-family: var(--f-hand);
+  font-size: 12px;
+  color: var(--pink-deep);
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
 }
-.offer__pack-label {
-  font-family:var(--f-pop);
-  font-size:11px;
-  color:var(--p-deep);
-  letter-spacing:0.2em;
-  margin-bottom:6px;
-  position:relative; z-index:1;
+.offer__title {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 18px;
 }
-.offer__pack-name {
-  font-family:var(--f-pop);
-  font-size:22px;
-  color:var(--ink);
-  line-height:1.3;
-  margin-bottom:18px;
-  position:relative; z-index:1;
+.offer__title em {
+  font-style: normal;
+  background: var(--yellow);
+  padding: 0 6px;
+  border-radius: 5px;
 }
-.offer__pack-preview {
-  margin:0 -10px 20px;
-  aspect-ratio:16/10;
-  border-radius:16px;
-  overflow:hidden;
-  position:relative; z-index:1;
+.offer__preview {
+  margin: 0 -6px 18px;
+  aspect-ratio: 16/10;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--cyan-soft), var(--pink-soft));
 }
-.offer__pack-preview img { width:100%; height:100%; object-fit:cover; }
-.offer__pack-price-row {
-  display:flex; align-items:baseline; gap:10px;
-  margin-bottom:8px;
-  position:relative; z-index:1;
-}
-.offer__pack-strike {
-  font-family:var(--f-pop);
-  font-size:16px;
-  color:var(--mid);
-  text-decoration:line-through;
-}
-.offer__pack-price {
-  font-family:var(--f-pop);
-  font-size:56px;
-  color:var(--p-deep);
-  line-height:1;
-  letter-spacing:-0.02em;
-}
-.offer__pack-price small { font-size:22px; margin-left:2px; }
-.offer__pack-sub {
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:11px;
-  color:var(--ink-sub);
-  letter-spacing:0.1em;
-  margin-bottom:20px;
-  position:relative; z-index:1;
-}
-.offer__pack-pills {
-  display:flex; flex-wrap:wrap; gap:5px;
-  margin-bottom:22px;
-  position:relative; z-index:1;
-}
-.offer__pack-pills span {
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:10px;
-  background:var(--p-bg);
-  color:var(--p-deep);
-  padding:5px 10px;
-  border-radius:20px;
-}
-.offer__pack-cta {
-  display:block;
-  background:linear-gradient(90deg, var(--p-main), var(--p-deep));
-  color:var(--white);
-  font-family:var(--f-pop);
-  font-size:17px;
-  padding:20px;
-  border-radius:60px;
-  text-decoration:none;
-  text-align:center;
-  letter-spacing:0.05em;
-  box-shadow:0 10px 24px rgba(250,94,117,0.35);
-  position:relative; z-index:1;
-}
-.offer__pack-fine {
-  font-family:var(--f-round);
-  font-weight:500;
-  font-size:10px;
-  color:var(--ink-sub);
-  line-height:1.8;
-  margin-top:14px;
-  text-align:center;
-  position:relative; z-index:1;
+.offer__preview img {
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
 
-/* ── FOOTER ── */
+.offer__bundle {
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.offer__bundle-title {
+  font-family: var(--f-hand);
+  font-size: 12px;
+  color: var(--pink-deep);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.offer__bundle ul { list-style: none; }
+.offer__bundle li {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 5px 0;
+  display: flex; align-items: center; gap: 8px;
+  color: var(--ink);
+}
+.offer__bundle li::before {
+  content: '✓';
+  width: 18px; height: 18px;
+  background: var(--pink-deep);
+  color: var(--white);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.offer__price-row {
+  display: flex; align-items: baseline; justify-content: center; gap: 10px;
+  margin-bottom: 4px;
+}
+.offer__strike {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--mid);
+  text-decoration: line-through;
+}
+.offer__price {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 56px;
+  color: var(--pink-deep);
+  line-height: 1;
+}
+.offer__price small { font-size: 22px; margin-left: 2px; }
+.offer__price-sub {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 11px;
+  text-align: center;
+  color: var(--ink-sub);
+  letter-spacing: 0.1em;
+  margin-bottom: 18px;
+}
+
+.offer__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-deep));
+  color: var(--white);
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 17px;
+  padding: 20px;
+  border-radius: 60px;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  box-shadow: 0 12px 28px rgba(250,94,117,0.35);
+  animation: pulseP 2s ease-in-out infinite;
+}
+.offer__cta-price {
+  font-family: var(--f-hand);
+  font-size: 20px;
+  color: var(--yellow);
+}
+.offer__fine {
+  font-family: var(--f-round);
+  font-weight: 500;
+  font-size: 10px;
+  color: var(--ink-sub);
+  text-align: center;
+  line-height: 1.85;
+  margin-top: 14px;
+}
+
+/* Alt offer (単品) */
+.offer__alt {
+  margin-top: 22px;
+  background: rgba(255,255,255,0.6);
+  border: 2px dashed var(--mid);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+}
+.offer__alt-label {
+  font-family: var(--f-hand);
+  font-size: 11px;
+  color: var(--mid);
+}
+.offer__alt-text {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink-sub);
+  margin-top: 4px;
+}
+
+/* ─── フッター ─── */
 .f {
-  padding:40px 20px 36px;
-  text-align:center;
-  background:var(--white);
-  border-top:2px solid var(--p-bg);
+  padding: 40px 20px 36px;
+  text-align: center;
+  background: var(--white);
+  border-top: 2px solid var(--pink-soft);
 }
 .f__co {
-  font-family:var(--f-pop);
-  font-size:14px;
-  color:var(--ink);
-  margin-bottom:6px;
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 6px;
 }
-.f__co .x { color:var(--p-main); }
-.f__co .loveez { color:var(--p-deep); }
-.f__co .ameru { color:var(--ameru); }
+.f__co .labu {
+  color: var(--pink-deep);
+  font-family: var(--f-hand);
+  font-size: 16px;
+}
+.f__co .ameru { color: var(--cyan-deep); font-family: var(--f-pop); font-size: 14px; }
 .f__tag {
-  font-family:var(--f-hand);
-  font-size:15px;
-  color:var(--p-deep);
-  margin-bottom:10px;
+  font-family: var(--f-hand);
+  font-size: 15px;
+  color: var(--pink-deep);
+  margin-bottom: 10px;
 }
 .f__copy {
-  font-family:var(--f-round);
-  font-weight:700;
-  font-size:9px;
-  color:var(--mid);
-  letter-spacing:0.05em;
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--mid);
 }
 
-.rv { opacity:0; transform:translateY(14px); transition:opacity 0.9s ease, transform 0.9s ease; }
-.rv.on { opacity:1; transform:none; }
+.rv { opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.rv.on { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
-<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 08 · IP collab</a></div>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 08 · らぶいーず IP総力</a></div>
 
 <div class="top">
   <div class="top__logos">
-    <span class="loveez">Love is...</span>
+    <span class="labu">らぶいーず</span>
     <span class="x">×</span>
     <span class="ameru">ameru</span>
   </div>
-  <span class="top__pill">Complete Pack</span>
+  <span class="top__pill">♡ 公式コラボ</span>
 </div>
+
 
 <!-- ═══════ FV ═══════ -->
 <section class="fv">
-  <div class="fv__badge-row rv">
+  <p class="fv__hearts">🩷 💕 🎀 💗 🩷 💕 🎀</p>
+  <div class="fv__badges rv">
     <span class="b1">Z世代熱狂 🔥</span>
-    <span class="b2">© NTV 公式</span>
-    <span class="b3">全5体セット</span>
+    <span class="b2">NTV公式</span>
+    <span class="b3">全5キャラ</span>
   </div>
 
   <div class="fv__catch rv">
-    <span class="en">LOVE IS…<br>Making Her.</span>
-    <span class="jp">自分の手で、<em>推しが生まれる</em>。</span>
+    <p class="fv__catch-labu">らぶいーず、</p>
+    <h1 class="fv__catch-hd">
+      ぜんぶ、<em>自分の手</em>で<br>
+      編めちゃうんです。
+    </h1>
   </div>
 
-  <!-- メイン動画（すもっぴ×ずもっぴ） -->
-  <div class="fv__video rv">
-    <span class="fv__video-bg"></span>
-    <span class="fv__video-badge">LIVE・公式コラボ</span>
-    <span class="fv__video-time">0:12</span>
-    <div class="fv__video-chars">
-      <div class="fv__video-char">
-        <div class="fv__video-char-label cy">SMOPPI / 公式</div>
-        <div class="fv__video-char-img" style="background:linear-gradient(135deg,#B5F5FE,#24D4F3);display:flex;align-items:center;justify-content:center;font-size:60px;">🩵</div>
-        <p class="fv__video-char-name">すもっぴ</p>
-      </div>
-      <div class="fv__video-char">
-        <div class="fv__video-char-label">ZUMOPPI / 手編み版</div>
-        <div class="fv__video-char-img">
-          <img src="images/01_zumoppi_hero.png" alt="ずもっぴ">
-        </div>
-        <p class="fv__video-char-name">ずもっぴ</p>
-      </div>
-    </div>
-    <span class="fv__video-heart">💕</span>
-    <div class="fv__video-bottom">
-      <p class="fv__video-bottom-title">ずもっぴ、<em>降臨</em>。</p>
-      <p class="fv__video-bottom-sub">すもっぴの"我が子"、自分の手で編めます。</p>
-      <p class="fv__video-bottom-hashtags">#らぶいーず #ずもっぴ #推し活 #コンプリートパック</p>
+  <!-- FV メインビジュアル -->
+  <div class="fv__main rv">
+    <img class="fv__main-img" src="images/01_zumoppi_hero.png" alt="すもっぴ" loading="eager">
+    <span class="fv__main-badge">LIVE・公式コラボ</span>
+    <span class="fv__main-time">0:12</span>
+    <div class="fv__main-overlay">
+      <p class="fv__main-title"><em>すもっぴ</em>、降臨。</p>
+      <p class="fv__main-sub">最初の一目は、編み済みで届く。だからはじめてでも、ちゃんと完成する。</p>
+      <p class="fv__main-hashtags">#らぶいーず #ameru #推し活</p>
     </div>
   </div>
 
-  <div class="fv__sub rv">
-    <p class="fv__sub-label">COMPLETE PACK · 5ヶ月で全員</p>
-    <p class="fv__sub-text">
+  <div class="fv__cta-card rv">
+    <p class="fv__cta-label">★ FIRST DELIVERY ★</p>
+    <p class="fv__cta-text">
       らぶいーず全5キャラが、<br>
       <em>1人ずつ、あなたの手で</em><br>
-      誕生していく定期便。
+      編めていく定期便。
     </p>
-    <a href="#offer" class="fv__sub-cta">
-      <span>まずは1体から</span>
-      <span class="fv__sub-cta-price">¥1,980〜</span>
+    <a href="#offer" class="fv__cta">
+      <span>まずは すもっぴ から</span>
+      <span class="fv__cta-price">¥1,980〜</span>
     </a>
-    <p class="fv__sub-note">— love is... 手で作ること。</p>
+    <p class="fv__cta-note">— 送料無料・いつでも解約OK</p>
   </div>
 </section>
 
 
-<!-- ═══════ 01 STORY ═══════ -->
-<section class="section story">
-  <p class="sec__kicker rv">— THE STORY —</p>
-  <h2 class="sec__hd rv">すもっぴの<em>我が子</em>、<br>それが <em>ずもっぴ</em>。</h2>
-  <p class="sec__sub rv">日本テレビ公式キャラ「らぶいーず」と、<br>ameruがつくった、編めるキャラ。</p>
+<!-- ═══════ 01 5キャラ紹介 ═══════ -->
+<section class="section cast">
+  <p class="sec__kicker rv">— MEET THE 5 —</p>
+  <h2 class="sec__hd rv">らぶいーずの<br><em>5キャラ</em>、全員あなたの手に。</h2>
+  <p class="sec__sub rv">月1体、5ヶ月でぜんぶ揃う。<br>公式キャラそのものを、編めます。</p>
 
-  <div class="story__mini-vid rv">
-    <img src="images/05_lifestyle_finished.png" alt="抱く">
-    <div class="play"></div>
-    <div class="story__mini-vid-overlay">
-      <span class="tag">● STORY VIDEO · 0:28</span>
-      <p class="title">公式グッズじゃない、<br>「<em>わたしの</em>ずもっぴ」。</p>
+  <div class="cast__grid rv">
+    <div class="cast__card cast__card--featured" style="background:linear-gradient(160deg, var(--cyan-soft), var(--cyan));">
+      <span class="cast__card-pair">♡ すもっぴ×ぴょんちー</span>
+      <div class="cast__card-bg"></div>
+      <span class="cast__card-emoji">🩵</span>
+      <div class="cast__card-over">
+        <p class="cast__card-no">No. 01 · MAIN</p>
+        <p class="cast__card-name">すもっぴ</p>
+        <p class="cast__card-trait">泣き虫で、ぴょんちーに夢中</p>
+      </div>
     </div>
-  </div>
 
-  <div class="story__vs rv">
-    <div class="story__vs-cell">
-      <div class="story__vs-cell-img" style="background:linear-gradient(135deg,#B5F5FE,#24D4F3);display:flex;align-items:center;justify-content:center;font-size:40px;">🩵</div>
-      <p class="story__vs-cell-label cy">公式 SMOPPI</p>
-      <p class="story__vs-cell-name">すもっぴ</p>
-      <p class="story__vs-cell-sub">NTVのぬいぐるみ ¥3,080</p>
-    </div>
-    <span class="story__vs-arrow">＋</span>
-    <div class="story__vs-cell">
-      <div class="story__vs-cell-img">
-        <img src="images/01_zumoppi_hero.png" alt="ずもっぴ">
+    <div class="cast__card" style="background:linear-gradient(160deg, var(--pink-soft), var(--pink));">
+      <span class="cast__card-pair">♡ すもっぴ×</span>
+      <div class="cast__card-bg"></div>
+      <span class="cast__card-emoji">🩷</span>
+      <div class="cast__card-over">
+        <p class="cast__card-no">No. 02 · MAIN</p>
+        <p class="cast__card-name">ぴょんちー</p>
+        <p class="cast__card-trait">すもっぴの彼女。わがままマイペース</p>
       </div>
-      <p class="story__vs-cell-label">AMERU · ZUMOPPI</p>
-      <p class="story__vs-cell-name">ずもっぴ</p>
-      <p class="story__vs-cell-sub">自分で編む ¥1,980</p>
     </div>
-  </div>
 
-  <div class="story__vs-note rv">
-    「ずもっぴ」は、<em>すもっぴの我が子</em>。<br>
-    公式のぬいぐるみ（¥3,080）より、<br>
-    <em>安く、そして世界でたったひとつ</em>の子が、<br>
-    あなたの手で生まれます。
-  </div>
-</section>
+    <div class="cast__card" style="background:linear-gradient(160deg, #FFF4D6, #FFD166);">
+      <span class="cast__card-pair">♡ うるる×</span>
+      <div class="cast__card-bg"></div>
+      <span class="cast__card-emoji">💛</span>
+      <div class="cast__card-over">
+        <p class="cast__card-no">No. 03</p>
+        <p class="cast__card-name">にゃぽ</p>
+        <p class="cast__card-trait">恋に燃えるファッションギャル</p>
+      </div>
+    </div>
 
+    <div class="cast__card" style="background:linear-gradient(160deg, #E8DCF2, var(--purple));">
+      <span class="cast__card-pair">♡ にゃぽ×</span>
+      <div class="cast__card-bg"></div>
+      <span class="cast__card-emoji">💜</span>
+      <div class="cast__card-over">
+        <p class="cast__card-no">No. 04</p>
+        <p class="cast__card-name">うるる</p>
+        <p class="cast__card-trait">ちょっぴりナルシストだけど天然</p>
+      </div>
+    </div>
 
-<!-- ═══════ 02 CALENDAR ═══════ -->
-<section class="section cal">
-  <p class="sec__kicker rv">— 5 MONTHS, 5 FRIENDS —</p>
-  <h2 class="sec__hd rv">5ヶ月で、<em>全員そろう</em>。</h2>
-  <p class="sec__sub rv">月1体ずつ、ポストに届きます。<br>5体そろうと、らぶいーずの家族がひと家族、棚に。</p>
-
-  <div class="cal__timeline rv">
-    <!-- Month 1 ずもっぴ -->
-    <div class="cal__month cal__month--first">
-      <div class="cal__month-tag">
-        <span class="m">MONTH</span>
-        <span class="n">01</span>
-      </div>
-      <div class="cal__month-card">
-        <div class="cal__month-card-chip" style="background:linear-gradient(135deg,#fff,#F0EAD9);"></div>
-        <div class="cal__month-card-body">
-          <p class="cal__month-card-name">ずもっぴ</p>
-          <p class="cal__month-card-sub">すもっぴモデル / No.1</p>
-          <span class="cal__month-card-bd">🌟 初回特別</span>
-        </div>
-        <div class="cal__month-card-price">
-          <span class="cal__month-card-price-hide"></span>
-          <small>(-52%OFF)</small>
-        </div>
-      </div>
-    </div>
-    <!-- Month 2 そら -->
-    <div class="cal__month">
-      <div class="cal__month-tag">
-        <span class="m">MONTH</span>
-        <span class="n">02</span>
-      </div>
-      <div class="cal__month-card">
-        <div class="cal__month-card-chip" style="background:linear-gradient(135deg,#D8E8F0,#7FB5C8);"></div>
-        <div class="cal__month-card-body">
-          <p class="cal__month-card-name">そら</p>
-          <p class="cal__month-card-sub">うるるモデル / No.2</p>
-        </div>
-        <div class="cal__month-card-price">¥4,200</div>
-      </div>
-    </div>
-    <!-- Month 3 さくら -->
-    <div class="cal__month">
-      <div class="cal__month-tag">
-        <span class="m">MONTH</span>
-        <span class="n">03</span>
-      </div>
-      <div class="cal__month-card">
-        <div class="cal__month-card-chip" style="background:linear-gradient(135deg,#FBD3DC,#E8899F);"></div>
-        <div class="cal__month-card-body">
-          <p class="cal__month-card-name">さくら</p>
-          <p class="cal__month-card-sub">ぴょんちーモデル / No.3</p>
-          <span class="cal__month-card-bd" style="background:var(--p-main);color:var(--white);">🎂 3/25 誕生日月</span>
-        </div>
-        <div class="cal__month-card-price">¥4,200</div>
-      </div>
-    </div>
-    <!-- Month 4 もり -->
-    <div class="cal__month">
-      <div class="cal__month-tag">
-        <span class="m">MONTH</span>
-        <span class="n">04</span>
-      </div>
-      <div class="cal__month-card">
-        <div class="cal__month-card-chip" style="background:linear-gradient(135deg,#DCEFD8,#94C59D);"></div>
-        <div class="cal__month-card-body">
-          <p class="cal__month-card-name">もり</p>
-          <p class="cal__month-card-sub">ぱおぱおモデル / No.4</p>
-        </div>
-        <div class="cal__month-card-price">¥4,200</div>
-      </div>
-    </div>
-    <!-- Month 5 ゆめ -->
-    <div class="cal__month">
-      <div class="cal__month-tag">
-        <span class="m">MONTH</span>
-        <span class="n">05</span>
-      </div>
-      <div class="cal__month-card">
-        <div class="cal__month-card-chip" style="background:linear-gradient(135deg,#EAD9F0,#B896D0);"></div>
-        <div class="cal__month-card-body">
-          <p class="cal__month-card-name">ゆめ</p>
-          <p class="cal__month-card-sub">にゃぽモデル / No.5</p>
-          <span class="cal__month-card-bd" style="background:var(--purple);color:var(--white);">🎂 9/18 誕生日月</span>
-        </div>
-        <div class="cal__month-card-price">¥4,200</div>
+    <div class="cast__card cast__card--featured" style="background:linear-gradient(160deg, #D4F0E4, var(--mint));">
+      <div class="cast__card-bg"></div>
+      <span class="cast__card-emoji">💚</span>
+      <div class="cast__card-over">
+        <p class="cast__card-no">No. 05 · BIG</p>
+        <p class="cast__card-name">ぱおぱお</p>
+        <p class="cast__card-trait">いたずらっこで食いしん坊。すもっぴの親友</p>
       </div>
     </div>
   </div>
 
-  <div class="cal__total rv">
-    <div class="cal__total-l">
-      5 COMPLETE PACK
-      <small>らぶいーず全5キャラ揃える</small>
+  <div class="rel-map rv">
+    <p class="rel-map__title">♡ 5人の関係図</p>
+    <div class="rel-map__list">
+      <div class="rel-map__row">
+        <span class="badge badge--cp">カップル</span>
+        <span>すもっぴ ♡ ぴょんちー（だいだいだーーーいしゅき♥）</span>
+      </div>
+      <div class="rel-map__row">
+        <span class="badge badge--cp">カップル</span>
+        <span>にゃぽ ♡ うるる（沼ってる／スキ…）</span>
+      </div>
+      <div class="rel-map__row">
+        <span class="badge badge--bf">親友</span>
+        <span>すもっぴ ← ぱおぱお（弟みたいな存在）</span>
+      </div>
+      <div class="rel-map__row">
+        <span class="badge badge--bs">兄妹</span>
+        <span>ぱおぱお ← にゃぽ</span>
+      </div>
+      <div class="rel-map__row">
+        <span class="badge badge--fr">なかよし</span>
+        <span>ぴょんちー ← にゃぽ（あいされててうらやましい）</span>
+      </div>
     </div>
-    <div class="cal__total-r">¥18,780</div>
   </div>
 </section>
 
 
-<!-- ═══════ 03 ISLANDS (IPの深い世界観) ═══════ -->
-<section class="section islands">
-  <p class="sec__kicker rv">— THE WORLD OF LOVE EEZ —</p>
-  <h2 class="sec__hd rv">3つの島、<br>5人の毎日。</h2>
-
-  <p class="islands__quote rv">
-    らぶらぶで、<br>
-    たまーにせつない毎日を、<br>
-    みんなでやさしく、みまもってあげてね。
-    <b>— らぶいーず 公式メッセージ</b>
+<!-- ═══════ 02 5ステップフロー ═══════ -->
+<section class="section flow">
+  <p class="sec__kicker rv">— 5 STEPS —</p>
+  <h2 class="sec__hd rv"><em>5つの瞬間</em>が、<br>毎月やってくる。</h2>
+  <p class="sec__sub rv">
+    届く → 動画で見る → 編む → 完成 → 全員集合。<br>
+    各ステップに、ちいさな感動があります。
   </p>
 
-  <div class="islands__grid rv">
-    <div class="islands__island">
-      <div class="emoji">🌲</div>
-      <p class="name">かっぺ島</p>
-      <p class="desc">山・森・湖<br>自然観光地</p>
+  <div class="flow__lane">
+    <!-- STEP 1: 届く -->
+    <div class="flow__step rv">
+      <div class="flow__step-img">
+        <img src="images/02_package_lifestyle.png" alt="ポストに届く">
+        <span class="flow__step-tag">STEP 01 · ARRIVE</span>
+        <span class="flow__step-num">01</span>
+      </div>
+      <div class="flow__step-body">
+        <h3 class="flow__step-title"><em>届く</em>、そして、可愛い。</h3>
+        <p class="flow__step-desc">ポストに入る小さな箱。開ける前から、もうときめく。</p>
+      </div>
     </div>
-    <div class="islands__island">
-      <div class="emoji">🏖️</div>
-      <p class="name">ピンキーアイランド</p>
-      <p class="desc">リゾート<br>砂漠・ビーチ</p>
+
+    <!-- STEP 2: 動画で見る -->
+    <div class="flow__step rv">
+      <div class="flow__step-img">
+        <img src="images/03_unboxing_flatlay.png" alt="QR動画で見る">
+        <span class="flow__step-tag flow__step-tag--video">● STEP 02 · WATCH</span>
+        <span class="flow__step-num">02</span>
+        <div class="flow__step-play"></div>
+      </div>
+      <div class="flow__step-body">
+        <h3 class="flow__step-title"><em>動画</em>で見るだけでOK。</h3>
+        <p class="flow__step-desc">編み図は使いません。QRを読み取って、動画を観るだけ。</p>
+      </div>
     </div>
-    <div class="islands__island">
-      <div class="emoji">🎡</div>
-      <p class="name">セントラル島</p>
-      <p class="desc">遊園地・映画館<br>デートの街</p>
+
+    <!-- STEP 3: 編む動画 -->
+    <div class="flow__step rv">
+      <div class="flow__step-img">
+        <img src="images/04_hands_crafting.png" alt="編んでる手元">
+        <span class="flow__step-tag flow__step-tag--video">● STEP 03 · CRAFT</span>
+        <span class="flow__step-num">03</span>
+        <div class="flow__step-play"></div>
+      </div>
+      <div class="flow__step-body">
+        <h3 class="flow__step-title">手元を真似て、<em>編む</em>。</h3>
+        <p class="flow__step-desc">最初の一目は編み済み。あなたは楽しい工程だけ、ゆっくりと。</p>
+      </div>
+    </div>
+
+    <!-- STEP 4: 完成 -->
+    <div class="flow__step rv">
+      <div class="flow__step-img">
+        <img src="images/05_lifestyle_finished.png" alt="完成したすもっぴ">
+        <span class="flow__step-tag">STEP 04 · FINISH</span>
+        <span class="flow__step-num">04</span>
+      </div>
+      <div class="flow__step-body">
+        <h3 class="flow__step-title"><em>完成</em>の、泣きそうな瞬間。</h3>
+        <p class="flow__step-desc">8〜10時間で、すもっぴが、あなたの手の中に。</p>
+      </div>
+    </div>
+
+    <!-- STEP 5: 完成2 / 全員集合 -->
+    <div class="flow__step flow__step--final rv">
+      <div class="flow__step-img">
+        <img src="images/06_shelf_display.png" alt="5人集合">
+        <span class="flow__step-tag">STEP 05 · ALL TOGETHER</span>
+        <span class="flow__step-num" style="color:var(--yellow);">05</span>
+      </div>
+      <div class="flow__step-body">
+        <h3 class="flow__step-title"><em>家族</em>ができた、5ヶ月目。</h3>
+        <p class="flow__step-desc">5人そろって、らぶいーずが、あなたの棚に。</p>
+      </div>
     </div>
   </div>
 </section>
 
 
-<!-- ═══════ 04 UNBOX VIDEO GALLERY ═══════ -->
-<section class="section unbox">
-  <p class="sec__kicker rv">— UNBOX · 動画で見せる —</p>
-  <h2 class="sec__hd rv">開封の瞬間、<br><em>3パターン</em>。</h2>
-  <p class="sec__sub rv">キットが届いてから完成までの流れを、<br>動画で確認できます。</p>
+<!-- ═══════ 03 5ヶ月タイムライン（案A） ═══════ -->
+<section class="section journey">
+  <p class="sec__kicker rv">— 5 MONTHS JOURNEY —</p>
+  <h2 class="sec__hd rv">5ヶ月で、<em>3回</em><br>"完成"の瞬間が来ます。</h2>
+  <p class="sec__sub rv">月1体、ただの定期便じゃない、<br>ちゃんと物語があります。</p>
 
-  <div class="unbox__scroller rv">
-    <div class="unbox__vid">
-      <img src="images/02_package_lifestyle.png" alt="届く">
-      <div class="unbox__vid-overlay">
-        <span class="unbox__vid-tag">開封</span>
-        <p class="unbox__vid-text">パッケージから<br>取り出すとこ</p>
+  <div class="journey__list rv">
+    <div class="journey__row">
+      <div class="journey__chip"><span class="m">MONTH</span><span class="n">01</span></div>
+      <div class="journey__card">
+        <span class="journey__card-emoji">🩵</span>
+        <div class="journey__card-body">
+          <p class="journey__card-name">すもっぴ</p>
+          <p class="journey__card-event">主人公、あなたの手に。</p>
+        </div>
       </div>
-      <span class="unbox__vid-heart">12.4K</span>
     </div>
-    <div class="unbox__vid">
-      <img src="images/04_hands_crafting.png" alt="編む">
-      <div class="unbox__vid-overlay">
-        <span class="unbox__vid-tag">編む</span>
-        <p class="unbox__vid-text">編み始め済の<br>パーツから</p>
+
+    <div class="journey__row journey__row--peak">
+      <div class="journey__chip"><span class="m">MONTH</span><span class="n">02</span></div>
+      <div class="journey__card">
+        <span class="journey__card-emoji">🩷</span>
+        <div class="journey__card-body">
+          <p class="journey__card-name">ぴょんちー</p>
+          <p class="journey__card-event"><strong>①組目カップル完成🎉</strong><br>すもっぴ×ぴょんちー、棚に並ぶ日。</p>
+          <span class="journey__card-badge journey__card-badge--cp">♡ カップル達成</span>
+        </div>
       </div>
-      <span class="unbox__vid-heart">8.9K</span>
     </div>
-    <div class="unbox__vid">
-      <img src="images/05_lifestyle_finished.png" alt="完成">
-      <div class="unbox__vid-overlay">
-        <span class="unbox__vid-tag">完成</span>
-        <p class="unbox__vid-text">ずもっぴが<br>できた瞬間</p>
+
+    <div class="journey__row">
+      <div class="journey__chip"><span class="m">MONTH</span><span class="n">03</span></div>
+      <div class="journey__card">
+        <span class="journey__card-emoji">💛</span>
+        <div class="journey__card-body">
+          <p class="journey__card-name">にゃぽ</p>
+          <p class="journey__card-event">ぴょんちーの友だち。女子が増える。</p>
+        </div>
       </div>
-      <span class="unbox__vid-heart">22.1K</span>
+    </div>
+
+    <div class="journey__row journey__row--peak">
+      <div class="journey__chip"><span class="m">MONTH</span><span class="n">04</span></div>
+      <div class="journey__card">
+        <span class="journey__card-emoji">💜</span>
+        <div class="journey__card-body">
+          <p class="journey__card-name">うるる</p>
+          <p class="journey__card-event"><strong>②組目カップル完成🎉</strong><br>にゃぽ×うるる、もう1組が揃う。</p>
+          <span class="journey__card-badge journey__card-badge--cp">♡ カップル達成</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey__row journey__row--final">
+      <div class="journey__chip"><span class="m">MONTH</span><span class="n">05</span></div>
+      <div class="journey__card">
+        <span class="journey__card-emoji">💚</span>
+        <div class="journey__card-body">
+          <p class="journey__card-name">ぱおぱお</p>
+          <p class="journey__card-event"><strong>家族コンプリート🎉</strong><br>5人揃って、らぶいーずが勢ぞろい。</p>
+          <span class="journey__card-badge journey__card-badge--final">✨ ALL COMPLETE</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <p class="journey__note rv">
+    2ヶ月目・4ヶ月目は <strong>カップル完成</strong>の日。<br>
+    5ヶ月目は <strong>家族が揃う</strong>日。<br>
+    毎月、ちゃんと"完成の瞬間"があります。
+  </p>
 </section>
 
 
-<!-- ═══════ 05 SMOPPI MOMENT ═══════ -->
-<section class="section smomo">
-  <p class="sec__kicker rv">— MESSAGE —</p>
-  <h2 class="sec__hd rv">love is…<br><em>手で作ること</em>。</h2>
-  <div class="smomo__msg rv">
-    すもっぴは、わたしたちが<em>みまもる</em>キャラ。<br>
-    ameru のずもっぴは、<em>あなたが、手で、みまもる</em>キャラ。<br>
-    <br>
-    だから、この5ヶ月が、<br>
-    たぶん、少しだけ、<em>特別な時間</em>になります。
+<!-- ═══════ 04 UGC/みんなの投稿 ═══════ -->
+<section class="section ugc">
+  <p class="sec__kicker rv">— VOICE —</p>
+  <h2 class="sec__hd rv"><em>#ameru</em>で、<br>みんな編んでる。</h2>
+
+  <div class="ugc__grid rv">
+    <div class="ugc__post">
+      <span class="ugc__post-live">● LIVE</span>
+      <span class="ugc__post-heart">12.4K</span>
+      <img src="images/04_hands_crafting.png" alt="投稿1">
+      <div class="ugc__post-over">
+        <p class="ugc__post-text">編んでみたら<br>ガチで完成🥹</p>
+      </div>
+    </div>
+    <div class="ugc__post">
+      <span class="ugc__post-live">● LIVE</span>
+      <span class="ugc__post-heart">22.1K</span>
+      <img src="images/06_shelf_display.png" alt="投稿2">
+      <div class="ugc__post-over">
+        <p class="ugc__post-text">5人そろった、、<br>泣いてる🩷</p>
+      </div>
+    </div>
+    <div class="ugc__post">
+      <span class="ugc__post-live">● LIVE</span>
+      <span class="ugc__post-heart">8.9K</span>
+      <img src="images/05_lifestyle_finished.png" alt="投稿3">
+      <div class="ugc__post-over">
+        <p class="ugc__post-text">すもっぴ<br>我が家に降臨♡</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ugc__voice rv">
+    <p class="ugc__voice-name">Aさま・30代／東京</p>
+    <p class="ugc__voice-text">
+      どうせ途中でやめる、と思ってたのに。<em>動画見ながらだと迷う場面ゼロ</em>で、気づいたら完成してました。机に置くだけで、毎日ちょっと嬉しい。
+    </p>
+  </div>
+  <div class="ugc__voice rv">
+    <p class="ugc__voice-name">Bさま・20代／福岡</p>
+    <p class="ugc__voice-text">
+      推しが<em>自分の手で生まれる</em>感覚、ヤバいです。2ヶ月目にすもっぴとぴょんちーが並んだ瞬間、泣きました。
+    </p>
   </div>
 </section>
 
 
 <!-- ═══════ OFFER ═══════ -->
-<section class="section offer" id="offer">
+<section class="offer" id="offer">
   <p class="sec__kicker rv">— START HERE —</p>
-  <h2 class="sec__hd rv">まずは、<em>No.1 ずもっぴ</em>から。</h2>
+  <h2 class="sec__hd rv">まずは、<em>すもっぴ</em>から。</h2>
   <p class="sec__sub rv">1体編めてから、続けるか決めてOK。</p>
 
-  <div class="offer__pack rv">
-    <div class="offer__pack-stamp">
-      <b>52%</b>
-      OFF
-    </div>
-    <p class="offer__pack-label">FIRST DELIVERY · 初回限定</p>
-    <p class="offer__pack-name">ずもっぴ<br>スターターキット</p>
+  <div class="offer__card rv">
+    <p class="offer__label">★ FIRST DELIVERY · 初回</p>
+    <p class="offer__title">すもっぴ<br><em>スターターキット</em></p>
 
-    <div class="offer__pack-preview">
-      <img src="images/03_unboxing_flatlay.png" alt="中身">
+    <div class="offer__preview">
+      <img src="images/03_unboxing_flatlay.png" alt="中身プレビュー">
     </div>
 
-    <div class="offer__pack-price-row">
-      <span class="offer__pack-strike">¥4,200</span>
-      <span class="offer__pack-price">¥1,980<small>〜</small></span>
-    </div>
-    <p class="offer__pack-sub">FREE SHIPPING · 送料無料</p>
-
-    <div class="offer__pack-pills">
-      <span>オリジナル糸</span>
-      <span>かぎ針</span>
-      <span>とじ針</span>
-      <span>目パーツ</span>
-      <span>わた</span>
-      <span>編み始め完成済み</span>
-      <span>QR動画教材</span>
-      <span>らぶいーず特典カード</span>
+    <div class="offer__bundle">
+      <p class="offer__bundle-title">♡ 中身ぜんぶ、入ってます</p>
+      <ul>
+        <li>オリジナル糸（絡まない設計）</li>
+        <li>かぎ針（初回のみ・ずっと使える）</li>
+        <li>とじ針・目パーツ・わた</li>
+        <li>編み始め完成済みパーツ</li>
+        <li>QR動画教材（何度でも見返し可）</li>
+        <li>らぶいーず特典カード</li>
+      </ul>
     </div>
 
-    <a href="#" class="offer__pack-cta">¥1,980 で、はじめる 💕</a>
+    <div class="offer__price-row">
+      <span class="offer__strike">¥4,200</span>
+      <span class="offer__price">¥1,980<small>〜</small></span>
+    </div>
+    <p class="offer__price-sub">FREE SHIPPING · -52%OFF</p>
 
-    <p class="offer__pack-fine">
+    <a href="#" class="offer__cta">
+      <span>はじめる</span>
+      <span class="offer__cta-price">💕</span>
+    </a>
+
+    <p class="offer__fine">
       2回目以降 ¥4,200 ／ いつでも解約・一時停止OK<br>
-      送料は初回無料、2回目以降 ¥420
+      送料は初回無料、2回目以降 ¥420<br>
+      ※ 定期便以外に、単品購入もございます
     </p>
+  </div>
+
+  <div class="offer__alt rv">
+    <p class="offer__alt-label">— 単品でも買えます —</p>
+    <p class="offer__alt-text">推しのキャラ1体だけ、でもOK。</p>
   </div>
 </section>
 
 
 <footer class="f">
-  <p class="f__co"><span class="loveez">Love is...</span> <span class="x">×</span> <span class="ameru">ameru</span></p>
-  <p class="f__tag">love is… making her.</p>
-  <p class="f__copy">© NTV (Love Eez) ／ 株式会社ヨミテ — ameru 2026</p>
+  <p class="f__co"><span class="labu">らぶいーず</span> × <span class="ameru">ameru</span></p>
+  <p class="f__tag">ぜんぶ、自分の手で。</p>
+  <p class="f__copy">らぶいーず® 日本テレビ ／ © 株式会社ヨミテ — ameru 2026</p>
 </footer>
 
 <script>
