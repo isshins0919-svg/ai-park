@@ -6,7 +6,7 @@
 <title>ameru — Pattern 02 · snaq.me型</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Pacifico&family=Caveat:wght@400;600;700&family=Bodoni+Moda:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Pacifico&family=Caveat:wght@400;600;700&family=Bodoni+Moda:ital,wght@0,400;1,400&family=Hachi+Maru+Pop&family=Yusei+Magic&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing: border-box; }
 :root {
@@ -542,6 +542,150 @@ img { display: block; max-width: 100%; }
 .rv.on { opacity: 1; transform: none; }
 .rv-2 { transition-delay: 0.1s; }
 .rv-3 { transition-delay: 0.2s; }
+
+/* らぶいーず専用ブランディング（ひらがな） */
+.labu-pill {
+  font-family: 'Hachi Maru Pop', 'Zen Maru Gothic', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.04em !important;
+  background: linear-gradient(90deg, #FD8798, #FA5E75) !important;
+  color: #fff !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 3px 10px rgba(250,94,117,0.3) !important;
+}
+
+/* Instagram投稿風セクション */
+.ig-band {
+  background: linear-gradient(160deg, #FFE5B5 0%, #FFD9BE 100%);
+  padding: 44px 24px 52px;
+  position: relative;
+  overflow: hidden;
+}
+.ig-band__title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: #4A3F36;
+  text-align: center;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.ig-band__title em {
+  font-style: normal;
+  background: #FD8798;
+  color: #fff;
+  padding: 1px 8px;
+  border-radius: 6px;
+}
+.ig-band__tags {
+  text-align: center;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #FA5E75;
+  margin-bottom: 22px;
+  letter-spacing: 0.05em;
+}
+.ig-band__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.ig-band__post {
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+.ig-band__post img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.ig-band__heart {
+  position: absolute;
+  bottom: 6px; left: 6px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+.ig-band__heart::before { content: '♡ '; color: #FD8798; }
+.ig-band__user {
+  position: absolute;
+  top: 6px; left: 6px;
+  background: rgba(255,255,255,0.9);
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 9px;
+  color: #4A3F36;
+  padding: 3px 7px;
+  border-radius: 10px;
+}
+.ig-band__footer {
+  text-align: center;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  color: #7F7267;
+  line-height: 1.7;
+}
+.ig-band__footer strong { color: #FA5E75; }
+
+/* 口コミ吹き出し（snaq.meでよく見るやつ） */
+.voice-bubble {
+  background: #fff;
+  border: 2px solid #4A3F36;
+  border-radius: 16px;
+  padding: 14px 16px 16px;
+  box-shadow: 3px 3px 0 #4A3F36;
+  margin: 14px 0 6px;
+  position: relative;
+}
+.voice-bubble::before {
+  content: '';
+  position: absolute;
+  top: -10px; left: 22px;
+  width: 14px; height: 14px;
+  background: #fff;
+  border-left: 2px solid #4A3F36;
+  border-top: 2px solid #4A3F36;
+  transform: rotate(45deg);
+}
+.voice-bubble__name {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 11px;
+  color: #FA5E75;
+  margin-bottom: 4px;
+}
+.voice-bubble__name::before {
+  content: '★★★★★';
+  color: #FFD166;
+  margin-right: 6px;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.voice-bubble__text {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.75;
+  color: #333;
+}
+.voice-bubble__text em {
+  font-style: normal;
+  background: #FFE5A3;
+  padding: 0 4px;
+  font-weight: 700;
+}
 </style>
 </head>
 <body>
@@ -552,7 +696,7 @@ img { display: block; max-width: 100%; }
   <span class="dots"></span>
   <div class="fv__top rv">
     <div class="fv__logo">ameru<small>アメル</small></div>
-    <span class="fv__pill">LOVE IS... ♡</span>
+    <span class="fv__pill labu-pill">♡ らぶいーず × ameru</span>
   </div>
 
   <div class="fv__hero rv rv-2">
@@ -579,6 +723,13 @@ img { display: block; max-width: 100%; }
       はじめる ♡
     </a>
     <p class="fv__note">— 送料無料、いつでも解約OK</p>
+  </div>
+
+  <div class="voice-bubble rv rv-3" style="margin:24px 4px 4px;">
+    <div class="voice-bubble__name">Aさま・30代／東京</div>
+    <div class="voice-bubble__text">
+      どうせ途中でやめる、と思ってたのに。<em>動画見ながらだと迷う場面ゼロ</em>で、気づいたら完成してました。机に置くだけで、毎日ちょっと嬉しい。
+    </div>
   </div>
 </section>
 
@@ -643,6 +794,44 @@ img { display: block; max-width: 100%; }
     <img src="images/07_collection_preview.png" alt="5体" loading="lazy">
     <span class="block__caption">a family of five ♡</span>
   </div>
+
+  <div class="voice-bubble rv rv-3">
+    <div class="voice-bubble__name">Bさま・40代／大阪</div>
+    <div class="voice-bubble__text">
+      娘の誕生日プレゼントのはずが、可愛すぎて自分のデスクに飾ってしまいました。<em>「編み始め完成済み」って発想が天才</em>。糸玉からやってたら絶対挫折してた。
+    </div>
+  </div>
+</section>
+
+
+<!-- Instagram投稿風 社会的証明バンド -->
+<section class="ig-band">
+  <span class="confetti confetti--star" style="top:18px;right:24px;color:#FD8798;">📸</span>
+  <span class="confetti confetti--star" style="top:28px;left:26px;color:#FA5E75;">✨</span>
+  <h3 class="ig-band__title rv"><em>#ameru</em> で、みんなが編んでる</h3>
+  <p class="ig-band__tags rv rv-2">#ameru  #ずもっぴ  #らぶいーず  #推し活</p>
+
+  <div class="ig-band__grid rv rv-3">
+    <div class="ig-band__post">
+      <span class="ig-band__user">@ameru_a</span>
+      <img src="images/04_hands_crafting.png" alt="Aさまの投稿" loading="lazy">
+      <span class="ig-band__heart">12.4K</span>
+    </div>
+    <div class="ig-band__post">
+      <span class="ig-band__user">@knit_b</span>
+      <img src="images/05_lifestyle_finished.png" alt="Bさまの投稿" loading="lazy">
+      <span class="ig-band__heart">8.9K</span>
+    </div>
+    <div class="ig-band__post">
+      <span class="ig-band__user">@c_knit</span>
+      <img src="images/06_shelf_display.png" alt="Cさまの投稿" loading="lazy">
+      <span class="ig-band__heart">22.1K</span>
+    </div>
+  </div>
+
+  <p class="ig-band__footer rv rv-3">
+    <strong>らぶいーず × ameru</strong>、毎日投稿されてます ♡
+  </p>
 </section>
 
 
