@@ -1,0 +1,60 @@
+# KOSURI商品プロファイル: プルーストクリーム (v4 - DPro勝ち広告学習版)
+product_key: yomite_proust
+client: yomite
+product_name: プルーストクリーム
+
+persona:
+  age_range: "20-40代"
+  gender: female
+  role: ワキガ・体臭に悩む女性
+  pain_points:
+    - 周りに臭っていないか不安
+    - 電車や人前が怖い
+    - 制汗剤では満足できない
+    - 夏が近づくと憂鬱
+
+product:
+  problem: body_odor_armpit
+  body_part: armpits
+  category: deodorant_cream
+  category_key: beauty_deodorant
+  visual_subjects:
+    - 腕を上げる女性のシルエット
+    - クリームのテクスチャー・塗布シーン
+    - 服のワキ部分・汗ジミのBefore
+    - 自信を取り戻した表情
+
+regulation:
+  yakkihou_level: medium
+  ng_expressions:
+    - 必ず消える
+    - 完治する
+    - ワキガを治す
+    - 即効で消臭
+  safe_alternatives:
+    - ニオイケア
+    - 気になるニオイをケア
+    - スッキリ感
+    - 清潔感のある印象へ
+  legal_notes: []
+
+hooks:
+  # V11=汗ジミBefore/After 2分割、V13=脇が手術医風専門家、V14=クリーム単品
+  priority: [V11, V13, V14, V1, V5, V7, V6]
+  avoid: [V8, V12]   # 嫌悪顔=侮辱 / 医療画像=ワキガには過剰でNG
+  # v4: 全10パターンで共通使用する単一モーション
+  primary_motion: slow_zoom_to_face
+  motion_priority:
+    - dual_zoom_to_center    # V11 split-screen
+    - talking_head_subtle    # V13専門家
+    - zoom_punch_hold        # V14商品: クリームボトルアップ
+    - macro_asmr_glide       # V1メタファー: プチプチ的クリーム質感
+    - ultra_slow_zoom_in     # V5 Before: 汗ジミにじっくり
+    - slow_pan_left_right    # V7質感
+
+winning_copies:
+  - "もう隣に座る人を気にしない"
+  - "夏が怖くなくなった"
+  - "気づかれる前にケアする"
+
+image_prompt_suffix: "Japanese woman, soft natural lighting, white or pastel clean background, not overly medical, lifestyle documentary feel"

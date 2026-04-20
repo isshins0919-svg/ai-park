@@ -243,6 +243,82 @@ BGM_VOLUMES = {"small": 0.20, "medium": 0.40, "large": 0.65}
 jobs: dict[str, dict] = {}
 
 
+# ─── Cancel機構（全モード共通） ────────────────────────────────
+class _JobCancelled(Exception):
+    """ジョブがユーザーによりキャンセルされた時に投げる内部例外。"""
+    pass
+
+
+def _is_cancelled(job_id: Optional[str]) -> bool:
+    if not job_id:
+        return False
+    return bool(jobs.get(job_id, {}).get("cancelled"))
+
+
+def _check_cancel(job_id: Optional[str]) -> None:
+    """cancelled なら _JobCancelled を raise。各 run_*_job の step 境界で呼ぶ。"""
+    if _is_cancelled(job_id):
+        raise _JobCancelled(f"job {job_id} cancelled by user")
+
+
+def _run_cancellable(cmd, job_id: Optional[str] = None, timeout: Optional[float] = None,
+                     poll_interval: float = 0.3, **kwargs):
+    """subprocess.run 互換の cancel-aware wrapper。
+
+    ジョブがcancelledになったら Popen.terminate() → _JobCancelled raise。
+    capture_output / text / check は透過サポート。
+    """
+    import time as _time
+    capture = kwargs.pop("capture_output", False)
+    text_mode = kwargs.pop("text", False)
+    check_mode = kwargs.pop("check", False)
+    if capture:
+        kwargs["stdout"] = subprocess.PIPE
+        kwargs["stderr"] = subprocess.PIPE
+
+    proc = subprocess.Popen(cmd, **kwargs)
+    start = _time.monotonic()
+    try:
+        while proc.poll() is None:
+            if _is_cancelled(job_id):
+                proc.terminate()
+                try:
+                    proc.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    proc.kill()
+                    proc.wait()
+                raise _JobCancelled(f"job {job_id} cancelled during subprocess")
+            if timeout and (_time.monotonic() - start) > timeout:
+                proc.kill(); proc.wait()
+                raise subprocess.TimeoutExpired(cmd, timeout)
+            _time.sleep(poll_interval)
+        stdout, stderr = proc.communicate()
+    except _JobCancelled:
+        raise
+    except Exception:
+        try:
+            proc.kill(); proc.wait()
+        except Exception:
+            pass
+        raise
+
+    if text_mode:
+        if isinstance(stdout, (bytes, bytearray)):
+            stdout = stdout.decode("utf-8", errors="replace")
+        if isinstance(stderr, (bytes, bytearray)):
+            stderr = stderr.decode("utf-8", errors="replace")
+
+    class _Result:
+        pass
+    r = _Result()
+    r.returncode = proc.returncode
+    r.stdout = stdout
+    r.stderr = stderr
+    if check_mode and proc.returncode != 0:
+        raise subprocess.CalledProcessError(proc.returncode, cmd, stdout, stderr)
+    return r
+
+
 # ─── Utility ───────────────────────────────────────────────────
 
 def get_duration(path: str) -> float:
@@ -594,46 +670,53 @@ def run_cut_job(job_id: str, session_id: str, clips: list[dict], filename_prefix
     job["total"] = total
     results = []
 
-    for clip in clips:
-        i = clip["index"]
-        output_name = f"{filename_prefix}_{i:02d}.mp4"
-        output_path = output_dir / output_name
-        job["current"] = i
-        job["current_name"] = output_name
+    try:
+        for clip in clips:
+            _check_cancel(job_id)
+            i = clip["index"]
+            output_name = f"{filename_prefix}_{i:02d}.mp4"
+            output_path = output_dir / output_name
+            job["current"] = i
+            job["current_name"] = output_name
 
-        cmd = [
-            FFMPEG, "-y",
-            "-ss", str(clip["start"]),
-            "-i", str(packed_path),
-            "-t", str(clip["duration"]),
-            "-c:v", "libx264", "-preset", "ultrafast", "-crf", "18",
-            "-c:a", "aac", "-b:a", "192k",
-            str(output_path),
-        ]
-        try:
-            subprocess.run(cmd, capture_output=True, text=True, check=True)
-            dur = get_duration(str(output_path))
-            size_mb = output_path.stat().st_size / 1024 / 1024
-            results.append({
-                "name": output_name,
-                "fv_name": f"clip_{i}",
-                "duration": round(dur, 1),
-                "size_mb": round(size_mb, 1),
-            })
-        except subprocess.CalledProcessError as e:
-            print(f"  cut error clip{i}: {e.stderr[-300:]}")
+            cmd = [
+                FFMPEG, "-y",
+                "-ss", str(clip["start"]),
+                "-i", str(packed_path),
+                "-t", str(clip["duration"]),
+                "-c:v", "libx264", "-preset", "ultrafast", "-crf", "18",
+                "-c:a", "aac", "-b:a", "192k",
+                str(output_path),
+            ]
+            try:
+                _run_cancellable(cmd, job_id=job_id, capture_output=True, text=True, check=True)
+                dur = get_duration(str(output_path))
+                size_mb = output_path.stat().st_size / 1024 / 1024
+                results.append({
+                    "name": output_name,
+                    "fv_name": f"clip_{i}",
+                    "duration": round(dur, 1),
+                    "size_mb": round(size_mb, 1),
+                })
+            except subprocess.CalledProcessError as e:
+                print(f"  cut error clip{i}: {e.stderr[-300:]}")
 
-    job["status"] = "done"
-    job["results"] = results
-    log_to_sheet("生成ログ", [
-        time.strftime("%Y-%m-%d %H:%M"),
-        "FVカット",
-        total,
-        "",
-        "",
-        round(time.time() - _start, 1),
-        session_id[:8],
-    ])
+        job["status"] = "done"
+        job["results"] = results
+        log_to_sheet("生成ログ", [
+            time.strftime("%Y-%m-%d %H:%M"),
+            "FVカット",
+            total,
+            "",
+            "",
+            round(time.time() - _start, 1),
+            session_id[:8],
+        ])
+    except _JobCancelled:
+        print(f"[Cut] job {job_id} cancelled by user")
+        job["status"] = "cancelled"
+        job["current_name"] = "キャンセルされました"
+        job["results"] = results
 
 
 # ─── Audio Helpers ────────────────────────────────────────
@@ -788,44 +871,51 @@ def run_generation_job(job_id: str, session_id: str, bgm_volume: float, annotati
     job["total"] = total
     results = []
 
-    for i, fv in enumerate(fv_paths):
-        output_name = f"{filename_prefix}_{i + 1}.mp4"
-        output_path = output_dir / output_name
+    try:
+        for i, fv in enumerate(fv_paths):
+            _check_cancel(job_id)
+            output_name = f"{filename_prefix}_{i + 1}.mp4"
+            output_path = output_dir / output_name
 
-        job["current"] = i + 1
-        job["current_name"] = output_name
+            job["current"] = i + 1
+            job["current_name"] = output_name
 
-        ok = generate_video(
-            base_path=base_path,
-            fv_path=fv,
-            bgm_path=bgm_path,
-            output_path=output_path,
-            bgm_volume=bgm_volume,
-            base_dur=base_dur,
-            annotation=annotation,
-        )
+            ok = generate_video(
+                base_path=base_path,
+                fv_path=fv,
+                bgm_path=bgm_path,
+                output_path=output_path,
+                bgm_volume=bgm_volume,
+                base_dur=base_dur,
+                annotation=annotation,
+            )
 
-        if ok:
-            dur = get_duration(str(output_path))
-            size_mb = output_path.stat().st_size / 1024 / 1024
-            results.append({
-                "name": output_name,
-                "fv_name": fv.name,
-                "duration": round(dur, 1),
-                "size_mb": round(size_mb, 1),
-            })
+            if ok:
+                dur = get_duration(str(output_path))
+                size_mb = output_path.stat().st_size / 1024 / 1024
+                results.append({
+                    "name": output_name,
+                    "fv_name": fv.name,
+                    "duration": round(dur, 1),
+                    "size_mb": round(size_mb, 1),
+                })
 
-    job["status"] = "done"
-    job["results"] = results
-    log_to_sheet("生成ログ", [
-        time.strftime("%Y-%m-%d %H:%M"),
-        "FVオーバーレイ",
-        total,
-        _bgm_label(bgm_volume),
-        (annotation[:50] if annotation else ""),
-        round(time.time() - _start, 1),
-        session_id[:8],
-    ])
+        job["status"] = "done"
+        job["results"] = results
+        log_to_sheet("生成ログ", [
+            time.strftime("%Y-%m-%d %H:%M"),
+            "FVオーバーレイ",
+            total,
+            _bgm_label(bgm_volume),
+            (annotation[:50] if annotation else ""),
+            round(time.time() - _start, 1),
+            session_id[:8],
+        ])
+    except _JobCancelled:
+        print(f"[Overlay] job {job_id} cancelled by user")
+        job["status"] = "cancelled"
+        job["current_name"] = "キャンセルされました"
+        job["results"] = results
 
 
 # ─── Concat Video Generation ──────────────────────────────
@@ -968,42 +1058,49 @@ def run_concat_job(
     job["total"] = total
     results = []
 
-    for i, fv in enumerate(fv_paths):
-        output_name = f"{filename_prefix}_{i + 1}.mp4"
-        output_path = output_dir / output_name
-        job["current"] = i + 1
-        job["current_name"] = output_name
+    try:
+        for i, fv in enumerate(fv_paths):
+            _check_cancel(job_id)
+            output_name = f"{filename_prefix}_{i + 1}.mp4"
+            output_path = output_dir / output_name
+            job["current"] = i + 1
+            job["current_name"] = output_name
 
-        ok = generate_concat_video(
-            fv_path=fv,
-            body_path=body_path,
-            bgm_path=bgm_path,
-            output_path=output_path,
-            bgm_volume=bgm_volume,
-            annotation=annotation,
-        )
+            ok = generate_concat_video(
+                fv_path=fv,
+                body_path=body_path,
+                bgm_path=bgm_path,
+                output_path=output_path,
+                bgm_volume=bgm_volume,
+                annotation=annotation,
+            )
 
-        if ok:
-            dur = get_duration(str(output_path))
-            size_mb = output_path.stat().st_size / 1024 / 1024
-            results.append({
-                "name": output_name,
-                "fv_name": fv.name,
-                "duration": round(dur, 1),
-                "size_mb": round(size_mb, 1),
-            })
+            if ok:
+                dur = get_duration(str(output_path))
+                size_mb = output_path.stat().st_size / 1024 / 1024
+                results.append({
+                    "name": output_name,
+                    "fv_name": fv.name,
+                    "duration": round(dur, 1),
+                    "size_mb": round(size_mb, 1),
+                })
 
-    job["status"] = "done"
-    job["results"] = results
-    log_to_sheet("生成ログ", [
-        time.strftime("%Y-%m-%d %H:%M"),
-        "FV結合",
-        total,
-        _bgm_label(bgm_volume),
-        (annotation[:50] if annotation else ""),
-        round(time.time() - _start, 1),
-        session_id[:8],
-    ])
+        job["status"] = "done"
+        job["results"] = results
+        log_to_sheet("生成ログ", [
+            time.strftime("%Y-%m-%d %H:%M"),
+            "FV結合",
+            total,
+            _bgm_label(bgm_volume),
+            (annotation[:50] if annotation else ""),
+            round(time.time() - _start, 1),
+            session_id[:8],
+        ])
+    except _JobCancelled:
+        print(f"[Concat] job {job_id} cancelled by user")
+        job["status"] = "cancelled"
+        job["current_name"] = "キャンセルされました"
+        job["results"] = results
 
 
 # ─── Routes ────────────────────────────────────────────────────
@@ -1196,6 +1293,8 @@ def generate():
         "current_name": "",
         "results": [],
         "session_id": session_id,
+        "cancelled": False,
+        "mode": mode,
     }
 
     if mode == "concat":
@@ -1228,6 +1327,20 @@ def status(job_id):
     if not job:
         return jsonify({"error": "not found"}), 404
     return jsonify(job)
+
+
+@app.route("/cancel/<job_id>", methods=["POST"])
+def cancel_job(job_id):
+    """ジョブをキャンセル。全モード共通（cut/generation/concat/fv-generate）。"""
+    job = jobs.get(job_id)
+    if not job:
+        return jsonify({"error": "not found"}), 404
+    if job.get("status") in ("done", "error", "cancelled"):
+        return jsonify({"status": job.get("status"), "message": "already finished"})
+    job["cancelled"] = True
+    job["status"] = "cancelling"
+    job["current_name"] = "キャンセル処理中..."
+    return jsonify({"status": "cancelling", "job_id": job_id})
 
 
 @app.route("/download/<job_id>/<filename>")
@@ -1580,6 +1693,64 @@ VISUAL_HOOK_PATTERNS = [
         ),
         "face_type": "F9",
     },
+    # ─── DPro勝ち広告学習 V11-V14 (2026-04-19 追加) ──────────────
+    # 上位6本の勝ち広告を分析: split-screen/医療画像/開発者ポートレート/商品単品
+    {
+        "id": "V11", "name": "Split-Screen対比衝撃",
+        "psychology": "画面2分割で左右の違いを探す本能が働き目が離せなくなる（勝ち広告6本中4本採用）",
+        "has_face": True,
+        "motion": "dual_zoom_to_center",
+        "image_prompt_template": (
+            "Vertical 9:16 split-screen composition with sharp white vertical divider line down the center, "
+            "left half shows {gender} person with {problem} visible discomfort expression realistic skin texture, "
+            "right half shows the same person beaming liberated natural smile, "
+            "stark lighting contrast between halves, cinematic documentary style, "
+            "no text no logos, faces clearly visible on both sides"
+        ),
+        "face_type": "F5_F2",
+    },
+    {
+        "id": "V12", "name": "医療科学ビジュアライゼーション",
+        "psychology": "MRI・レントゲン・顕微鏡画像の権威+黒背景の恐怖感が思考を止める（ヒザこし守護神cost+15M型）",
+        "has_face": False,
+        "motion": "static_then_zoom",
+        "image_prompt_template": (
+            "Vertical 9:16 medical scientific visualization of {body_part}, "
+            "x-ray or MRI style imaging on pure black background, "
+            "detailed anatomical rendering with subtle millimeter scale markers on side, "
+            "white and cyan accent colors, cinematic clinical atmosphere, "
+            "highly detailed medical grade CGI, no text no labels no logos"
+        ),
+        "face_type": None,
+    },
+    {
+        "id": "V13", "name": "専門家・開発者ポートレート",
+        "psychology": "白衣/研究室の専門家が直接視線で信頼と権威を即発動（LADDER NMN / オレリー型）",
+        "has_face": True,
+        "motion": "talking_head_subtle",
+        "image_prompt_template": (
+            "Vertical 9:16 portrait of Japanese expert specialist in white lab coat or professional attire, "
+            "clean research laboratory or clinic interior background with blurred medical equipment, "
+            "direct confident eye contact to camera, slight concerned professional expression about {problem}, "
+            "handheld documentary camera feel, natural window light, "
+            "upper body composition fills 70% of frame, no text no logos no brand names"
+        ),
+        "face_type": "F9",
+    },
+    {
+        "id": "V14", "name": "商品単品ヒーローショット",
+        "psychology": "手が商品を持つ所有感・触感・実生活シーンの使用イメージ（毎日骨ケアMBP型）",
+        "has_face": False,
+        "motion": "zoom_punch_hold",
+        "image_prompt_template": (
+            "Vertical 9:16 hero product shot, a woman's hand gracefully holding a sleek {category} product bottle, "
+            "clean minimalist background in white or soft pastel color, natural soft daylight casting gentle shadow, "
+            "product label should be blank without any text or logo, "
+            "premium e-commerce photography style, product fills 50% of frame centered, "
+            "hand and forearm visible showing intimate ownership feel"
+        ),
+        "face_type": None,
+    },
 ]
 
 # ─── 表情ルールDB ──────────────────────────────────────────────
@@ -1679,13 +1850,63 @@ def _build_motion_filter(motion_type: str, duration: float, w: int = 1080, h: in
     return motion_map.get(motion_type, motion_map["static_no_motion"])
 
 
+def _normalize_to_9_16(image_path: Path, target_w: int = 1080, target_h: int = 1920) -> bool:
+    """生成画像を強制的に9:16 (1080x1920) に正規化する。
+
+    Gemini 2.5 Flash Image は出力サイズが可変で、1:1 や 16:9 など他アスペクト比で
+    返してくることがある。縦長9:16の広告FV以外は絶対NGなので、PIL でcenter-cropして
+    1080x1920にresizeする。アスペクト比バグの再発を根本遮断する保険処理。
+    """
+    try:
+        from PIL import Image
+        img = Image.open(image_path).convert("RGB")
+        src_w, src_h = img.size
+        target_ratio = target_w / target_h  # 0.5625
+        src_ratio = src_w / src_h
+
+        if abs(src_ratio - target_ratio) > 0.01:
+            # アスペクト比が違う → center crop
+            if src_ratio > target_ratio:
+                # 横長すぎ → 左右をcropして縦長に
+                new_w = int(src_h * target_ratio)
+                left = (src_w - new_w) // 2
+                img = img.crop((left, 0, left + new_w, src_h))
+            else:
+                # 縦長すぎ → 上下をcrop
+                new_h = int(src_w / target_ratio)
+                top = (src_h - new_h) // 2
+                img = img.crop((0, top, src_w, top + new_h))
+
+        # 1080x1920に統一リサイズ
+        img = img.resize((target_w, target_h), Image.Resampling.LANCZOS)
+        img.save(str(image_path), quality=92)
+        return True
+    except Exception as e:
+        print(f"[Normalize 9:16] error: {e}")
+        return False
+
+
 def _gemini_generate_image(prompt: str, api_key: str, out_path: Path) -> bool:
-    """Gemini Imagen APIで画像生成。成功したらTrue。"""
+    """Gemini Imagen APIで画像生成。成功したら9:16に強制正規化してTrue。
+
+    重要: Gemini 2.5 Flash Image は aspectRatio を直接指定できないモデル。
+    プロンプトで誘導 + 生成後 _normalize_to_9_16 で強制crop+resize の二段構えで
+    縦横比バグをゼロにする。
+    """
     import base64, urllib.request
+    # プロンプトの先頭と末尾に9:16要件を強く入れる（モデルがスキップしないよう繰り返す）
+    nine_sixteen_prefix = (
+        "STRICT VERTICAL 9:16 PORTRAIT ORIENTATION (1080x1920 pixels, tall not wide). "
+    )
+    nine_sixteen_suffix = (
+        " | REQUIRED: 9:16 vertical portrait format only, NOT square, NOT landscape, "
+        "subject framed tall like smartphone screen."
+    )
+    full_prompt = nine_sixteen_prefix + prompt + nine_sixteen_suffix
     try:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key={api_key}"
         payload = json.dumps({
-            "contents": [{"parts": [{"text": prompt}]}],
+            "contents": [{"parts": [{"text": full_prompt}]}],
             "generationConfig": {"responseModalities": ["TEXT", "IMAGE"]},
         }).encode()
         req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
@@ -1695,6 +1916,8 @@ def _gemini_generate_image(prompt: str, api_key: str, out_path: Path) -> bool:
             if "inlineData" in part:
                 img_bytes = base64.b64decode(part["inlineData"]["data"])
                 out_path.write_bytes(img_bytes)
+                # 強制的に9:16に正規化（Geminiが正方形や横長を返しても安全）
+                _normalize_to_9_16(out_path)
                 return True
         return False
     except Exception as e:
@@ -1706,25 +1929,32 @@ def _analyze_video_for_fv(video_path: str, api_key: str) -> dict:
     """Geminiで動画冒頭を解析してFV情報を返す。"""
     import base64, urllib.request
     try:
-        # 冒頭10秒を2fps でフレーム抽出
+        # 冒頭6秒を4fps でフレーム抽出（0.25秒精度・タイミング精度向上）
         with tempfile.TemporaryDirectory() as tmpdir:
             subprocess.run(
-                [FFMPEG, "-y", "-i", video_path, "-vf", "fps=2,scale=320:-1",
-                 "-t", "10", f"{tmpdir}/frame_%04d.jpg", "-loglevel", "quiet"],
+                [FFMPEG, "-y", "-i", video_path, "-vf", "fps=4,scale=360:-1",
+                 "-t", "6", f"{tmpdir}/frame_%04d.jpg", "-loglevel", "quiet"],
                 capture_output=True,
             )
-            frames = sorted(Path(tmpdir).glob("*.jpg"))[:16]
+            frames = sorted(Path(tmpdir).glob("*.jpg"))[:24]
             if not frames:
                 return {}
 
             parts = [{"text": (
                 "この動画広告の冒頭フレームを時系列で解析してください。\n"
-                "各フレームには [X.X秒] のタイムスタンプが付いています。\n"
+                "各フレームには [X.XX秒] のタイムスタンプが付いています（0.25秒精度）。\n"
                 "\n"
-                "特に重要: フレーム間でテロップ(画面内に映る文字)が切り替わる瞬間を正確に捉え、\n"
-                "caption_segments に「開始秒・終了秒・そのセグメントで表示されているテロップ文字列」を順に記録してください。\n"
-                "例: 0〜2.3秒は『遺伝型ワキガ10年以上放置してる人』、2.3〜4.8秒は『絶対見て』のように、\n"
-                "テロップが切り替わるたびに別セグメントに分けます。\n"
+                "【最重要: テロップの切替タイミングと画面位置】\n"
+                "フレーム間でテロップ(画面内に映る文字)が切り替わる瞬間を0.25秒精度で捉え、\n"
+                "caption_segments を順に記録してください。各セグメントに以下を含める:\n"
+                "  - start, end (秒、小数点2桁)\n"
+                "  - text (そのセグメントで画面に出ている実テロップ文字列)\n"
+                "  - screen_position: テロップの画面内縦位置\n"
+                "    ('top'=上部20%以内 / 'upper_mid'=上部40%付近 / 'center'=中央付近 /\n"
+                "     'lower_mid'=下部60%付近 / 'bottom'=下部80%以下)\n"
+                "  - importance: 'primary'(主フック) / 'secondary'(補足) / 'kicker'(オチ・CTA)\n"
+                "例: 0〜2.3秒に『遺伝型ワキガ10年以上放置してる人』が center/primary、\n"
+                "2.3〜4.8秒に『絶対見て』が center/kicker のように。\n"
                 "画面に全く文字が出ていない区間はセグメントに含めません。\n"
                 "\n"
                 "以下のJSON形式で返してください:\n"
@@ -1732,19 +1962,22 @@ def _analyze_video_for_fv(video_path: str, api_key: str) -> dict:
                 "  \"fv_end_sec\": FV終点の秒数,\n"
                 "  \"captions\": [\"後方互換用・主要テロップ文字列のリスト\"],\n"
                 "  \"caption_segments\": [\n"
-                "    {\"start\": 開始秒(float), \"end\": 終了秒(float), \"text\": \"そのセグメントの実テロップ文字列\"}\n"
+                "    {\"start\": 開始秒, \"end\": 終了秒, \"text\": \"実テロップ\",\n"
+                "     \"screen_position\": \"top|upper_mid|center|lower_mid|bottom\",\n"
+                "     \"importance\": \"primary|secondary|kicker\"}\n"
                 "  ],\n"
-                "  \"target\": \"ターゲット層（例: 産後ママ、30代男性）\",\n"
+                "  \"target\": \"ターゲット層\",\n"
                 "  \"product\": \"商品・サービス名\",\n"
                 "  \"category\": \"カテゴリ（健康/美容/食品等）\",\n"
-                "  \"body_part\": \"関連する体の部位（例: armpits, skin, knees）\",\n"
-                "  \"problem\": \"悩み・問題（例: body odor, wrinkles）\",\n"
-                "  \"gender\": \"登場人物の性別（female/male/neutral）\",\n"
+                "  \"body_part\": \"関連する体の部位\",\n"
+                "  \"problem\": \"悩み・問題\",\n"
+                "  \"gender\": \"登場人物の性別\",\n"
                 "  \"main_colors\": [\"メインカラー3色\"]\n"
                 "}"
             )}]
             for i, f in enumerate(frames):
-                parts.append({"text": f"[{i*0.5:.1f}秒]"})
+                # fps=4 なので 0.25秒刻み
+                parts.append({"text": f"[{i*0.25:.2f}秒]"})
                 parts.append({"inline_data": {"mime_type": "image/jpeg",
                               "data": base64.b64encode(f.read_bytes()).decode()}})
 
@@ -1814,34 +2047,22 @@ def _design_10_patterns(video_info: dict, user_prompt: str, api_key: str,
 - 「瞬間」を切り取る（状態でなくモーメント）
 - 偽物感のある化学式・英字ブランド名・架空UIを描写しない
 
-【テロップの重要制約】
-- テロップの文字列は一切「新規生成するな」。元動画から抽出される文字列だけを使う。
-- あなたが決めるのは「見せ方」のみ: 配置(placement)・サイズ(size)・スタイル(style)・強調ワード(emphasis_words)
-- emphasis_words は元テロップ内に実際に含まれる単語だけ指定。含まれない語を書いたら無効扱い
-
-【利用可能な見せ方パラメータ】
-- caption_placement: "note_top" | "hook_top" | "mid" | "kick_bottom" | "footer"
-- caption_size: "xl"(最大140px) | "l"(108px) | "m"(80px) | "s"(52px)
-- caption_style: "bold"(白字+黒厚縁) | "highlight"(黄色背景+黒字) | "double_stroke"(白字+黒+外白の三重)
-- caption_kick_placement / caption_kick_size / caption_kick_style: キッカー用（下段サブテロップ）
+【重要な制約（v4ユーザー指示: 変数は1つだけ）】
+- テロップの文字列は一切「新規生成するな」。元動画から抽出される文字列をそのまま使う。
+- テロップの「見せ方」もあなたは決めない（システム側で全10パターン完全統一する）
+- モーションもあなたは決めない（システム側で全10パターン同じモーションに固定する）
+- **あなたの唯一の仕事は「画像の中身」を10パターン変えること**。それが唯一の検証変数。
 
 以下のJSON形式で最大10パターンを返してください。各パターンは「使用可能なビジュアルフック」を1つずつ使うこと。
-各パターンで画像・モーションと「テロップの見せ方」だけを変え、テロップの文字列は変えない:
+テロップ・モーション・見せ方は一切返さず、画像方針のみに集中すること:
 {{
   "patterns": [
     {{
       "hook_id": "V1",
-      "concept": "このパターンのコンセプト1行",
+      "concept": "このパターンのコンセプト1行（画像が何を見せるか）",
       "why_stop": "なぜ視聴者の目が止まるか（心理的根拠）",
-      "image_prompt": "Gemini画像生成用の英語プロンプト。NO text, NO logos, NO Japanese characters, NO watermarks を必ず含める",
-      "face_expression": "使う表情ルールのID（顔なしならnull）",
-      "caption_placement": "hook_top|note_top|mid|kick_bottom|footer のいずれか",
-      "caption_size": "xl|l|m|s のいずれか",
-      "caption_style": "bold|highlight|double_stroke のいずれか",
-      "caption_kick_placement": "kick_bottom|mid|footer など（キッカーの位置）",
-      "caption_kick_size": "xl|l|m|s",
-      "caption_kick_style": "bold|highlight|double_stroke",
-      "emphasis_words": ["元テロップに含まれる単語のみ。新規生成禁止"]
+      "image_prompt": "Gemini画像生成用の英語プロンプト。NO text, NO logos, NO Japanese characters, NO watermarks を必ず含める。SNS投稿風・ドキュメンタリー感を推奨、広告っぽい完璧さは避ける。インパクト強く",
+      "face_expression": "使う表情ルールのID（顔なしならnull）"
     }}
   ]
 }}"""
@@ -1907,22 +2128,49 @@ def _draw_caption_layers_on_canvas(canvas, caption_layers: list[dict]) -> None:
 
         lines = text.split("\n")
 
-        # Auto-fit: 各行が画面幅の92%を超えないよう、font_sizeを段階的に縮小
-        MAX_WIDTH_RATIO = 0.92
+        # Auto-fit v2: 長いテキストは縮小、短いテキストは拡大して画面幅を最大活用
+        # ユーザー要望: 「絶対見て」のような短い文字は1つ目テロップと同サイズではなく、より大きく
+        MAX_WIDTH_RATIO = 0.88   # 画面幅の88%以内に収める（上限）
+        TARGET_MIN_RATIO = 0.75  # 画面幅の75%以上は使う（下限・短文を大きく）
         max_width_px = int(w * MAX_WIDTH_RATIO)
+        target_min_px = int(w * TARGET_MIN_RATIO)
         min_font_size = 36
+        max_font_size = int(280 * scale)  # xxl扱いの上限（1080px幅なら280px）
+
+        def _measure_lines(_font):
+            _md = ImageDraw.Draw(Image.new("RGBA", (10, 10)))
+            _mx = 0
+            for _ln in lines:
+                _bb = _md.textbbox((0, 0), _ln, font=_font)
+                _mx = max(_mx, _bb[2] - _bb[0])
+            return _mx
+
         if font_path:
-            for _iter in range(20):  # 最大20回縮小
-                measure_draw = ImageDraw.Draw(Image.new("RGBA", (10, 10)))
-                max_line_w = 0
-                for ln in lines:
-                    bb = measure_draw.textbbox((0, 0), ln, font=font)
-                    max_line_w = max(max_line_w, bb[2] - bb[0])
+            # Step1: 超過時は縮小
+            for _iter in range(25):
+                max_line_w = _measure_lines(font)
                 if max_line_w <= max_width_px or font_size <= min_font_size:
                     break
                 font_size = max(min_font_size, int(font_size * 0.93))
                 try:
                     font = ImageFont.truetype(font_path, font_size)
+                except Exception:
+                    break
+            # Step2: 不足時は拡大（短いテキストを大きく）
+            for _iter in range(20):
+                max_line_w = _measure_lines(font)
+                if max_line_w >= target_min_px or font_size >= max_font_size:
+                    break
+                new_size = min(max_font_size, int(font_size * 1.1))
+                if new_size <= font_size:
+                    break
+                try:
+                    new_font = ImageFont.truetype(font_path, new_size)
+                    new_w = _measure_lines(new_font)
+                    if new_w > max_width_px:
+                        break  # 次のステップで超過する → ここで止める
+                    font_size = new_size
+                    font = new_font
                 except Exception:
                     break
 
@@ -2038,60 +2286,86 @@ def _burn_captions_to_image(image_path: Path, caption_layers: list[dict]) -> Pat
     return tmp_path
 
 
+def _detect_caption_placement_from_segments(base_segments: list[dict]) -> str:
+    """元動画のcaption_segmentsからテロップの支配的な縦位置を検出し、
+    _CAPTION_Y_MAP のキーに変換して返す。
+
+    screen_position の多数決で決定:
+      top / upper_mid → "hook_top"
+      center          → "mid"
+      lower_mid / bottom → "kick_bottom"
+    """
+    # Gemini が返す screen_position → _CAPTION_Y_MAP キーのマッピング
+    POS_TO_PLACEMENT = {
+        "top":       "hook_top",
+        "upper_mid": "hook_top",
+        "center":    "mid",
+        "lower_mid": "kick_bottom",
+        "bottom":    "kick_bottom",
+    }
+    votes: dict[str, int] = {}
+    for seg in base_segments:
+        pos = seg.get("screen_position", "")
+        placement = POS_TO_PLACEMENT.get(pos)
+        if placement:
+            votes[placement] = votes.get(placement, 0) + 1
+
+    if not votes:
+        return "hook_top"  # フォールバック
+
+    dominant = max(votes, key=lambda k: votes[k])
+    print(f"[Caption Placement] body解析結果: {votes} → '{dominant}' に統一")
+    return dominant
+
+
 def _build_caption_timeline_from_pattern(
     base_segments: list[dict],
     pattern: dict,
     fv_duration: float,
-    profile: Optional[dict] = None,  # 互換のため残す（現在は注釈自動追加しない）
+    profile: Optional[dict] = None,
 ) -> list[dict]:
-    """元動画のテロップタイムライン × パターン見せ方 → 時間軸レイヤー配列。
+    """元動画のテロップタイムライン × 統一見せ方 → 時間軸レイヤー配列（v5）。
 
-    重要原則（ユーザー指示・決してブレてはいけない）:
-    - テロップの「文字列」「出現タイミング」「切替順序」は元動画から完全固定。
-      base_segments = [{"start": 0.0, "end": 2.3, "text": "..."}, ...] をそのまま使う。
-    - パターン間で変わるのは「見せ方」のみ: placement / size / style / emphasis_words
-    - 注釈（legal_notes）は今回自動追加しない。ユーザーが後で別手段で加える方針。
-    - セグメントの奇数番目は hook_top（上）、偶数番目は kick_bottom（下）に配置してリズム作る。
+    v4での決定（ユーザー指示「変数は画像の中身だけ」）:
+    - 全10パターンで見せ方を完全に統一する（placement/size/style全て固定）
+    - pattern引数は無視する（LLMからのcaption系指定は受け取らない）
+    - 全セグメントを auto-detected placement / `xl` / `double_stroke` で統一
+    - 短い文字（≤6文字）は render側の auto-fit で自動拡大される
 
-    戻り値: [{"start": 0.0, "end": 2.3, "layers": [layer_dict, ...]}]
+    v5追加:
+    - bodyのcaption_segmentsのscreen_positionを多数決で検出し、
+      テロップY位置を自動決定（top/upper_mid→hook_top, center→mid,
+      lower_mid/bottom→kick_bottom）
+
+    これにより、検証時に差分要因が「画像の中身」のみに絞れる実験設計になる。
+
+    戻り値: [{"start", "end", "layers": [layer_dict]}]
     """
     timeline: list[dict] = []
     if not base_segments:
         return timeline
 
-    hook_placement = pattern.get("caption_placement", "hook_top")
-    hook_size = pattern.get("caption_size", "xl")
-    hook_style = pattern.get("caption_style", "double_stroke")
-    kick_placement = pattern.get("caption_kick_placement", "kick_bottom")
-    kick_size = pattern.get("caption_kick_size", "l")
-    kick_style = pattern.get("caption_kick_style", "bold")
-    emphasis_all = pattern.get("emphasis_words") or []
+    # body動画のテロップ位置から自動検出（全パターン・全セグメント共通）
+    FIXED_PLACEMENT = _detect_caption_placement_from_segments(base_segments)
+    FIXED_SIZE = "xl"
+    FIXED_STYLE = "double_stroke"
 
-    for i, seg in enumerate(base_segments):
+    for seg in base_segments:
         text = (seg.get("text") or "").strip()
         if not text:
             continue
         start = float(seg.get("start", 0.0))
         end = float(seg.get("end", fv_duration))
-        # FV区間外はスキップ、末尾は fv_duration でクランプ
         if start >= fv_duration:
             continue
         end = min(end, fv_duration)
 
-        # 奇数番目=hook配置、偶数番目=kick配置で上下リズム
-        use_hook = (i % 2 == 0)
-        placement = hook_placement if use_hook else kick_placement
-        size = hook_size if use_hook else kick_size
-        style = hook_style if use_hook else kick_style
-
-        emphasis_words = [w_ for w_ in emphasis_all if w_ and w_ in text]
-
         layer = {
             "text": text,
-            "placement": placement,
-            "size": size,
-            "style": style,
-            "emphasis_words": emphasis_words,
+            "placement": FIXED_PLACEMENT,
+            "size": FIXED_SIZE,
+            "style": FIXED_STYLE,
+            "emphasis_words": [],  # 強調語も統一廃止（差別化要因から除外）
         }
         timeline.append({
             "start": start,
@@ -2275,6 +2549,7 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
     job["product_name"] = (profile or {}).get("product_name", "")
 
     try:
+        _check_cancel(job_id)
         # Step1: 動画解析
         job["current_name"] = "動画を解析中..."
         video_info = _analyze_video_for_fv(video_path, api_key)
@@ -2285,6 +2560,7 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
         video_info["fv_end_sec"] = fv_end_sec
         print(f"[FV Gen] 解析完了: {video_info}")
 
+        _check_cancel(job_id)
         # Step2: 10パターン設計（プロファイル注入）
         job["current_name"] = "10パターンをAIが設計中..."
         patterns = _design_10_patterns(video_info, user_prompt, api_key, profile=profile)
@@ -2319,7 +2595,25 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
         results = []
         captions = video_info.get("captions", [])
 
+        # ─── モーション選択（v4: 10パターン全部同じモーションに固定） ───
+        # ユーザー指示: 「変数は1つ = 画像の中身だけ」
+        # モーションが10パターンで変わると検証時のノイズになるので、ジョブ単位で1つに固定。
+        # 優先順位:
+        #   1. プロファイルの primary_motion（新フィールド）
+        #   2. プロファイルの motion_priority[0]（既存、先頭のみ使用）
+        #   3. 汎用最強フォールバック: slow_zoom_to_face（どんな画像でも自然に動く）
+        FIXED_MOTION = "slow_zoom_to_face"
+        if profile:
+            hooks_cfg = profile.get("hooks", {}) or {}
+            FIXED_MOTION = (
+                hooks_cfg.get("primary_motion")
+                or (hooks_cfg.get("motion_priority") or [None])[0]
+                or "slow_zoom_to_face"
+            )
+        print(f"[FV Gen] 固定モーション: {FIXED_MOTION} (全10パターンで使用)")
+
         for i, pattern in enumerate(patterns):
+            _check_cancel(job_id)  # 各パターン生成前にキャンセル確認
             hook_id = pattern.get("hook_id", f"V{i+1}")
             job["current"] = i + 1
             job["current_name"] = f"{hook_id} — 画像生成中..."
@@ -2370,13 +2664,8 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
             fv_hook_path = fv_gen_dir / f"fv_{i+1:02d}.mp4"
             hook_pattern = next((p for p in VISUAL_HOOK_PATTERNS if p["id"] == hook_id), VISUAL_HOOK_PATTERNS[i % 10])
 
-            # モーション: プロファイルの motion_priority があれば優先、なければフック既定
-            motion_type = pattern.get("motion_type") or hook_pattern.get("motion", "static_no_motion")
-            if profile:
-                mot_priority = (profile.get("hooks", {}) or {}).get("motion_priority") or []
-                # パターンindexに応じて優先モーションから割り当て
-                if mot_priority and i < len(mot_priority):
-                    motion_type = mot_priority[i]
+            # モーションは全パターンで固定（ループ外で決定済み）
+            motion_type = FIXED_MOTION
 
             # テロップタイムラインを構築:
             # - テキスト・出現タイミングは元動画(video_info.caption_segments)に完全固定
@@ -2466,6 +2755,11 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
             except Exception as _he:
                 print(f"[FV Gen] history append failed: {_he}")
 
+    except _JobCancelled:
+        print(f"[FV Gen] job {job_id} cancelled by user")
+        job["status"] = "cancelled"
+        job["current_name"] = "キャンセルされました"
+        # 途中まで生成した results は保持（UIに表示される）
     except Exception as ex:
         print(f"[FV Gen] job error: {ex}")
         job["status"] = "error"
@@ -2505,6 +2799,7 @@ def fv_generate():
     jobs[job_id] = {
         "status": "running", "total": 10, "current": 0,
         "current_name": "起動中...", "results": [], "session_id": session_id,
+        "cancelled": False, "mode": "fvgen",
     }
     threading.Thread(
         target=run_fv_generate_job,

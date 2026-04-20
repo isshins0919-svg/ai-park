@@ -1,0 +1,62 @@
+# KOSURI商品プロファイル: 伸長ぐんぐん習慣 (v4 - DPro勝ち広告学習版)
+product_key: yomite_gungun
+client: yomite
+product_name: 伸長ぐんぐん習慣
+
+persona:
+  age_range: "30-40代"
+  gender: female
+  role: 子どもの身長を気にする母親
+  pain_points:
+    - 子どもが周りより小さくて不安
+    - カルシウムだけでは足りない気がする
+    - 何を食べさせれば伸びるのか分からない
+    - 背の順でいつも前
+
+product:
+  problem: child_growth_support
+  body_part: null
+  category: health_supplement
+  category_key: health_supplement_kids
+  visual_subjects:
+    - 成長を応援される子ども
+    - 家族の食卓
+    - 身長計測シーン
+    - 健やかな親子の関係性
+    - サプリの粒・錠剤のアップ
+
+regulation:
+  yakkihou_level: strict
+  ng_expressions:
+    - 身長が伸びる
+    - 背が伸びる
+    - 必ず効く
+    - 治る
+    - 何センチ伸びた
+    - 医学的効果
+  safe_alternatives:
+    - 健やかな成長をサポート
+    - 栄養をしっかり補える
+    - 成長期に必要な栄養
+  legal_notes: []  # 自動追加しない（ユーザー指示）
+
+hooks:
+  # V11=Before/After2分割、V13=元Jリーガー風専門家、V14=サプリ単品、V10=権威
+  priority: [V13, V11, V10, V14, V6, V3, V9]
+  avoid: [V1, V2, V7, V8]   # 部位クローズアップ・不可視系・嫌悪顔は親ターゲットに不向き
+  # v4: 全10パターンで共通使用する単一モーション（実験変数は画像のみに集中）
+  primary_motion: talking_head_subtle
+  motion_priority:
+    - talking_head_subtle    # V13専門家: ほぼ静止
+    - dual_zoom_to_center    # V11 split-screen
+    - talking_head_subtle    # V10権威
+    - zoom_punch_hold        # V14商品: ボトルにガッと寄る
+    - slow_zoom_to_face      # V6表情: 母親の顔
+    - static_no_motion       # V3憧れ
+
+winning_copies:
+  - "わが子だけ、なんで伸びないんだろう"
+  - "給食だけじゃ足りなかった"
+  - "成長期、あと何年？"
+
+image_prompt_suffix: "Japanese mother and child relationship, warm home setting, bright healthy family context, soft natural light, documentary style"

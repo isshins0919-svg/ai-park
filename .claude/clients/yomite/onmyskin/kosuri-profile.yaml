@@ -1,0 +1,62 @@
+# KOSURI商品プロファイル: on:my skin (v4 - DPro勝ち広告学習版)
+product_key: yomite_onmyskin
+client: yomite
+product_name: "on:my skin"
+
+persona:
+  age_range: "30-50代"
+  gender: female
+  role: 肌悩みを抱える女性
+  pain_points:
+    - 年齢肌が気になり始めた
+    - 化粧ノリが悪い
+    - 何を使っても変わらない気がする
+    - 鏡を見るのが怖くなった
+
+product:
+  problem: skin_care_aging
+  body_part: skin
+  category: skincare
+  category_key: beauty_skincare
+  visual_subjects:
+    - 肌のクローズアップ（頬・目元）
+    - 鏡を見る仕草
+    - スキンケアクリームのテクスチャー
+    - 若々しく見える表情
+    - ボトル・パッケージの静物
+
+regulation:
+  yakkihou_level: medium
+  ng_expressions:
+    - シワが消える
+    - 必ず若返る
+    - 治る
+    - 医学的に証明
+    - 細胞レベルで改善
+  safe_alternatives:
+    - ハリを与える
+    - しっとり保湿
+    - ふっくらした印象
+    - 整った肌印象
+  legal_notes: []
+
+hooks:
+  # V11=シミBefore/After（オレリー型cost+17M）、V13=美容皮膚科医、V14=クリーム単品
+  priority: [V11, V13, V14, V1, V5, V6, V10, V9]
+  avoid: []
+  # v4: 全10パターンで共通使用する単一モーション
+  primary_motion: slow_zoom_to_face
+  motion_priority:
+    - dual_zoom_to_center    # V11 split-screen: シミBefore/After
+    - talking_head_subtle    # V13美容皮膚科医
+    - zoom_punch_hold        # V14商品: クリーム/美容液
+    - native_feed_scroll     # V1 SNS擬態
+    - ultra_slow_zoom_in     # V5 Before: 肌クローズアップ
+    - slow_zoom_to_face      # V6表情
+
+winning_copies:
+  - "あれ、なんか違う？と言われた"
+  - "鏡を見るのが楽しくなった"
+  - "40代の肌が変わる瞬間"
+
+image_prompt_suffix: "Japanese woman with natural realistic skin, minimal aesthetic, soft natural lighting, not overly commercial, documentary SNS feel"

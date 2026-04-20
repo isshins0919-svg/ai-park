@@ -1,0 +1,9 @@
+.gcloudignore
+.git
+.gitignore
+uploads/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+# clients/ はデプロイ時に一時コピーされるので除外しない

@@ -1,0 +1,102 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-04-20",
+  "description": "ヨミテ4商品 DPro日次ニュース設定。dpro-yomite-daily-news スキルが参照。",
+  "slack_channel": "C0AMYLU2W5D",
+  "advertiser_id": 1485,
+  "advertiser_name": "株式会社ヨミテ",
+  "interval_days": 2,
+  "quadrant_rules": {
+    "description": "市場Δとヨミテ自社Δの象限で状況を判定",
+    "market_up_threshold_pct": 5,
+    "own_up_threshold_pct": 5,
+    "quadrants": {
+      "own_up_market_up": {"label": "🌊 追い風（市場波）", "action": "波に乗れてる。継続強化。"},
+      "own_up_market_down": {"label": "🚀 独走（勝ってる）", "action": "自社クリエイティブが本物。横展開。"},
+      "own_down_market_up": {"label": "⚠️ 波に乗れてない", "action": "競合の勝ちパターン分析必須。"},
+      "own_down_market_down": {"label": "📉 市場縮小（静観OK）", "action": "季節性の可能性。2週間様子見。"}
+    }
+  },
+  "products": [
+    {
+      "name": "on:myskin",
+      "display_name": "ヨミテ ハーブピーリング on:myskin",
+      "product_id": 1444210,
+      "color": "#4FC3F7",
+      "emoji": "🧖‍♀️",
+      "market": {
+        "type": "genre",
+        "genre_ids": [7, 80, 103],
+        "genre_label": "美容液×スキンケア×クレンジング横断"
+      },
+      "note": "毛穴・ハーブピーリング訴求。スキンケア3ジャンル横断で市場把握。"
+    },
+    {
+      "name": "プルーストクリーム2",
+      "display_name": "ヨミテ プルーストクリーム2",
+      "product_id": 517993,
+      "color": "#BA68C8",
+      "emoji": "💧",
+      "market": {
+        "type": "genre",
+        "genre_ids": [76],
+        "genre_label": "体臭ケア"
+      },
+      "note": "脇ガ対策クリーム。体臭ケアジャンル単体で比較。"
+    },
+    {
+      "name": "伸長ぐんぐん習慣",
+      "display_name": "ヨミテ 伸長ぐんぐん習慣",
+      "product_id": 22970,
+      "color": "#66BB6A",
+      "emoji": "🌱",
+      "market": {
+        "type": "genre",
+        "genre_ids": [54],
+        "genre_label": "成長期サポートサプリ"
+      },
+      "note": "子供身長サプリ。成長期サポートサプリジャンル単体で比較。"
+    },
+    {
+      "name": "RKL",
+      "display_name": "ヨミテ RKL",
+      "product_id": 366473,
+      "color": "#FFA726",
+      "emoji": "🦵",
+      "market": {
+        "type": "hybrid_genre_keyword",
+        "genre_ids": [1467],
+        "genre_label": "ヒザ系（ヘルスケア用品×ヒザ関連キーワード）",
+        "include_keywords": ["ヒザ", "膝", "ひざ", "変形性膝", "膝関節", "ひざ痛", "膝の痛み"],
+        "keyword_logic": "or",
+        "exclude_keywords": ["キャンペーン", "求人", "住宅", "転職", "応募", "プレゼント"],
+        "note": "DProにヒザジャンルがないため、ヘルスケア用品×キーワード×除外で疑似ジャンル化。週次で除外語を見直す。"
+      }
+    }
+  ],
+  "image_generation": {
+    "enabled_phase": 2,
+    "tool": "gemini_nano_banana_pro",
+    "size": "1200x1200",
+    "layout": "2x2_grid",
+    "font": "NotoSansJP-Bold",
+    "template": "yomite_daily_dashboard"
+  },
+  "notifications": {
+    "main_channel_post_limit": 1,
+    "thread_posts_per_product": 1,
+    "error_fallback_message": "⚠️ 本日のDProデータ取得に失敗しました"
+  },
+  "phases": {
+    "phase1_current": {
+      "enabled": ["interval_2days", "per_product_threads", "market_vs_own_share", "rkl_hybrid_search"],
+      "disabled": ["image_generation", "user_mentions", "new_competitor_alerts", "slowdown_alerts"]
+    },
+    "phase2_next_week": {
+      "enabled": ["gemini_image_generation", "user_mentions"]
+    },
+    "phase3_monthly": {
+      "enabled": ["new_competitor_alerts", "slowdown_alerts", "weekly_mvp_monday"]
+    }
+  }
+}

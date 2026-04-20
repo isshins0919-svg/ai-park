@@ -16,6 +16,7 @@ REGION="asia-northeast1"            # 東京リージョン
 SERVICE_NAME="kosuri-studio"
 IMAGE="gcr.io/${PROJECT_ID}/${SERVICE_NAME}"
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
+VOYAGE_ROOT="$(cd "${REPO_ROOT}/../.." && pwd)"
 
 echo "=== KOSURIちゃん Cloud Run デプロイ ==="
 echo "  Project : ${PROJECT_ID}"
@@ -29,6 +30,12 @@ gcloud config set project "${PROJECT_ID}"
 # 2. 必要なAPIを有効化
 echo "[1/4] APIを有効化..."
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com --quiet
+
+# 商品プロファイルを一時コピー（Cloud Buildのコンテキストに含める）
+echo "  [prep] 商品プロファイルをコンテキストにコピー中..."
+rm -rf "${REPO_ROOT}/clients"
+cp -r "${VOYAGE_ROOT}/.claude/clients" "${REPO_ROOT}/clients"
+trap 'echo "  [cleanup] clients/ を削除"; rm -rf "${REPO_ROOT}/clients"' EXIT
 
 # 3. Dockerイメージをビルド & push (Cloud Build使用 → ローカルDockerが不要)
 echo "[2/4] Cloud Buildでイメージをビルド中..."

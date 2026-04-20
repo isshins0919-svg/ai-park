@@ -1,0 +1,67 @@
+# KOSURI商品プロファイル: RKL 膝サポーター (v4 - DPro勝ち広告学習版)
+product_key: yomite_rkl
+client: yomite
+product_name: RKL 膝サポーター
+
+persona:
+  age_range: "50-60代"
+  gender: female
+  role: 膝の痛みに悩むシニア女性
+  pain_points:
+    - 立ち上がりが辛い
+    - 長距離歩けない
+    - 階段を降りるのが怖い
+    - 外出が億劫になる
+    - 靴下の跡がついている
+
+product:
+  problem: knee_pain_senior
+  body_part: knee
+  category: healthcare_support
+  category_key: healthcare_support
+  visual_subjects:
+    - シニア女性（50-60代）が軽々歩く姿
+    - サポーター装着の瞬間
+    - 膝のレントゲン・MRI画像
+    - 階段を楽に降りる表情
+  key_authorities:
+    - デューク更家氏 絶賛
+    - 一般医療機器販売許可メーカー開発
+    - ダブル特許技術（重心安定+血行促進）
+
+regulation:
+  yakkihou_level: medium
+  ng_expressions:
+    - 膝痛が治る
+    - 完治する
+    - 医学的効果を保証
+    - 軟骨が再生
+  safe_alternatives:
+    - 膝楽々
+    - サポート感
+    - 歩行サポート
+    - 装着時の重心安定
+  legal_notes: []
+
+hooks:
+  # V12=膝MRI/X-ray画像(ヒザこし型cost+15M核心)、V11=歩行Before/After、V13=デューク更家風
+  priority: [V12, V11, V13, V10, V6, V9]
+  avoid: [V2, V3]
+  model_age_override: senior
+  # v4: 全10パターンで共通使用する単一モーション（RKLはQuick Cutが勝ちパターン）
+  primary_motion: slow_zoom_to_face
+  motion_priority:
+    - static_then_zoom       # V12医療画像: 黒背景から詳細へズーム
+    - dual_zoom_to_center    # V11 split-screen: 歩行Before/After
+    - talking_head_subtle    # V13デューク/専門家
+    - flash_cut_zoom         # V10権威: Quick Cut
+    - slow_zoom_to_face      # V6表情: 「軽い！」の驚き顔
+    - snap_focus_reveal      # V9対比
+
+winning_copies:
+  - "あ、軽い軽い！"
+  - "靴下の跡がついている60代、それ膝が限界のサイン"
+  - "3秒で履くだけで、膝楽々"
+  - "デューク更家さんも絶賛"
+
+image_prompt_suffix: "Japanese senior woman in her 60s with natural grey hair, active lifestyle, natural warm lighting, authentic documentary not overly glamorous"

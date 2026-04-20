@@ -417,9 +417,13 @@ textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid 
 
           <!-- 進捗（ステップ表示） -->
           <div id="fvgen-progress" style="display:none; margin-bottom:16px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; gap:8px;">
               <div style="font-size:0.8rem; color:#6d28d9; font-weight:700;" id="fvgen-status-text">生成中...</div>
               <div style="font-size:0.72rem; color:var(--text-tertiary);" id="fvgen-count-text"></div>
+              <button onclick="cancelCurrentJob()" id="fvgen-cancel-btn"
+                style="flex-shrink:0; padding:4px 10px; border:1.5px solid #ef4444; background:#fff; color:#ef4444; border-radius:6px; font-size:0.7rem; font-weight:800; cursor:pointer; font-family:inherit;">
+                ✕ キャンセル
+              </button>
             </div>
             <div style="background:#ede9fe; border-radius:8px; height:10px; margin-bottom:8px;">
               <div id="fvgen-progress-bar" style="background:linear-gradient(90deg,#7c3aed,#ec4899); height:10px; border-radius:8px; width:0%; transition:width 0.8s;"></div>
@@ -546,9 +550,13 @@ textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid 
         </div>
 
         <div class="progress-container" id="progress">
-          <div class="prog-label">
-            <span id="prog-status">生成中...</span>
+          <div class="prog-label" style="display:flex; align-items:center; gap:8px;">
+            <span id="prog-status" style="flex:1;">生成中...</span>
             <span id="prog-text">0%</span>
+            <button onclick="cancelCurrentJob()" id="gen-cancel-btn"
+              style="flex-shrink:0; padding:4px 10px; border:1.5px solid #ef4444; background:#fff; color:#ef4444; border-radius:6px; font-size:0.7rem; font-weight:800; cursor:pointer; font-family:inherit;">
+              ✕ キャンセル
+            </button>
           </div>
           <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
           <!-- ステップ表示 -->
@@ -819,7 +827,31 @@ async function startFvGenerate() {
   const data = await res.json();
   if (data.error) { toast('❌ ' + data.error); btn.disabled = false; btn.innerHTML = '<span class="material-icons">auto_awesome</span> AIがFV10パターンを生成する'; return; }
 
+  window._activeJobId = data.job_id;  // キャンセル用
+  window._activeMode = 'fvgen';
   pollFvGenJob(data.job_id, data.session_id);
+}
+
+
+// ─── 全モード共通: 生成中ジョブをキャンセル ──────────────────────
+async function cancelCurrentJob() {
+  const jobId = window._activeJobId;
+  if (!jobId) { toast('⚠️ キャンセル対象のジョブがありません'); return; }
+  const confirmed = confirm('生成を中止しますか？\n処理中の結果は失われます。');
+  if (!confirmed) return;
+  try {
+    const res = await fetch('/cancel/' + jobId, { method: 'POST' });
+    const data = await res.json();
+    if (data.error) { toast('❌ ' + data.error); return; }
+    toast('🛑 キャンセル要求を送信しました。処理が止まるまで数秒かかります');
+    // ボタンを disabled 化
+    ['fvgen-cancel-btn', 'gen-cancel-btn'].forEach(id => {
+      const b = document.getElementById(id);
+      if (b) { b.disabled = true; b.textContent = 'キャンセル中...'; b.style.opacity = '0.5'; }
+    });
+  } catch (e) {
+    toast('❌ キャンセル要求失敗: ' + e.message);
+  }
 }
 
 function updateFvGenStep(stepName) {
@@ -876,6 +908,22 @@ async function pollFvGenJob(jobId, sid) {
       const btn = document.getElementById('fvgen-btn');
       btn.disabled = false;
       btn.innerHTML = '<span class="material-icons">auto_awesome</span> AIがFV10パターンを生成する';
+      window._activeJobId = null;
+    } else if (job.status === 'cancelled') {
+      clearInterval(poll);
+      document.getElementById('fvgen-progress').style.display = 'none';
+      document.getElementById('fvgen-running-banner').style.display = 'none';
+      toast('🛑 FV生成がキャンセルされました');
+      if (job.results && job.results.length > 0) {
+        renderFvGenResults(job.results, sid);
+        toast('途中まで生成した ' + job.results.length + '本は保持されます');
+      }
+      const btn = document.getElementById('fvgen-btn');
+      btn.disabled = false;
+      btn.innerHTML = '<span class="material-icons">auto_awesome</span> AIがFV10パターンを生成する';
+      window._activeJobId = null;
+    } else if (job.status === 'done') {
+      window._activeJobId = null;
     }
   }, 3000);
 }
@@ -1176,6 +1224,7 @@ function updateGenStep(pct) {
 }
 
 function pollStatus(jobId, onDone) {
+  window._activeJobId = jobId;  // キャンセル対象を記録
   document.getElementById('gen-running-banner').style.display = '';
   const interval = setInterval(async () => {
     try {
@@ -1201,12 +1250,25 @@ function pollStatus(jobId, onDone) {
         sendBrowserNotif('✅ 生成完了！', `${job.results.length}本の動画が準備できたよ！KOSURIちゃんStudioに戻ってね`);
         kosuriAskFeedback();
         if (onDone) onDone();
+        window._activeJobId = null;
       } else if (job.status === 'error') {
         clearInterval(interval);
         document.getElementById('gen-btn').disabled = false;
         document.getElementById('progress').style.display = 'none';
         document.getElementById('gen-running-banner').style.display = 'none';
         toast('エラー: ' + (job.error || '生成に失敗'));
+        window._activeJobId = null;
+      } else if (job.status === 'cancelled') {
+        clearInterval(interval);
+        document.getElementById('gen-btn').disabled = false;
+        document.getElementById('progress').style.display = 'none';
+        document.getElementById('gen-running-banner').style.display = 'none';
+        toast('🛑 生成がキャンセルされました');
+        if (job.results && job.results.length > 0) {
+          renderResults(jobId, job.results);
+          toast('途中まで生成した ' + job.results.length + ' 本は保持されます');
+        }
+        window._activeJobId = null;
       }
     } catch (e) { /* retry */ }
   }, 1500);
