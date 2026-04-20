@@ -69,6 +69,46 @@
           "advertiser": "更新中"
         }
       ]
+    },
+    "apobusterf": {
+      "own": 20838,
+      "market": 10248667,
+      "share_pct": 0.203,
+      "competitors_top2": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "cost_diff": 3256888,
+          "advertiser": "株式会社ヨミテ"
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 1203700,
+          "advertiser": "海外ブランド"
+        }
+      ],
+      "own_creatives_top3": [
+        {
+          "cost_diff": 10940,
+          "app": "Instagram",
+          "hook": "ちょっと高くてもいいから脇が根本解決したい人を探しています",
+          "url": "https://www.instagram.com/p/DWq8LkIAD9d/",
+          "lp": "https://sb-apoama.discover-news.tokyo/ab/apo_fb_a"
+        },
+        {
+          "cost_diff": 5624,
+          "app": "Instagram",
+          "hook": "緑茶をたくさん飲むと脇がが落ち着くって本当ですか?",
+          "url": "https://www.instagram.com/p/DXJo-uIAFcd/",
+          "lp": "https://sb-apoama.discover-news.tokyo/ab/apo-buster_fb_2"
+        },
+        {
+          "cost_diff": 4274,
+          "app": "TikTok",
+          "hook": "コーヒーを控えると脇がが気にならなくなるって本当ですか",
+          "url": "https://www.tiktok.com/@.../video/7629609245444656405",
+          "lp": "https://sb-apo-buster-tiktok.discover-news.tokyo/ab/apo-buster_tik-c"
+        }
+      ]
     }
   }
 }

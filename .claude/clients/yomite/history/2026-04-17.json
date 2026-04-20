@@ -61,6 +61,46 @@
           "cost_diff": 1168010
         }
       ]
+    },
+    "apobusterf": {
+      "own": 350414,
+      "market": 17515842,
+      "share_pct": 2.001,
+      "competitors_top2": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "cost_diff": 8956408,
+          "advertiser": "株式会社ヨミテ"
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 1000000,
+          "advertiser": "海外ブランド"
+        }
+      ],
+      "own_creatives_top3": [
+        {
+          "cost_diff": 274440,
+          "app": "TikTok",
+          "hook": "Tシャツに脇が臭残ってる人、絶対見て!（TikTokブロード配信）",
+          "url": "https://www.tiktok.com/@.../video/7628915904717344017",
+          "lp": "https://sb-apo-buster-tiktok.discover-news.tokyo/ab/apo-buster_tt_broad"
+        },
+        {
+          "cost_diff": 74000,
+          "app": "Google",
+          "hook": "（Google Discoveryバナー）",
+          "url": "https://tpc.googlesyndication.com/simgad/2432524759068718477",
+          "lp": "https://nichijourank.jp/ワキガ対策グッズ"
+        },
+        {
+          "cost_diff": 1974,
+          "app": "TikTok",
+          "hook": "Tシャツに脇が臭残ってる人、絶対見て!（別クリエイティブ）",
+          "url": "https://www.tiktok.com/@.../video/7628535947273014544",
+          "lp": "https://sb-apo-buster-tiktok.discover-news.tokyo/ab/apo-buster_tt_broad"
+        }
+      ]
     }
   }
 }

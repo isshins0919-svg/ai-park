@@ -44,7 +44,12 @@
           "name": "コーセー 雪肌精UVエッセンスミルク",
           "cost_diff": 2228700
         }
-      ]
+      ],
+      "media_breakdown": {
+        "video": 20484,
+        "banner": 870680,
+        "carousel": 0
+      }
     },
     "proust": {
       "own": 1631456,
@@ -82,7 +87,12 @@
           "name": "Old Spice フィジーの香りデオドラント",
           "cost_diff": 759127
         }
-      ]
+      ],
+      "media_breakdown": {
+        "video": 4446464,
+        "banner": 1554524,
+        "carousel": 0
+      }
     },
     "gungun": {
       "own": 2250848,
@@ -120,7 +130,12 @@
           "name": "エメトレ ドクターセノビル",
           "cost_diff": 308800
         }
-      ]
+      ],
+      "media_breakdown": {
+        "video": 1391418,
+        "banner": 2832588,
+        "carousel": 0
+      }
     },
     "rkl": {
       "own": 1225052,
@@ -158,7 +173,59 @@
           "name": "（2位調査予定）",
           "cost_diff": 0
         }
-      ]
+      ],
+      "media_breakdown": {
+        "video": 1896680,
+        "banner": 85744,
+        "carousel": 0
+      }
+    },
+    "apobusterf": {
+      "own": 12298,
+      "market": 8868178,
+      "share_pct": 0.139,
+      "competitors_top2": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "cost_diff": 1631456,
+          "advertiser": "株式会社ヨミテ"
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 1466474,
+          "advertiser": "海外ブランド"
+        }
+      ],
+      "own_creatives_top3": [
+        {
+          "cost_diff": 5052,
+          "app": "Facebook",
+          "hook": "Tシャツに脇が臭残ってる人絶対見て えーと脇がが病気ってご存知じゃない",
+          "url": "https://www.facebook.com/100093326922927/videos/1736184514033276",
+          "lp": "https://sb-apoama.discover-news.tokyo/ab/apo-buster_fb_2"
+        },
+        {
+          "cost_diff": 4274,
+          "app": "TikTok",
+          "hook": "コーヒーを控えると脇がが気にならなくなるって本当ですか",
+          "url": "https://www.tiktok.com/@.../video/7629609245444656405",
+          "lp": "https://sb-apo-buster-tiktok.discover-news.tokyo/ab/apo-buster_tik-c"
+        },
+        {
+          "cost_diff": 2972,
+          "app": "Facebook",
+          "hook": "Tシャツに脇が臭残ってる人絶対見て（別クリエイティブ）",
+          "url": "https://www.facebook.com/100093326922927/videos/2407212953129814",
+          "lp": "https://sb-apoama.discover-news.tokyo/ab/apo-buster_fb_2"
+        }
+      ],
+      "media_breakdown": {
+        "video": 20241,
+        "banner": 8,
+        "carousel": 0
+      }
     }
-  }
+  },
+  "to_date_api": "2026-04-19",
+  "note": "date=発行日(朝投稿日)、to_date_api=DPro APIでのto_date。interval=2でto_date_api〜前日(to_date-1)の2日間差分を集計。8時投稿運用のため当日データは含まない。"
 }

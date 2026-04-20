@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "updated_at": "2026-04-20",
-  "description": "ヨミテ4商品 DPro日次ニュース設定。dpro-yomite-daily-news スキルが参照。",
+  "description": "ヨミテ系 5商品 DPro日次ニュース設定。dpro-yomite-daily-news スキルが参照。商品ごとに advertiser_id を上書き可能（未指定ならトップレベルのヨミテを使用）。",
   "slack_channel": "C0AMYLU2W5D",
   "advertiser_id": 1485,
   "advertiser_name": "株式会社ヨミテ",
@@ -77,6 +77,21 @@
         "exclude_keywords": ["キャンペーン", "求人", "住宅", "転職", "応募", "プレゼント"],
         "note": "DProにヒザジャンルがないため、ヘルスケア用品×キーワード×除外で疑似ジャンル化。週次で除外語を見直す。"
       }
+    },
+    {
+      "name": "アポバスターF",
+      "display_name": "アポバスターF",
+      "product_id": 172612,
+      "advertiser_id": 2053,
+      "advertiser_name_override": "ドクターシリーズ株式会社",
+      "color": "#EC407A",
+      "emoji": "🧴",
+      "market": {
+        "type": "genre",
+        "genre_ids": [76],
+        "genre_label": "体臭ケア"
+      },
+      "note": "アポクリン腺対策・脇が訴求の医薬部外品。プルーストクリーム2と同ジャンル体臭ケアでグループ企業内の意図的競合ポジション（両方の状況を比較観察するため併載）。自社集計のadvertiser_idはドクターシリーズ株式会社(2053)で上書き。"
     }
   ],
   "image_generation": {
