@@ -15,6 +15,7 @@
 | [pak-philosophy.md](pak-philosophy.md) | **マーケ哲学の核**（357行）。全スキル共通の判断基準。3価値観・3つの魂・戦略翻訳・KV哲学・エンベディング哲学・組織設計・プランモード・フィードバック・ポメ太DIVE9原則 |
 | [park-architecture.md](park-architecture.md) | Park Skillsパイプライン設計原則 |
 | [ccdd-strategy.md](ccdd-strategy.md) | CCDD勉強会からのAI活用方針（Phase 1-4構想） |
+| [lp-n1-framework.md](lp-n1-framework.md) | **LP N1フレーム**（買う瞬間の動機軸）。`/lp-park`から必読。ameru案件で確立 |
 
 ---
 
