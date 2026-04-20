@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — 全画像ギャラリー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --cream: #FBF4EC;
+  --beige: #F5E6DC;
+  --pink-soft: #F4C6BD;
+  --pink-deep: #D98C7E;
+  --ink: #2A2525;
+  --ink-sub: #6B5D52;
+  --white: #FFFFFF;
+  --f-maru: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+  --f-sans: 'Noto Sans JP', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-sans);
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt" 1;
+}
+img { display:block; max-width:100%; height:auto; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 40px 20px 80px; }
+
+.top-link {
+  display: inline-block;
+  font-family: var(--f-maru);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--pink-deep);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--pink-deep);
+  margin-bottom: 24px;
+  padding-bottom: 2px;
+}
+
+.page-title {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.page-title em {
+  font-style: normal;
+  color: var(--pink-deep);
+}
+.page-lead {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ink-sub);
+  margin-bottom: 28px;
+  max-width: 640px;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-bottom: 40px;
+  font-family: var(--f-maru);
+  font-size: 12px;
+  color: var(--ink-sub);
+}
+.stats span {
+  background: var(--white);
+  border: 1px solid var(--beige);
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+.stats b { color: var(--pink-deep); font-weight: 900; margin-right: 4px; }
+
+.toc {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+  box-shadow: 0 2px 12px rgba(217,140,126,0.06);
+}
+.toc h3 {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--ink-sub);
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+}
+.toc__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.toc__list a {
+  font-family: var(--f-maru);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--pink-deep);
+  text-decoration: none;
+  background: var(--beige);
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+.toc__list a:hover { background: var(--pink-soft); }
+
+.category {
+  margin-bottom: 56px;
+  scroll-margin-top: 20px;
+}
+.category__header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--beige);
+  margin-bottom: 24px;
+}
+.category__title {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--ink);
+}
+.category__count {
+  font-family: var(--f-maru);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--pink-deep);
+  background: var(--white);
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--pink-soft);
+}
+.category__desc {
+  font-size: 12.5px;
+  color: var(--ink-sub);
+  margin-top: 4px;
+  line-height: 1.8;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.img-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(217,140,126,0.06);
+  display: flex;
+  flex-direction: column;
+}
+.img-card__thumb {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: var(--beige);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--beige);
+}
+.img-card__thumb--cover img { object-fit: cover; }
+.img-card__body {
+  padding: 12px 14px 14px;
+}
+.img-card__id {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 11px;
+  color: var(--pink-deep);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.img-card__name {
+  font-family: var(--f-maru);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.img-card__meta {
+  font-size: 10.5px;
+  color: var(--ink-sub);
+  line-height: 1.6;
+}
+.img-card__usage {
+  font-size: 10px;
+  color: var(--pink-deep);
+  margin-top: 6px;
+  font-weight: 700;
+}
+
+.char-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(217,140,126,0.06);
+}
+.char-card img { width: 80%; margin: 0 auto 12px; aspect-ratio: 1/1; object-fit: contain; }
+.char-card__name {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.footer-nav {
+  margin-top: 40px;
+  padding: 24px;
+  background: var(--white);
+  border-radius: 20px;
+  text-align: center;
+}
+.footer-nav a {
+  font-family: var(--f-maru);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--pink-deep);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--pink-deep);
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="top-link" href="10_patterns_index.html">← LP一覧に戻る</a>
+
+  <h1 class="page-title">
+    ameru <em>全画像</em> ギャラリー
+  </h1>
+  <p class="page-lead">
+    LP群で使用している全ビジュアル素材を、用途別にカタログ化。<br>
+    ロゴ・既存撮影素材（7本）・Phase1 AI生成（17本）・Phase2 AI生成（12本）・公式IPキャラ（5体）。
+  </p>
+
+  <div class="stats">
+    <span><b>2</b> ロゴ</span>
+    <span><b>7</b> 既存撮影</span>
+    <span><b>17</b> Phase1 AI生成</span>
+    <span><b>12</b> Phase2 AI生成</span>
+    <span><b>5</b> 公式IPキャラ</span>
+    <span><b>43</b> 合計素材</span>
+  </div>
+
+  <!-- 目次 -->
+  <div class="toc">
+    <h3>CATEGORIES</h3>
+    <div class="toc__list">
+      <a href="#logos">🌱 ロゴ</a>
+      <a href="#characters">💗 公式IPキャラ</a>
+      <a href="#existing">📸 既存撮影素材</a>
+      <a href="#phase1-hero">🎨 Phase1 ヒーロー</a>
+      <a href="#phase1-kit">🎨 Phase1 キット内容</a>
+      <a href="#phase1-lineup">🎨 Phase1 ラインナップ</a>
+      <a href="#phase1-bg">🎨 Phase1 背景素材</a>
+      <a href="#phase2-timeline">✨ Phase2 タイムライン</a>
+      <a href="#phase2-emotion">✨ Phase2 人物×感情</a>
+      <a href="#phase2-gift">✨ Phase2 ギフト</a>
+    </div>
+  </div>
+
+  <!-- ロゴ -->
+  <section class="category" id="logos">
+    <div class="category__header">
+      <h2 class="category__title">🌱 ロゴ</h2>
+      <span class="category__count">2本</span>
+    </div>
+    <p class="category__desc">全LPのヘッダー・フッターで使用するブランドロゴ。</p>
+    <div class="grid">
+      <div class="img-card">
+        <div class="img-card__thumb"><img src="images/logos/ameru_logo_main.png" alt="ameru メインロゴ"></div>
+        <div class="img-card__body">
+          <div class="img-card__id">LOGO-01</div>
+          <div class="img-card__name">ameru メインロゴ</div>
+          <div class="img-card__meta">PNG / 横長</div>
+          <div class="img-card__usage">全LPヘッダー / フッター</div>
+        </div>
+      </div>
+      <div class="img-card">
+        <div class="img-card__thumb"><img src="images/logos/ameru_logo_pink.png" alt="ameru ピンクロゴ"></div>
+        <div class="img-card__body">
+          <div class="img-card__id">LOGO-02</div>
+          <div class="img-card__name">ameru ピンクロゴ</div>
+          <div class="img-card__meta">PNG / 横長</div>
+          <div class="img-card__usage">ピンク系バリエ用</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 公式IPキャラ -->
+  <section class="category" id="characters">
+    <div class="category__header">
+      <h2 class="category__title">💗 公式IPキャラ（らぶいーず）</h2>
+      <span class="category__count">5体</span>
+    </div>
+    <p class="category__desc">NTV公式 らぶいーずの5キャラ。装飾要素として全LPで活用。画像は loveeez.com 公式からロード。</p>
+    <div class="grid">
+      <div class="char-card"><img src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="すもっぴ"><div class="char-card__name">すもっぴ</div></div>
+      <div class="char-card"><img src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="ぴょんちー"><div class="char-card__name">ぴょんちー</div></div>
+      <div class="char-card"><img src="https://loveeez.com/assets/imgs/home/friends_nyapo_info.webp" alt="にゃぽ"><div class="char-card__name">にゃぽ</div></div>
+      <div class="char-card"><img src="https://loveeez.com/assets/imgs/home/friends_ururu_info.webp" alt="うるる"><div class="char-card__name">うるる</div></div>
+      <div class="char-card"><img src="https://loveeez.com/assets/imgs/home/friends_paopao_info.webp" alt="ぱおぱお"><div class="char-card__name">ぱおぱお</div></div>
+    </div>
+  </section>
+
+  <!-- 既存撮影素材 -->
+  <section class="category" id="existing">
+    <div class="category__header">
+      <h2 class="category__title">📸 既存撮影素材</h2>
+      <span class="category__count">7本</span>
+    </div>
+    <p class="category__desc">プロジェクト開始時からの実物撮影素材。商品・パッケージ・編み手元など基礎ビジュアル。</p>
+    <div class="grid">
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/01_zumoppi_hero.png" alt=""></div><div class="img-card__body"><div class="img-card__id">01</div><div class="img-card__name">すもっぴヒーロー</div><div class="img-card__meta">正方・青空背景</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/02_package_lifestyle.png" alt=""></div><div class="img-card__body"><div class="img-card__id">02</div><div class="img-card__name">パッケージ × 桜</div><div class="img-card__meta">ライフスタイル</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/03_unboxing_flatlay.png" alt=""></div><div class="img-card__body"><div class="img-card__id">03</div><div class="img-card__name">開封フラットレイ</div><div class="img-card__meta">トップダウン</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/04_hands_crafting.png" alt=""></div><div class="img-card__body"><div class="img-card__id">04</div><div class="img-card__name">編み手元</div><div class="img-card__meta">暖色×情緒</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/05_lifestyle_finished.png" alt=""></div><div class="img-card__body"><div class="img-card__id">05</div><div class="img-card__name">完成後ライフスタイル</div><div class="img-card__meta">抱きしめる</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/06_shelf_display.png" alt=""></div><div class="img-card__body"><div class="img-card__id">06</div><div class="img-card__name">棚ディスプレイ</div><div class="img-card__meta">生活馴染み</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/07_collection_preview.png" alt=""></div><div class="img-card__body"><div class="img-card__id">07</div><div class="img-card__name">5キャラコレクション</div><div class="img-card__meta">旧ラインナップ</div></div></div>
+    </div>
+  </section>
+
+  <!-- Phase1 ヒーロー -->
+  <section class="category" id="phase1-hero">
+    <div class="category__header">
+      <h2 class="category__title">🎨 Phase1 ヒーロー完成品</h2>
+      <span class="category__count">6本</span>
+    </div>
+    <p class="category__desc">Gemini 3 Pro Image Preview 生成。各LPのFV候補になる最重要ヒーロー。</p>
+    <div class="grid">
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/H01_hero_cloud_blanket.png" alt=""></div><div class="img-card__body"><div class="img-card__id">H01</div><div class="img-card__name">白毛布×朝日</div><div class="img-card__meta">4:5 縦</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/H02_hero_pinkbeige_square.png" alt=""></div><div class="img-card__body"><div class="img-card__id">H02</div><div class="img-card__name">ピンクベージュ背景</div><div class="img-card__meta">1:1 meeth型</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/H03_hero_wood_table.png" alt=""></div><div class="img-card__body"><div class="img-card__id">H03</div><div class="img-card__name">木テーブル</div><div class="img-card__meta">16:9 ナチュラル</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/H04_hero_with_package.png" alt=""></div><div class="img-card__body"><div class="img-card__id">H04</div><div class="img-card__name">パッケージ並置</div><div class="img-card__meta">4:5 商品型</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/H05_hero_face_macro.png" alt=""></div><div class="img-card__body"><div class="img-card__id">H05</div><div class="img-card__name">顔マクロ</div><div class="img-card__meta">1:1 SNS映え</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/H06_hero_hands_holding.png" alt=""></div><div class="img-card__body"><div class="img-card__id">H06</div><div class="img-card__name">手で持つ</div><div class="img-card__meta">4:5 感情訴求</div></div></div>
+    </div>
+  </section>
+
+  <!-- Phase1 キット -->
+  <section class="category" id="phase1-kit">
+    <div class="category__header">
+      <h2 class="category__title">🎨 Phase1 キット内容物</h2>
+      <span class="category__count">4本</span>
+    </div>
+    <p class="category__desc">"超カンタンに編めるオリジナル糸"の証拠。動画ガイドビジュアル化にも活用。</p>
+    <div class="grid">
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/K01_kit_flatlay_woobles.png" alt=""></div><div class="img-card__body"><div class="img-card__id">K01</div><div class="img-card__name">キット一式フラットレイ</div><div class="img-card__meta">1:1</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/K02_yarn_macro_easy_peasy.png" alt=""></div><div class="img-card__body"><div class="img-card__id">K02</div><div class="img-card__name">糸マクロ</div><div class="img-card__meta">1:1 品質証拠</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/K03_phone_hands_learning.png" alt=""></div><div class="img-card__body"><div class="img-card__id">K03</div><div class="img-card__name">スマホ動画×手元</div><div class="img-card__meta">4:5 仕組み説明</div><div class="img-card__usage">P01原本・P06</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/K04_unboxing_moment.png" alt=""></div><div class="img-card__body"><div class="img-card__id">K04</div><div class="img-card__name">箱開封の瞬間</div><div class="img-card__meta">16:9 ときめき</div><div class="img-card__usage">P01原本 Step1</div></div></div>
+    </div>
+  </section>
+
+  <!-- Phase1 ラインナップ -->
+  <section class="category" id="phase1-lineup">
+    <div class="category__header">
+      <h2 class="category__title">🎨 Phase1 ラインナップ</h2>
+      <span class="category__count">4本</span>
+    </div>
+    <p class="category__desc">5キャラコラボ訴求の複数パターン。</p>
+    <div class="grid">
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/L01_lineup_remaster.png" alt=""></div><div class="img-card__body"><div class="img-card__id">L01</div><div class="img-card__name">5体×紙吹雪</div><div class="img-card__meta">16:9 スタジオ</div><div class="img-card__usage">P01/P02/P08</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/L02_lineup_shelf.png" alt=""></div><div class="img-card__body"><div class="img-card__id">L02</div><div class="img-card__name">5体×棚×インテリア</div><div class="img-card__meta">16:9 生活馴染み</div><div class="img-card__usage">P01原本 集めたい</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/L03_lineup_focus_foreground.png" alt=""></div><div class="img-card__body"><div class="img-card__id">L03</div><div class="img-card__name">前1体フォーカス</div><div class="img-card__meta">4:5 主役ローテ</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/L04_lineup_with_charspace.png" alt=""></div><div class="img-card__body"><div class="img-card__id">L04</div><div class="img-card__name">5体×下部余白</div><div class="img-card__meta">16:9 IP並置用</div></div></div>
+    </div>
+  </section>
+
+  <!-- Phase1 背景 -->
+  <section class="category" id="phase1-bg">
+    <div class="category__header">
+      <h2 class="category__title">🎨 Phase1 背景素材</h2>
+      <span class="category__count">3本（T04は失敗・CSS代替）</span>
+    </div>
+    <p class="category__desc">LP全体のトーン統一に使うテクスチャ素材。T04はIP_RECITATIONで2回失敗→CSS gradientで代替予定。</p>
+    <div class="grid">
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/T01_bg_pinkbeige_gradient.png" alt=""></div><div class="img-card__body"><div class="img-card__id">T01</div><div class="img-card__name">ピンクベージュグラデ</div><div class="img-card__meta">1:1 meeth背景</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/T02_bg_yarn_negative.png" alt=""></div><div class="img-card__body"><div class="img-card__id">T02</div><div class="img-card__name">白毛糸×右余白</div><div class="img-card__meta">16:9 キャプション敷き</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase1/T03_bg_pastel_confetti.png" alt=""></div><div class="img-card__body"><div class="img-card__id">T03</div><div class="img-card__name">パステル紙吹雪</div><div class="img-card__meta">1:1 お祝い</div></div></div>
+    </div>
+  </section>
+
+  <!-- Phase2 タイムライン -->
+  <section class="category" id="phase2-timeline">
+    <div class="category__header">
+      <h2 class="category__title">✨ Phase2 編む過程・タイムライン</h2>
+      <span class="category__count">5本</span>
+    </div>
+    <p class="category__desc">"完成までの道のり"を画で語る。Step2-4・Before/After訴求・FV候補に活用。</p>
+    <div class="grid">
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/P01_timeline_start.png" alt=""></div><div class="img-card__body"><div class="img-card__id">P01</div><div class="img-card__name">糸玉と最初の一目</div><div class="img-card__meta">1:1 スタート</div><div class="img-card__usage">P01原本 Step2</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/P02_timeline_half_head.png" alt=""></div><div class="img-card__body"><div class="img-card__id">P02</div><div class="img-card__name">頭だけ編みあがり</div><div class="img-card__meta">1:1 進行中</div><div class="img-card__usage">P01原本 Step3</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/P03_timeline_before_face.png" alt=""></div><div class="img-card__body"><div class="img-card__id">P03</div><div class="img-card__name">顔付ける直前</div><div class="img-card__meta">1:1 クライマックス</div><div class="img-card__usage">P01原本 Step4</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/P04_timeline_palms.png" alt=""></div><div class="img-card__body"><div class="img-card__id">P04</div><div class="img-card__name">手のひらに乗せる</div><div class="img-card__meta">4:5 達成感</div><div class="img-card__usage">P01原本 FV</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/P05_timeline_before_after.png" alt=""></div><div class="img-card__body"><div class="img-card__id">P05</div><div class="img-card__name">Before/After 2分割</div><div class="img-card__meta">1:1 変化訴求</div><div class="img-card__usage">P01原本 B/A</div></div></div>
+    </div>
+  </section>
+
+  <!-- Phase2 人物×感情 -->
+  <section class="category" id="phase2-emotion">
+    <div class="category__header">
+      <h2 class="category__title">✨ Phase2 人物×感情</h2>
+      <span class="category__count">4本</span>
+    </div>
+    <p class="category__desc">"投影"を作る感情ショット。AI生成で撮影と遜色ない品質 → Phase3撮影不要と判断。</p>
+    <div class="grid">
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/E01_emotion_hug.png" alt=""></div><div class="img-card__body"><div class="img-card__id">E01</div><div class="img-card__name">抱きしめる</div><div class="img-card__meta">4:5 癒し</div><div class="img-card__usage">P01原本 感情ピーク</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/E02_emotion_crafting.png" alt=""></div><div class="img-card__body"><div class="img-card__id">E02</div><div class="img-card__name">編んでる途中</div><div class="img-card__meta">4:5 没入</div><div class="img-card__usage">P01B 癒し・P07</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/E03_emotion_parent_child.png" alt=""></div><div class="img-card__body"><div class="img-card__id">E03</div><div class="img-card__name">親子で編む</div><div class="img-card__meta">16:9 家族</div><div class="img-card__usage">P10 カップル・家族</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/E04_emotion_windowsill.png" alt=""></div><div class="img-card__body"><div class="img-card__id">E04</div><div class="img-card__name">窓辺に飾る</div><div class="img-card__meta">4:5 余韻</div><div class="img-card__usage">P01原本 Step5</div></div></div>
+    </div>
+  </section>
+
+  <!-- Phase2 ギフト -->
+  <section class="category" id="phase2-gift">
+    <div class="category__header">
+      <h2 class="category__title">✨ Phase2 ギフト文脈</h2>
+      <span class="category__count">3本</span>
+    </div>
+    <p class="category__desc">プレゼント購入層（誕生日・出産祝い・子どもへ）取得用。</p>
+    <div class="grid">
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/G01_gift_ribbon_card.png" alt=""></div><div class="img-card__body"><div class="img-card__id">G01</div><div class="img-card__name">リボン＋カード</div><div class="img-card__meta">1:1 ギフト</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/G02_gift_handover.png" alt=""></div><div class="img-card__body"><div class="img-card__id">G02</div><div class="img-card__name">渡す手</div><div class="img-card__meta">4:5 愛情</div></div></div>
+      <div class="img-card"><div class="img-card__thumb img-card__thumb--cover"><img src="images/phase2/G03_gift_child_hands.png" alt=""></div><div class="img-card__body"><div class="img-card__id">G03</div><div class="img-card__name">子どもが受け取る</div><div class="img-card__meta">4:5 感情ピーク</div></div></div>
+    </div>
+  </section>
+
+  <div class="footer-nav">
+    <a href="10_patterns_index.html">← LP一覧に戻る</a>
+  </div>
+
+</div>
+</body>
+</html>

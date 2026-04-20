@@ -186,6 +186,28 @@ body::before {
   transition: transform 0.4s ease;
 }
 .card:hover .card__thumb img { transform: scale(1.05); }
+.card__thumb-overlay {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(42, 37, 37, 0.82) 60%);
+  padding: 32px 14px 12px;
+  z-index: 2;
+}
+.card__thumb-label {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 12px;
+  color: var(--white);
+  letter-spacing: 0.08em;
+  text-align: center;
+  line-height: 1.5;
+}
+.card__thumb-label .x {
+  color: var(--pink-soft);
+  font-size: 10px;
+  margin: 0 4px;
+  font-weight: 700;
+}
 .card__chara-badge {
   position: absolute;
   bottom: 10px; right: 10px;
@@ -356,15 +378,19 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P01</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="">
-        <img src="images/phase1/H02_hero_pinkbeige_square.png" alt="P01 meeth型">
+        <img src="images/phase2/P04_timeline_palms.png" alt="P01 原本">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">推し活訴求 <span class="x">×</span> meeth系ビューティ構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">MEETH 型 · 原本</div>
-        <h3 class="card__title">世界に1つだけの<br>"すもっぴ"を。</h3>
-        <p class="card__desc">ピンクベージュ×太字×親しみ。meeth系の基準となるLP。</p>
+        <div class="card__archetype">原本 · 広めターゲット</div>
+        <h3 class="card__title">あの子を、<br>自分の手で編む。</h3>
+        <p class="card__desc">らぶいーず公式 あみぐるみキットの基準LP。ピンクベージュ×太字×肯定形コピーで、推し×手作り体験を訴求。</p>
         <div class="card__tags">
           <span class="card__tag card__tag--new">原本</span>
           <span class="card__tag">meeth風</span>
+          <span class="card__tag">推し活</span>
           <span class="card__tag">定期便</span>
         </div>
       </div>
@@ -376,15 +402,19 @@ body::before {
         <span class="card__id">P01-A</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="">
         <img src="images/phase1/H05_hero_face_macro.png" alt="P01A 達成感型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">自己効力感訴求 <span class="x">×</span> UGC証拠構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">MEETH 系 · 達成感訴求</div>
+        <div class="card__archetype">MEETH 系 · 挫折経験者向け</div>
         <h3 class="card__title">自分で作ったって、<br>わかる。</h3>
-        <p class="card__desc">UGC写真×"不器用な私でも完成した"証拠。挫折経験者の自己効力感に刺す。</p>
+        <p class="card__desc">UGC写真×"不器用な私でも完成した"証拠を積み上げ、再挑戦成功の記念碑として刺す。</p>
         <div class="card__tags">
           <span class="card__tag card__tag--new">NEW</span>
           <span class="card__tag">UGC訴求</span>
-          <span class="card__tag">挫折経験者向け</span>
+          <span class="card__tag">挫折経験者</span>
+          <span class="card__tag">定期便</span>
         </div>
       </div>
     </a>
@@ -394,16 +424,20 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P01-B</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_ururu_info.webp" alt="">
-        <img src="images/phase1/H06_hero_hands_holding.png" alt="P01B 癒し型">
+        <img src="images/phase2/E02_emotion_crafting.png" alt="P01B 癒し型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">癒し訴求 <span class="x">×</span> 明朝ミニマル構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">MEETH 系 · マインドフル</div>
+        <div class="card__archetype">MEETH 系 · デジタル疲労層</div>
         <h3 class="card__title">スマホを、<br>置く時間。</h3>
-        <p class="card__desc">1日30分、手を動かす物語。デジタル疲労の社会人に"静けさ"を売る。</p>
+        <p class="card__desc">1日30分、手を動かす物語。明朝×静けさで、デジタル疲労のIT/クリエイティブ職に"何も考えない時間"を売る。</p>
         <div class="card__tags">
           <span class="card__tag card__tag--new">NEW</span>
           <span class="card__tag">マインドフル</span>
-          <span class="card__tag">明朝×太字</span>
+          <span class="card__tag">明朝</span>
+          <span class="card__tag">定期便</span>
         </div>
       </div>
     </a>
@@ -413,16 +447,20 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P01-C</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="">
-        <img src="images/phase1/L01_lineup_remaster.png" alt="P01C 推し活型">
+        <img src="images/phase1/L02_lineup_shelf.png" alt="P01C 推し活型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">コレクター訴求 <span class="x">×</span> IPコラボ構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">MEETH 系 · 推し活特化</div>
+        <div class="card__archetype">MEETH 系 · ガチファン向け</div>
         <h3 class="card__title">らぶいーず、<br>自分の手で迎える。</h3>
-        <p class="card__desc">NTV公式コラボ推し。"買う"から"迎える"へ。推し活ファン向け。</p>
+        <p class="card__desc">NTV公式コラボの特別性を前面に。5キャラ全コンプを"自作"で達成する推し活の新定番。</p>
         <div class="card__tags">
           <span class="card__tag card__tag--new">NEW</span>
           <span class="card__tag">推し活</span>
           <span class="card__tag">コレクション</span>
+          <span class="card__tag">定期便</span>
         </div>
       </div>
     </a>
@@ -432,15 +470,18 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P02</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="">
-        <img src="images/01_zumoppi_hero.png" alt="P02 snaq.me型">
+        <img src="images/phase1/L01_lineup_remaster.png" alt="P02 snaq.me型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">診断エンタメ訴求 <span class="x">×</span> snaq.me系ポップ構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">SNAQ.ME 型 · ポップ診断</div>
-        <h3 class="card__title">性格診断で選ぶ、<br>あなた色の1匹。</h3>
-        <p class="card__desc">カラフル×診断コンテンツで"自分にぴったり"体験を作るエンタメ型LP。</p>
+        <div class="card__archetype">SNAQ.ME 型 · エンタメ訴求</div>
+        <h3 class="card__title">性格診断で選ぶ、<br>あなた色の1体。</h3>
+        <p class="card__desc">カラフル×診断コンテンツで"自分にぴったり"体験を提供。エンタメ入口で初心者を取り込む。</p>
         <div class="card__tags">
           <span class="card__tag">snaq.me風</span>
-          <span class="card__tag">診断コンテンツ</span>
+          <span class="card__tag">診断</span>
           <span class="card__tag">定期便</span>
         </div>
       </div>
@@ -451,12 +492,15 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P05</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_paopao_info.webp" alt="">
-        <img src="images/01_zumoppi_hero.png" alt="P05 BASE FOOD型">
+        <img src="images/phase1/K02_yarn_macro_easy_peasy.png" alt="P05 BASE FOOD型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">科学訴求 <span class="x">×</span> BASE FOOD系数値構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">BASE FOOD 型 · 科学訴求</div>
+        <div class="card__archetype">BASE FOOD 型 · ロジカル志向層</div>
         <h3 class="card__title">編み物は、<br>設計で決まる。</h3>
-        <p class="card__desc">数値×根拠×"設計"の言語で語るロジカル訴求LP。モニター数×完成率で証明。</p>
+        <p class="card__desc">完成率95%等の数値・根拠・"設計"の言語でロジカルに訴求。理屈で納得したい人向け。</p>
         <div class="card__tags">
           <span class="card__tag">BASE FOOD風</span>
           <span class="card__tag">数値訴求</span>
@@ -470,12 +514,15 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P06</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_nyapo_info.webp" alt="">
-        <img src="images/04_hands_crafting.png" alt="P06 The Woobles型">
+        <img src="images/phase1/K03_phone_hands_learning.png" alt="P06 The Woobles型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">動画訴求 <span class="x">×</span> Woobles系本家直系構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">THE WOOBLES 型 · 本家直系</div>
+        <div class="card__archetype">THE WOOBLES 型 · ベンチマーク直系</div>
         <h3 class="card__title">思うより、カンタン。<br>本当に、ほんと。</h3>
-        <p class="card__desc">ベンチマーク本家The Wooblesのトンマナ直輸入。動画×Easy Peasy糸で編める。</p>
+        <p class="card__desc">本家The Wooblesのトンマナ直輸入。動画×Easy Peasy糸で"誰でも編める"を正面突破。</p>
         <div class="card__tags">
           <span class="card__tag">Woobles直系</span>
           <span class="card__tag">動画推し</span>
@@ -489,15 +536,18 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P07</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_ururu_info.webp" alt="">
-        <img src="images/02_package_lifestyle.png" alt="P07 TikTok UGC型">
+        <img src="images/phase2/E02_emotion_crafting.png" alt="P07 TikTok UGC型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">UGCバズ訴求 <span class="x">×</span> TikTok系縦動画構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">TIKTOK UGC 型 · Z世代縦動画</div>
+        <div class="card__archetype">TIKTOK UGC 型 · Z世代訴求</div>
         <h3 class="card__title">"編んでみた"が<br>バズってる。</h3>
         <p class="card__desc">縦動画×ハッシュタグ×UGCで"みんな編んでる"体感を作るSNSネイティブLP。</p>
         <div class="card__tags">
           <span class="card__tag">TikTok風</span>
-          <span class="card__tag">UGC推し</span>
+          <span class="card__tag">UGC</span>
           <span class="card__tag">Z世代</span>
           <span class="card__tag">定期便</span>
         </div>
@@ -509,16 +559,19 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P08</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="">
-        <img src="images/01_zumoppi_hero.png" alt="P08 らぶいーず推し活型">
+        <img src="images/phase1/L01_lineup_remaster.png" alt="P08 らぶいーず推し活型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">推し活コンプリート訴求 <span class="x">×</span> IP大展開構成</div>
+        </div>
       </div>
       <div class="card__body">
-        <div class="card__archetype">らぶいーず 推し活 型</div>
+        <div class="card__archetype">らぶいーず 推し活 型 · 熱狂ファン向け</div>
         <h3 class="card__title">らぶいーず、ぜんぶ、<br>自分の手で。</h3>
-        <p class="card__desc">NTV公式IPコラボを最大訴求。推し活×手作りの融合で熱狂ファンを狙う。</p>
+        <p class="card__desc">NTV公式IPコラボを最大訴求。推し活×手作りの融合で、5体コンプまで導く熱狂ファン型。</p>
         <div class="card__tags">
           <span class="card__tag card__tag--new">イチオシ</span>
           <span class="card__tag">らぶいーず推し</span>
-          <span class="card__tag">推し活</span>
+          <span class="card__tag">コンプリート</span>
           <span class="card__tag">定期便</span>
         </div>
       </div>
@@ -529,15 +582,19 @@ body::before {
       <div class="card__thumb">
         <span class="card__id">P10</span>
         <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="">
-        <img src="images/02_package_lifestyle.png" alt="P10 カップル型">
+        <img src="images/phase2/E03_emotion_parent_child.png" alt="P10 カップル型">
+        <div class="card__thumb-overlay">
+          <div class="card__thumb-label">ギフト・共同体験訴求 <span class="x">×</span> ストーリー構成</div>
+        </div>
       </div>
       <div class="card__body">
         <div class="card__archetype">カップル・家族 ストーリー型</div>
         <h3 class="card__title">ふたりで、<br>編んでみない？</h3>
-        <p class="card__desc">カップル・親子で編む時間を物語化。ギフト訴求 × 共同体験 LP。</p>
+        <p class="card__desc">カップル・親子で編む時間を物語化。ギフト訴求 × 共同体験で"一緒に作る"記憶を売る。</p>
         <div class="card__tags">
           <span class="card__tag">ストーリー型</span>
           <span class="card__tag">ギフト</span>
+          <span class="card__tag">親子</span>
           <span class="card__tag">定期便</span>
         </div>
       </div>
@@ -547,15 +604,16 @@ body::before {
 
   <!-- ── フッター情報 ── -->
   <div class="footer-info">
-    <h3>🎨 開発ツール・リンク</h3>
+    <h3>🎨 素材ギャラリー・開発ドキュメント</h3>
     <p>
-      Phase1で生成した17本の画像素材と、画像戦略ドキュメントはこちら。
+      このLP群で使用している全画像（ロゴ・パッケージ・既存素材・Phase1/2生成）と、戦略ドキュメントはこちら。
     </p>
     <div class="footer-info__links">
-      <a href="phase1_preview.html">📸 Phase1 画像17本サムネ</a>
-      <a href="image_strategy_3experts_discussion.md">📄 画像30本戦略（3人議論）</a>
-      <a href="phase1_prompts.md">✍️ Phase1 プロンプト設計</a>
-      <a href="images/phase1/">📁 素材フォルダ</a>
+      <a href="all_images_gallery.html"><strong>🖼️ 全画像ギャラリー（ロゴ・素材・全ビジュアル）</strong></a>
+      <a href="n1_redefinition.md">🧭 N1再定義（4パターン）</a>
+      <a href="phase2_prompts.md">🎨 Phase2 プロンプト設計（13本）</a>
+      <a href="phase1_preview.html">📸 Phase1 サムネ（旧）</a>
+      <a href="image_strategy_3experts_discussion.md">📄 画像30本戦略</a>
     </div>
     <div class="footer-info__chara-row">
       <img src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="すもっぴ">
