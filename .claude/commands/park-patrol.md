@@ -366,6 +366,62 @@ Step 5 のレポートに以下を追加表示する:
 
 ---
 
+### Step 2.6: リポジトリ健康診断
+
+**目的**: git repo に大容量ファイルや未整理の差分が溜まる前に検知し、push不可 / session肥大 / 整理コスト膨張を予防する。
+
+**背景**: 2026-04-19 に video-ai/fv_studio/uploads/ に3.6GB / 動画80ファイルが混入し、GitHub 100MB制限で push不可になった事故が発生。原因は `.gitignore` メンテ怠慢。事前検知できれば2時間の整理作業を予防できた。
+
+以下の bash を実行し、3つの健康指標を取得する:
+
+```bash
+# --- 健康指標1: 50MB超のgit追跡ファイル ---
+LARGE_FILES=$(git ls-files -z | xargs -0 -I {} sh -c 'if [ -f "{}" ]; then sz=$(stat -f%z "{}" 2>/dev/null); if [ "$sz" -gt 52428800 ] 2>/dev/null; then echo "$sz {}"; fi; fi' 2>/dev/null | sort -rn | head -5)
+
+# --- 健康指標2: .gitignore に入るべき疑いフォルダの検出 ---
+# ランタイム生成型っぽいフォルダ名 (uploads/, output/, cache/, tmp/, generated/, .cache/) がgit追跡下にあるか
+SUSPICIOUS_DIRS=$(git ls-files | awk -F'/' '{for(i=1;i<NF;i++){if($i~/^(uploads|output|cache|tmp|generated|\.cache|node_modules)$/){print $0; break}}}' | awk -F'/' '{path=""; for(i=1;i<=NF;i++){if(path)path=path"/"; path=path $i; if($i~/^(uploads|output|cache|tmp|generated|\.cache|node_modules)$/){print path; break}}}' | sort -u | head -5)
+
+# --- 健康指標3: 未コミット変更件数 ---
+UNSTAGED_COUNT=$(git status --short | wc -l | tr -d ' ')
+
+# 出力
+echo "LARGE_FILES: $LARGE_FILES"
+echo "SUSPICIOUS_DIRS: $SUSPICIOUS_DIRS"
+echo "UNSTAGED_COUNT: $UNSTAGED_COUNT"
+```
+
+**判定基準:**
+
+| 指標 | 注意 (🟡) | 警告 (🔴) |
+|---|---|---|
+| 50MB超 git追跡ファイル | 1件以上 | 100MB超 1件以上（= push不可） |
+| 疑いフォルダがgit追跡下 | 1個以上 | ー |
+| 未コミット変更件数 | 50件以上 | 100件以上 |
+
+**Step 5 レポートへの反映:**
+
+すべてクリアなら:
+```
+  🏥 リポ健康: ✅ クリア
+```
+
+何かあれば:
+```
+  🏥 リポ健康: ⚡ 注意あり
+     - 🔴 100MB超ファイル: {パス}（push不可）
+     - 🟡 50MB超ファイル: {件数}件
+     - 🟡 疑いフォルダがgit下: {パス}（.gitignore追加推奨）
+     - 🟡 未コミット {件数}件（コミット推奨）
+```
+
+**⚡ 要注目の判定基準に追加（Step 5 原則）:**
+- **100MB超ファイル検出** → 🔴 最優先。Park Kaizen 提案を出す前に `git-cleanup-captain`（未実装のSkill提案あり）で対応
+- **疑いフォルダ検出** → 🟡 中。`.gitignore` 更新を推奨アクションで出す
+- **未コミット100件超** → 🟡 中。整理コストが膨張中。いったん `/おつかれ` で commit 推奨
+
+---
+
 ### Step 3: 過去のパトロール記録を読み込み
 
 以下のファイルを Read する:
@@ -406,6 +462,7 @@ Step 2〜4 の情報を統合し、以下のフォーマットで **簡潔に** 
   🎬 動画生成:  {変動なし | ⚡ 要注目: 内容}
   🔌 API変更:   {変動なし | ⚡ 要注目: 内容}
   📢 広告トレンド: {変動なし | ⚡ 要注目: 内容}
+  🏥 リポ健康: {✅ クリア | ⚡ 注意あり: 内訳}
 
   ─────────────────────────────────────────
   影響スキル:

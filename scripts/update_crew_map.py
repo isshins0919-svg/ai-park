@@ -3,7 +3,7 @@
 update_crew_map.py — 一進VOYAGE号クルーマップ自動更新スクリプト
 
 .claude/agents/ と .claude/commands/ の frontmatter を読み込み、
-docs/voyage-crew-map.html の以下を自動更新する:
+docs/voyage/voyage-crew-map.html の以下を自動更新する:
   - STATS (TOTAL CREW / AGENTS / SKILLS)
   - 新入りクルー（HTMLに未登場のファイルを自動検出して追記）
 
@@ -18,7 +18,7 @@ from pathlib import Path
 BASE = Path(__file__).parent.parent
 AGENTS_DIR   = BASE / ".claude/agents"
 COMMANDS_DIR = BASE / ".claude/commands"
-HTML_PATH    = BASE / "docs/voyage-crew-map.html"
+HTML_PATH    = BASE / "docs/voyage/voyage-crew-map.html"
 
 # スキップするファイル（特殊用途）
 SKIP_FILES = {"pak-sensei.md"}
