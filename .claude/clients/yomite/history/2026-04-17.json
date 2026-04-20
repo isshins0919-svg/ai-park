@@ -1,0 +1,66 @@
+{
+  "date": "2026-04-17",
+  "to_date_api": "2026-04-16",
+  "products": {
+    "onmyskin": {
+      "own": 53478,
+      "market": 14965124,
+      "share_pct": 0.357,
+      "competitors_top2": [
+        {
+          "name": "第一三共ヘルスケア ブライトエイジ アイゾーン ダブルリバイタライザー",
+          "cost_diff": 1677630
+        },
+        {
+          "name": "シロク 赤CICA 美容乳液",
+          "cost_diff": 1211568
+        }
+      ]
+    },
+    "proust": {
+      "own": 8956408,
+      "market": 17515842,
+      "share_pct": 51.133,
+      "competitors_top2": [
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 1069845
+        },
+        {
+          "name": "Rexona Whole Body Deo",
+          "cost_diff": 684899
+        }
+      ]
+    },
+    "gungun": {
+      "own": 810416,
+      "market": 5957928,
+      "share_pct": 13.602,
+      "competitors_top2": [
+        {
+          "name": "KENSHOU フィジカルメンテPRO",
+          "cost_diff": 843892
+        },
+        {
+          "name": "For－S ノビエース",
+          "cost_diff": 624800
+        }
+      ]
+    },
+    "rkl": {
+      "own": 1234150,
+      "market": 9524733,
+      "share_pct": 12.957,
+      "competitors_top2": [
+        {
+          "name": "EMSense トリプルセラピー フットマッサージャー",
+          "cost_diff": 2218774
+        },
+        {
+          "name": "Warelix Unisex Outdoor Slip－On Sneakers",
+          "cost_diff": 1168010
+        }
+      ]
+    }
+  }
+}

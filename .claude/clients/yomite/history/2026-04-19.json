@@ -1,0 +1,74 @@
+{
+  "date": "2026-04-19",
+  "to_date_api": "2026-04-18",
+  "products": {
+    "onmyskin": {
+      "own": 265466,
+      "market": 35831016,
+      "share_pct": 0.741,
+      "competitors_top2": [
+        {
+          "name": "ドクターシーラボ VC100エッセンスローションEX",
+          "cost_diff": 7834266,
+          "advertiser": "JNTLコンシューマーヘルス株式会社"
+        },
+        {
+          "name": "オルビス ユードット スキンケアセット",
+          "cost_diff": 5471426,
+          "advertiser": "株式会社オルビス"
+        }
+      ]
+    },
+    "proust": {
+      "own": 3256888,
+      "market": 10248667,
+      "share_pct": 31.779,
+      "competitors_top2": [
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 1203700,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラント",
+          "cost_diff": 721102,
+          "advertiser": "更新中"
+        }
+      ]
+    },
+    "gungun": {
+      "own": 966368,
+      "market": 7469894,
+      "share_pct": 12.937,
+      "competitors_top2": [
+        {
+          "name": "For－S ノビエース",
+          "cost_diff": 1573300,
+          "advertiser": "株式会社For-S"
+        },
+        {
+          "name": "KENSHOU フィジカルメンテPRO",
+          "cost_diff": 593012,
+          "advertiser": "更新中"
+        }
+      ]
+    },
+    "rkl": {
+      "own": 862660,
+      "market": 8937109,
+      "share_pct": 9.653,
+      "competitors_top2": [
+        {
+          "name": "レミントン 人工筋肉サポーター 膝パワーウォーク",
+          "cost_diff": 1073600,
+          "advertiser": "株式会社レミントン"
+        },
+        {
+          "name": "GroundingWell Grounding Mat",
+          "cost_diff": 1011889,
+          "advertiser": "更新中"
+        }
+      ]
+    }
+  }
+}

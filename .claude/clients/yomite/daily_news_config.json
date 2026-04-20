@@ -20,16 +20,21 @@
   "products": [
     {
       "name": "on:myskin",
-      "display_name": "ヨミテ ハーブピーリング on:myskin",
+      "display_name": "ヨミテ on:myskin ハーブピーリング",
       "product_id": 1444210,
+      "product_id_aliases": [1443716],
       "color": "#4FC3F7",
       "emoji": "🧖‍♀️",
       "market": {
-        "type": "genre",
-        "genre_ids": [7, 80, 103],
-        "genre_label": "美容液×スキンケア×クレンジング横断"
+        "type": "hybrid_genre_keyword",
+        "genre_ids": [80, 103],
+        "genre_label": "毛穴・ピーリング系（スキンケア×クレンジング×毛穴関連kw）",
+        "include_keywords": ["毛穴", "角栓", "ピーリング", "マイクロニードル", "黒ずみ"],
+        "keyword_logic": "or",
+        "exclude_keywords": ["シワ改善", "82歳", "熟年", "高齢", "リンクル", "50代", "60代", "70代", "80代", "ほうれい線", "UV", "日焼け止め", "サンスクリーン", "サンケア"],
+        "note": "30〜50代女性×毛穴/ハーブピーリング訴求。高齢者向けシワ系とUV/サンケア系を除外語で駆除。"
       },
-      "note": "毛穴・ハーブピーリング訴求。スキンケア3ジャンル横断で市場把握。"
+      "note": "DProに2つの商品エントリあり（1444210: ヨミテ ハーブピーリング on:myskin / 1443716: ヨミテ on:myskin ハーブピーリング）。自社コスト集計時は両方を合算する。"
     },
     {
       "name": "プルーストクリーム2",

@@ -1,0 +1,66 @@
+{
+  "date": "2026-04-18",
+  "to_date_api": "2026-04-17",
+  "products": {
+    "onmyskin": {
+      "own": 56594,
+      "market": 21487864,
+      "share_pct": 0.263,
+      "competitors_top2": [
+        {
+          "name": "オルビス ユードット スキンケアセット",
+          "cost_diff": 5471426
+        },
+        {
+          "name": "SHISEIDO アクアレーベル 高保湿毛穴ケア シートマスク",
+          "cost_diff": 1157091
+        }
+      ]
+    },
+    "proust": {
+      "own": 4451240,
+      "market": 11600682,
+      "share_pct": 38.371,
+      "competitors_top2": [
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 958275
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラント",
+          "cost_diff": 623227
+        }
+      ]
+    },
+    "gungun": {
+      "own": 1124508,
+      "market": 7989376,
+      "share_pct": 14.075,
+      "competitors_top2": [
+        {
+          "name": "For－S ノビエース",
+          "cost_diff": 1573300
+        },
+        {
+          "name": "KENSHOU フィジカルメンテPRO",
+          "cost_diff": 1033832
+        }
+      ]
+    },
+    "rkl": {
+      "own": 864170,
+      "market": 10035479,
+      "share_pct": 8.611,
+      "competitors_top2": [
+        {
+          "name": "EMSense トリプルセラピー フットマッサージャー",
+          "cost_diff": 1213026
+        },
+        {
+          "name": "レミントン 人工筋肉サポーター 膝パワーウォーク",
+          "cost_diff": 1169600
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "date": "2026-04-20",
+  "products": {
+    "onmyskin": {
+      "own": 638664,
+      "market": 41136750,
+      "share_pct": 1.553,
+      "own_detail": {
+        "1444210": 3312,
+        "1443716": 635352
+      },
+      "own_creatives_top3": [
+        {
+          "cost_diff": 330004,
+          "app": "SmartNews",
+          "product_id": 1443716,
+          "hook": "古い角質が... 韓国発のセルフピーリングがついに一般販売解禁！？",
+          "url": "https://thumbnail.smartnews-ads.com/c/110100630/KpVVIdoKynJ5WLoR/110196881.jpg?id=ba0f790ea55f25c3433c35c1e8acb961",
+          "lp": "https://healthcare.rmh.co.jp/ab/ob_01"
+        },
+        {
+          "cost_diff": 244168,
+          "app": "SmartNews",
+          "product_id": 1443716,
+          "hook": "AHA/BHAで角質オフ、3,040本のマイクロニードルで肌奥へ届ける、30種ハーブで整肌",
+          "url": "https://thumbnail.smartnews-ads.com/c/110100630/s9dPHtmMWgV1Ovr3/110196884.jpg?id=110365000",
+          "lp": "https://healthcare.rmh.co.jp/ab/ob_01"
+        },
+        {
+          "cost_diff": 61180,
+          "app": "SmartNews",
+          "product_id": 1443716,
+          "hook": "古い角質が... 韓国発のセルフピーリングがついに一般販売解禁！？",
+          "url": "https://thumbnail.smartnews-ads.com/c/110100630/s9dPHtmMWgV1Ovr3/110196884.jpg?id=9b400653b3e3b12e490a39456edda6f7",
+          "lp": "https://healthcare.rmh.co.jp/ab/ob_01"
+        }
+      ],
+      "competitors_top2": [
+        {
+          "name": "ドクターシーラボ VC100エッセンスローションEX",
+          "cost_diff": 7836928
+        },
+        {
+          "name": "コーセー 雪肌精UVエッセンスミルク",
+          "cost_diff": 2228700
+        }
+      ]
+    },
+    "proust": {
+      "own": 1631456,
+      "market": 8868178,
+      "share_pct": 18.397,
+      "own_creatives_top3": [
+        {
+          "cost_diff": 603272,
+          "app": "YouTube",
+          "hook": "脇が遺伝して悩んでる人 お風呂後のあれで一発? 1日脇完全放置できる時代来てます",
+          "url": "https://www.youtube.com/watch?v=0-sVMviO-Ys",
+          "lp": "https://healthcare.rmh.co.jp/ab/ytl-3-1"
+        },
+        {
+          "cost_diff": 517408,
+          "app": "SmartNews",
+          "hook": "プルーストクリーム2.0がすごい！",
+          "url": "https://thumbnail.smartnews-ads.com/c/109913366/10MKqd8dikTCUwUw/110227857.jpg",
+          "lp": "https://healthcare.rmh.co.jp/ab/proust_sn_01"
+        },
+        {
+          "cost_diff": 510776,
+          "app": "YouTube",
+          "hook": "脇がの匂いを香水でごまかしてる人",
+          "url": "https://www.youtube.com/watch?v=iUgss6e7ufc",
+          "lp": "https://healthcare.rmh.co.jp/ab/ytl_ta_5"
+        }
+      ],
+      "competitors_top2": [
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 1466474
+        },
+        {
+          "name": "Old Spice フィジーの香りデオドラント",
+          "cost_diff": 759127
+        }
+      ]
+    },
+    "gungun": {
+      "own": 2250848,
+      "market": 6323202,
+      "share_pct": 35.597,
+      "own_creatives_top3": [
+        {
+          "cost_diff": 1320108,
+          "app": "SmartNews",
+          "hook": "【初回480円】遺伝のせい？諦める前に「管理栄養士」推奨の魔法のスープ",
+          "url": "https://thumbnail.smartnews-ads.com/c/110319258/AO8Zvhcb1vJImjgN/110360335.jpg?id=6fe8022cd934e99dc4176f8102cf2318",
+          "lp": "https://healthcare.rmh.co.jp/ab/ob_10"
+        },
+        {
+          "cost_diff": 710056,
+          "app": "SmartNews",
+          "hook": "また大きくなった？ママが大喜び、息子の伸び悩みは魔法のスープで解決",
+          "url": "https://thumbnail.smartnews-ads.com/c/110319258/AO8Zvhcb1vJImjgN/110360335.jpg?id=0418fa2caa2ccb257a28d9de870f5f04",
+          "lp": "https://healthcare.rmh.co.jp/ab/ob_10"
+        },
+        {
+          "cost_diff": 220684,
+          "app": "Facebook",
+          "hook": "ケーキ初回500円以下でぐんぐん伸ばしたい人は心境ブーストパウダー",
+          "url": "https://www.facebook.com/61563743590156/videos/1113219490973543",
+          "lp": "https://sb.epicu.tokyo/ab/gngn_fk_dg_p001_ag007_b02551"
+        }
+      ],
+      "competitors_top2": [
+        {
+          "name": "LEFT-U セノッピーグミ",
+          "cost_diff": 1079162
+        },
+        {
+          "name": "エメトレ ドクターセノビル",
+          "cost_diff": 308800
+        }
+      ]
+    },
+    "rkl": {
+      "own": 1225052,
+      "market": 5979836,
+      "share_pct": 20.486,
+      "own_creatives_top3": [
+        {
+          "cost_diff": 807538,
+          "app": "Shorts",
+          "hook": "実演系リアクション動画（すごい！軽い！）",
+          "url": "https://www.youtube.com/watch?v=aunAXS_66T8",
+          "lp": "https://healthcare.rmh.co.jp/ab/rkl_k1_yts2_a2"
+        },
+        {
+          "cost_diff": 237476,
+          "app": "Shorts",
+          "hook": "すごい！軽い！サポートされてる感じがすっごい分かる",
+          "url": "https://www.youtube.com/watch?v=RZsbha4wMIs",
+          "lp": "https://healthcare.rmh.co.jp/ab/rkl_k1_yts2_a2"
+        },
+        {
+          "cost_diff": 180038,
+          "app": "Shorts",
+          "hook": "軽い！サポートされてる感じが 自分のサポーターだと 全然違う",
+          "url": "https://www.youtube.com/watch?v=s2EUg9jWQdw",
+          "lp": "https://healthcare.rmh.co.jp/ab/rkl_yts_a9"
+        }
+      ],
+      "competitors_top2": [
+        {
+          "name": "レミントン 人工筋肉サポーター 膝パワーウォーク",
+          "cost_diff": 1026260
+        },
+        {
+          "name": "（2位調査予定）",
+          "cost_diff": 0
+        }
+      ]
+    }
+  }
+}
