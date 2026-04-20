@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 02 · snaq.me型</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Pacifico&family=Caveat:wght@400;600;700&family=Bodoni+Moda:ital,wght@0,400;1,400&family=Hachi+Maru+Pop&family=Yusei+Magic&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing: border-box; }
+:root {
+  --cream: #FFFBF4;
+  --peach: #FFD9BE;
+  --mint: #C8EADE;
+  --pink: #FFC8CF;
+  --butter: #FFE5A3;
+  --lavender: #E2D4F0;
+  --wood: #E8D5B7;
+  --ink: #4A3F36;
+  --ink-sub: #7F7267;
+  --dot: #F5BEC9;
+  --f-round: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+  --f-script: 'Pacifico', cursive;
+  --f-hand: 'Caveat', cursive;
+  --f-italic: 'Bodoni Moda', serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-round);
+  font-weight: 500;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.9;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+
+.pattern-tag {
+  position: fixed;
+  top: 12px; left: 12px;
+  font-family: var(--f-hand);
+  font-weight: 600;
+  font-size: 13px;
+  color: #B89177;
+  z-index: 100;
+  background: rgba(255, 251, 244, 0.88);
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* 全体をキャンバス感覚にする水玉ドット */
+.dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(245, 190, 201, 0.4) 2px, transparent 2px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ── FV ── */
+.fv {
+  position: relative;
+  padding: 30px 24px 50px;
+  background:
+    radial-gradient(circle at 20% 0%, var(--peach), transparent 50%),
+    radial-gradient(circle at 80% 100%, var(--mint), transparent 50%),
+    var(--cream);
+  overflow: hidden;
+}
+.fv__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.fv__logo {
+  font-family: var(--f-script);
+  font-size: 30px;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.fv__logo small {
+  font-family: var(--f-round);
+  font-weight: 500;
+  font-size: 9px;
+  color: var(--ink-sub);
+  margin-left: 4px;
+  letter-spacing: 0.15em;
+  vertical-align: 4px;
+}
+.fv__pill {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 10px;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 5px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.12em;
+}
+.fv__hero {
+  position: relative;
+  margin: 14px -4px 24px;
+}
+.fv__hero-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 12px 32px rgba(74, 63, 54, 0.12);
+}
+.fv__ribbon {
+  position: absolute;
+  top: 14px; left: -8px;
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 11px;
+  background: var(--ink);
+  color: var(--butter);
+  padding: 8px 16px;
+  letter-spacing: 0.15em;
+  transform: rotate(-4deg);
+  box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+}
+.fv__ribbon::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -8px;
+  border: 8px solid transparent;
+  border-top-color: #2A2420;
+  border-right-color: #2A2420;
+  transform: rotate(-15deg);
+  z-index: -1;
+}
+.fv__sticker {
+  position: absolute;
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+  text-align: center;
+  transform: rotate(12deg);
+  box-shadow: 0 6px 16px rgba(74, 63, 54, 0.15);
+}
+.fv__sticker b {
+  font-family: var(--f-italic);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 0.9;
+}
+.fv__sticker--1 {
+  top: -12px; right: -8px;
+  background: var(--pink);
+  color: var(--ink);
+}
+
+.fv__catch {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.fv__script {
+  font-family: var(--f-script);
+  font-size: 26px;
+  color: var(--ink-sub);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.fv__hd {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: clamp(28px, 7.5vw, 36px);
+  line-height: 1.55;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+.fv__hd em {
+  font-style: normal;
+  color: #E88BA0;
+  position: relative;
+  padding: 0 4px;
+}
+.fv__hd em::after {
+  content: '';
+  position: absolute;
+  inset: -2px -2px -4px -2px;
+  border: 2px dashed #E88BA0;
+  border-radius: 16px;
+  transform: rotate(-2deg);
+  pointer-events: none;
+}
+.fv__lead {
+  font-size: 14px;
+  color: var(--ink-sub);
+  font-weight: 500;
+  line-height: 2;
+}
+
+.fv__cta-wrap {
+  text-align: center;
+  margin-top: 10px;
+}
+.fv__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ink);
+  color: var(--butter);
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  padding: 18px 36px;
+  border-radius: 60px;
+  text-decoration: none;
+  box-shadow: 0 6px 0 #2A2420, 0 12px 24px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease;
+}
+.fv__cta:active { transform: translateY(3px); box-shadow: 0 3px 0 #2A2420, 0 6px 12px rgba(0,0,0,0.15); }
+.fv__cta-price {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--peach);
+  margin-right: 4px;
+}
+.fv__note {
+  text-align: center;
+  font-family: var(--f-hand);
+  font-size: 14px;
+  color: var(--ink-sub);
+  margin-top: 14px;
+  transform: rotate(-2deg);
+}
+
+/* ── Block — 1セクション1KV1メッセージ ── */
+.block {
+  position: relative;
+  padding: 80px 24px 90px;
+  overflow: hidden;
+}
+.block--peach { background: var(--peach); }
+.block--mint { background: var(--mint); }
+.block--butter { background: var(--butter); }
+.block--pink { background: var(--pink); }
+.block--lavender { background: var(--lavender); }
+.block--wood {
+  background: var(--wood);
+  background-image:
+    linear-gradient(90deg, rgba(0,0,0,0.04) 0, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 100%);
+  background-size: 3px 3px;
+}
+
+.block__num {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: rgba(74, 63, 54, 0.45);
+  margin-bottom: 12px;
+  text-align: center;
+}
+.block__num b { font-weight: 700; font-size: 22px; color: var(--ink); margin-right: 6px; letter-spacing: 0; }
+.block__hd {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: clamp(24px, 6.5vw, 28px);
+  line-height: 1.6;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.block__hd em {
+  font-style: normal;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 1px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+.block__hd .sc {
+  font-family: var(--f-script);
+  font-weight: 400;
+  color: var(--ink-sub);
+  font-size: 80%;
+  display: inline-block;
+  transform: translateY(2px);
+  letter-spacing: 0;
+}
+.block__sub {
+  font-family: var(--f-round);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 2;
+  text-align: center;
+  margin-bottom: 28px;
+  opacity: 0.85;
+}
+.block__img {
+  width: calc(100% + 12px);
+  margin: 0 -6px;
+  aspect-ratio: 4/3;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 14px 28px rgba(74, 63, 54, 0.15);
+  position: relative;
+}
+.block__img img { width: 100%; height: 100%; object-fit: cover; }
+.block__img--square { aspect-ratio: 1/1; }
+.block__caption {
+  position: absolute;
+  bottom: 14px; left: 14px;
+  font-family: var(--f-hand);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--cream);
+  padding: 3px 12px;
+  border-radius: 50px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.confetti {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--f-italic);
+  opacity: 0.85;
+}
+.confetti--star { font-size: 18px; }
+.confetti--dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* 4箇条カード */
+.points {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.points__cell {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(74, 63, 54, 0.08);
+  position: relative;
+}
+.points__cell::before {
+  content: '';
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+.points__emoji {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 24px;
+  color: #E88BA0;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.points__t {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.points__d {
+  font-size: 11px;
+  color: var(--ink-sub);
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+/* Offer */
+.offer {
+  background: var(--cream);
+  padding: 80px 24px 100px;
+  position: relative;
+  text-align: center;
+}
+.offer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 40px;
+  background: var(--lavender);
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0.7;
+}
+.offer__label {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-sub);
+  letter-spacing: 0.3em;
+  margin-bottom: 10px;
+}
+.offer__hd {
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+.offer__price-card {
+  background:
+    linear-gradient(135deg, var(--peach), var(--pink));
+  border-radius: 28px;
+  padding: 32px 24px;
+  margin: 24px 0;
+  box-shadow: 0 14px 28px rgba(232, 139, 160, 0.3);
+  position: relative;
+}
+.offer__sticker-stamp {
+  position: absolute;
+  top: -16px; right: -8px;
+  background: var(--ink);
+  color: var(--butter);
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 11px;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(12deg);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.offer__sticker-stamp b {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 22px;
+  line-height: 0.9;
+}
+.offer__price-strike {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(74, 63, 54, 0.6);
+  text-decoration: line-through;
+  margin-right: 10px;
+}
+.offer__price-main {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 60px;
+  color: var(--ink);
+  line-height: 1;
+}
+.offer__price-main small {
+  font-size: 20px;
+  margin-left: 2px;
+}
+.offer__price-sub {
+  font-family: var(--f-round);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--ink);
+  letter-spacing: 0.15em;
+  margin-top: 10px;
+}
+.offer__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--ink);
+  color: var(--butter);
+  font-family: var(--f-round);
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  padding: 20px 40px;
+  border-radius: 60px;
+  text-decoration: none;
+  box-shadow: 0 6px 0 #2A2420, 0 12px 24px rgba(0,0,0,0.15);
+  margin-top: 18px;
+}
+.offer__cta:active { transform: translateY(3px); box-shadow: 0 3px 0 #2A2420; }
+.offer__fine {
+  font-size: 10px;
+  color: var(--ink-sub);
+  line-height: 1.8;
+  margin-top: 18px;
+}
+
+/* Footer */
+.f {
+  text-align: center;
+  padding: 60px 24px 50px;
+  background: var(--wood);
+}
+.f__logo {
+  font-family: var(--f-script);
+  font-size: 30px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.f__tag {
+  font-family: var(--f-hand);
+  font-size: 14px;
+  color: var(--ink-sub);
+}
+
+/* Reveal */
+.rv { opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.rv.on { opacity: 1; transform: none; }
+.rv-2 { transition-delay: 0.1s; }
+.rv-3 { transition-delay: 0.2s; }
+
+/* らぶいーず専用ブランディング（ひらがな） */
+.labu-pill {
+  font-family: 'Hachi Maru Pop', 'Zen Maru Gothic', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.04em !important;
+  background: linear-gradient(90deg, #FD8798, #FA5E75) !important;
+  color: #fff !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 3px 10px rgba(250,94,117,0.3) !important;
+}
+
+/* Instagram投稿風セクション */
+.ig-band {
+  background: linear-gradient(160deg, #FFE5B5 0%, #FFD9BE 100%);
+  padding: 44px 24px 52px;
+  position: relative;
+  overflow: hidden;
+}
+.ig-band__title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: #4A3F36;
+  text-align: center;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.ig-band__title em {
+  font-style: normal;
+  background: #FD8798;
+  color: #fff;
+  padding: 1px 8px;
+  border-radius: 6px;
+}
+.ig-band__tags {
+  text-align: center;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #FA5E75;
+  margin-bottom: 22px;
+  letter-spacing: 0.05em;
+}
+.ig-band__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.ig-band__post {
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+.ig-band__post img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.ig-band__heart {
+  position: absolute;
+  bottom: 6px; left: 6px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+.ig-band__heart::before { content: '♡ '; color: #FD8798; }
+.ig-band__user {
+  position: absolute;
+  top: 6px; left: 6px;
+  background: rgba(255,255,255,0.9);
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 9px;
+  color: #4A3F36;
+  padding: 3px 7px;
+  border-radius: 10px;
+}
+.ig-band__footer {
+  text-align: center;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  color: #7F7267;
+  line-height: 1.7;
+}
+.ig-band__footer strong { color: #FA5E75; }
+
+/* 5ヶ月の物語（月ごとの達成感を時系列で） */
+.timeline {
+  background: linear-gradient(180deg, #FFF5E8 0%, #FFE8E3 100%);
+  padding: 48px 22px 60px;
+  position: relative;
+}
+.timeline__title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  text-align: center;
+  color: #4A3F36;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.timeline__title em {
+  font-style: normal;
+  color: #FA5E75;
+}
+.timeline__lead {
+  text-align: center;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #7F7267;
+  margin-bottom: 24px;
+}
+.tl-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tl-row {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 14px rgba(74, 63, 54, 0.08);
+  border: 2px solid transparent;
+}
+.tl-row--peak {
+  border-color: #FD8798;
+  background: linear-gradient(135deg, #FFFAF2 0%, #FFE8EF 100%);
+  box-shadow: 0 6px 16px rgba(253, 135, 152, 0.18);
+  transform: translateX(4px);
+}
+.tl-row--final {
+  border-color: #06D6A0;
+  background: linear-gradient(135deg, #FFFAF2 0%, #E8FAEF 100%);
+  box-shadow: 0 6px 16px rgba(6, 214, 160, 0.2);
+}
+.tl-chip {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.1;
+  padding: 4px;
+}
+.tl-body {
+  min-width: 0;
+}
+.tl-month {
+  font-family: 'Pacifico', cursive;
+  font-size: 11px;
+  color: #B09AB8;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.tl-name {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  color: #4A3F36;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+.tl-event {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #7F7267;
+  line-height: 1.5;
+}
+.tl-event strong {
+  color: #FA5E75;
+  font-weight: 900;
+}
+.tl-row--final .tl-event strong { color: #06A87F; }
+.tl-badge {
+  display: inline-block;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  margin-top: 3px;
+  letter-spacing: 0.03em;
+}
+.tl-badge--couple { background: #FD8798; color: #fff; }
+.tl-badge--final { background: #06D6A0; color: #fff; }
+.tl-peak-note {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: rgba(253,135,152,0.1);
+  border: 2px dashed #FD8798;
+  border-radius: 12px;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #4A3F36;
+  line-height: 1.7;
+  text-align: center;
+}
+.tl-peak-note strong { color: #FA5E75; }
+
+/* 口コミ吹き出し（snaq.meでよく見るやつ） */
+.voice-bubble {
+  background: #fff;
+  border: 2px solid #4A3F36;
+  border-radius: 16px;
+  padding: 14px 16px 16px;
+  box-shadow: 3px 3px 0 #4A3F36;
+  margin: 14px 0 6px;
+  position: relative;
+}
+.voice-bubble::before {
+  content: '';
+  position: absolute;
+  top: -10px; left: 22px;
+  width: 14px; height: 14px;
+  background: #fff;
+  border-left: 2px solid #4A3F36;
+  border-top: 2px solid #4A3F36;
+  transform: rotate(45deg);
+}
+.voice-bubble__name {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 11px;
+  color: #FA5E75;
+  margin-bottom: 4px;
+}
+.voice-bubble__name::before {
+  content: '★★★★★';
+  color: #FFD166;
+  margin-right: 6px;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.voice-bubble__text {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.75;
+  color: #333;
+}
+.voice-bubble__text em {
+  font-style: normal;
+  background: #FFE5A3;
+  padding: 0 4px;
+  font-weight: 700;
+}
+</style>
+</head>
+<body>
+<!-- ameru logo (auto-inserted) -->
+<header style="padding:16px 24px 12px; text-align:center; background:rgba(251,244,236,0.96); backdrop-filter:blur(10px); border-bottom:1px solid rgba(0,0,0,0.06); position:sticky; top:0; z-index:999;">
+  <img src="images/logos/ameru_logo_main.png" alt="ameru - amigurumi for everyone" style="width:100px; margin:0 auto; display:block;">
+</header>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 02 · snaq.me</a></div>
+
+<!-- FV -->
+<section class="fv">
+  <span class="dots"></span>
+  <div class="fv__top rv">
+    <div class="fv__logo">ameru<small>アメル</small></div>
+    <span class="fv__pill labu-pill">♡ らぶいーず × ameru</span>
+  </div>
+
+  <div class="fv__hero rv rv-2">
+    <span class="fv__ribbon">新発売 · ¥1,980から</span>
+    <img class="fv__hero-img" src="images/01_zumoppi_hero.png" alt="すもっぴ">
+    <div class="fv__sticker fv__sticker--1"><b>52%</b>OFF</div>
+  </div>
+
+  <div class="fv__catch rv rv-3">
+    <p class="fv__script">just begin!</p>
+    <h1 class="fv__hd">
+      はじめての、<br>
+      <em>あみぐるみBOX</em>。
+    </h1>
+    <p class="fv__lead">
+      月1、ポストに届く。<br>
+      らぶいーずの5人が、ひとりずつ編みあがる。
+    </p>
+  </div>
+
+  <div class="fv__cta-wrap rv rv-3">
+    <a href="#offer" class="fv__cta">
+      <span class="fv__cta-price">¥1,980〜</span>
+      はじめる ♡
+    </a>
+    <p class="fv__note">— 送料無料、いつでも解約OK</p>
+  </div>
+
+  <div class="voice-bubble rv rv-3" style="margin:24px 4px 4px;">
+    <div class="voice-bubble__name">Aさま・30代／東京</div>
+    <div class="voice-bubble__text">
+      どうせ途中でやめる、と思ってたのに。<em>動画見ながらだと迷う場面ゼロ</em>で、気づいたら完成してました。机に置くだけで、毎日ちょっと嬉しい。
+    </div>
+  </div>
+</section>
+
+
+<!-- Block 1 · Peach · 世界観 -->
+<section class="block block--peach">
+  <span class="confetti confetti--star" style="top:40px;left:20px;color:#E88BA0;">✦</span>
+  <span class="confetti confetti--dot" style="top:120px;right:30px;color:var(--ink);"></span>
+  <p class="block__num rv"><b>01</b>WHAT IS IT?</p>
+  <h2 class="block__hd rv rv-2"><span class="sc">every month,</span><br>らぶいーずの <em>5人</em> が、<br>ひとりずつ、編みあがる。</h2>
+  <p class="block__sub rv rv-3">手芸やったことない人のために、ぜんぶ設計しました。</p>
+  <div class="block__img rv rv-3">
+    <img src="images/05_lifestyle_finished.png" alt="完成したすもっぴを持つ" loading="lazy">
+    <span class="block__caption">monthly amigurumi</span>
+  </div>
+</section>
+
+
+<!-- Block 2 · Mint · 中身 -->
+<section class="block block--mint">
+  <span class="confetti confetti--dot" style="top:60px;left:40px;color:#E88BA0;"></span>
+  <span class="confetti confetti--star" style="top:140px;right:30px;color:var(--ink);">✧</span>
+  <p class="block__num rv"><b>02</b>UNBOXING</p>
+  <h2 class="block__hd rv rv-2"><em>ぜんぶ、入ってる。</em><br><span class="sc">nothing missing.</span></h2>
+  <p class="block__sub rv rv-3">糸・針・目パーツ・わた・編み始め完成済み・動画QR。買い足し無用。</p>
+  <div class="block__img block__img--square rv rv-3">
+    <img src="images/03_unboxing_flatlay.png" alt="全道具" loading="lazy">
+    <span class="block__caption">all materials included ✓</span>
+  </div>
+
+  <div class="points rv rv-3">
+    <div class="points__cell">
+      <p class="points__emoji">01</p>
+      <p class="points__t">編み図、使いません</p>
+      <p class="points__d">動画を観るだけでOK</p>
+    </div>
+    <div class="points__cell">
+      <p class="points__emoji">02</p>
+      <p class="points__t">最初の難所は済</p>
+      <p class="points__d">編み始め完成済み</p>
+    </div>
+    <div class="points__cell">
+      <p class="points__emoji">03</p>
+      <p class="points__t">絡まないオリジナル糸</p>
+      <p class="points__d">不器用さんでもOK</p>
+    </div>
+    <div class="points__cell">
+      <p class="points__emoji">04</p>
+      <p class="points__t">8〜10時間で完成</p>
+      <p class="points__d">2〜3日でも大丈夫</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Block 3 · Butter · 仲間 -->
+<section class="block block--butter">
+  <p class="block__num rv"><b>03</b>COLLECTION</p>
+  <h2 class="block__hd rv rv-2"><span class="sc">meet the family.</span><br><em>全5体、家族になる。</em></h2>
+  <p class="block__sub rv rv-3">すもっぴ · ぴょんちー · にゃぽ · うるる · ぱおぱお。</p>
+  <div class="block__img rv rv-3" style="aspect-ratio: 16/10;">
+    <img src="images/phase1/L01_lineup_remaster.png" alt="5体" loading="lazy">
+    <span class="block__caption">a family of five ♡</span>
+  </div>
+
+  <div class="voice-bubble rv rv-3">
+    <div class="voice-bubble__name">Bさま・40代／大阪</div>
+    <div class="voice-bubble__text">
+      娘の誕生日プレゼントのはずが、可愛すぎて自分のデスクに飾ってしまいました。<em>「編み始め完成済み」って発想が天才</em>。糸玉からやってたら絶対挫折してた。
+    </div>
+  </div>
+</section>
+
+
+<!-- Instagram投稿風 社会的証明バンド -->
+<section class="ig-band">
+  <span class="confetti confetti--star" style="top:18px;right:24px;color:#FD8798;">📸</span>
+  <span class="confetti confetti--star" style="top:28px;left:26px;color:#FA5E75;">✨</span>
+  <h3 class="ig-band__title rv"><em>#ameru</em> で、みんなが編んでる</h3>
+  <p class="ig-band__tags rv rv-2">#ameru  #すもっぴ  #らぶいーず  #推し活</p>
+
+  <div class="ig-band__grid rv rv-3">
+    <div class="ig-band__post">
+      <span class="ig-band__user">@ameru_a</span>
+      <img src="images/04_hands_crafting.png" alt="Aさまの投稿" loading="lazy">
+      <span class="ig-band__heart">12.4K</span>
+    </div>
+    <div class="ig-band__post">
+      <span class="ig-band__user">@knit_b</span>
+      <img src="images/05_lifestyle_finished.png" alt="Bさまの投稿" loading="lazy">
+      <span class="ig-band__heart">8.9K</span>
+    </div>
+    <div class="ig-band__post">
+      <span class="ig-band__user">@c_knit</span>
+      <img src="images/06_shelf_display.png" alt="Cさまの投稿" loading="lazy">
+      <span class="ig-band__heart">22.1K</span>
+    </div>
+  </div>
+
+  <p class="ig-band__footer rv rv-3">
+    <strong>らぶいーず × ameru</strong>、毎日投稿されてます ♡
+  </p>
+</section>
+
+
+<!-- Block 4 · Lavender · 棚 -->
+<section class="block block--lavender">
+  <span class="confetti confetti--star" style="top:40px;right:20px;color:var(--ink);">✦</span>
+  <p class="block__num rv"><b>04</b>IN YOUR ROOM</p>
+  <h2 class="block__hd rv rv-2"><em>5体そろった日</em>、<br><span class="sc">you'll smile.</span></h2>
+  <div class="block__img rv rv-3" style="aspect-ratio: 4/5;">
+    <img src="images/06_shelf_display.png" alt="棚の5人" loading="lazy">
+    <span class="block__caption">on your shelf ♡</span>
+  </div>
+</section>
+
+
+<!-- Timeline · 5ヶ月の物語（案A：カップル完成ピーク設計） -->
+<section class="timeline">
+  <h2 class="timeline__title rv">
+    5ヶ月で、<em>3回</em>、<br>
+    "完成"の瞬間が来ます。
+  </h2>
+  <p class="timeline__lead rv rv-2">
+    月1体、5ヶ月。ただの定期便じゃない、物語です。
+  </p>
+
+  <div class="tl-list">
+    <div class="tl-row rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#E8F7FB,#B5E5F0);color:#4A7089;">1<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 01</p>
+        <p class="tl-name">すもっぴ</p>
+        <p class="tl-event">主人公、あなたの手に登場。</p>
+      </div>
+    </div>
+
+    <div class="tl-row tl-row--peak rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#FFD4E0,#FA5E75);">2<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 02</p>
+        <p class="tl-name">ぴょんちー</p>
+        <p class="tl-event">
+          <strong>①組目カップル完成🎉</strong><br>
+          すもっぴ×ぴょんちー、棚に並ぶ日。
+        </p>
+        <span class="tl-badge tl-badge--couple">♡ カップル達成</span>
+      </div>
+    </div>
+
+    <div class="tl-row rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#FFF4D6,#E8B860);">3<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 03</p>
+        <p class="tl-name">にゃぽ</p>
+        <p class="tl-event">ぴょんちーの友だち。女子が増えていく。</p>
+      </div>
+    </div>
+
+    <div class="tl-row tl-row--peak rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#E8DCF2,#8D7AB8);">4<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 04</p>
+        <p class="tl-name">うるる</p>
+        <p class="tl-event">
+          <strong>②組目カップル完成🎉</strong><br>
+          にゃぽ×うるる、もう1組が揃う。
+        </p>
+        <span class="tl-badge tl-badge--couple">♡ カップル達成</span>
+      </div>
+    </div>
+
+    <div class="tl-row tl-row--final rv">
+      <div class="tl-chip" style="background:linear-gradient(135deg,#D4F0E4,#06D6A0);">5<br>月目</div>
+      <div class="tl-body">
+        <p class="tl-month">MONTH 05</p>
+        <p class="tl-name">ぱおぱお</p>
+        <p class="tl-event">
+          <strong>家族コンプリート🎉</strong><br>
+          5人揃って、らぶいーずが勢ぞろい。
+        </p>
+        <span class="tl-badge tl-badge--final">✨ ALL COMPLETE</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="tl-peak-note rv">
+    2ヶ月目・4ヶ月目は <strong>カップルが揃う</strong>日。<br>
+    5ヶ月目は <strong>家族が揃う</strong>日。<br>
+    毎月、ちゃんと"完成の瞬間"があります。
+  </p>
+</section>
+
+
+<!-- Offer -->
+<section class="offer" id="offer">
+  <p class="offer__label rv">— FIRST DELIVERY —</p>
+  <h2 class="offer__hd rv">まず、1体だけ、<br>編んでみる。</h2>
+
+  <div class="offer__price-card rv rv-2">
+    <div class="offer__sticker-stamp">
+      <b>52%</b>
+      OFF
+    </div>
+    <div>
+      <span class="offer__price-strike">¥4,200</span>
+      <span class="offer__price-main">¥1,980<small>〜</small></span>
+    </div>
+    <p class="offer__price-sub">初回限定 · 送料無料</p>
+  </div>
+
+  <a href="#" class="offer__cta rv rv-3">
+    はじめる ♡
+  </a>
+  <p class="offer__fine rv rv-3">
+    2回目以降 ¥4,200 ／ いつでも解約できます（縛りなし）<br>
+    送料は初回無料、2回目以降 ¥420
+  </p>
+</section>
+
+<footer class="f">
+  <p class="f__logo">ameru</p>
+  <p class="f__tag">amigurumi for everyone</p>
+</footer>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 40 && r.bottom > -40) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive: true });
+  addEventListener('resize', on, { passive: true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>

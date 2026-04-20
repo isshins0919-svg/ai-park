@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru — Pattern 06 · Woobles型プロセス動画</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing: border-box; }
+:root {
+  --bg: #FFFFFF;
+  --off: #F6F4EF;
+  --pop: #FF6B6B;
+  --pop-dark: #E85555;
+  --sky: #5EC5E0;
+  --yellow: #FFE066;
+  --ink: #1A1A1A;
+  --ink-sub: #6B6B6B;
+  --mid: #BABABA;
+  --f-en: 'Poppins', sans-serif;
+  --f-jp: 'Noto Sans JP', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-en), var(--f-jp);
+  font-weight: 500;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+
+.pattern-tag {
+  position: fixed;
+  top: 12px; left: 12px;
+  font-family: var(--f-en);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--pop);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid #eee;
+  letter-spacing: 0.05em;
+}
+.pattern-tag a { color: inherit; text-decoration: none; }
+
+/* Top bar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: #fff;
+  border-bottom: 1px solid #F0F0F0;
+}
+.topbar__logo {
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+}
+.topbar__logo small {
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--ink-sub);
+  margin-left: 4px;
+}
+.topbar__cta {
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 8px 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+/* FV — video主役 */
+.fv {
+  position: relative;
+  padding: 24px 20px 40px;
+  background: var(--off);
+}
+.fv__video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/12;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+}
+.fv__video-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.92;
+}
+.fv__video-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 20%, rgba(0,0,0,0.6) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px 24px;
+  color: #fff;
+}
+.fv__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px; height: 80px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+}
+.fv__play::before {
+  content: '';
+  border: 14px solid transparent;
+  border-left: 20px solid var(--ink);
+  margin-left: 6px;
+}
+.fv__video-duration {
+  position: absolute;
+  bottom: 12px; right: 12px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-family: var(--f-en);
+  font-weight: 700;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+.fv__video-label {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: var(--pop);
+  color: #fff;
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 10px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  letter-spacing: 0.15em;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.fv__content {
+  padding: 30px 4px 0;
+}
+.fv__badge {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  letter-spacing: 0.1em;
+}
+.fv__hd {
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: clamp(32px, 9vw, 42px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.fv__hd em { font-style: normal; color: var(--pop); }
+.fv__hd-jp {
+  font-family: var(--f-jp);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink-sub);
+  margin-bottom: 22px;
+  letter-spacing: 0.02em;
+}
+.fv__lead {
+  font-size: 14px;
+  color: var(--ink-sub);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.fv__cta {
+  display: block;
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 16px;
+  padding: 20px;
+  border-radius: 60px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  transition: transform 0.1s ease;
+}
+.fv__cta:active { transform: scale(0.98); }
+.fv__cta-arrow { margin-left: 8px; }
+.fv__trust {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 11px;
+  color: var(--ink-sub);
+  margin-top: 10px;
+}
+.fv__trust span::before { content: '✓ '; color: var(--pop); font-weight: 900; }
+
+/* Social proof bar */
+.sp {
+  background: var(--ink);
+  color: #fff;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sp__cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-en);
+  font-weight: 700;
+  font-size: 12px;
+}
+.sp__cell b {
+  font-size: 18px;
+  color: var(--yellow);
+}
+
+/* Before/After */
+.ba {
+  padding: 60px 20px;
+  background: var(--off);
+}
+.ba__kicker {
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--pop);
+  letter-spacing: 0.2em;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.ba__hd {
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: clamp(28px, 8vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.ba__sub {
+  font-family: var(--f-jp);
+  font-weight: 700;
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-sub);
+  margin-bottom: 32px;
+}
+.ba__compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  align-items: center;
+}
+.ba__side {
+  text-align: center;
+}
+.ba__img {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.ba__img img { width: 100%; height: 100%; object-fit: cover; }
+.ba__badge {
+  position: absolute;
+  top: 8px; left: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.1em;
+}
+.ba__badge--after {
+  background: var(--pop);
+  color: #fff;
+}
+.ba__label {
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+  letter-spacing: 0.05em;
+}
+.ba__arrow {
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--pop);
+}
+
+/* Steps (How It Works) */
+.hiw {
+  padding: 60px 20px;
+  background: #fff;
+}
+.hiw__hd {
+  text-align: center;
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 34px;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.hiw__sub {
+  font-family: var(--f-jp);
+  font-weight: 700;
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-sub);
+  margin-bottom: 36px;
+}
+.hiw__list { display: flex; flex-direction: column; gap: 14px; }
+.hiw__item {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 18px;
+  background: var(--off);
+  border-radius: 12px;
+}
+.hiw__num {
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--pop);
+  letter-spacing: -0.04em;
+}
+.hiw__item-t {
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.hiw__item-tjp {
+  font-family: var(--f-jp);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.hiw__item-d {
+  font-family: var(--f-jp);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--ink-sub);
+  line-height: 1.8;
+}
+
+/* Reviews carousel-like */
+.rev {
+  padding: 60px 20px;
+  background: var(--off);
+}
+.rev__hd {
+  text-align: center;
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 30px;
+  margin-bottom: 2px;
+  letter-spacing: -0.02em;
+}
+.rev__sub {
+  text-align: center;
+  font-family: var(--f-en);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--pop);
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+}
+.rev__stars {
+  text-align: center;
+  font-size: 20px;
+  color: var(--yellow);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+.rev__meta {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-sub);
+  margin-bottom: 28px;
+}
+.rev__meta b { color: var(--ink); font-weight: 800; }
+.rev__list { display: flex; flex-direction: column; gap: 12px; }
+.rev__card {
+  background: #fff;
+  padding: 18px 18px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+.rev__card-stars {
+  color: var(--yellow);
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.rev__card-t {
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 6px;
+  font-style: italic;
+}
+.rev__card-b {
+  font-family: var(--f-jp);
+  font-weight: 500;
+  font-size: 12.5px;
+  color: var(--ink-sub);
+  line-height: 1.8;
+  margin-bottom: 6px;
+}
+.rev__card-name {
+  font-size: 11px;
+  color: var(--mid);
+  font-weight: 500;
+}
+
+/* Offer */
+.offer {
+  padding: 60px 20px 70px;
+  background: var(--pop);
+  color: #fff;
+  text-align: center;
+}
+.offer__kicker {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 11px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.15em;
+  margin-bottom: 14px;
+}
+.offer__hd {
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.offer__sub {
+  font-family: var(--f-jp);
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 24px;
+  opacity: 0.92;
+}
+.offer__price-box {
+  background: #fff;
+  color: var(--ink);
+  border-radius: 16px;
+  padding: 24px 18px;
+  margin-bottom: 22px;
+}
+.offer__price-label {
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 11px;
+  color: var(--pop);
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+.offer__price-strike {
+  font-size: 14px;
+  color: var(--mid);
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+.offer__price {
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 62px;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+}
+.offer__price small { font-size: 24px; }
+.offer__save {
+  display: inline-block;
+  background: var(--pop);
+  color: #fff;
+  font-family: var(--f-en);
+  font-weight: 800;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+  letter-spacing: 0.1em;
+}
+.offer__btn {
+  display: block;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--f-en);
+  font-weight: 900;
+  font-size: 16px;
+  padding: 22px;
+  border-radius: 60px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+  transition: transform 0.1s ease;
+}
+.offer__btn:active { transform: scale(0.98); }
+.offer__trust {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.offer__trust span::before { content: '✓ '; }
+
+/* Reveal */
+.rv { opacity: 0; transform: translateY(14px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.rv.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<!-- ameru logo (auto-inserted) -->
+<header style="padding:16px 24px 12px; text-align:center; background:rgba(251,244,236,0.96); backdrop-filter:blur(10px); border-bottom:1px solid rgba(0,0,0,0.06); position:sticky; top:0; z-index:999;">
+  <img src="images/logos/ameru_logo_main.png" alt="ameru - amigurumi for everyone" style="width:100px; margin:0 auto; display:block;">
+</header>
+<div class="pattern-tag"><a href="10_patterns_index.html">← 10 Patterns / 06 · video-first</a></div>
+
+<div class="topbar">
+  <div class="topbar__logo">ameru <small>amigurumi</small></div>
+  <a href="#offer" class="topbar__cta">Shop Now</a>
+</div>
+
+<!-- FV — 動画主役 -->
+<section class="fv">
+  <div class="fv__video-wrap rv">
+    <span class="fv__video-label">● WATCH</span>
+    <img src="images/04_hands_crafting.png" alt="ameru process video">
+    <span class="fv__video-duration">0:42</span>
+    <div class="fv__play"></div>
+  </div>
+
+  <div class="fv__content rv">
+    <span class="fv__badge">🌟 NEW · 2026</span>
+    <h1 class="fv__hd">
+      Easier than<br>
+      you think.<br>
+      <em>Yes,</em> really.
+    </h1>
+    <p class="fv__hd-jp">編めないと思ってた人に、編める感覚を。</p>
+    <p class="fv__lead">
+      ameru は、最初の一目をこちらで編んだ状態でお届けする日本発のあみぐるみキット。動画を観るだけで、はじめての人が完成まで進めます。
+    </p>
+
+    <a href="#offer" class="fv__cta">
+      ¥1,980から、はじめる
+      <span class="fv__cta-arrow">→</span>
+    </a>
+    <div class="fv__trust">
+      <span>初回送料無料</span>
+      <span>いつでも解約</span>
+      <span>動画教材付</span>
+    </div>
+  </div>
+</section>
+
+<!-- Social proof bar -->
+<div class="sp">
+  <div class="sp__cell"><b>4.8</b>★ rating</div>
+  <div class="sp__cell"><b>94%</b> complete</div>
+  <div class="sp__cell"><b>10,000+</b> makers</div>
+</div>
+
+
+<!-- Before / After -->
+<section class="ba">
+  <p class="ba__kicker rv">BEFORE · AFTER</p>
+  <h2 class="ba__hd rv">From yarn to zumoppi.</h2>
+  <p class="ba__sub rv">糸玉から、あの子まで。</p>
+
+  <div class="ba__compare rv">
+    <div class="ba__side">
+      <div class="ba__img">
+        <span class="ba__badge">BEFORE</span>
+        <img src="images/03_unboxing_flatlay.png" alt="糸玉" loading="lazy" style="object-position: 10% 60%;">
+      </div>
+      <p class="ba__label">Yarn &amp; tools</p>
+    </div>
+    <span class="ba__arrow">→</span>
+    <div class="ba__side">
+      <div class="ba__img">
+        <span class="ba__badge ba__badge--after">AFTER</span>
+        <img src="images/01_zumoppi_hero.png" alt="完成" loading="lazy">
+      </div>
+      <p class="ba__label">Finished!</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- 5-Step Flow — 届く→動画→編む→完成→完成2 -->
+<section class="hiw">
+  <h2 class="hiw__hd rv">Your 5 Moments.</h2>
+  <p class="hiw__sub rv">毎月、5つの瞬間が順に訪れます。</p>
+
+  <div class="hiw__list">
+    <!-- STEP 01: 届く -->
+    <div class="hiw__item rv" style="background:var(--off);overflow:hidden;padding:0;">
+      <div style="aspect-ratio:16/10;overflow:hidden;position:relative;">
+        <img src="images/02_package_lifestyle.png" alt="届く" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+        <span style="position:absolute;top:10px;left:10px;font-family:var(--f-en);font-weight:800;font-size:10px;background:var(--pop);color:#fff;padding:4px 10px;border-radius:12px;letter-spacing:0.1em;">STEP 01 · ARRIVE</span>
+        <span style="position:absolute;top:10px;right:10px;font-family:var(--f-en);font-weight:900;font-size:32px;color:#fff;line-height:1;text-shadow:0 3px 8px rgba(0,0,0,0.35);">01</span>
+      </div>
+      <div style="padding:14px 18px 16px;">
+        <p class="hiw__item-t">Arrives at your door.</p>
+        <p class="hiw__item-tjp">届く、そして可愛い。</p>
+        <p class="hiw__item-d">ポストに入る薄い箱。開ける前から、もうテンション上がる。</p>
+      </div>
+    </div>
+
+    <!-- STEP 02: 動画で見る -->
+    <div class="hiw__item rv" style="background:var(--off);overflow:hidden;padding:0;">
+      <div style="aspect-ratio:16/10;overflow:hidden;position:relative;">
+        <img src="images/03_unboxing_flatlay.png" alt="動画で見る" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+        <span style="position:absolute;top:10px;left:10px;font-family:var(--f-en);font-weight:800;font-size:10px;background:var(--ink);color:#fff;padding:4px 10px;border-radius:12px;letter-spacing:0.1em;display:flex;align-items:center;gap:4px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--pop);animation:pulse 1.3s ease-in-out infinite;"></span>
+          STEP 02 · WATCH
+        </span>
+        <span style="position:absolute;top:10px;right:10px;font-family:var(--f-en);font-weight:900;font-size:32px;color:#fff;line-height:1;text-shadow:0 3px 8px rgba(0,0,0,0.35);">02</span>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;background:rgba(255,255,255,0.95);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 12px rgba(0,0,0,0.2);">
+          <span style="border:10px solid transparent;border-left:15px solid var(--ink);margin-left:3px;"></span>
+        </div>
+      </div>
+      <div style="padding:14px 18px 16px;">
+        <p class="hiw__item-t">Watch the video.</p>
+        <p class="hiw__item-tjp">QRで、動画を見るだけ。</p>
+        <p class="hiw__item-d">編み図は使わない。スマホで動画を観るだけで、進められる。</p>
+      </div>
+    </div>
+
+    <!-- STEP 03: 編む -->
+    <div class="hiw__item rv" style="background:var(--off);overflow:hidden;padding:0;">
+      <div style="aspect-ratio:16/10;overflow:hidden;position:relative;">
+        <img src="images/04_hands_crafting.png" alt="編む" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+        <span style="position:absolute;top:10px;left:10px;font-family:var(--f-en);font-weight:800;font-size:10px;background:var(--ink);color:#fff;padding:4px 10px;border-radius:12px;letter-spacing:0.1em;display:flex;align-items:center;gap:4px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--pop);animation:pulse 1.3s ease-in-out infinite;"></span>
+          STEP 03 · CRAFT
+        </span>
+        <span style="position:absolute;top:10px;right:10px;font-family:var(--f-en);font-weight:900;font-size:32px;color:#fff;line-height:1;text-shadow:0 3px 8px rgba(0,0,0,0.35);">03</span>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;background:rgba(255,255,255,0.95);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 12px rgba(0,0,0,0.2);">
+          <span style="border:10px solid transparent;border-left:15px solid var(--ink);margin-left:3px;"></span>
+        </div>
+      </div>
+      <div style="padding:14px 18px 16px;">
+        <p class="hiw__item-t">Mimic the hands.</p>
+        <p class="hiw__item-tjp">手元を真似て、編む。</p>
+        <p class="hiw__item-d">最初の一目は編み済み。8〜10時間で、すもっぴが手の中に。</p>
+      </div>
+    </div>
+
+    <!-- STEP 04: 完成 -->
+    <div class="hiw__item rv" style="background:var(--off);overflow:hidden;padding:0;">
+      <div style="aspect-ratio:16/10;overflow:hidden;position:relative;">
+        <img src="images/01_zumoppi_hero.png" alt="完成" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+        <span style="position:absolute;top:10px;left:10px;font-family:var(--f-en);font-weight:800;font-size:10px;background:var(--pop);color:#fff;padding:4px 10px;border-radius:12px;letter-spacing:0.1em;">STEP 04 · FINISH</span>
+        <span style="position:absolute;top:10px;right:10px;font-family:var(--f-en);font-weight:900;font-size:32px;color:#fff;line-height:1;text-shadow:0 3px 8px rgba(0,0,0,0.35);">04</span>
+      </div>
+      <div style="padding:14px 18px 16px;">
+        <p class="hiw__item-t">Yes, really finished.</p>
+        <p class="hiw__item-tjp">完成。すもっぴ、降臨。</p>
+        <p class="hiw__item-d">はじめて編んだのに、ちゃんと可愛かった。机に置くだけで嬉しい。</p>
+      </div>
+    </div>
+
+    <!-- STEP 05: 完成2 (2ヶ月目カップル完成) -->
+    <div class="hiw__item rv" style="background:linear-gradient(135deg,var(--pop),#FF8E9E);color:#fff;overflow:hidden;padding:0;border:3px solid var(--pop);">
+      <div style="aspect-ratio:16/10;overflow:hidden;position:relative;">
+        <img src="images/06_shelf_display.png" alt="カップル完成" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+        <span style="position:absolute;top:10px;left:10px;font-family:var(--f-en);font-weight:800;font-size:10px;background:var(--ink);color:var(--yellow);padding:4px 10px;border-radius:12px;letter-spacing:0.1em;">STEP 05 · COUPLE 🎉</span>
+        <span style="position:absolute;top:10px;right:10px;font-family:var(--f-en);font-weight:900;font-size:32px;color:var(--yellow);line-height:1;text-shadow:0 3px 8px rgba(0,0,0,0.35);">05</span>
+      </div>
+      <div style="padding:14px 18px 16px;">
+        <p class="hiw__item-t" style="color:#fff;">The couple arrives.</p>
+        <p class="hiw__item-tjp" style="color:#fff;">2ヶ月目、カップル完成。</p>
+        <p class="hiw__item-d" style="color:rgba(255,255,255,0.92);">すもっぴ×ぴょんちーが棚に並ぶ日。ここが一番の"買ってよかった"。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Reviews -->
+<section class="rev">
+  <p class="rev__sub rv">LOVED BY 10,000+</p>
+  <h2 class="rev__hd rv">Reviews.</h2>
+  <p class="rev__stars rv">★★★★★</p>
+  <p class="rev__meta rv"><b>4.8 / 5.0</b> · 2,438 reviews</p>
+
+  <div class="rev__list">
+    <div class="rev__card rv">
+      <p class="rev__card-stars">★★★★★</p>
+      <p class="rev__card-t">"Actually, I made it!"</p>
+      <p class="rev__card-b">手芸は小学校以来でしたが、動画を見ながらだと迷わずに完成まで進めました。自分で編めた達成感、久しぶりです。</p>
+      <p class="rev__card-name">— 顧客A さま / 30代 · 東京都</p>
+    </div>
+    <div class="rev__card rv">
+      <p class="rev__card-stars">★★★★★</p>
+      <p class="rev__card-t">"The 'pre-started' idea is genius."</p>
+      <p class="rev__card-b">糸玉からやってたら絶対挫折してました。編み始めが完成済み、この発想が天才です。</p>
+      <p class="rev__card-name">— 顧客B さま / 40代 · 大阪府</p>
+    </div>
+    <div class="rev__card rv">
+      <p class="rev__card-stars">★★★★★</p>
+      <p class="rev__card-t">"Every month is a new friend."</p>
+      <p class="rev__card-b">推し活で何か作りたくて、ameruなら毎月1体ずつ家族が増えていくのが楽しみ。友達にも勧めてます。</p>
+      <p class="rev__card-name">— 顧客C さま / 30代 · 福岡県</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Offer -->
+<section class="offer" id="offer">
+  <span class="offer__kicker rv">⚡ LIMITED OFFER</span>
+  <h2 class="offer__hd rv">¥1,980で、<br>はじめる。</h2>
+  <p class="offer__sub rv">まず、1体だけ、編んでみる。</p>
+
+  <div class="offer__price-box rv">
+    <p class="offer__price-label">FIRST DELIVERY</p>
+    <div>
+      <span class="offer__price-strike">¥4,200</span>
+    </div>
+    <p class="offer__price">¥1,980<small>〜</small></p>
+    <span class="offer__save">-52% OFF</span>
+  </div>
+
+  <a href="#" class="offer__btn rv">GET YOURS NOW →</a>
+
+  <div class="offer__trust rv">
+    <span>送料無料</span>
+    <span>いつでも解約</span>
+    <span>動画付</span>
+  </div>
+</section>
+
+<script>
+(function(){
+  function on(){
+    document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight + 40 && r.bottom > -40) el.classList.add('on');
+    });
+  }
+  on();
+  addEventListener('scroll', on, { passive: true });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 2500);
+})();
+</script>
+</body>
+</html>

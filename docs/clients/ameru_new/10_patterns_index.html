@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru × らぶいーず — LP Patterns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --cream: #FBF4EC;
+  --beige: #F5E6DC;
+  --pink-dust: #E8B4A8;
+  --pink-soft: #F4C6BD;
+  --pink-deep: #D98C7E;
+  --pink-pale: #FCE4DD;
+  --blue-sky: #B8DDE8;
+  --blue-soft: #D4EAF0;
+  --ink: #2A2525;
+  --ink-sub: #6B5D52;
+  --white: #FFFFFF;
+  --f-maru: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+  --f-sans: 'Noto Sans JP', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-sans);
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt" 1;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+
+/* 背景の紙吹雪 */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(circle at 10% 20%, var(--pink-pale) 0%, transparent 2%),
+    radial-gradient(circle at 85% 15%, var(--blue-soft) 0%, transparent 1.5%),
+    radial-gradient(circle at 20% 80%, var(--pink-pale) 0%, transparent 2%),
+    radial-gradient(circle at 90% 70%, var(--blue-soft) 0%, transparent 1.5%),
+    radial-gradient(circle at 50% 50%, var(--pink-pale) 0%, transparent 1%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 80px; position: relative; z-index: 1; }
+
+/* ── ヘッダー ── */
+.header-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.header-logo img {
+  width: 160px;
+  margin: 0 auto 8px;
+}
+.header-logo__sub {
+  font-family: var(--f-maru);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--pink-deep);
+  letter-spacing: 0.25em;
+}
+
+/* ── メインキャッチ ── */
+.hero {
+  text-align: center;
+  padding: 40px 16px 60px;
+  position: relative;
+}
+.hero__chara {
+  position: absolute;
+  width: 72px; height: 72px;
+  object-fit: contain;
+  opacity: 0.85;
+}
+.hero__chara.left { top: 20px; left: 8%; transform: rotate(-12deg); }
+.hero__chara.right { top: 60px; right: 8%; transform: rotate(10deg); width: 60px; height: 60px; }
+.hero__chara.bottom-left { bottom: 0px; left: 12%; transform: rotate(8deg); width: 50px; height: 50px; }
+@media (max-width: 640px) {
+  .hero__chara.left { left: 4%; width: 56px; height: 56px; }
+  .hero__chara.right { right: 4%; width: 46px; height: 46px; }
+  .hero__chara.bottom-left { display: none; }
+}
+
+.hero__badge {
+  display: inline-block;
+  background: var(--white);
+  border: 2px solid var(--pink-deep);
+  color: var(--pink-deep);
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 12px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  letter-spacing: 0.15em;
+}
+.hero h1 {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--pink-deep);
+  background: linear-gradient(transparent 60%, var(--pink-soft) 60%);
+  padding: 0 6px;
+}
+.hero__lead {
+  font-family: var(--f-maru);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--ink-sub);
+  max-width: 620px;
+  margin: 0 auto 12px;
+}
+
+/* ── ステータスライン ── */
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
+  margin-bottom: 48px;
+  font-family: var(--f-maru);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ink-sub);
+  letter-spacing: 0.05em;
+}
+.status span {
+  background: var(--white);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--beige);
+}
+.status b { color: var(--pink-deep); font-weight: 900; margin-right: 4px; }
+
+/* ── カードグリッド ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: var(--white);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(217, 140, 126, 0.08);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(217, 140, 126, 0.18);
+}
+.card__thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5/4;
+  background: var(--beige);
+  overflow: hidden;
+}
+.card__thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.card:hover .card__thumb img { transform: scale(1.05); }
+.card__chara-badge {
+  position: absolute;
+  bottom: 10px; right: 10px;
+  width: 40px; height: 40px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  z-index: 2;
+  transform: rotate(-6deg);
+}
+
+.card__id {
+  position: absolute;
+  top: 12px; left: 12px;
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.1em;
+  z-index: 2;
+}
+
+.card__body {
+  padding: 20px 22px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.card__archetype {
+  font-family: var(--f-maru);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--pink-deep);
+  letter-spacing: 0.15em;
+}
+.card__title {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 19px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.card__desc {
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--ink-sub);
+  margin-top: 2px;
+}
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+.card__tag {
+  background: var(--beige);
+  color: var(--ink-sub);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.card__tag--new {
+  background: var(--pink-deep);
+  color: var(--white);
+}
+
+/* ── フッター ── */
+.footer-info {
+  margin-top: 60px;
+  padding: 32px 24px;
+  background: var(--white);
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(217, 140, 126, 0.05);
+}
+.footer-info h3 {
+  font-family: var(--f-maru);
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.footer-info p {
+  font-size: 13px;
+  line-height: 2;
+  color: var(--ink-sub);
+  margin-bottom: 16px;
+}
+.footer-info__links {
+  display: flex; flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 20px;
+  font-size: 12px;
+}
+.footer-info__links a {
+  color: var(--pink-deep);
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 1px dashed var(--pink-deep);
+  padding-bottom: 2px;
+}
+
+.footer-info__chara-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+.footer-info__chara-row img {
+  width: 48px; height: 48px;
+  object-fit: contain;
+}
+
+.footer-copy {
+  text-align: center;
+  padding: 40px 20px 20px;
+  font-size: 11px;
+  color: var(--ink-sub);
+  opacity: 0.7;
+  line-height: 2;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="header-logo">
+    <img src="images/logos/ameru_logo_main.png" alt="ameru - amigurumi for everyone">
+    <div class="header-logo__sub">× らぶいーず 公式コラボ</div>
+  </header>
+
+  <section class="hero">
+    <img class="hero__chara left" src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="すもっぴ">
+    <img class="hero__chara right" src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="ぴょんちー">
+    <img class="hero__chara bottom-left" src="https://loveeez.com/assets/imgs/home/friends_paopao_info.webp" alt="ぱおぱお">
+
+    <div class="hero__badge">LP PATTERNS — 2026.04</div>
+    <h1>
+      <em>らぶいーず</em>を、<br>
+      自分の手で編もう。
+    </h1>
+    <p class="hero__lead">
+      超初心者でも編める、ameruのスターターキット。<br>
+      7つのLPパターンで、それぞれの切り口を試してみています。
+    </p>
+  </section>
+
+  <div class="status">
+    <span><b>10</b> LP 公開中</span>
+    <span><b>17</b> 画像素材 Phase1</span>
+    <span><b>¥1,980</b> 定期便・初回特価</span>
+    <span><b>5</b> 公式キャラ コラボ</span>
+  </div>
+
+  <!-- ── LPカードグリッド ── -->
+  <div class="grid">
+
+    <!-- P01 meeth (原本) -->
+    <a class="card" href="pattern_01_meeth_beauty.html">
+      <div class="card__thumb">
+        <span class="card__id">P01</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="">
+        <img src="images/phase1/H02_hero_pinkbeige_square.png" alt="P01 meeth型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">MEETH 型 · 原本</div>
+        <h3 class="card__title">世界に1つだけの<br>"すもっぴ"を。</h3>
+        <p class="card__desc">ピンクベージュ×太字×親しみ。meeth系の基準となるLP。</p>
+        <div class="card__tags">
+          <span class="card__tag card__tag--new">原本</span>
+          <span class="card__tag">meeth風</span>
+          <span class="card__tag">定期便</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P01A 達成感型 -->
+    <a class="card" href="pattern_01A_achievement.html">
+      <div class="card__thumb">
+        <span class="card__id">P01-A</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="">
+        <img src="images/phase1/H05_hero_face_macro.png" alt="P01A 達成感型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">MEETH 系 · 達成感訴求</div>
+        <h3 class="card__title">自分で作ったって、<br>わかる。</h3>
+        <p class="card__desc">UGC写真×"不器用な私でも完成した"証拠。挫折経験者の自己効力感に刺す。</p>
+        <div class="card__tags">
+          <span class="card__tag card__tag--new">NEW</span>
+          <span class="card__tag">UGC訴求</span>
+          <span class="card__tag">挫折経験者向け</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P01B 癒し/マインドフル型 -->
+    <a class="card" href="pattern_01B_mindful.html">
+      <div class="card__thumb">
+        <span class="card__id">P01-B</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_ururu_info.webp" alt="">
+        <img src="images/phase1/H06_hero_hands_holding.png" alt="P01B 癒し型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">MEETH 系 · マインドフル</div>
+        <h3 class="card__title">スマホを、<br>置く時間。</h3>
+        <p class="card__desc">1日30分、手を動かす物語。デジタル疲労の社会人に"静けさ"を売る。</p>
+        <div class="card__tags">
+          <span class="card__tag card__tag--new">NEW</span>
+          <span class="card__tag">マインドフル</span>
+          <span class="card__tag">明朝×太字</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P01C 推し活型 -->
+    <a class="card" href="pattern_01C_oshikatsu.html">
+      <div class="card__thumb">
+        <span class="card__id">P01-C</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="">
+        <img src="images/phase1/L01_lineup_remaster.png" alt="P01C 推し活型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">MEETH 系 · 推し活特化</div>
+        <h3 class="card__title">らぶいーず、<br>自分の手で迎える。</h3>
+        <p class="card__desc">NTV公式コラボ推し。"買う"から"迎える"へ。推し活ファン向け。</p>
+        <div class="card__tags">
+          <span class="card__tag card__tag--new">NEW</span>
+          <span class="card__tag">推し活</span>
+          <span class="card__tag">コレクション</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P02 snaqme -->
+    <a class="card" href="pattern_02_snaqme.html">
+      <div class="card__thumb">
+        <span class="card__id">P02</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="">
+        <img src="images/01_zumoppi_hero.png" alt="P02 snaq.me型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">SNAQ.ME 型 · ポップ診断</div>
+        <h3 class="card__title">性格診断で選ぶ、<br>あなた色の1匹。</h3>
+        <p class="card__desc">カラフル×診断コンテンツで"自分にぴったり"体験を作るエンタメ型LP。</p>
+        <div class="card__tags">
+          <span class="card__tag">snaq.me風</span>
+          <span class="card__tag">診断コンテンツ</span>
+          <span class="card__tag">定期便</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P05 basefood -->
+    <a class="card" href="pattern_05_basefood.html">
+      <div class="card__thumb">
+        <span class="card__id">P05</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_paopao_info.webp" alt="">
+        <img src="images/01_zumoppi_hero.png" alt="P05 BASE FOOD型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">BASE FOOD 型 · 科学訴求</div>
+        <h3 class="card__title">編み物は、<br>設計で決まる。</h3>
+        <p class="card__desc">数値×根拠×"設計"の言語で語るロジカル訴求LP。モニター数×完成率で証明。</p>
+        <div class="card__tags">
+          <span class="card__tag">BASE FOOD風</span>
+          <span class="card__tag">数値訴求</span>
+          <span class="card__tag">定期便</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P06 woobles -->
+    <a class="card" href="pattern_06_woobles.html">
+      <div class="card__thumb">
+        <span class="card__id">P06</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_nyapo_info.webp" alt="">
+        <img src="images/04_hands_crafting.png" alt="P06 The Woobles型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">THE WOOBLES 型 · 本家直系</div>
+        <h3 class="card__title">思うより、カンタン。<br>本当に、ほんと。</h3>
+        <p class="card__desc">ベンチマーク本家The Wooblesのトンマナ直輸入。動画×Easy Peasy糸で編める。</p>
+        <div class="card__tags">
+          <span class="card__tag">Woobles直系</span>
+          <span class="card__tag">動画推し</span>
+          <span class="card__tag">定期便</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P07 tiktok_ugc -->
+    <a class="card" href="pattern_07_tiktok_ugc.html">
+      <div class="card__thumb">
+        <span class="card__id">P07</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_ururu_info.webp" alt="">
+        <img src="images/02_package_lifestyle.png" alt="P07 TikTok UGC型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">TIKTOK UGC 型 · Z世代縦動画</div>
+        <h3 class="card__title">"編んでみた"が<br>バズってる。</h3>
+        <p class="card__desc">縦動画×ハッシュタグ×UGCで"みんな編んでる"体感を作るSNSネイティブLP。</p>
+        <div class="card__tags">
+          <span class="card__tag">TikTok風</span>
+          <span class="card__tag">UGC推し</span>
+          <span class="card__tag">Z世代</span>
+          <span class="card__tag">定期便</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P08 loveez_complete -->
+    <a class="card" href="pattern_08_loveez_complete.html">
+      <div class="card__thumb">
+        <span class="card__id">P08</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="">
+        <img src="images/01_zumoppi_hero.png" alt="P08 らぶいーず推し活型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">らぶいーず 推し活 型</div>
+        <h3 class="card__title">らぶいーず、ぜんぶ、<br>自分の手で。</h3>
+        <p class="card__desc">NTV公式IPコラボを最大訴求。推し活×手作りの融合で熱狂ファンを狙う。</p>
+        <div class="card__tags">
+          <span class="card__tag card__tag--new">イチオシ</span>
+          <span class="card__tag">らぶいーず推し</span>
+          <span class="card__tag">推し活</span>
+          <span class="card__tag">定期便</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- P10 couple_loveez -->
+    <a class="card" href="pattern_10_couple_loveez.html">
+      <div class="card__thumb">
+        <span class="card__id">P10</span>
+        <img class="card__chara-badge" src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="">
+        <img src="images/02_package_lifestyle.png" alt="P10 カップル型">
+      </div>
+      <div class="card__body">
+        <div class="card__archetype">カップル・家族 ストーリー型</div>
+        <h3 class="card__title">ふたりで、<br>編んでみない？</h3>
+        <p class="card__desc">カップル・親子で編む時間を物語化。ギフト訴求 × 共同体験 LP。</p>
+        <div class="card__tags">
+          <span class="card__tag">ストーリー型</span>
+          <span class="card__tag">ギフト</span>
+          <span class="card__tag">定期便</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── フッター情報 ── -->
+  <div class="footer-info">
+    <h3>🎨 開発ツール・リンク</h3>
+    <p>
+      Phase1で生成した17本の画像素材と、画像戦略ドキュメントはこちら。
+    </p>
+    <div class="footer-info__links">
+      <a href="phase1_preview.html">📸 Phase1 画像17本サムネ</a>
+      <a href="image_strategy_3experts_discussion.md">📄 画像30本戦略（3人議論）</a>
+      <a href="phase1_prompts.md">✍️ Phase1 プロンプト設計</a>
+      <a href="images/phase1/">📁 素材フォルダ</a>
+    </div>
+    <div class="footer-info__chara-row">
+      <img src="https://loveeez.com/assets/imgs/home/friends_smoppi_info.webp" alt="すもっぴ">
+      <img src="https://loveeez.com/assets/imgs/home/friends_pyonchi_info.webp" alt="ぴょんちー">
+      <img src="https://loveeez.com/assets/imgs/home/friends_nyapo_info.webp" alt="にゃぽ">
+      <img src="https://loveeez.com/assets/imgs/home/friends_ururu_info.webp" alt="うるる">
+      <img src="https://loveeez.com/assets/imgs/home/friends_paopao_info.webp" alt="ぱおぱお">
+    </div>
+  </div>
+
+  <div class="footer-copy">
+    ameru — amigurumi for everyone<br>
+    らぶいーず公式コラボキット<br>
+    © 2026 ameru. All rights reserved.
+  </div>
+
+</div>
+</body>
+</html>

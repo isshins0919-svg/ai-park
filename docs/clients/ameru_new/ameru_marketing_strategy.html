@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru マーケティング戦略レポート 2026</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --blue:#4CBAD4; --blue-dark:#2A9AB8; --blue-pale:#EEF9FC; --blue-mid:#D6F1F8;
+    --pink:#F5A8C0; --pink-pale:#FDE8F0;
+    --dark:#1A3340; --mid:#3D6070; --light:#7AAAB8;
+    --cream:#F8FBFC; --white:#FFFFFF;
+    --gold:#E8B84B; --green:#4CAF87; --orange:#F07850; --red:#E85050;
+  }
+  body { font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',sans-serif; background:var(--cream); color:var(--dark); line-height:1.8; font-size:14px; }
+
+  /* ── HEADER ── */
+  .report-header { background:linear-gradient(135deg,var(--dark) 0%,#1E4A60 100%); color:var(--white); padding:60px 40px 48px; position:relative; overflow:hidden; }
+  .report-header::before { content:''; position:absolute; top:-80px; right:-60px; width:360px; height:360px; border-radius:50%; background:rgba(76,186,212,.12); }
+  .report-header::after  { content:''; position:absolute; bottom:-60px; left:-40px; width:240px; height:240px; border-radius:50%; background:rgba(76,186,212,.08); }
+  .header-inner { max-width:900px; margin:0 auto; position:relative; z-index:1; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:end; }
+  .header-text {}
+  .header-meta { font-size:11px; letter-spacing:3px; color:var(--blue); text-transform:uppercase; margin-bottom:16px; }
+  .header-title { font-size:clamp(24px,3.5vw,36px); font-weight:900; line-height:1.3; margin-bottom:14px; }
+  .header-sub { font-size:13px; color:rgba(255,255,255,.6); line-height:1.7; max-width:540px; }
+  .header-badges { display:flex; flex-wrap:wrap; gap:7px; margin-top:20px; }
+  .badge { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 12px; border-radius:50px; border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.65); }
+  .header-pkg { flex-shrink:0; }
+  .header-pkg img { width:160px; filter:drop-shadow(0 8px 24px rgba(0,0,0,.35)); border-radius:4px; }
+
+  /* ── TOC ── */
+  .toc { background:var(--white); border-left:4px solid var(--blue); padding:24px 28px; margin:36px 32px; border-radius:0 10px 10px 0; }
+  .toc-title { font-size:10px; font-weight:700; letter-spacing:3px; color:var(--blue-dark); text-transform:uppercase; margin-bottom:12px; }
+  .toc ol { padding-left:18px; }
+  .toc li { font-size:12px; color:var(--mid); line-height:1.9; }
+  .toc li a { color:var(--mid); text-decoration:none; }
+  .toc li.new-item { font-weight:700; color:var(--blue-dark); }
+  .toc li.new-item::marker { color:var(--blue); }
+
+  /* ── SECTION ── */
+  .section { padding:56px 32px; border-bottom:1px solid rgba(0,0,0,.06); }
+  .section > .inner { max-width:900px; margin:0 auto; }
+  .section-num { font-size:9px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--blue); display:block; margin-bottom:8px; }
+  .section h2 { font-size:clamp(20px,3vw,26px); font-weight:900; line-height:1.4; color:var(--dark); margin-bottom:20px; padding-bottom:14px; border-bottom:2px solid var(--blue-mid); }
+  .section h3 { font-size:15px; font-weight:700; color:var(--dark); margin:28px 0 12px; display:flex; align-items:center; gap:8px; }
+  .section h3::before { content:''; display:inline-block; width:4px; height:16px; background:var(--blue); border-radius:2px; flex-shrink:0; }
+  .section p { font-size:14px; color:var(--mid); line-height:1.9; margin-bottom:12px; }
+  .section p strong { color:var(--dark); }
+
+  /* ── CALLOUT ── */
+  .callout { border-left:4px solid var(--blue); padding:16px 18px; border-radius:0 10px 10px 0; margin:18px 0; font-size:13px; color:var(--dark); line-height:1.8; background:var(--blue-pale); }
+  .callout.orange { background:#FFF3EE; border-color:var(--orange); }
+  .callout.green  { background:#EEF8F4; border-color:var(--green); }
+  .callout.gold   { background:#FFFBEE; border-color:var(--gold); }
+  .callout.red    { background:#FFF0F0; border-color:var(--red); }
+  .callout strong { font-weight:700; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x:auto; margin:16px 0; border-radius:8px; box-shadow:0 1px 8px rgba(0,60,80,.07); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { background:var(--dark); color:var(--white); padding:10px 14px; text-align:left; font-weight:700; font-size:11px; letter-spacing:.5px; white-space:nowrap; }
+  td { padding:10px 14px; border-bottom:1px solid #E0EEF2; color:var(--mid); vertical-align:top; }
+  tr:nth-child(even) td { background:var(--blue-pale); }
+  td strong { color:var(--dark); font-weight:700; }
+  .td-good { color:var(--green)!important; font-weight:700; }
+  .td-warn { color:var(--orange)!important; font-weight:700; }
+  .td-bad  { color:var(--red)!important; font-weight:700; }
+  .td-key  { background:rgba(232,184,75,.1)!important; color:var(--dark)!important; font-weight:700; }
+
+  /* ── METRICS ── */
+  .metrics { display:grid; grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); gap:14px; margin:20px 0; }
+  .metric-card { background:var(--white); border-radius:12px; padding:18px 16px; box-shadow:0 2px 10px rgba(0,60,80,.07); text-align:center; }
+  .metric-val { font-size:26px; font-weight:900; color:var(--blue-dark); line-height:1.1; margin-bottom:4px; }
+  .metric-val.orange { color:var(--orange); }
+  .metric-val.green  { color:var(--green); }
+  .metric-val.gold   { color:var(--gold); }
+  .metric-val.red    { color:var(--red); }
+  .metric-label { font-size:10px; color:var(--light); line-height:1.4; }
+
+  /* ── COST WATERFALL ── */
+  .cost-bars { display:flex; flex-direction:column; gap:6px; margin:20px 0; }
+  .cost-bar-row { display:flex; align-items:center; gap:10px; }
+  .cost-bar-label { width:120px; font-size:11px; color:var(--mid); text-align:right; flex-shrink:0; }
+  .cost-bar-track { flex:1; height:26px; background:var(--blue-pale); border-radius:4px; position:relative; overflow:hidden; }
+  .cost-bar-fill { height:100%; border-radius:4px; display:flex; align-items:center; padding-left:8px; }
+  .cost-bar-fill span { font-size:10px; font-weight:700; color:var(--white); white-space:nowrap; }
+  .cost-bar-amt { width:70px; font-size:12px; font-weight:700; color:var(--dark); text-align:right; flex-shrink:0; }
+
+  /* ── PERSONA ── */
+  .persona-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin:18px 0; }
+  .persona-card { background:var(--white); border-radius:12px; padding:18px 16px; box-shadow:0 2px 10px rgba(0,60,80,.07); }
+  .persona-card.primary { border:2px solid var(--blue); background:var(--blue-pale); }
+  .primary-tag { display:inline-block; background:var(--blue); color:#fff; font-size:9px; font-weight:700; letter-spacing:1px; padding:2px 8px; border-radius:50px; margin-bottom:6px; text-transform:uppercase; }
+  .persona-name { font-size:13px; font-weight:900; color:var(--dark); margin-bottom:3px; }
+  .persona-attr { font-size:10px; color:var(--light); margin-bottom:7px; }
+  .persona-key  { font-size:12px; color:var(--mid); line-height:1.6; }
+
+  /* ── IP CARDS ── */
+  .ip-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin:18px 0; }
+  .ip-card { background:var(--white); border-radius:12px; padding:18px 16px; box-shadow:0 2px 10px rgba(0,60,80,.07); border-top:4px solid var(--blue); }
+  .ip-card.pink  { border-top-color:var(--pink); }
+  .ip-card.gold  { border-top-color:var(--gold); }
+  .ip-card.green { border-top-color:var(--green); }
+  .ip-card.orange{ border-top-color:var(--orange); }
+  .ip-card h4 { font-size:13px; font-weight:900; color:var(--dark); margin-bottom:7px; }
+  .ip-card p  { font-size:12px; color:var(--mid); line-height:1.7; margin:0; }
+
+  /* ── PHASE TIMELINE ── */
+  .phases { display:flex; flex-direction:column; gap:0; margin:20px 0; }
+  .phase { display:flex; gap:0; position:relative; }
+  .phase::before { content:''; position:absolute; left:21px; top:44px; width:2px; height:calc(100% - 16px); background:var(--blue-mid); }
+  .phase:last-child::before { display:none; }
+  .phase-dot { flex-shrink:0; width:43px; height:43px; border-radius:50%; background:var(--blue); color:var(--white); font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center; z-index:1; margin-right:18px; box-shadow:0 2px 10px rgba(76,186,212,.35); }
+  .phase-body { padding-bottom:30px; flex:1; }
+  .phase-period { font-size:10px; color:var(--blue); font-weight:700; letter-spacing:1px; margin-top:10px; margin-bottom:4px; }
+  .phase-title  { font-size:16px; font-weight:900; color:var(--dark); margin-bottom:8px; }
+  .phase-list   { list-style:none; }
+  .phase-list li { font-size:13px; color:var(--mid); padding:3px 0 3px 14px; position:relative; line-height:1.7; }
+  .phase-list li::before { content:'→'; position:absolute; left:0; color:var(--blue); font-size:10px; top:6px; }
+
+  /* ── LP STRUCTURE ── */
+  .lp-sections { display:flex; flex-direction:column; gap:0; margin:20px 0; }
+  .lp-sec { display:flex; gap:16px; border-left:3px solid var(--blue-mid); padding:0 0 24px 20px; position:relative; }
+  .lp-sec:last-child { border-left-color:transparent; }
+  .lp-sec::before { content:''; position:absolute; left:-8px; top:0; width:14px; height:14px; background:var(--blue); border-radius:50%; border:2px solid var(--white); }
+  .lp-sec-body { flex:1; }
+  .lp-sec-tag { display:inline-block; font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:2px 10px; border-radius:50px; margin-bottom:6px; }
+  .tag-fv      { background:var(--dark); color:#fff; }
+  .tag-visual  { background:var(--blue); color:#fff; }
+  .tag-collect { background:var(--pink); color:#fff; }
+  .tag-trust   { background:var(--green); color:#fff; }
+  .tag-offer   { background:var(--gold); color:var(--dark); }
+  .tag-how     { background:#aaa; color:#fff; }
+  .lp-sec-title { font-size:14px; font-weight:900; color:var(--dark); margin-bottom:4px; }
+  .lp-sec-desc  { font-size:12px; color:var(--mid); line-height:1.7; }
+  .lp-sec-kpi   { font-size:10px; font-weight:700; color:var(--blue-dark); margin-top:4px; }
+
+  /* ── PKG HIGHLIGHT ── */
+  .pkg-highlight { background:linear-gradient(135deg,var(--blue-pale) 0%,#D8F4FB 100%); border-radius:16px; padding:28px; display:flex; gap:28px; align-items:center; margin:20px 0; }
+  .pkg-highlight img { width:140px; flex-shrink:0; filter:drop-shadow(0 6px 18px rgba(0,60,80,.18)); border-radius:4px; }
+  .pkg-highlight-body h4 { font-size:16px; font-weight:900; color:var(--dark); margin-bottom:8px; }
+  .pkg-highlight-body p  { font-size:13px; color:var(--mid); line-height:1.7; margin-bottom:8px; }
+  .pkg-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .pkg-tag  { font-size:11px; color:var(--blue-dark); background:var(--white); border:1.5px solid var(--blue-mid); padding:3px 12px; border-radius:50px; font-weight:600; }
+
+  /* ── COST COMPARE ── */
+  .cost-compare { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:18px 0; }
+  .cost-box { background:var(--white); border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(0,60,80,.07); }
+  .cost-box.new-box { border:2px solid var(--blue); background:var(--blue-pale); }
+  .cost-box h4 { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--light); margin-bottom:14px; }
+  .cost-box h4 span { color:var(--blue-dark); }
+  .cost-item { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(0,80,100,.07); font-size:12px; }
+  .cost-item:last-child { border-bottom:none; font-weight:700; font-size:13px; padding-top:10px; }
+  .cost-item .name { color:var(--mid); }
+  .cost-item .val  { color:var(--dark); font-weight:600; }
+  .cost-item .val.profit { color:var(--green); }
+  .cost-item .val.better { color:var(--blue-dark); }
+  .cost-item .val.worse  { color:var(--orange); }
+
+  /* ── SCENARIO TABLE ── */
+  .scenario-note { font-size:11px; color:var(--light); margin-top:6px; }
+
+  /* ── FINAL CTA BOX ── */
+  .final-section { background:linear-gradient(135deg,var(--dark) 0%,#1E4A60 100%); color:var(--white); padding:56px 32px; }
+  .final-section > .inner { max-width:900px; margin:0 auto; }
+  .final-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin-top:24px; }
+  .final-card { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:20px; }
+  .final-card-num { font-size:10px; letter-spacing:2px; color:var(--blue); font-weight:700; margin-bottom:7px; text-transform:uppercase; }
+  .final-card-title { font-size:15px; font-weight:900; color:var(--white); margin-bottom:7px; line-height:1.35; }
+  .final-card-desc  { font-size:12px; color:rgba(255,255,255,.6); line-height:1.7; }
+  .final-quote { margin-top:32px; padding:22px; background:rgba(76,186,212,.12); border:1px solid rgba(76,186,212,.25); border-radius:14px; font-size:15px; font-weight:700; color:var(--white); line-height:1.7; }
+  .final-quote span { display:block; font-size:12px; font-weight:400; color:rgba(255,255,255,.5); margin-top:6px; }
+
+  /* ── FOOTER ── */
+  .report-footer { background:var(--dark); color:rgba(255,255,255,.35); padding:28px 40px; font-size:10px; line-height:1.8; text-align:center; }
+
+  @media(max-width:640px) {
+    .header-inner { grid-template-columns:1fr; }
+    .header-pkg { display:none; }
+    .pkg-highlight { flex-direction:column; }
+    .cost-compare { grid-template-columns:1fr; }
+    .metrics { grid-template-columns:repeat(2,1fr); }
+    .section { padding:40px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="report-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <p class="header-meta">Marketing Strategy Report · 2026-04-08 · ver.2</p>
+      <h1 class="header-title">ameru（アメル）<br>マーケティング戦略レポート</h1>
+      <p class="header-sub">Love is... IPを起点とした日本市場参入から、原価設計・LP構成・オリジナルIPによる長期ブランド構築まで。あみぐるみキット事業を成功させるための包括的な戦略と戦術。</p>
+      <div class="header-badges">
+        <span class="badge">D2C 定期購読</span>
+        <span class="badge">IP活用戦略</span>
+        <span class="badge">原価管理</span>
+        <span class="badge">LP設計</span>
+        <span class="badge">広告戦略</span>
+        <span class="badge">オリジナルIP</span>
+      </div>
+    </div>
+    <div class="header-pkg">
+      <img src="ameru_pkg_3rd.png" alt="ameru パッケージ">
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOC ══ -->
+<nav class="toc">
+  <p class="toc-title">目次</p>
+  <ol>
+    <li><a href="#s1">事業の現在地と市場機会</a></li>
+    <li class="new-item"><a href="#s1b">The Woobles 高利益率の構造解剖</a> ★新規</li>
+    <li><a href="#s2">ターゲットペルソナ設計</a></li>
+    <li><a href="#s3">Love is... IP活用戦略（価格・広告・展開）</a></li>
+    <li class="new-item"><a href="#s4">原価管理と価格設計</a> ★新規</li>
+    <li class="new-item"><a href="#s5">LP設計 — 動画→LP導線の構成</a> ★新規</li>
+    <li><a href="#s6">広告戦略 — 全体設計</a></li>
+    <li><a href="#s7">オリジナルIP展開計画</a></li>
+    <li><a href="#s8">フェーズ別ロードマップ</a></li>
+    <li><a href="#s9">KPIと成功指標</a></li>
+    <li><a href="#s10">まとめ：ameruが勝つための5つの鍵</a></li>
+  </ol>
+</nav>
+
+
+<!-- ══ 01 ══ -->
+<div class="section" id="s1">
+<div class="inner">
+  <span class="section-num">Section 01</span>
+  <h2>事業の現在地と市場機会</h2>
+  <p>日本の手芸・あみぐるみ市場は2025年に向けて急拡大している。「推し活」関連グッズの市場は2024年比で最大<strong>17.5倍</strong>の成長を記録。「既製品を買う」から「自分で作る・カスタマイズする」への消費シフトが鮮明になっており、社会人が没頭できる趣味の第1位は<strong>手芸・クラフト・DIY</strong>、趣味への月平均支出は<strong>6,889円</strong>。ameruが参入するタイミングとして最高の追い風が吹いている。</p>
+
+  <div class="metrics">
+    <div class="metric-card"><div class="metric-val">17.5x</div><div class="metric-label">推し活グッズ流通額成長率（2024年比）</div></div>
+    <div class="metric-card"><div class="metric-val">74.6%</div><div class="metric-label">推し活層の「ぬい」所有率</div></div>
+    <div class="metric-card"><div class="metric-val orange">40%</div><div class="metric-label">15-35歳女性の「ぬい活」経験・興味層</div></div>
+    <div class="metric-card"><div class="metric-val green">¥6,889</div><div class="metric-label">社会人の趣味への月平均支出</div></div>
+    <div class="metric-card"><div class="metric-val gold">86%</div><div class="metric-label">The Woobles参照モデルの粗利率</div></div>
+    <div class="metric-card"><div class="metric-val">18.1%</div><div class="metric-label">ameru 現在の想定利益率（試算値）</div></div>
+  </div>
+
+  <div class="callout">
+    <strong>競合の空白地帯：</strong>日本市場には「初心者が確実に完成できる設計」×「高単価D2C」の商品が存在しない。フェリシモ等の既存プレイヤーは月1,000〜3,000円の低単価サブスクが主流。The Wooblesの日本版として参入するameruに、真のコンペティターはいない。
+  </div>
+
+  <h3>ameruの3つの技術的差別化（コピー不可能な堀）</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>差別化要素</th><th>内容</th><th>競合が真似できない理由</th></tr></thead>
+      <tbody>
+        <tr><td><strong>編み始め完成済み</strong></td><td>最難関のマジックリング工程を工場で完成させて発送</td><td>工場との製造フロー構築が必要。後発が追いつくまでに時間がかかる</td></tr>
+        <tr><td><strong>独自開発糸</strong></td><td>ほつれにくく初心者が編みやすいオリジナル糸（The WooblesのEasy Peasy Yarn超えを目指す）</td><td>ごしょう産業・澤田株式会社（2社で見積もり中）とのOEM開発。糸のスペックはノウハウで守れる</td></tr>
+        <tr><td><strong>動画教材一体型</strong></td><td>QRコード付き縦型動画。右利き・左利き対応。音声なしで理解可能</td><td>質の高い動画制作ノウハウ＋ヨミテのマーケティング知見が必要</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 01b NEW：The Woobles 解剖 ══ -->
+<div class="section" id="s1b" style="background:var(--white);">
+<div class="inner">
+  <span class="section-num">Section 01b ★ NEW</span>
+  <h2>The Woobles 高利益率の構造解剖 — ameruが学ぶべき5つの理由</h2>
+
+  <p>「粗利86%・純利32〜38%・CAC $16」——これは物理的な製品会社としては異次元の数字だ。なぜ糸と針を売る会社がここまで高収益なのか。ameruが同じ構造を日本で再現するためのカラクリを解剖する。</p>
+
+  <div class="metrics">
+    <div class="metric-card"><div class="metric-val green">86%</div><div class="metric-label">粗利率（Gross Margin）</div></div>
+    <div class="metric-card"><div class="metric-val green">32〜38%</div><div class="metric-label">純利益率（Net Margin）</div></div>
+    <div class="metric-card"><div class="metric-val orange">$16</div><div class="metric-label">顧客獲得単価（CAC）</div></div>
+    <div class="metric-card"><div class="metric-val">$57</div><div class="metric-label">平均注文額（AOV）</div></div>
+    <div class="metric-card"><div class="metric-val gold">$3</div><div class="metric-label">製品1個あたりの製造原価</div></div>
+    <div class="metric-card"><div class="metric-val">$30</div><div class="metric-label">小売価格（消費者向け）</div></div>
+  </div>
+
+  <h3>理由① 「資材」ではなく「達成感（フィエロ）」を売っている</h3>
+  <p>
+    製造原価$3の製品が$30で売れる。10倍の価格差を正当化しているのは、糸の品質でも素材の珍しさでもない。
+    <strong>「完成させた瞬間の感情体験」</strong>に顧客はお金を払っている。
+    共同創業者のジャスティンはGoogle Classroomのリード UXデザイナー出身。
+    「物理的なスキルをどう大規模に教えるか」という教育設計の問題として捉えており、
+    これが同業他社には模倣できない価値の源泉となっている。
+  </p>
+  <div class="callout">
+    <strong>ameruへの示唆：</strong>「あみぐるみが届く」ではなく「<strong>はじめて編んだのに、ちゃんと可愛かった</strong>」という体験が商品。
+    原価議論より先に「フィエロ設計」が問われる。
+  </div>
+
+  <h3>理由② 工場で「最難関工程」を代替することで離脱を消している</h3>
+  <p>
+    初心者が最も挫折するのはマジックリング（作り目の輪）だ。The Wooblesはこの工程を工場であらかじめ完成させた状態で出荷する（特許出願済み）。
+    顧客は箱を開けた瞬間から「編む楽しさ」だけを体験できる。
+    離脱が消えることで<strong>完成→SNS投稿→UGC発生</strong>というサイクルが回り始める。UGCが回ればCACが下がり、CAC $16という驚異の数字が生まれる。
+  </p>
+
+  <h3>理由③ 独自糸（Easy Peasy Yarn）で再注文を囲い込んでいる</h3>
+  <p>
+    コットンとナイロンの混紡チューブ状糸は、ほつれにくく目が見やすいため初心者が失敗しにくい。
+    この糸自体が独自開発品であるため、顧客が「次のキットも欲しい」と思ったとき自然に自社製品に戻ってくる構造になっている。
+    素材そのものが<strong>スイッチングコスト</strong>を生んでいる。
+  </p>
+
+  <h3>理由④ IPライセンスで「検索されなくても見つかる」状態を作っている</h3>
+  <p>
+    サンリオ（ハローキティ）・ハリー・ポッター・Minecraft・PAC-MANなど、強力なファンベースを持つIPと提携。
+    IPファンがThe Wooblesを探すのではなく、<strong>IPファンがSNSでエンカウントする</strong>設計になっている。
+    ブランド認知ゼロの状態でも既存IPの集客力を借りられるため、広告費に頼らない流入が作れる。
+  </p>
+  <div class="callout green">
+    <strong>ameruの Love is... IPはまさにこの戦略：</strong>Love is...ファンが「あみぐるみで欲しい」と思う前に、Love is...を調べた際にameruがヒットする状態を作る。
+    IP選定の基準は「ファン数」より「ファンの熱量とSNS発信率」。
+  </div>
+
+  <h3>理由⑤ 顧客を「コレクター」に変換してLTVを最大化している</h3>
+  <p>
+    ハロウィン・クリスマス・IP別のコレクションを次々投入し、「全部揃えたい」という収集欲求を刺激する。
+    さらにアクセサリーキット（帽子・眼鏡など$7前後）や書籍でアドオン収益を積み上げる。
+    AOV $57（= 複数購入 or バンドル）は、この設計の証拠だ。
+  </p>
+
+  <h3>The Woobles の財務構造 vs ameru の現在地</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>指標</th><th>The Woobles（参照）</th><th>ameru（現状目標）</th><th>ギャップと打ち手</th></tr></thead>
+      <tbody>
+        <tr><td><strong>粗利率</strong></td><td class="td-good">86%</td><td class="td-warn">〜65%（試算）</td><td>ロイヤリティ7%・キット原価比率が大きい。オリジナルIPへの移行で改善余地あり</td></tr>
+        <tr><td><strong>純利益率</strong></td><td class="td-good">32〜38%</td><td class="td-warn">18.1%</td><td>CACの差が主因。UGCサイクルが回れば自然に改善する</td></tr>
+        <tr><td><strong>CAC / CPA</strong></td><td class="td-good">$16（約¥2,400）</td><td class="td-warn">¥2,000以下を目標</td><td>初期は課金広告で獲得。UGCが蓄積されると有機流入でCACが落ちる</td></tr>
+        <tr><td><strong>AOV / F1価格</strong></td><td>$57（約¥8,500）</td><td>¥1,980（初回体験価）</td><td>The Wooblesは複数購入前提。ameruはF2〜F5のLTVで追いつく設計</td></tr>
+        <tr class="td-key"><td><strong>コア差別化</strong></td><td>Easy Peasy Yarn + フィエロ設計</td><td>編み始め完成済み + Love is... IP</td><td>方向性は同じ。スピードと素材品質の積み上げが勝負</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout red">
+    <strong>最重要教訓：</strong>The Wooblesが$200の自己資本からスタートして粗利86%を達成したのは、「教育体験」に投資し続けたからだ。
+    工場でマジックリングを完成させるコストは上がるが、それが離脱ゼロを生み、UGCを生み、CACを下げる。
+    ameruも同じく、<strong>「完成させること」への投資を惜しまないこと</strong>がThe Woobles超えへの唯一の道。
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 02 ══ -->
+<div class="section" id="s2" style="background:var(--white);">
+<div class="inner">
+  <span class="section-num">Section 02</span>
+  <h2>ターゲットペルソナ設計</h2>
+  <p>日本市場調査を統合し、5つのペルソナを整理。現時点でリソースを集中すべき<strong>ゴールデンペルソナ</strong>は「推し活ハイブリッド・ワーカー」。Love is... IPとの相性、SNS拡散力、価格受容性、LTVの高さから最優先と判断。</p>
+
+  <div class="persona-grid">
+    <div class="persona-card primary">
+      <span class="primary-tag">★ 最優先</span>
+      <p class="persona-name">推し活ハイブリッド・ワーカー</p>
+      <p class="persona-attr">27〜33歳 女性 ／ 都市部専門職</p>
+      <p class="persona-key">推しIPへの愛着×デジタル疲労×「作れた」達成感への渇望。SNS拡散力◎・価格受容性◎・LTV◎。Love is... 相性最高。</p>
+    </div>
+    <div class="persona-card">
+      <p class="persona-name">Z世代 推し活追求者</p>
+      <p class="persona-attr">19〜24歳 女性 ／ 学生〜社会人1-2年目</p>
+      <p class="persona-key">ぬい活の主役層。TikTok・X中心。推しカラーで自作したい欲求が強い。拡散力は最大。</p>
+    </div>
+    <div class="persona-card">
+      <p class="persona-name">デジタル・デトックス専門職</p>
+      <p class="persona-attr">28〜38歳 女性 ／ IT・医療・教育</p>
+      <p class="persona-key">脳の休息として手を動かしたい。「準備ゼロ・オールインワン」訴求が刺さる。</p>
+    </div>
+    <div class="persona-card">
+      <p class="persona-name">クリエイティブ・ママ</p>
+      <p class="persona-attr">35〜45歳 女性 ／ 小学生の子供あり</p>
+      <p class="persona-key">親子体験・ギフト需要。母の日・クリスマスギフト需要が大きい。</p>
+    </div>
+    <div class="persona-card">
+      <p class="persona-name">タイパ重視スキル習得者</p>
+      <p class="persona-attr">30〜40代 男女 ／ 論理的思考型</p>
+      <p class="persona-key">失敗保証があれば高単価でも払う。オリジナルIPフェーズで有望。</p>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <strong>ゴールデンペルソナの最大の強み：</strong>完成品を「高品質なSNS投稿」として自発的に発信する。広告費なしでブランドが広がる<strong>UGCサイクル</strong>が生まれる。The Wooblesの成長の大部分はこの自然発生的UGCが支えていた。
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 03 ══ -->
+<div class="section" id="s3">
+<div class="inner">
+  <span class="section-num">Section 03</span>
+  <h2>Love is... IP活用戦略</h2>
+
+  <!-- パッケージ画像 -->
+  <div class="pkg-highlight">
+    <img src="ameru_pkg_3rd.png" alt="ameru パッケージ No.1 ずもっぴ">
+    <div class="pkg-highlight-body">
+      <h4>第1弾：No.1 ずもっぴ（3rdデザイン確定）</h4>
+      <p>スカイブルー×ホワイトの鮮やかなパッケージ。「今日から編めるあみぐるみ」「All Materials Included」「BEGINNERS」の表記が初心者への安心感を与える。このビジュアルが広告・LP・UGCすべての起点になる。</p>
+      <div class="pkg-tags">
+        <span class="pkg-tag">✔ らぶいーず コラボ</span>
+        <span class="pkg-tag">✔ LEVEL ★（初心者）</span>
+        <span class="pkg-tag">✔ 8〜10時間で完成</span>
+        <span class="pkg-tag">✔ 全道具入り</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>（a）価格設計</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>回</th><th>内容</th><th>価格（税込）</th><th>戦略的意図</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1回目</strong></td><td>ずもっぴ（No.1）+ 全道具フルセット</td><td class="td-gold"><strong>¥1,980</strong></td><td>試す壁を最低に下げる。道具を初回に全部入れることで実質無料感を演出。CPO ¥4,000以内が前提。</td></tr>
+        <tr><td>2〜5回目</td><td>各キャラクター + 糸・パーツのみ</td><td>¥4,200/回</td><td>道具なし分の原価を下げ、利益率を高める。ロイヤリティ（想定7%）を吸収しつつ18%+利益を維持。</td></tr>
+        <tr class="td-key"><td>5回 総額</td><td>Love is... 全5種コンプリート</td><td>¥18,780</td><td>ディアゴスティーニ型の「全部揃えたい」収集欲求でLTV最大化。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>（b）広告クリエイティブの方向性</h3>
+  <div class="ip-cards">
+    <div class="ip-card">
+      <h4>パターンA：開封動画</h4>
+      <p>パッケージを開ける瞬間→中身のかわいさ→完成品。「届いた」という疑似体験。パッケージのビジュアル強度が高いほど効く。</p>
+    </div>
+    <div class="ip-card pink">
+      <h4>パターンB：完成リアクション</h4>
+      <p>「初めて作った」人が完成させた瞬間の顔・声。達成感の伝播。UGC素材をSpark Adsで転用するのが最も効率的。</p>
+    </div>
+    <div class="ip-card gold">
+      <h4>パターンC：before/after</h4>
+      <p>「編み図を見て挫折した昔」vs「ameruで完成した今」。「これなら私もできる」と思わせる設計。</p>
+    </div>
+  </div>
+
+  <h3>（c）IPを絡めた具体的展開案</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>展開</th><th>内容</th><th>効果</th></tr></thead>
+      <tbody>
+        <tr><td><strong>コンプリートキャンペーン</strong></td><td>全5体揃えたユーザーに「コンプリート認定」デジタル配布。SNS投稿を促す。</td><td>F5継続率向上 + UGC誘発</td></tr>
+        <tr><td><strong>公式コラボ告知</strong></td><td>Love is... 公式SNSでameru発売告知。ファンへの認知を一気に広げる。</td><td>初期CPAを大幅に下げる最短経路</td></tr>
+        <tr><td><strong>ぬい撮りハッシュタグ</strong></td><td>#ameruずもっぴ でSNS投稿を促進。優良投稿を公式リポスト。</td><td>UGCサイクル確立。第三者証言が広告より強い</td></tr>
+        <tr><td><strong>アクセサリー別売り</strong></td><td>キャラに合わせた小物（帽子・リボン等）を¥780〜¥1,280で別売り。</td><td>LTV向上 + 収集欲求の延長</td></tr>
+        <tr><td><strong>推しカラー展開</strong></td><td>Love is... キャラの「推しカラー」に対応した糸カラーを展開。</td><td>ファンの自作意欲を刺激。追加注文の動機に</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 04 NEW：原価管理 ══ -->
+<div class="section" id="s4" style="background:var(--white);">
+<div class="inner">
+  <span class="section-num">Section 04 ★ NEW</span>
+  <h2>原価管理と価格設計</h2>
+
+  <p>通販事業において原価管理は事業の生死を決める。現状のユニットエコノミクスを解剖し、<strong>キット製造原価の目標値</strong>と<strong>目標CPA</strong>を明確化する。</p>
+
+  <h3>現状のユニットエコノミクス（基準値）</h3>
+  <p>継続率（F2=85%、F3=77%、F4=69%、F5=62%）を加味した期待値ベースの試算。</p>
+
+  <div class="metrics">
+    <div class="metric-card"><div class="metric-val">¥14,077</div><div class="metric-label">LTV（期待値）</div></div>
+    <div class="metric-card"><div class="metric-val red">¥1,250</div><div class="metric-label">キット原価/回（現行）</div></div>
+    <div class="metric-card"><div class="metric-val orange">¥1,000</div><div class="metric-label">キット原価/回（目標）</div></div>
+    <div class="metric-card"><div class="metric-val orange">¥4,000</div><div class="metric-label">CPO 目標</div></div>
+    <div class="metric-card"><div class="metric-val red">9.2%</div><div class="metric-label">利益率（現行・要改善）</div></div>
+    <div class="metric-card"><div class="metric-val green">18.1%</div><div class="metric-label">利益率（目標¥1,000達成時）</div></div>
+  </div>
+
+  <div class="callout red">
+    <strong>⚠ 現状の正直な数字：</strong>
+    キット原価¥1,250/回（5回合計¥6,250）の状態では、LTV¥14,077に対して利益は<strong>¥1,294（9.2%）</strong>。
+    事業として成立させるには<strong>¥1,000/回以下への削減が最重要課題</strong>。¥1,000達成で利益率18.1%（¥2,544）になる。
+  </div>
+
+  <h3>なぜameruのキット原価は¥1,250と高いのか</h3>
+  <p>The Wooblesの製造原価$3（約¥450）と比べると約2.8倍。この差は以下4つの要因で説明できる。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>コスト高要因</th><th>内容</th><th>削減アクション</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>① 小ロット仕入れ</strong></td>
+          <td>立ち上げ期のため発注ロットが小さく、部材の単価が高止まりしている。The Wooblesは年間数十万個スケールで単価が激安</td>
+          <td>ロット数拡大で自然に下がる。3,000〜5,000個/回で大幅改善</td>
+        </tr>
+        <tr>
+          <td><strong>② 編み始め工賃（マジックリング）</strong></td>
+          <td>最難関のマジックリング工程を工場で手作業完成させる。これがThe Wooblesの最大の差別化だが、手作業なので工賃が乗る</td>
+          <td>ロット増で1個あたり工賃は低下。完全自動化は困難なため許容コストとして設計に織り込む</td>
+        </tr>
+        <tr>
+          <td><strong>③ 玉巻き工賃</strong></td>
+          <td>Easy Peasy Yarn相当のチューブ糸は機械製造だが、糸玉にする巻き工程でコストが発生。指定色・指定量での小ロット対応は割高</td>
+          <td>OEM先（ごしょう産業 or 澤田株式会社）との長期契約・ロット拡大で単価交渉。糸種の統一化で品番数削減</td>
+        </tr>
+        <tr>
+          <td><strong>④ かぎ針仕様</strong></td>
+          <td>仕様未確定。オリジナルデザインの場合は金型費が原価に乗る。立ち上げ期は特に高い</td>
+          <td>仕様確定後に原価への影響を試算。金型費は一度かかればスケールで薄まる</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>コスト構造の可視化（現行 vs 目標）</h3>
+  <p>現行¥1,250の状態（左）と、目標¥1,000達成時（右）の対比。</p>
+  <div class="cost-compare">
+    <div class="cost-box">
+      <h4>現行モデル（¥1,250/回）</h4>
+      <div class="cost-item"><span class="name">LTV</span><span class="val">¥14,077</span></div>
+      <div class="cost-item"><span class="name">キット原価（×5回）</span><span class="val worse">¥6,250（44.4%）</span></div>
+      <div class="cost-item"><span class="name">CPO</span><span class="val">¥4,000</span></div>
+      <div class="cost-item"><span class="name">ロイヤリティ</span><span class="val">¥985</span></div>
+      <div class="cost-item"><span class="name">送料・決済・システム</span><span class="val">¥1,548</span></div>
+      <div class="cost-item"><span class="name" style="color:var(--red);font-weight:700;">利益 / 利益率</span><span class="val" style="color:var(--red);">¥1,294 / <strong>9.2%</strong></span></div>
+    </div>
+    <div class="cost-box new-box">
+      <h4>目標モデル（¥1,000/回）</h4>
+      <div class="cost-item"><span class="name">LTV</span><span class="val">¥14,077</span></div>
+      <div class="cost-item"><span class="name">キット原価（×5回）</span><span class="val better">¥5,000（35.5%）</span></div>
+      <div class="cost-item"><span class="name">CPO</span><span class="val">¥4,000</span></div>
+      <div class="cost-item"><span class="name">ロイヤリティ</span><span class="val">¥985</span></div>
+      <div class="cost-item"><span class="name">送料・決済・システム</span><span class="val">¥1,548</span></div>
+      <div class="cost-item"><span class="name" style="color:var(--green);font-weight:700;">利益 / 利益率</span><span class="val profit">¥2,544 / <strong>18.1%</strong></span></div>
+    </div>
+  </div>
+
+  <h3>原価シナリオ別の利益シミュレーション</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>シナリオ</th><th>キット原価/回</th><th>合計キット費</th><th>利益</th><th>利益率</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>現行（立ち上げ期）</td>
+          <td class="td-bad"><strong>¥1,250</strong></td>
+          <td class="td-bad">¥6,250</td>
+          <td class="td-bad">¥1,294</td>
+          <td class="td-bad"><strong>9.2%</strong></td>
+          <td class="td-bad">要改善。事業継続には原価削減必須</td>
+        </tr>
+        <tr class="td-key">
+          <td><strong>目標（第一優先）</strong></td>
+          <td class="td-good"><strong>¥1,000</strong></td>
+          <td class="td-good">¥5,000</td>
+          <td class="td-good">¥2,544</td>
+          <td class="td-good"><strong>18.1%</strong></td>
+          <td class="td-good">最低ライン達成。ロット拡大で実現</td>
+        </tr>
+        <tr>
+          <td>理想（スケール後）</td>
+          <td class="td-warn"><strong>¥800</strong></td>
+          <td class="td-warn">¥4,000</td>
+          <td class="td-warn">¥3,544</td>
+          <td class="td-warn"><strong>25.2%</strong></td>
+          <td class="td-warn">中国工場スケール＋金型費回収後に狙う</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout red">
+    <strong>⚠ 最重要インサイト：</strong>
+    現行¥1,250/回では利益率9.2%。まず<strong>¥1,000/回への削減が絶対条件</strong>（利益率18.1%）。
+    ロット拡大・工賃交渉・糸種統一・かぎ針の汎用品スタート検討が打ち手の優先順序。
+  </div>
+
+  <h3>目標CPAの設計</h3>
+  <p>CPO（全顧客獲得コスト）¥4,000を維持するための、媒体CPA目標を設定する。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>シナリオ</th><th>CPO 上限</th><th>内訳</th><th>媒体 CPA 目標</th></tr></thead>
+      <tbody>
+        <tr class="td-key"><td><strong>現行モデル（18%マージン）</strong></td><td><strong>¥4,000</strong></td><td>媒体CPA ¥2,000 + 制作費・代理店費等 ¥2,000</td><td class="td-good"><strong>¥2,000以下</strong></td></tr>
+        <tr><td>20%マージン目標</td><td>¥3,739</td><td>媒体CPA ¥1,870 + その他 ¥1,869</td><td class="td-warn"><strong>¥1,870以下</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout gold">
+    <strong>推奨：</strong>立ち上げ期は<strong>媒体CPA ¥2,000以下を死守ライン</strong>として設定。
+    20%マージン目標は事業が安定した後に段階的に追求する。CPOの「その他¥2,000」には動画制作費・クリエイター費・LP改善費が含まれることを忘れずに。
+  </div>
+
+  <h3>原価管理のチェックリスト</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>項目</th><th>現状</th><th>目標</th><th>アクション</th></tr></thead>
+      <tbody>
+        <tr><td><strong>キット製造原価</strong></td><td>¥1,250/回（現行）</td><td><strong>¥1,000/回以下（最優先）</strong></td><td>ロット拡大・玉巻き/編み始め工賃交渉・糸種統一・かぎ針仕様見直しの4本柱で削減</td></tr>
+        <tr><td><strong>配送費（キャリア）</strong></td><td>未確定</td><td>コスト最小化</td><td>ヤマト・佐川・メルカリ便等で相見積もり。契約ロット拡大で単価交渉。</td></tr>
+        <tr><td><strong>ロイヤリティ</strong></td><td>想定7%</td><td>7%固定（Love is...）</td><td>オリジナルIPへの移行でゼロにする。中長期目標。</td></tr>
+        <tr><td><strong>決済連動費</strong></td><td>4.5%</td><td>4%以下</td><td>決済手数料の最適化（Stripe等の比較検討）。</td></tr>
+        <tr><td><strong>CPO</strong></td><td>目標¥4,000</td><td>¥4,000以内</td><td>媒体CPA ¥2,000以下。UGCが回れば自然と下がる。</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 05 NEW：LP設計 ══ -->
+<div class="section" id="s5">
+<div class="inner">
+  <span class="section-num">Section 05 ★ NEW</span>
+  <h2>LP設計 — 動画クリエイティブ→LP導線の構成</h2>
+
+  <p>ameruの主要流入は<strong>動画広告（TikTok・Instagram リール）→ LP</strong>の導線。動画で感情を動かされたユーザーがLPに着地した瞬間に「続きを見ている感覚」を与えることが最重要。温まった感情を冷まさず、最短でCTAに誘導する設計にする。</p>
+
+  <div class="callout">
+    <strong>動画→LPの基本原則：</strong>
+    ① 動画のビジュアルとLPのFVは世界観を統一する（同じパッケージ・同じトーン）<br>
+    ② LPのFVでは動画の約束を「証明」する（完成品を見せる）<br>
+    ③ 価格はFV内に必ず表示。「¥1,980」を隠さない<br>
+    ④「難しそう」という不安の解消は中盤以降。まず欲しいを作る
+  </div>
+
+  <h3>LP全体構成（6セクション）</h3>
+
+  <div class="pkg-highlight" style="margin-bottom:28px;">
+    <img src="ameru_pkg_3rd.png" alt="ameru パッケージ">
+    <div class="pkg-highlight-body">
+      <h4>LPのFVビジュアル素材として</h4>
+      <p>このパッケージ画像がLPの最初に来る。「届いた瞬間から可愛い」を体感させる。<br>動画広告でパッケージ開封シーンを使う場合、LPのFV画像と同じパッケージを使うことで「これが届く商品だ」と一致させる。</p>
+      <div class="pkg-tags">
+        <span class="pkg-tag">FV ビジュアル素材</span>
+        <span class="pkg-tag">広告と統一</span>
+        <span class="pkg-tag">パッケージ = 広告</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-sections">
+
+    <div class="lp-sec">
+      <div class="lp-sec-body">
+        <span class="lp-sec-tag tag-fv">01 FV</span>
+        <p class="lp-sec-title">パッケージ・完成品ビジュアル一発 ＋ 即CTA</p>
+        <p class="lp-sec-desc">
+          <strong>目的：</strong>動画の興奮を「即購入」に変換する。考える前に手が動く状態を作る。<br>
+          <strong>コンテンツ：</strong>パッケージ大カット（または完成品写真）／ ブランドロゴ + Love is... バッジ ／ メインコピー「あの子が、自分の手でできあがる。」／ 初回¥1,980（送料無料）+ CTAボタン ／ サブコピー「全5種揃う定期キット。道具も糸も全部入り。」<br>
+          <strong>設計の肝：</strong>スクロールなしで「何の商品か」「いくらか」「どう申し込むか」が全部わかる。CTAは最初から出す。
+        </p>
+        <p class="lp-sec-kpi">★ 目標：FV離脱率 40%以下 ／ CTAクリック率 15%以上</p>
+      </div>
+    </div>
+
+    <div class="lp-sec">
+      <div class="lp-sec-body">
+        <span class="lp-sec-tag tag-visual">02 完成品ギャラリー</span>
+        <p class="lp-sec-title">「こんなに可愛いものができる」— 欲求を積み上げる</p>
+        <p class="lp-sec-desc">
+          <strong>目的：</strong>「欲しい」感情を最大化する。「難しそう」より前に「かわいい」を刷り込む。<br>
+          <strong>コンテンツ：</strong>完成品5種の横スクロールギャラリー ／ ライフスタイルカット（飾る・持ち歩く・プレゼントするシーン）／ 「できあがった瞬間、飾りたくなる。」コピー<br>
+          <strong>設計の肝：</strong>横スクロールは「もっと見たい」を演出する。ライフスタイルカットは「私の日常にこれがある」イメージを与える。
+        </p>
+        <p class="lp-sec-kpi">★ 素材が揃い次第、UGC写真（実際に作った人の投稿）を入れる</p>
+      </div>
+    </div>
+
+    <div class="lp-sec">
+      <div class="lp-sec-body">
+        <span class="lp-sec-tag tag-visual">03 パッケージ紹介</span>
+        <p class="lp-sec-title">「届いた瞬間から、可愛かった。」— 開封体験を売る</p>
+        <p class="lp-sec-desc">
+          <strong>目的：</strong>「モノとしての価値」を伝える。パッケージ自体が欲しくなる状態を作る。<br>
+          <strong>コンテンツ：</strong>パッケージ大カット（正面・斜め）／ 「写真撮りたくなる・インテリアになる」コピー ／ 同梱内容タグ（全道具入り・コレクション仕様）<br>
+          <strong>設計の肝：</strong>「モノとしての可愛さ」はコレクター訴求への橋渡し。ここでパッケージ画像を大きく使う。
+        </p>
+        <p class="lp-sec-kpi">★ 3rdデザイン確定版の高解像度写真が入れば即完成</p>
+      </div>
+    </div>
+
+    <div class="lp-sec">
+      <div class="lp-sec-body">
+        <span class="lp-sec-tag tag-collect">04 全5種コレクション</span>
+        <p class="lp-sec-title">「Love is... 全5種、ぜんぶ揃う。」— 収集欲求を刺激</p>
+        <p class="lp-sec-desc">
+          <strong>目的：</strong>「1個だけ」ではなく「全部揃えたい」という継続購読の動機を作る。<br>
+          <strong>コンテンツ：</strong>5種コレクショングリッド（No.1は実画像、No.2〜5は近日公開）／ 「完成品を棚に並べると、5体の家族ができあがる。」コピー ／ 定期購読の仕組みをさらっと説明<br>
+          <strong>設計の肝：</strong>未公開キャラは「？」で表示してもOK。むしろミステリー感が継続欲求を高める。
+        </p>
+        <p class="lp-sec-kpi">★ 「ポケモンを集めたい」心理と同じ。コレクター欲求が定期解約率を下げる</p>
+      </div>
+    </div>
+
+    <div class="lp-sec">
+      <div class="lp-sec-body">
+        <span class="lp-sec-tag tag-how">05 「実は誰でもできる」</span>
+        <p class="lp-sec-title">不安の解消は中盤。「欲しい」が先、「できる」が後</p>
+        <p class="lp-sec-desc">
+          <strong>目的：</strong>「欲しいけど私にできるかな」という購入直前の不安を払拭する。<br>
+          <strong>コンテンツ：</strong>3ステップ構成 — ①編み始め完成済みで届く ②動画だけで全工程わかる ③絡まない独自開発糸 ／ 「手芸、やったことなくて大丈夫。」コピー<br>
+          <strong>設計の肝：</strong>「簡単」ではなく「壁を取り除いた」という言い方にする。「簡単」は信頼性が低い。
+        </p>
+        <p class="lp-sec-kpi">★ ここまで来たユーザーはすでに「欲しい」状態。不安解消でクロージングに向かう</p>
+      </div>
+    </div>
+
+    <div class="lp-sec">
+      <div class="lp-sec-body">
+        <span class="lp-sec-tag tag-offer">06 オファー + CTA</span>
+        <p class="lp-sec-title">価格・同梱内容・保証 — 決断を後押しする</p>
+        <p class="lp-sec-desc">
+          <strong>目的：</strong>価格の納得感を作り、「今すぐ申し込む」理由を与える。<br>
+          <strong>コンテンツ：</strong>5回分の価格ステップ一覧（初回¥1,980→2〜5回目¥4,200）／ 各回の同梱内容リスト ／ 解約・一時停止の容易さ ／ 大きな「初回¥1,980で始める」CTAボタン ／ 保証文言（いつでも解約可）<br>
+          <strong>設計の肝：</strong>「いつでも解約できる」は不安解消の最後の一押し。CTAボタンは画面の中で最も目立つ配色にする。
+        </p>
+        <p class="lp-sec-kpi">★ 目標 LP CVR 3%以上。オファー改善でCVRを0.5%上げるとCPA ¥340改善。</p>
+      </div>
+    </div>
+
+  </div>
+
+  <h3>LP最適化の優先事項（アクション順）</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>優先</th><th>項目</th><th>効果</th><th>必要素材</th></tr></thead>
+      <tbody>
+        <tr><td class="td-good">★★★</td><td><strong>FVビジュアルを実素材に</strong></td><td>CVRへの直接影響が最大</td><td>パッケージ高解像度写真 or 完成品切り抜き</td></tr>
+        <tr><td class="td-good">★★★</td><td><strong>完成品ギャラリー充実</strong></td><td>「欲しい」感情の積み上げ</td><td>5種完成品写真（各キャラ）</td></tr>
+        <tr><td class="td-warn">★★</td><td><strong>UGC写真の組み込み</strong></td><td>第三者証言が購入決断を後押し</td><td>初期ユーザー・モニターの投稿写真</td></tr>
+        <tr><td class="td-warn">★★</td><td><strong>ライフスタイルカット</strong></td><td>「私の生活にこれがある」イメージ</td><td>飾る・持ち歩く・プレゼントシーン</td></tr>
+        <tr><td>★</td><td><strong>動画教材の一部公開</strong></td><td>「本当に動画で分かるの？」の証明</td><td>動画教材のサンプル（30秒程度）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout green">
+    <strong>動画→LP導線で最も重要なこと：</strong>
+    動画を見た人は「パッケージが可愛い」「あみぐるみが作れる」というイメージを持ってLPに来る。
+    そのイメージを即座に「そう、これです」と確認させることが最初の仕事。
+    FVで別のビジュアルを出す・別のコピーを使うと温まった感情が冷める。<strong>動画とLPはセットで設計する。</strong>
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 06 広告戦略 ══ -->
+<div class="section" id="s6" style="background:var(--white);">
+<div class="inner">
+  <span class="section-num">Section 06</span>
+  <h2>広告戦略 — 全体設計</h2>
+  <p>ameruの広告は<strong>「CPA ¥2,000で新規を取り、F2転換率85%で回収する」</strong>モデルを目指す。The Wooblesが証明した通り、粗利率が高い商品は広告費率20〜30%でも成立する。Instagram・TikTokのビジュアル広告が最も効く。</p>
+
+  <h3>ファネル設計</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>ステージ</th><th>目的</th><th>施策</th><th>KPI</th></tr></thead>
+      <tbody>
+        <tr><td><strong>認知（TOFU）</strong></td><td>Love is... ファン・推し活層にリーチ</td><td>TikTok / IG リール。Love is... キーワード・類似オーディエンス。</td><td>CPM ¥400以下 / CTR 2%以上</td></tr>
+        <tr><td><strong>興味（MOFU）</strong></td><td>LP訪問→申込意向形成</td><td>リターゲティング。完成品カルーセル。「全5種コンプリート」訴求。</td><td>LP CVR 3%以上</td></tr>
+        <tr><td><strong>購買（BOFU）</strong></td><td>初回¥1,980 定期申込</td><td>LP最適化。LINEリタゲ。初回価格強調。</td><td>CPA ¥2,000以下</td></tr>
+        <tr><td><strong>継続（リテンション）</strong></td><td>F2〜F5の解約防止</td><td>LINE公式アカウント。完成時達成感演出。次キャラのティザー送付。</td><td>F2転換率 85%以上</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>予算配分の目安</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>チャネル</th><th>比率</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td><strong>TikTok 広告 + Spark Ads</strong></td><td>40%</td><td>推し活層・Z世代への最高効率。UGC素材をそのまま広告化できる。</td></tr>
+        <tr><td><strong>Instagram 広告（リール・カルーセル）</strong></td><td>40%</td><td>27〜33歳ゴールデンペルソナの主戦場。ビジュアル訴求が強い。</td></tr>
+        <tr><td><strong>LINE公式アカウント運用</strong></td><td>10%</td><td>F2転換率管理。最も費用対効果の高いリテンション施策。</td></tr>
+        <tr><td><strong>その他（X・インフルエンサー）</strong></td><td>10%</td><td>Love is... 関連インフルエンサーへのキット提供でUGCの種まき。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>UGCサイクル（最も重要な長期戦略）：</strong>
+    ① 完成品をSNS投稿したくなるパッケージ → ② #ameru投稿 → 公式リポスト → ③ 「私も作りたい」 → ④ 有機流入増加 → ⑤ CPA低下・スケール可能。
+    このサイクルを回すために<strong>パッケージの可愛さは最重要投資</strong>。現在の3rdデザインの方向性は正しい。
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 07 オリジナルIP ══ -->
+<div class="section" id="s7">
+<div class="inner">
+  <span class="section-num">Section 07</span>
+  <h2>オリジナルIP展開計画</h2>
+  <p>Love is... は強力な入口だが、ロイヤリティ（想定7%）・IP制約・人気変動リスクを抱える。事業の長期的な強みは<strong>ameruオリジナルIPの構築</strong>にある。</p>
+
+  <div class="callout orange">
+    <strong>IPリスクの現実：</strong>外部IPはブームが終わると売れなくなる。Love is... で初期顧客を獲得し、その顧客をオリジナルIPに乗り換えさせる設計が長期戦略の核心。
+  </div>
+
+  <div class="ip-cards">
+    <div class="ip-card"><h4>① くすみカラー × シンプル造形</h4><p>「すみっコぐらし」「ちいかわ」型。シンプルで量産しやすいフォルム。大人女性の部屋インテリアに馴染む。</p></div>
+    <div class="ip-card pink"><h4>② 感情・生活シーンへの共感</h4><p>「ちょっと疲れてる」「頑張った日」などのエモーションを乗せると、ゴールデンペルソナとの感情的一体感が生まれる。</p></div>
+    <div class="ip-card gold"><h4>③ バリエーション展開のしやすさ</h4><p>季節限定・カラー別でシリーズ展開しやすい汎用ベースキャラクターを設計。コレクション欲求を持続させる。</p></div>
+    <div class="ip-card green"><h4>④ 推し活との接続性</h4><p>「推しカラーの糸で着替えさせられる」カスタマイズ性。IPを超えて自分だけの推しを作れる体験。</p></div>
+  </div>
+
+  <h3>Love is... → オリジナルIPへの移行3フェーズ</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>フェーズ</th><th>戦略</th><th>目的</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Phase 1</strong> Love is... 単独</td><td>Love is... IPで初期顧客を大量獲得。パッケージにameruロゴを大きく配置（現行実施済み）。</td><td>ブランド認知の基盤構築 + UGCサイクル確立</td></tr>
+        <tr><td><strong>Phase 2</strong> IP並走期</td><td>Love is... 継続しながらameru独自キャラクター第1弾をリリース。「ずもっぴ」をオリジナルIPとして本格展開。</td><td>IP依存度の低減 + ロイヤリティコスト削減</td></tr>
+        <tr><td><strong>Phase 3</strong> オリジナルIP主体</td><td>オリジナルIPのLTV・リピート率がLove is... を上回った時点でリソースを集中。</td><td>参入障壁の最大化 + 利益率の抜本改善</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 08 ロードマップ ══ -->
+<div class="section" id="s8" style="background:var(--white);">
+<div class="inner">
+  <span class="section-num">Section 08</span>
+  <h2>フェーズ別ロードマップ</h2>
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-dot">1</div>
+      <div class="phase-body">
+        <p class="phase-period">Phase 1 ／ 〜2026年夏</p>
+        <p class="phase-title">立ち上げ・PMF確認期</p>
+        <ul class="phase-list">
+          <li>Love is... × ameru No.1（ずもっぴ）でテスト販売開始</li>
+          <li>200〜300件の初回購入でCPA・F2率・LTVを実測</li>
+          <li>配送会社相見積もり → キャリアコスト最適化</li>
+          <li>TikTok・Instagram広告フック3パターンA/Bテスト</li>
+          <li>LINE公式アカウント構築 + F2ナッジフロー設計</li>
+          <li>UGCハッシュタグ施策の種まき（モニター・インフルエンサー）</li>
+          <li>LP改善（クリエイティブ反応を見ながら随時）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-dot">2</div>
+      <div class="phase-body">
+        <p class="phase-period">Phase 2 ／ 2026年秋〜冬</p>
+        <p class="phase-title">スケール期 + No.2〜5展開</p>
+        <ul class="phase-list">
+          <li>勝ちクリエイティブが出たら広告予算を2〜3倍に拡大</li>
+          <li>No.2〜5 順次リリース（定期購読者に自動発送）</li>
+          <li>母の日・クリスマスのギフト訴求キャンペーン</li>
+          <li>Love is... 公式SNSとのタイアップ</li>
+          <li>アクセサリー別売りキット（¥780〜）のテスト</li>
+          <li>蔦屋書店・LOFTでのポップアップ検討</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-dot">3</div>
+      <div class="phase-body">
+        <p class="phase-period">Phase 3 ／ 2027年〜</p>
+        <p class="phase-title">オリジナルIP立ち上げ + 次IPコラボ</p>
+        <ul class="phase-list">
+          <li>ameruオリジナルキャラクター（ずもっぴ等）の本格展開</li>
+          <li>次IPコラボ（サンリオ・すみっコ等）打診・交渉</li>
+          <li>オリジナルIPのデジタル販売（パターン・型紙）開始</li>
+          <li>海外展開（台湾・韓国）の検討</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 09 KPI ══ -->
+<div class="section" id="s9">
+<div class="inner">
+  <span class="section-num">Section 09</span>
+  <h2>KPIと成功指標</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>指標</th><th>目標値</th><th>現状</th><th>重要度</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CPA（媒体広告費）</strong></td><td>¥2,000以下</td><td>未計測</td><td class="td-good">★★★ 最重要</td></tr>
+        <tr><td><strong>CPO（全獲得コスト）</strong></td><td>¥4,000以内</td><td>設計値</td><td class="td-good">★★★ 最重要</td></tr>
+        <tr><td><strong>F2転換率</strong></td><td>85%以上</td><td>設計目標値</td><td class="td-good">★★★ 最重要</td></tr>
+        <tr><td><strong>キット原価/回</strong></td><td>¥1,000以下（目標）</td><td>¥1,250（現行）</td><td class="td-bad">★★★ 要削減</td></tr>
+        <tr><td><strong>配送キャリアコスト</strong></td><td>最小化</td><td>未確定</td><td class="td-warn">★★★ 要交渉</td></tr>
+        <tr><td><strong>利益率</strong></td><td>18%以上（目標20%）</td><td>18.1%（試算）</td><td class="td-warn">★★</td></tr>
+        <tr><td><strong>LTV</strong></td><td>¥14,000〜¥18,780</td><td>¥14,077（試算）</td><td class="td-warn">★★</td></tr>
+        <tr><td><strong>完成率</strong></td><td>80%以上</td><td>未計測</td><td class="td-warn">★★★（UGCの源泉）</td></tr>
+        <tr><td><strong>LP CVR</strong></td><td>3%以上</td><td>未計測</td><td class="td-warn">★★</td></tr>
+        <tr><td><strong>UGC投稿率</strong></td><td>購入者の30%以上</td><td>未計測</td><td>★★</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout red">
+    <strong>最初に死守すべき1指標：F2転換率 85%。</strong>
+    これが85%を下回ると初回¥1,980の投資回収ができず、ユニットエコノミクスが崩壊する。
+    完成体験の質 × LINE F1→F2ナッジが決め手。広告費より先に「完成させる仕組み」に投資すること。
+  </div>
+</div>
+</div>
+
+
+<!-- ══ 10 まとめ ══ -->
+<div class="final-section" id="s10">
+<div class="inner">
+  <span class="section-num" style="color:var(--blue);">Section 10</span>
+  <h2 style="color:var(--white);border-color:rgba(76,186,212,.3);padding-bottom:14px;border-bottom:2px solid rgba(76,186,212,.3);">ameruが勝つための5つの鍵</h2>
+  <div class="final-grid">
+    <div class="final-card">
+      <p class="final-card-num" style="color:var(--blue);">Key 01</p>
+      <p class="final-card-title">パッケージで「欲しい」を作る</p>
+      <p class="final-card-desc">広告のCTRとCVRはパッケージの可愛さで決まる。現在の3rdデザイン（スカイブルー×ずもっぴ）は正しい方向。LP・SNS広告との世界観統一を徹底する。</p>
+    </div>
+    <div class="final-card">
+      <p class="final-card-num" style="color:var(--pink);">Key 02</p>
+      <p class="final-card-title">完成率80%超を死守する</p>
+      <p class="final-card-desc">完成しない人はSNSに投稿しない。F2に転換しない。完成率がすべての数字の起点。動画教材・編み始め完成済みは最重要インフラ。</p>
+    </div>
+    <div class="final-card">
+      <p class="final-card-num" style="color:var(--gold);">Key 03</p>
+      <p class="final-card-title">配送コストを最適化する</p>
+      <p class="final-card-desc">キャリア複数社で相見積もりを取り、配送コストを最小化する。契約ロット拡大で単価交渉余地が生まれる。利益率20%達成の鍵の一つ。</p>
+    </div>
+    <div class="final-card">
+      <p class="final-card-num" style="color:var(--green);">Key 04</p>
+      <p class="final-card-title">UGCサイクルを最速で回す</p>
+      <p class="final-card-desc">最初の100人のUGCが次の1000人を呼ぶ。モニター・インフルエンサーへのキット提供でUGCの種まきを先行する。CPAが下がれば勝ちが見えてくる。</p>
+    </div>
+    <div class="final-card">
+      <p class="final-card-num" style="color:var(--orange);">Key 05</p>
+      <p class="final-card-title">早くオリジナルIPへ移行する</p>
+      <p class="final-card-desc">Love is... のロイヤリティ7%はLTV ¥985の負担。オリジナルIPに移行すれば利益率が大幅改善。Love is... での顧客基盤をオリジナルIPへ乗り換えさせる設計を今から作る。</p>
+    </div>
+  </div>
+
+  <div class="final-quote">
+    ameruが目指すべきポジションは「キットを売る会社」ではなく、<strong style="color:var(--blue);">「初心者が初めて何かを作り上げる体験のインフラ」</strong>。
+    <span>Love is... で「最初の達成感」を売り、オリジナルIPで「ずっとameruにいたい」を作る。この2段階設計が日本版The Wooblesへの最短経路だ。</span>
+  </div>
+</div>
+</div>
+
+<div class="report-footer">
+  ameru マーケティング戦略レポート ver.2 ／ 2026-04-08 ／ 作成：一進VOYAGE号 秘書クルー<br>
+  参照：ameru事業説明（澤田氏）/ The Woobles戦略分析 / 日本市場ペルソナ分析 / 発注数ユニットエコノミクス.csv / MTGメモ（3rd PKG提案 2026-04-07）/ 260408_ameru_PKG_3rd.png
+</div>
+
+</body>
+</html>
