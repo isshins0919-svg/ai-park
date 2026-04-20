@@ -174,7 +174,7 @@ def draw_chart(product_cfg, history, out_path):
     ax_bg.scatter(stars_x, stars_y, s=stars_s, c=GOLD_LIGHT, alpha=0.25, zorder=0)
 
     # 上部グラデ帯（ヘッダー）
-    header_h = 0.18
+    header_h = 0.17
     ax_head = fig.add_axes([0,1-header_h,1,header_h], zorder=1)
     ax_head.set_facecolor(BG_MID)
     ax_head.set_xlim(0,1); ax_head.set_ylim(0,1)
@@ -201,7 +201,7 @@ def draw_chart(product_cfg, history, out_path):
     draw_anchor(ax_head, 0.065, 0.5, size=0.35, color=GOLD, lw=3.0)
 
     # コンパス風装飾（右、大きく）
-    compass_x, compass_y, compass_r = 0.92, 0.5, 0.38
+    compass_x, compass_y, compass_r = 0.9, 0.5, 0.3
     circle = Circle((compass_x, compass_y), compass_r, fill=False, edgecolor=GOLD, lw=2.5, alpha=0.55, transform=ax_head.transAxes)
     ax_head.add_patch(circle)
     circle2 = Circle((compass_x, compass_y), compass_r*0.6, fill=False, edgecolor=GOLD, lw=1.2, alpha=0.35, transform=ax_head.transAxes)
@@ -219,15 +219,17 @@ def draw_chart(product_cfg, history, out_path):
     ax_head.text(compass_x, compass_y + compass_r*0.72, "N", fontsize=11, color=GOLD_LIGHT, ha="center", va="center", weight="bold", family="serif", transform=ax_head.transAxes)
 
     # タイトル
-    ax_head.text(0.13, 0.74, "V O Y A G E   R E P O R T", fontsize=13, color=GOLD_LIGHT, weight="bold", family="serif", transform=ax_head.transAxes)
-    ax_head.text(0.13, 0.44, display_name, fontsize=28, color=INK, weight="bold", transform=ax_head.transAxes)
-    ax_head.text(0.13, 0.18, f"市場  ／  {market_label}", fontsize=12, color=CREAM, transform=ax_head.transAxes, style="italic")
+    ax_head.text(0.13, 0.78, "V O Y A G E   R E P O R T", fontsize=12, color=GOLD_LIGHT, weight="bold", family="serif", transform=ax_head.transAxes)
+    ax_head.text(0.13, 0.48, display_name, fontsize=26, color=INK, weight="bold", transform=ax_head.transAxes)
+    # 市場ラベルはコンパスに被らないよう長さ制限
+    mkt_label_short = market_label if len(market_label) <= 22 else market_label[:22] + "…"
+    ax_head.text(0.13, 0.22, f"市場  ／  {mkt_label_short}", fontsize=12, color=CREAM, transform=ax_head.transAxes, style="italic")
 
     # 右：今日日付
     today_str = datetime.strptime(dates_sorted[-1], "%Y-%m-%d").strftime("%Y.%m.%d")
     day_str = datetime.strptime(dates_sorted[-1], "%Y-%m-%d").strftime("%A").upper()
-    ax_head.text(0.8, 0.82, today_str, fontsize=12, color=GOLD_LIGHT, ha="right", va="center", family="serif", transform=ax_head.transAxes)
-    ax_head.text(0.8, 0.72, day_str, fontsize=10, color=CREAM, ha="right", va="center", family="serif", alpha=0.7, transform=ax_head.transAxes)
+    ax_head.text(0.72, 0.85, today_str, fontsize=12, color=GOLD_LIGHT, ha="right", va="center", family="serif", transform=ax_head.transAxes)
+    ax_head.text(0.72, 0.75, day_str, fontsize=10, color=CREAM, ha="right", va="center", family="serif", alpha=0.7, transform=ax_head.transAxes)
 
     # 下装飾ライン（金）
     ax_head.plot([0.02, 0.98], [0.02, 0.02], color=GOLD, lw=1.2, alpha=0.7, transform=ax_head.transAxes)
@@ -268,98 +270,123 @@ def draw_chart(product_cfg, history, out_path):
 
     # 軸
     ax.set_xticks(x_pos)
-    ax.set_xticklabels([d.strftime("%m/%d\n(%a)") for d in dates_dt], fontsize=10, color=INK)
-    ax.tick_params(axis="y", colors=INK, labelsize=10)
-    ax.set_ylabel("市場占有率 (%)", fontsize=12, color=GOLD_LIGHT, fontweight="bold", labelpad=10)
+    ax.set_xticklabels([d.strftime("%m/%d\n(%a)") for d in dates_dt], fontsize=12, color=INK)
+    ax.tick_params(axis="y", colors=INK, labelsize=11)
+    ax.set_ylabel("市場占有率 (%)", fontsize=13, color=GOLD_LIGHT, fontweight="bold", labelpad=12)
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.1f}%"))
 
+    # Y軸範囲をデータに応じて調整
+    all_y = own_y[:]
+    for cname in top_comps:
+        all_y += [v for _,v in comp_series.get(cname, [])]
+    ymax = max(all_y) if all_y else 1
+    ax.set_ylim(0, ymax * 1.22)
+
     # グリッド
-    ax.grid(True, axis="y", color=GRID, linestyle="--", alpha=0.5, zorder=1)
+    ax.grid(True, axis="y", color=GRID, linestyle="--", alpha=0.55, zorder=1)
     ax.set_axisbelow(True)
 
     # 枠
     for spine in ax.spines.values():
         spine.set_color(GOLD)
-        spine.set_linewidth(1.2)
+        spine.set_linewidth(1.4)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    # タイトル（市場ラベル）
-    ax.set_title(f"市場: {market_label}", fontsize=12, color=CREAM, pad=12, weight="bold", loc="left")
+    # タイトル（セクションラベル）
+    ax.set_title("〜 直近の市場占有率推移 〜", fontsize=13, color=CREAM, pad=14, weight="bold", loc="left", style="italic")
 
-    # 凡例
-    leg = ax.legend(loc="upper left", fontsize=10.5, frameon=True, facecolor=BG_MID, edgecolor=GOLD, labelcolor=INK)
-    leg.get_frame().set_alpha(0.8)
+    # 凡例（右上）
+    leg = ax.legend(loc="upper right", fontsize=11, frameon=True, facecolor=BG_MID, edgecolor=GOLD, labelcolor=INK)
+    leg.get_frame().set_alpha(0.85)
+    leg.get_frame().set_linewidth(1.2)
 
     # 最新点にシェア%バッジ
     last_y = own_y[-1]
+    # 直前の値より上がってるか下がってるかで位置調整
+    offset_y = 40 if (len(own_y) < 2 or own_y[-1] >= own_y[-2]) else -50
+    ha = "left" if offset_y > 0 else "center"
+    offset_x = -20 if offset_y > 0 else -20
     ax.annotate(f"{last_y:.2f}%",
                 xy=(x_pos[-1], last_y),
-                xytext=(12, 12), textcoords="offset points",
-                fontsize=16, color="white", weight="bold",
-                bbox=dict(boxstyle="round,pad=0.45", facecolor=color, edgecolor=GOLD, lw=1.5),
+                xytext=(offset_x, offset_y), textcoords="offset points",
+                fontsize=19, color="white", weight="bold", ha="center",
+                bbox=dict(boxstyle="round,pad=0.6", facecolor=color, edgecolor=GOLD, lw=2),
+                arrowprops=dict(arrowstyle="->", color=GOLD, lw=1.8),
                 zorder=10)
 
     # === 下部パネル（ステータスバー） ===
-    status_h = 0.24
+    status_h = 0.23
     ax_status = fig.add_axes([0, 0, 1, status_h], zorder=2)
     ax_status.set_facecolor(BG_MID)
     ax_status.set_xlim(0,1); ax_status.set_ylim(0,1)
     ax_status.axis("off")
 
     # 区切り金ライン上部
-    ax_status.plot([0.02, 0.98], [0.96, 0.96], color=GOLD, lw=1, alpha=0.7, transform=ax_status.transAxes)
+    ax_status.plot([0.02, 0.98], [0.96, 0.96], color=GOLD, lw=1.2, alpha=0.75, transform=ax_status.transAxes)
 
     # 左: 象限バッジ
-    ax_status.add_patch(FancyBboxPatch((0.035, 0.46), 0.27, 0.44, boxstyle="round,pad=0.02",
-                                       facecolor=q_color, edgecolor=GOLD, lw=1.5, alpha=0.92,
+    ax_status.add_patch(FancyBboxPatch((0.035, 0.42), 0.22, 0.46, boxstyle="round,pad=0.02",
+                                       facecolor=q_color, edgecolor=GOLD, lw=1.8, alpha=0.95,
                                        transform=ax_status.transAxes))
-    ax_status.text(0.17, 0.76, q_icon, fontsize=34, ha="center", va="center", color="white",
+    ax_status.text(0.145, 0.74, q_icon, fontsize=48, ha="center", va="center", color="white",
                    weight="bold", transform=ax_status.transAxes)
-    ax_status.text(0.17, 0.54, q_label, fontsize=14, color="white", ha="center", va="center",
+    ax_status.text(0.145, 0.5, q_label, fontsize=15, color="white", ha="center", va="center",
                    weight="bold", transform=ax_status.transAxes)
+    ax_status.text(0.145, 0.38, "QUADRANT", fontsize=8, color=CREAM, ha="center", va="center",
+                   family="serif", alpha=0.8, transform=ax_status.transAxes)
 
     # 中央: 今日のシェア（特大）
     delta_txt = ""
     if prev_share is not None:
         delta = last_y - prev_share
         if delta > 0.01:
-            delta_txt = f"▲ +{delta:.2f}pt"
+            delta_txt = f"▲  +{delta:.2f}pt"
             delta_color = "#3AF58B"
         elif delta < -0.01:
-            delta_txt = f"▼ {delta:.2f}pt"
+            delta_txt = f"▼  {delta:.2f}pt"
             delta_color = "#F56A6A"
         else:
-            delta_txt = "→ 変化なし"
+            delta_txt = "→  変化なし"
             delta_color = GOLD_LIGHT
     else:
         delta_color = GOLD_LIGHT
 
-    ax_status.text(0.5, 0.85, "TODAY SHARE", fontsize=10, color=GOLD_LIGHT, ha="center", weight="bold",
+    ax_status.text(0.5, 0.87, "TODAY  SHARE", fontsize=11, color=GOLD_LIGHT, ha="center", weight="bold",
                    family="serif", transform=ax_status.transAxes)
-    ax_status.text(0.5, 0.55, f"{last_y:.2f}%", fontsize=46, color="white", ha="center",
+    # 金線下
+    ax_status.plot([0.4, 0.6], [0.8, 0.8], color=GOLD, lw=0.8, alpha=0.6, transform=ax_status.transAxes)
+    ax_status.text(0.5, 0.48, f"{last_y:.2f}%", fontsize=62, color="white", ha="center", va="center",
                    weight="bold", transform=ax_status.transAxes)
     if delta_txt:
-        ax_status.text(0.5, 0.3, delta_txt, fontsize=13, color=delta_color, ha="center",
+        ax_status.text(0.5, 0.2, delta_txt, fontsize=15, color=delta_color, ha="center",
                        weight="bold", transform=ax_status.transAxes)
 
     # 右: 自社/市場金額
     def fmt_yen(v):
-        if v >= 10**6: return f"¥{v/10**6:.1f}M"
+        if v >= 10**6: return f"¥{v/10**6:.2f}M"
         if v >= 10**3: return f"¥{v/10**3:.0f}K"
         return f"¥{v:.0f}"
 
-    ax_status.text(0.83, 0.85, "VS MARKET", fontsize=10, color=GOLD_LIGHT, ha="center", weight="bold",
+    ax_status.add_patch(FancyBboxPatch((0.74, 0.42), 0.22, 0.46, boxstyle="round,pad=0.02",
+                                       facecolor=BG_DARK, edgecolor=GOLD, lw=1.3, alpha=0.9,
+                                       transform=ax_status.transAxes))
+    ax_status.text(0.85, 0.81, "VS  MARKET", fontsize=11, color=GOLD_LIGHT, ha="center", weight="bold",
                    family="serif", transform=ax_status.transAxes)
-    ax_status.text(0.83, 0.62, f"自社 {fmt_yen(today_own)}", fontsize=13, color=color, ha="center",
+    ax_status.plot([0.78, 0.92], [0.74, 0.74], color=GOLD, lw=0.7, alpha=0.5, transform=ax_status.transAxes)
+    # 自社
+    ax_status.text(0.78, 0.62, "自社", fontsize=11, color=GOLD_LIGHT, ha="left", transform=ax_status.transAxes)
+    ax_status.text(0.92, 0.62, fmt_yen(today_own), fontsize=15, color=color, ha="right",
                    weight="bold", transform=ax_status.transAxes)
-    ax_status.text(0.83, 0.42, f"市場 {fmt_yen(today_market)}", fontsize=13, color=INK, ha="center",
-                   transform=ax_status.transAxes)
+    # 市場
+    ax_status.text(0.78, 0.48, "市場", fontsize=11, color=GOLD_LIGHT, ha="left", transform=ax_status.transAxes)
+    ax_status.text(0.92, 0.48, fmt_yen(today_market), fontsize=15, color=INK, ha="right",
+                   weight="bold", transform=ax_status.transAxes)
 
     # 下段装飾バー + Brand
-    ax_status.plot([0.02, 0.98], [0.1, 0.1], color=GOLD, lw=0.5, alpha=0.5, transform=ax_status.transAxes)
-    ax_status.text(0.5, 0.04, "一進 VOYAGE 号   YOMITE DAILY MARKET POSITION   ~ Navigate the tides ~",
-                   fontsize=9, color=GOLD_LIGHT, ha="center", alpha=0.75, family="serif",
+    ax_status.plot([0.02, 0.98], [0.1, 0.1], color=GOLD, lw=0.6, alpha=0.5, transform=ax_status.transAxes)
+    ax_status.text(0.5, 0.04, "一 進  V O Y A G E  号     YOMITE DAILY MARKET POSITION     ~ Navigate the tides ~",
+                   fontsize=10, color=GOLD_LIGHT, ha="center", alpha=0.8, family="serif",
                    style="italic", transform=ax_status.transAxes)
 
     # 保存
