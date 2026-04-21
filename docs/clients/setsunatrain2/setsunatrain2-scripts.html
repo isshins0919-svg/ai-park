@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セツナトレイン2 台本 × フック × 撮影リファレンス集</title>
+<style>
+  :root {
+    --bg: #0d1117; --card: #161b22; --border: #30363d;
+    --text: #e6edf3; --muted: #8b949e;
+    --blue: #4a90d9; --gold: #d4a44c; --green: #3fb950;
+    --red: #f85149; --purple: #a371f7; --pink: #f778ba;
+    --orange: #d29922; --cyan: #39d2c0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
+  .container { max-width:1200px; margin:0 auto; padding:40px 24px; }
+
+  .hero { background:linear-gradient(135deg,#0a1628,#1a3a5c 50%,#2a5a8c); border-radius:16px; padding:48px 40px; margin-bottom:40px; border:1px solid var(--border); }
+  .hero h1 { font-size:30px; font-weight:800; }
+  .hero .sub { color:var(--blue); font-size:16px; margin-top:4px; }
+  .hero .date { color:var(--muted); font-size:13px; margin-top:8px; }
+
+  .section { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:32px; margin-bottom:24px; }
+  .section h2 { font-size:22px; font-weight:700; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid var(--border); }
+  .section h3 { font-size:17px; font-weight:700; margin:20px 0 10px; color:var(--blue); }
+  .section h4 { font-size:15px; font-weight:600; margin:16px 0 8px; color:var(--gold); }
+  .section p { margin-bottom:10px; }
+  .section ul, .section ol { margin:8px 0 16px 20px; }
+  .section li { margin-bottom:5px; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+  th,td { padding:10px 12px; text-align:left; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.5px; }
+
+  .ref-card { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:20px; margin:12px 0; }
+  .ref-card .ref-title { font-weight:700; font-size:15px; margin-bottom:6px; }
+  .ref-card .ref-meta { font-size:12px; color:var(--muted); margin-bottom:8px; }
+  .ref-card a { color:var(--blue); text-decoration:none; font-size:13px; word-break:break-all; }
+  .ref-card a:hover { text-decoration:underline; }
+  .ref-card .ref-learn { background:rgba(74,144,217,0.08); border-left:3px solid var(--blue); padding:8px 12px; margin-top:10px; border-radius:0 6px 6px 0; font-size:13px; }
+
+  .persona-badge { display:inline-block; padding:6px 16px; border-radius:20px; font-size:13px; font-weight:700; margin-bottom:12px; }
+
+  .script-box { background:var(--bg); border:1px solid var(--border); border-radius:10px; margin:16px 0; overflow:hidden; }
+  .script-header { padding:16px 20px; border-bottom:1px solid var(--border); }
+  .script-header .time { display:inline-block; background:rgba(74,144,217,0.15); color:var(--blue); font-size:12px; font-weight:700; padding:2px 10px; border-radius:10px; margin-right:8px; }
+  .script-header .scene { font-weight:700; }
+  .script-body { padding:16px 20px; }
+  .script-body .visual { font-size:13px; color:var(--purple); margin-bottom:6px; }
+  .script-body .copy { color:var(--gold); font-weight:600; margin-bottom:6px; }
+  .script-body .nare { font-size:13px; color:var(--cyan); }
+  .script-body .note { font-size:12px; color:var(--muted); margin-top:6px; font-style:italic; }
+
+  .hook-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:12px; margin:12px 0; }
+  .hook-item { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:14px 16px; font-size:14px; }
+  .hook-item .hook-num { display:inline-block; width:24px; height:24px; background:var(--blue); color:#fff; border-radius:50%; text-align:center; line-height:24px; font-size:11px; font-weight:700; margin-right:8px; flex-shrink:0; }
+  .hook-item .hook-type { font-size:11px; color:var(--muted); display:block; margin-top:4px; }
+
+  .visual-hook { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:14px 16px; font-size:14px; }
+  .visual-hook .vh-num { display:inline-block; width:24px; height:24px; background:var(--purple); color:#fff; border-radius:50%; text-align:center; line-height:24px; font-size:11px; font-weight:700; margin-right:8px; }
+
+  .alert { background:rgba(212,164,76,0.1); border:1px solid var(--gold); border-radius:10px; padding:16px 20px; margin:16px 0; }
+  .alert-title { font-weight:700; color:var(--gold); margin-bottom:6px; }
+  .insight { background:rgba(74,144,217,0.08); border-left:3px solid var(--blue); padding:12px 16px; margin:12px 0; border-radius:0 8px 8px 0; }
+
+  .toc { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:20px 24px; margin:16px 0; }
+  .toc a { color:var(--blue); text-decoration:none; }
+  .toc a:hover { text-decoration:underline; }
+  .toc li { margin-bottom:4px; }
+
+  @media (max-width:768px) {
+    .hero { padding:28px 20px; }
+    .hero h1 { font-size:22px; }
+    .section { padding:20px; }
+    .hook-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <h1>セツナトレイン2 台本 &times; フック &times; 撮影リファレンス集</h1>
+  <div class="sub">5台本 &times; 各10+テキストフック &times; 各10+ビジュアルフック &times; 参考動画URL付き</div>
+  <div class="date">2026-04-09 | 一進AI Creative Team | 来週撮影用</div>
+</div>
+
+<!-- TOC -->
+<div class="section">
+  <h2>目次</h2>
+  <div class="toc">
+    <ol>
+      <li><a href="#ref">撮影リファレンス動画集（DPro調査 / URL付き）</a></li>
+      <li><a href="#s1">台本A「体験Vlog型」— 女友達2人旅</a></li>
+      <li><a href="#s2">台本B「デートプラン型」— 彼女を驚かせたい彼氏</a></li>
+      <li><a href="#s3">台本C「謎解き没入型」— 冒頭で謎を出す</a></li>
+      <li><a href="#s4">台本D「癒し逃避型」— 疲れたOLの週末リセット</a></li>
+      <li><a href="#s5">台本E「友達口コミ型」— UGC風レビュー</a></li>
+      <li><a href="#checklist">撮影チェックリスト</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- REFERENCE VIDEOS -->
+<!-- ============================================== -->
+<div class="section" id="ref">
+  <h2>1. 撮影リファレンス動画集</h2>
+  <p>DProで調査した「勝っている動画広告」の中から、セツナトレイン2の撮影参考になるものを厳選。</p>
+
+  <h3>A. 最重要リファレンス（構造がほぼ同じ）</h3>
+
+  <div class="ref-card" style="border-color:var(--gold)">
+    <div class="ref-title" style="color:var(--gold)">東武特急 SPACIA X「ファミリーの旅 x コンパートメント篇」</div>
+    <div class="ref-meta">YouTube Shorts / 60秒 / 推定広告費+77万円</div>
+    <a href="https://www.youtube.com/watch?v=EVQE_UN7MZQ" target="_blank">https://www.youtube.com/watch?v=EVQE_UN7MZQ</a><br>
+    <a href="https://assets.douga-pro.com/shorts/EVQE_UN7MZQ/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>なぜ参考にすべきか：</strong>「特急に乗って観光地へ行く体験」を、実際の利用者インタビュー + 旅先のBロールで見せる構成。<strong>セツナトレイン2と構造がほぼ同じ。</strong>家族の自然な会話と感想をベースに、牧場・自然散策などのアクティビティを挿入。撮影の雰囲気・テンポ・ナレーション全てが参考になる。
+    </div>
+  </div>
+
+  <div class="ref-card" style="border-color:var(--gold)">
+    <div class="ref-title" style="color:var(--gold)">東武特急 SPACIA X「夫婦の旅 x プレミアムシート篇」</div>
+    <div class="ref-meta">YouTube Shorts / 60秒 / 推定広告費+75万円</div>
+    <a href="https://www.youtube.com/watch?v=DgfgR5GeFmc" target="_blank">https://www.youtube.com/watch?v=DgfgR5GeFmc</a><br>
+    <a href="https://assets.douga-pro.com/shorts/DgfgR5GeFmc/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>なぜ参考にすべきか：</strong>ファミリー篇と同シリーズの「大人カップル篇」。酒蔵見学・自然散策のシーン。<strong>同じフレームワークでターゲットだけ変えて横展開している好例。</strong>台本B（デートプラン型）の撮影参考として最適。
+    </div>
+  </div>
+
+  <div class="ref-card" style="border-color:var(--gold)">
+    <div class="ref-title" style="color:var(--gold)">東武特急 SPACIA X「ブランド体験30秒篇」</div>
+    <div class="ref-meta">YouTube Shorts / 30秒 / 推定広告費+31万円</div>
+    <a href="https://www.youtube.com/watch?v=_UNzFmx_TJk" target="_blank">https://www.youtube.com/watch?v=_UNzFmx_TJk</a><br>
+    <a href="https://assets.douga-pro.com/shorts/_UNzFmx_TJk/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>なぜ参考にすべきか：</strong>短尺版。車内のラグジュアリー感を映像美で見せる。「ここに座っていると電車にいることを忘れちゃう」のナレーション。<strong>30秒バージョンの切り出し方の参考に。</strong>
+    </div>
+  </div>
+
+  <h3>B. 謎解きイベント広告（直接競合の参考）</h3>
+
+  <div class="ref-card" style="border-color:var(--purple)">
+    <div class="ref-title" style="color:var(--purple)">志摩スペイン村 x リアル謎解きゲーム</div>
+    <div class="ref-meta">X(Twitter) / 15秒 / 推定広告費+34万円 / 再生数413万回</div>
+    <a href="https://assets.douga-pro.com/x/2029406552390557737/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>なぜ参考にすべきか：</strong>テーマパーク×謎解きのコラボ広告。「ワクワクが終わらない」というコピーとともに園内映像＋テキストオーバーレイで展開。<strong>謎解きイベント広告の直接的な成功事例。</strong>15秒の短尺構成も参考になる。
+    </div>
+  </div>
+
+  <div class="ref-card" style="border-color:var(--purple)">
+    <div class="ref-title" style="color:var(--purple)">志摩スペイン村 x 謎解き（TikTok版）</div>
+    <div class="ref-meta">TikTok / 15秒 / 推定広告費+14万円 / 120万再生</div>
+    <a href="https://www.tiktok.com/@MS4wLjABAAAA-LDtx22L9H825gA5vN0FEIWdt6aA8RI5Sv3z43grMt1Oja1_vOCzBqu2PKSPVx1d/video/7611460666834062613" target="_blank">TikTokリンク</a><br>
+    <a href="https://assets.douga-pro.com/tiktok/7611460666834062613/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>学び：</strong>X版と同素材のTikTok横展開。1本の動画を複数プラットフォームに出す戦略が確認済み。
+    </div>
+  </div>
+
+  <div class="ref-card" style="border-color:var(--purple)">
+    <div class="ref-title" style="color:var(--purple)">志摩スペイン村 x 謎解き（Instagram版）</div>
+    <div class="ref-meta">Instagram / 15秒 / 推定広告費+7.6万円</div>
+    <a href="https://www.instagram.com/p/DVfB5kPjB_Z/" target="_blank">https://www.instagram.com/p/DVfB5kPjB_Z/</a><br>
+    <a href="https://assets.douga-pro.com/instagram/DVfB5kPjB_Z/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>学び：</strong>同一素材のIG展開。3プラットフォーム横展開の実例。
+    </div>
+  </div>
+
+  <div class="ref-card" style="border-color:var(--purple)">
+    <div class="ref-title" style="color:var(--purple)">たぬき探偵ジェリー 関門周遊謎解き</div>
+    <div class="ref-meta">Instagram / 30秒 / 推定広告費+27万円</div>
+    <a href="https://www.instagram.com/p/DRg6BfrAO3i/" target="_blank">https://www.instagram.com/p/DRg6BfrAO3i/</a><br>
+    <a href="https://assets.douga-pro.com/instagram/DRg6BfrAO3i/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>なぜ参考にすべきか：</strong>「地域周遊型の謎解きイベント」という点でセツナトレイン2に最も近い。下関×門司港を舞台にした謎解き。<strong>地域の名所映像 + キャラクターナレーション</strong>で展開。
+    </div>
+  </div>
+
+  <h3>C. 旅行体験・UGC風（トーン参考）</h3>
+
+  <div class="ref-card">
+    <div class="ref-title">シュミタイム 日帰りプチツアー</div>
+    <div class="ref-meta">Instagram / 29秒 / 推定広告費+12万円</div>
+    <a href="https://www.instagram.com/p/DSrxL3JjP_T/" target="_blank">https://www.instagram.com/p/DSrxL3JjP_T/</a><br>
+    <a href="https://assets.douga-pro.com/instagram/DSrxL3JjP_T/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>なぜ参考にすべきか：</strong>「〇〇って知ってる？」から始まるUGC風・友達口調ナレーション。<strong>台本E（友達口コミ型）の撮影トーン参考として最適。</strong>低予算でも効く「リアルっぽさ」がポイント。
+    </div>
+  </div>
+
+  <div class="ref-card">
+    <div class="ref-title">東武SPACIA X（X/Twitter版 60秒）</div>
+    <div class="ref-meta">X / 60秒 / 推定広告費+47万円 / 再生数1,190万回</div>
+    <a href="https://assets.douga-pro.com/x/1994261424559018011/video.mp4" target="_blank">MP4直リンク</a>
+    <div class="ref-learn">
+      <strong>学び：</strong>同素材のX展開。再生数1,190万回の大ヒット。プラットフォーム横展開の効果を実証。
+    </div>
+  </div>
+
+  <div class="alert">
+    <div class="alert-title">撮影前に必ず全動画を視聴してください</div>
+    <p style="margin:0">特に<strong>東武SPACIA X 3本</strong>と<strong>志摩スペイン村の謎解き広告</strong>は必見。「勝っている動画」の空気感・テンポ・カメラワークを体に入れてから撮影に臨むことで、仕上がりの質が段違いに変わります。</p>
+  </div>
+
+  <h3>撮影パターン別の学び（まとめ）</h3>
+  <table>
+    <tr><th>パターン</th><th>代表事例</th><th>構成</th><th>セツナトレイン2での活用</th></tr>
+    <tr>
+      <td><strong>体験者インタビュー + Bロール</strong></td>
+      <td>東武SPACIA X</td>
+      <td>インタビュー音声 + 旅先映像を交互に</td>
+      <td>台本A,B,D に適用。自然な感想 + 映像美</td>
+    </tr>
+    <tr>
+      <td><strong>短尺ダイジェスト + 音楽ドリブン</strong></td>
+      <td>志摩スペイン村</td>
+      <td>15-30秒でハイライト連打。テキスト最小限</td>
+      <td>台本C に適用。テンポ重視でフック重視</td>
+    </tr>
+    <tr>
+      <td><strong>UGC風 友達口調ナレ</strong></td>
+      <td>シュミタイム</td>
+      <td>スマホ撮り風 +「知ってる？」の語りかけ</td>
+      <td>台本E に適用。低コスト高効果</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ============================================== -->
+<!-- SCRIPT A -->
+<!-- ============================================== -->
+<div class="section" id="s1">
+  <h2>台本A「体験Vlog型」— 女友達2人旅</h2>
+  <div class="persona-badge" style="background:rgba(247,120,186,0.15); color:var(--pink)">
+    N1ペルソナ: あやか（28歳）都内OL / 女友達2人で「ちょっと特別な週末」を探している / インスタのリールで情報収集 / 甘いもの好き / 旅行好きだけど計画面倒
+  </div>
+
+  <h3>台本構成（60秒）</h3>
+
+  <div class="script-box">
+    <div class="script-header">
+      <span class="time">0:00-0:03</span>
+      <span class="scene">HOOK — 品川駅ホーム</span>
+    </div>
+    <div class="script-body">
+      <div class="visual">画：品川駅ホームで特急踊り子が入線。2人がテンション上がって振り返る自撮り風</div>
+      <div class="copy">テロップ：（下記フック参照）</div>
+      <div class="note">※ フックはABテスト前提。10パターン用意して差し替え</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header">
+      <span class="time">0:03-0:10</span>
+      <span class="scene">車内 — ドラマ&謎解き開始</span>
+    </div>
+    <div class="script-body">
+      <div class="visual">画：車窓の景色が都会→海に変わる / スマホでドラマ視聴 / キット開封の手元</div>
+      <div class="copy">テロップ：「車内でドラマ見ながら謎解きスタート」</div>
+      <div class="nare">ナレ（自然体）：「電車乗ってる間にドラマ見ながら謎解くの、めっちゃ新しくない？」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header">
+      <span class="time">0:10-0:15</span>
+      <span class="scene">伊東駅到着</span>
+    </div>
+    <div class="script-body">
+      <div class="visual">画：電車降りる → 伊東の青空 → 2人で「着いたー！」</div>
+      <div class="copy">テロップ：「品川から90分で別世界」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header">
+      <span class="time">0:15-0:35</span>
+      <span class="scene">スイーツ4店舗巡り（20秒 = 動画の核）</span>
+    </div>
+    <div class="script-body">
+      <div class="visual">画：各店5秒ずつ。入店→スイーツ接写→一口→リアクション。BGMのビートに合わせてカット割り</div>
+      <div class="copy">
+        店1テロップ：「1軒目。地元40年のケーキ屋さん」<br>
+        店2テロップ：「2軒目。え、なにこれ可愛い」<br>
+        店3テロップ：「3軒目。これが優勝」<br>
+        店4テロップ：「4軒目。最後のご褒美」
+      </div>
+      <div class="nare">ナレ：「うっっっま！」「やば、見て見て」「これ優勝だわ」（自然なリアクション）</div>
+      <div class="note">※ ここがリテンションの核。スイーツの「シズル感」を全力で撮る</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header">
+      <span class="time">0:35-0:45</span>
+      <span class="scene">謎解き × 街歩き</span>
+    </div>
+    <div class="script-body">
+      <div class="visual">画：地図見ながら歩く / ヒント発見の「あ！」 / 2人で相談する横顔</div>
+      <div class="copy">テロップ：「街を歩きながら謎を解く。これがめっちゃ楽しい」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header">
+      <span class="time">0:45-0:52</span>
+      <span class="scene">クライマックス — 全謎クリア</span>
+    </div>
+    <div class="script-body">
+      <div class="visual">画：最後の謎が解けた瞬間 → 顔を上げると絶景 → 2人で「すごい！」</div>
+      <div class="copy">テロップ：「全部解けた時の達成感、やばい」</div>
+    </div>
+  </div>
+
+  <div class="script-box" style="border-color:var(--gold)">
+    <div class="script-header">
+      <span class="time">0:52-1:00</span>
+      <span class="scene">CTA — LINE誘導</span>
+    </div>
+    <div class="script-body">
+      <div class="visual">画：夕暮れの伊東をバックにカメラ目線 → エンドカード</div>
+      <div class="nare">ナレ：「品川から90分。スイーツと謎解きの1日旅、まじで最高だった」</div>
+      <div class="copy">テロップ：「LINE登録で300円OFFクーポン！」「9月30日まで / 詳細はLINEで」</div>
+    </div>
+  </div>
+
+  <!-- HOOKS A -->
+  <h3>テキストフック（ファーストビュー文言）12パターン</h3>
+  <div class="hook-grid">
+    <div class="hook-item"><span class="hook-num">1</span>品川から90分で着く"冒険"があるって知ってた？<span class="hook-type">H1 疑問形 × アクセス訴求</span></div>
+    <div class="hook-item"><span class="hook-num">2</span>週末の予定、まだ決まってない人おめでとう<span class="hook-type">H6 UGC祝福 × 未計画者ターゲット</span></div>
+    <div class="hook-item"><span class="hook-num">3</span>今まで行ったデートスポットで1番楽しかったかも<span class="hook-type">H3 日常シーン × 比較最上級</span></div>
+    <div class="hook-item"><span class="hook-num">4</span>特急で90分。着いた先でスイーツ4軒はしごした日の話<span class="hook-type">H3 日常シーン × 数字具体性</span></div>
+    <div class="hook-item"><span class="hook-num">5</span>友達と「何する？」ってなった時にこれ見て<span class="hook-type">H4 ターゲット呼びかけ × シチュエーション</span></div>
+    <div class="hook-item"><span class="hook-num">6</span>東京から1番近い"非日常"、見つけた<span class="hook-type">H8 数字衝撃 × 発見</span></div>
+    <div class="hook-item"><span class="hook-num">7</span>「どこ行く？」が秒で決まる最強の休日プラン<span class="hook-type">H5 条件提示 × 課題解決</span></div>
+    <div class="hook-item"><span class="hook-num">8</span>スイーツ好きに伝えたい。伊東がやばかった<span class="hook-type">H4 ターゲット呼びかけ × 地名</span></div>
+    <div class="hook-item"><span class="hook-num">9</span>謎解きしながらスイーツ食べ歩く旅があるらしい<span class="hook-type">H1 疑問形 × 意外性</span></div>
+    <div class="hook-item"><span class="hook-num">10</span>「計画面倒」って人に最適な旅を発見した<span class="hook-type">H4 ターゲット呼びかけ × Pain解決</span></div>
+    <div class="hook-item"><span class="hook-num">11</span>1日2,750円で最高の思い出ができる裏技<span class="hook-type">H8 数字衝撃 × お得感</span></div>
+    <div class="hook-item"><span class="hook-num">12</span>インスタに載せたくなる旅、ここにあった<span class="hook-type">H3 日常シーン × SNS欲求</span></div>
+  </div>
+
+  <h3>ビジュアルフック（冒頭0-3秒の映像）12パターン</h3>
+  <div class="hook-grid">
+    <div class="visual-hook"><span class="vh-num">1</span><strong>特急入線カット：</strong>品川ホームで踊り子号が滑り込んでくる。2人がテンション上がって自撮り風に振り返る</div>
+    <div class="visual-hook"><span class="vh-num">2</span><strong>スイーツ接写スタート：</strong>いきなり美しいスイーツの超アップから始まる。「これどこの？」と思わせてから場所を明かす</div>
+    <div class="visual-hook"><span class="vh-num">3</span><strong>車窓タイムラプス：</strong>都会のビル → トンネル → 一気に海が広がる車窓を3秒に圧縮</div>
+    <div class="visual-hook"><span class="vh-num">4</span><strong>謎解きキット開封：</strong>おしゃれなパッケージの開封ASMR。手元アップ。中身が見える瞬間</div>
+    <div class="visual-hook"><span class="vh-num">5</span><strong>伊東の青空ドローン風：</strong>海と空の青が広がる伊東の景色。広角で非日常感を出す</div>
+    <div class="visual-hook"><span class="vh-num">6</span><strong>「行くよ！」自撮り：</strong>改札を通る瞬間。カメラに向かって「今日はこれ行ってくる！」のワクワク顔</div>
+    <div class="visual-hook"><span class="vh-num">7</span><strong>乗車券チラ見せ：</strong>手に持った特急券のアップ → カメラを上げると品川駅の看板</div>
+    <div class="visual-hook"><span class="vh-num">8</span><strong>ドラマ画面チラ見せ：</strong>スマホのドラマ画面を覗き込む → 「何これ面白い」のリアクション</div>
+    <div class="visual-hook"><span class="vh-num">9</span><strong>食べる瞬間リアクション：</strong>スイーツを一口食べた瞬間の「うまっ！」の表情。感情が動く瞬間</div>
+    <div class="visual-hook"><span class="vh-num">10</span><strong>2人で走る背中：</strong>伊東の街を2人で走っていく後ろ姿。冒険感・青春感</div>
+    <div class="visual-hook"><span class="vh-num">11</span><strong>暗号文アップ：</strong>謎解きの問題文をカメラに向ける。「これ解ける？」のテロップ</div>
+    <div class="visual-hook"><span class="vh-num">12</span><strong>Before/After：</strong>左半分＝オフィスの退屈な顔 / 右半分＝伊東で笑顔。分割画面</div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- SCRIPT B -->
+<!-- ============================================== -->
+<div class="section" id="s2">
+  <h2>台本B「デートプラン型」— 彼女を驚かせたい彼氏</h2>
+  <div class="persona-badge" style="background:rgba(74,144,217,0.15); color:var(--blue)">
+    N1ペルソナ: けんた（32歳）IT企業勤務 / 彼女とのデートがマンネリ化 / 「すごい！」と言われたい / 計画は好きだけど新しいアイデアが欲しい / 週末ドライバーだけど今回は電車もあり
+  </div>
+
+  <h3>台本構成（60秒）</h3>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:00-0:03</span><span class="scene">HOOK</span></div>
+    <div class="script-body">
+      <div class="visual">画：彼女の手を引いて品川駅のホームを歩く後ろ姿。or カメラ目線で「次のデート、もう決まった」</div>
+      <div class="copy">テロップ：（下記フック参照）</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:03-0:10</span><span class="scene">特急車内 — 2人のワクワク</span></div>
+    <div class="script-body">
+      <div class="visual">画：並んで座る2人 / 車窓を見ながら「どこ行くの？」「着いてからのお楽しみ」 / ドラマ画面</div>
+      <div class="nare">ナレ（男性目線）：「彼女には"謎解きの旅"としか伝えてない」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:10-0:15</span><span class="scene">伊東到着 — 彼女の反応</span></div>
+    <div class="script-body">
+      <div class="visual">画：伊東駅 → 海が見える → 彼女が「え、すごい！」と反応</div>
+      <div class="copy">テロップ：「90分で着く"ちょうどいい冒険"」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:15-0:35</span><span class="scene">スイーツ巡り — 彼女が喜ぶ瞬間の連続</span></div>
+    <div class="script-body">
+      <div class="visual">画：各店で彼女がスイーツに喜ぶ表情。2人で「せーの」で食べる。インスタ用に撮影するシーン</div>
+      <div class="copy">テロップ：「スイーツ4軒を謎解きしながら巡る」</div>
+      <div class="nare">ナレ：「彼女のテンション、過去最高だった気がする」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:35-0:45</span><span class="scene">2人で謎解き</span></div>
+    <div class="script-body">
+      <div class="visual">画：2人で頭を寄せて問題を見る / 「あ、分かった！」のハイタッチ</div>
+      <div class="copy">テロップ：「2人で謎解くの、想像以上に盛り上がる」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:45-0:52</span><span class="scene">夕暮れの絶景</span></div>
+    <div class="script-body">
+      <div class="visual">画：夕暮れの海を2人で見る。横顔のシルエット。</div>
+      <div class="copy">テロップ：「最後にたどり着いた景色が、最高だった」</div>
+    </div>
+  </div>
+
+  <div class="script-box" style="border-color:var(--gold)">
+    <div class="script-header"><span class="time">0:52-1:00</span><span class="scene">CTA</span></div>
+    <div class="script-body">
+      <div class="nare">ナレ：「次のデート、ここに決めた」</div>
+      <div class="copy">テロップ：「LINE登録で300円OFFクーポン / 9月30日まで」</div>
+    </div>
+  </div>
+
+  <h3>テキストフック 12パターン</h3>
+  <div class="hook-grid">
+    <div class="hook-item"><span class="hook-num">1</span>次のデート、もう決まった<span class="hook-type">H3 日常シーン × 断言</span></div>
+    <div class="hook-item"><span class="hook-num">2</span>彼女に「え、すごい！」って言われたデートプラン<span class="hook-type">H8 社会的証明 × 承認欲求</span></div>
+    <div class="hook-item"><span class="hook-num">3</span>いつものデートに飽きた人、これ見て<span class="hook-type">H4 ターゲット呼びかけ × Pain</span></div>
+    <div class="hook-item"><span class="hook-num">4</span>映画→ディナーのデート、もう卒業しない？<span class="hook-type">H1 疑問形 × 脱マンネリ</span></div>
+    <div class="hook-item"><span class="hook-num">5</span>特急90分で行ける「ちょうどいい冒険」<span class="hook-type">H3 日常シーン × コンセプト直球</span></div>
+    <div class="hook-item"><span class="hook-num">6</span>彼女が「今までで1番楽しい！」って言ったデート<span class="hook-type">H8 最上級 × 社会的証明</span></div>
+    <div class="hook-item"><span class="hook-num">7</span>旅行はハードル高い。でも「ちょっとした冒険」ならどう？<span class="hook-type">H1 疑問形 × 障壁崩し</span></div>
+    <div class="hook-item"><span class="hook-num">8</span>2人で謎解くデート、想像以上に盛り上がった<span class="hook-type">H3 日常シーン × 意外性</span></div>
+    <div class="hook-item"><span class="hook-num">9</span>デートプランに迷った日に見つけた最適解<span class="hook-type">H7 発見 × 課題解決</span></div>
+    <div class="hook-item"><span class="hook-num">10</span>1日2,750円で「最高だったね」って言い合える体験<span class="hook-type">H8 数字 × 感情</span></div>
+    <div class="hook-item"><span class="hook-num">11</span>「え、これどうやって見つけたの？」って聞かれた<span class="hook-type">H3 日常会話 × 承認欲求</span></div>
+    <div class="hook-item"><span class="hook-num">12</span>スイーツ好きの彼女が喜ぶ旅、ここにあった<span class="hook-type">H4 ターゲット × 発見</span></div>
+  </div>
+
+  <h3>ビジュアルフック 10パターン</h3>
+  <div class="hook-grid">
+    <div class="visual-hook"><span class="vh-num">1</span><strong>手を繋いでホームを歩く後ろ姿：</strong>特急が待つホームへ。「2人の冒険が始まる」感</div>
+    <div class="visual-hook"><span class="vh-num">2</span><strong>彼氏カメラ目線：</strong>「次のデート、もう決まった」と自信ありげに言う</div>
+    <div class="visual-hook"><span class="vh-num">3</span><strong>彼女の「え、すごい！」の表情：</strong>伊東の海を見た瞬間のリアクション接写</div>
+    <div class="visual-hook"><span class="vh-num">4</span><strong>2人でスイーツ撮影：</strong>インスタ用にスイーツを撮り合う楽しそうな瞬間</div>
+    <div class="visual-hook"><span class="vh-num">5</span><strong>ハイタッチ：</strong>謎が解けた瞬間のハイタッチ。達成感の共有</div>
+    <div class="visual-hook"><span class="vh-num">6</span><strong>「どこ行くの？」「秘密」：</strong>車内で彼女が聞く → 彼氏がニヤリ</div>
+    <div class="visual-hook"><span class="vh-num">7</span><strong>分割画面比較：</strong>左＝映画館の退屈そうな顔 / 右＝伊東で大笑い</div>
+    <div class="visual-hook"><span class="vh-num">8</span><strong>LINEの会話画面風：</strong>「今度の土曜どこ行く？」→「任せて」のやり取り画面</div>
+    <div class="visual-hook"><span class="vh-num">9</span><strong>特急券2枚を並べて持つ手元：</strong>「品川→伊東」のチケットが見える</div>
+    <div class="visual-hook"><span class="vh-num">10</span><strong>夕暮れの海を見る2人のシルエット：</strong>エモい画から始めて「ここどこ？」と思わせる</div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- SCRIPT C -->
+<!-- ============================================== -->
+<div class="section" id="s3">
+  <h2>台本C「謎解き没入型」— 冒頭で謎を出す</h2>
+  <div class="persona-badge" style="background:rgba(163,113,247,0.15); color:var(--purple)">
+    N1ペルソナ: ゆうき（26歳）メーカー勤務 / 謎解きカフェに月1で通う / 脱出ゲームのチケット即買い / 「解けた！」の快感中毒 / 新しい謎解き体験を常に探している
+  </div>
+
+  <h3>台本構成（60秒）</h3>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:00-0:05</span><span class="scene">HOOK — 謎を突きつける</span></div>
+    <div class="script-body">
+      <div class="visual">画：画面いっぱいに暗号文が表示される。手書き風。ミステリアスなBGM</div>
+      <div class="copy">テロップ：「この暗号、3秒で解ける？」</div>
+      <div class="note">※ ここで「解こうとする」心理が働き、スクロールが止まる。答えを見せずに引っ張る</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:05-0:10</span><span class="scene">「解けなかった？」→ ヒントは伊東にある</span></div>
+    <div class="script-body">
+      <div class="visual">画：暗号が薄れて、背景に伊東の街並みが浮かび上がる</div>
+      <div class="copy">テロップ：「答えは、特急90分先にある」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:10-0:20</span><span class="scene">セツナトレイン2の世界観紹介</span></div>
+    <div class="script-body">
+      <div class="visual">画：キットの中身 / ドラマのワンシーン / 伊東の街</div>
+      <div class="copy">テロップ：「特急踊り子で、ドラマと謎解きの旅へ」</div>
+      <div class="nare">ナレ：「車内でドラマを見て、着いた先で謎を解く。今までにない謎解き体験」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:20-0:35</span><span class="scene">謎解きシーンの連続（ここが核）</span></div>
+    <div class="script-body">
+      <div class="visual">画：問題文の接写 → 考え中の表情 → ヒントを見つけた瞬間 → 「解けた！」の興奮。テンポよく3-4問分を連打</div>
+      <div class="copy">各謎ごとにテロップ：「第1の謎」「第2の謎」...「最終問題」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:35-0:45</span><span class="scene">スイーツ × 街歩き（ご褒美要素）</span></div>
+    <div class="script-body">
+      <div class="visual">画：謎を解くごとにスイーツ店にたどり着く構成。「謎の答え＝次の店」</div>
+      <div class="copy">テロップ：「謎を解くと、ご褒美スイーツが待ってる」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:45-0:52</span><span class="scene">最終問題クリア</span></div>
+    <div class="script-body">
+      <div class="visual">画：最後の暗号を解読 → 秘密の場所にたどり着く → 達成感の表情</div>
+      <div class="copy">テロップ：「全問正解の先に、最後の景色が待っている」</div>
+    </div>
+  </div>
+
+  <div class="script-box" style="border-color:var(--gold)">
+    <div class="script-header"><span class="time">0:52-1:00</span><span class="scene">CTA — 冒頭の暗号の答えを明かす</span></div>
+    <div class="script-body">
+      <div class="copy">テロップ：「さっきの暗号の答え、知りたい？」→「LINEで答え合わせ」</div>
+      <div class="note">※ 冒頭の謎をCTAに使う。「答えを知りたければLINE登録」の構造</div>
+    </div>
+  </div>
+
+  <h3>テキストフック 12パターン</h3>
+  <div class="hook-grid">
+    <div class="hook-item"><span class="hook-num">1</span>この暗号、3秒で解ける？<span class="hook-type">参加型チャレンジ</span></div>
+    <div class="hook-item"><span class="hook-num">2</span>謎解き好きな人だけ見て。新しいやつ出た<span class="hook-type">H4 ターゲット呼びかけ</span></div>
+    <div class="hook-item"><span class="hook-num">3</span>東京から90分で行ける「リアル謎解きの旅」<span class="hook-type">H3 日常シーン × 具体性</span></div>
+    <div class="hook-item"><span class="hook-num">4</span>脱出ゲームの次はこれ。街ごと謎解きステージ<span class="hook-type">H7 乗り換え × 新体験</span></div>
+    <div class="hook-item"><span class="hook-num">5</span>まだ部屋の中で謎解きしてるの？<span class="hook-type">H8 新常識提案</span></div>
+    <div class="hook-item"><span class="hook-num">6</span>特急に乗って謎を解く。この体験、やばかった<span class="hook-type">H3 日常シーン × 衝撃</span></div>
+    <div class="hook-item"><span class="hook-num">7</span>答えは「伊東」にある<span class="hook-type">ミステリアス × 地名</span></div>
+    <div class="hook-item"><span class="hook-num">8</span>全問正解できたら天才かもしれない<span class="hook-type">チャレンジ × 自尊心</span></div>
+    <div class="hook-item"><span class="hook-num">9</span>ドラマを見ながら謎を解く。しかも特急の中で<span class="hook-type">H3 意外性 × 3要素</span></div>
+    <div class="hook-item"><span class="hook-num">10</span>謎解き×スイーツ×旅。最強の組み合わせ見つけた<span class="hook-type">H8 発見 × 3要素</span></div>
+    <div class="hook-item"><span class="hook-num">11</span>正解率、たった12%<span class="hook-type">H8 数字衝撃 × チャレンジ</span></div>
+    <div class="hook-item"><span class="hook-num">12</span>この問題、解けたらLINEで答え合わせしよ<span class="hook-type">参加型 × CTA直結</span></div>
+  </div>
+
+  <h3>ビジュアルフック 10パターン</h3>
+  <div class="hook-grid">
+    <div class="visual-hook"><span class="vh-num">1</span><strong>暗号文ドン：</strong>画面いっぱいに謎の暗号。手書き風。3秒カウントダウン付き</div>
+    <div class="visual-hook"><span class="vh-num">2</span><strong>キット開封ASMR：</strong>封を切る音 → 中から謎解きカードが出てくる</div>
+    <div class="visual-hook"><span class="vh-num">3</span><strong>ドラマのワンシーン：</strong>緊迫したドラマの1カットを冒頭に。「何この動画？」と思わせる</div>
+    <div class="visual-hook"><span class="vh-num">4</span><strong>正解表示エフェクト：</strong>スマホに「正解！」と表示される瞬間 → 喜ぶ人</div>
+    <div class="visual-hook"><span class="vh-num">5</span><strong>地図＋ピン：</strong>伊東の地図に謎解きポイントのピンが次々と立つアニメーション</div>
+    <div class="visual-hook"><span class="vh-num">6</span><strong>「解けなかった」のリアクション：</strong>考え込んで頭を抱える → でも楽しそう</div>
+    <div class="visual-hook"><span class="vh-num">7</span><strong>問題文をカメラに向ける：</strong>視聴者に直接問題を見せる第4の壁突破</div>
+    <div class="visual-hook"><span class="vh-num">8</span><strong>街のヒントを見つけた瞬間：</strong>看板や建物にヒントが → 「あ！」の表情</div>
+    <div class="visual-hook"><span class="vh-num">9</span><strong>タイマー演出：</strong>画面上に制限時間カウントダウン。スクロール止める効果</div>
+    <div class="visual-hook"><span class="vh-num">10</span><strong>ノートに書き込む手元：</strong>暗号を解読するために計算・メモする手元接写</div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- SCRIPT D -->
+<!-- ============================================== -->
+<div class="section" id="s4">
+  <h2>台本D「癒し逃避型」— 疲れた私の週末リセット</h2>
+  <div class="persona-badge" style="background:rgba(57,210,192,0.15); color:var(--cyan)">
+    N1ペルソナ: みく（30歳）広告代理店勤務 / 平日は終電帰り / 週末は寝て終わるのがもったいない / 「何かしたいけど何も決められない」 / 甘いものが生きがい / 1人or仲良い友達と
+  </div>
+
+  <h3>台本構成（60秒）</h3>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:00-0:05</span><span class="scene">HOOK — 疲れた金曜夜</span></div>
+    <div class="script-body">
+      <div class="visual">画：暗い部屋。ベッドに転がってスマホを見ている。疲れた表情。</div>
+      <div class="copy">テロップ：（下記フック参照）</div>
+      <div class="note">※ N1の「今」を映す。共感から入る</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:05-0:10</span><span class="scene">翌朝 — 決断</span></div>
+    <div class="script-body">
+      <div class="visual">画：朝日 → 品川駅 → 特急のドアが開く。BGMが切り替わって明るく</div>
+      <div class="copy">テロップ：「翌朝、特急に乗った」</div>
+      <div class="note">※ 金曜夜→土曜朝の場面転換で「行動のトリガー」を見せる</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:10-0:18</span><span class="scene">車内 — ぼんやり→没入</span></div>
+    <div class="script-body">
+      <div class="visual">画：車窓をぼんやり見る → スマホでドラマ再生 → 謎解きに没頭する表情変化</div>
+      <div class="nare">ナレ：「ぼんやり車窓を見てたら、気づいたらドラマに夢中になってた」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:18-0:38</span><span class="scene">伊東 — スイーツ × 癒しの時間（20秒）</span></div>
+    <div class="script-body">
+      <div class="visual">画：穏やかなBGM。スイーツをゆっくり味わう。海を見ながらベンチで食べる。街の猫。路地裏の小さなお店</div>
+      <div class="copy">
+        テロップ（切り替え）：<br>
+        「甘いものって、ほんとに心が緩む」<br>
+        「知らない街を歩くだけで、なんか回復する」<br>
+        「頭を使うのに、なぜかリラックスしてる」
+      </div>
+      <div class="note">※ この台本は「テンポ感」ではなく「間」を大事にする。ゆったりめのBGM</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:38-0:48</span><span class="scene">謎解き — 頭を使う心地よさ</span></div>
+    <div class="script-body">
+      <div class="visual">画：考え中の真剣な顔 → 解けた瞬間の笑顔 → 次のスポットへ歩く</div>
+      <div class="nare">ナレ：「仕事じゃない方向に頭使うの、こんなに気持ちいいんだ」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:48-0:53</span><span class="scene">帰りの特急 — 満足感</span></div>
+    <div class="script-body">
+      <div class="visual">画：夕暮れの車窓。満足そうに微笑む。スイーツの写真をスマホで見返す</div>
+      <div class="nare">ナレ：「帰りの電車で、今日の写真見返してた。いい1日だったな」</div>
+    </div>
+  </div>
+
+  <div class="script-box" style="border-color:var(--gold)">
+    <div class="script-header"><span class="time">0:53-1:00</span><span class="scene">CTA</span></div>
+    <div class="script-body">
+      <div class="copy">テロップ：「疲れた週末を、最高の週末に。」→「LINE登録で300円OFF」</div>
+    </div>
+  </div>
+
+  <h3>テキストフック 12パターン</h3>
+  <div class="hook-grid">
+    <div class="hook-item"><span class="hook-num">1</span>金曜の夜、「明日なにしよう」って思ったら見て<span class="hook-type">H4 ターゲット呼びかけ × シチュエーション</span></div>
+    <div class="hook-item"><span class="hook-num">2</span>疲れてる時ほど、ちょっとだけ遠くに行きたくなる<span class="hook-type">H3 日常シーン × 共感</span></div>
+    <div class="hook-item"><span class="hook-num">3</span>寝て終わる週末、もったいなくない？<span class="hook-type">H1 疑問形 × 後悔回避</span></div>
+    <div class="hook-item"><span class="hook-num">4</span>何もしたくないけど何かしたい、が全部叶う旅<span class="hook-type">矛盾フック × 本音</span></div>
+    <div class="hook-item"><span class="hook-num">5</span>特急で90分。何も考えずに行ける旅があった<span class="hook-type">H3 アクセス × 手軽さ</span></div>
+    <div class="hook-item"><span class="hook-num">6</span>自分へのご褒美、スイーツ4軒ハシゴでどう？<span class="hook-type">H5 条件提示 × ご褒美</span></div>
+    <div class="hook-item"><span class="hook-num">7</span>仕事じゃない方向に頭使うの、めちゃくちゃ気持ちいい<span class="hook-type">H3 新認知 × 快感</span></div>
+    <div class="hook-item"><span class="hook-num">8</span>「いい1日だったな」って帰りの電車で思えた旅<span class="hook-type">H3 After描写 × 感情</span></div>
+    <div class="hook-item"><span class="hook-num">9</span>計画ゼロで行ける旅。全部謎が導いてくれる<span class="hook-type">H5 条件提示 × 手軽さ</span></div>
+    <div class="hook-item"><span class="hook-num">10</span>知らない街×甘いもの×謎解き。回復力えぐい<span class="hook-type">H8 3要素 × 効果訴求</span></div>
+    <div class="hook-item"><span class="hook-num">11</span>休日の過ごし方、これに変えてから毎週楽しみ<span class="hook-type">H7 乗り換え × 継続効果</span></div>
+    <div class="hook-item"><span class="hook-num">12</span>「何する？」って悩む時間が、1番もったいない<span class="hook-type">H1 疑問形 × 機会損失</span></div>
+  </div>
+
+  <h3>ビジュアルフック 10パターン</h3>
+  <div class="hook-grid">
+    <div class="visual-hook"><span class="vh-num">1</span><strong>暗い部屋でスマホ：</strong>ベッドに転がってスマホを見る金曜夜。共感の入口</div>
+    <div class="visual-hook"><span class="vh-num">2</span><strong>朝日 → 品川駅：</strong>暗い部屋から一転、朝日に照らされた品川駅。ドラマチックな転換</div>
+    <div class="visual-hook"><span class="vh-num">3</span><strong>車窓の海：</strong>窓に映る海の風景。ぼんやり見つめる横顔。癒しの画</div>
+    <div class="visual-hook"><span class="vh-num">4</span><strong>スイーツ × 海ベンチ：</strong>海が見えるベンチでスイーツを食べる。最高のシチュエーション</div>
+    <div class="visual-hook"><span class="vh-num">5</span><strong>Before/After時系列：</strong>疲れ顔の金曜夜 → 笑顔の土曜夕方。同じ人の変化</div>
+    <div class="visual-hook"><span class="vh-num">6</span><strong>ため息→深呼吸：</strong>オフィスのため息 → 伊東で海を見て深呼吸する対比</div>
+    <div class="visual-hook"><span class="vh-num">7</span><strong>猫のいる路地裏：</strong>伊東の裏路地で猫と出会う穏やかなシーン</div>
+    <div class="visual-hook"><span class="vh-num">8</span><strong>帰りの電車で微笑む：</strong>夕暮れの車窓。スマホで写真を見返して微笑む横顔</div>
+    <div class="visual-hook"><span class="vh-num">9</span><strong>目覚まし→チケット：</strong>スマホの目覚ましが鳴る → 隣に特急券が置いてある</div>
+    <div class="visual-hook"><span class="vh-num">10</span><strong>スイーツの湯気接写：</strong>温かいスイーツの湯気がゆっくり立ち上る。スローモーション</div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- SCRIPT E -->
+<!-- ============================================== -->
+<div class="section" id="s5">
+  <h2>台本E「友達口コミ型」— UGC風レビュー</h2>
+  <div class="persona-badge" style="background:rgba(63,185,80,0.15); color:var(--green)">
+    N1ペルソナ: りな（25歳）アパレル店員 / インスタのストーリーズが生活の一部 / 友達の「これ良かったよ」で行動する / UGCに最も反応する層 / 「みんなが行ってる」が最強の動機
+  </div>
+
+  <h3>台本構成（60秒）— スマホ自撮り一発撮り風</h3>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:00-0:05</span><span class="scene">HOOK — カメラに話しかける</span></div>
+    <div class="script-body">
+      <div class="visual">画：自撮り。自然光。部屋or カフェ。「これ聞いて！」のテンション</div>
+      <div class="nare">ナレ：「ねぇ聞いて、先週めっちゃいいとこ行ったんだけど」</div>
+      <div class="note">※ インスタストーリーズに友達が投稿してる感覚。作り込まない</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:05-0:15</span><span class="scene">「何したか」を興奮気味に説明</span></div>
+    <div class="script-body">
+      <div class="visual">画：説明しながら、撮った写真・動画をスマホで見せる（画面共有風）</div>
+      <div class="nare">ナレ：「品川から特急乗ってさ、90分で伊東ってとこ行くの。で、電車の中でドラマ見ながら謎解きするの。これがもうめっちゃ楽しくて」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:15-0:35</span><span class="scene">スイーツ写真を見せまくる（20秒）</span></div>
+    <div class="script-body">
+      <div class="visual">画：スマホのカメラロールをスクロールしながら「これ見てこれ見て！」と写真を次々見せる</div>
+      <div class="nare">ナレ：「で、着いたらスイーツ4軒巡るの！見て、これ！やばくない？ で、2軒目がね…（以下テンポよく）。てか全部おいしすぎて写真撮りすぎた笑」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:35-0:45</span><span class="scene">「1番良かったこと」を語る</span></div>
+    <div class="script-body">
+      <div class="visual">画：自撮りに戻って、少しトーンを落として本音で語る</div>
+      <div class="nare">ナレ：「てか1番良かったのが、謎解きしながら街歩くから"どこ行こう"って悩まなくていいの。全部謎が連れてってくれる。これがマジで楽」</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <div class="script-header"><span class="time">0:45-0:52</span><span class="scene">感情のピーク</span></div>
+    <div class="script-body">
+      <div class="visual">画：最後に撮った写真（夕暮れの伊東）を見せる</div>
+      <div class="nare">ナレ：「最後にたどり着いた場所がね、ほんとにやばかった。写真じゃ伝わらないから、行って」</div>
+    </div>
+  </div>
+
+  <div class="script-box" style="border-color:var(--gold)">
+    <div class="script-header"><span class="time">0:52-1:00</span><span class="scene">CTA — 自然な推薦</span></div>
+    <div class="script-body">
+      <div class="nare">ナレ：「てかLINE登録したら300円OFFもらえるから、まじで行ってみて。9月までやってるから。リンク貼っとくね」</div>
+      <div class="copy">テロップ：「セツナトレイン2 / LINE登録で300円OFF / 9月30日まで」</div>
+    </div>
+  </div>
+
+  <h3>テキストフック 12パターン</h3>
+  <div class="hook-grid">
+    <div class="hook-item"><span class="hook-num">1</span>ねぇ聞いて、先週めっちゃいいとこ行った<span class="hook-type">H3 日常会話 × 友達感</span></div>
+    <div class="hook-item"><span class="hook-num">2</span>最近行った中で1番良かったとこ教える<span class="hook-type">H3 口コミ × 最上級</span></div>
+    <div class="hook-item"><span class="hook-num">3</span>これ知ってる人まだ少ないから今のうちに行って<span class="hook-type">H6 UGC × 希少性</span></div>
+    <div class="hook-item"><span class="hook-num">4</span>品川から90分で行けるんだけど、まじで穴場<span class="hook-type">H3 日常 × 穴場感</span></div>
+    <div class="hook-item"><span class="hook-num">5</span>スイーツ好きは絶対行った方がいい場所見つけた<span class="hook-type">H4 ターゲット × 発見</span></div>
+    <div class="hook-item"><span class="hook-num">6</span>友達に勧めたら全員行ってた。そのくらい良かった<span class="hook-type">H8 社会的証明</span></div>
+    <div class="hook-item"><span class="hook-num">7</span>「何する？」って悩んだ週末にこれ行って正解だった<span class="hook-type">H3 シチュエーション × 正解</span></div>
+    <div class="hook-item"><span class="hook-num">8</span>インスタに載せたら「どこ？」って7人から聞かれた<span class="hook-type">H8 数字 × SNS反応</span></div>
+    <div class="hook-item"><span class="hook-num">9</span>正直、人に教えたくないんだけど…教える<span class="hook-type">矛盾フック × 希少感</span></div>
+    <div class="hook-item"><span class="hook-num">10</span>特急で謎解きしながらスイーツ巡る旅って聞いたことある？<span class="hook-type">H1 疑問形 × 新体験</span></div>
+    <div class="hook-item"><span class="hook-num">11</span>帰りの電車で「また行こう」ってなった場所<span class="hook-type">H3 After × リピート</span></div>
+    <div class="hook-item"><span class="hook-num">12</span>2,750円でこの体験はバグってる<span class="hook-type">H8 価格 × ギャップ</span></div>
+  </div>
+
+  <h3>ビジュアルフック 10パターン</h3>
+  <div class="hook-grid">
+    <div class="visual-hook"><span class="vh-num">1</span><strong>自撮りトーク：</strong>カフェや部屋で「ねぇ聞いて」と話しかけ始める。インスタストーリーズ感</div>
+    <div class="visual-hook"><span class="vh-num">2</span><strong>カメラロールスクロール：</strong>スマホの写真をスクロールしながら「見てこれ！」</div>
+    <div class="visual-hook"><span class="vh-num">3</span><strong>スイーツ接写 → 顔：</strong>スイーツのアップ → カメラ引いて「うまっ」の顔</div>
+    <div class="visual-hook"><span class="vh-num">4</span><strong>ストーリーズ風テキスト：</strong>画面にインスタのストーリーズUI風のテキストが載る</div>
+    <div class="visual-hook"><span class="vh-num">5</span><strong>LINEスクショ風：</strong>友達とのLINE「ねぇここ良かった！」「え、どこ？」の会話画面</div>
+    <div class="visual-hook"><span class="vh-num">6</span><strong>インスタ投稿風：</strong>伊東の写真がインスタのフィード風に表示される</div>
+    <div class="visual-hook"><span class="vh-num">7</span><strong>「いいね」の通知が大量に：</strong>投稿後に通知が止まらない演出</div>
+    <div class="visual-hook"><span class="vh-num">8</span><strong>後ろ姿 → 振り返り：</strong>伊東の街を歩く後ろ姿 → 振り返って「ここ最高！」</div>
+    <div class="visual-hook"><span class="vh-num">9</span><strong>友達の反応集：</strong>「えっいいな！」「私も行きたい！」のテキストが次々と表示</div>
+    <div class="visual-hook"><span class="vh-num">10</span><strong>開封動画風：</strong>キットが届いた → 開封する → 中身を見せる。ASMR要素</div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- CHECKLIST -->
+<!-- ============================================== -->
+<div class="section" id="checklist">
+  <h2>撮影チェックリスト（来週用）</h2>
+
+  <div class="alert">
+    <div class="alert-title">1回の撮影で5台本分の素材を全て押さえる</div>
+    <p style="margin:0">全台本で共通して使うシーンと、台本固有のシーンを分けてリスト化。効率的に撮り切る。</p>
+  </div>
+
+  <h3>全台本共通（必須カット）</h3>
+  <table>
+    <tr><th>#</th><th>シーン</th><th>カット内容</th><th>注意点</th></tr>
+    <tr><td>1</td><td>品川駅ホーム</td><td>特急入線 / ホームでのワクワク / 乗車</td><td>縦型撮影。ホーム混雑時は人を避けて</td></tr>
+    <tr><td>2</td><td>車内</td><td>車窓（都会→海） / ドラマ視聴 / キット開封 / 謎解き中</td><td>自然光で。逆光注意</td></tr>
+    <tr><td>3</td><td>伊東駅到着</td><td>駅名看板 / ホーム / 駅前の空</td><td>「着いた！」のテンション</td></tr>
+    <tr><td>4</td><td>スイーツ4店舗</td><td>外観 / 入店 / メニュー / スイーツ接写 / 一口 / リアクション</td><td>各店で必ず「食べる前アップ→一口→リアクション」の3カット</td></tr>
+    <tr><td>5</td><td>謎解き街歩き</td><td>地図を見る / ヒント発見 / 相談中 / 解けた瞬間</td><td>問題文の接写も忘れずに</td></tr>
+    <tr><td>6</td><td>クライマックス</td><td>最後の謎クリア / 最終目的地の絶景</td><td>感情のピーク。大きなリアクション</td></tr>
+    <tr><td>7</td><td>夕暮れの伊東</td><td>海 / 街並み / 空の色</td><td>エンドカード用。感動的な画</td></tr>
+  </table>
+
+  <h3>台本別の追加カット</h3>
+  <table>
+    <tr><th>台本</th><th>追加で撮るもの</th></tr>
+    <tr><td><strong>A（Vlog型）</strong></td><td>2人の自撮り多め / 「楽しいね」の会話 / 走る背中</td></tr>
+    <tr><td><strong>B（デート型）</strong></td><td>手を繋ぐ後ろ姿 / 彼女の「すごい！」リアクション / ハイタッチ / 夕暮れの2人シルエット</td></tr>
+    <tr><td><strong>C（謎解き型）</strong></td><td>問題文の接写（多め）/ 考え中の真剣顔 / ノートに書き込む手元 / 正解表示画面</td></tr>
+    <tr><td><strong>D（癒し型）</strong></td><td>海ベンチでスイーツ / ぼんやり車窓 / 猫との遭遇 / 帰りの電車で写真を見返す</td></tr>
+    <tr><td><strong>E（UGC型）</strong></td><td>自撮りトーク（帰宅後or現地で）/ カメラロールスクロール / インスタ用に撮影するシーン</td></tr>
+  </table>
+
+  <h3>機材・持ち物</h3>
+  <ul>
+    <li><strong>スマホ2台</strong>（メイン撮影 + サブアングル or 自撮り）</li>
+    <li><strong>ジンバル or 自撮り棒</strong>（Vlog感の安定映像。DJI OM推奨）</li>
+    <li><strong>ワイヤレスマイク</strong>（ナレーション収録。UGC型は不要）</li>
+    <li><strong>モバイルバッテリー</strong>（1日撮影で電池切れ防止）</li>
+    <li><strong>謎解きキット</strong>（開封シーン撮影用に未開封を1つ用意）</li>
+  </ul>
+
+  <h3>撮影の心得</h3>
+  <div class="insight">
+    <strong>「小さな嘘をつかない」（パク哲学）：</strong>リアクションは演技しない。本当に美味しかったら「うまっ」、本当に驚いたら「えっ」。<strong>本物の感情だけを撮る。</strong>UGC型・Vlog型の効果はリアリティに比例する。作り込んだ瞬間に「広告っぽく」なって離脱される。
+  </div>
+</div>
+
+<div style="text-align:center; padding:40px 0; color:var(--muted); font-size:13px;">
+  <p>Prepared by 一進AI Creative Team | 2026-04-09</p>
+  <p style="font-size:11px; margin-top:4px;">セツナトレイン2 台本×フック×撮影リファレンス集 v1.0</p>
+</div>
+
+</div>
+</body>
+</html>
