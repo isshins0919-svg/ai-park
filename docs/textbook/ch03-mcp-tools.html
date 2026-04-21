@@ -87,7 +87,8 @@
       <div class="ex-label real">🍽️ レストランの例</div>
       <p><strong>ホスト（お客さん）</strong> = Claude Code。「Slackに投稿して」とリクエストする<br><br>
       <strong>クライアント（ウェイター）</strong> = Claude Codeに内蔵。リクエストを適切なサーバーに届ける<br><br>
-      <strong>サーバー（厨房）</strong> = Slack MCP。実際にSlack APIを叩いて投稿する</p>
+      <strong>サーバー（厨房）</strong> = Slack MCP。実際にSlack APIを叩いて投稿する<br><br>
+      ※ <strong>サーバー</strong>とは「裏側で動いて、リクエストが来たら仕事をこなす縁の下のプログラム」のこと。物理的なマシンじゃなくて、裏方スタッフをイメージして。</p>
     </div>
     <div class="ex-box">
       <div class="ex-label voyage">⚓ ポイント</div>
@@ -111,7 +112,7 @@
   <h3><span class="emoji">💻</span> ローカルサーバー（stdio方式）</h3>
   <p class="tagline">自分のPCで動くサーバー。セットアップが必要だが自由度が高い</p>
 
-  <p>自分のPCにインストールして使うタイプ。npmやpipでパッケージを入れて、settings.jsonに設定を書きます。</p>
+  <p>自分のPCにインストールして使うタイプ。<strong>npm</strong>（エヌピーエム。JavaScript用のアプリ配布所。スマホのApp Storeみたいなもの）や<strong>pip</strong>（ピップ。Python用のApp Store）で<strong>パッケージ</strong>（機能をまとめた部品ファイル）を入れて、<code>settings.json</code>（Claude Codeの設定ファイル。「どのサーバーを繋ぐか」を書くメモ帳みたいなもの）に設定を書きます。</p>
 
   <div class="code-block">
     <span class="comment">// settings.json の設定例（ファイルシステムサーバー）</span><br>
@@ -129,7 +130,7 @@
     <div class="label">メリット / デメリット</div>
     <p>✅ 自由度が高い（カスタムサーバーも作れる）<br>
     ✅ データが外部に出ない（セキュリティ◎）<br>
-    ❌ 環境構築が必要（Node.js, Python等）<br>
+    ❌ 環境構築（=アプリを動かす土台を準備すること）が必要。<strong>Node.js</strong>（ノード。JavaScriptをPCで動かす土台）や <strong>Python</strong>（パイソン。プログラミング言語の一つ。AI・データ分析で定番）のインストールが前提<br>
     ❌ PCが起動していないと使えない</p>
   </div>
 </div>
@@ -212,7 +213,9 @@
     <div class="step-num">1</div>
     <div class="step-body">
       <h4>CLIで追加する</h4>
-      <p><code>claude mcp add サーバー名 -- コマンド 引数</code> で設定を追加します。</p>
+      <p><strong>CLI</strong>（シーエルアイ / Command Line Interface = ターミナルに文字を打ってPCを操作する画面）で設定を追加します。<br><br>
+      <code>claude mcp add サーバー名 -- コマンド 引数</code><br><br>
+      ※ <strong>コマンド</strong> = PCへの命令（例: <code>npx</code>）、<strong>引数</strong> = 命令にわたす追加情報（例: ファイル名やフォルダのパス）</p>
     </div>
   </div>
   <div class="story-step">
@@ -319,6 +322,38 @@
     <div class="glossary-item">
       <div class="term">リモートMCP</div>
       <p class="def">クラウド上で動くMCPサーバー。Slack、Google Calendar等の外部サービス。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">サーバー</div>
+      <p class="def">裏側で動いて、リクエストが来たら仕事をこなす縁の下のプログラム。物理的な機械じゃなく「裏方スタッフ」のイメージ。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">CLI（コマンドラインインターフェース）</div>
+      <p class="def">ターミナルに文字を打ってPCを操作する画面。GUI（マウスで操作）の反対。Claude Codeの本体はここで動く。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">コマンド / 引数</div>
+      <p class="def">コマンド＝PCへの命令（例: <code>npx</code>）、引数＝命令にわたす追加情報（例: ファイル名やフォルダのパス）。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">npm / pip</div>
+      <p class="def">npm=JavaScript用、pip=Python用の「アプリ配布所」。スマホのApp Store的なもので、ここから機能を追加できる。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">パッケージ</div>
+      <p class="def">機能をまとめたソフトウェアの部品ファイル。これを入れると新しい機能が使えるようになる。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">settings.json</div>
+      <p class="def">Claude Codeの設定を書くファイル。「どのMCPサーバーを繋ぐか」などをここに書く。拡張子 .json は「設定をキレイに並べるフォーマット」。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">環境構築</div>
+      <p class="def">アプリを動かすのに必要な土台（言語や関連ツール）をPCに用意すること。家を建てる前の「基礎工事」のようなもの。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">Node.js / Python</div>
+      <p class="def">Node.js=JavaScriptをPCで動かす土台。Python=プログラミング言語の一つで、AI・データ分析で広く使われる。どちらもMCPサーバーを動かす土台になる。</p>
     </div>
   </div>
 </div>
