@@ -17,6 +17,33 @@
           "cost_diff": 5471426,
           "advertiser": "株式会社オルビス"
         }
+      ],
+      "competitors_top5": [
+        {
+          "name": "ドクターシーラボ VC100エッセンスローションEX",
+          "cost_diff": 7834266,
+          "advertiser": "JNTLコンシューマーヘルス株式会社"
+        },
+        {
+          "name": "オルビス ユードット スキンケアセット",
+          "cost_diff": 5471426,
+          "advertiser": "株式会社オルビス"
+        },
+        {
+          "name": "LOOKFANTASTIC サンプロテクション",
+          "cost_diff": 2127204,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "新日本製薬 パーフェクトワンフォーカス スムースクレンジングバーム",
+          "cost_diff": 1522664,
+          "advertiser": "新日本製薬株式会社"
+        },
+        {
+          "name": "アミノセルス製薬 オレリー モイスト クレンジングセット",
+          "cost_diff": 1127248,
+          "advertiser": "アミノセルス製薬株式会社"
+        }
       ]
     },
     "proust": {
@@ -33,6 +60,33 @@
           "name": "Old Spice オールドスパイスフィジーの香りデオドラント",
           "cost_diff": 721102,
           "advertiser": "更新中"
+        }
+      ],
+      "competitors_top5": [
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 1203700,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラント",
+          "cost_diff": 721102,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "Rexona Whole Body Deo",
+          "cost_diff": 604706,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "Secret Clinical Strength Antiperspirant Deodorant A'Ja Wilson Edition",
+          "cost_diff": 339973,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "Schick HYDRO シェーバー",
+          "cost_diff": 186232,
+          "advertiser": "シック・ジャパン株式会社"
         }
       ]
     },
@@ -51,6 +105,33 @@
           "cost_diff": 593012,
           "advertiser": "更新中"
         }
+      ],
+      "competitors_top5": [
+        {
+          "name": "For－S ノビエース",
+          "cost_diff": 1573300,
+          "advertiser": "株式会社For-S"
+        },
+        {
+          "name": "KENSHOU フィジカルメンテPRO",
+          "cost_diff": 593012,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "エメトレ ドクターセノビル",
+          "cost_diff": 501600,
+          "advertiser": "株式会社エメトレ"
+        },
+        {
+          "name": "ロート製薬 セノビック パフォーマンスUP",
+          "cost_diff": 398400,
+          "advertiser": "ロート製薬株式会社"
+        },
+        {
+          "name": "LEFT－U セノッピーグミ",
+          "cost_diff": 340174,
+          "advertiser": "株式会社LEFT-U"
+        }
       ]
     },
     "rkl": {
@@ -68,6 +149,33 @@
           "cost_diff": 1011889,
           "advertiser": "更新中"
         }
+      ],
+      "competitors_top5": [
+        {
+          "name": "レミントン 人工筋肉サポーター 膝パワーウォーク",
+          "cost_diff": 1073600,
+          "advertiser": "株式会社レミントン"
+        },
+        {
+          "name": "GroundingWell Grounding Mat",
+          "cost_diff": 1011889,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "EMSense トリプルセラピー フットマッサージャー",
+          "cost_diff": 867486,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "リカバリーバンド ヒューロン",
+          "cost_diff": 587760,
+          "advertiser": "株式会社ボウス"
+        },
+        {
+          "name": "apkzonic Anti Theft Alarm",
+          "cost_diff": 414614,
+          "advertiser": "更新中"
+        }
       ]
     },
     "apobusterf": {
@@ -77,13 +185,13 @@
       "competitors_top2": [
         {
           "name": "ヨミテ プルーストクリーム2",
-          "cost_diff": 3256888,
+          "cost_diff": 1328240,
           "advertiser": "株式会社ヨミテ"
         },
         {
           "name": "NATIVE アルミニウムフリー デオドラント",
           "cost_diff": 1203700,
-          "advertiser": "海外ブランド"
+          "advertiser": "更新中"
         }
       ],
       "own_creatives_top3": [
@@ -107,6 +215,33 @@
           "hook": "コーヒーを控えると脇がが気にならなくなるって本当ですか",
           "url": "https://www.tiktok.com/@.../video/7629609245444656405",
           "lp": "https://sb-apo-buster-tiktok.discover-news.tokyo/ab/apo-buster_tik-c"
+        }
+      ],
+      "competitors_top5": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "cost_diff": 1328240,
+          "advertiser": "株式会社ヨミテ"
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "cost_diff": 1203700,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラント",
+          "cost_diff": 721102,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "Rexona Whole Body Deo",
+          "cost_diff": 604706,
+          "advertiser": "更新中"
+        },
+        {
+          "name": "Secret Clinical Strength Antiperspirant Deodorant A'Ja Wilson Edition",
+          "cost_diff": 339973,
+          "advertiser": "更新中"
         }
       ]
     }

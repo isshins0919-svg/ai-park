@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__df6842ef-0c99-4102-8c8a-84b879dd8520__get_items_by_rds_api_v1_items_get",
+      "mcp__df6842ef-0c99-4102-8c8a-84b879dd8520__search_genres_api_v1_genres_get",
+      "mcp__df6842ef-0c99-4102-8c8a-84b879dd8520__read_apps_api_v1_apps_get",
+      "mcp__df6842ef-0c99-4102-8c8a-84b879dd8520__search_products_with_relevance_api_v1_products_get",
+      "mcp__6a7da57b-d218-427b-84f9-7ae71fb8ef19__slack_send_message",
+      "mcp__c8d0f386-4a82-4ec9-bc02-c32201255854__list_events",
+      "mcp__scheduled-tasks__create_scheduled_task",
+      "mcp__scheduled-tasks__update_scheduled_task",
+      "mcp__scheduled-tasks__list_scheduled_tasks",
+      "Bash(date '+%Y-%m-%d %H:%M (%a)')",
+      "Bash(git pull origin main --rebase *)",
+      "Bash(git status --short *)",
+      "Bash(git log --oneline *)",
+      "Bash(python3 scripts/update_crew_map.py *)",
+      "Bash(python3 .claude/clients/yomite/scripts/generate_charts.py *)",
+      "Bash(python3 /Users/ca01224/Desktop/一進VOYAGE号/.claude/clients/yomite/scripts/generate_charts.py *)",
+      "Bash(zsh -c 'source ~/.zshrc && python3 /Users/ca01224/Desktop/一進VOYAGE号/.claude/clients/yomite/scripts/post_charts_to_slack.py *)"
+    ]
+  }
+}

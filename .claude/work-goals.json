@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-06 10:15",
+  "last_updated": "2026-04-21 09:40",
   "jobs": [
     {
       "id": 1,
@@ -131,10 +131,10 @@
       "id": 17,
       "name": "ameruのLPサフ作成オファー",
       "goal": "ameruのLP制作サポートについてオファーを出すところまで完了する",
-      "status": "active",
+      "status": "completed",
       "priority": "high",
       "created_at": "2026-03-26",
-      "notes": "期限: 2026-04-11（金）に延長"
+      "notes": "2026-04-21完了！ameru 10本完成 https://isshins0919-svg.github.io/ai-park/clients/ameru_new/10_patterns_index.html"
     },
     {
       "id": 16,
@@ -161,7 +161,7 @@
       "status": "active",
       "priority": "high",
       "created_at": "2026-04-06",
-      "notes": "期限: 2026-04-18勉強会以降に完成。2商品での検証・実装が完了条件"
+      "notes": "期限: 2026-04月中に完成。2商品での検証・実装が完了条件"
     },
     {
       "id": 21,
@@ -180,6 +180,33 @@
       "priority": "high",
       "created_at": "2026-03-25",
       "notes": "対象: hook-critic / cro-specialist / n1-validator / legal-checker / visual-director / typography-critic / brand-guardian / image-prompt-optimizer + 動画系4体 = 計12体。週1〜2体ペースで完成。どんどん進める！"
+    },
+    {
+      "id": 22,
+      "name": "Claude code miniダイブの実施",
+      "goal": "Claude code miniダイブを実施する",
+      "status": "active",
+      "priority": "medium",
+      "created_at": "2026-04-21",
+      "notes": ""
+    },
+    {
+      "id": 23,
+      "name": "sawadaにAI研修の実施（全5回）",
+      "goal": "sawadaへAI研修を全5回実施する",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-21",
+      "notes": "2026-04-21 一次連絡済み。全5回の実施はこれから"
+    },
+    {
+      "id": 24,
+      "name": "lutemo社AI研修の内容学ぶ",
+      "goal": "lutemo社のAI研修コンテンツを把握・学習する",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-21",
+      "notes": "期限: 2026-04-21（本日中）"
     }
   ]
 }

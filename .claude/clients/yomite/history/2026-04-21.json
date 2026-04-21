@@ -1,0 +1,84 @@
+{
+  "date": "2026-04-21",
+  "to_date_api": "2026-04-20",
+  "products": {
+    "onmyskin": {
+      "own": 389660,
+      "market": 17871046,
+      "market_note": "genre103(クレンジング×毛穴kw)のみ。genre80(スキンケア)はAPIタイムアウトで取得不可。市場値は過小評価。",
+      "share_pct": 2.181,
+      "competitors_top3": [
+        {"name": "アミノセルス製薬 オレリー モイスト クレンジングセット", "cost_diff": 3104577, "advertiser": "アミノセルス製薬株式会社"},
+        {"name": "ランクアップ マナラ ホットクレンジングゲル マッサージプラス", "cost_diff": 1363014, "advertiser": "株式会社ランクアップ"},
+        {"name": "シロク Nオーガニック Basic スージング クレンジングジェル", "cost_diff": 1068000, "advertiser": "株式会社シロク"}
+      ],
+      "media_breakdown": {
+        "banner": 2,
+        "video": 1,
+        "carousel": 0
+      }
+    },
+    "proust": {
+      "own": 2818000,
+      "market": 9951164,
+      "share_pct": 28.318,
+      "competitors_top3": [
+        {"name": "NATIVE アルミニウムフリー デオドラント", "cost_diff": 1434103, "advertiser": "更新中"},
+        {"name": "Old Spice オールドスパイスフィジーの香りデオドラント", "cost_diff": 781796, "advertiser": "更新中"},
+        {"name": "Rexona Whole Body Deo", "cost_diff": 694853, "advertiser": "更新中"}
+      ],
+      "media_breakdown": {
+        "banner": 0,
+        "video": 3,
+        "carousel": 0
+      }
+    },
+    "gungun": {
+      "own": 2265164,
+      "market": 10763492,
+      "share_pct": 21.047,
+      "competitors_top3": [
+        {"name": "LEFT-U セノッピーグミ", "cost_diff": 1773582, "advertiser": "株式会社LEFT-U"},
+        {"name": "KENSHOU フィジカルメンテPRO", "cost_diff": 1191318, "advertiser": "更新中"},
+        {"name": "LEFT-U セノッピーチュアブル", "cost_diff": 382318, "advertiser": "株式会社LEFT-U"}
+      ],
+      "media_breakdown": {
+        "banner": 2,
+        "video": 1,
+        "carousel": 0
+      }
+    },
+    "rkl": {
+      "own": 1385654,
+      "market": 17386125,
+      "market_note": "genre1467×膝kw、excludeフィルタ適用後（キャンペーン・プレゼント等除外）",
+      "share_pct": 7.970,
+      "competitors_top3": [
+        {"name": "Carpe デオドラント 4本セット", "cost_diff": 5322673, "advertiser": "更新中"},
+        {"name": "レミントン 体感エアーベルト腰用", "cost_diff": 2284544, "advertiser": "株式会社レミントン"},
+        {"name": "レミントン 人工筋肉サポーター 膝パワーウォーク", "cost_diff": 1223784, "advertiser": "株式会社レミントン"}
+      ],
+      "media_breakdown": {
+        "banner": 0,
+        "video": 3,
+        "carousel": 0
+      }
+    },
+    "apobusterf": {
+      "own": 360640,
+      "market": 9951164,
+      "market_note": "genre76(体臭ケア)。プルーストクリーム2と同一市場。",
+      "share_pct": 3.624,
+      "competitors_top3": [
+        {"name": "NATIVE アルミニウムフリー デオドラント", "cost_diff": 1434103, "advertiser": "更新中"},
+        {"name": "ヨミテ プルーストクリーム2", "cost_diff": 1158264, "advertiser": "株式会社ヨミテ"},
+        {"name": "Old Spice オールドスパイスフィジーの香りデオドラント", "cost_diff": 781796, "advertiser": "更新中"}
+      ],
+      "media_breakdown": {
+        "banner": 0,
+        "video": 3,
+        "carousel": 0
+      }
+    }
+  }
+}
