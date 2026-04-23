@@ -1,0 +1,349 @@
+{
+  "date": "2026-04-23",
+  "to_date_api": "2026-04-22",
+  "data_scope": "Meta(FB/Insta) + YouTube(通常/Shorts) のみ",
+  "allowed_app_ids": [
+    1,
+    3,
+    4,
+    5
+  ],
+  "products": {
+    "proust": {
+      "own": 3388760,
+      "market": 10159747,
+      "share_pct": 33.4,
+      "rank": 1,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 21.7,
+          "cost_diff": 2202920,
+          "is_own": true
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "advertiser": "更新中",
+          "share_pct": 10.5,
+          "cost_diff": 1069096,
+          "is_own": false
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラン",
+          "advertiser": "更新中",
+          "share_pct": 7.6,
+          "cost_diff": 776576,
+          "is_own": false
+        },
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 6.1,
+          "cost_diff": 619072,
+          "is_own": true
+        },
+        {
+          "name": "Rexona Whole Body Deo",
+          "advertiser": "更新中",
+          "share_pct": 5.8,
+          "cost_diff": 591083,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "advertiser": "更新中",
+          "cost_diff": 1069096
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラン",
+          "advertiser": "更新中",
+          "cost_diff": 776576
+        },
+        {
+          "name": "Rexona Whole Body Deo",
+          "advertiser": "更新中",
+          "cost_diff": 591083
+        }
+      ],
+      "media_breakdown": {
+        "banner": 0,
+        "video": 3388760,
+        "carousel": 0
+      },
+      "data_confidence": "high"
+    },
+    "gungun": {
+      "own": 1927688,
+      "market": 10171954,
+      "share_pct": 19.0,
+      "rank": 3,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "LEFT－U セノッピーグミ",
+          "advertiser": "株式会社LEFT-U",
+          "share_pct": 24.1,
+          "cost_diff": 2454812,
+          "is_own": false
+        },
+        {
+          "name": "LEFT－U セノッピーグミ",
+          "advertiser": "株式会社LEFT-U",
+          "share_pct": 15.0,
+          "cost_diff": 1526538,
+          "is_own": false
+        },
+        {
+          "name": "ヨミテ 伸長ぐんぐん習慣",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 12.1,
+          "cost_diff": 1233112,
+          "is_own": true
+        },
+        {
+          "name": "pupu レヨン スタディフード",
+          "advertiser": "pupu株式会社",
+          "share_pct": 10.5,
+          "cost_diff": 1072492,
+          "is_own": false
+        },
+        {
+          "name": "アリンクル セアップ",
+          "advertiser": "株式会社アリンクル",
+          "share_pct": 4.9,
+          "cost_diff": 498378,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "name": "LEFT－U セノッピーグミ",
+          "advertiser": "株式会社LEFT-U",
+          "cost_diff": 2454812
+        },
+        {
+          "name": "LEFT－U セノッピーグミ",
+          "advertiser": "株式会社LEFT-U",
+          "cost_diff": 1526538
+        },
+        {
+          "name": "pupu レヨン スタディフード",
+          "advertiser": "pupu株式会社",
+          "cost_diff": 1072492
+        }
+      ],
+      "media_breakdown": {
+        "banner": 0,
+        "video": 1927688,
+        "carousel": 0
+      },
+      "data_confidence": "high"
+    },
+    "rkl": {
+      "own": 779418,
+      "market": 412601531,
+      "share_pct": 0.2,
+      "rank": 5,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "YOSHITO レディースシューズ",
+          "advertiser": "更新中",
+          "share_pct": 14.6,
+          "cost_diff": 42767692,
+          "is_own": false
+        },
+        {
+          "name": "P＆G レノアハピネス",
+          "advertiser": "アスクル株式会社",
+          "share_pct": 12.6,
+          "cost_diff": 36855872,
+          "is_own": false
+        },
+        {
+          "name": "家族への思いやり 資料請求",
+          "advertiser": "プラス少額短期保険株式会社",
+          "share_pct": 6.9,
+          "cost_diff": 20272292,
+          "is_own": false
+        },
+        {
+          "name": "さくらフォレスト ラクーダEXα",
+          "advertiser": "さくらフォレスト株式会社",
+          "share_pct": 6.8,
+          "cost_diff": 19790672,
+          "is_own": false
+        },
+        {
+          "name": "トロピカーナ エッセンシャルズ",
+          "advertiser": "キリンホールディングス株式会社",
+          "share_pct": 6.3,
+          "cost_diff": 18531192,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "name": "YOSHITO レディースシューズ",
+          "advertiser": "更新中",
+          "cost_diff": 42767692
+        },
+        {
+          "name": "P＆G レノアハピネス",
+          "advertiser": "アスクル株式会社",
+          "cost_diff": 36855872
+        },
+        {
+          "name": "家族への思いやり 資料請求",
+          "advertiser": "プラス少額短期保険株式会社",
+          "cost_diff": 20272292
+        }
+      ],
+      "media_breakdown": {
+        "banner": 0,
+        "video": 779418,
+        "carousel": 0
+      },
+      "data_confidence": "low",
+      "data_confidence_reason": "市場キーワード検索に非関連商品(靴/洗剤/保険)が混入。市場¥412.6Mは過大計上の可能性大"
+    },
+    "onmyskin": {
+      "own": 1063574,
+      "market": 54096436,
+      "share_pct": 2.0,
+      "rank": 5,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "アミノセルス製薬 オレリー モイスト クレンジングセット",
+          "advertiser": "アミノセルス製薬株式会社",
+          "share_pct": 23.9,
+          "cost_diff": 12936411,
+          "is_own": false
+        },
+        {
+          "name": "ドクターシーラボ VC100エッセンスローションEX",
+          "advertiser": "JNTLコンシューマーヘルス株式会社",
+          "share_pct": 16.0,
+          "cost_diff": 8674832,
+          "is_own": false
+        },
+        {
+          "name": "Dove パールシャインシリーズ 洗顔",
+          "advertiser": "更新中",
+          "share_pct": 11.8,
+          "cost_diff": 6358484,
+          "is_own": false
+        },
+        {
+          "name": "オルビス ユードット スキンケアセット",
+          "advertiser": "株式会社オルビス",
+          "share_pct": 10.2,
+          "cost_diff": 5491468,
+          "is_own": false
+        },
+        {
+          "name": "第一三共ヘルスケア ブライトエイジ アイゾーン ダブルリバイ",
+          "advertiser": "第一三共ヘルスケアダイレクト株式会社",
+          "share_pct": 7.0,
+          "cost_diff": 3794944,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "name": "アミノセルス製薬 オレリー モイスト クレンジングセット",
+          "advertiser": "アミノセルス製薬株式会社",
+          "cost_diff": 12936411
+        },
+        {
+          "name": "ドクターシーラボ VC100エッセンスローションEX",
+          "advertiser": "JNTLコンシューマーヘルス株式会社",
+          "cost_diff": 8674832
+        },
+        {
+          "name": "Dove パールシャインシリーズ 洗顔",
+          "advertiser": "更新中",
+          "cost_diff": 6358484
+        }
+      ],
+      "media_breakdown": {
+        "banner": 0,
+        "video": 1063574,
+        "carousel": 0
+      },
+      "data_confidence": "high"
+    },
+    "apobusterf": {
+      "own": 58716,
+      "market": 10159747,
+      "share_pct": 0.6,
+      "rank": 5,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 21.7,
+          "cost_diff": 2202920,
+          "is_own": false
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "advertiser": "更新中",
+          "share_pct": 10.5,
+          "cost_diff": 1069096,
+          "is_own": false
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラン",
+          "advertiser": "更新中",
+          "share_pct": 7.6,
+          "cost_diff": 776576,
+          "is_own": false
+        },
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 6.1,
+          "cost_diff": 619072,
+          "is_own": false
+        },
+        {
+          "name": "Rexona Whole Body Deo",
+          "advertiser": "更新中",
+          "share_pct": 5.8,
+          "cost_diff": 591083,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "advertiser": "株式会社ヨミテ",
+          "cost_diff": 2202920
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "advertiser": "更新中",
+          "cost_diff": 1069096
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラン",
+          "advertiser": "更新中",
+          "cost_diff": 776576
+        }
+      ],
+      "media_breakdown": {
+        "banner": 0,
+        "video": 58716,
+        "carousel": 0
+      },
+      "data_confidence": "high"
+    }
+  }
+}

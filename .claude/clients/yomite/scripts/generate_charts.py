@@ -1,19 +1,26 @@
 #!/usr/bin/env python3
 """
-ヨミテ デイリー 市場占有率チャート（日本語フル版）
-history/*.json から 1商品1枚のシェア推移+媒体別ブレイクダウンPNGを生成。
-白背景・太字見出し・数字主張強め。日本語ラベル徹底、意味の明確化。
-
+ヨミテ デイリー 「勝ってるか / 負けてるか」チャート v4.0
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ 重要: グラフのX軸ラベルは「観測日(前日=to_date_api)」基準。
-   発行日(history JSONの date フィールド)ではない！
+設計思想:
+  - 絶対¥は信用できない（DPro推定誤差あり）→ 絶対値を廃止
+  - 本質は「競合との比較・市場内での順位」
+  - 一目で「勝ってる／負けてる」が分かることが最優先
+  - Meta(FB/Insta) + YouTube(通常/Shorts) に集計対象を限定
 
-   各データ点:
-   - X軸ラベル = その点の「最新観測日」（APIのto_date）
-   - 値 = その日を末尾とする過去2日間の差分（interval=2）
+生成チャート:
+  ① サマリ: 5商品の市場順位・シェア%・前日比を一画面で
+  ② 商品別: ①順位バッジ大 ②市場リーダーボードTOP5 ③主要競合との直接対決
 
-   例: history/2026-04-20.json は to_date_api=2026-04-19 なので
-       グラフ上は「4/19」ラベル（4/18-4/19の2日間差分）で描画される。
+データソース:
+  history/{YYYY-MM-DD}.json の products[slug]:
+    - share_pct          (ジャンル内シェア%)
+    - rank               (市場内の順位)
+    - rank_total         (TOP何位までの計測か)
+    - leaderboard_top5   (市場TOP5の全員)
+    - competitors_top3   (自社除く競合TOP3)
+    - media_breakdown    (媒体別本数)
+    - data_confidence    ("low" など、データ信頼度の注釈)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 import json
@@ -27,40 +34,50 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, Rectangle
 
-# ⚠️ 日本語統一（serif系は文字化けの原因なので全面的にHiragino Sansに固定）
+# 日本語フォント統一（serif系は使用禁止・文字化けの原因）
 plt.rcParams["font.family"] = "Hiragino Sans"
 plt.rcParams["axes.unicode_minus"] = False
 
-# 曜日の日本語化
 WEEKDAY_JA = ["月", "火", "水", "木", "金", "土", "日"]
-
-def ja_weekday(dt):
-    return WEEKDAY_JA[dt.weekday()]
-
-def date_ja(dt, fmt="short"):
-    """日本語付き日付。fmt='short'→'4/20(月)' / fmt='long'→'2026-04-21 (火)'"""
-    if fmt == "short":
-        return f"{dt.month}/{dt.day}({ja_weekday(dt)})"
-    return f"{dt.strftime('%Y-%m-%d')} ({ja_weekday(dt)})"
-
+def ja_weekday(dt): return WEEKDAY_JA[dt.weekday()]
+def date_short(dt): return f"{dt.month}/{dt.day}({ja_weekday(dt)})"
+def date_long(dt): return f"{dt.strftime('%Y-%m-%d')} ({ja_weekday(dt)})"
 
 ROOT = Path("/Users/ca01224/Desktop/一進VOYAGE号/.claude/clients/yomite")
 HIST_DIR = ROOT / "history"
 OUT_DIR = ROOT / "charts"
 CONFIG_PATH = ROOT / "daily_news_config.json"
 
-# カラーパレット
+# ═══ カラーパレット ═══
 BG = "#FFFFFF"
 INK = "#1B1F26"
 INK_SUB = "#6E7682"
 INK_SUB_LIGHT = "#9CA3AE"
 LINE_LIGHT = "#E5E8EC"
-GRID = "#F0F2F5"
-COMP1 = "#B5BCC6"
-COMP2 = "#D4D8DE"
-VIDEO_COLOR = "#6C63FF"     # 動画 = パープル
-BANNER_COLOR = "#FF8A3D"    # バナー = オレンジ
-CAROUSEL_COLOR = "#3AC29A"  # カルーセル = グリーン
+GRID = "#F2F4F7"
+
+# 順位バッジのカラー（勝ち負けの視覚化）
+# ⚠️ matplotlibのHiragino Sansで絵文字が文字化けするので、
+#    絵文字ではなく文字記号（◆◇◎●▲▼）で表現
+RANK_COLOR = {
+    1: "#FFD700",   # 金: 首位
+    2: "#3AA6E8",   # 青: 2位（勝ち圏）
+    3: "#3AA6E8",   # 青: 3位（勝ち圏）
+    4: "#F1A53A",   # オレンジ: 4位（要注意）
+    5: "#E25860",   # 赤: 5位以下（負け圏）
+}
+RANK_LABEL = {
+    1: "首位・独走中",
+    2: "2位・追撃ポジション",
+    3: "3位・勝ち圏維持",
+    4: "4位・要注意",
+    5: "劣勢・戦略見直し",
+}
+
+# 媒体カラー
+VIDEO_COLOR = "#6C63FF"
+BANNER_COLOR = "#FF8A3D"
+CAROUSEL_COLOR = "#3AC29A"
 
 # 商品名 → slug
 PKEY_TO_SLUG = {
@@ -69,15 +86,6 @@ PKEY_TO_SLUG = {
     "伸長ぐんぐん習慣": "gungun",
     "RKL": "rkl",
     "アポバスターF": "apobusterf",
-}
-
-# 状態（象限）定義 — 日本語名＋1行説明
-QUADRANT = {
-    "own_up_market_up":   ("追い風",      "市場も自社も拡大",        "#3AA6E8"),
-    "own_up_market_down": ("自社独走",     "市場縮小の中で自社は伸長", "#F1A53A"),
-    "own_down_market_up": ("乗り遅れ",     "市場拡大なのに自社後退",   "#E25860"),
-    "own_down_market_down":("全体縮小",   "市場も自社も縮小",        "#9080B0"),
-    "unknown":            ("データ蓄積中", "判定に必要な履歴が不足",   INK_SUB),
 }
 
 
@@ -98,98 +106,34 @@ def load_history():
     return out
 
 
-def compute_quadrant(raw):
-    """絶対値ベースで象限判定。raw = [(date, own_cost, market_cost, share), ...]
-    直近2日の自社¥と市場¥の変動を±5%しきい値で比較。
-    """
-    if len(raw) < 2:
-        return "unknown"
-    (_, own_p, market_p, _), (_, own_n, market_n, _) = raw[-2], raw[-1]
-    market_up = market_p > 0 and market_n > market_p * 1.05
-    market_down = market_p > 0 and market_n < market_p * 0.95
-    own_up = own_p > 0 and own_n > own_p * 1.05
-    own_down = own_p > 0 and own_n < own_p * 0.95
-    if own_up and market_up: return "own_up_market_up"
-    if own_up and market_down: return "own_up_market_down"
-    if own_down and market_up: return "own_down_market_up"
-    if own_down and market_down: return "own_down_market_down"
-    if own_up: return "own_up_market_up"
-    if own_down: return "own_down_market_down"
-    return "own_up_market_up"
+def rank_color(rank, total=5):
+    if rank is None: return INK_SUB
+    return RANK_COLOR.get(rank, RANK_COLOR[5])
 
 
-def extract_top_competitors(history, product_key, top_n=2):
-    total_days = len(history)
-    counter = {}
-    total_cost = {}
-    for date, h in history.items():
-        p = h.get("products", {}).get(product_key, {})
-        comps = p.get("competitors_top5") or p.get("competitors_top3") or p.get("competitors_top2") or []
-        for c in comps:
-            name = c.get("name","?")
-            counter[name] = counter.get(name, 0) + 1
-            total_cost[name] = total_cost.get(name, 0) + c.get("cost_diff", 0)
-    ranked = sorted(counter.keys(), key=lambda n: (-counter[n], -total_cost.get(n,0), n))
-    return ranked[:top_n]
+def rank_judgement(rank):
+    if rank is None: return "評価不能", INK_SUB
+    if rank == 1:    return "首位・独走中", "#C48A00"
+    if rank == 2:    return "2位・追撃ポジション", "#3AA6E8"
+    if rank == 3:    return "3位・勝ち圏維持", "#3AA6E8"
+    if rank == 4:    return "4位・要注意", "#F1A53A"
+    return "劣勢・戦略見直し", "#C4362C"
 
 
-def shorten(name, n=26):
+def shorten(name, n=30):
     if len(name) <= n: return name
     return name[:n-1] + "…"
 
 
-def fmt_yen(v):
-    """¥1.23M / ¥456K / ¥789 形式"""
-    if v >= 10**6: return f"¥{v/10**6:.2f}M"
-    if v >= 10**3: return f"¥{v/10**3:.0f}K"
-    return f"¥{int(v)}"
+def fmt_pct(v):
+    if v is None: return "—"
+    return f"{v:.2f}%"
 
 
-def fmt_delta(latest, prev, threshold=100000):
-    """前日比の文字列・色・記号を返す。
-    前日値が threshold (default: ¥100K) 未満の場合は「低水準→¥XXX」で%は出さない。
-    戻り値: (text, color, is_meaningful)
-    """
-    if prev is None:
-        return ("前日データなし", INK_SUB_LIGHT, False)
-    if prev < threshold and latest > prev:
-        # 低水準からの立ち上がり → %表示は紛らわしいので金額差で出す
-        diff = latest - prev
-        return (f"急増中 +{fmt_yen(diff)}", "#1F9D55", True)
-    if prev == 0:
-        return ("新規計上", "#1F9D55", False)
-    pct = (latest - prev) / prev * 100
-    if pct > 5:
-        return (f"▲ +{pct:.0f}%", "#1F9D55", True)
-    if pct < -5:
-        return (f"▼ {pct:.0f}%", "#C4362C", True)
-    return (f"→ ほぼ横ばい", INK_SUB, True)
-
-
-def make_headline(quadrant_key, own_delta_pct=None):
-    """象限と絶対値変動率から、分かりやすい日本語見出しを作る"""
-    q_label, q_desc, _ = QUADRANT[quadrant_key]
-    dstr = ""
-    if own_delta_pct is not None:
-        if own_delta_pct > 0:
-            dstr = f"（自社 +{own_delta_pct:.0f}%）"
-        else:
-            dstr = f"（自社 {own_delta_pct:.0f}%）"
-    if quadrant_key == "own_up_market_up":
-        return f"追い風｜市場と一緒に自社も伸びている {dstr}"
-    if quadrant_key == "own_up_market_down":
-        return f"自社独走｜市場は縮小しているが自社は伸びている {dstr}"
-    if quadrant_key == "own_down_market_up":
-        return f"乗り遅れ｜市場は伸びているのに自社は後退 {dstr}"
-    if quadrant_key == "own_down_market_down":
-        return f"全体縮小｜市場も自社も縮小フェーズ {dstr}"
-    return "データ蓄積中｜判定には2日以上の履歴が必要"
-
-
-# ════════════════════════════════════════════════════════════════
-# 商品個別チャート
-# ════════════════════════════════════════════════════════════════
-def draw_chart(product_cfg, history, out_path):
+# ════════════════════════════════════════════════════════════
+# 商品個別チャート：順位 × リーダーボード × 直接対決
+# ════════════════════════════════════════════════════════════
+def draw_product_chart(product_cfg, history, out_path):
     pkey = product_cfg["name"]
     pkey_norm = PKEY_TO_SLUG[pkey]
     color = product_cfg["color"]
@@ -197,464 +141,404 @@ def draw_chart(product_cfg, history, out_path):
     market_label = product_cfg["market"]["genre_label"]
 
     dates_sorted = sorted(history.keys())
-    # X軸は「観測日(前日=to_date_api)」基準
-    observed_dates = []
-    for d in dates_sorted:
-        obs = history[d].get("to_date_api")
-        if obs:
-            observed_dates.append(obs)
-        else:
-            obs_dt = datetime.strptime(d, "%Y-%m-%d") - timedelta(days=1)
-            observed_dates.append(obs_dt.strftime("%Y-%m-%d"))
+    today_date = dates_sorted[-1]
+    obs_date = history[today_date].get("to_date_api")
+    if not obs_date:
+        obs_date = (datetime.strptime(today_date, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
+    today_dt = datetime.strptime(today_date, "%Y-%m-%d")
+    obs_dt = datetime.strptime(obs_date, "%Y-%m-%d")
 
-    # 時系列データ
-    series_own = []
-    series_own_abs = []
-    series_own_raw = []
-    comp_series = {}
-    top_comps = extract_top_competitors(history, pkey_norm, top_n=2)
+    p = history[today_date]["products"].get(pkey_norm, {})
+    rank = p.get("rank")
+    rank_total = p.get("rank_total", 5)
+    share = p.get("share_pct", 0)
+    leaderboard = p.get("leaderboard_top5", [])
+    competitors = p.get("competitors_top3", [])
+    confidence = p.get("data_confidence", "high")
+    confidence_note = p.get("data_confidence_reason", "")
 
-    for d in dates_sorted:
-        h = history[d]["products"].get(pkey_norm, {})
-        own = h.get("own", 0)
-        market = h.get("market", 0)
-        share = h.get("share_pct", 0)
-        series_own.append((d, share))
-        series_own_abs.append((d, own))
-        series_own_raw.append((d, own, market, share))
-        comps_full = h.get("competitors_top5") or h.get("competitors_top3") or h.get("competitors_top2") or []
-        for c in comps_full:
-            cname = c.get("name","")
-            if cname in top_comps:
-                comp_series.setdefault(cname, []).append((d, c.get("cost_diff", 0)))
+    # 自社シェアの直近履歴（推移のライトバージョン）
+    share_history = []
+    for d in dates_sorted[-4:]:
+        s = history[d]["products"].get(pkey_norm, {}).get("share_pct")
+        if s is not None:
+            obs_d = history[d].get("to_date_api", d)
+            share_history.append((obs_d, s))
 
-    quadrant_key = compute_quadrant(series_own_raw)
-    q_label, q_desc, q_color = QUADRANT[quadrant_key]
+    # 前日比
+    prev_share = share_history[-2][1] if len(share_history) >= 2 else None
+    delta = share - prev_share if prev_share is not None else None
 
-    last_share = series_own[-1][1] if series_own else 0
-    today_own = series_own_raw[-1][1] if series_own_raw else 0
-    today_market = series_own_raw[-1][2] if series_own_raw else 0
-    prev_own = series_own_abs[-2][1] if len(series_own_abs) >= 2 else None
-    prev_share = series_own[-2][1] if len(series_own) >= 2 else None
+    r_label, r_color = rank_judgement(rank)
+    r_bg = rank_color(rank)
 
-    own_delta_pct = None
-    if prev_own and prev_own > 100000:  # 低水準はHEADLINE表記から除外
-        own_delta_pct = (today_own - prev_own) / prev_own * 100
-
-    latest = history[dates_sorted[-1]]["products"].get(pkey_norm, {})
-    media_breakdown = latest.get("media_breakdown", {})
-    mb_total = sum(media_breakdown.values()) if media_breakdown else 0
-
-    # === Figure (1400x1300) ===
+    # ═══ Figure: 14x13 ═══
     fig = plt.figure(figsize=(14, 13), dpi=100)
     fig.patch.set_facecolor(BG)
 
-    # ======= 上段ヘッダー =======
-    header_h = 0.23
-    ax_head = fig.add_axes([0, 1-header_h, 1, header_h], zorder=1)
-    ax_head.set_facecolor(BG)
-    ax_head.set_xlim(0,1); ax_head.set_ylim(0,1)
-    ax_head.axis("off")
+    # ════════════════════════════════════════════
+    # ① ヘッダー
+    # ════════════════════════════════════════════
+    header_h = 0.24
+    ax_h = fig.add_axes([0, 1 - header_h, 1, header_h])
+    ax_h.set_facecolor(BG); ax_h.axis("off")
+    ax_h.set_xlim(0, 1); ax_h.set_ylim(0, 1)
 
-    # 左端カラーアクセントバー
-    ax_head.add_patch(Rectangle((0, 0), 0.008, 1, facecolor=color, transform=ax_head.transAxes))
+    # 左端カラーバー
+    ax_h.add_patch(Rectangle((0, 0), 0.008, 1, facecolor=color, transform=ax_h.transAxes))
 
-    # 左: 本日のサマリー見出し
-    headline_text = make_headline(quadrant_key, own_delta_pct)
-    ax_head.text(0.035, 0.82, "◆ 本日のサマリー", fontsize=11, color=INK_SUB, weight="bold",
-                 transform=ax_head.transAxes)
-    ax_head.text(0.035, 0.58, headline_text, fontsize=19, color=INK, weight="bold",
-                 transform=ax_head.transAxes)
-    # 商品名
-    ax_head.text(0.035, 0.32, display_name, fontsize=17, color=INK, weight="bold",
-                 transform=ax_head.transAxes)
-    ax_head.text(0.035, 0.1, f"市場カテゴリ: {market_label}", fontsize=10, color=INK_SUB,
-                 transform=ax_head.transAxes)
+    # 左: 商品名 + 観測日
+    ax_h.text(0.035, 0.80, display_name, fontsize=19, color=INK, weight="bold",
+              transform=ax_h.transAxes)
+    ax_h.text(0.035, 0.65, f"市場カテゴリ: {market_label}",
+              fontsize=10, color=INK_SUB, transform=ax_h.transAxes)
+    ax_h.text(0.035, 0.52, f"観測日: {date_long(obs_dt)} ／ Meta(FB/Insta) + YouTube(通常/Shorts) 集計",
+              fontsize=10, color=INK_SUB_LIGHT, transform=ax_h.transAxes)
 
-    # 右: 市場占有率（シェア）
-    latest_obs_dt = datetime.strptime(observed_dates[-1], "%Y-%m-%d")
-    latest_obs_short = date_ja(latest_obs_dt, "short")
-    ax_head.text(0.97, 0.82, f"◆ ジャンル内の市場占有率  ({latest_obs_short}時点)",
-                 fontsize=11, color=INK_SUB, ha="right", weight="bold",
-                 transform=ax_head.transAxes)
-    ax_head.text(0.97, 0.44, f"{last_share:.2f}%", fontsize=58, color=color, ha="right", weight="bold",
-                 transform=ax_head.transAxes)
+    # 大きな順位バッジ（中央）
+    if rank:
+        badge_x, badge_y = 0.56, 0.20
+        badge_w, badge_h = 0.18, 0.62
+        ax_h.add_patch(FancyBboxPatch((badge_x, badge_y), badge_w, badge_h,
+                                      boxstyle="round,pad=0.02",
+                                      facecolor=r_bg, edgecolor="none", alpha=0.95,
+                                      transform=ax_h.transAxes))
+        ax_h.text(badge_x + badge_w/2, badge_y + badge_h * 0.68,
+                  f"{rank}位", fontsize=46, color="white", weight="bold",
+                  ha="center", va="center", transform=ax_h.transAxes)
+        ax_h.text(badge_x + badge_w/2, badge_y + badge_h * 0.22,
+                  f"/ 市場TOP{rank_total}", fontsize=11, color="white",
+                  ha="center", va="center", transform=ax_h.transAxes)
 
-    # 前日比（シェアポイント差）
-    if prev_share is not None:
-        delta = last_share - prev_share
+    # 右: シェア% + 勝ち負けメッセージ
+    ax_h.text(0.97, 0.82, "◆ ジャンル内シェア",
+              fontsize=11, color=INK_SUB, ha="right", weight="bold",
+              transform=ax_h.transAxes)
+    ax_h.text(0.97, 0.48, fmt_pct(share), fontsize=54, color=color, weight="bold",
+              ha="right", transform=ax_h.transAxes)
+
+    # 前日比
+    if delta is not None:
         if delta > 0.01:
-            delta_txt = f"前日比 ▲ +{delta:.2f}pt"
-            delta_color = "#1F9D55"
+            dtxt, dcol = f"前日比 ▲ +{delta:.2f}pt", "#1F9D55"
         elif delta < -0.01:
-            delta_txt = f"前日比 ▼ {delta:.2f}pt"
-            delta_color = "#C4362C"
+            dtxt, dcol = f"前日比 ▼ {delta:.2f}pt", "#C4362C"
         else:
-            delta_txt = "前日比 → ほぼ横ばい"
-            delta_color = INK_SUB
-        ax_head.text(0.97, 0.16, delta_txt, fontsize=11, color=delta_color, ha="right",
-                     weight="bold", transform=ax_head.transAxes)
-    ax_head.text(0.97, 0.02, f"市場全体の広告消化額: {fmt_yen(today_market)}",
-                 fontsize=10, color=INK_SUB, ha="right", transform=ax_head.transAxes)
+            dtxt, dcol = "前日比 → ほぼ横ばい", INK_SUB
+        ax_h.text(0.97, 0.22, dtxt, fontsize=12, color=dcol, weight="bold",
+                  ha="right", transform=ax_h.transAxes)
+    ax_h.text(0.97, 0.08, r_label, fontsize=13, color=r_color, weight="bold",
+              ha="right", transform=ax_h.transAxes)
 
-    # 下ボーダーライン
-    ax_head.plot([0.02, 0.98], [0.0, 0.0], color=LINE_LIGHT, lw=1.5, transform=ax_head.transAxes)
+    # 下ボーダー
+    ax_h.plot([0.02, 0.98], [0.0, 0.0], color=LINE_LIGHT, lw=1.5, transform=ax_h.transAxes)
 
-    # ======= 日付帯 =======
-    date_y = 1 - header_h - 0.028
-    date_h = 0.028
-    ax_date = fig.add_axes([0, date_y, 1, date_h], zorder=2)
-    ax_date.axis("off")
-    ax_date.set_facecolor(BG)
-    today_dt = datetime.strptime(dates_sorted[-1], "%Y-%m-%d")
-    today_str = date_ja(today_dt, "long")
-    latest_obs_str = date_ja(latest_obs_dt, "long")
-    ax_date.text(0.035, 0.5,
-                 f"発行日: {today_str}  ／  最新観測日: {latest_obs_str}  ／  各データ点は直近2日間の変動",
-                 fontsize=10, color=INK_SUB, va="center", transform=ax_date.transAxes)
+    # データ信頼度警告
+    if confidence == "low":
+        ax_h.text(0.035, -0.02,
+                  f"※ データ信頼度: 低  {confidence_note}",
+                  fontsize=10, color="#C4362C", weight="bold",
+                  transform=ax_h.transAxes)
 
-    # ======= 中段: 折れ線 =======
-    chart_top = date_y - 0.025
-    chart_bottom = 0.32
-    ax = fig.add_axes([0.08, chart_bottom, 0.85, chart_top - chart_bottom], zorder=2)
-    ax.set_facecolor(BG)
+    # ════════════════════════════════════════════
+    # ② 市場リーダーボード（TOP5 水平バー、全てaxes座標）
+    # ════════════════════════════════════════════
+    lb_top = 1 - header_h - 0.04
+    lb_h = 0.44
+    ax_lb = fig.add_axes([0.08, lb_top - lb_h, 0.85, lb_h])
+    ax_lb.set_facecolor(BG)
+    ax_lb.set_xlim(0, 1); ax_lb.set_ylim(0, 1)
+    ax_lb.axis("off")
 
-    dates_dt = [datetime.strptime(d, "%Y-%m-%d") for d in observed_dates]
-    x_pos = list(range(len(dates_dt)))
-    date_idx = {d:i_ for i_,d in enumerate(dates_sorted)}
+    ax_lb.text(0, 0.96, "市場リーダーボード TOP5（Meta+YouTube内 シェア%）",
+               fontsize=14, color=INK, weight="bold", transform=ax_lb.transAxes)
 
-    # 競合線
-    comp_colors = [COMP1, COMP2]
-    for i, cname in enumerate(top_comps):
-        pts = comp_series.get(cname, [])
-        if not pts: continue
-        px = [date_idx[d] for d,_ in pts if d in date_idx]
-        py = [v for d,v in pts if d in date_idx]
-        ax.plot(px, py, color=comp_colors[i], lw=2.3, marker="o", markersize=8,
-                markerfacecolor="white", markeredgecolor=comp_colors[i], markeredgewidth=1.8,
-                linestyle="-", alpha=0.92, label=f"競合: {shorten(cname, 22)}", zorder=3)
-        if py and px:
-            ax.annotate(fmt_yen(py[-1]),
-                        xy=(px[-1], py[-1]),
-                        xytext=(12, 0), textcoords="offset points",
-                        fontsize=11, color=INK_SUB, va="center", zorder=4)
+    # リーダーボード（1位→5位）を上から順に描画
+    lb_items = leaderboard[:5] if leaderboard else []
+    N = max(len(lb_items), 1)
 
-    # 自社線
-    own_y = [v for _,v in series_own_abs]
-    ax.plot(x_pos, own_y, color=color, lw=4.5, marker="o", markersize=13,
-            markerfacecolor=color, markeredgecolor="white", markeredgewidth=3,
-            label=f"自社（ヨミテ）", zorder=6, solid_capstyle="round")
+    # 描画エリア: y=0 〜 y=0.88
+    AREA_TOP = 0.88
+    AREA_BOTTOM = 0.02
+    ROW_H = (AREA_TOP - AREA_BOTTOM) / N  # 各行の高さ
 
-    for i, (xi, yi) in enumerate(zip(x_pos, own_y)):
-        is_last = (i == len(own_y) - 1)
-        ax.annotate(fmt_yen(yi),
-                    xy=(xi, yi),
-                    xytext=(0, 18 if is_last else 13),
-                    textcoords="offset points",
-                    fontsize=15 if is_last else 11,
-                    color=color if is_last else INK,
-                    weight="bold" if is_last else "normal",
-                    ha="center", zorder=10)
+    # バーのx座標（axes 0-1）- 左半分が名前、右半分がバー
+    BAR_LEFT = 0.52
+    BAR_MAX_W = 0.36   # バー最大幅
 
-    ax.set_xticks(x_pos)
-    ax.set_xticklabels([f"{d.month}/{d.day}\n({ja_weekday(d)})" for d in dates_dt],
-                       fontsize=12, color=INK_SUB)
-    ax.tick_params(axis="y", colors=INK_SUB, labelsize=11)
+    if lb_items:
+        max_share = max([x.get("share_pct", 0) for x in lb_items])
+        for i, item in enumerate(lb_items):
+            rank_in_lb = i + 1  # 1位〜5位
+            row_top_y = AREA_TOP - i * ROW_H
+            row_center_y = row_top_y - ROW_H / 2
 
-    def yaxis_yen_fmt(x, _):
-        if x >= 10**6: return f"¥{x/10**6:.1f}M"
-        if x >= 10**3: return f"¥{x/10**3:.0f}K"
-        return f"¥{int(x)}"
-    ax.yaxis.set_major_formatter(plt.FuncFormatter(yaxis_yen_fmt))
+            name = shorten(item.get("name", "?"), 22)
+            adv = shorten(item.get("advertiser", ""), 18)
+            s = item.get("share_pct", 0)
+            is_own = item.get("is_own", False)
 
-    all_y = own_y[:]
-    for cname in top_comps:
-        all_y += [v for _,v in comp_series.get(cname, [])]
-    ymax = max(all_y) if all_y else 1
-    ax.set_ylim(0, ymax * 1.3)
+            bar_color = color if is_own else INK_SUB_LIGHT
+            text_color = color if is_own else INK
+            text_weight = "bold" if is_own else "normal"
 
-    ax.grid(True, axis="y", color=GRID, linestyle="-", alpha=1, zorder=1, lw=1)
-    ax.set_axisbelow(True)
+            # 行の背景（自社はハイライト）
+            if is_own:
+                ax_lb.add_patch(Rectangle(
+                    (0, row_top_y - ROW_H), 1, ROW_H,
+                    facecolor=color, alpha=0.06,
+                    edgecolor="none",
+                    transform=ax_lb.transAxes
+                ))
 
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-    ax.spines["left"].set_visible(True)
-    ax.spines["left"].set_color(LINE_LIGHT)
-    ax.spines["left"].set_linewidth(1)
-    ax.spines["bottom"].set_visible(True)
-    ax.spines["bottom"].set_color(LINE_LIGHT)
-    ax.spines["bottom"].set_linewidth(1)
+            # 順位ラベル（左端）
+            ax_lb.text(0.025, row_center_y, f"{rank_in_lb}位",
+                       fontsize=14, color=INK_SUB, ha="left", va="center",
+                       weight="bold" if is_own else "normal",
+                       transform=ax_lb.transAxes)
+            # 商品名 + 広告主（自社は背景色+色文字で自明なので記号なし）
+            suffix = "  【自社】" if is_own else ""
+            ax_lb.text(0.08, row_center_y + ROW_H * 0.18, f"{name}{suffix}",
+                       fontsize=11, color=text_color, va="center",
+                       weight=text_weight, transform=ax_lb.transAxes)
+            ax_lb.text(0.08, row_center_y - ROW_H * 0.22, f"({adv})",
+                       fontsize=9, color=INK_SUB_LIGHT, va="center",
+                       transform=ax_lb.transAxes)
+            # バー（正規化した幅）
+            normalized_w = (s / max_share) * BAR_MAX_W if max_share > 0 else 0
+            bar_h = ROW_H * 0.45
+            ax_lb.add_patch(Rectangle(
+                (BAR_LEFT, row_center_y - bar_h / 2), normalized_w, bar_h,
+                facecolor=bar_color, alpha=0.92 if is_own else 0.42,
+                edgecolor="white", linewidth=1.2,
+                transform=ax_lb.transAxes
+            ))
+            # シェア%ラベル
+            ax_lb.text(BAR_LEFT + normalized_w + 0.008, row_center_y,
+                       f"{s:.1f}%",
+                       fontsize=13, color=text_color, va="center",
+                       weight="bold" if is_own else "normal",
+                       transform=ax_lb.transAxes)
 
-    ax.set_ylabel("広告消化額（円）", fontsize=12, color=INK_SUB, labelpad=10)
+    # ════════════════════════════════════════════
+    # ③ 直接対決（vs 主要競合2-3社）
+    # ════════════════════════════════════════════
+    hh_top = lb_top - lb_h - 0.04
+    hh_h = 0.22
+    ax_hh = fig.add_axes([0.08, 0.04, 0.85, hh_h])
+    ax_hh.set_facecolor(BG)
+    ax_hh.set_xlim(0, 1); ax_hh.set_ylim(0, 1)
+    ax_hh.axis("off")
 
-    leg = ax.legend(loc="upper left", fontsize=11, frameon=False, labelcolor=INK,
-                    handlelength=2.5, handletextpad=0.6, borderaxespad=0.3)
+    ax_hh.text(0, 0.92, "主要競合との直接対決（vs 競合TOP3、自社除く）",
+               fontsize=14, color=INK, weight="bold", transform=ax_hh.transAxes)
 
-    ax.set_title("直近の広告消化額推移（自社 vs 主要競合 上位2社）",
-                 fontsize=13, color=INK, pad=12, weight="bold", loc="left")
+    if competitors:
+        col_w = 0.31
+        gap = 0.015
+        start_x = 0
+        for i, comp in enumerate(competitors[:3]):
+            cname = shorten(comp.get("name", "?"), 22)
+            cshare = comp.get("share_pct", 0)
+            diff = share - cshare  # 正=自社勝ち / 負=負け
 
-    # ======= 下段: 媒体別ブレイクダウン =======
-    ax_mb = fig.add_axes([0.08, 0.04, 0.85, 0.24], zorder=2)
-    ax_mb.set_facecolor(BG)
-    ax_mb.set_xlim(0,1); ax_mb.set_ylim(0,1)
-    ax_mb.axis("off")
+            x0 = start_x + i * (col_w + gap)
+            # カード背景
+            card_col = "#E8F5E9" if diff > 0 else "#FFEBEE"
+            border_col = "#1F9D55" if diff > 0 else "#C4362C"
+            ax_hh.add_patch(FancyBboxPatch((x0, 0.08), col_w, 0.75,
+                                            boxstyle="round,pad=0.015",
+                                            facecolor=card_col,
+                                            edgecolor=border_col,
+                                            linewidth=1.5,
+                                            transform=ax_hh.transAxes))
 
-    ax_mb.text(0, 0.92, "今日の自社クリエイティブ 媒体別の本数内訳",
-               fontsize=13, color=INK, weight="bold", transform=ax_mb.transAxes)
-    ax_mb.text(0, 0.78, "※ 上位3本の広告クリエイティブを媒体タイプで分類",
-               fontsize=10, color=INK_SUB, transform=ax_mb.transAxes)
-
-    if mb_total > 0:
-        bar_y = 0.35
-        bar_h = 0.22
-        cur_x = 0.0
-        labels = [
-            ("動画", "video", VIDEO_COLOR),
-            ("バナー（静止画）", "banner", BANNER_COLOR),
-            ("カルーセル", "carousel", CAROUSEL_COLOR),
-        ]
-        for label, key, col in labels:
-            v = media_breakdown.get(key, 0)
-            if v == 0: continue
-            pct = v / mb_total
-            ax_mb.add_patch(Rectangle((cur_x, bar_y), pct, bar_h, facecolor=col,
-                                       edgecolor="white", lw=2, transform=ax_mb.transAxes))
-            if pct > 0.08:
-                ax_mb.text(cur_x + pct/2, bar_y + bar_h/2, f"{pct*100:.0f}%",
-                          fontsize=14, color="white", weight="bold",
-                          ha="center", va="center", transform=ax_mb.transAxes)
-            cur_x += pct
-
-        # 凡例
-        leg_y = 0.05
-        col_x = [0.0, 0.37, 0.74]
-        for (label, key, col), cx in zip(labels, col_x):
-            v = media_breakdown.get(key, 0)
-            pct = (v / mb_total * 100) if mb_total else 0
-            ax_mb.add_patch(Rectangle((cx, leg_y + 0.12), 0.02, 0.1, facecolor=col,
-                                       transform=ax_mb.transAxes))
-            ax_mb.text(cx + 0.028, leg_y + 0.22, label, fontsize=12, color=INK,
-                      weight="bold", va="top", transform=ax_mb.transAxes)
-            ax_mb.text(cx + 0.028, leg_y + 0.08, f"{v}本 ({pct:.0f}%)",
-                      fontsize=11, color=INK_SUB, va="top", transform=ax_mb.transAxes)
-
-        # 主戦場バッジ
-        max_key = max(media_breakdown, key=lambda k: media_breakdown[k])
-        max_pct = media_breakdown[max_key] / mb_total * 100
-        if max_pct >= 60:
-            label_name = {"video": "動画", "banner": "バナー（静止画）",
-                         "carousel": "カルーセル"}[max_key]
-            ax_mb.text(0.99, 0.92, f"主戦場: {label_name} {max_pct:.0f}%",
-                       fontsize=12, color=INK, ha="right", weight="bold",
-                       bbox=dict(facecolor="#FFF3E0", edgecolor="#FF8A3D",
-                                 boxstyle="round,pad=0.4"),
-                       transform=ax_mb.transAxes)
+            # 競合名
+            ax_hh.text(x0 + col_w/2, 0.72, f"vs {cname}",
+                       fontsize=10, color=INK, ha="center", weight="bold",
+                       transform=ax_hh.transAxes)
+            # 結論ラベル（絵文字使用せず記号で表現）
+            if diff > 0:
+                verdict, vcol = "◎ 優位", "#1F9D55"
+                diff_txt = f"+{diff:.1f}pt"
+            elif diff < 0:
+                verdict, vcol = "● 劣勢", "#C4362C"
+                diff_txt = f"{diff:.1f}pt"
+            else:
+                verdict, vcol = "＝ 拮抗", INK_SUB
+                diff_txt = "±0.0pt"
+            ax_hh.text(x0 + col_w/2, 0.56, verdict,
+                       fontsize=15, color=vcol, ha="center", weight="bold",
+                       transform=ax_hh.transAxes)
+            # 差分
+            ax_hh.text(x0 + col_w/2, 0.38, diff_txt,
+                       fontsize=20, color=vcol, ha="center", weight="bold",
+                       transform=ax_hh.transAxes)
+            # 自社シェア vs 競合シェア
+            ax_hh.text(x0 + col_w/2, 0.18,
+                       f"自社 {share:.1f}%  vs  競合 {cshare:.1f}%",
+                       fontsize=10, color=INK_SUB, ha="center",
+                       transform=ax_hh.transAxes)
     else:
-        ax_mb.text(0.5, 0.5, "媒体別データなし（明日以降蓄積）",
-                  fontsize=12, color=INK_SUB,
-                  ha="center", va="center", transform=ax_mb.transAxes)
+        ax_hh.text(0.5, 0.5, "競合データなし",
+                   fontsize=12, color=INK_SUB, ha="center", va="center",
+                   transform=ax_hh.transAxes)
 
     fig.savefig(out_path, facecolor=BG, dpi=110, bbox_inches=None)
     plt.close(fig)
     print(f"✅ {out_path}")
 
 
-# ════════════════════════════════════════════════════════════════
-# サマリ（全5商品）ダッシュボード画像
-# ════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════
+# サマリ：5商品の順位ダッシュボード
+# ════════════════════════════════════════════════════════════
 def draw_summary(cfg, history, out_path):
-    """5商品を1枚に集約した全体ダッシュボード。
-    各商品: 商品名, 自社広告消化額, 前日比, ジャンル占有率, 状態, 主な媒体 を横一列で並べる。
-    各カラムに明確なヘッダー行と下段の凡例を入れて、誰が見ても分かるようにする。
-    """
     dates_sorted = sorted(history.keys())
     today_date = dates_sorted[-1]
-    observed_date = history[today_date].get("to_date_api")
-    if not observed_date:
-        observed_date = (datetime.strptime(today_date, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
+    obs_date = history[today_date].get("to_date_api", today_date)
     today_dt = datetime.strptime(today_date, "%Y-%m-%d")
-    obs_dt = datetime.strptime(observed_date, "%Y-%m-%d")
-    today_str = date_ja(today_dt, "long")
-    obs_str = date_ja(obs_dt, "short")
+    obs_dt = datetime.strptime(obs_date, "%Y-%m-%d")
 
     n = len(cfg["products"])
     fig = plt.figure(figsize=(16, 10), dpi=100)
     fig.patch.set_facecolor(BG)
 
-    # ヘッダー (高め)
-    header_h = 0.16
-    ax_head = fig.add_axes([0, 1-header_h, 1, header_h])
+    # ヘッダー
+    header_h = 0.17
+    ax_head = fig.add_axes([0, 1 - header_h, 1, header_h])
     ax_head.set_facecolor(BG); ax_head.axis("off")
-    ax_head.set_xlim(0,1); ax_head.set_ylim(0,1)
+    ax_head.set_xlim(0, 1); ax_head.set_ylim(0, 1)
 
-    ax_head.text(0.035, 0.72, "ヨミテ 5商品デイリー・ダッシュボード",
-                 fontsize=26, color=INK, weight="bold", transform=ax_head.transAxes)
-    ax_head.text(0.035, 0.42,
-                 f"発行日: {today_str}｜最新観測日: {obs_str}｜直近2日間の広告配信の変動をレポート",
+    ax_head.text(0.035, 0.72, "ヨミテ 5商品  市場ポジション・ダッシュボード",
+                 fontsize=24, color=INK, weight="bold", transform=ax_head.transAxes)
+    ax_head.text(0.035, 0.44,
+                 f"発行日: {date_long(today_dt)}｜観測日: {date_short(obs_dt)}｜Meta(FB/Insta) + YouTube(通常/Shorts) 集計",
                  fontsize=12, color=INK_SUB, transform=ax_head.transAxes)
-    ax_head.text(0.035, 0.18,
-                 "※ 数字の意味は各カラムヘッダーと最下段の凡例を参照ください",
+    ax_head.text(0.035, 0.22,
+                 "勝ってるか / 負けてるか が一目で分かるよう、順位と市場内ポジションで可視化",
                  fontsize=10, color=INK_SUB_LIGHT, transform=ax_head.transAxes)
     ax_head.plot([0.02, 0.98], [0.02, 0.02], color=LINE_LIGHT, lw=1.5, transform=ax_head.transAxes)
 
-    # ======= テーブルヘッダー行 =======
-    # カラム位置（x座標）
-    COL_X = {
-        "product": 0.035,
-        "own":     0.40,
-        "delta":   0.54,
-        "share":   0.70,
-        "state":   0.82,
-        "channel": 0.965,
-    }
-
-    thead_h = 0.05
-    thead_y = 1 - header_h - thead_h - 0.01
+    # ヘッダー行
+    thead_h = 0.04
+    thead_y = 1 - header_h - thead_h - 0.005
     ax_th = fig.add_axes([0, thead_y, 1, thead_h])
     ax_th.set_facecolor("#F8FAFC"); ax_th.axis("off")
-    ax_th.set_xlim(0,1); ax_th.set_ylim(0,1)
+    ax_th.set_xlim(0, 1); ax_th.set_ylim(0, 1)
 
-    # ヘッダーラベル
-    ax_th.text(COL_X["product"], 0.5, "商品名／所属ジャンル",
-               fontsize=11, color=INK, weight="bold", va="center", transform=ax_th.transAxes)
-    ax_th.text(COL_X["own"], 0.5, "自社の広告消化額",
-               fontsize=11, color=INK, weight="bold", va="center", ha="right", transform=ax_th.transAxes)
-    ax_th.text(COL_X["delta"], 0.5, "前日比",
-               fontsize=11, color=INK, weight="bold", va="center", ha="right", transform=ax_th.transAxes)
-    ax_th.text(COL_X["share"], 0.5, "ジャンル内の市場占有率",
-               fontsize=11, color=INK, weight="bold", va="center", ha="right", transform=ax_th.transAxes)
-    ax_th.text(COL_X["state"], 0.5, "状態",
-               fontsize=11, color=INK, weight="bold", va="center", ha="center", transform=ax_th.transAxes)
-    ax_th.text(COL_X["channel"], 0.5, "主な媒体",
-               fontsize=11, color=INK, weight="bold", va="center", ha="right", transform=ax_th.transAxes)
+    COL = {
+        "product": 0.035,
+        "rank":    0.39,
+        "share":   0.54,
+        "vs_top":  0.68,
+        "state":   0.84,
+    }
+    ax_th.text(COL["product"], 0.5, "商品名 / ジャンル",
+               fontsize=10.5, color=INK, weight="bold", va="center", transform=ax_th.transAxes)
+    ax_th.text(COL["rank"], 0.5, "市場順位",
+               fontsize=10.5, color=INK, weight="bold", va="center", ha="center", transform=ax_th.transAxes)
+    ax_th.text(COL["share"], 0.5, "シェア%",
+               fontsize=10.5, color=INK, weight="bold", va="center", ha="center", transform=ax_th.transAxes)
+    ax_th.text(COL["vs_top"], 0.5, "首位との差",
+               fontsize=10.5, color=INK, weight="bold", va="center", ha="center", transform=ax_th.transAxes)
+    ax_th.text(COL["state"], 0.5, "状態",
+               fontsize=10.5, color=INK, weight="bold", va="center", ha="center", transform=ax_th.transAxes)
 
     ax_th.plot([0.02, 0.98], [0.0, 0.0], color=LINE_LIGHT, lw=1, transform=ax_th.transAxes)
 
-    # ======= 各商品行 =======
-    footer_h = 0.16   # 凡例用スペース
+    # 各商品行
     rows_top = thead_y - 0.005
-    rows_bottom = footer_h + 0.01
+    rows_bottom = 0.11
     row_h = (rows_top - rows_bottom) / n
 
-    for idx, product in enumerate(cfg["products"]):
+    # シェア順にソート
+    products_sorted = sorted(cfg["products"],
+                             key=lambda p: -(history[today_date]["products"].get(PKEY_TO_SLUG.get(p["name"]), {}).get("share_pct", 0)))
+
+    for idx, product in enumerate(products_sorted):
         pkey = product["name"]
         pkey_norm = PKEY_TO_SLUG.get(pkey, pkey.lower())
         color = product["color"]
         display_name = product["display_name"]
         market_label = product["market"].get("genre_label", "")
 
-        # データ集約
-        series_own_abs = []
-        series_own_raw = []
-        shares = []
-        for d in dates_sorted:
-            h = history[d]["products"].get(pkey_norm, {})
-            own = h.get("own", 0)
-            market = h.get("market", 0)
-            share = h.get("share_pct", 0)
-            series_own_abs.append(own)
-            series_own_raw.append((d, own, market, share))
-            shares.append(share)
+        p = history[today_date]["products"].get(pkey_norm, {})
+        rank = p.get("rank")
+        share = p.get("share_pct", 0)
+        leaderboard = p.get("leaderboard_top5", [])
+        top_share = leaderboard[0]["share_pct"] if leaderboard else share
 
-        latest_own = series_own_abs[-1] if series_own_abs else 0
-        prev_own = series_own_abs[-2] if len(series_own_abs) >= 2 else None
-        latest_share = shares[-1] if shares else 0
-        latest_market = series_own_raw[-1][2] if series_own_raw else 0
-
-        quadrant_key = compute_quadrant(series_own_raw)
-        q_label, q_desc, q_color = QUADRANT[quadrant_key]
-
-        # 媒体別主戦場
-        latest_mb = history[today_date]["products"].get(pkey_norm, {}).get("media_breakdown", {})
-        mb_total = sum(latest_mb.values()) if latest_mb else 0
-        main_channel_txt = "データなし"
-        if mb_total > 0:
-            mx = max(latest_mb, key=lambda k: latest_mb[k])
-            mx_pct = latest_mb[mx] / mb_total * 100
-            ch_label = {"video":"動画", "banner":"バナー", "carousel":"カルーセル"}.get(mx, mx)
-            main_channel_txt = f"{ch_label} {mx_pct:.0f}%"
-
-        # 前日比（低水準対策済み）
-        delta_txt, delta_color, _ = fmt_delta(latest_own, prev_own)
+        r_label, r_color = rank_judgement(rank)
+        r_bg = rank_color(rank)
 
         y_top = rows_top - idx * row_h
         ax = fig.add_axes([0, y_top - row_h, 1, row_h])
         ax.set_facecolor(BG); ax.axis("off")
-        ax.set_xlim(0,1); ax.set_ylim(0,1)
+        ax.set_xlim(0, 1); ax.set_ylim(0, 1)
 
         # 左カラーバー
         ax.add_patch(Rectangle((0.02, 0.15), 0.005, 0.7, facecolor=color, transform=ax.transAxes))
 
-        # 商品名 + ジャンル
-        ax.text(COL_X["product"], 0.68, display_name, fontsize=15, color=INK,
-                weight="bold", va="center", transform=ax.transAxes)
-        ax.text(COL_X["product"], 0.30, f"市場全体: {fmt_yen(latest_market)}",
-                fontsize=10, color=INK_SUB, va="center", transform=ax.transAxes)
+        # 商品名
+        ax.text(COL["product"], 0.68, display_name,
+                fontsize=14, color=INK, weight="bold", va="center", transform=ax.transAxes)
+        ax.text(COL["product"], 0.30, shorten(market_label, 48),
+                fontsize=9, color=INK_SUB, va="center", transform=ax.transAxes)
 
-        # 自社広告消化額
-        ax.text(COL_X["own"], 0.5, fmt_yen(latest_own),
+        # 順位バッジ
+        if rank:
+            bx = COL["rank"] - 0.05
+            ax.add_patch(FancyBboxPatch((bx, 0.2), 0.10, 0.6,
+                                        boxstyle="round,pad=0.02",
+                                        facecolor=r_bg, edgecolor="none", alpha=0.95,
+                                        transform=ax.transAxes))
+            ax.text(bx + 0.05, 0.5, f"{rank}位",
+                    fontsize=22, color="white", weight="bold",
+                    ha="center", va="center", transform=ax.transAxes)
+
+        # シェア%
+        ax.text(COL["share"], 0.5, f"{share:.2f}%",
                 fontsize=22, color=color, weight="bold",
-                va="center", ha="right", transform=ax.transAxes)
+                va="center", ha="center", transform=ax.transAxes)
 
-        # 前日比
-        ax.text(COL_X["delta"], 0.5, delta_txt,
-                fontsize=14, color=delta_color, weight="bold",
-                va="center", ha="right", transform=ax.transAxes)
+        # 首位との差
+        if rank == 1:
+            vs_txt, vs_col = "★ 首位", "#C48A00"
+        else:
+            diff = share - top_share
+            vs_txt = f"{diff:+.1f}pt"
+            vs_col = "#1F9D55" if diff >= 0 else "#C4362C"
+        ax.text(COL["vs_top"], 0.5, vs_txt,
+                fontsize=14, color=vs_col, weight="bold",
+                va="center", ha="center", transform=ax.transAxes)
 
-        # ジャンル内占有率
-        ax.text(COL_X["share"], 0.5, f"{latest_share:.2f}%",
-                fontsize=22, color=color, weight="bold",
-                va="center", ha="right", transform=ax.transAxes)
-
-        # 状態バッジ
-        ax.add_patch(FancyBboxPatch((0.775, 0.26), 0.10, 0.48,
-                                    boxstyle="round,pad=0.02",
-                                    facecolor=q_color, edgecolor="none", alpha=0.95,
-                                    transform=ax.transAxes))
-        ax.text(COL_X["state"], 0.58, q_label, fontsize=12, color="white",
-                weight="bold", ha="center", va="center", transform=ax.transAxes)
-        ax.text(COL_X["state"], 0.38, q_desc, fontsize=8, color="white",
-                ha="center", va="center", transform=ax.transAxes)
-
-        # 主な媒体
-        ax.text(COL_X["channel"], 0.5, main_channel_txt,
-                fontsize=13, color=INK, weight="bold",
-                va="center", ha="right", transform=ax.transAxes)
+        # 状態ラベル
+        ax.text(COL["state"], 0.62, r_label,
+                fontsize=11, color=r_color, weight="bold",
+                va="center", ha="center", transform=ax.transAxes)
+        # 補足 (データ信頼度)
+        if p.get("data_confidence") == "low":
+            ax.text(COL["state"], 0.30, "※ 要検証",
+                    fontsize=9, color=INK_SUB, ha="center", va="center",
+                    transform=ax.transAxes)
 
         # 下ボーダー
-        ax.plot([0.02, 0.98], [0.02, 0.02], color=LINE_LIGHT, lw=0.8, transform=ax.transAxes)
+        ax.plot([0.02, 0.98], [0.02, 0.02], color=LINE_LIGHT, lw=0.7, transform=ax.transAxes)
 
-    # ======= 最下段: 凡例（数字の意味） =======
-    ax_fg = fig.add_axes([0, 0, 1, footer_h])
+    # 凡例（最下段）
+    ax_fg = fig.add_axes([0, 0, 1, 0.10])
     ax_fg.set_facecolor("#FAFBFC"); ax_fg.axis("off")
-    ax_fg.set_xlim(0,1); ax_fg.set_ylim(0,1)
+    ax_fg.set_xlim(0, 1); ax_fg.set_ylim(0, 1)
     ax_fg.plot([0.02, 0.98], [1.0, 1.0], color=LINE_LIGHT, lw=1.5, transform=ax_fg.transAxes)
 
-    ax_fg.text(0.035, 0.82, "◆ 用語の説明（この表の読み方）",
+    ax_fg.text(0.035, 0.72, "◆ 表の読み方",
                fontsize=11, color=INK, weight="bold", transform=ax_fg.transAxes)
-
-    legend_items = [
-        ("自社の広告消化額",
-         "ヨミテが直近2日間で配信した広告の総消化金額"),
-        ("前日比",
-         "昨日との比較。低水準（¥100K未満）からの増加は金額差で表記"),
-        ("ジャンル内の市場占有率",
-         "所属ジャンルの全広告消化額のうち自社が占める割合（自社／市場 × 100）"),
-        ("状態",
-         "自社 vs 市場 の変動パターン。追い風／自社独走／乗り遅れ／全体縮小の4区分"),
-        ("主な媒体",
-         "自社クリエイティブ上位3本のうち最も本数の多い媒体タイプとその割合"),
-    ]
-    # 2列で配置
-    for i, (term, desc) in enumerate(legend_items):
-        col = i % 2
-        row = i // 2
-        x = 0.035 + col * 0.49
-        y = 0.62 - row * 0.2
-        ax_fg.text(x, y, f"・{term}:", fontsize=10, color=INK,
-                   weight="bold", va="center", transform=ax_fg.transAxes)
-        ax_fg.text(x + 0.12, y, desc, fontsize=10, color=INK_SUB,
-                   va="center", transform=ax_fg.transAxes)
+    ax_fg.text(0.035, 0.42,
+               "・市場順位: ジャンル内TOP5中の自社ポジション（金=首位 ／ 青=2-3位（勝ち圏） ／ 橙=4位（要注意） ／ 赤=5位（劣勢））",
+               fontsize=9.5, color=INK_SUB, transform=ax_fg.transAxes)
+    ax_fg.text(0.035, 0.18,
+               "・シェア%: ジャンル広告消化額全体（Meta+YouTube）に対する自社の割合 ／ 首位との差: 1位からの開き（ptポイント）",
+               fontsize=9.5, color=INK_SUB, transform=ax_fg.transAxes)
 
     fig.savefig(out_path, facecolor=BG, dpi=110, bbox_inches=None)
     plt.close(fig)
@@ -665,32 +549,26 @@ def main():
     cfg = load_config()
     history = load_history()
     if not history:
-        print("❌ history empty")
-        sys.exit(1)
+        print("❌ history empty"); sys.exit(1)
 
     today = sorted(history.keys())[-1]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # サマリ画像を最初に生成
+    # サマリ
     summary_path = OUT_DIR / f"{today}_voyage_00summary.png"
     try:
         draw_summary(cfg, history, summary_path)
     except Exception as e:
-        import traceback
-        traceback.print_exc()
-        print(f"❌ summary: {e}")
+        import traceback; traceback.print_exc()
 
     # 各商品
     for product in cfg["products"]:
-        pkey = product["name"]
-        slug = PKEY_TO_SLUG.get(pkey, pkey.lower())
+        slug = PKEY_TO_SLUG.get(product["name"], product["name"].lower())
         out = OUT_DIR / f"{today}_voyage_{slug}.png"
         try:
-            draw_chart(product, history, out)
+            draw_product_chart(product, history, out)
         except Exception as e:
-            import traceback
-            traceback.print_exc()
-            print(f"❌ {slug}: {e}")
+            import traceback; traceback.print_exc()
 
 
 if __name__ == "__main__":

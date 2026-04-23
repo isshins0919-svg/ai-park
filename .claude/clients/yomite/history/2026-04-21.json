@@ -1,84 +1,119 @@
 {
   "date": "2026-04-21",
   "to_date_api": "2026-04-20",
+  "data_scope": "Meta(FB/Insta) + YouTube(通常/Shorts) のみ。SmartNews/Yahoo等はDPro推定に過剰計上リスクあるため除外",
+  "allowed_app_ids": [1, 3, 4, 5],
   "products": {
-    "onmyskin": {
-      "own": 389660,
-      "market": 17871046,
-      "market_note": "genre103(クレンジング×毛穴kw)のみ。genre80(スキンケア)はAPIタイムアウトで取得不可。市場値は過小評価。",
-      "share_pct": 2.181,
-      "competitors_top3": [
-        {"name": "アミノセルス製薬 オレリー モイスト クレンジングセット", "cost_diff": 3104577, "advertiser": "アミノセルス製薬株式会社"},
-        {"name": "ランクアップ マナラ ホットクレンジングゲル マッサージプラス", "cost_diff": 1363014, "advertiser": "株式会社ランクアップ"},
-        {"name": "シロク Nオーガニック Basic スージング クレンジングジェル", "cost_diff": 1068000, "advertiser": "株式会社シロク"}
-      ],
-      "media_breakdown": {
-        "banner": 2,
-        "video": 1,
-        "carousel": 0
-      }
-    },
     "proust": {
       "own": 2818000,
-      "market": 9951164,
-      "share_pct": 28.318,
-      "competitors_top3": [
-        {"name": "NATIVE アルミニウムフリー デオドラント", "cost_diff": 1434103, "advertiser": "更新中"},
-        {"name": "Old Spice オールドスパイスフィジーの香りデオドラント", "cost_diff": 781796, "advertiser": "更新中"},
-        {"name": "Rexona Whole Body Deo", "cost_diff": 694853, "advertiser": "更新中"}
+      "market": 9147135,
+      "share_pct": 30.813,
+      "rank": 2,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {"name": "NATIVE アルミニウムフリー デオドラント", "advertiser": "更新中", "share_pct": 15.68, "cost_diff": 1434103, "is_own": false},
+        {"name": "ヨミテ プルーストクリーム2 (TOP)", "advertiser": "ヨミテ", "share_pct": 12.66, "cost_diff": 1158264, "is_own": true},
+        {"name": "ヨミテ プルーストクリーム2 (2位)", "advertiser": "ヨミテ", "share_pct": 9.56, "cost_diff": 874528, "is_own": true},
+        {"name": "ヨミテ プルーストクリーム2 (3位)", "advertiser": "ヨミテ", "share_pct": 8.58, "cost_diff": 785208, "is_own": true},
+        {"name": "Old Spice フィジーの香りデオドラント", "advertiser": "更新中", "share_pct": 8.55, "cost_diff": 781796, "is_own": false}
       ],
-      "media_breakdown": {
-        "banner": 0,
-        "video": 3,
-        "carousel": 0
-      }
+      "competitors_top3": [
+        {"name": "NATIVE アルミニウムフリー デオドラント", "cost_diff": 1434103, "advertiser": "更新中", "share_pct": 15.68},
+        {"name": "Old Spice オールドスパイスフィジーの香りデオドラント", "cost_diff": 781796, "advertiser": "更新中", "share_pct": 8.55},
+        {"name": "Rexona Whole Body Deo", "cost_diff": 694853, "advertiser": "更新中", "share_pct": 7.60}
+      ],
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0}
     },
     "gungun": {
-      "own": 2265164,
-      "market": 10763492,
-      "share_pct": 21.047,
-      "competitors_top3": [
-        {"name": "LEFT-U セノッピーグミ", "cost_diff": 1773582, "advertiser": "株式会社LEFT-U"},
-        {"name": "KENSHOU フィジカルメンテPRO", "cost_diff": 1191318, "advertiser": "更新中"},
-        {"name": "LEFT-U セノッピーチュアブル", "cost_diff": 382318, "advertiser": "株式会社LEFT-U"}
+      "own": 1604698,
+      "market": 10543160,
+      "share_pct": 15.220,
+      "rank": 4,
+      "rank_total": 5,
+      "rank_note": "自社TOPクリエイティブの市場内ポジション。製品集計ベースでは3位",
+      "leaderboard_top5": [
+        {"name": "LEFT-U セノッピーグミ (Shorts)", "advertiser": "LEFT-U", "share_pct": 16.82, "cost_diff": 1773582, "is_own": false},
+        {"name": "KENSHOU フィジカルメンテPRO", "advertiser": "更新中", "share_pct": 11.30, "cost_diff": 1191318, "is_own": false},
+        {"name": "LEFT-U セノッピーグミ (Insta)", "advertiser": "LEFT-U", "share_pct": 8.03, "cost_diff": 846584, "is_own": false},
+        {"name": "ヨミテ 伸長ぐんぐん習慣 (TOP)", "advertiser": "ヨミテ", "share_pct": 6.43, "cost_diff": 678072, "is_own": true},
+        {"name": "KENSHOU フィジカルメンテPRO (2)", "advertiser": "更新中", "share_pct": 6.22, "cost_diff": 655794, "is_own": false}
       ],
-      "media_breakdown": {
-        "banner": 2,
-        "video": 1,
-        "carousel": 0
-      }
+      "competitors_top3": [
+        {"name": "LEFT-U セノッピーグミ", "cost_diff": 1773582, "advertiser": "LEFT-U", "share_pct": 16.82},
+        {"name": "KENSHOU フィジカルメンテPRO", "cost_diff": 1191318, "advertiser": "更新中", "share_pct": 11.30},
+        {"name": "LEFT-U セノッピーチュアブル", "cost_diff": 382318, "advertiser": "LEFT-U", "share_pct": 3.63}
+      ],
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0}
     },
     "rkl": {
-      "own": 1385654,
-      "market": 17386125,
-      "market_note": "genre1467×膝kw、excludeフィルタ適用後（キャンペーン・プレゼント等除外）",
-      "share_pct": 7.970,
-      "competitors_top3": [
-        {"name": "Carpe デオドラント 4本セット", "cost_diff": 5322673, "advertiser": "更新中"},
-        {"name": "レミントン 体感エアーベルト腰用", "cost_diff": 2284544, "advertiser": "株式会社レミントン"},
-        {"name": "レミントン 人工筋肉サポーター 膝パワーウォーク", "cost_diff": 1223784, "advertiser": "株式会社レミントン"}
+      "own": 1268528,
+      "market": 26021790,
+      "share_pct": 4.875,
+      "rank": 5,
+      "rank_total": 6,
+      "market_definition_note": "RKL専用：膝悩みケア商品市場（サポーター系 + 軟骨/膝サプリ系、全媒体）。ユーザー指摘に基づき2026-04-21再定義",
+      "rank_note": "商品単位（アドバタイザー×製品）集計でのランキング。競合'ヘルシオン'と'ダイドー ロコモプロ'の台頭を含む現実的な競合マップ",
+      "leaderboard_top5": [
+        {"name": "ヘルシオン ヒザこし守護神", "advertiser": "ヘルシオン", "share_pct": 56.67, "cost_diff": 14747166, "is_own": false, "segment": "軟骨サプリ"},
+        {"name": "レミントン 膝パワーウォーク", "advertiser": "レミントン", "share_pct": 17.12, "cost_diff": 4454168, "is_own": false, "segment": "サポーター(直接競合)"},
+        {"name": "ダイドー ロコモプロ", "advertiser": "ダイドー", "share_pct": 13.24, "cost_diff": 3445760, "is_own": false, "segment": "膝サプリ"},
+        {"name": "さくらフォレスト 百明青汁", "advertiser": "さくらフォレスト", "share_pct": 7.19, "cost_diff": 1870084, "is_own": false, "segment": "青汁(膝訴求)"},
+        {"name": "ヨミテ RKL", "advertiser": "ヨミテ", "share_pct": 4.87, "cost_diff": 1268528, "is_own": true, "segment": "サポーター(自社)"}
       ],
-      "media_breakdown": {
-        "banner": 0,
-        "video": 3,
-        "carousel": 0
-      }
+      "competitors_top3": [
+        {"name": "ヘルシオン ヒザこし守護神", "cost_diff": 14747166, "advertiser": "株式会社ヘルシオン", "share_pct": 56.67, "segment": "軟骨サプリ"},
+        {"name": "レミントン 人工筋肉サポーター 膝パワーウォーク", "cost_diff": 4454168, "advertiser": "株式会社レミントン", "share_pct": 17.12, "segment": "サポーター(直接競合)"},
+        {"name": "ダイドードリンコ ロコモプロ", "cost_diff": 3445760, "advertiser": "ダイドーグループホールディングス", "share_pct": 13.24, "segment": "膝サプリ"}
+      ],
+      "segment_analysis": {
+        "supporter_market": {"size": 5722696, "own_share": 22.17, "note": "サポーター市場だけで見ると RKL は 2位/2社"},
+        "supplement_market": {"size": 20063010, "own_share": 0, "note": "軟骨サプリ勢が圧倒的。RKLは『サポーター推奨』でサプリ市場に挑む"}
+      },
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0}
     },
     "apobusterf": {
       "own": 360640,
-      "market": 9951164,
-      "market_note": "genre76(体臭ケア)。プルーストクリーム2と同一市場。",
-      "share_pct": 3.624,
-      "competitors_top3": [
-        {"name": "NATIVE アルミニウムフリー デオドラント", "cost_diff": 1434103, "advertiser": "更新中"},
-        {"name": "ヨミテ プルーストクリーム2", "cost_diff": 1158264, "advertiser": "株式会社ヨミテ"},
-        {"name": "Old Spice オールドスパイスフィジーの香りデオドラント", "cost_diff": 781796, "advertiser": "更新中"}
+      "market": 9147135,
+      "share_pct": 3.942,
+      "rank": 5,
+      "rank_total": 5,
+      "rank_note": "個別クリエイティブは市場TOP5圏外。自社合算ベースで5位相当",
+      "leaderboard_top5": [
+        {"name": "NATIVE アルミニウムフリー デオドラント", "advertiser": "更新中", "share_pct": 15.68, "cost_diff": 1434103, "is_own": false},
+        {"name": "ヨミテ プルーストクリーム2 ※グループ兄弟", "advertiser": "ヨミテ", "share_pct": 12.66, "cost_diff": 1158264, "is_own": false},
+        {"name": "Old Spice フィジーの香りデオドラント", "advertiser": "更新中", "share_pct": 8.55, "cost_diff": 781796, "is_own": false},
+        {"name": "Rexona Whole Body Deo", "advertiser": "更新中", "share_pct": 7.60, "cost_diff": 694853, "is_own": false},
+        {"name": "アポバスターF (合計)", "advertiser": "ドクターシリーズ", "share_pct": 3.94, "cost_diff": 360640, "is_own": true}
       ],
-      "media_breakdown": {
-        "banner": 0,
-        "video": 3,
-        "carousel": 0
-      }
+      "competitors_top3": [
+        {"name": "NATIVE アルミニウムフリー デオドラント", "cost_diff": 1434103, "advertiser": "更新中", "share_pct": 15.68},
+        {"name": "ヨミテ プルーストクリーム2", "cost_diff": 1158264, "advertiser": "ヨミテ", "share_pct": 12.66},
+        {"name": "Old Spice オールドスパイスフィジーの香りデオドラント", "cost_diff": 781796, "advertiser": "更新中", "share_pct": 8.55}
+      ],
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0}
+    },
+    "onmyskin": {
+      "own": 1051212,
+      "market": 16995490,
+      "share_pct": 6.185,
+      "rank": 4,
+      "rank_total": 5,
+      "data_confidence": "medium",
+      "data_confidence_reason": "product_id=532064『on：myskin FOR FACE』（全角コロン）追加で大幅改善。実広告費¥2M+/日と整合。SMN/Yahoo除外のため更にupside可能性",
+      "product_ids_used": [1443716, 532064],
+      "leaderboard_top5": [
+        {"name": "アミノセルス製薬 オレリー (YouTube)", "advertiser": "アミノセルス", "share_pct": 18.27, "cost_diff": 3104577, "is_own": false},
+        {"name": "アミノセルス製薬 オレリー (Insta)", "advertiser": "アミノセルス", "share_pct": 8.13, "cost_diff": 1382302, "is_own": false},
+        {"name": "ランクアップ マナラ ホットクレンジングゲル", "advertiser": "ランクアップ", "share_pct": 8.02, "cost_diff": 1363014, "is_own": false},
+        {"name": "ヨミテ on:myskin (3本合計)", "advertiser": "ヨミテ", "share_pct": 6.19, "cost_diff": 1051212, "is_own": true},
+        {"name": "アテニア スキンクリア クレンズオイル", "advertiser": "アテニア", "share_pct": 5.66, "cost_diff": 962456, "is_own": false}
+      ],
+      "competitors_top3": [
+        {"name": "アミノセルス製薬 オレリー モイスト クレンジングセット", "cost_diff": 3104577, "advertiser": "アミノセルス製薬", "share_pct": 18.27},
+        {"name": "ランクアップ マナラ ホットクレンジングゲル", "cost_diff": 1363014, "advertiser": "ランクアップ", "share_pct": 8.02},
+        {"name": "アテニア スキンクリア クレンズオイル", "cost_diff": 962456, "advertiser": "アテニア", "share_pct": 5.66}
+      ],
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0}
     }
   }
 }

@@ -491,8 +491,8 @@ textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid 
 
         <!-- 注釈 -->
         <div class="form-group">
-          <label>注釈テキスト <span style="font-weight:400; color:var(--text-tertiary);">（空欄なら非表示）</span></label>
-          <textarea id="annotation" rows="3" placeholder="例: ※個人の感想です&#10;※効果効能を保証するものではありません"></textarea>
+          <label>注釈テキスト <span style="font-weight:400; color:var(--text-tertiary);">（不要なら削除してください）</span></label>
+          <textarea id="annotation" rows="3">※個人の感想です。効果・効能を保証するものではありません。</textarea>
         </div>
 
         <!-- 運用手順 -->
@@ -776,25 +776,38 @@ setupZone('zone-fvgen-video', 'input-fvgen-video', 'base');
 document.getElementById('input-fvgen-video').onchange = async (e) => {
   if (!e.target.files.length) return;
   const file = e.target.files[0];
-  document.getElementById('files-fvgen-video').textContent = file.name;
-  // アップロード
-  const presignRes = await fetch('/presign-url', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({session_id: sessionId, filename: file.name, content_type: file.type || 'video/mp4', type: 'base'}),
-  });
-  const presign = await presignRes.json();
-  sessionId = presign.session_id;
-  toast('動画アップロード中...');
-  await fetch(presign.upload_url, {method: 'PUT', headers: {'Content-Type': file.type || 'video/mp4'}, body: file});
-  const reg = await fetch('/register-gcs', {
-    method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({session_id: sessionId, gcs_path: presign.gcs_path, filename: file.name, type: 'base'}),
-  });
-  const regData = await reg.json();
-  fvgenVideoFilename = file.name;
-  toast('✅ アップロード完了');
-  e.target.value = '';
+  // アップロード中の表示
+  const zone = document.getElementById('zone-fvgen-video');
+  const filesEl = document.getElementById('files-fvgen-video');
+  zone.style.opacity = '0.6';
+  zone.style.pointerEvents = 'none';
+  filesEl.textContent = '📤 アップロード中...';
+  try {
+    const presignRes = await fetch('/presign-url', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({session_id: sessionId, filename: file.name, content_type: file.type || 'video/mp4', type: 'base'}),
+    });
+    const presign = await presignRes.json();
+    sessionId = presign.session_id;
+    await fetch(presign.upload_url, {method: 'PUT', headers: {'Content-Type': file.type || 'video/mp4'}, body: file});
+    const reg = await fetch('/register-gcs', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({session_id: sessionId, gcs_path: presign.gcs_path, filename: file.name, type: 'base'}),
+    });
+    await reg.json();
+    fvgenVideoFilename = file.name;
+    const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+    filesEl.innerHTML = `<span style="color:#10b981;">✅</span> ${file.name} <span style="color:var(--text-tertiary);">(${sizeMB}MB)</span>`;
+    toast('✅ アップロード完了');
+  } catch(err) {
+    filesEl.textContent = '❌ アップロード失敗';
+    toast('❌ アップロード失敗: ' + err.message);
+  } finally {
+    zone.style.opacity = '1';
+    zone.style.pointerEvents = 'auto';
+    e.target.value = '';
+  }
 };
 
 async function startFvGenerate() {
@@ -980,9 +993,29 @@ setupZone('zone-body',       'input-body',        'body');
 setupZone('zone-packed',     'input-packed',      'packed');
 setupZone('zone-bgm',        'input-bgm',         'bgm');
 
+function _setZoneUploading(type) {
+  const zoneId = { base: 'zone-base', bgm: 'zone-bgm', fv: 'zone-fv', body: 'zone-body', packed: 'zone-packed' }[type];
+  const zone = zoneId && document.getElementById(zoneId);
+  if (!zone) return;
+  zone.style.opacity = '0.6';
+  zone.style.pointerEvents = 'none';
+  const hint = zone.querySelector('.hint');
+  if (hint) hint.textContent = '📤 アップロード中...';
+}
+
+function _setZoneDone(type) {
+  const zoneId = { base: 'zone-base', bgm: 'zone-bgm', fv: 'zone-fv', body: 'zone-body', packed: 'zone-packed' }[type];
+  const zone = zoneId && document.getElementById(zoneId);
+  if (!zone) return;
+  zone.style.opacity = '1';
+  zone.style.pointerEvents = 'auto';
+  const hint = zone.querySelector('.hint');
+  if (hint) hint.textContent = '';
+}
+
 async function uploadFiles(fileList, type) {
   // ファイルごとに GCS 署名付きURL → 直接PUT → 登録 の順で処理
-  toast('アップロード中...');
+  _setZoneUploading(type);
   const saved = [];
   try {
     for (const file of fileList) {
@@ -1045,10 +1078,12 @@ async function uploadFiles(fileList, type) {
       uploadState.packed = saved[0] || null;
       showFileInfo('files-packed', fileList[0]);
     }
+    _setZoneDone(type);
     toast('アップロード完了 ✅');
   } catch (e) {
+    _setZoneDone(type);
     console.error(e);
-    toast('アップロード失敗: ' + e.message);
+    toast('❌ アップロード失敗: ' + e.message);
   }
 }
 

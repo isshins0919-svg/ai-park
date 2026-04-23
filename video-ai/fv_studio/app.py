@@ -8,11 +8,13 @@ URL:  http://localhost:5050
 import io
 import json
 import os
+import re
 import subprocess
 import tempfile
 import textwrap
 import threading
 import time
+import unicodedata
 import uuid
 import zipfile
 from pathlib import Path
@@ -238,6 +240,62 @@ VIDEO_EXT = {".mp4", ".mov", ".avi", ".mkv", ".webm"}
 AUDIO_EXT = {".mp3", ".wav", ".aac", ".m4a", ".ogg"}
 
 BGM_VOLUMES = {"small": 0.20, "medium": 0.40, "large": 0.65}
+
+
+def _gemini_request_with_retry(url: str, payload: bytes, timeout: int = 60) -> bytes:
+    """Gemini API へのリクエストを 429 時に指数バックオフで最大3回リトライする。
+
+    待機時間: 1回目30秒 → 2回目60秒 → 3回目120秒
+    それでも失敗したら最後の例外を再 raise する。
+    """
+    import urllib.request, urllib.error
+    wait_times = [30, 60, 120]
+    last_exc: Exception = RuntimeError("no attempt")
+    for attempt, wait in enumerate([0] + wait_times):
+        if wait:
+            print(f"[Gemini] 429 レートリミット — {wait}秒待機して再試行 ({attempt}/3)...")
+            time.sleep(wait)
+        try:
+            req = urllib.request.Request(
+                url, data=payload, headers={"Content-Type": "application/json"}
+            )
+            res = urllib.request.urlopen(req, timeout=timeout)
+            return res.read()
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                last_exc = e
+                continue  # リトライ
+            raise  # 429以外はそのままraise
+        except Exception as e:
+            raise
+    raise last_exc
+
+
+def _sanitize_filename_prefix(prefix: str) -> str:
+    """ファイル名プレフィックスから HTTPヘッダー非互換文字を除去する。
+
+    ①②③などの丸付き数字 → 通常の数字に変換。
+    その他の制御文字・特殊記号を除去。
+    日本語（ひらがな・カタカナ・漢字）は保持。
+    Cloud Run + Werkzeug の send_file で Content-Disposition が壊れるのを防ぐ。
+    """
+    if not prefix:
+        return "output"
+    s = unicodedata.normalize("NFC", prefix)
+    # 丸付き数字 ①(U+2460)〜⑳(U+2473) → 1〜20
+    s = re.sub(
+        r'[\u2460-\u2473]',
+        lambda m: str(ord(m.group()) - 0x245F),
+        s,
+    )
+    # その他の Unicode 記号カテゴリ (So/Sm/Sk/Sc) を除去（絵文字・特殊記号）
+    s = "".join(
+        c for c in s
+        if unicodedata.category(c) not in ("So", "Sm", "Sk", "Sc", "Cc", "Cf")
+    )
+    s = s.strip()
+    return s if s else "output"
+
 
 # Job tracking
 jobs: dict[str, dict] = {}
@@ -580,9 +638,7 @@ def _gemini_verify_cuts(clips: list[dict], packed_path: str, expected_count: int
             }).encode()
 
             url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
-            req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-            res = urllib.request.urlopen(req, timeout=30)
-            resp_data = json.loads(res.read())
+            resp_data = json.loads(_gemini_request_with_retry(url, payload, timeout=30))
             text = resp_data["candidates"][0]["content"]["parts"][0]["text"]
 
             # JSONを抽出
@@ -1280,7 +1336,7 @@ def generate():
     bgm_vol_key = data.get("bgm_volume", "medium")
     bgm_volume = BGM_VOLUMES.get(bgm_vol_key, 0.40)
     annotation = data.get("annotation", "")
-    filename_prefix = data.get("filename_prefix", "FV")
+    filename_prefix = _sanitize_filename_prefix(data.get("filename_prefix", "FV"))
     mode = data.get("mode", "overlay")          # "overlay" or "concat"
     fv_input_type = data.get("fv_input_type", "individual")  # "individual" or "packed"
     clip_dur = float(data.get("clip_dur", 2.0))
@@ -1352,7 +1408,13 @@ def download(job_id, filename):
     filepath = sess_dir / "output" / filename
     if not filepath.exists():
         return "file not found", 404
-    return send_file(str(filepath), as_attachment=True, download_name=filename)
+    # download_name の特殊文字を除去（①など丸付き数字でWerkzeugが500を返すのを防ぐ）
+    safe_name = _sanitize_filename_prefix(filepath.stem) + filepath.suffix
+    try:
+        return send_file(str(filepath), as_attachment=True, download_name=safe_name)
+    except Exception as e:
+        print(f"[download] send_file error: {e} (path={filepath})")
+        return f"download error: {e}", 500
 
 
 @app.route("/download_zip/<job_id>")
@@ -1909,9 +1971,8 @@ def _gemini_generate_image(prompt: str, api_key: str, out_path: Path) -> bool:
             "contents": [{"parts": [{"text": full_prompt}]}],
             "generationConfig": {"responseModalities": ["TEXT", "IMAGE"]},
         }).encode()
-        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-        res = urllib.request.urlopen(req, timeout=60)
-        data = json.loads(res.read())
+        raw = _gemini_request_with_retry(url, payload, timeout=60)
+        data = json.loads(raw)
         for part in data["candidates"][0]["content"]["parts"]:
             if "inlineData" in part:
                 img_bytes = base64.b64decode(part["inlineData"]["data"])
@@ -1986,9 +2047,7 @@ def _analyze_video_for_fv(video_path: str, api_key: str) -> dict:
                 "generationConfig": {"temperature": 0.1},
             }).encode()
             url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
-            req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-            res = urllib.request.urlopen(req, timeout=30)
-            text = json.loads(res.read())["candidates"][0]["content"]["parts"][0]["text"]
+            text = json.loads(_gemini_request_with_retry(url, payload, timeout=30))["candidates"][0]["content"]["parts"][0]["text"]
             s = text.find("{"); e = text.rfind("}") + 1
             return json.loads(text[s:e]) if s >= 0 else {}
     except Exception as ex:
@@ -2073,9 +2132,7 @@ def _design_10_patterns(video_info: dict, user_prompt: str, api_key: str,
             "generationConfig": {"temperature": 0.7, "maxOutputTokens": 3000},
         }).encode()
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
-        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-        res = urllib.request.urlopen(req, timeout=30)
-        text = json.loads(res.read())["candidates"][0]["content"]["parts"][0]["text"]
+        text = json.loads(_gemini_request_with_retry(url, payload, timeout=30))["candidates"][0]["content"]["parts"][0]["text"]
         s = text.find("{"); e = text.rfind("}") + 1
         result = json.loads(text[s:e])
         return result.get("patterns", [])
@@ -2418,7 +2475,23 @@ def _build_fv_video(image_path: Path, audio_path: Path,
     caption_timeline = [{"start": float, "end": float, "layers": [layer, ...]}]
     各セグメントは透明背景PNGに焼いて、ffmpeg overlayで `enable='between(t, start, end)'`
     によって指定時刻のみ表示する。これで画像が動いてもテロップはピクセル固定される。
+
+    FV_RENDERER=remotion 環境変数で Remotion レンダラに切替可能 (並行検証用)。
+    既定は ffmpeg。
     """
+    if os.environ.get("FV_RENDERER", "ffmpeg").lower() == "remotion":
+        try:
+            from .remotion_bridge import build_fv_video_remotion
+        except ImportError:
+            from remotion_bridge import build_fv_video_remotion  # type: ignore
+        return build_fv_video_remotion(
+            image_path=image_path,
+            audio_path=audio_path,
+            caption_timeline=caption_timeline,
+            fv_duration=fv_duration,
+            motion_type=motion_type,
+            output_path=output_path,
+        )
     try:
         w, h = 1080, 1920
         motion_filter = _build_motion_filter(motion_type, fv_duration, w, h)

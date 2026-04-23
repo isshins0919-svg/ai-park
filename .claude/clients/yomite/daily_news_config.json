@@ -1,7 +1,13 @@
 {
-  "version": "2.0.0",
-  "updated_at": "2026-04-20",
-  "description": "ヨミテ系 5商品 DPro日次ニュース設定。dpro-yomite-daily-news スキルが参照。商品ごとに advertiser_id を上書き可能（未指定ならトップレベルのヨミテを使用）。",
+  "version": "3.0.0-rank-based",
+  "updated_at": "2026-04-21",
+  "description": "ヨミテ系 5商品 DPro日次ニュース設定。dpro-yomite-daily-news スキルが参照。v3.0: Meta+YouTube限定、順位・シェアベース設計。",
+  "data_quality": {
+    "allowed_app_ids": [1, 3, 4, 5],
+    "allowed_app_names": ["YouTube", "Shorts", "Instagram", "Facebook"],
+    "excluded_apps": ["SmartNews", "Yahoo", "Pinterest"],
+    "excluded_reason": "DPro推定値に過剰計上リスクあり。SMNで最大58倍の誇張を確認（2026-04-21）。D2C EC向け市場はMeta+YouTubeで8-9割カバーできるため除外してOK。"
+  },
   "slack_channel": "C0AMYLU2W5D",
   "advertiser_id": 1485,
   "advertiser_name": "株式会社ヨミテ",
@@ -22,7 +28,8 @@
       "name": "on:myskin",
       "display_name": "ヨミテ on:myskin ハーブピーリング",
       "product_id": 1444210,
-      "product_id_aliases": [1443716],
+      "product_id_aliases": [1443716, 532064],
+      "product_id_aliases_note": "532064は全角コロンの「on：myskin FOR FACE」、Meta主戦場の本体。2026-04-21にconfigから抜けていたことが発覚し追加",
       "color": "#4FC3F7",
       "emoji": "🧖‍♀️",
       "market": {
@@ -69,13 +76,19 @@
       "color": "#FFA726",
       "emoji": "🦵",
       "market": {
-        "type": "hybrid_genre_keyword",
-        "genre_ids": [1467],
-        "genre_label": "ヒザ系（ヘルスケア用品×ヒザ関連キーワード）",
-        "include_keywords": ["ヒザ", "膝", "ひざ", "変形性膝", "膝関節", "ひざ痛", "膝の痛み"],
-        "keyword_logic": "or",
-        "exclude_keywords": ["キャンペーン", "求人", "住宅", "転職", "応募", "プレゼント"],
-        "note": "DProにヒザジャンルがないため、ヘルスケア用品×キーワード×除外で疑似ジャンル化。週次で除外語を見直す。"
+        "type": "custom_knee_market",
+        "genre_label": "膝悩みケア市場（サポーター + 軟骨/膝サプリ、全媒体）",
+        "scope_note": "RKL専用。サポーター系＋サプリ系を統合。レミントンの主戦場SMN/Yahooも含める",
+        "queries": [
+          {"type": "keyword", "include_keywords": ["ひざ", "膝", "ヒザ", "膝関節", "変形性膝", "ひざ痛", "膝の痛み", "膝サポーター", "グルコサミン", "コンドロイチン", "プロテオグリカン"], "keyword_logic": "or", "limit": 50},
+          {"type": "genre", "genre_ids": [1467], "include_keywords": ["ヒザ", "膝", "ひざ", "膝関節", "変形性膝", "ひざ痛", "膝の痛み"], "keyword_logic": "or", "limit": 20},
+          {"type": "genre", "genre_ids": [92], "include_keywords": ["膝", "ひざ", "ヒザ", "グルコサミン", "コンドロイチン", "プロテオグリカン", "軟骨", "関節"], "keyword_logic": "or", "limit": 30}
+        ],
+        "must_include_keywords": ["膝", "ひざ", "ヒザ", "膝関節", "変形性膝", "ひざ痛", "膝の痛み", "膝サポーター", "グルコサミン", "コンドロイチン", "プロテオグリカン", "軟骨", "ロコモ"],
+        "exclude_keywords": ["デオドラント", "脇汗", "脇が", "脇臭", "酸素ボックス", "酸素カプセル", "Anti Theft", "Grounding", "盗難", "音声入力", "水素水", "成長期", "身長ブースト", "認知症", "認知低下", "脳のゴミ", "歯周", "歯が", "フリマ", "キャンペーン", "求人", "転職", "スマホ"],
+        "allowed_app_ids": [1, 3, 4, 5, 9, 10],
+        "override_global_app_filter": true,
+        "note": "RKLのみ allowed_app_ids を拡張（SMN=9, Yahoo=10 追加）。レミントンがSMN/Yahoo主戦場のため除外すると実態が歪む。"
       }
     },
     {

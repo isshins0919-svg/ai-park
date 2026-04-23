@@ -1,0 +1,36 @@
+{
+  "last_updated": "2026-04-23",
+  "broker": "野村證券",
+  "holdings": [
+    {
+      "id": 1,
+      "name": "野村世界業種別投資シリーズ（世界半導体株投資）",
+      "ticker_proxy": "SOX",
+      "type": "投資信託",
+      "amount_jpy": 300000,
+      "allocation_pct": 4,
+      "notes": "SOX指数連動。AI需要・TSMC/NVDA決算に敏感"
+    },
+    {
+      "id": 2,
+      "name": "野村インデックスファンド・日経225",
+      "ticker_proxy": "N225",
+      "type": "投資信託",
+      "amount_jpy": 4500000,
+      "allocation_pct": 60,
+      "notes": "ポートフォリオの主軸。円安/米株連動"
+    },
+    {
+      "id": 3,
+      "name": "テスラ",
+      "ticker_proxy": "TSLA",
+      "type": "米国個別株",
+      "amount_jpy": 2700000,
+      "allocation_pct": 36,
+      "notes": "ボラ高。FSD / Robotaxi / マスク発言で動く"
+    }
+  ],
+  "total_jpy": 7500000,
+  "goal": "売り時・買い時の判断サポート",
+  "advisory_mode": "information_only"
+}

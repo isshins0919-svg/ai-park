@@ -1,0 +1,502 @@
+{
+  "date": "2026-04-22",
+  "to_date_api": "2026-04-21",
+  "data_scope": "Meta+YouTube+Shorts(+SMN/Yahoo for RKL only)",
+  "products": {
+    "onmyskin": {
+      "own": 1014554.0,
+      "market": 28274799.0,
+      "share_pct": 3.6,
+      "quadrant": "⚠️ 波に乗れてない",
+      "rank": 5,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "アミノセルス製薬 オレリー モイスト クレンジングセット",
+          "advertiser": "アミノセルス製薬株式会社",
+          "share_pct": 32.4,
+          "cost_diff": 9162009.0,
+          "is_own": false
+        },
+        {
+          "name": "ランクアップ マナラ ホットクレンジングゲル マッサージプラス",
+          "advertiser": "株式会社ランクアップ",
+          "share_pct": 5.3,
+          "cost_diff": 1509064.0,
+          "is_own": false
+        },
+        {
+          "name": "アテニア スキンクリア クレンズオイル",
+          "advertiser": "株式会社アテニア",
+          "share_pct": 3.4,
+          "cost_diff": 962456.0,
+          "is_own": false
+        },
+        {
+          "name": "オルビス ザ クレンジング オイル",
+          "advertiser": "オルビス株式会社",
+          "share_pct": 3.1,
+          "cost_diff": 869204.0,
+          "is_own": false
+        },
+        {
+          "name": "メディカルコート フルリ クリアゲルクレンズ",
+          "advertiser": "メディカルコート株式会社",
+          "share_pct": 2.7,
+          "cost_diff": 771612.0,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "advertiser": "アミノセルス製薬株式会社",
+          "product": "アミノセルス製薬 オレリー モイスト クレンジングセット",
+          "cost": 9162009.0,
+          "cost_fmt": "¥9.2M"
+        },
+        {
+          "advertiser": "株式会社ランクアップ",
+          "product": "ランクアップ マナラ ホットクレンジングゲル マッサージプラス",
+          "cost": 1509064.0,
+          "cost_fmt": "¥1.5M"
+        },
+        {
+          "advertiser": "アミノセルス製薬株式会社",
+          "product": "アミノセルス製薬 オレリー モイスト クレンジングセット",
+          "cost": 1382302.0,
+          "cost_fmt": "¥1.4M"
+        }
+      ],
+      "own_top3": [
+        {
+          "cost_diff": 598712.0,
+          "cost_fmt": "¥598K",
+          "app_name": "Facebook",
+          "hook": "【ブランド史上最安値】ギガ割り開催中\n韓国産お家ハーブピーリングが80%オフ\n元クリニック専売品が\n1000円以下で手に",
+          "production_url": "https://www.facebook.com/61586829786402/videos/2144366662772425",
+          "transition_url": "https://healthcare.rmh.co.jp/ab/onmyskinface_10",
+          "media_type": "video",
+          "product_name": "ヨミテ on：myskin FOR FACE"
+        },
+        {
+          "cost_diff": 275412.0,
+          "cost_fmt": "¥275K",
+          "app_name": "Instagram",
+          "hook": "【ブランド史上最安値】ギガ割り開催中\n韓国産お家ハーブピーリングが80%オフ\n元クリニック専売品が\n1000円以下で手に",
+          "production_url": "https://www.instagram.com/p/DWoPkDpDM2s/",
+          "transition_url": "https://healthcare.rmh.co.jp/ab/onmyskinface_10",
+          "media_type": "video",
+          "product_name": "ヨミテ on：myskin FOR FACE"
+        },
+        {
+          "cost_diff": 140430.0,
+          "cost_fmt": "¥140K",
+          "app_name": "Instagram",
+          "hook": "【ブランド史上最安値】ギガ割り開催中\n韓国産お家ハーブピーリングが80%オフ\n元クリニック専売品が\n1000円以下で手に",
+          "production_url": "https://www.instagram.com/p/DW369oyjKUV/",
+          "transition_url": "https://healthcare.rmh.co.jp/ab/onmyskinface_10",
+          "media_type": "video",
+          "product_name": "ヨミテ on：myskin FOR FACE"
+        }
+      ],
+      "data_confidence": "low",
+      "data_confidence_reason": "genre80タイムアウト2回"
+    },
+    "proust": {
+      "own": 4276464.0,
+      "market": 13835447.0,
+      "share_pct": 30.9,
+      "quadrant": "🌊 追い風（市場波）",
+      "rank": 1,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 16.7,
+          "cost_diff": 2314280.0,
+          "is_own": true
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "advertiser": "更新中",
+          "share_pct": 9.8,
+          "cost_diff": 1357150.0,
+          "is_own": false
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラント",
+          "advertiser": "更新中",
+          "share_pct": 5.6,
+          "cost_diff": 780933.0,
+          "is_own": false
+        },
+        {
+          "name": "Rexona Whole Body Deo",
+          "advertiser": "更新中",
+          "share_pct": 4.1,
+          "cost_diff": 569789.0,
+          "is_own": false
+        },
+        {
+          "name": "Secret Clinical Strength Antiperspirant Deodorant A'Ja Wilson Edition",
+          "advertiser": "更新中",
+          "share_pct": 3.4,
+          "cost_diff": 475539.0,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "advertiser": "更新中",
+          "product": "NATIVE アルミニウムフリー デオドラント",
+          "cost": 1357150.0,
+          "cost_fmt": "¥1.4M"
+        },
+        {
+          "advertiser": "更新中",
+          "product": "Old Spice オールドスパイスフィジーの香りデオドラント",
+          "cost": 780933.0,
+          "cost_fmt": "¥780K"
+        },
+        {
+          "advertiser": "更新中",
+          "product": "Rexona Whole Body Deo",
+          "cost": 569789.0,
+          "cost_fmt": "¥569K"
+        }
+      ],
+      "own_top3": [
+        {
+          "cost_diff": 2314280.0,
+          "cost_fmt": "¥2.3M",
+          "app_name": "YouTube",
+          "hook": "脇がの匂いを香水でごまかしてる人",
+          "production_url": "https://www.youtube.com/watch?v=iUgss6e7ufc",
+          "transition_url": "https://healthcare.rmh.co.jp/ab/ytl_ta_5",
+          "media_type": "video",
+          "product_name": "ヨミテ プルーストクリーム2"
+        },
+        {
+          "cost_diff": 1002568.0,
+          "cost_fmt": "¥1.0M",
+          "app_name": "YouTube",
+          "hook": "（フック情報なし）",
+          "production_url": "https://www.youtube.com/watch?v=HotzRXNSa6M",
+          "transition_url": "https://healthcare.rmh.co.jp/ab/ytl_chin_001",
+          "media_type": "video",
+          "product_name": "ヨミテ プルーストクリーム2"
+        },
+        {
+          "cost_diff": 959616.0,
+          "cost_fmt": "¥959K",
+          "app_name": "YouTube",
+          "hook": "お風呂後にやってる「ワキガ対策」が今話題 創業76年の老舗企業が開発に成功。ワキガ悩み解決する密着式ワキガ対策が今話題に",
+          "production_url": "https://www.youtube.com/watch?v=0-sVMviO-Ys",
+          "transition_url": "https://healthcare.rmh.co.jp/ab/ytl-3-1",
+          "media_type": "video",
+          "product_name": "ヨミテ プルーストクリーム2"
+        }
+      ],
+      "data_confidence": "high",
+      "data_confidence_reason": ""
+    },
+    "gungun": {
+      "own": 1604698.0,
+      "market": 16993962.0,
+      "share_pct": 9.4,
+      "quadrant": "🌊 追い風（市場波）",
+      "rank": 4,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "LEFT－U セノッピーグミ",
+          "advertiser": "株式会社LEFT-U",
+          "share_pct": 14.0,
+          "cost_diff": 2374284.0,
+          "is_own": false
+        },
+        {
+          "name": "KENSHOU フィジカルメンテPRO",
+          "advertiser": "更新中",
+          "share_pct": 7.0,
+          "cost_diff": 1191318.0,
+          "is_own": false
+        },
+        {
+          "name": "pupu レヨン スタディフード",
+          "advertiser": "pupu株式会社",
+          "share_pct": 6.3,
+          "cost_diff": 1072492.0,
+          "is_own": false
+        },
+        {
+          "name": "ヨミテ 伸長ぐんぐん習慣",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 4.0,
+          "cost_diff": 678072.0,
+          "is_own": true
+        },
+        {
+          "name": "LEFT－U セノッピーチュアブル",
+          "advertiser": "株式会社LEFT-U",
+          "share_pct": 2.6,
+          "cost_diff": 445750.0,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "advertiser": "株式会社LEFT-U",
+          "product": "LEFT－U セノッピーグミ",
+          "cost": 2374284.0,
+          "cost_fmt": "¥2.4M"
+        },
+        {
+          "advertiser": "株式会社LEFT-U",
+          "product": "LEFT－U セノッピーグミ",
+          "cost": 1415808.0,
+          "cost_fmt": "¥1.4M"
+        },
+        {
+          "advertiser": "更新中",
+          "product": "KENSHOU フィジカルメンテPRO",
+          "cost": 1191318.0,
+          "cost_fmt": "¥1.2M"
+        }
+      ],
+      "own_top3": [
+        {
+          "cost_diff": 678072.0,
+          "cost_fmt": "¥678K",
+          "app_name": "Instagram",
+          "hook": "＼✨️ご飯にも、味噌汁にも、おかずにも✨️／\n「伸長*ブーストパウダー」ならどんな料理にも混ぜられる！\n\nお子さんをぐん",
+          "production_url": "https://www.instagram.com/p/DW-H2L8APy-/",
+          "transition_url": "https://sb.epicu.tokyo/ab/gngn_fk_dg_p001_ag007_b02551",
+          "media_type": "video",
+          "product_name": "ヨミテ 伸長ぐんぐん習慣"
+        },
+        {
+          "cost_diff": 506374.0,
+          "cost_fmt": "¥506K",
+          "app_name": "Instagram",
+          "hook": "＼✨️ご飯にも、味噌汁にも、おかずにも✨️／\n「伸長*ブーストパウダー」ならどんな料理にも混ぜられる！\n\nお子さんをぐん",
+          "production_url": "https://www.instagram.com/p/DW-H2lqgOw6/",
+          "transition_url": "https://sb.epicu.tokyo/ab/gngn_fk_dg_p003_ag007_b02895",
+          "media_type": "video",
+          "product_name": "ヨミテ 伸長ぐんぐん習慣"
+        },
+        {
+          "cost_diff": 420252.0,
+          "cost_fmt": "¥420K",
+          "app_name": "Instagram",
+          "hook": "＼今なら楽天30％OFF🎉／\n4/14(火)20:00~4/20(月) 23:59\n\n🍴3秒混ぜるだけ！🍴\n成長期に必要",
+          "production_url": "https://www.instagram.com/p/DXGvg1bgIuL/",
+          "transition_url": "https://item.rakuten.co.jp/yakuin-organic/yo-gun-1/",
+          "media_type": "video",
+          "product_name": "ヨミテ 伸長ぐんぐん習慣"
+        }
+      ],
+      "data_confidence": "high",
+      "data_confidence_reason": ""
+    },
+    "rkl": {
+      "own": 1075962.0,
+      "market": 24330010.0,
+      "share_pct": 4.4,
+      "quadrant": "⚠️ 波に乗れてない",
+      "rank": 5,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "ヘルシオン ヒザこし守護神",
+          "advertiser": "株式会社ヘルシオン",
+          "share_pct": 53.5,
+          "cost_diff": 13025664.0,
+          "is_own": false
+        },
+        {
+          "name": "ダイドードリンコ ロコモプロ",
+          "advertiser": "ダイドーグループホールディングス株式会社",
+          "share_pct": 14.8,
+          "cost_diff": 3599568.0,
+          "is_own": false
+        },
+        {
+          "name": "レミントン 人工筋肉サポーター 膝パワーウォーク",
+          "advertiser": "株式会社レミントン",
+          "share_pct": 5.2,
+          "cost_diff": 1255248.0,
+          "is_own": false
+        },
+        {
+          "name": "さくらフォレスト 百明青汁",
+          "advertiser": "さくらフォレスト株式会社",
+          "share_pct": 4.3,
+          "cost_diff": 1048708.0,
+          "is_own": false
+        },
+        {
+          "name": "ヨミテ RKL",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 3.2,
+          "cost_diff": 766934.0,
+          "is_own": true
+        }
+      ],
+      "competitors_top3": [
+        {
+          "advertiser": "株式会社ヘルシオン",
+          "product": "ヘルシオン ヒザこし守護神",
+          "cost": 13025664.0,
+          "cost_fmt": "¥13.0M"
+        },
+        {
+          "advertiser": "ダイドーグループホールディングス株式会社",
+          "product": "ダイドードリンコ ロコモプロ",
+          "cost": 3599568.0,
+          "cost_fmt": "¥3.6M"
+        },
+        {
+          "advertiser": "株式会社ヘルシオン",
+          "product": "ヘルシオン ヒザこし守護神",
+          "cost": 1411052.0,
+          "cost_fmt": "¥1.4M"
+        }
+      ],
+      "own_top3": [
+        {
+          "cost_diff": 766934.0,
+          "cost_fmt": "¥766K",
+          "app_name": "Shorts",
+          "hook": "特許技術を活用した神アイテムがすごい W特許技術を活用。あなたの辛いひざに先進的技術を",
+          "production_url": "https://www.youtube.com/watch?v=aunAXS_66T8",
+          "transition_url": "https://healthcare.rmh.co.jp/ab/rkl_k1_yts2_a2",
+          "media_type": "video",
+          "product_name": "ヨミテ RKL"
+        },
+        {
+          "cost_diff": 156128.0,
+          "cost_fmt": "¥156K",
+          "app_name": "Facebook",
+          "hook": "爆売れサポーターがすごかった...デューク更家さん絶賛「\"日本で唯一\"の膝サポーター」70代が注文殺到_NASAも注目す",
+          "production_url": "https://www.facebook.com/61585873270996/videos/4146019838948896",
+          "transition_url": "https://sb.smart-picks.net/ab/meta2_30",
+          "media_type": "video",
+          "product_name": "ヨミテ RKL"
+        },
+        {
+          "cost_diff": 152900.0,
+          "cost_fmt": "¥152K",
+          "app_name": "Shorts",
+          "hook": "特許技術を活用した神アイテムがすごい W特許技術を活用。あなたの辛いひざに先進的技術を",
+          "production_url": "https://www.youtube.com/watch?v=RZsbha4wMIs",
+          "transition_url": "https://healthcare.rmh.co.jp/ab/rkl_k1_yts2_a2",
+          "media_type": "video",
+          "product_name": "ヨミテ RKL"
+        }
+      ],
+      "data_confidence": "high",
+      "data_confidence_reason": ""
+    },
+    "apobusterf": {
+      "own": 360640.0,
+      "market": 13835447.0,
+      "share_pct": 2.6,
+      "quadrant": "⚠️ 波に乗れてない",
+      "rank": 5,
+      "rank_total": 5,
+      "leaderboard_top5": [
+        {
+          "name": "ヨミテ プルーストクリーム2",
+          "advertiser": "株式会社ヨミテ",
+          "share_pct": 16.7,
+          "cost_diff": 2314280.0,
+          "is_own": false
+        },
+        {
+          "name": "NATIVE アルミニウムフリー デオドラント",
+          "advertiser": "更新中",
+          "share_pct": 9.8,
+          "cost_diff": 1357150.0,
+          "is_own": false
+        },
+        {
+          "name": "Old Spice オールドスパイスフィジーの香りデオドラント",
+          "advertiser": "更新中",
+          "share_pct": 5.6,
+          "cost_diff": 780933.0,
+          "is_own": false
+        },
+        {
+          "name": "Rexona Whole Body Deo",
+          "advertiser": "更新中",
+          "share_pct": 4.1,
+          "cost_diff": 569789.0,
+          "is_own": false
+        },
+        {
+          "name": "Secret Clinical Strength Antiperspirant Deodorant A'Ja Wilson Edition",
+          "advertiser": "更新中",
+          "share_pct": 3.4,
+          "cost_diff": 475539.0,
+          "is_own": false
+        }
+      ],
+      "competitors_top3": [
+        {
+          "advertiser": "株式会社ヨミテ",
+          "product": "ヨミテ プルーストクリーム2",
+          "cost": 2314280.0,
+          "cost_fmt": "¥2.3M"
+        },
+        {
+          "advertiser": "更新中",
+          "product": "NATIVE アルミニウムフリー デオドラント",
+          "cost": 1357150.0,
+          "cost_fmt": "¥1.4M"
+        },
+        {
+          "advertiser": "株式会社ヨミテ",
+          "product": "ヨミテ プルーストクリーム2",
+          "cost": 1002568.0,
+          "cost_fmt": "¥1.0M"
+        }
+      ],
+      "own_top3": [
+        {
+          "cost_diff": 197654.0,
+          "cost_fmt": "¥197K",
+          "app_name": "Instagram",
+          "hook": "【緊急募集】重度のワキガに悩む人、絶対見て",
+          "production_url": "https://www.instagram.com/p/DWlXmmMAGns/",
+          "transition_url": "https://sb-apoama.discover-news.tokyo/ab/apo_fb_a",
+          "media_type": "video",
+          "product_name": "アポバスターF"
+        },
+        {
+          "cost_diff": 97436.0,
+          "cost_fmt": "¥97K",
+          "app_name": "Instagram",
+          "hook": "【緊急募集】重度のワキガに悩む人、絶対見て",
+          "production_url": "https://www.instagram.com/p/DWkmAk-gLpZ/",
+          "transition_url": "https://sb-apoama.discover-news.tokyo/ab/apo_fb_a",
+          "media_type": "video",
+          "product_name": "アポバスターF"
+        },
+        {
+          "cost_diff": 65550.0,
+          "cost_fmt": "¥65K",
+          "app_name": "Instagram",
+          "hook": "【緊急募集】重度のワキガに悩む人、絶対見て",
+          "production_url": "https://www.instagram.com/p/DW00FpNgFLH/",
+          "transition_url": "https://sb-apoama.discover-news.tokyo/ab/apo_fb_a?utm_creative=81&utm_medium=paid&utm_source=ig&utm_id=120243076370100511&utm_content=120243455925750511&utm_term=120243455925670511&utm_campaign=120243076370100511&fbclid=PAaWdyZARFZqFleHRuA2FlbQEwAGFkaWQBqzDJQDn3L3NydGMGYXBwX2lkDDI1NjI4MTA0MDU1OAABp5EwSdAOGNMJc5DvVT_1ty8BBqOBDWv7cKR2lUp5IedpUMafMawaw6Skt31Q_aem_ZrBzTtAWdHg2NZ4DZbllHg",
+          "media_type": "video",
+          "product_name": "アポバスターF"
+        }
+      ],
+      "data_confidence": "high",
+      "data_confidence_reason": ""
+    }
+  }
+}

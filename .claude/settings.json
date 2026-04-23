@@ -17,6 +17,8 @@
       "Bash(python3 scripts/update_crew_map.py *)",
       "Bash(python3 .claude/clients/yomite/scripts/generate_charts.py *)",
       "Bash(python3 /Users/ca01224/Desktop/一進VOYAGE号/.claude/clients/yomite/scripts/generate_charts.py *)",
+      "Bash(python3 /Users/ca01224/Desktop/一進VOYAGE号/.claude/clients/yomite/scripts/upload_daily_charts.py *)",
+      "Bash(python3 /Users/ca01224/Desktop/一進VOYAGE号/.claude/clients/yomite/scripts/post_charts_to_slack.py *)",
       "Bash(zsh -c 'source ~/.zshrc && python3 /Users/ca01224/Desktop/一進VOYAGE号/.claude/clients/yomite/scripts/post_charts_to_slack.py *)"
     ]
   }

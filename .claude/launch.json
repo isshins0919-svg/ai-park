@@ -20,9 +20,15 @@
       "port": 8766
     },
     {
+      "name": "docs-server",
+      "runtimeExecutable": "/opt/homebrew/bin/python3.11",
+      "runtimeArgs": ["-m", "http.server", "8780", "-d", "/Users/ca01224/Desktop/一進VOYAGE号/docs"],
+      "port": 8780
+    },
+    {
       "name": "kosuri-studio",
-      "runtimeExecutable": "/Library/Developer/CommandLineTools/usr/bin/python3",
-      "runtimeArgs": ["/Users/ca01224/Desktop/一進VOYAGE号/video-ai/fv_studio/app.py"],
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/ca01224/Desktop/一進VOYAGE号/video-ai/fv_studio && /opt/homebrew/bin/python3.11 app.py"],
       "port": 5050
     }
   ]
