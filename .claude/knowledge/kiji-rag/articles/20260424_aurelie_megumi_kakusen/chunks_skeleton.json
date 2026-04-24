@@ -1,0 +1,5080 @@
+{
+  "article_id": "20260424_aurelie_megumi_kakusen",
+  "schema_version": "1.0",
+  "chunks": [
+    {
+      "chunk_order": 1,
+      "block_type": "image",
+      "source_block_orders": [
+        1,
+        2,
+        3
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        "",
+        ""
+      ],
+      "content_alt": [
+        "",
+        "",
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c001",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 2,
+      "block_type": "text",
+      "source_block_orders": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "content_text": "突然ですが【MEGUMIさんの角栓溶解法】が今話題なのを知ってますか？\n皮膚をなじませて汚れを落とすこと\n皮膚をなじませて汚れを落とすこと\n今この方法で、すっぴん美人が続出中♡",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c002",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 3,
+      "block_type": "image",
+      "source_block_orders": [
+        8
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c003",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 4,
+      "block_type": "text",
+      "source_block_orders": [
+        9,
+        10,
+        11
+      ],
+      "content_text": "MEGUMIさんご自身も愛用中で毛穴年齢は衝撃の19歳！本当にこれで43歳!?\nMEGUMIさんといえば「日本一売れた美容本」の作者！✨\n単行本実用書 トーハン調べ／単行本実用 日販調べ 「キレイはこれでつくれます」ダイヤモンド社/「心に効く美容」講談社",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c004",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 5,
+      "block_type": "image",
+      "source_block_orders": [
+        12
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c005",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 6,
+      "block_type": "text",
+      "source_block_orders": [
+        13
+      ],
+      "content_text": "実は20代の頃は意外にも毛穴や肌荒れに悩んでいたみたい…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c006",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 7,
+      "block_type": "image",
+      "source_block_orders": [
+        14
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c007",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 8,
+      "block_type": "text",
+      "source_block_orders": [
+        15,
+        16
+      ],
+      "content_text": "でも！そこから「絶対変わってやる！」って10年で試した美容法は1000種類以上！\n努力がすごすぎる✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c008",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 9,
+      "block_type": "image",
+      "source_block_orders": [
+        17
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c009",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 10,
+      "block_type": "text",
+      "source_block_orders": [
+        18,
+        19,
+        20
+      ],
+      "content_text": "そんな努力の結晶💎 すっぴん＆加工なし最新ショットがこちら！\n↓　↓　↓\n今のほうが断然キレイ!? うるつや肌が眩しすぎる✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c010",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 11,
+      "block_type": "image",
+      "source_block_orders": [
+        21
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c011",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 12,
+      "block_type": "text",
+      "source_block_orders": [
+        22,
+        23
+      ],
+      "content_text": "「キレイはこれでつくれます」ダイヤモンド社\nこれ見ると元気出ますよね🔥 私も頑張ろうっと思えました😭",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c012",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 13,
+      "block_type": "image",
+      "source_block_orders": [
+        24
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c013",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 14,
+      "block_type": "text",
+      "source_block_orders": [
+        25
+      ],
+      "content_text": "一方…もうすぐ40歳の私はというといちご鼻が汚すぎ(泣)",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c014",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 15,
+      "block_type": "image",
+      "source_block_orders": [
+        26
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c015",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 16,
+      "block_type": "text",
+      "source_block_orders": [
+        27
+      ],
+      "content_text": "昔から色々試してるけど自分に合うものがわからない＞＜ 逆に悪化した気さえする…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c016",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 17,
+      "block_type": "image",
+      "source_block_orders": [
+        28
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c017",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 18,
+      "block_type": "text",
+      "source_block_orders": [
+        29,
+        30,
+        31,
+        32
+      ],
+      "content_text": "一生この汚い肌なの…。そんな時見つけたのが『MEGUMI流 角栓溶解法』\n皮膚をなじませて汚れを落とすこと\n2024年5月30日放送分\nファンデで隠しても汚い毛穴が丸見えの私が試してみると…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c018",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 19,
+      "block_type": "image",
+      "source_block_orders": [
+        33
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c019",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 20,
+      "block_type": "text",
+      "source_block_orders": [
+        34,
+        35
+      ],
+      "content_text": "洗浄による 画像はイメージ\nえぇぇぇぇ！！！！ 毛穴見えない!?😮",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c020",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 21,
+      "block_type": "image",
+      "source_block_orders": [
+        36
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c021",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 22,
+      "block_type": "text",
+      "source_block_orders": [
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "content_text": "洗浄による 画像はイメージ\nクレンジングをあるものに変えただけで ぷるっぷるたまご肌🥚✨\n洗浄による 画像はイメージ\n実はこの方法 辛口美容雑誌LDKでもA評価 !! 美容皮膚科にも置かれていてあまりの人気で2回も完売！\nLDKのA評価について 掲載：『LDK the Beauty』2024年9月号／調査期間：2024年5月27日〜7月12日／調査方法：専門家による保湿力・成分評価、およびモニターによる使用感調査、モイスチャーリッチセラムにおいて 美容皮膚科完売について 1回目：2024年8月25日、2回目：2025年1月10日\nどんどん噂が広がり 楽天やamazonで1位を独占！\nクレンジングリキッドデイリーランキング1位、2025/2/4集計、2025/2/5更新 フェイスケアセットカテゴリにおいて、 ベストセラーランキングを獲得（2025年6月24日時点）",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c022",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 23,
+      "block_type": "image",
+      "source_block_orders": [
+        44
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c023",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 24,
+      "block_type": "text",
+      "source_block_orders": [
+        45,
+        46
+      ],
+      "content_text": "そんな今超話題の角栓溶解法が「Aurelie.(オレリー)」の大人気クレンジングなんです！\n皮膚をなじませて汚れを落とすこと",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c024",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 25,
+      "block_type": "image",
+      "source_block_orders": [
+        47
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c025",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 26,
+      "block_type": "text",
+      "source_block_orders": [
+        48,
+        49
+      ],
+      "content_text": "先日行われたPOPUPではMEGUMIさん降臨で大盛況したそう！\nそんなオレリーから今なら YouTubeを見てくれたあなただけ！ 🌹特別キャンペーン🌹を開催中",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c026",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 27,
+      "block_type": "image",
+      "source_block_orders": [
+        50
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c027",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 28,
+      "block_type": "text",
+      "source_block_orders": [
+        51,
+        52,
+        53,
+        54
+      ],
+      "content_text": "日本初成分配合！ なんとSNSで大バズり中の医薬部外品の ビタミンC美容液がつく！\n2種の医薬部外品成分、4種のビタミンC誘導体、リピジュア、加水分解卵殻膜を配合した日本初・日本唯一の化粧水・美容液（TPCマーケティングリサーチ株式会社での調べ／2024年12月13日以前において）\n1回目：2024年8月25日、2回目：2025年1月10日\nしかもそれだけじゃない MEGUMIさんからの無料プレゼントが たくさんついて、 🎁これ、全部届く！🎁",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c028",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 29,
+      "block_type": "image",
+      "source_block_orders": [
+        55
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c029",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 30,
+      "block_type": "text",
+      "source_block_orders": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "content_text": "このサイトの最後で 特別キャンペーンの申し込み方法をチェック💖\n実際に使ってみた人からは 大絶賛の声がたくさん！\n本表示の生成には事業者が関与しています\n使ってみて大正解♡ emiさん(30代) 乾燥肌 泡がもっちもちで洗いあがりスッキリ感が良い！MEGUMIさんがつくる商品だからこそ信頼性がありそう。使ってみて大正解♡もう1か月使い続けてまた報告したいと思います♪\n個人の感想であり、効果効能の保証ではございません。事業者の依頼による口コミです。 画像はイメージです。\nすっぴんでいることも増えました！ ｋさん(40代) 乾燥肌 日々、仕事・家事・育児に追われているママに本当オススメ。仕事柄毎日メイクが必要な私ですが、最近調子いいです♪すっぴんでいることも増えました！\n個人の感想であり、効果効能の保証ではございません。事業者の依頼による口コミです。\nそんな超話題のオレリー！ 少しでも気になる人のために 正直レビューしていきます👀↓↓\nMEGUMIクレンジング 1ヶ月使ってみた正直レビュー\nまずはクレンジングから！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c030",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 31,
+      "block_type": "image",
+      "source_block_orders": [
+        66
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c031",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 32,
+      "block_type": "text",
+      "source_block_orders": [
+        67
+      ],
+      "content_text": "手に出してみると… 意外とサラっとしてるけど 触るととろける不思議なテクスチャー！ これ、MEGUMIさんの「こだわり」",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c032",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 33,
+      "block_type": "image",
+      "source_block_orders": [
+        68,
+        69
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        ""
+      ],
+      "content_alt": [
+        "",
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c033",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 34,
+      "block_type": "text",
+      "source_block_orders": [
+        70
+      ],
+      "content_text": "実は… よく使われるオイルクレンジングは 毛穴には逆効果!?😱 しっかり落ちるのはいいけど、 洗浄力が強すぎて 美肌バリアまで洗い流しちゃう😱 だから、肌のバランスが崩れて 皮脂が過剰に分泌されちゃう😱",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c034",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 35,
+      "block_type": "image",
+      "source_block_orders": [
+        71
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "画像はイメージ"
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c035",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 36,
+      "block_type": "text",
+      "source_block_orders": [
+        72
+      ],
+      "content_text": "つ・ま・り!! オイルクレンジングで洗うほど 毛穴詰まりが悪化して逆効果😭",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c036",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 37,
+      "block_type": "image",
+      "source_block_orders": [
+        73
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c037",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 38,
+      "block_type": "text",
+      "source_block_orders": [
+        74
+      ],
+      "content_text": "かといって 洗浄力が弱いミルクやウォーターも❌",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c038",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 39,
+      "block_type": "image",
+      "source_block_orders": [
+        75
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c039",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 40,
+      "block_type": "text",
+      "source_block_orders": [
+        76
+      ],
+      "content_text": "肌に優しいからこそ ちゃんと洗い流しきれず 汚れが毛穴にたまっていく…＞＜",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c040",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 41,
+      "block_type": "image",
+      "source_block_orders": [
+        77,
+        78
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        ""
+      ],
+      "content_alt": [
+        "",
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c041",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 42,
+      "block_type": "text",
+      "source_block_orders": [
+        79,
+        80,
+        81
+      ],
+      "content_text": "汚れはしっかり落とし 肌バランスを保つ クレンジングなんてどこにあるの…？😭\nそこで！ クレンジング難民を救うのが MEGUMI開発『角栓溶解法』\n皮膚をなじませて汚れを落とすこと",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c042",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 43,
+      "block_type": "image",
+      "source_block_orders": [
+        82
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c043",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 44,
+      "block_type": "text",
+      "source_block_orders": [
+        83,
+        84
+      ],
+      "content_text": "なんとこれ ウォーターとオイルのいいとこ取りした 🎉日本初2層式クレンジング🎉\nリンゴ果実培養細胞エキス、ブドウ果実細胞エキス、2種の植物エキスを配合した日本初・日本唯一のクレンジング(TPCマーケティングリサーチ株式会社での調べ / 2024年5月8日以前において)",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c044",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 45,
+      "block_type": "image",
+      "source_block_orders": [
+        85,
+        86
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        ""
+      ],
+      "content_alt": [
+        "",
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c045",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 46,
+      "block_type": "text",
+      "source_block_orders": [
+        87
+      ],
+      "content_text": "オイルで毛穴汚れを浮かせて ウォーターでするっと落とす 2層のわがまま処方を実現！✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c046",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 47,
+      "block_type": "image",
+      "source_block_orders": [
+        88
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c047",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 48,
+      "block_type": "text",
+      "source_block_orders": [
+        89,
+        90,
+        91,
+        92,
+        93
+      ],
+      "content_text": "まさに、奇跡の両立だから メイクも毛穴汚れもごっそりなのに 肌がしっかり潤う！\nクルクル〜ってなじませながら これでメイクを落とすと…\nす…すごい！ 角栓溶けてる!?\n皮膚をなじませて汚れを落とすこと\n汚くて見せたくないんだけど🤣",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c048",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 49,
+      "block_type": "image",
+      "source_block_orders": [
+        94
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c049",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 50,
+      "block_type": "text",
+      "source_block_orders": [
+        95,
+        96
+      ],
+      "content_text": "ごっっっそりなのよ!!!\nもちろん、メイクもするんっ！😳 ウォータープルーフもOK◎ なのにマツエクはとれない！👏 しかもつっぱり感がない感じ！ まさに潤いながら落とす新処方",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c050",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 51,
+      "block_type": "image",
+      "source_block_orders": [
+        97
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "洗浄による 画像はイメージ"
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c051",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 52,
+      "block_type": "text",
+      "source_block_orders": [
+        98,
+        99,
+        100
+      ],
+      "content_text": "それに… なんだか肌の調子いい感じ！💖\n洗浄による 画像はイメージ\nそれもそのはず！ これ、『落とすだけ』じゃない！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c052",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 53,
+      "block_type": "image",
+      "source_block_orders": [
+        101
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c053",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 54,
+      "block_type": "text",
+      "source_block_orders": [
+        102,
+        103,
+        104
+      ],
+      "content_text": "クレンジングなのに ビタミンCや植物エキスなど 🌿美容成分は脅威の90%配合🌿\n内容量に対して（水に含む）\n美容にいい成分がたっぷりの りんごの幹細胞エキスも！🍎✨ 年齢肌、くすみに ブレーキ！✋",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c054",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 55,
+      "block_type": "image",
+      "source_block_orders": [
+        105
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "洗浄による 画像はイメージ"
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c055",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 56,
+      "block_type": "text",
+      "source_block_orders": [
+        106
+      ],
+      "content_text": "さらに肌へのやさしさも とことんこだわっていて、安心！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c056",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 57,
+      "block_type": "image",
+      "source_block_orders": [
+        107
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c057",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 58,
+      "block_type": "text",
+      "source_block_orders": [
+        108
+      ],
+      "content_text": "ケアし続けると 毛穴が目立つ肌から",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c058",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 59,
+      "block_type": "image",
+      "source_block_orders": [
+        109
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "画像はイメージ"
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c059",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 60,
+      "block_type": "text",
+      "source_block_orders": [
+        110,
+        111,
+        112
+      ],
+      "content_text": "ここまでぷるつや卵肌に!?\n洗浄による 画像はイメージ\nMEGUMIさん あなたは私の救世主です😭✨✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c060",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 61,
+      "block_type": "image",
+      "source_block_orders": [
+        113
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "画像はイメージ"
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c061",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 62,
+      "block_type": "text",
+      "source_block_orders": [
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122
+      ],
+      "content_text": "すでに使い続けている人からは 「買って大正解♡」「自信でた！」 など絶賛の声が多いみたい…！\n本表示の生成には事業者が関与しています\n洗いあがりが好きです～！ Kさん(30代/女性/乾燥肌) 毛穴開きが気になっていたのでSNSで広告を見て、MEGUMIさん監修と言うこともあり、信頼できると思って購入しました。感動。こんなにファンデーション塗ってた？と思うほどよく落とせます。\n個人の感想であり、効果効能の保証ではございません。事業者の依頼による口コミです。画像はイメージです。\n美容って今からでも遅くないんですね>< kumiさん(40代/女性/普通肌) MEGUMIさんどんどん綺麗になってて 自分もあんな風になりたいって思っていました。シートマスクも取り入れたり…美容って今からでも遅くないんですね！香りにもこだわりがあって私も好きな香り！\n個人の感想であり、効果効能の保証ではございません。事業者の依頼による口コミです。画像はイメージです。\n「そんなにいいなら使ってみたい!!」 と思った人もいるのでは？\nでもこの商品 とっても入手困難…（私もGETするの大変だった💦）\n今回特別に お得に買える裏ワザを 教えるので見逃さないでください✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c062",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 63,
+      "block_type": "image",
+      "source_block_orders": [
+        123
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c063",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 64,
+      "block_type": "text",
+      "source_block_orders": [
+        124,
+        125
+      ],
+      "content_text": "絶対見逃さないで! ドラコス価格でGETする方法は!?\nMEGUMIさんプロデュース",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c064",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 65,
+      "block_type": "image",
+      "source_block_orders": [
+        126
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c065",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 66,
+      "block_type": "text",
+      "source_block_orders": [
+        127,
+        128,
+        129,
+        130,
+        131
+      ],
+      "content_text": "発売から２日で100媒体以上に掲載され 海外でも超話題に！ 美容皮膚科でも2度も完売！\n1回目：2024年8月25日、2回目：2025年1月10日、Aurelie.ブランド内において\nスキンケアセットは デパコス成分たっぷりの こだわり製法だから単品で買うと…\nクレンジング（1ヶ月分）3,960円 美容液（1ヶ月分）8,580円 セットもついて合計 12,870円はちょっとお高め…💦\n単品通常合計価格",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c066",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 67,
+      "block_type": "image",
+      "source_block_orders": [
+        132
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c067",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 68,
+      "block_type": "text",
+      "source_block_orders": [
+        133,
+        134
+      ],
+      "content_text": "【※そこで朗報※】 このページを見つけた方は ✨超ラッキー！✨\nYouTubeをみてくれたあなた限定！ 🎉最安値でGETできる🎉 クレンジングの値段で美容液も! なんと69%OFF！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c068",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 69,
+      "block_type": "image",
+      "source_block_orders": [
+        135
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c069",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 70,
+      "block_type": "text",
+      "source_block_orders": [
+        136,
+        137
+      ],
+      "content_text": "※さ・ら・に!!※ 🌹本日購入で🌹 コットンがセットになって クレイパック＋シートマスク が無料でついてくる！\n※さらにさらに!!※ 無料プレゼントクーポン付き！！ MEGUMI姉さん太っ腹か！？",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c070",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 71,
+      "block_type": "image",
+      "source_block_orders": [
+        138
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c071",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 72,
+      "block_type": "text",
+      "source_block_orders": [
+        139
+      ],
+      "content_text": "高級毛穴ケアセットが 1本あたり1,980円(税込)＋無料🎁 ドラコス価格で手に入る!",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": true,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c072",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 73,
+      "block_type": "image",
+      "source_block_orders": [
+        140
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c073",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 74,
+      "block_type": "text",
+      "source_block_orders": [
+        141
+      ],
+      "content_text": "みなさんが羨ましい😭 私は楽天で約12,000円で買ったのに… 9,000円くらい損しちゃいました…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c074",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 75,
+      "block_type": "image",
+      "source_block_orders": [
+        142
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c075",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 76,
+      "block_type": "text",
+      "source_block_orders": [
+        143
+      ],
+      "content_text": "これ、調べ尽くしましたが どこよりもお得です！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c076",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 77,
+      "block_type": "image",
+      "source_block_orders": [
+        144
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c077",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 78,
+      "block_type": "text",
+      "source_block_orders": [
+        145
+      ],
+      "content_text": "今スルーすると損！と心から言えます🫣",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c078",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 79,
+      "block_type": "image",
+      "source_block_orders": [
+        146
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c079",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 80,
+      "block_type": "text",
+      "source_block_orders": [
+        147
+      ],
+      "content_text": "定期コースだからこその破格ですが、 いつでも解約可能で…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c080",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 81,
+      "block_type": "image",
+      "source_block_orders": [
+        148
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c081",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 82,
+      "block_type": "text",
+      "source_block_orders": [
+        149,
+        150
+      ],
+      "content_text": "初回商品の到着後より解約が可能です。解約をご希望のお客様は、お買い上げ明細書に記載されている次回発送予定の10日前までにお電話（0120-006-996/営業時間9:00〜18:00※土日祝日を除く）もしくはLINEまでご連絡ください。\n「効果がない」と感じても 全額返金可能だから、リスクなく試せる！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c082",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 83,
+      "block_type": "image",
+      "source_block_orders": [
+        151
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c083",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 84,
+      "block_type": "text",
+      "source_block_orders": [
+        152,
+        153,
+        154
+      ],
+      "content_text": "1,000種類以上試したMEGUMIさんが 本気で作った集中毛穴ケアセット 発売初日から超話題なので 明日見たら売りきてれる危険が…！ いつ特別価格が終了するかわかりません😭\n10年悩んだ毛穴悩み、くすみ悩みに！ どうせならドラコス価格でGETしてみて♡\n汚れによる",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c084",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 85,
+      "block_type": "image",
+      "source_block_orders": [
+        155
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": true,
+      "cta_urls": [
+        "https://official.ad-aurelie.jp/cl/p1e6d8dc224686p8/?bid=8ea4ac6910Fnb0F4&sb_tracking=true"
+      ],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c085",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 86,
+      "block_type": "text",
+      "source_block_orders": [
+        156,
+        157,
+        158,
+        159
+      ],
+      "content_text": "＞＞＞公式サイトはこちら\nサイトに繋がらなければ残念ながら完売です。次回ご案内をお待ちください。\n※追記※ 1点だけ注意点⚠️\n一応念のためと思って このページを閉じる前に 楽天で検索してみたんですが",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": true,
+      "cta_urls": [
+        "https://official.ad-aurelie.jp/cl/p1e6d8dc224686p8/?bid=8ea4ac6910Fnb0F4&sb_tracking=true"
+      ],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c086",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 87,
+      "block_type": "image",
+      "source_block_orders": [
+        160
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c087",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 88,
+      "block_type": "text",
+      "source_block_orders": [
+        161,
+        162
+      ],
+      "content_text": "この勢いだと公式限定セットも いつ完売するかわからない💦\n＼今のうちに買うのが断然お得！／ クレンジング＋美容液 ＋コットン＋無料特典 ＝69%OFFのどこよりも最安値！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c088",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 89,
+      "block_type": "image",
+      "source_block_orders": [
+        163
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c089",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 90,
+      "block_type": "text",
+      "source_block_orders": [
+        164
+      ],
+      "content_text": "気になっている方は 売りきれる前に要チェック!!",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c090",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 91,
+      "block_type": "image",
+      "source_block_orders": [
+        165,
+        166,
+        167
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        "",
+        ""
+      ],
+      "content_alt": [
+        "",
+        "",
+        ""
+      ],
+      "has_cta": true,
+      "cta_urls": [
+        "https://official.ad-aurelie.jp/cl/p1e6d8dc224686p8/?bid=8ea4ac6910Fnb0F4&sb_tracking=true"
+      ],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c091",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 92,
+      "block_type": "text",
+      "source_block_orders": [
+        168,
+        169
+      ],
+      "content_text": "＞＞＞公式サイトはこちら\n運営会社情報 特定商取引法に基づく表示 プライバシーポリシー",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": true,
+      "cta_urls": [
+        "https://official.ad-aurelie.jp/cl/p1e6d8dc224686p8/?bid=8ea4ac6910Fnb0F4&sb_tracking=true"
+      ],
+      "chunk_id": "20260424_aurelie_megumi_kakusen__c092",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    }
+  ]
+}

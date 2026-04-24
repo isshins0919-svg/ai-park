@@ -1,0 +1,283 @@
+{
+  "article_id": "20260424_aurelie_megumi_kakusen",
+  "scorer": "claude-opus-4-7[1m] manual",
+  "scored_at": "2026-04-24T17:30:00+09:00",
+  "rubric_version": "sales_elements.md v1.0 (5層×4要素=20)",
+  "scores": [
+    {"chunk_order": 1, "funnel_position": "opening", "context_hint": "FVヒーロー画像群（MEGUMI顔想定）",
+     "elements": {"B1_authority": 0.6, "D2_aspiration": 0.5}},
+
+    {"chunk_order": 2, "funnel_position": "opening", "context_hint": "記事フック：有名人監修独自メカニズム訴求",
+     "elements": {"B1_authority": 0.7, "B2_social_proof": 0.5, "C2_unique_mechanism": 0.5, "D2_aspiration": 0.7}},
+
+    {"chunk_order": 3, "funnel_position": "opening", "context_hint": "MEGUMIイメージ画像",
+     "elements": {"B1_authority": 0.6}},
+
+    {"chunk_order": 4, "funnel_position": "authority", "context_hint": "毛穴年齢19歳＋日本一売れた美容本＝権威と数値証拠の合わせ技",
+     "elements": {"B1_authority": 0.9, "B3_data_evidence": 0.8, "D2_aspiration": 0.6}},
+
+    {"chunk_order": 5, "funnel_position": "empathy", "context_hint": "MEGUMI関連画像",
+     "elements": {"B1_authority": 0.4}},
+
+    {"chunk_order": 6, "funnel_position": "empathy", "context_hint": "MEGUMIも20代は悩んでた：透明性・親近感形成",
+     "elements": {"B4_transparency": 0.7, "A1_pain_empathy": 0.4}},
+
+    {"chunk_order": 7, "funnel_position": "empathy", "context_hint": "関連画像",
+     "elements": {"B4_transparency": 0.3}},
+
+    {"chunk_order": 8, "funnel_position": "empathy", "context_hint": "1000種類試した努力：数値証拠×ストーリー",
+     "elements": {"B3_data_evidence": 0.8, "B4_transparency": 0.7, "D2_aspiration": 0.4}},
+
+    {"chunk_order": 9, "funnel_position": "empathy", "context_hint": "関連画像",
+     "elements": {"B1_authority": 0.3}},
+
+    {"chunk_order": 10, "funnel_position": "empathy", "context_hint": "すっぴん加工なし／今のほうがキレイ（変化提示）",
+     "elements": {"B1_authority": 0.5, "D1_transformation": 0.7, "D2_aspiration": 0.7}},
+
+    {"chunk_order": 11, "funnel_position": "empathy", "context_hint": "MEGUMIすっぴんショット（Before/After想定）",
+     "elements": {"D1_transformation": 0.7, "D2_aspiration": 0.4}},
+
+    {"chunk_order": 12, "funnel_position": "empathy", "context_hint": "共感の語り：私も頑張ろう",
+     "elements": {"D2_aspiration": 0.5}},
+
+    {"chunk_order": 13, "funnel_position": "empathy", "context_hint": "画像",
+     "elements": {}},
+
+    {"chunk_order": 14, "funnel_position": "empathy", "context_hint": "40歳いちご鼻汚すぎ：強悩み共感トップ",
+     "elements": {"A1_pain_empathy": 0.95}},
+
+    {"chunk_order": 15, "funnel_position": "empathy", "context_hint": "いちご鼻イメージ",
+     "elements": {"A1_pain_empathy": 0.6}},
+
+    {"chunk_order": 16, "funnel_position": "empathy", "context_hint": "色々試したが合わない・逆に悪化：失敗体験共感",
+     "elements": {"A1_pain_empathy": 0.9, "A2_fear_appeal": 0.4}},
+
+    {"chunk_order": 17, "funnel_position": "empathy", "context_hint": "悩み関連画像",
+     "elements": {"A1_pain_empathy": 0.4}},
+
+    {"chunk_order": 18, "funnel_position": "concept", "context_hint": "一生この汚い肌→MEGUMI流角栓溶解法発見（恐怖→解決ピボット）",
+     "elements": {"A1_pain_empathy": 0.9, "A2_fear_appeal": 0.8, "C2_unique_mechanism": 0.6}},
+
+    {"chunk_order": 19, "funnel_position": "empathy", "context_hint": "before想定画像",
+     "elements": {"A1_pain_empathy": 0.4}},
+
+    {"chunk_order": 20, "funnel_position": "proof", "context_hint": "毛穴見えない!?驚き：変化体験の導入",
+     "elements": {"D1_transformation": 0.9}},
+
+    {"chunk_order": 21, "funnel_position": "proof", "context_hint": "after想定画像",
+     "elements": {"D1_transformation": 0.7}},
+
+    {"chunk_order": 22, "funnel_position": "proof", "context_hint": "LDK A評価×美容皮膚科2回完売×楽天amazon1位：信頼層フル積み",
+     "elements": {"B1_authority": 0.85, "B2_social_proof": 0.95, "B3_data_evidence": 0.6, "D1_transformation": 0.6, "D4_scarcity": 0.5}},
+
+    {"chunk_order": 23, "funnel_position": "proof", "context_hint": "掲載画像想定",
+     "elements": {"B1_authority": 0.4}},
+
+    {"chunk_order": 24, "funnel_position": "concept", "context_hint": "商品名接続：話題の角栓溶解法=Aurelie.",
+     "elements": {"B2_social_proof": 0.6, "C2_unique_mechanism": 0.5}},
+
+    {"chunk_order": 25, "funnel_position": "concept", "context_hint": "商品画像想定",
+     "elements": {}},
+
+    {"chunk_order": 26, "funnel_position": "offer", "context_hint": "POPUP大盛況＋YouTube限定キャンペーン予告",
+     "elements": {"B2_social_proof": 0.7, "D4_scarcity": 0.6, "E2_offer_appeal": 0.5}},
+
+    {"chunk_order": 27, "funnel_position": "offer", "context_hint": "キャンペーン関連画像",
+     "elements": {"E2_offer_appeal": 0.3}},
+
+    {"chunk_order": 28, "funnel_position": "concept", "context_hint": "日本初成分・4種ビタミンC誘導体・MEGUMI無料プレゼント",
+     "elements": {"C2_unique_mechanism": 0.8, "B3_data_evidence": 0.7, "E2_offer_appeal": 0.7}},
+
+    {"chunk_order": 29, "funnel_position": "offer", "context_hint": "プレゼント画像",
+     "elements": {"E2_offer_appeal": 0.4}},
+
+    {"chunk_order": 30, "funnel_position": "proof", "context_hint": "口コミ集（emiさん/ｋさん）：社会的証明×シーン想起（仕事家事育児のママ）",
+     "elements": {"B2_social_proof": 0.8, "D3_scenario": 0.8, "D2_aspiration": 0.5, "B1_authority": 0.4}},
+
+    {"chunk_order": 31, "funnel_position": "mechanism", "context_hint": "商品テクスチャ画像",
+     "elements": {}},
+
+    {"chunk_order": 32, "funnel_position": "mechanism", "context_hint": "テクスチャ×MEGUMIこだわり",
+     "elements": {"C2_unique_mechanism": 0.5, "B1_authority": 0.4}},
+
+    {"chunk_order": 33, "funnel_position": "mechanism", "context_hint": "詳細画像",
+     "elements": {}},
+
+    {"chunk_order": 34, "funnel_position": "mechanism", "context_hint": "オイルクレンジングは逆効果：原因解明×差別化",
+     "elements": {"C1_causality": 0.9, "C3_differentiation": 0.7, "A2_fear_appeal": 0.5}},
+
+    {"chunk_order": 35, "funnel_position": "mechanism", "context_hint": "オイルイメージ図",
+     "elements": {"C1_causality": 0.3}},
+
+    {"chunk_order": 36, "funnel_position": "mechanism", "context_hint": "オイルで洗うほど毛穴悪化：因果強化",
+     "elements": {"C1_causality": 0.8, "A2_fear_appeal": 0.4}},
+
+    {"chunk_order": 37, "funnel_position": "mechanism", "context_hint": "悪化イメージ",
+     "elements": {}},
+
+    {"chunk_order": 38, "funnel_position": "mechanism", "context_hint": "ミルク・ウォーターも❌：他カテゴリも否定",
+     "elements": {"C3_differentiation": 0.8}},
+
+    {"chunk_order": 39, "funnel_position": "mechanism", "context_hint": "ミルク類イメージ",
+     "elements": {}},
+
+    {"chunk_order": 40, "funnel_position": "mechanism", "context_hint": "肌優しいから汚れが毛穴にたまる：差別化続き",
+     "elements": {"C1_causality": 0.7, "C3_differentiation": 0.7}},
+
+    {"chunk_order": 41, "funnel_position": "mechanism", "context_hint": "関連イメージ",
+     "elements": {}},
+
+    {"chunk_order": 42, "funnel_position": "mechanism", "context_hint": "そんなクレンジングどこに→MEGUMI開発角栓溶解法で救済",
+     "elements": {"A1_pain_empathy": 0.6, "C2_unique_mechanism": 0.7, "B1_authority": 0.5}},
+
+    {"chunk_order": 43, "funnel_position": "mechanism", "context_hint": "商品イメージ",
+     "elements": {"C2_unique_mechanism": 0.3}},
+
+    {"chunk_order": 44, "funnel_position": "mechanism", "context_hint": "日本初2層式クレンジング：独自メカニズム核",
+     "elements": {"C2_unique_mechanism": 0.95, "B3_data_evidence": 0.7}},
+
+    {"chunk_order": 45, "funnel_position": "mechanism", "context_hint": "2層式イメージ図",
+     "elements": {"C2_unique_mechanism": 0.4}},
+
+    {"chunk_order": 46, "funnel_position": "mechanism", "context_hint": "オイルで浮かせウォーターで落とす：2層処方解説",
+     "elements": {"C2_unique_mechanism": 0.85, "C3_differentiation": 0.6}},
+
+    {"chunk_order": 47, "funnel_position": "mechanism", "context_hint": "処方イメージ",
+     "elements": {}},
+
+    {"chunk_order": 48, "funnel_position": "proof", "context_hint": "奇跡の両立×ごっそり×潤う×角栓溶けてる：体験描写",
+     "elements": {"D1_transformation": 0.85, "C2_unique_mechanism": 0.6, "C3_differentiation": 0.6}},
+
+    {"chunk_order": 49, "funnel_position": "proof", "context_hint": "使用中画像",
+     "elements": {"D1_transformation": 0.5}},
+
+    {"chunk_order": 50, "funnel_position": "proof", "context_hint": "ごっそり/ウォータープルーフOK/マツエクとれない：機能性強調",
+     "elements": {"D1_transformation": 0.75, "C2_unique_mechanism": 0.5}},
+
+    {"chunk_order": 51, "funnel_position": "proof", "context_hint": "洗い上がり画像",
+     "elements": {"D1_transformation": 0.5}},
+
+    {"chunk_order": 52, "funnel_position": "proof", "context_hint": "肌の調子いい／落とすだけじゃない：次の訴求へのブリッジ",
+     "elements": {"D1_transformation": 0.5}},
+
+    {"chunk_order": 53, "funnel_position": "mechanism", "context_hint": "成分イメージ",
+     "elements": {}},
+
+    {"chunk_order": 54, "funnel_position": "mechanism", "context_hint": "美容成分90%配合／りんご幹細胞エキス：成分根拠",
+     "elements": {"C2_unique_mechanism": 0.7, "B3_data_evidence": 0.8}},
+
+    {"chunk_order": 55, "funnel_position": "mechanism", "context_hint": "成分画像",
+     "elements": {}},
+
+    {"chunk_order": 56, "funnel_position": "mechanism", "context_hint": "肌にやさしさ・安心：反論処理ライト",
+     "elements": {"B4_transparency": 0.4, "C4_objection_handling": 0.3}},
+
+    {"chunk_order": 57, "funnel_position": "mechanism", "context_hint": "安心イメージ",
+     "elements": {}},
+
+    {"chunk_order": 58, "funnel_position": "proof", "context_hint": "ケアし続けると毛穴目立つ肌から：変化導入",
+     "elements": {"D1_transformation": 0.7}},
+
+    {"chunk_order": 59, "funnel_position": "proof", "context_hint": "Before画像",
+     "elements": {"D1_transformation": 0.6}},
+
+    {"chunk_order": 60, "funnel_position": "desire", "context_hint": "ぷるつや卵肌／救世主MEGUMI：変化のピーク",
+     "elements": {"D1_transformation": 0.9, "D2_aspiration": 0.7, "B1_authority": 0.4}},
+
+    {"chunk_order": 61, "funnel_position": "desire", "context_hint": "After画像",
+     "elements": {"D1_transformation": 0.5}},
+
+    {"chunk_order": 62, "funnel_position": "proof", "context_hint": "Kさん/kumiさん口コミ×自信ついた×入手困難：多層訴求",
+     "elements": {"B2_social_proof": 0.85, "D3_scenario": 0.7, "D2_aspiration": 0.7, "D4_scarcity": 0.7, "B1_authority": 0.5}},
+
+    {"chunk_order": 63, "funnel_position": "offer", "context_hint": "オファーセクション導入画像",
+     "elements": {}},
+
+    {"chunk_order": 64, "funnel_position": "offer", "context_hint": "見出し：絶対見逃さないで！ドラコス価格",
+     "elements": {"A4_anxiety_trigger": 0.6, "E1_urgency": 0.5, "E2_offer_appeal": 0.6, "B1_authority": 0.5}},
+
+    {"chunk_order": 65, "funnel_position": "offer", "context_hint": "MEGUMIプロデュース画像",
+     "elements": {"E2_offer_appeal": 0.4, "B1_authority": 0.3}},
+
+    {"chunk_order": 66, "funnel_position": "offer", "context_hint": "発売2日で100媒体／海外／皮膚科2回完売／定価12,870円設定",
+     "elements": {"B2_social_proof": 0.9, "B3_data_evidence": 0.7, "D4_scarcity": 0.6, "E2_offer_appeal": 0.4}},
+
+    {"chunk_order": 67, "funnel_position": "offer", "context_hint": "価格図",
+     "elements": {"E2_offer_appeal": 0.4}},
+
+    {"chunk_order": 68, "funnel_position": "offer", "context_hint": "ラッキー！YouTube限定69%OFF：オファー核",
+     "elements": {"D4_scarcity": 0.8, "E2_offer_appeal": 0.9, "A3_regret_avoidance": 0.5}},
+
+    {"chunk_order": 69, "funnel_position": "offer", "context_hint": "割引イメージ",
+     "elements": {"E2_offer_appeal": 0.6}},
+
+    {"chunk_order": 70, "funnel_position": "offer", "context_hint": "コットン+クレイパック+シートマスク無料＋クーポン：特典盛り",
+     "elements": {"E2_offer_appeal": 0.95, "B1_authority": 0.3}},
+
+    {"chunk_order": 71, "funnel_position": "offer", "context_hint": "特典画像",
+     "elements": {"E2_offer_appeal": 0.6}},
+
+    {"chunk_order": 72, "funnel_position": "cta", "context_hint": "1,980円＋無料ドラコス価格：オファー核text",
+     "elements": {"E2_offer_appeal": 0.95, "E4_cta_clarity": 0.6, "D4_scarcity": 0.4}},
+
+    {"chunk_order": 73, "funnel_position": "cta", "context_hint": "価格画像",
+     "elements": {"E2_offer_appeal": 0.5}},
+
+    {"chunk_order": 74, "funnel_position": "cta", "context_hint": "楽天12,000円購入で9,000円損：強後悔回避",
+     "elements": {"A3_regret_avoidance": 0.9, "B4_transparency": 0.5}},
+
+    {"chunk_order": 75, "funnel_position": "cta", "context_hint": "損失イメージ",
+     "elements": {"A3_regret_avoidance": 0.3}},
+
+    {"chunk_order": 76, "funnel_position": "cta", "context_hint": "調べ尽くしたがどこよりもお得",
+     "elements": {"E2_offer_appeal": 0.8, "A3_regret_avoidance": 0.5}},
+
+    {"chunk_order": 77, "funnel_position": "cta", "context_hint": "比較イメージ",
+     "elements": {"E2_offer_appeal": 0.4}},
+
+    {"chunk_order": 78, "funnel_position": "cta", "context_hint": "今スルーすると損：後悔回避×緊急性トップ",
+     "elements": {"A3_regret_avoidance": 0.95, "E1_urgency": 0.8}},
+
+    {"chunk_order": 79, "funnel_position": "cta", "context_hint": "警告イメージ",
+     "elements": {}},
+
+    {"chunk_order": 80, "funnel_position": "cta", "context_hint": "定期だがいつでも解約可：リスクリバーサル導入",
+     "elements": {"E3_risk_reversal": 0.85, "C4_objection_handling": 0.7}},
+
+    {"chunk_order": 81, "funnel_position": "cta", "context_hint": "解約情報画像",
+     "elements": {"E3_risk_reversal": 0.3}},
+
+    {"chunk_order": 82, "funnel_position": "cta", "context_hint": "解約手順詳細＋全額返金可能：完全リスクリバーサル",
+     "elements": {"E3_risk_reversal": 0.95, "C4_objection_handling": 0.85}},
+
+    {"chunk_order": 83, "funnel_position": "cta", "context_hint": "返金保証イメージ",
+     "elements": {"E3_risk_reversal": 0.4}},
+
+    {"chunk_order": 84, "funnel_position": "cta", "context_hint": "1000種類試したMEGUMI本気／明日売り切れ危険：緊急性ピーク",
+     "elements": {"A4_anxiety_trigger": 0.9, "E1_urgency": 0.95, "D4_scarcity": 0.8, "A2_fear_appeal": 0.5, "B1_authority": 0.5}},
+
+    {"chunk_order": 85, "funnel_position": "cta", "context_hint": "購入ボタン画像（CTA）",
+     "elements": {"E4_cta_clarity": 0.9, "E2_offer_appeal": 0.5}},
+
+    {"chunk_order": 86, "funnel_position": "cta", "context_hint": "公式サイトはこちら／つながらなければ完売／追記フック",
+     "elements": {"E4_cta_clarity": 0.9, "D4_scarcity": 0.75, "A4_anxiety_trigger": 0.6}},
+
+    {"chunk_order": 87, "funnel_position": "closing", "context_hint": "追記セクション画像",
+     "elements": {}},
+
+    {"chunk_order": 88, "funnel_position": "closing", "context_hint": "勢いだと完売／今買うのがお得／69%OFF最安：最終プッシュ",
+     "elements": {"E1_urgency": 0.95, "E2_offer_appeal": 0.95, "A4_anxiety_trigger": 0.8, "D4_scarcity": 0.85}},
+
+    {"chunk_order": 89, "funnel_position": "closing", "context_hint": "最終オファー画像",
+     "elements": {"E2_offer_appeal": 0.5}},
+
+    {"chunk_order": 90, "funnel_position": "closing", "context_hint": "売り切れる前に要チェック：一押し",
+     "elements": {"E1_urgency": 0.85, "A4_anxiety_trigger": 0.7, "D4_scarcity": 0.7}},
+
+    {"chunk_order": 91, "funnel_position": "cta", "context_hint": "最終CTA画像群",
+     "elements": {"E4_cta_clarity": 0.95, "E2_offer_appeal": 0.5}},
+
+    {"chunk_order": 92, "funnel_position": "cta", "context_hint": "最終公式サイトリンク＋フッター",
+     "elements": {"E4_cta_clarity": 0.85}}
+  ]
+}

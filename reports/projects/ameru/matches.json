@@ -1,0 +1,142 @@
+{
+  "01_FV": [
+    {
+      "file": "logos_ameru_logo_pink.png",
+      "score": 0.3971
+    },
+    {
+      "file": "phase1_L04_lineup_with_charspace.png",
+      "score": 0.3938
+    },
+    {
+      "file": "phase1_L02_lineup_shelf.png",
+      "score": 0.3932
+    }
+  ],
+  "02_chars": [
+    {
+      "file": "official_paopao.webp",
+      "score": 0.3813
+    },
+    {
+      "file": "phase1_L02_lineup_shelf.png",
+      "score": 0.3795
+    },
+    {
+      "file": "official_ururu.webp",
+      "score": 0.3682
+    }
+  ],
+  "03_hero": [
+    {
+      "file": "phase1_L02_lineup_shelf.png",
+      "score": 0.4866
+    },
+    {
+      "file": "phase1_H01_hero_cloud_blanket.png",
+      "score": 0.4711
+    },
+    {
+      "file": "phase1_L03_lineup_focus_foreground.png",
+      "score": 0.4677
+    }
+  ],
+  "04_only1": [
+    {
+      "file": "phase2_P01_timeline_start.png",
+      "score": 0.4202
+    },
+    {
+      "file": "phase2_P05_timeline_before_after.png",
+      "score": 0.4056
+    },
+    {
+      "file": "phase1_K01_kit_flatlay_woobles.png",
+      "score": 0.4037
+    }
+  ],
+  "05_kit": [
+    {
+      "file": "03_unboxing_flatlay.png",
+      "score": 0.4525
+    },
+    {
+      "file": "phase1_K01_kit_flatlay_woobles.png",
+      "score": 0.4482
+    },
+    {
+      "file": "phase1_K04_unboxing_moment.png",
+      "score": 0.4457
+    }
+  ],
+  "06_video": [
+    {
+      "file": "phase1_K03_phone_hands_learning.png",
+      "score": 0.4368
+    },
+    {
+      "file": "logos_ameru_logo_pink.png",
+      "score": 0.3843
+    },
+    {
+      "file": "logos_ameru_logo_main.png",
+      "score": 0.3816
+    }
+  ],
+  "07_process": [
+    {
+      "file": "phase2_P01_timeline_start.png",
+      "score": 0.3838
+    },
+    {
+      "file": "phase1_K01_kit_flatlay_woobles.png",
+      "score": 0.3716
+    },
+    {
+      "file": "phase2_E02_emotion_crafting.png",
+      "score": 0.3698
+    }
+  ],
+  "08_life": [
+    {
+      "file": "phase2_E04_emotion_windowsill.png",
+      "score": 0.4208
+    },
+    {
+      "file": "phase1_L02_lineup_shelf.png",
+      "score": 0.4014
+    },
+    {
+      "file": "phase1_H03_hero_wood_table.png",
+      "score": 0.3954
+    }
+  ],
+  "09_offer": [
+    {
+      "file": "phase2_G01_gift_ribbon_card.png",
+      "score": 0.3826
+    },
+    {
+      "file": "phase2_G02_gift_handover.png",
+      "score": 0.3412
+    },
+    {
+      "file": "03_unboxing_flatlay.png",
+      "score": 0.3038
+    }
+  ],
+  "10_cta": [
+    {
+      "file": "phase2_G02_gift_handover.png",
+      "score": 0.3896
+    },
+    {
+      "file": "phase2_G03_gift_child_hands.png",
+      "score": 0.3767
+    },
+    {
+      "file": "phase2_G01_gift_ribbon_card.png",
+      "score": 0.357
+    }
+  ]
+}
