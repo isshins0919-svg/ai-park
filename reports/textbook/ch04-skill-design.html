@@ -48,6 +48,138 @@
 
 <div class="divider"></div>
 
+<!-- ═══ ナレッジ vs スキル（混乱先回り回収） ═══ -->
+<div class="section">
+  <div class="section-label">KNOWLEDGE VS SKILL</div>
+  <h2>Skill設計の前に — ナレッジとスキルの違い</h2>
+
+  <p>この島に入る前に、<strong>初心者が100%ハマる混乱</strong>を先に潰しておきます。</p>
+
+  <div class="compare">
+    <div class="compare-ng">
+      <div class="label">❓ よくある混乱</div>
+      <p>「ナレッジもスキルも、両方とも <code>.md</code> ファイルに書くよね？」<br><br>
+      「<code>knowledge/</code> と <code>commands/</code>、<strong>どう使い分けるの？</strong>」</p>
+    </div>
+    <div class="compare-ok">
+      <div class="label">✅ 一言でいうと</div>
+      <p><strong>ナレッジ = 読む情報</strong>（知識）<br>
+      <strong>スキル = 実行する手順</strong>（やり方）<br><br>
+      前者は<strong>教科書</strong>、後者は<strong>料理レシピ</strong>。</p>
+    </div>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🍕</span> ピザ屋で例える — いちばん分かりやすい</h3>
+  <p class="tagline">店員の仕事を分解すると、この2つが見える</p>
+
+  <div class="ex-grid">
+    <div class="ex-box">
+      <div class="ex-label real">📚 ナレッジ（読むもの）</div>
+      <p>・メニュー表<br>
+      ・材料辞典（粉・チーズ・ハーブの知識）<br>
+      ・常連さんの好みリスト<br>
+      ・過去のクレーム集<br><br>
+      → 全部「<strong>頭に入れておく情報</strong>」。それ単体では動かない。</p>
+    </div>
+    <div class="ex-box">
+      <div class="ex-label voyage">📋 スキル（実行するもの）</div>
+      <p>・ピザを焼く手順書<br>
+      ・注文受付マニュアル<br>
+      ・クレーム対応フロー<br>
+      ・閉店チェックリスト<br><br>
+      → 全部「<strong>こう動く</strong>」の手順。呼び出されると実行される。</p>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="label">ポイント</div>
+    <p>店員は <strong>まず材料辞典（ナレッジ）を読んで</strong> 食材を理解し、<strong>ピザ手順書（スキル）に沿って</strong> 焼く。<br>
+    <strong>ナレッジだけでは動けない、スキルだけでは品質が出ない。両方必要。</strong></p>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">📂</span> VOYAGE号のフォルダ構造で視覚化</h3>
+  <p class="tagline">実際に見ると一目瞭然</p>
+
+  <div class="diagram" style="text-align: left;">
+    <span class="a">.claude/</span><br>
+    ├── <span class="g">knowledge/</span>&emsp;&emsp; 📚 <strong>読むもの（辞書・哲学書）</strong><br>
+    │&emsp;&emsp;├── pak-philosophy.md&emsp; ← マーケの哲学書<br>
+    │&emsp;&emsp;├── hook-db.md&emsp;&emsp;&emsp;&emsp;&emsp;← フックコピーDB<br>
+    │&emsp;&emsp;└── cta-db.md&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ← CTAパターン集<br>
+    │<br>
+    ├── <span class="o">commands/</span>&emsp;&emsp;&emsp;📋 <strong>実行するもの（スキル = 手順書）</strong><br>
+    │&emsp;&emsp;├── banner-park.md&emsp;&emsp;← バナー制作の手順<br>
+    │&emsp;&emsp;├── handoff.md&emsp;&emsp;&emsp;&emsp;&emsp;← 引き継ぎの手順<br>
+    │&emsp;&emsp;└── nice-dive.md&emsp;&emsp;&emsp;← 学びログの手順<br>
+    │<br>
+    ├── <span class="p">agents/</span>&emsp;&emsp;&emsp;&emsp;🤖 <strong>自律実行エージェント</strong>（Island 05で詳しく）<br>
+    │<br>
+    └── <span class="y">clients/</span>&emsp;&emsp;&emsp;&emsp;👥 <strong>お客さんカルテ（ナレッジの一種）</strong><br>
+    &emsp;&emsp;&emsp;├── lutemo.md<br>
+    &emsp;&emsp;&emsp;└── ameru.md
+  </div>
+
+  <div class="why-box">
+    <div class="label">名前の付き方のクセも覚えとくと便利</div>
+    <p>・<strong>ナレッジ</strong> = 「〇〇-db.md」「〇〇-philosophy.md」など <strong>「調べ物」っぽい名前</strong><br>
+    ・<strong>スキル</strong> = 「〇〇-park.md」「handoff」「nice-dive」など <strong>「動作」っぽい名前</strong></p>
+  </div>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🎯</span> 3つの判別基準</h3>
+  <p class="tagline">迷ったらこれで判断</p>
+
+  <table>
+    <tr><th>質問</th><th>ナレッジ</th><th>スキル</th></tr>
+    <tr><td>「<code>/〇〇</code>」で呼び出す？</td><td>❌ しない</td><td>✅ する</td></tr>
+    <tr><td>AIが「自分で参照」する？</td><td>✅ する</td><td>❌ ユーザーが起動</td></tr>
+    <tr><td>中身に「ステップ1, 2, 3...」がある？</td><td>❌ ない（情報の羅列）</td><td>✅ ある（手順）</td></tr>
+    <tr><td>書き方</td><td>散文・リスト・データ</td><td>手順書・アクション</td></tr>
+    <tr><td>人間で例えると</td><td>辞書・教科書・資料室</td><td>マニュアル・レシピ・チェックリスト</td></tr>
+  </table>
+</div>
+
+<div class="topic-card">
+  <h3><span class="emoji">🤝</span> ナレッジとスキルは一緒に働く</h3>
+  <p class="tagline">「入れ子構造」で使われるから、最初は境界が曖昧に見える</p>
+
+  <p>実際の業務では、<strong>スキルの中でナレッジを参照する</strong>ことがほとんどです。この「入れ子構造」が混乱の元凶。</p>
+
+  <div class="code-block">
+    <span class="comment"># banner-park.md（スキル・手順書）の中身例</span><br>
+    <br>
+    Step 1: <span class="keyword">knowledge/pak-philosophy.md を読む</span>  ← ナレッジを参照<br>
+    Step 2: ユーザーに商品情報を聞く<br>
+    Step 3: <span class="keyword">clients/lutemo.md を読む</span>  ← ナレッジを参照<br>
+    Step 4: コピーを3案生成<br>
+    Step 5: バナー画像を生成<br>
+    Step 6: ユーザーに確認
+  </div>
+
+  <div class="why-box">
+    <div class="label">この関係性を理解すると</div>
+    <p><strong>スキルは「手順書」なので、中で色々な「辞書（ナレッジ）」を読みに行く。</strong><br>
+    料理人が「パスタを茹でる手順書」を見ながら「食材辞典」で塩の量を確認するのと同じ。<br><br>
+    ✅ 手順 = スキル / ✅ 知識 = ナレッジ / ✅ 両方あって品質が出る</p>
+  </div>
+</div>
+
+<div class="highlight" style="margin:24px 0;">
+  <div class="hl-emoji">🧭</div>
+  <div class="hl-text">この島の残りで学ぶこと</div>
+  <div class="hl-sub">
+    ここからは<strong>「スキル」</strong>の設計に集中します。<br>
+    ナレッジの作り方は Island 06（コンテキストウィンドウ）で改めて扱います。
+  </div>
+</div>
+
+<div class="divider"></div>
+
 <!-- ═══ Script vs Skill ═══ -->
 <div class="section">
   <div class="section-label">SCRIPT VS SKILL</div>
