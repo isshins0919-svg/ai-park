@@ -1,188 +1,31 @@
 {
-  "last_updated": "2026-04-21 09:40",
+  "last_updated": "2026-04-24 10:35",
+  "categories": ["work", "side_learning", "private"],
   "jobs": [
     {
-      "id": 1,
-      "name": "OJT AIパワフルモード作成",
-      "goal": "OJT AIのパワフルモードを今週中に完成させる",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-23",
-      "notes": "2026-03-23完了！"
-    },
-    {
-      "id": 3,
-      "name": "記事LP → 記事1本作成",
-      "goal": "記事LPアップデート後に記事を1本作成する",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-23",
-      "notes": "2026-03-23完了！"
-    },
-    {
-      "id": 4,
-      "name": "AI動画作成（Sora活用）",
-      "goal": "Soraを使って動画作成まで進める",
-      "status": "completed",
-      "priority": "medium",
-      "created_at": "2026-03-23",
-      "notes": "2026-03-23完了！"
-    },
-    {
-      "id": 5,
-      "name": "Claude codeエージェント活用イメージ整理",
-      "goal": "AIエージェントの活用イメージを鮮明にして説明できる状態にする",
-      "status": "completed",
-      "priority": "medium",
-      "created_at": "2026-03-23",
-      "notes": "2026-03-23完了！"
-    },
-    {
-      "id": 6,
-      "name": "記事FB仕組みの一次完成",
-      "goal": "記事フィードバック仕組みを一次完成させる",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-24",
-      "notes": "2026-03-24完了！"
-    },
-    {
-      "id": 7,
-      "name": "camicksの提案完了",
-      "goal": "Camicks向けの提案書を完成させる",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-24",
-      "notes": "2026-03-24完了！"
-    },
-    {
-      "id": 8,
-      "name": "議事録集約システムの構築",
-      "goal": "Make × Notion × Google Meet 文字起こし連携の仕組みを構築する",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-24",
-      "notes": "2026-03-24完了！足で回して対応"
-    },
-    {
-      "id": 9,
-      "name": "LP高速化 1本",
-      "goal": "LP高速化診断・修正を1本完遂する",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-24",
-      "notes": "2026-03-24完了！"
-    },
-    {
-      "id": 10,
-      "name": "最高のトレーニング",
-      "goal": "今日のトレーニングを全力でやりきる",
-      "status": "completed",
+      "id": 13,
+      "category": "work",
+      "name": "クリエイティブAgentチーム構築（週1〜2体ペース）",
+      "goal": "記事LP・バナー・動画の専門Agent12体を週1〜2体ペースで完成させる",
+      "status": "cancelled",
       "priority": "high",
       "created_at": "2026-03-25",
-      "notes": "2026-03-25完了！筋トレ10点🔥"
-    },
-    {
-      "id": 11,
-      "name": "mauri進捗を上長に説明できる状態にする",
-      "goal": "mauri事業の進捗・数字・ネクストを上長に話せるレベルに整理する",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-25",
-      "notes": "2026-04-06完了！全ゴール達成"
-    },
-    {
-      "id": 12,
-      "name": "mauriのAIでの戦い方を明確にする",
-      "goal": "mauri事業においてAIをどう使って戦うかの方針・打ち手を言語化する",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-25",
-      "notes": "2026-04-06完了！全ゴール達成"
-    },
-    {
-      "id": 14,
-      "name": "camicksアップデート提案",
-      "goal": "Camicksの最新状況を踏まえた追加提案を完成させる",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-26",
-      "notes": "2026-04-06完了！→撮影ゴールに切り替え"
-    },
-    {
-      "id": 19,
-      "name": "camicks撮影",
-      "goal": "Camicksの撮影を完了させる",
-      "status": "active",
-      "priority": "high",
-      "created_at": "2026-04-06",
-      "notes": "期限: 2026-04月中。ステップ: ①撮影香盤表・日程決める ②カメラマン決める ③モデル決める ④スタジオ決める ⑤撮影する"
-    },
-    {
-      "id": 15,
-      "name": "記事FB AI 完成・リリース",
-      "goal": "記事フィードバックAIをいったんリリースして1週間運用・FBもらう",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-26",
-      "notes": "2026-03-26完了！1週間運用→FBもらう→改善サイクルへ"
-    },
-    {
-      "id": 17,
-      "name": "ameruのLPサフ作成オファー",
-      "goal": "ameruのLP制作サポートについてオファーを出すところまで完了する",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-26",
-      "notes": "2026-04-21完了！ameru 10本完成 https://isshins0919-svg.github.io/ai-park/clients/ameru_new/10_patterns_index.html"
-    },
-    {
-      "id": 16,
-      "name": "OJT AIのアップデート完了",
-      "goal": "OJT AIを最新の判断軸・コンテンツでアップデートして完成させる",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-26",
-      "notes": "2026-03-26完了！いい感じ🔥"
-    },
-    {
-      "id": 18,
-      "name": "動画自動編集AI v2 — テスト動画1本出力",
-      "goal": "台本 + 素材クリップを登録→縦型1分動画mp4が自動出力される仕組みをテスト動画1本完成まで動かす",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-03-31",
-      "notes": "2026-04-06完了！動画Proミッション達成"
+      "notes": "2026-04-24 削除。理由: agentの具体度が低くタスクとして機能しない。個別の具体タスクに分解されるまで保留"
     },
     {
       "id": 20,
+      "category": "work",
       "name": "記事ABテスト作成AIへの移行",
       "goal": "記事フィードバックAIを記事ABテスト作成AIに移行し、2商品で検証・実装を完了する",
       "status": "active",
       "priority": "high",
       "created_at": "2026-04-06",
-      "notes": "期限: 2026-04月中に完成。2商品での検証・実装が完了条件"
-    },
-    {
-      "id": 21,
-      "name": "動画編集AIでの2本配信",
-      "goal": "動画編集AIを使って動画を2本配信する",
-      "status": "completed",
-      "priority": "high",
-      "created_at": "2026-04-06",
-      "notes": "2026-04-13完了！"
-    },
-    {
-      "id": 13,
-      "name": "クリエイティブAgentチーム構築（週1〜2体ペース）",
-      "goal": "記事LP・バナー・動画の専門Agent12体を週1〜2体ペースで完成させる",
-      "status": "active",
-      "priority": "high",
-      "created_at": "2026-03-25",
-      "notes": "対象: hook-critic / cro-specialist / n1-validator / legal-checker / visual-director / typography-critic / brand-guardian / image-prompt-optimizer + 動画系4体 = 計12体。週1〜2体ペースで完成。どんどん進める！"
+      "deadline": "2026-04-30",
+      "notes": "2商品での検証・実装が完了条件。4/24のSquadBeyondイベントで記事検証AIの知見吸収"
     },
     {
       "id": 22,
+      "category": "work",
       "name": "Claude code miniダイブの実施",
       "goal": "Claude code miniダイブを実施する",
       "status": "active",
@@ -191,8 +34,31 @@
       "notes": ""
     },
     {
+      "id": 25,
+      "category": "work",
+      "name": "動画編集AI 終了計画",
+      "goal": "① 利用者から「成果出たよ」報告を獲得 / ② 5月中に開発を誰かに引き継ぐ",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-24",
+      "deadline": "2026-05-31",
+      "notes": "必達。6末退職までのミッション。STEP: ①複数メンバーとヒアリング→方向性決定（一進さん自ら実施） ②引き継ぎ先決定 ③ドキュメント整備 ④ハンドオフ完了"
+    },
+
+    {
+      "id": 24,
+      "category": "side_learning",
+      "name": "lutemo社AI研修コンテンツ学習",
+      "goal": "lutemo社のAI研修コンテンツを把握・学習する",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-21",
+      "notes": "期限4/21超過中。今日10:30-11:00で着手"
+    },
+    {
       "id": 23,
-      "name": "sawadaにAI研修の実施（全5回）",
+      "category": "side_learning",
+      "name": "sawada AI研修（全5回）",
       "goal": "sawadaへAI研修を全5回実施する",
       "status": "active",
       "priority": "high",
@@ -200,13 +66,65 @@
       "notes": "2026-04-21 一次連絡済み。全5回の実施はこれから"
     },
     {
-      "id": 24,
-      "name": "lutemo社AI研修の内容学ぶ",
-      "goal": "lutemo社のAI研修コンテンツを把握・学習する",
+      "id": 19,
+      "category": "side_learning",
+      "name": "camicks撮影",
+      "goal": "Camicksの撮影を完了させる",
       "status": "active",
       "priority": "high",
-      "created_at": "2026-04-21",
-      "notes": "期限: 2026-04-21（本日中）"
-    }
+      "created_at": "2026-04-06",
+      "deadline": "2026-04-30",
+      "notes": "ステップ: ①香盤表・日程 ②カメラマン ③モデル ④スタジオ ⑤撮影"
+    },
+
+    {
+      "id": 26,
+      "category": "private",
+      "name": "東廻り世界一周の旅（第一回）予約周り完了",
+      "goal": "東廻り世界一周の旅の予約関連をすべて完了させる",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-24",
+      "notes": ""
+    },
+    {
+      "id": 27,
+      "category": "private",
+      "name": "世界ぶらり旅（第二回）行き航空券確保",
+      "goal": "世界ぶらり旅の行きの航空券を取る",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-24",
+      "notes": ""
+    },
+    {
+      "id": 28,
+      "category": "private",
+      "name": "動画編集プラットフォーム構築",
+      "goal": "6月末までに動画編集のプラットフォームを構築する",
+      "status": "active",
+      "priority": "high",
+      "created_at": "2026-04-24",
+      "deadline": "2026-06-30",
+      "notes": ""
+    },
+
+{ "id": 1, "category": "work", "name": "OJT AIパワフルモード作成", "goal": "OJT AIのパワフルモードを今週中に完成させる", "status": "completed", "priority": "high", "created_at": "2026-03-23", "notes": "2026-03-23完了" },
+    { "id": 3, "category": "work", "name": "記事LP → 記事1本作成", "goal": "記事LPアップデート後に記事を1本作成する", "status": "completed", "priority": "high", "created_at": "2026-03-23", "notes": "2026-03-23完了" },
+    { "id": 4, "category": "work", "name": "AI動画作成（Sora活用）", "goal": "Soraを使って動画作成まで進める", "status": "completed", "priority": "medium", "created_at": "2026-03-23", "notes": "2026-03-23完了" },
+    { "id": 5, "category": "work", "name": "Claude codeエージェント活用イメージ整理", "goal": "AIエージェントの活用イメージを鮮明にして説明できる状態にする", "status": "completed", "priority": "medium", "created_at": "2026-03-23", "notes": "2026-03-23完了" },
+    { "id": 6, "category": "work", "name": "記事FB仕組みの一次完成", "goal": "記事フィードバック仕組みを一次完成させる", "status": "completed", "priority": "high", "created_at": "2026-03-24", "notes": "2026-03-24完了" },
+    { "id": 7, "category": "work", "name": "camicksの提案完了", "goal": "Camicks向けの提案書を完成させる", "status": "completed", "priority": "high", "created_at": "2026-03-24", "notes": "2026-03-24完了" },
+    { "id": 8, "category": "work", "name": "議事録集約システムの構築", "goal": "Make × Notion × Google Meet 文字起こし連携の仕組みを構築する", "status": "completed", "priority": "high", "created_at": "2026-03-24", "notes": "2026-03-24完了" },
+    { "id": 9, "category": "work", "name": "LP高速化 1本", "goal": "LP高速化診断・修正を1本完遂する", "status": "completed", "priority": "high", "created_at": "2026-03-24", "notes": "2026-03-24完了" },
+    { "id": 10, "category": "private", "name": "最高のトレーニング", "goal": "今日のトレーニングを全力でやりきる", "status": "completed", "priority": "high", "created_at": "2026-03-25", "notes": "2026-03-25完了" },
+    { "id": 11, "category": "work", "name": "mauri進捗を上長に説明できる状態にする", "goal": "mauri事業の進捗・数字・ネクストを上長に話せるレベルに整理する", "status": "completed", "priority": "high", "created_at": "2026-03-25", "notes": "2026-04-06完了" },
+    { "id": 12, "category": "work", "name": "mauriのAIでの戦い方を明確にする", "goal": "mauri事業においてAIをどう使って戦うかの方針・打ち手を言語化する", "status": "completed", "priority": "high", "created_at": "2026-03-25", "notes": "2026-04-06完了" },
+    { "id": 14, "category": "work", "name": "camicksアップデート提案", "goal": "Camicksの最新状況を踏まえた追加提案を完成させる", "status": "completed", "priority": "high", "created_at": "2026-03-26", "notes": "2026-04-06完了" },
+    { "id": 15, "category": "work", "name": "記事FB AI 完成・リリース", "goal": "記事フィードバックAIをいったんリリースして1週間運用・FBもらう", "status": "completed", "priority": "high", "created_at": "2026-03-26", "notes": "2026-03-26完了" },
+    { "id": 16, "category": "work", "name": "OJT AIのアップデート完了", "goal": "OJT AIを最新の判断軸・コンテンツでアップデートして完成させる", "status": "completed", "priority": "high", "created_at": "2026-03-26", "notes": "2026-03-26完了" },
+    { "id": 17, "category": "work", "name": "ameruのLPサフ作成オファー", "goal": "ameruのLP制作サポートについてオファーを出すところまで完了する", "status": "completed", "priority": "high", "created_at": "2026-03-26", "notes": "2026-04-21完了" },
+    { "id": 18, "category": "work", "name": "動画自動編集AI v2 — テスト動画1本出力", "goal": "台本 + 素材クリップを登録→縦型1分動画mp4が自動出力される仕組みをテスト動画1本完成まで動かす", "status": "completed", "priority": "high", "created_at": "2026-03-31", "notes": "2026-04-06完了" },
+    { "id": 21, "category": "work", "name": "動画編集AIでの2本配信", "goal": "動画編集AIを使って動画を2本配信する", "status": "completed", "priority": "high", "created_at": "2026-04-06", "notes": "2026-04-13完了" }
   ]
 }

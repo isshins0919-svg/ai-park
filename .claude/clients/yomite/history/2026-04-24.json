@@ -1,0 +1,118 @@
+{
+  "date": "2026-04-24",
+  "to_date_api": "2026-04-23",
+  "data_scope": "Meta(FB/Insta) + YouTube(通常/Shorts) のみ（RKLはSMN/Yahoo含む）",
+  "allowed_app_ids": [1, 3, 4, 5],
+  "products": {
+    "onmyskin": {
+      "own": 1129766,
+      "market": 53800000,
+      "share_pct": 2.1,
+      "rank": 6,
+      "rank_total": 5,
+      "rank_note": "市場TOP5内に自社エントリなし（¥1.1M vs 首位¥13.6M）",
+      "leaderboard_top5": [
+        {"name":"アミノセルス製薬 オレリー モイストクレンジング","advertiser":"アミノセルス製薬株式会社","share_pct":25.3,"cost_diff":13600000,"is_own":false},
+        {"name":"ドクターシーラボ VC100エッセンスローションE","advertiser":"JNTLコンシューマーヘルス株式会社","share_pct":17.1,"cost_diff":9200000,"is_own":false},
+        {"name":"Dove パールシャインシリーズ 洗顔","advertiser":"更新中","share_pct":11.8,"cost_diff":6400000,"is_own":false},
+        {"name":"オルビス ユードット スキンケアセット","advertiser":"株式会社オルビス","share_pct":10.2,"cost_diff":5500000,"is_own":false},
+        {"name":"第一三共ヘルスケア ブライトエイジ","advertiser":"第一三共ヘルスケアダイレクト株式会社","share_pct":5.5,"cost_diff":3000000,"is_own":false}
+      ],
+      "competitors_top3": [
+        {"name":"アミノセルス製薬 オレリー モイストクレンジング","advertiser":"アミノセルス製薬株式会社","cost_diff":13600000,"share_pct":25.3},
+        {"name":"ドクターシーラボ VC100エッセンスローションE","advertiser":"JNTLコンシューマーヘルス株式会社","cost_diff":9200000,"share_pct":17.1},
+        {"name":"Dove パールシャインシリーズ 洗顔","advertiser":"更新中","cost_diff":6400000,"share_pct":11.8}
+      ],
+      "media_breakdown": {"banner": 1, "video": 2, "carousel": 0},
+      "data_confidence": "high"
+    },
+    "proust": {
+      "own": 1230304,
+      "market": 5668000,
+      "share_pct": 21.7,
+      "rank": 5,
+      "rank_total": 5,
+      "rank_note": "TOP5入りだが首位NATIVE比で大幅差",
+      "leaderboard_top5": [
+        {"name":"NATIVE アルミニウムフリー デオドラント","advertiser":"更新中","share_pct":16.9,"cost_diff":958000,"is_own":false},
+        {"name":"Old Spice オールドスパイスフィジーの香り","advertiser":"更新中","share_pct":14.4,"cost_diff":813000,"is_own":false},
+        {"name":"Rexona Whole Body Deo","advertiser":"更新中","share_pct":12.1,"cost_diff":683000,"is_own":false},
+        {"name":"KISSME 薬用制汗クリーム","advertiser":"株式会社伊勢半","share_pct":9.3,"cost_diff":527000,"is_own":false},
+        {"name":"ヨミテ プルーストクリーム2","advertiser":"株式会社ヨミテ","share_pct":7.7,"cost_diff":438000,"is_own":true}
+      ],
+      "competitors_top3": [
+        {"name":"NATIVE アルミニウムフリー デオドラント","advertiser":"更新中","cost_diff":958000,"share_pct":16.9},
+        {"name":"Old Spice オールドスパイスフィジーの香り","advertiser":"更新中","cost_diff":813000,"share_pct":14.4},
+        {"name":"Rexona Whole Body Deo","advertiser":"更新中","cost_diff":683000,"share_pct":12.1}
+      ],
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0},
+      "data_confidence": "high"
+    },
+    "gungun": {
+      "own": 1719052,
+      "market": 5543000,
+      "share_pct": 31.0,
+      "rank": 2,
+      "rank_total": 5,
+      "rank_note": "首位LEFT-U セノッピーグミ(31.3%)に肉薄の2位",
+      "leaderboard_top5": [
+        {"name":"LEFT-U セノッピーグミ","advertiser":"株式会社LEFT-U","share_pct":31.3,"cost_diff":1733000,"is_own":false},
+        {"name":"ヨミテ 伸長ぐんぐん習慣","advertiser":"株式会社ヨミテ","share_pct":22.3,"cost_diff":1233000,"is_own":true},
+        {"name":"LEFT-U セノッピーチュアブル","advertiser":"株式会社LEFT-U","share_pct":15.0,"cost_diff":833000,"is_own":false},
+        {"name":"アリンクル セアップ","advertiser":"株式会社アリンクル","share_pct":9.1,"cost_diff":504000,"is_own":false},
+        {"name":"pupu レヨン スーパーフード","advertiser":"pupu株式会社","share_pct":6.1,"cost_diff":339000,"is_own":false}
+      ],
+      "competitors_top3": [
+        {"name":"LEFT-U セノッピーグミ","advertiser":"株式会社LEFT-U","cost_diff":1733000,"share_pct":31.3},
+        {"name":"LEFT-U セノッピーチュアブル","advertiser":"株式会社LEFT-U","cost_diff":833000,"share_pct":15.0},
+        {"name":"アリンクル セアップ","advertiser":"株式会社アリンクル","cost_diff":504000,"share_pct":9.1}
+      ],
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0},
+      "data_confidence": "high"
+    },
+    "rkl": {
+      "own": 675872,
+      "market": 6547000,
+      "share_pct": 10.3,
+      "rank": 6,
+      "rank_total": 5,
+      "rank_note": "TOP5内に自社なし。レミントン¥2.5Mが圧倒的首位",
+      "leaderboard_top5": [
+        {"name":"レミントン 人工筋肉サポーター 膝パワーウォーク","advertiser":"株式会社レミントン","share_pct":38.9,"cost_diff":2546000,"is_own":false},
+        {"name":"さくらフォレスト あゆみ","advertiser":"さくらフォレスト株式会社","share_pct":15.8,"cost_diff":1034000,"is_own":false},
+        {"name":"ファーマフーズ タマゴサミン","advertiser":"株式会社ファーマフーズ","share_pct":15.3,"cost_diff":1001000,"is_own":false},
+        {"name":"ダイドードリンコ ロコモプロ","advertiser":"ダイドーグループホールディングス株式会社","share_pct":12.0,"cost_diff":784000,"is_own":false},
+        {"name":"FUJIFILM ヒザテクト","advertiser":"株式会社富士フイルム ヘルスケア ラボラ","share_pct":9.9,"cost_diff":646000,"is_own":false}
+      ],
+      "competitors_top3": [
+        {"name":"レミントン 人工筋肉サポーター 膝パワーウォーク","advertiser":"株式会社レミントン","cost_diff":2546000,"share_pct":38.9},
+        {"name":"さくらフォレスト あゆみ","advertiser":"さくらフォレスト株式会社","cost_diff":1034000,"share_pct":15.8},
+        {"name":"ファーマフーズ タマゴサミン","advertiser":"株式会社ファーマフーズ","cost_diff":1001000,"share_pct":15.3}
+      ],
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0},
+      "data_confidence": "high"
+    },
+    "apobusterf": {
+      "own": 90168,
+      "market": 5668000,
+      "share_pct": 1.6,
+      "rank": 6,
+      "rank_total": 5,
+      "rank_note": "TOP5内に自社なし。欧米OTCブランドが上位独占",
+      "leaderboard_top5": [
+        {"name":"NATIVE アルミニウムフリー デオドラント","advertiser":"更新中","share_pct":16.9,"cost_diff":958000,"is_own":false},
+        {"name":"Old Spice オールドスパイスフィジーの香り","advertiser":"更新中","share_pct":14.4,"cost_diff":813000,"is_own":false},
+        {"name":"Rexona Whole Body Deo","advertiser":"更新中","share_pct":12.1,"cost_diff":683000,"is_own":false},
+        {"name":"KISSME 薬用制汗クリーム","advertiser":"株式会社伊勢半","share_pct":9.3,"cost_diff":527000,"is_own":false},
+        {"name":"ヨミテ プルーストクリーム2","advertiser":"株式会社ヨミテ","share_pct":7.7,"cost_diff":438000,"is_own":false}
+      ],
+      "competitors_top3": [
+        {"name":"NATIVE アルミニウムフリー デオドラント","advertiser":"更新中","cost_diff":958000,"share_pct":16.9},
+        {"name":"Old Spice オールドスパイスフィジーの香り","advertiser":"更新中","cost_diff":813000,"share_pct":14.4},
+        {"name":"Rexona Whole Body Deo","advertiser":"更新中","cost_diff":683000,"share_pct":12.1}
+      ],
+      "media_breakdown": {"banner": 0, "video": 3, "carousel": 0},
+      "data_confidence": "high"
+    }
+  }
+}
