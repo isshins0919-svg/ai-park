@@ -237,9 +237,12 @@ def main():
         print("✅ 新入りクルーなし（全員登録済み）")
 
     new_html = build_new_crew_html(new_crew)
+    # lambda経由で渡すことで、replacement文字列内の \U \N \g 等の
+    # エスケープシーケンス解釈を無効化（絵文字・日本語パスでの KeyError '\U' 対策）
+    replacement = f"<!-- AUTO:NEW-CREW -->{new_html}\n      <!-- /AUTO:NEW-CREW -->"
     html = re.sub(
         r"<!-- AUTO:NEW-CREW -->.*?<!-- /AUTO:NEW-CREW -->",
-        f"<!-- AUTO:NEW-CREW -->{new_html}\n      <!-- /AUTO:NEW-CREW -->",
+        lambda _m: replacement,
         html, flags=re.DOTALL,
     )
 
