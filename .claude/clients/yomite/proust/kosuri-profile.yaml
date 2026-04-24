@@ -13,6 +13,12 @@ persona:
     - 制汗剤では満足できない
     - 夏が近づくと憂鬱
 
+n1:
+  scene: "満員電車で吊り革を掴んだ瞬間、隣の人が顔をしかめた気がして固まる28歳OL"
+  emotion: "気づかれているかもという恐怖 × 誰にも相談できない孤独感"
+  visual_hook_emotion: "吊り革を掴む腕＋服のワキ汗ジミのアップを1カット目で見せて一発で自分事化"
+  target_moment: "通勤電車・会議室・デート前・夏場の外出直前の鏡の前"
+
 product:
   problem: body_odor_armpit
   body_part: armpits

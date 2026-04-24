@@ -13,6 +13,12 @@ persona:
     - 何を使っても変わらない気がする
     - 鏡を見るのが怖くなった
 
+n1:
+  scene: "深夜0時、洗面台の鏡で頬のたるみと目尻のシワをチェックして溜め息をつく40代女性"
+  emotion: "急に訪れた年齢肌への焦り × まだ諦めたくないという希望"
+  visual_hook_emotion: "Before→After の肌の劇的変化（頬・目元クローズアップ）を1カット目で見せる"
+  target_moment: "洗顔後スキンケアタイム・朝の化粧ノリチェック・子どもが寝た後の一人の時間"
+
 product:
   problem: skin_care_aging
   body_part: skin

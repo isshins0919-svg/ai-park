@@ -13,6 +13,12 @@ persona:
     - 何を食べさせれば伸びるのか分からない
     - 背の順でいつも前
 
+n1:
+  scene: "運動会でわが子が背の順で一番前に並んでいる姿を見てしまった瞬間の30代母"
+  emotion: "わが子だけ取り残されている焦り × 親として何かしてあげられない無力感"
+  visual_hook_emotion: "『背の順 一番前』の子ども＋母親の視線を1カット目に置いて即共感させる"
+  target_moment: "運動会・参観日・健康診断の身長記録を見た直後・周りの子と比較した瞬間"
+
 product:
   problem: child_growth_support
   body_part: null

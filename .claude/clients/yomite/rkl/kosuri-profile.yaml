@@ -14,6 +14,12 @@ persona:
     - 外出が億劫になる
     - 靴下の跡がついている
 
+n1:
+  scene: "朝、駅の階段を降りる時に膝がカクッと崩れそうになって手すりを掴んだ60代女性"
+  emotion: "歳を取った現実への怖さ × 孫と一緒に歩きたいという切実な願い"
+  visual_hook_emotion: "階段を降りる瞬間の膝クローズアップ or 立ち上がりで顔を歪める表情を1カット目で"
+  target_moment: "朝起きた直後の一歩目・階段・長時間歩いた後・孫と出かける前夜"
+
 product:
   problem: knee_pain_senior
   body_part: knee
