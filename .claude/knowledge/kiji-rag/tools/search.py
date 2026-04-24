@@ -62,6 +62,8 @@ def main():
     ap.add_argument("--article", help="特定記事IDに絞る")
     ap.add_argument("--block-type", dest="block_type", choices=["text", "image", "video"])
     ap.add_argument("-k", "--top-k", type=int, default=5, dest="k")
+    ap.add_argument("--per-article-limit", type=int, default=0, dest="per_article_limit",
+                    help="同一記事からの最大ヒット数 (0=制限なし)。記事多様性確保用。")
     ap.add_argument("--json", action="store_true", dest="as_json")
     ap.add_argument("--scan", type=int, default=500,
                     help="フィルタ前に sim上位N件を保持（default 500）")
@@ -81,6 +83,8 @@ def main():
             elem_key, t = args.element.split(sep, 1)
             elem_thr = float(t)
 
+    from collections import Counter
+    per_article_counter = Counter()
     results = []
     for i in order:
         c = chunks[i]
@@ -92,7 +96,10 @@ def main():
             continue
         if elem_key and c["elements"].get(elem_key, 0.0) < elem_thr:
             continue
+        if args.per_article_limit and per_article_counter[c["_article_id"]] >= args.per_article_limit:
+            continue
         results.append({"index": int(i), "sim": float(sims[i]), "chunk": c})
+        per_article_counter[c["_article_id"]] += 1
         if len(results) >= args.k:
             break
 

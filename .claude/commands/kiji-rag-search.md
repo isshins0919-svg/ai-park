@@ -28,6 +28,7 @@ description: 記事LP Vector RAG から意味検索。自然言語クエリ × 2
 | `article=<article_id>` | 特定記事に絞る |
 | `block=<text\|image\|video>` | ブロック種別フィルタ |
 | `k=<N>` | 上位N件（デフォルト5）|
+| `per_article=<N>` | 同一記事からの最大ヒット数（記事多様性確保） |
 
 ### 例
 
@@ -66,6 +67,7 @@ python3 .claude/knowledge/kiji-rag/tools/search.py "<QUERY>" [OPTIONS]
 | `article=ID` | `--article ID` |
 | `block=TYPE` | `--block-type TYPE` |
 | `k=N` | `-k N` |
+| `per_article=N` | `--per-article-limit N` |
 
 ### 結果整形ルール
 

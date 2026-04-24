@@ -138,11 +138,28 @@
 - **使い道**: sns-marketer の精度向上
 - **統合先**: sns-marketer / sns-post-crew
 
-#### 8. 記事LP構造の横断分析
+#### 8. 記事LP構造の横断分析 ✅ **実装済み (2026-04-24, kiji-rag v1.0)**
 
-- **何をする**: 案件間で記事LP構造をベクトル化
-- **使い道**: DPro benchmark.json の拡張。「勝ち構造」抽出
-- **実装コスト**: 中
+- **何をする**: 記事LPを **ブロック切り替わり単位** でチャンク化 → **20要素スコアリング(5層×4要素)** × embedding-2 でベクトル化 → 横断検索
+- **実装**: `.claude/knowledge/kiji-rag/` 基盤構築完了
+  - チャンク統合: `tools/merge_blocks.py`
+  - 20要素スコア付与: `tools/apply_scores.py`
+  - ベクトル化: `tools/embed_chunks.py`
+  - 横断検索: `tools/search.py` + `/kiji-rag-search` スキル
+  - 半自動パイプライン: `/kiji-rag-add <URL>` スキル
+- **使い道**:
+  - `/kiji-rag-search` で記事横断の勝ちチャンク参照（自然言語クエリ × 20要素フィルタの二段構え）
+  - `/記事LP-park` Phase 2 Step 2.5 で hookVector 選定を補強
+  - `kiji-compass` の勝ちパターン実装率に「意味で近い勝ち記事」を追加データとして投入
+- **現状** (2026-04-24):
+  - Aurelie（美容/MEGUMI角栓溶解法）92チャンク → dominant E:24/B:16/D:15/C:13/A:10 = 権威×オファー強押し型
+  - Proust（ワキガ/プルーストクリーム2.0）55チャンク → dominant C:15/B:11/D:8/A:4/E:3 = 問題再定義×論理メカニズム型
+  - 総 147チャンク検索空間、戦略タイプ対照性が可視化されている
+- **次フェーズ**:
+  - Squad Beyond MCP（`getArticleHtml`, `listAbTestDailyReports`）連携で画像URL解決＋成果データ紐付け
+  - マルチモーダル画像埋め込みで視覚要素の定量化
+  - 20-30記事蓄積でジャンル別戦略タイプの型化（benchmark.json の進化版）
+- **実装コスト**: 中（初期構築完了、記事追加は `/kiji-rag-add` で半自動）
 
 ---
 
