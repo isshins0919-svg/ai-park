@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>ameru ｜ はじめて編んだのに、ちゃんと可愛かった。</title>
+<meta name="description" content="らぶいーず® × ameru 公式あみぐるみキット。編み始めが完成した状態でお届け。世界一やさしい、はじめての1体。">
+<style>
+  :root{
+    --ink:#2a3440; --ink-soft:#4a5766; --cream:#f7f1e6; --ivory:#fbf7ef;
+    --blue:#bcd8e8; --blue-deep:#6ea6c2; --blush:#e8b5b5; --gold:#c9a36a;
+    --stock:#e25c4a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#ede6d8;color:var(--ink);
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    -webkit-font-smoothing:antialiased;line-height:1.7;font-feature-settings:"palt";}
+  .stage{max-width:420px;margin:0 auto;background:var(--ivory);
+    box-shadow:0 0 40px rgba(0,0,0,.08);overflow:hidden;}
+  .scr{position:relative;width:100%;aspect-ratio:9/16;overflow:hidden;}
+  .scr img{width:100%;height:100%;object-fit:cover;display:block;}
+  .ov{position:absolute;inset:0;display:flex;flex-direction:column;padding:24px;}
+  .top{align-self:flex-start}
+  .mid{margin:auto 0}
+  .bot{margin-top:auto}
+
+  /* typography */
+  .gothic{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;}
+  .hed{font-size:28px;font-weight:700;line-height:1.4;letter-spacing:.02em;
+    text-shadow:0 1px 10px rgba(255,255,255,.55)}
+  .sub{font-size:13px;color:var(--ink-soft);margin-top:8px;letter-spacing:.05em}
+  .tag{display:inline-block;font-size:11px;letter-spacing:.15em;padding:5px 10px;
+    border:1px solid var(--ink);border-radius:999px;background:rgba(255,255,255,.7);
+    text-transform:none}
+  .badge{display:inline-block;font-size:11px;padding:4px 10px;border-radius:4px;
+    background:var(--blue-deep);color:#fff;letter-spacing:.1em}
+
+  /* sections between screens */
+  .strip{padding:36px 28px;text-align:center;background:var(--ivory);}
+  .strip h2{font-size:22px;line-height:1.55;font-weight:700;color:var(--ink)}
+  .strip p{font-size:13px;color:var(--ink-soft);margin-top:10px;line-height:2}
+  .divider{width:40px;height:1px;background:var(--ink);margin:22px auto;opacity:.3}
+
+  /* FV */
+  .s01 .hed{font-size:30px;color:var(--ink)}
+  .s01 .tag-row{display:flex;gap:8px;flex-wrap:wrap}
+
+  /* Empathy */
+  .s02 .neg{font-size:14px;color:#7a6a5c;line-height:2;
+    background:rgba(251,247,239,.7);padding:10px 14px;border-radius:6px;display:inline-block}
+  .s02 .pos{font-size:22px;font-weight:700;line-height:1.55;color:#2a3440}
+
+  /* only1 */
+  .s03 .hed{font-size:26px}
+  .s03 .stamp{position:absolute;top:22px;right:22px;width:84px;height:84px;
+    border-radius:50%;background:var(--blue-deep);color:#fff;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-size:11px;line-height:1.4;font-weight:700;transform:rotate(-8deg);
+    box-shadow:0 6px 20px rgba(110,166,194,.35)}
+
+  /* yarn */
+  .s04 .list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;
+    font-size:12px;color:var(--ink);margin-top:14px}
+  .s04 .list div{background:rgba(255,255,255,.78);padding:8px 10px;border-radius:6px;
+    display:flex;align-items:center;gap:8px}
+  .s04 .dot{width:10px;height:10px;border-radius:50%}
+
+  /* video */
+  .s05 .chap{font-size:11px;color:var(--ink-soft);margin-top:6px;line-height:1.9}
+
+  /* chars */
+  .s06 .hed{font-size:24px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.25)}
+  .s06 .sub{color:rgba(255,255,255,.92);text-shadow:0 1px 8px rgba(0,0,0,.2)}
+  .s06 .chip{display:inline-block;font-size:10px;letter-spacing:.1em;padding:4px 8px;
+    background:rgba(255,255,255,.88);border-radius:999px;margin:2px 4px 0 0}
+
+  /* delivery */
+  .s07 .timeline{position:absolute;inset:0;display:flex;flex-direction:column;
+    justify-content:center;padding:60px 24px}
+  .s07 .row{display:flex;align-items:center;gap:12px;margin:7px 0;
+    background:rgba(255,255,255,.72);border-radius:8px;padding:8px 12px;
+    backdrop-filter:blur(4px)}
+  .s07 .n{font-weight:700;font-size:14px;color:var(--ink);width:22px}
+  .s07 .nm{font-weight:700;font-size:13px}
+  .s07 .note{font-size:11px;color:var(--ink-soft);margin-left:auto}
+
+  /* ugc */
+  .s08 .hed{font-size:24px}
+
+  /* offer */
+  .s09{background:var(--cream)}
+  .s09 .card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:86%;background:rgba(255,255,255,.96);border-radius:12px;padding:22px;
+    box-shadow:0 14px 40px rgba(42,52,64,.12);text-align:center}
+  .s09 .label{font-size:11px;letter-spacing:.18em;color:var(--blue-deep);font-weight:700}
+  .s09 .h{font-size:24px;font-weight:700;margin:8px 0 14px}
+  .s09 table{width:100%;font-size:13px;border-collapse:collapse}
+  .s09 td{padding:8px 6px;border-bottom:1px dashed #d7cfc1}
+  .s09 td:last-child{text-align:right;font-weight:700}
+  .s09 tr:last-child td{border:0;padding-top:14px;font-size:15px;color:var(--ink)}
+  .s09 .feat{margin-top:14px;font-size:12px;color:var(--ink-soft);line-height:2;text-align:left}
+  .s09 .feat div::before{content:"✓  ";color:var(--blue-deep);font-weight:700}
+  .s09 .stock{margin-top:14px;font-size:11px;color:var(--stock);font-weight:700;letter-spacing:.1em}
+
+  /* CTA */
+  .s10 .hed{font-size:32px;color:#2a3440;text-shadow:0 2px 14px rgba(255,255,255,.6)}
+  .ctabtn{display:block;width:90%;margin:18px auto 0;padding:18px 20px;
+    background:linear-gradient(180deg,#6ea6c2,#517f98);color:#fff;
+    text-align:center;font-weight:700;font-size:17px;letter-spacing:.08em;
+    border-radius:999px;text-decoration:none;
+    box-shadow:0 10px 30px rgba(81,127,152,.35);
+    font-family:"Hiragino Sans",sans-serif}
+  .ctabtn small{display:block;font-weight:400;font-size:11px;opacity:.9;margin-top:4px;letter-spacing:.2em}
+  .reassure{display:flex;justify-content:space-around;font-size:10.5px;color:var(--ink-soft);
+    margin-top:14px;letter-spacing:.05em}
+
+  /* sticky CTA */
+  .sticky{position:sticky;bottom:0;left:0;right:0;z-index:10;
+    background:linear-gradient(180deg,rgba(251,247,239,0),rgba(251,247,239,.98) 30%);
+    padding:14px 16px 18px;}
+  .sticky .ctabtn{margin:0 auto;width:100%;max-width:360px}
+
+  /* footer */
+  footer{padding:30px 24px 70px;text-align:center;font-size:11px;color:#8a8070;
+    background:var(--ivory);letter-spacing:.1em;line-height:2}
+  footer .mark{font-size:14px;letter-spacing:.3em;color:var(--ink);margin-bottom:10px}
+
+  /* fade-in */
+  .fade{opacity:0;transform:translateY(12px);transition:opacity .9s ease,transform .9s ease}
+  .fade.in{opacity:1;transform:none}
+
+  @media (max-width:380px){
+    .hed{font-size:25px!important}
+    .strip h2{font-size:19px}
+  }
+</style>
+</head>
+<body>
+
+<main class="stage">
+
+  <!-- 01 FV -->
+  <section class="scr s01">
+    <img src="screens/01.png" alt="ameru あみぐるみキット">
+    <div class="ov">
+      <div class="top">
+        <div class="tag gothic">らぶいーず® 公式あみぐるみキット</div>
+      </div>
+      <div class="bot fade">
+        <h1 class="hed">はじめて編んだのに、<br>ちゃんと可愛かった。</h1>
+        <p class="sub gothic">ameru × らぶいーず®｜編み始め、完成済み。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip fade">
+    <h2 class="gothic">あみぐるみ、はじめてでも<br>必ず、完成まで。</h2>
+    <p>世界一やさしい仕組みで、<br>はじめての1体をあなたの手に。</p>
+  </div>
+
+  <!-- 02 Empathy -->
+  <section class="scr s02">
+    <img src="screens/02.png" alt="挫折する理由">
+    <div class="ov">
+      <div class="top fade">
+        <div class="neg gothic">
+          「あみず、読めない。」<br>「最初の一段で、つまづく。」<br>「結局、途中で置いてしまう。」
+        </div>
+      </div>
+      <div class="bot fade">
+        <p class="pos gothic">だから、<br>世界一やさしく作りました。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Only1 -->
+  <section class="scr s03">
+    <img src="screens/03.png" alt="編み始め完成済み">
+    <div class="ov">
+      <div class="stamp gothic">ameru<br>ONLY 1</div>
+      <div class="bot fade">
+        <h2 class="hed">いちばん難しい最初の一目、<br>編んでおきました。</h2>
+        <p class="sub gothic">編み始めが完成した状態でお届け。<br>だから、いきなり楽しいところから始められます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Yarn -->
+  <section class="scr s04">
+    <img src="screens/04.png" alt="独自開発糸">
+    <div class="ov">
+      <div class="top fade">
+        <div class="badge gothic">ameru オリジナル糸</div>
+        <h2 class="hed" style="margin-top:10px">糸が、編み手に優しい。</h2>
+        <p class="sub gothic">割れない。毛羽立たない。<br>編み目が、くっきり見える。</p>
+      </div>
+      <div class="bot fade">
+        <div class="list gothic">
+          <div><span class="dot" style="background:#bcd8e8"></span>すもっぴ 水色</div>
+          <div><span class="dot" style="background:#f2c6cf"></span>ぴょんちー ピンク</div>
+          <div><span class="dot" style="background:#f1e3b8"></span>にゃぽ クリーム</div>
+          <div><span class="dot" style="background:#c8bfd4"></span>うるる 薄紫</div>
+          <div><span class="dot" style="background:#c5dfc9"></span>ぱおぱお ミント</div>
+          <div style="color:var(--ink-soft)">全色、視認性最優先</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Video -->
+  <section class="scr s05">
+    <img src="screens/05.png" alt="動画教材">
+    <div class="ov">
+      <div class="bot fade">
+        <div class="tag gothic">LINEから、あなたのペースで届く</div>
+        <h2 class="hed" style="margin-top:10px">スマホ片手に、5分ずつ。</h2>
+        <p class="sub gothic">右利きも左利きも。<br>字幕だけでも分かる縦型動画。</p>
+        <p class="chap gothic">わ編み ／ こま編み ／ 増やし目 ／ とじ方 ／ 組み立て</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip fade">
+    <h2 class="gothic">らぶいーず®、<br>公式5体。</h2>
+    <p>すもっぴ・ぴょんちー・にゃぽ・うるる・ぱおぱお。<br>ぜんぶ、あなたの手で。</p>
+    <div class="divider"></div>
+  </div>
+
+  <!-- 06 Characters -->
+  <section class="scr s06">
+    <img src="screens/06.png" alt="らぶいーず 公式5体">
+    <div class="ov">
+      <div class="bot fade">
+        <h2 class="hed gothic">5体、ぜんぶ、<br>自分の手で。</h2>
+        <p class="sub">
+          <span class="chip">すもっぴ</span><span class="chip">ぴょんちー</span>
+          <span class="chip">にゃぽ</span><span class="chip">うるる</span>
+          <span class="chip">ぱおぱお</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 Delivery -->
+  <section class="scr s07">
+    <img src="screens/07.png" alt="お届け順">
+    <div class="ov timeline fade">
+      <div class="row"><div class="n">1</div><div>
+        <div class="nm">すもっぴ</div>
+        <div class="note gothic" style="font-size:11px;color:var(--ink-soft)">主人公・入門</div>
+      </div></div>
+      <div class="row"><div class="n">2</div><div>
+        <div class="nm">ぴょんちー</div>
+        <div class="note gothic" style="font-size:11px;color:var(--blush);font-weight:700">🎉 ①組目カップル完成</div>
+      </div></div>
+      <div class="row"><div class="n">3</div><div>
+        <div class="nm">にゃぽ</div>
+        <div class="note gothic" style="font-size:11px;color:var(--ink-soft)">仲間が広がる</div>
+      </div></div>
+      <div class="row"><div class="n">4</div><div>
+        <div class="nm">うるる</div>
+        <div class="note gothic" style="font-size:11px;color:var(--blush);font-weight:700">🎉 ②組目カップル完成</div>
+      </div></div>
+      <div class="row"><div class="n">5</div><div>
+        <div class="nm">ぱおぱお</div>
+        <div class="note gothic" style="font-size:11px;color:var(--gold);font-weight:700">✨ 全員、集合</div>
+      </div></div>
+    </div>
+  </section>
+
+  <div class="strip fade">
+    <h2 class="gothic">5回で、世界が<br>ひとつ、完成する。</h2>
+    <p>2回目にカップルが揃い、<br>5回目で全員が集まる物語。</p>
+  </div>
+
+  <!-- 08 Fiero -->
+  <section class="scr s08">
+    <img src="screens/08.png" alt="できた瞬間">
+    <div class="ov">
+      <div class="bot fade">
+        <h2 class="hed gothic">できた瞬間、<br>スマホを握っていた。</h2>
+        <p class="sub gothic">自分で編んだ1体は、世界でひとつ。<br>撮りたくなる。見せたくなる。</p>
+        <p class="sub gothic" style="margin-top:8px;color:var(--ink)">#ameruできた ／ #らぶいーず</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 Offer -->
+  <section class="scr s09">
+    <img src="screens/09.png" alt="オファー">
+    <div class="card fade">
+      <div class="label gothic">OFFER</div>
+      <div class="h gothic">はじめの1体は、<br>¥1,980。</div>
+      <table class="gothic">
+        <tr><td>F1（初回）体験価格</td><td>¥1,980</td></tr>
+        <tr><td>F2〜F5 通常価格</td><td>¥4,200 × 4回</td></tr>
+        <tr><td>5回総額（税込）</td><td>¥18,780</td></tr>
+      </table>
+      <div class="feat">
+        <div>かぎ針・糸・パーツ、すべて同梱</div>
+        <div>LINEで届く動画教材つき</div>
+        <div>編み始め、完成済み</div>
+        <div>いつでも解約OK</div>
+      </div>
+      <div class="stock gothic">限定300セット</div>
+    </div>
+  </section>
+
+  <!-- 10 CTA -->
+  <section class="scr s10">
+    <img src="screens/10.png" alt="今、手を動かす">
+    <div class="ov">
+      <div class="mid fade" style="text-align:center">
+        <h2 class="hed gothic">今、手を動かす。</h2>
+        <p class="sub gothic" style="color:var(--ink)">はじめての1体が、<br>自分を少し好きにさせる。</p>
+      </div>
+      <div class="bot fade">
+        <a class="ctabtn gothic" href="#order">¥1,980 で はじめてみる
+          <small>5回定期便 ／ 単品購入も選べます</small>
+        </a>
+        <div class="reassure gothic">
+          <span>いつでも解約OK</span><span>送料込み</span><span>限定300セット</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sticky CTA -->
+  <div class="sticky">
+    <a class="ctabtn gothic" href="#order">¥1,980 で はじめてみる</a>
+  </div>
+
+  <footer>
+    <div class="mark gothic">ameru</div>
+    らぶいーず® 日本テレビ<br>
+    株式会社ヨミテ<br>
+    <span style="opacity:.6">© ameru. All rights reserved.</span>
+  </footer>
+
+</main>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.15});
+  document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

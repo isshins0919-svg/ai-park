@@ -1,0 +1,65 @@
+{
+  "base_script": "cream2_001",
+  "new_script": "cream2_002",
+  "analyzed_at": "2026-04-24",
+  "full_similarity": 0.9402,
+  "sections": [
+    {
+      "section": "hook",
+      "sim": 0.7234,
+      "target": "0.70〜0.85(新角度)",
+      "judge": "✅ 理想"
+    },
+    {
+      "section": "problem",
+      "sim": 0.9193,
+      "target": "0.70〜0.85(新角度)",
+      "judge": "⚠️ 変化弱い"
+    },
+    {
+      "section": "urgency",
+      "sim": 0.6486,
+      "target": "0.70〜0.85(新角度)",
+      "judge": "✓ 大幅刷新"
+    },
+    {
+      "section": "solution_origin",
+      "sim": 0.9246,
+      "target": "0.70〜0.85(新角度)",
+      "judge": "⚠️ 変化弱い"
+    },
+    {
+      "section": "mechanism",
+      "sim": 0.9009,
+      "target": "0.70〜0.85(新角度)",
+      "judge": "⚠️ 変化弱い"
+    },
+    {
+      "section": "social_proof",
+      "sim": 1.0,
+      "target": "0.95+(保持)",
+      "judge": "✅ 勝ち要素保持"
+    },
+    {
+      "section": "offer",
+      "sim": 1.0,
+      "target": "0.95+(保持)",
+      "judge": "✅ 勝ち要素保持"
+    },
+    {
+      "section": "risk_reversal",
+      "sim": 1.0,
+      "target": "0.95+(保持)",
+      "judge": "✅ 勝ち要素保持"
+    },
+    {
+      "section": "cta",
+      "sim": 1.0,
+      "target": "0.95+(保持)",
+      "judge": "✅ 勝ち要素保持"
+    }
+  ],
+  "novel_avg": 0.8234,
+  "preserved_avg": 1.0,
+  "verdict": {
+    "novel_ok": 

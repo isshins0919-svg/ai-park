@@ -382,7 +382,7 @@ out = f'research-park/output/{slug}'
 os.makedirs(out, exist_ok=True)
 
 def embed(text):
-    r = client.models.embed_content(model='gemini-embedding-001', contents=text)
+    r = client.models.embed_content(model='gemini-embedding-2-preview', contents=text)
     return r.embeddings[0].values
 
 def cosine_sim(a, b):

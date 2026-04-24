@@ -1,6 +1,6 @@
 # knowledge/ — 目次
 
-> VOYAGE号の全ナレッジDB（30ファイル / 2026-04-18）
+> VOYAGE号の全ナレッジDB（31ファイル / 2026-04-24）
 > スキルは必要時に読む。起動時には読まない
 >
 > 📌 進化の記録: [CHANGELOG.md](../../CHANGELOG.md)
@@ -14,8 +14,19 @@
 |---|---|
 | [pak-philosophy.md](pak-philosophy.md) | **マーケ哲学の核**（357行）。全スキル共通の判断基準。3価値観・3つの魂・戦略翻訳・KV哲学・エンベディング哲学・組織設計・プランモード・フィードバック・ポメ太DIVE9原則 |
 | [park-architecture.md](park-architecture.md) | Park Skillsパイプライン設計原則 |
-| [ccdd-strategy.md](ccdd-strategy.md) | CCDD勉強会からのAI活用方針（Phase 1-4構想） |
 | [lp-n1-framework.md](lp-n1-framework.md) | **LP N1フレーム**（買う瞬間の動機軸）。`/lp-park`から必読。ameru案件で確立 |
+
+---
+
+## 🧲 ベクトル活用
+
+Gemini embedding-2 を核にしたベクトル活用3点セット。
+
+| ファイル | 役割 |
+|---|---|
+| [embedding-2-playbook.md](embedding-2-playbook.md) | **いつ何に使うか**（ユースケース判断マップ・2026-04-24新設） |
+| [ccdd-strategy.md](ccdd-strategy.md) | **なぜやるか**（全体方針・Phase 1-4構想） |
+| [vector-utils.md](vector-utils.md) | **どう書くか**（共通コード・`embed()` / `cosine_sim()`） |
 
 ---
 
@@ -68,7 +79,6 @@
 | [slack-error-notification.md](slack-error-notification.md) | Slack通知設定 |
 | [video-edit-kantoku-rules.md](video-edit-kantoku-rules.md) | 動画編集カントクルール |
 | [google-slides-recipe.md](google-slides-recipe.md) | Googleスライド生成レシピ |
-| [vector-utils.md](vector-utils.md) | ベクトルユーティリティ設計 |
 
 ---
 

@@ -60,6 +60,71 @@ except Exception as _e:
         return
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("APP_SECRET_KEY", "kosuri-secret-2026")
+
+# ─── パスワード認証 ────────────────────────────────────────────
+APP_PASSWORD = os.environ.get("APP_PASSWORD", "kosuri.yomite")
+_NO_AUTH_ROUTES = {"/login", "/health"}  # 認証不要なルート
+
+@app.before_request
+def require_login():
+    from flask import session, request, redirect, url_for
+    if request.path in _NO_AUTH_ROUTES:
+        return
+    if not session.get("authenticated"):
+        return redirect("/login")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    from flask import session, request, redirect
+    error = ""
+    if request.method == "POST":
+        if request.form.get("password") == APP_PASSWORD:
+            session["authenticated"] = True
+            return redirect("/")
+        error = "パスワードが違います"
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KOSURIちゃん — ログイン</title>
+  <style>
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fff0f6 0%, #f3f0ff 100%);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; }}
+    .card {{ background: #fff; border-radius: 24px; padding: 48px 40px;
+             box-shadow: 0 8px 32px rgba(0,0,0,0.08); width: 100%; max-width: 380px; text-align: center; }}
+    .logo {{ font-size: 2rem; margin-bottom: 8px; }}
+    h1 {{ font-size: 1.2rem; font-weight: 900; color: #1e1b4b; margin-bottom: 4px; }}
+    p {{ font-size: 0.82rem; color: #94a3b8; margin-bottom: 32px; }}
+    input {{ width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0;
+             border-radius: 12px; font-size: 1rem; font-family: inherit;
+             outline: none; transition: 0.2s; letter-spacing: 0.05em; }}
+    input:focus {{ border-color: #ec4899; }}
+    button {{ width: 100%; margin-top: 16px; padding: 14px;
+              background: linear-gradient(135deg, #ec4899, #8b5cf6);
+              color: #fff; border: none; border-radius: 12px;
+              font-size: 1rem; font-weight: 800; font-family: inherit;
+              cursor: pointer; transition: 0.2s; }}
+    button:hover {{ opacity: 0.9; }}
+    .error {{ color: #ef4444; font-size: 0.82rem; margin-top: 12px; }}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">🎬</div>
+    <h1>FV量産Studio KOSURIちゃん</h1>
+    <p>パスワードを入力してください</p>
+    <form method="POST">
+      <input type="password" name="password" placeholder="パスワード" autofocus autocomplete="current-password">
+      <button type="submit">ログイン</button>
+    </form>
+    {"<div class='error'>⚠️ " + error + "</div>" if error else ""}
+  </div>
+</body>
+</html>"""
 
 # ─── Google Sheets Integration (optional) ─────────────────
 SPREADSHEET_ID = os.environ.get(

@@ -21,7 +21,7 @@ import numpy as np
 BASE = Path(__file__).resolve().parent.parent
 KNOWLEDGE_DIR = BASE / ".claude" / "knowledge"
 DB_PATH = Path(__file__).resolve().parent / "knowledge_vectors.db"
-EMBED_MODEL = "gemini-embedding-001"
+EMBED_MODEL = "gemini-embedding-2-preview"
 EMBED_DELAY = 0.35  # seconds between API calls
 
 # === Category Map ===

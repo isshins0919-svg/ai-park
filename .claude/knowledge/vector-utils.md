@@ -25,7 +25,7 @@ client = genai.Client(api_key=os.environ['GEMINI_API_KEY_1'])
 
 def embed(text):
     """テキストをGemini Embeddingでベクトル化"""
-    r = client.models.embed_content(model='gemini-embedding-001', contents=text)
+    r = client.models.embed_content(model='gemini-embedding-2-preview', contents=text)
     return r.embeddings[0].values
 
 def cosine_sim(a, b):

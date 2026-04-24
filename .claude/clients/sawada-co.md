@@ -19,7 +19,7 @@
 すべて `~/Desktop/_clients/sawada-co/` 配下に集約済み。
 
 ### 経営・財務
-- `★【全UNIT】 第57期 SAWADA 経営計画（PDCA）/` — 事業部別経営計画（全11 UNIT: 原糸SOB / 原糸itto / 原糸D&D+TQC / PRODUCTION / 製品OEM / 製品D&D / SAWADA MARCHE&広報 / ADAWAS / ヘルスケア / セランタamiamie / A&A / 澤田上海）
+- `★【全UNIT】 第57期 SAWADA 経営計画（PDCA）/` — 事業部別経営計画（全12 UNIT: 原糸SOB / 原糸itto / 原糸D&D+TQC / PRODUCTION / 製品OEM / 製品D&D / SAWADA MARCHE&広報 / ADAWAS / ヘルスケア / セランタamiamie / A&A / 澤田上海）
 - `澤田AIコンサル/🔵51～56期事業部別業績表＋57～61期成長戦略シュミレーション.xlsx` — 過去6期実績 + 今後5期シミュ
 - `澤田AIコンサル/澤田株式会社_経営分析提言レポートv2_2026年3月.pdf` — 経営分析
 - `澤田AIコンサル/澤田株式会社 成長戦略レポート（2026年4月版）.pdf` — 成長戦略

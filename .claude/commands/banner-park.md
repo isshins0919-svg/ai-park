@@ -368,7 +368,26 @@ for spec in bannerSpecs:
 
 ---
 
-## Phase 4: Nano Banana Pro 画像生成
+## Phase 4: 画像生成（エンジン選択可）
+
+### エンジン選択
+
+ユーザー指示で切替可能（未指定時は `gemini`）:
+
+| engine | モデル | 強み | 料金目安/枚 |
+|---|---|---|---|
+| `gemini`（デフォルト） | `gemini-3-pro-image-preview` | 日本語コピー・人物表情・ロゴ参照入力に強い | 無料枠＋キー3本ローテ |
+| `openai` | `gpt-image-1` | テキスト入り画像・正確な構図指示・minimalist系に強い | $0.042 (medium) |
+| `both` | 両エンジン並列生成 | A/Bで比較したい時。banners_gemini/ と banners_openai/ に分けて保存 | 合算 |
+
+ユーザー発話例と解釈:
+- 「Banner Parkで○○」→ `gemini`（デフォルト）
+- 「Banner Parkで○○、OpenAIで出して」→ `openai`
+- 「Gemini と OpenAI 両方で比較したい」→ `both`
+
+---
+
+### 4-A: Gemini (Nano Banana Pro) ※engine=gemini/both 時
 
 N枚を `gemini-3-pro-image-preview` で生成。
 
@@ -451,6 +470,81 @@ for i, spec in enumerate(bannerSpecs):
 
 print(f'\\n=== 生成結果: {ok}/{len(bannerSpecs)} OK, {ng}/{len(bannerSpecs)} NG ===')
 ```
+
+---
+
+### 4-B: OpenAI gpt-image-1 ※engine=openai/both 時
+
+N枚を `gpt-image-1` で生成。ロゴ参照は非対応のため、プロンプトに商品/ブランド要素を言葉で埋め込む。
+
+```python
+import sys, os, json, time
+sys.path.insert(0, '/Users/ca01224/Desktop/一進VOYAGE号/.claude/scripts')
+from openai_image import generate_image, OpenAIImageError
+
+# aspect_ratio → size マッピング
+ASPECT_TO_SIZE = {
+    '1:1': '1024x1024',
+    '9:16': '1024x1536',
+    '16:9': '1536x1024',
+    '4:5': '1024x1024',   # 近似（gpt-image-1は9:16/1:1/16:9のみ）
+    '3:4': '1024x1024',
+}
+
+slug = '{slug}'
+out_dir = f'banner-park/output/{slug}'
+# engine=both の場合は banners_openai/ に分離、openai単独なら banners/
+banner_subdir = 'banners_openai' if engine == 'both' else 'banners'
+banner_dir = f'{out_dir}/{banner_subdir}'
+spec_dir = f'{out_dir}/specs'
+os.makedirs(banner_dir, exist_ok=True)
+os.makedirs(spec_dir, exist_ok=True)
+
+ok = ng = 0
+
+for i, spec in enumerate(bannerSpecs):
+    fn_base = f"banner_{spec['bannerIndex']:02d}"
+    fp = os.path.join(banner_dir, f"{fn_base}.png")
+    if os.path.exists(fp):
+        ok += 1
+        continue
+
+    size = ASPECT_TO_SIZE.get(spec['aspectRatio'], 'auto')
+    prompt = spec['fullBannerPrompt']
+
+    try:
+        paths = generate_image(
+            prompt=prompt,
+            out_dir=banner_dir,
+            filename_prefix=fn_base,
+            size=size,
+            quality='medium',   # 'high' にすると品質UP($0.17/枚)
+            n=1,
+        )
+        # 指定ファイル名にリネーム
+        if paths and os.path.basename(paths[0]) != f"{fn_base}.png":
+            os.rename(paths[0], fp)
+        ok += 1
+    except OpenAIImageError as e:
+        print(f"[NG] banner_{spec['bannerIndex']:02d}: {e}")
+        ng += 1
+
+    time.sleep(1)
+
+    # bannerSpec を JSON として保存（Gemini 4-A と同じ）
+    spec_path = os.path.join(spec_dir, f"banner_{spec['bannerIndex']:02d}_spec.json")
+    with open(spec_path, 'w', encoding='utf-8') as f:
+        json.dump(spec, f, ensure_ascii=False, indent=2)
+
+print(f'\\n=== OpenAI生成結果: {ok}/{len(bannerSpecs)} OK, {ng}/{len(bannerSpecs)} NG ===')
+```
+
+### エンジン別の注意点
+
+- **ロゴ入り**: OpenAIは参照画像非対応。ロゴ必須ならGeminiのみ。または `assets/{slug}/logo.png` を OpenAI Image Edits API 経由で後合成する拡張が必要（将来実装）
+- **日本語テキスト**: Gemini優位。OpenAIは英語/シンプル日本語まで
+- **コスト**: `openai` 単独 medium で 5枚 $0.21 / 10枚 $0.42 / 20枚 $0.84。高品質は約4倍
+- **`both` 時の保存**: `banners/` (Gemini) と `banners_openai/` (OpenAI) に分離。Phase 5-A/B/C の検証は両方に対して走らせる
 
 ---
 
