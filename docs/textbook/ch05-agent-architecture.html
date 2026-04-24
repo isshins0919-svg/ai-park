@@ -87,10 +87,203 @@
 
 <div class="divider"></div>
 
+<!-- ═══ ケーススタディ: 最高級の組織 ═══ -->
+<div class="section">
+  <div class="section-label">CASE STUDY — 最高級の組織を解剖する</div>
+  <h2>実例で見る — 記事LP「CKOクルー」という組織</h2>
+
+  <p>抽象論の前に、<strong>実際に動いている最高級の組織</strong>を1つ見せます。この組織を理解できれば、自分の業務にも応用できる。</p>
+
+  <p>これは「<strong>記事LP（ランディングページ）の品質を診断・治療・テスト設計まで一気通貫で行うAI組織</strong>」。<br>
+  人間の医療チーム（院長 + 専門医 + 執刀医 + 薬剤師 + 臨床研究員）をそのままAIに置き換えた設計です。</p>
+
+  <div class="why-box">
+    <div class="label">なぜこの組織が「最高級」なのか</div>
+    <p>① <strong>指揮官は一切実行しない</strong>（判断と指名だけ。一流CEOの動き方）<br>
+    ② <strong>モデルを使い分ける</strong>（Opus=判断、Sonnet=創造、Haiku=検証。適材適所）<br>
+    ③ <strong>3フェーズ一気通貫</strong>（診断→治療→テスト。やりっぱなしにしない）<br>
+    ④ <strong>Gate評価フレームワーク</strong>（読者の体験順に評価する=上流優先）</p>
+  </div>
+
+  <h3 style="margin-top:28px;">🏢 組織図（全体像）</h3>
+
+  <div class="diagram" style="text-align:left; line-height:1.9;">
+    <span class="a">━━━━━━━━ CKO（院長・全体の指揮官）━━━━━━━━</span><br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>判断と指名のみ。自分では実行しない。</strong><br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;│<br>
+    &emsp;&emsp;┌─────────────┼─────────────┐<br>
+    &emsp;&emsp;▼&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;▼&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;▼<br>
+    <span class="g">Phase 1: 診断</span>&emsp;&emsp;<span class="p">Phase 2: 治療</span>&emsp;&emsp;<span class="o">Phase 3: テスト設計</span><br>
+    &emsp;（8体並列）&emsp;&emsp;&emsp;（2体直列）&emsp;&emsp;&emsp;（1体 + 承認）<br>
+    <br>
+    <span class="g">━━ Phase 1 / 8体の専門医が並列で診察 ━━</span><br>
+    &emsp;<strong>Gate 1: STOP</strong>&emsp;🎣 フッククルー ← 冒頭で止めれるか<br>
+    &emsp;<strong>Gate 2: FLOW</strong>&emsp;🌊 フロークルー ← 脳死で読めるか<br>
+    &emsp;<strong>Gate 3: FEEL</strong>&emsp;🎢 アーククルー ← 感情が動くか<br>
+    &emsp;<strong>Gate 4: TRUST</strong>&emsp;⚓ トラストクルー ← 信じられるか<br>
+    &emsp;<strong>Gate 5: ACT</strong>&emsp;&emsp;🔔 CTAクルー ← 背中押されるか<br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;💎 オファークルー ← 買いたくなるか<br>
+    &emsp;<strong>補助</strong>&emsp;&emsp;&emsp;&emsp;🧭 コンパスクルー ← 勝ちパターン実装率<br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;👁️ ビジュアルクルー ← 視覚設計<br>
+    <br>
+    <span class="p">━━ Phase 2 / 2体が直列でループ ━━</span><br>
+    &emsp;📝 <strong>ライタークルー</strong>（Sonnet） ← 実際に書き換える<br>
+    &emsp;&emsp;&emsp;↓<br>
+    &emsp;⚖️ <strong>バリデータークルー</strong>（Haiku） ← 品質5項目+薬機法チェック<br>
+    &emsp;&emsp;&emsp;↓ REVISE なら最大2回戻る<br>
+    &emsp;✅ CKO最終承認<br>
+    <br>
+    <span class="o">━━ Phase 3 / テスト設計 ━━</span><br>
+    &emsp;🧪 <strong>テストクルー</strong>（Haiku） ← ABテストカード + 手順書<br>
+    &emsp;&emsp;&emsp;↓<br>
+    &emsp;✅ CKO承認 → Slackに全結果送信
+  </div>
+
+  <h3 style="margin-top:28px;">👔 各役職の役割と「なぜ分けたか」</h3>
+
+  <table>
+    <tr>
+      <th>役職</th>
+      <th>担当</th>
+      <th>モデル</th>
+      <th>なぜ分けた？</th>
+    </tr>
+    <tr>
+      <td><strong>🧭 CKO</strong></td>
+      <td>N1分析・指示・最終判断</td>
+      <td>Opus<br>（最上位）</td>
+      <td>「誰のための記事か」を決めるのは組織で最も重要。判断に集中させる</td>
+    </tr>
+    <tr>
+      <td>🎣🌊🎢⚓🔔💎🧭👁️<br>診断8クルー</td>
+      <td>各専門領域の評価</td>
+      <td>Sonnet<br>（中位）</td>
+      <td>8観点を1体でやるとCWが爆発。独立CWで並列実行</td>
+    </tr>
+    <tr>
+      <td>📝 ライタークルー</td>
+      <td>実際の文章書き換え</td>
+      <td>Sonnet<br>（中位）</td>
+      <td>創造タスクは思考力が必要。CKOは指示だけ</td>
+    </tr>
+    <tr>
+      <td>⚖️ バリデーター</td>
+      <td>品質・薬機法チェック</td>
+      <td>Haiku<br>（軽量）</td>
+      <td>チェックリスト処理は軽量モデルで十分・高速・低コスト</td>
+    </tr>
+    <tr>
+      <td>🧪 テストクルー</td>
+      <td>ABテスト設計</td>
+      <td>Haiku<br>（軽量）</td>
+      <td>テンプレート出力なのでHaikuで足りる</td>
+    </tr>
+  </table>
+
+  <div class="highlight" style="margin-top:24px;">
+    <div class="hl-emoji">💡</div>
+    <div class="hl-text">この設計の「えぐい」ポイント</div>
+    <div class="hl-sub">
+      <strong>CKOは一切実行しない。</strong>医療現場の院長が手術しないのと同じ。<br>
+      判断者と実行者を分けることで、判断の質が落ちない。<br>
+      しかも下位モデル（Haiku）を上手く使うことで、<strong>コストを10倍下げながら品質を保つ</strong>。
+    </div>
+  </div>
+
+  <h3 style="margin-top:28px;">🔄 Gate評価フレームワーク — 上流優先の思想</h3>
+
+  <p>8クルーは横並びに見えるが、<strong>評価の優先順位は読者体験の順序</strong>で決まる:</p>
+
+  <div class="diagram" style="text-align:left;">
+    読者の体験順序 = 評価の優先順序<br>
+    <br>
+    &emsp;<span class="a">Gate 1: STOP</span>（止まるか？） ← フッククルー<br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;└→ 止まらなければ先は読まれない<br>
+    &emsp;<span class="g">Gate 2: FLOW</span>（流れるか？） ← フロークルー<br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;└→ 脳死で入らなければ訴求が届かない<br>
+    &emsp;<span class="p">Gate 3: FEEL</span>（感じるか？） ← アーククルー<br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;└→ 感情が動かなければ買いたくならない<br>
+    &emsp;<span class="o">Gate 4: TRUST</span>（信じるか？） ← トラストクルー<br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;└→ 信じなければ行動しない<br>
+    &emsp;<span class="y">Gate 5: ACT</span>（動くか？） ← CTA + オファークルー<br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;└→ 背中を押されなければ買わない<br>
+    <br>
+    <span class="a">★ must_fix（最優先改善点）は「最も早いGateの問題」から手を付ける</span><br>
+    &emsp;（下流がどんなに高くても、上流が崩れていれば効果は出ない）
+  </div>
+
+  <h3 style="margin-top:28px;">🛒 Amazon商品ページにそのまま転用できる</h3>
+
+  <p>この組織構造は、<strong>記事LPだけじゃなくAmazon商品ページ最適化にも使える</strong>。Lutemoの業務に置き換えるとこうなる:</p>
+
+  <table>
+    <tr>
+      <th>記事LP版（既存）</th>
+      <th>→</th>
+      <th>Amazon商品ページ版（Lutemo適用）</th>
+    </tr>
+    <tr>
+      <td>CKO（院長）</td>
+      <td>→</td>
+      <td><strong>商品戦略責任者</strong>（商品のN1・訴求軸決定）</td>
+    </tr>
+    <tr>
+      <td>🎣 フッククルー（Gate 1: STOP）</td>
+      <td>→</td>
+      <td><strong>タイトル・メイン画像クルー</strong>（検索結果で止めれるか）</td>
+    </tr>
+    <tr>
+      <td>🌊 フロークルー（Gate 2: FLOW）</td>
+      <td>→</td>
+      <td><strong>箇条書きクルー</strong>（スキャンで要点が入るか）</td>
+    </tr>
+    <tr>
+      <td>🎢 アーククルー（Gate 3: FEEL）</td>
+      <td>→</td>
+      <td><strong>A+コンテンツクルー</strong>（ストーリーで共感できるか）</td>
+    </tr>
+    <tr>
+      <td>⚓ トラストクルー（Gate 4: TRUST）</td>
+      <td>→</td>
+      <td><strong>レビュー・認証クルー</strong>（口コミ・認証マークで信じられるか）</td>
+    </tr>
+    <tr>
+      <td>🔔 CTAクルー（Gate 5: ACT）</td>
+      <td>→</td>
+      <td><strong>カート文言・クーポンクルー</strong>（買うボタンを押させるか）</td>
+    </tr>
+    <tr>
+      <td>📝 ライタークルー（治療）</td>
+      <td>→</td>
+      <td><strong>コピー書き換えクルー</strong>（実際のテキスト修正）</td>
+    </tr>
+    <tr>
+      <td>⚖️ バリデーター（品質チェック）</td>
+      <td>→</td>
+      <td><strong>Amazonガイドラインチェッカー</strong>（禁止ワード・文字数規定）</td>
+    </tr>
+    <tr>
+      <td>🧪 テストクルー（ABテスト）</td>
+      <td>→</td>
+      <td><strong>AMZ ABテストクルー</strong>（Amazon広告でABテスト設計）</td>
+    </tr>
+  </table>
+
+  <div class="why-box">
+    <div class="label">Lutemoメンバーへの持ち帰り</div>
+    <p>「組織の形」は一度作れば<strong>違う業務にも転用できる</strong>。<br>
+    記事LP用に作った組織を、Amazon・YouTube・メルマガ・広告クリエイティブ…と横展開する。これがエージェント設計の投資対効果が高い理由です。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
 <!-- ═══ 7つの設計原則 ═══ -->
 <div class="section">
   <div class="section-label">DESIGN PRINCIPLES</div>
   <h2>エージェント設計の7つの原則</h2>
+
+  <p>上のCKO組織は「7つの原則」をすべて満たしています。逆に言うと、これを守らないとあの組織にはならない。一つずつ見ていきます。</p>
 
   <div class="topic-card">
     <h3><span class="emoji">📐</span> 7つのルール</h3>
@@ -256,6 +449,22 @@
       <div class="term">NG信号</div>
       <p class="def">エージェント分割が必要なサイン。ループ3回NG・指示忘れ・ハルシネーションの3つ。</p>
     </div>
+    <div class="glossary-item">
+      <div class="term">オペス / ソネット / ハイク（Opus / Sonnet / Haiku）</div>
+      <p class="def">Claudeのモデル3兄弟。Opus=最上位・最賢い（判断向き）、Sonnet=中位・バランス型（創造向き）、Haiku=軽量・高速（チェック向き）。使い分けが組織設計のカギ。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">Gate評価</div>
+      <p class="def">ユーザー体験の順序で品質を評価する考え方。上流（冒頭）から下流（購入）へ並ぶゲートを順に突破できるかを見る。上流が崩れてたら下流改善は無意味、という思想。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">カントクパターン</div>
+      <p class="def">指揮官が一切自分で実行せず、判断と指名だけする設計パターン。医療の院長、映画の監督と同じ。判断の質を守るための役割分離。</p>
+    </div>
+    <div class="glossary-item">
+      <div class="term">must_fix</div>
+      <p class="def">「最優先で治すべき箇所」。最大3点に絞る。全部直そうとすると結果的に何も直らないから、インパクト順に並べて上から潰す思想。</p>
+    </div>
   </div>
 </div>
 
@@ -274,20 +483,29 @@
   <ol class="mission-steps">
     <li data-step="1">Island 01で作った「7パーツの一覧表」を振り返る</li>
     <li data-step="2">自分の業務タスクを「対話が必要」vs「独立で完結」に分類する</li>
-    <li data-step="3">Claude Codeで以下を実行:
+    <li data-step="3">Claude Codeで以下を実行（CKO組織図を参考にする）:
       <div class="code-block" style="margin-top:8px;">
         starter-kit/agent-design-principles.md を読んで、<br>
+        さらに、記事LP CKO組織（5つのGate + 治療2体 + テスト1体の構造）<br>
+        を参考にしてください。<br>
+        <br>
         以下の業務のエージェント組織図を設計してください。<br>
         <br>
         <span class="comment"># 業務内容</span><br>
-        - 部署: [あなたの部署]<br>
+        - 担当業務: [例: Amazon商品ページ最適化 / 広告運用 / 競合分析]<br>
         - 主要タスク: [3-5個列挙]<br>
-        - 使うツール: [Slack, Drive, etc.]<br>
+        - 使うツール: [Amazon Seller Central, 広告管理画面, etc.]<br>
         <br>
         <span class="comment"># 出力形式</span><br>
-        - オーケストレーター（commands/）: 何を担当？<br>
-        - サブエージェント（agents/）: 各1タスクで設計<br>
-        - 各エージェントの役割・ゴール・制約を明記
+        1. オーケストレーター（指揮官・commands/）: 何を判断する？<br>
+        2. 診断クルー（並列・agents/）: Gate 1〜5 のうち何が必要？<br>
+        3. 治療クルー（直列・agents/）: 実行役とチェック役<br>
+        4. テストクルー（agents/）: ABテスト設計<br>
+        <br>
+        各エージェントについて:<br>
+        - 役割・ゴール・制約<br>
+        - 使うモデル（Opus / Sonnet / Haiku）と理由<br>
+        - 上位/下位エージェントとの関係
       </div>
     </li>
     <li data-step="4">「7つの設計原則」に照らしてレビュー。特に「1体1タスク」を守れているか確認</li>
