@@ -1,0 +1,575 @@
+{
+  "official_smoppi.webp": {
+    "brand": "loveeez",
+    "section": "character",
+    "genre": "ip_plush",
+    "tags": [
+      "character",
+      "official_ip",
+      "sky_blue",
+      "cute"
+    ]
+  },
+  "official_pyonchi.webp": {
+    "brand": "loveeez",
+    "section": "character",
+    "genre": "ip_plush",
+    "tags": [
+      "character",
+      "official_ip",
+      "pink",
+      "rabbit"
+    ]
+  },
+  "official_nyapo.webp": {
+    "brand": "loveeez",
+    "section": "character",
+    "genre": "ip_plush",
+    "tags": [
+      "character",
+      "official_ip",
+      "cream",
+      "cat"
+    ]
+  },
+  "official_ururu.webp": {
+    "brand": "loveeez",
+    "section": "character",
+    "genre": "ip_plush",
+    "tags": [
+      "character",
+      "official_ip",
+      "purple"
+    ]
+  },
+  "official_paopao.webp": {
+    "brand": "loveeez",
+    "section": "character",
+    "genre": "ip_plush",
+    "tags": [
+      "character",
+      "official_ip",
+      "mint",
+      "elephant"
+    ]
+  },
+  "logos_ameru_logo_main.png": {
+    "brand": "ameru",
+    "section": "logo",
+    "genre": "d2c_craft",
+    "tags": [
+      "logo",
+      "brand"
+    ]
+  },
+  "logos_ameru_logo_pink.png": {
+    "brand": "ameru",
+    "section": "logo",
+    "genre": "d2c_craft",
+    "tags": [
+      "logo",
+      "pink"
+    ]
+  },
+  "01_zumoppi_hero.png": {
+    "brand": "ameru",
+    "section": "hero",
+    "genre": "d2c_craft",
+    "tags": [
+      "amigurumi",
+      "sky_blue",
+      "sky_background",
+      "hero"
+    ]
+  },
+  "02_package_lifestyle.png": {
+    "brand": "ameru",
+    "section": "lifestyle",
+    "genre": "d2c_craft",
+    "tags": [
+      "package",
+      "sakura",
+      "lifestyle"
+    ]
+  },
+  "03_unboxing_flatlay.png": {
+    "brand": "ameru",
+    "section": "kit",
+    "genre": "d2c_craft",
+    "tags": [
+      "flatlay",
+      "kit",
+      "unboxing",
+      "topdown"
+    ]
+  },
+  "04_hands_crafting.png": {
+    "brand": "ameru",
+    "section": "process",
+    "genre": "d2c_craft",
+    "tags": [
+      "hands",
+      "crafting",
+      "warm"
+    ]
+  },
+  "05_lifestyle_finished.png": {
+    "brand": "ameru",
+    "section": "lifestyle",
+    "genre": "d2c_craft",
+    "tags": [
+      "finished",
+      "hug",
+      "emotion"
+    ]
+  },
+  "06_shelf_display.png": {
+    "brand": "ameru",
+    "section": "lifestyle",
+    "genre": "d2c_craft",
+    "tags": [
+      "shelf",
+      "display",
+      "interior"
+    ]
+  },
+  "07_collection_preview.png": {
+    "brand": "ameru",
+    "section": "lineup",
+    "genre": "d2c_craft",
+    "tags": [
+      "collection",
+      "5characters"
+    ]
+  },
+  "phase1_H01_hero_cloud_blanket.png": {
+    "brand": "ameru",
+    "section": "hero",
+    "genre": "d2c_craft",
+    "tags": [
+      "hero",
+      "cloud_blanket",
+      "morning_light",
+      "4:5"
+    ]
+  },
+  "phase1_H02_hero_pinkbeige_square.png": {
+    "brand": "ameru",
+    "section": "hero",
+    "genre": "d2c_craft",
+    "tags": [
+      "hero",
+      "pinkbeige",
+      "square"
+    ]
+  },
+  "phase1_H03_hero_wood_table.png": {
+    "brand": "ameru",
+    "section": "hero",
+    "genre": "d2c_craft",
+    "tags": [
+      "hero",
+      "wood_table",
+      "16:9"
+    ]
+  },
+  "phase1_H04_hero_with_package.png": {
+    "brand": "ameru",
+    "section": "hero",
+    "genre": "d2c_craft",
+    "tags": [
+      "hero",
+      "package",
+      "4:5"
+    ]
+  },
+  "phase1_H05_hero_face_macro.png": {
+    "brand": "ameru",
+    "section": "hero",
+    "genre": "d2c_craft",
+    "tags": [
+      "hero",
+      "macro",
+      "face"
+    ]
+  },
+  "phase1_H06_hero_hands_holding.png": {
+    "brand": "ameru",
+    "section": "hero",
+    "genre": "d2c_craft",
+    "tags": [
+      "hero",
+      "hands",
+      "holding"
+    ]
+  },
+  "phase1_K01_kit_flatlay_woobles.png": {
+    "brand": "ameru",
+    "section": "kit",
+    "genre": "d2c_craft",
+    "tags": [
+      "kit",
+      "flatlay",
+      "woobles_style"
+    ]
+  },
+  "phase1_K02_yarn_macro_easy_peasy.png": {
+    "brand": "ameru",
+    "section": "kit",
+    "genre": "d2c_craft",
+    "tags": [
+      "yarn",
+      "macro",
+      "easy_peasy"
+    ]
+  },
+  "phase1_K03_phone_hands_learning.png": {
+    "brand": "ameru",
+    "section": "video_tutorial",
+    "genre": "d2c_craft",
+    "tags": [
+      "phone",
+      "hands",
+      "video",
+      "learning"
+    ]
+  },
+  "phase1_K04_unboxing_moment.png": {
+    "brand": "ameru",
+    "section": "kit",
+    "genre": "d2c_craft",
+    "tags": [
+      "unboxing",
+      "moment",
+      "16:9"
+    ]
+  },
+  "phase1_L01_lineup_remaster.png": {
+    "brand": "ameru",
+    "section": "lineup",
+    "genre": "d2c_craft",
+    "tags": [
+      "lineup",
+      "5chars",
+      "confetti",
+      "16:9"
+    ]
+  },
+  "phase1_L02_lineup_shelf.png": {
+    "brand": "ameru",
+    "section": "lineup",
+    "genre": "d2c_craft",
+    "tags": [
+      "lineup",
+      "5chars",
+      "shelf",
+      "interior"
+    ]
+  },
+  "phase1_L03_lineup_focus_foreground.png": {
+    "brand": "ameru",
+    "section": "lineup",
+    "genre": "d2c_craft",
+    "tags": [
+      "lineup",
+      "focus",
+      "foreground"
+    ]
+  },
+  "phase1_L04_lineup_with_charspace.png": {
+    "brand": "ameru",
+    "section": "lineup",
+    "genre": "d2c_craft",
+    "tags": [
+      "lineup",
+      "5chars",
+      "charspace",
+      "16:9"
+    ]
+  },
+  "phase1_T01_bg_pinkbeige_gradient.png": {
+    "brand": "ameru",
+    "section": "background",
+    "genre": "d2c_craft",
+    "tags": [
+      "background",
+      "pinkbeige",
+      "gradient"
+    ]
+  },
+  "phase1_T02_bg_yarn_negative.png": {
+    "brand": "ameru",
+    "section": "background",
+    "genre": "d2c_craft",
+    "tags": [
+      "background",
+      "yarn",
+      "negative_space"
+    ]
+  },
+  "phase1_T03_bg_pastel_confetti.png": {
+    "brand": "ameru",
+    "section": "background",
+    "genre": "d2c_craft",
+    "tags": [
+      "background",
+      "pastel",
+      "confetti"
+    ]
+  },
+  "phase2_P01_timeline_start.png": {
+    "brand": "ameru",
+    "section": "process",
+    "genre": "d2c_craft",
+    "tags": [
+      "timeline",
+      "start",
+      "yarn_ball"
+    ]
+  },
+  "phase2_P02_timeline_half_head.png": {
+    "brand": "ameru",
+    "section": "process",
+    "genre": "d2c_craft",
+    "tags": [
+      "timeline",
+      "half",
+      "head"
+    ]
+  },
+  "phase2_P03_timeline_before_face.png": {
+    "brand": "ameru",
+    "section": "process",
+    "genre": "d2c_craft",
+    "tags": [
+      "timeline",
+      "before_face"
+    ]
+  },
+  "phase2_P04_timeline_palms.png": {
+    "brand": "ameru",
+    "section": "process",
+    "genre": "d2c_craft",
+    "tags": [
+      "timeline",
+      "palms",
+      "handheld"
+    ]
+  },
+  "phase2_P05_timeline_before_after.png": {
+    "brand": "ameru",
+    "section": "only1_proof",
+    "genre": "d2c_craft",
+    "tags": [
+      "before_after",
+      "split",
+      "timeline"
+    ]
+  },
+  "phase2_E01_emotion_hug.png": {
+    "brand": "ameru",
+    "section": "emotion",
+    "genre": "d2c_craft",
+    "tags": [
+      "hug",
+      "emotion",
+      "4:5"
+    ]
+  },
+  "phase2_E02_emotion_crafting.png": {
+    "brand": "ameru",
+    "section": "emotion",
+    "genre": "d2c_craft",
+    "tags": [
+      "crafting",
+      "emotion",
+      "in_progress"
+    ]
+  },
+  "phase2_E03_emotion_parent_child.png": {
+    "brand": "ameru",
+    "section": "emotion",
+    "genre": "d2c_craft",
+    "tags": [
+      "parent_child",
+      "emotion",
+      "16:9"
+    ]
+  },
+  "phase2_E04_emotion_windowsill.png": {
+    "brand": "ameru",
+    "section": "lifestyle",
+    "genre": "d2c_craft",
+    "tags": [
+      "windowsill",
+      "lifestyle",
+      "emotion",
+      "4:5"
+    ]
+  },
+  "phase2_G01_gift_ribbon_card.png": {
+    "brand": "ameru",
+    "section": "offer_gift",
+    "genre": "d2c_craft",
+    "tags": [
+      "gift",
+      "ribbon",
+      "card",
+      "package"
+    ]
+  },
+  "phase2_G02_gift_handover.png": {
+    "brand": "ameru",
+    "section": "cta",
+    "genre": "d2c_craft",
+    "tags": [
+      "handover",
+      "gift",
+      "hands",
+      "4:5"
+    ]
+  },
+  "phase2_G03_gift_child_hands.png": {
+    "brand": "ameru",
+    "section": "cta",
+    "genre": "d2c_craft",
+    "tags": [
+      "child_hands",
+      "gift",
+      "receive",
+      "4:5"
+    ]
+  },
+  "camicks_main_02_offwhite_pair.png": {
+    "brand": "camicks",
+    "section": "hero",
+    "genre": "d2c_textile",
+    "tags": [
+      "offwhite",
+      "pair",
+      "product",
+      "premium"
+    ]
+  },
+  "camicks_main_03_darkgray_top_angle.png": {
+    "brand": "camicks",
+    "section": "hero",
+    "genre": "d2c_textile",
+    "tags": [
+      "topangle",
+      "darkgray",
+      "moody"
+    ]
+  },
+  "camicks_main_04_multicolor_lineup.png": {
+    "brand": "camicks",
+    "section": "lineup",
+    "genre": "d2c_textile",
+    "tags": [
+      "lineup",
+      "multicolor",
+      "colorpalette"
+    ]
+  },
+  "camicks_main_05_lifestyle_foot.png": {
+    "brand": "camicks",
+    "section": "lifestyle",
+    "genre": "d2c_textile",
+    "tags": [
+      "lifestyle",
+      "foot",
+      "natural"
+    ]
+  },
+  "camicks_amazon_main_v1.png": {
+    "brand": "camicks",
+    "section": "hero",
+    "genre": "d2c_textile",
+    "tags": [
+      "amazon",
+      "main",
+      "hero",
+      "clean"
+    ]
+  },
+  "camicks_amazon_01_c_secret.png": {
+    "brand": "camicks",
+    "section": "feature",
+    "genre": "d2c_textile",
+    "tags": [
+      "feature",
+      "secret",
+      "japanese_craft"
+    ]
+  },
+  "camicks_amazon_02_c_craft.png": {
+    "brand": "camicks",
+    "section": "feature",
+    "genre": "d2c_textile",
+    "tags": [
+      "craft",
+      "process",
+      "premium"
+    ]
+  },
+  "camicks_amazon_03_c_washi.png": {
+    "brand": "camicks",
+    "section": "feature",
+    "genre": "d2c_textile",
+    "tags": [
+      "washi",
+      "texture",
+      "macro"
+    ]
+  },
+  "camicks_amazon_05_c_aesthetic.png": {
+    "brand": "camicks",
+    "section": "feature",
+    "genre": "d2c_textile",
+    "tags": [
+      "aesthetic",
+      "mood",
+      "lifestyle"
+    ]
+  },
+  "camicks_amazon_06_c_legacy.png": {
+    "brand": "camicks",
+    "section": "brand",
+    "genre": "d2c_textile",
+    "tags": [
+      "legacy",
+      "heritage",
+      "brand_story"
+    ]
+  },
+  "camicks_amazon_sub03_washi_v2.png": {
+    "brand": "camicks",
+    "section": "feature",
+    "genre": "d2c_textile",
+    "tags": [
+      "washi",
+      "detail",
+      "sub"
+    ]
+  },
+  "camicks_amazon_sub04_easycare_v2.png": {
+    "brand": "camicks",
+    "section": "feature",
+    "genre": "d2c_textile",
+    "tags": [
+      "easycare",
+      "function",
+      "sub"
+    ]
+  },
+  "camicks_amazon_sub05_lifestyle_v2.png": {
+    "brand": "camicks",
+    "section": "lifestyle",
+    "genre": "d2c_textile",
+    "tags": [
+      "lifestyle",
+      "wearing",
+      "sub"
+    ]
+  }
+}

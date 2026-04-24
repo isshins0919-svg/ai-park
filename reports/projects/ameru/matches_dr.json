@@ -1,0 +1,322 @@
+{
+  "01_FV": [
+    {
+      "file": "meimoku_003_2980offer00.jpg",
+      "score": 0.4481,
+      "brand": "meimoku",
+      "section": "offer"
+    },
+    {
+      "file": "laric_035_men7.jpg",
+      "score": 0.4324,
+      "brand": "laric_scalp",
+      "section": "other"
+    },
+    {
+      "file": "laric_028_btn01.png",
+      "score": 0.4315,
+      "brand": "laric_scalp",
+      "section": "cta"
+    },
+    {
+      "file": "yuriiro_126_offer_04.jpg",
+      "score": 0.4172,
+      "brand": "yuriiro",
+      "section": "fv"
+    },
+    {
+      "file": "laric_029_btm_1500.jpg",
+      "score": 0.4171,
+      "brand": "laric_scalp",
+      "section": "other"
+    }
+  ],
+  "02_empathy": [
+    {
+      "file": "laric_028_btn01.png",
+      "score": 0.3724,
+      "brand": "laric_scalp",
+      "section": "cta"
+    },
+    {
+      "file": "regina_023_f9e08bc8-5b22-4f36-b3a2-1cfc419b3c9b.jpg",
+      "score": 0.3674,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "meimoku_002_offer_henpin.jpg",
+      "score": 0.3484,
+      "brand": "meimoku",
+      "section": "offer"
+    },
+    {
+      "file": "regina_019_b9188ddd-8a59-415d-9c09-c016b47fabe7.jpg",
+      "score": 0.338,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "yuriiro_010_lp03_02.jpg",
+      "score": 0.3369,
+      "brand": "yuriiro",
+      "section": "fv"
+    }
+  ],
+  "03_solution": [
+    {
+      "file": "laric_028_btn01.png",
+      "score": 0.4226,
+      "brand": "laric_scalp",
+      "section": "cta"
+    },
+    {
+      "file": "laric_023_pic38.jpg",
+      "score": 0.4111,
+      "brand": "laric_scalp",
+      "section": "other"
+    },
+    {
+      "file": "laric_030_men4.jpg",
+      "score": 0.4109,
+      "brand": "laric_scalp",
+      "section": "other"
+    },
+    {
+      "file": "laric_054_b_pic01.jpg",
+      "score": 0.4099,
+      "brand": "laric_scalp",
+      "section": "other"
+    },
+    {
+      "file": "laric_012_pic33.jpg",
+      "score": 0.4047,
+      "brand": "laric_scalp",
+      "section": "other"
+    }
+  ],
+  "04_proof_number": [
+    {
+      "file": "laric_028_btn01.png",
+      "score": 0.3988,
+      "brand": "laric_scalp",
+      "section": "cta"
+    },
+    {
+      "file": "meimoku_003_2980offer00.jpg",
+      "score": 0.395,
+      "brand": "meimoku",
+      "section": "offer"
+    },
+    {
+      "file": "meimoku_002_offer_henpin.jpg",
+      "score": 0.3902,
+      "brand": "meimoku",
+      "section": "offer"
+    },
+    {
+      "file": "laric_030_men4.jpg",
+      "score": 0.3836,
+      "brand": "laric_scalp",
+      "section": "other"
+    },
+    {
+      "file": "yuriiro_132_media.jpg",
+      "score": 0.3824,
+      "brand": "yuriiro",
+      "section": "fv"
+    }
+  ],
+  "05_proof_voice": [
+    {
+      "file": "kimie_036_voice-04.jpg",
+      "score": 0.4335,
+      "brand": "kimie_placenta",
+      "section": "fv"
+    },
+    {
+      "file": "kimie_082_voice-03.jpg",
+      "score": 0.4242,
+      "brand": "kimie_placenta",
+      "section": "fv"
+    },
+    {
+      "file": "kimie_066_confidence-05.jpg",
+      "score": 0.4141,
+      "brand": "kimie_placenta",
+      "section": "fv"
+    },
+    {
+      "file": "kimie_079_voice-02.jpg",
+      "score": 0.4082,
+      "brand": "kimie_placenta",
+      "section": "fv"
+    },
+    {
+      "file": "kimie_032_confidence-04.jpg",
+      "score": 0.4037,
+      "brand": "kimie_placenta",
+      "section": "fv"
+    }
+  ],
+  "06_proof_media": [
+    {
+      "file": "yuriiro_132_media.jpg",
+      "score": 0.4328,
+      "brand": "yuriiro",
+      "section": "fv"
+    },
+    {
+      "file": "laric_053_sld02-1.png",
+      "score": 0.4242,
+      "brand": "laric_scalp",
+      "section": "other"
+    },
+    {
+      "file": "yuriiro_058_lp04_07.jpg",
+      "score": 0.424,
+      "brand": "yuriiro",
+      "section": "fv"
+    },
+    {
+      "file": "yuriiro_072_lp01_08b.jpg",
+      "score": 0.42,
+      "brand": "yuriiro",
+      "section": "fv"
+    },
+    {
+      "file": "meimoku_002_offer_henpin.jpg",
+      "score": 0.4184,
+      "brand": "meimoku",
+      "section": "offer"
+    }
+  ],
+  "07_offer_anchor": [
+    {
+      "file": "meimoku_003_2980offer00.jpg",
+      "score": 0.4704,
+      "brand": "meimoku",
+      "section": "offer"
+    },
+    {
+      "file": "kimie_060_offer-02.jpg",
+      "score": 0.444,
+      "brand": "kimie_placenta",
+      "section": "fv"
+    },
+    {
+      "file": "laric_035_men7.jpg",
+      "score": 0.4402,
+      "brand": "laric_scalp",
+      "section": "other"
+    },
+    {
+      "file": "regina_017_469fd934-cb4f-4ea0-a120-e1efda393073.jpg",
+      "score": 0.4315,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "laric_004_men8.jpg",
+      "score": 0.4302,
+      "brand": "laric_scalp",
+      "section": "other"
+    }
+  ],
+  "08_guarantee": [
+    {
+      "file": "regina_004_e137902e-058f-4729-a4a7-ee7f4c2324ca.jpg",
+      "score": 0.462,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "regina_005_45076e6c-a6fb-428b-bbf7-d83e2256a3e9.jpg",
+      "score": 0.4373,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "yuriiro_105_hbn_02l.jpg",
+      "score": 0.4272,
+      "brand": "yuriiro",
+      "section": "other"
+    },
+    {
+      "file": "meimoku_002_offer_henpin.jpg",
+      "score": 0.4262,
+      "brand": "meimoku",
+      "section": "offer"
+    },
+    {
+      "file": "regina_014_d83a0168-e54c-43ef-aefb-5c8ba6a512f6.jpg",
+      "score": 0.4254,
+      "brand": "regina_clinic",
+      "section": "other"
+    }
+  ],
+  "09_faq": [
+    {
+      "file": "regina_023_f9e08bc8-5b22-4f36-b3a2-1cfc419b3c9b.jpg",
+      "score": 0.4233,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "regina_004_e137902e-058f-4729-a4a7-ee7f4c2324ca.jpg",
+      "score": 0.418,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "regina_020_3be05744-6ef1-4b3f-bd7c-e6e54b74a9bb.jpg",
+      "score": 0.4014,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "regina_001_92a73367-746d-41b4-8b39-3dc856389c12.jpg",
+      "score": 0.3957,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "regina_019_b9188ddd-8a59-415d-9c09-c016b47fabe7.jpg",
+      "score": 0.3924,
+      "brand": "regina_clinic",
+      "section": "other"
+    }
+  ],
+  "10_cta": [
+    {
+      "file": "laric_028_btn01.png",
+      "score": 0.4156,
+      "brand": "laric_scalp",
+      "section": "cta"
+    },
+    {
+      "file": "meimoku_003_2980offer00.jpg",
+      "score": 0.3917,
+      "brand": "meimoku",
+      "section": "offer"
+    },
+    {
+      "file": "regina_017_469fd934-cb4f-4ea0-a120-e1efda393073.jpg",
+      "score": 0.3504,
+      "brand": "regina_clinic",
+      "section": "other"
+    },
+    {
+      "file": "meimoku_002_offer_henpin.jpg",
+      "score": 0.3451,
+      "brand": "meimoku",
+      "section": "offer"
+    },
+    {
+      "file": "laric_035_men7.jpg",
+      "score": 0.3449,
+      "brand": "laric_scalp",
+      "section": "other"
+    }
+  ]
+}

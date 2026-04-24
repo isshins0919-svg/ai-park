@@ -299,7 +299,7 @@ if not FONT_PATH_BOLD:
     FONT_PATH_BOLD = FONT_PATH
 
 UPLOAD_DIR = Path(__file__).parent / "uploads"
-UPLOAD_DIR.mkdir(exist_ok=True)
+UPLOAD_DIR.mkdir(exist_ok=True, parents=True)
 
 VIDEO_EXT = {".mp4", ".mov", ".avi", ".mkv", ".webm"}
 AUDIO_EXT = {".mp3", ".wav", ".aac", ".m4a", ".ogg"}
@@ -750,7 +750,7 @@ def _gemini_verify_cuts(clips: list[dict], packed_path: str, expected_count: int
 def generate_thumbnails(clips: list[dict], packed_path: str, session_dir: Path) -> list[dict]:
     """各クリップの先頭フレームをサムネイル画像として生成。clipsにthumbキーを追加して返す。"""
     thumb_dir = session_dir / "thumbnails"
-    thumb_dir.mkdir(exist_ok=True)
+    thumb_dir.mkdir(exist_ok=True, parents=True)
     result = []
     for clip in clips:
         fname = f"thumb_{clip['index']:03d}.jpg"
@@ -771,7 +771,7 @@ def run_cut_job(job_id: str, session_id: str, clips: list[dict], filename_prefix
     job = jobs[job_id]
     sess_dir = get_session_dir(session_id)
     output_dir = sess_dir / "output"
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(exist_ok=True, parents=True)
 
     # まとめ素材を検索
     packed_path = None
@@ -855,7 +855,7 @@ def has_audio_stream(path: str) -> bool:
 
 def split_packed_video(packed_path: Path, fv_dir: Path, clip_dur: float) -> list[Path]:
     """まとめ素材を固定秒数で分割してfv_dirに保存。クリップパスリストを返す。"""
-    fv_dir.mkdir(exist_ok=True)
+    fv_dir.mkdir(exist_ok=True, parents=True)
     output_pattern = str(fv_dir / "clip_%03d.mp4")
     cmd = [
         FFMPEG, "-y",
@@ -958,7 +958,7 @@ def run_generation_job(job_id: str, session_id: str, bgm_volume: float, annotati
     job = jobs[job_id]
     sess_dir = get_session_dir(session_id)
     output_dir = sess_dir / "output"
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(exist_ok=True, parents=True)
 
     # 素材検出
     base_path = None
@@ -1140,7 +1140,7 @@ def run_concat_job(
     job = jobs[job_id]
     sess_dir = get_session_dir(session_id)
     output_dir = sess_dir / "output"
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(exist_ok=True, parents=True)
 
     # BGM検出
     bgm_path = None
@@ -1315,7 +1315,7 @@ def upload_local(session_id, upload_type, filename):
         dest_dir = sess_dir / "base"
     else:
         dest_dir = sess_dir
-    dest_dir.mkdir(exist_ok=True)
+    dest_dir.mkdir(exist_ok=True, parents=True)
     dest = dest_dir / filename
     dest.write_bytes(request.data)
     print(f"[LocalUpload] saved {dest} ({dest.stat().st_size//1024}KB)")
@@ -1346,7 +1346,7 @@ def register_gcs():
         dest_dir = sess_dir / "packed"
     else:
         dest_dir = sess_dir
-    dest_dir.mkdir(exist_ok=True)
+    dest_dir.mkdir(exist_ok=True, parents=True)
     dest = dest_dir / filename
 
     # ローカルモード（GCS未設定時）: /upload-local で既にファイル保存済み
@@ -1376,15 +1376,15 @@ def upload():
             continue
         if upload_type == "fv":
             fv_dir = sess_dir / "fv"
-            fv_dir.mkdir(exist_ok=True)
+            fv_dir.mkdir(exist_ok=True, parents=True)
             dest = fv_dir / f.filename
         elif upload_type == "body":
             body_dir = sess_dir / "body"
-            body_dir.mkdir(exist_ok=True)
+            body_dir.mkdir(exist_ok=True, parents=True)
             dest = body_dir / f.filename
         elif upload_type == "packed":
             packed_dir = sess_dir / "packed"
-            packed_dir.mkdir(exist_ok=True)
+            packed_dir.mkdir(exist_ok=True, parents=True)
             dest = packed_dir / f.filename
         else:
             dest = sess_dir / f.filename
@@ -2675,7 +2675,7 @@ def run_fv_generate_job(job_id: str, session_id: str, video_path: str,
     api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY_1", "")
     sess_dir = get_session_dir(session_id)
     fv_gen_dir = sess_dir / "fv_generated"
-    fv_gen_dir.mkdir(exist_ok=True)
+    fv_gen_dir.mkdir(exist_ok=True, parents=True)
 
     # 商品プロファイル読み込み（失敗してもジョブは続行）
     profile = _load_kosuri_profile(product_key) if product_key else None

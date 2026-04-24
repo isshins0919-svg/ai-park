@@ -1,0 +1,262 @@
+{
+  "01_FV": [
+    {
+      "file": "07_collection_preview.png",
+      "score": 0.5137,
+      "brand": "ameru",
+      "section": "lineup"
+    },
+    {
+      "file": "phase1_L01_lineup_remaster.png",
+      "score": 0.5111,
+      "brand": "ameru",
+      "section": "lineup"
+    },
+    {
+      "file": "phase1_H02_hero_pinkbeige_square.png",
+      "score": 0.5087,
+      "brand": "ameru",
+      "section": "hero"
+    },
+    {
+      "file": "phase1_L02_lineup_shelf.png",
+      "score": 0.5072,
+      "brand": "ameru",
+      "section": "lineup"
+    }
+  ],
+  "02_chars": [
+    {
+      "file": "07_collection_preview.png",
+      "score": 0.4264,
+      "brand": "ameru",
+      "section": "lineup"
+    },
+    {
+      "file": "phase1_L02_lineup_shelf.png",
+      "score": 0.4176,
+      "brand": "ameru",
+      "section": "lineup"
+    },
+    {
+      "file": "phase1_L04_lineup_with_charspace.png",
+      "score": 0.3959,
+      "brand": "ameru",
+      "section": "lineup"
+    },
+    {
+      "file": "phase1_L01_lineup_remaster.png",
+      "score": 0.3888,
+      "brand": "ameru",
+      "section": "lineup"
+    }
+  ],
+  "03_hero": [
+    {
+      "file": "phase1_H05_hero_face_macro.png",
+      "score": 0.4866,
+      "brand": "ameru",
+      "section": "hero"
+    },
+    {
+      "file": "phase1_H01_hero_cloud_blanket.png",
+      "score": 0.4804,
+      "brand": "ameru",
+      "section": "hero"
+    },
+    {
+      "file": "01_zumoppi_hero.png",
+      "score": 0.4729,
+      "brand": "ameru",
+      "section": "hero"
+    },
+    {
+      "file": "phase1_H02_hero_pinkbeige_square.png",
+      "score": 0.4492,
+      "brand": "ameru",
+      "section": "hero"
+    }
+  ],
+  "04_only1": [
+    {
+      "file": "phase2_P05_timeline_before_after.png",
+      "score": 0.4997,
+      "brand": "ameru",
+      "section": "only1_proof"
+    },
+    {
+      "file": "phase2_P01_timeline_start.png",
+      "score": 0.4803,
+      "brand": "ameru",
+      "section": "process"
+    },
+    {
+      "file": "phase2_P02_timeline_half_head.png",
+      "score": 0.467,
+      "brand": "ameru",
+      "section": "process"
+    },
+    {
+      "file": "phase2_P03_timeline_before_face.png",
+      "score": 0.4521,
+      "brand": "ameru",
+      "section": "process"
+    }
+  ],
+  "05_kit": [
+    {
+      "file": "phase1_K01_kit_flatlay_woobles.png",
+      "score": 0.5303,
+      "brand": "ameru",
+      "section": "kit"
+    },
+    {
+      "file": "phase1_K04_unboxing_moment.png",
+      "score": 0.4985,
+      "brand": "ameru",
+      "section": "kit"
+    },
+    {
+      "file": "03_unboxing_flatlay.png",
+      "score": 0.4974,
+      "brand": "ameru",
+      "section": "kit"
+    },
+    {
+      "file": "phase1_K02_yarn_macro_easy_peasy.png",
+      "score": 0.4704,
+      "brand": "ameru",
+      "section": "kit"
+    }
+  ],
+  "06_video": [
+    {
+      "file": "phase1_K03_phone_hands_learning.png",
+      "score": 0.5071,
+      "brand": "ameru",
+      "section": "video_tutorial"
+    },
+    {
+      "file": "phase2_P01_timeline_start.png",
+      "score": 0.4058,
+      "brand": "ameru",
+      "section": "process"
+    },
+    {
+      "file": "04_hands_crafting.png",
+      "score": 0.395,
+      "brand": "ameru",
+      "section": "process"
+    },
+    {
+      "file": "phase2_P04_timeline_palms.png",
+      "score": 0.3841,
+      "brand": "ameru",
+      "section": "process"
+    }
+  ],
+  "07_process": [
+    {
+      "file": "phase2_P01_timeline_start.png",
+      "score": 0.4953,
+      "brand": "ameru",
+      "section": "process"
+    },
+    {
+      "file": "phase2_P03_timeline_before_face.png",
+      "score": 0.487,
+      "brand": "ameru",
+      "section": "process"
+    },
+    {
+      "file": "phase2_P02_timeline_half_head.png",
+      "score": 0.4869,
+      "brand": "ameru",
+      "section": "process"
+    },
+    {
+      "file": "phase2_P04_timeline_palms.png",
+      "score": 0.4819,
+      "brand": "ameru",
+      "section": "process"
+    }
+  ],
+  "08_life": [
+    {
+      "file": "phase2_E04_emotion_windowsill.png",
+      "score": 0.4813,
+      "brand": "ameru",
+      "section": "lifestyle"
+    },
+    {
+      "file": "05_lifestyle_finished.png",
+      "score": 0.464,
+      "brand": "ameru",
+      "section": "lifestyle"
+    },
+    {
+      "file": "phase2_E03_emotion_parent_child.png",
+      "score": 0.4146,
+      "brand": "ameru",
+      "section": "emotion"
+    },
+    {
+      "file": "phase2_E02_emotion_crafting.png",
+      "score": 0.3994,
+      "brand": "ameru",
+      "section": "emotion"
+    }
+  ],
+  "09_offer": [
+    {
+      "file": "phase2_G01_gift_ribbon_card.png",
+      "score": 0.4952,
+      "brand": "ameru",
+      "section": "offer_gift"
+    },
+    {
+      "file": "phase1_H04_hero_with_package.png",
+      "score": 0.3233,
+      "brand": "ameru",
+      "section": "hero"
+    },
+    {
+      "file": "phase1_K04_unboxing_moment.png",
+      "score": 0.3201,
+      "brand": "ameru",
+      "section": "kit"
+    },
+    {
+      "file": "phase1_K01_kit_flatlay_woobles.png",
+      "score": 0.313,
+      "brand": "ameru",
+      "section": "kit"
+    }
+  ],
+  "10_cta": [
+    {
+      "file": "phase2_G02_gift_handover.png",
+      "score": 0.4253,
+      "brand": "ameru",
+      "section": "cta"
+    },
+    {
+      "file": "phase2_G03_gift_child_hands.png",
+      "score": 0.4024,
+      "brand": "ameru",
+      "section": "cta"
+    },
+    {
+      "file": "phase2_G01_gift_ribbon_card.png",
+      "score": 0.3697,
+      "brand": "ameru",
+      "section": "offer_gift"
+    },
+    {
+      "file": "phase2_E02_emotion_crafting.png",
+      "score": 0.3373,
+      "brand": "ameru",
+      "section": "emotion"
+    }
+  ]
+}

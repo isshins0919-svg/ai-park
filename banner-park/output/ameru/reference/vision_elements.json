@@ -1,0 +1,312 @@
+[
+  {
+    "id": "kiyohara_4626448",
+    "src": "清原_推しぬい",
+    "copy": "「推しぬい」にwawaちゃん仲間入り！",
+    "cost": 1076,
+    "url": "https://cdn.kashika-20mile.com/dpro-analytics/x/image/C8ix2YH5Z8Y.webp",
+    "lp": "https://www.kiyohara.co.jp/store/product/brand/oshinui",
+    "app": "X",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/kiyohara_4626448.webp",
+    "cluster_image": 1,
+    "cluster_multi": 2,
+    "vision": {
+      "main_visual": "画面の中心には、特徴的な髪型と服装をした3体のぬいぐるみ（推しぬい）が並んでいます。",
+      "palette": [
+        "白",
+        "パステルパープル",
+        "パステルイエロー"
+      ],
+      "layout": {
+        "copy_position": "トップ",
+        "product_position": "中央",
+        "cta_position": "なし"
+      },
+      "main_copy": "推しぬい",
+      "sub_copy": "wawaちゃんシリーズ\n<監修> ぬいぐるみの生地やさん\nKIYOHARA",
+      "cta": null,
+      "emotional_tone": "可愛らしさ",
+      "appeal_axis": "「推し」の概念を取り入れた、カスタマイズ可能なぬいぐるみシリーズを訴求しています。",
+      "visual_style": "写真"
+    }
+  },
+  {
+    "id": "jibun_7390090",
+    "src": "じぶんぐるみ",
+    "copy": "オーダーメイドぬいぐるみ🌟",
+    "cost": 49600,
+    "url": "https://assets.douga-pro.com/yahoo/Vb3qQpGavpr/thumbnail.webp",
+    "lp": "https://jibungurumi.com/",
+    "app": "Yahoo",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/jibun_7390090.webp",
+    "cluster_image": 1,
+    "cluster_multi": 1,
+    "vision": {
+      "main_visual": "笑顔の男女が自分たちに似た手作りの人形を2体持っている。",
+      "palette": [
+        "白",
+        "緑",
+        "肌色"
+      ],
+      "layout": {
+        "copy_position": "なし",
+        "product_position": "中央",
+        "cta_position": "なし"
+      },
+      "main_copy": null,
+      "sub_copy": null,
+      "cta": null,
+      "emotional_tone": "幸せ",
+      "appeal_axis": "自分たちに似せた人形を制作するサービスや商品を訴求している。",
+      "visual_style": "写真"
+    }
+  },
+  {
+    "id": "jibun_5467081",
+    "src": "じぶんぐるみ",
+    "copy": "334億の顔からお好きな顔で作れます",
+    "cost": 29600,
+    "url": "https://assets.douga-pro.com/yahoo/XdYEHiaHUCN/thumbnail.webp",
+    "lp": "https://jibungurumi.com/",
+    "app": "Yahoo",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/jibun_5467081.webp",
+    "cluster_image": 1,
+    "cluster_multi": 1,
+    "vision": {
+      "main_visual": "笑顔の男性が、自身に似た人形が「BROOKLYN」と書かれたショップカードを持っている姿を写しています。",
+      "palette": [
+        "白",
+        "茶色",
+        "紺色"
+      ],
+      "layout": {
+        "copy_position": "ボトム",
+        "product_position": "ボトム",
+        "cta_position": "なし"
+      },
+      "main_copy": "BROOKLYN",
+      "sub_copy": "Have a Nice Day, shop card, 東京都世田谷区...",
+      "cta": null,
+      "emotional_tone": "親しみ",
+      "appeal_axis": "親しみやすいキャラクターとショップカードを通じて、BROOKLYNというブランドや店舗の存在を訴求しています。",
+      "visual_style": "写真"
+    }
+  },
+  {
+    "id": "moin_12530536",
+    "src": "moin_moin_ドールハウス",
+    "copy": "なんかこれ見てると泣きそうになる。(pr)",
+    "cost": 267776,
+    "url": "https://assets.douga-pro.com/x/2005279586293293500/thumbnail.webp",
+    "lp": "https://www.amazon.co.jp/moin",
+    "app": "X",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/moin_12530536.webp",
+    "cluster_image": 1,
+    "cluster_multi": 2,
+    "vision": {
+      "main_visual": "レトロなテレビ型の箱の中に、温かい光が灯るミニチュアの部屋が写っています。",
+      "palette": [
+        "ダークグリーン",
+        "ウォームイエロー",
+        "レッド"
+      ],
+      "layout": {
+        "copy_position": "ミドル",
+        "product_position": "トップ",
+        "cta_position": "なし"
+      },
+      "main_copy": "LEDライトは実際に点灯します",
+      "sub_copy": "前面カバーは取り外し可能♪ 昼と夜で表情ががらりと変わります 熱を持ちにくく、寿命が長いLEDライトを採用。作成を楽しんでいただいた後はインテリアとして長くお楽しみ頂けます。",
+      "cta": null,
+      "emotional_tone": "癒し",
+      "appeal_axis": "精巧なミニチュアの世界を自分で作り、インテリアとして楽しむ体験を訴求しています。",
+      "visual_style": "実写+テロップ"
+    }
+  },
+  {
+    "id": "moin_12525835",
+    "src": "moin_moin_ドールハウス",
+    "copy": "エモすぎて、視界がバグる。(pr)",
+    "cost": 5868,
+    "url": "https://assets.douga-pro.com/x/2005279215432892595/thumbnail.webp",
+    "lp": "https://www.amazon.co.jp/moin",
+    "app": "X",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/moin_12525835.webp",
+    "cluster_image": 1,
+    "cluster_multi": 2,
+    "vision": {
+      "main_visual": "レトロなテレビ型ケースに収められた、細部まで作り込まれたミニチュアの部屋が写っています。",
+      "palette": [
+        "グリーン",
+        "ブラウン",
+        "レッド"
+      ],
+      "layout": {
+        "copy_position": "トップ",
+        "product_position": "中央",
+        "cta_position": "なし"
+      },
+      "main_copy": "細部まで驚くほどリアル！",
+      "sub_copy": "昼と夜で表情ががらりと変わります。LEDライトは実際に点灯します。熱を持ちにくく、寿命が長いLEDライトを採用。作成を楽しんでいただいた後はインテリアとして長くお楽しみ頂けます。",
+      "cta": null,
+      "emotional_tone": "癒し",
+      "appeal_axis": "レトロなテレビ型ケースに入った、LEDライトが点灯するミニチュアドールハウスキットの精巧さと魅力を訴求しています。",
+      "visual_style": "実写+テロップ"
+    }
+  },
+  {
+    "id": "omonui_3095988",
+    "src": "おもぬい_癒し2kg",
+    "copy": "オトナだってもふもふに癒されたい！",
+    "cost": 140424,
+    "url": "https://cdn.kashika-20mile.com/dpro-analytics/instagram/image/F2eGodUMMxx.webp",
+    "lp": "https://www.prairiedog.com/omonui/",
+    "app": "Instagram",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/omonui_3095988.webp",
+    "cluster_image": 1,
+    "cluster_multi": 2,
+    "vision": {
+      "main_visual": "白いアヒル型のぬいぐるみと、それを優しく抱える人物の手が画面の中心に写っており、下部には他の動物のぬいぐるみも並べられています。",
+      "palette": [
+        "白",
+        "青",
+        "ピンク"
+      ],
+      "layout": {
+        "copy_position": "左",
+        "product_position": "右",
+        "cta_position": "右下"
+      },
+      "main_copy": "オトナだって もふもふに癒されたい！ ずっしり重い 2kgのぬいぐるみです。",
+      "sub_copy": "omonui おもぬい",
+      "cta": "詳細を見る",
+      "emotional_tone": "癒し",
+      "appeal_axis": "大人向けに、ずっしりとした重さで安心感と癒しを提供するぬいぐるみ。",
+      "visual_style": "実写+テロップ"
+    }
+  },
+  {
+    "id": "adada_7653349",
+    "src": "ADADA_パリデザイン",
+    "copy": "フランス製の生地、パリでデザインされた一生ものの贈り物",
+    "cost": 13986,
+    "url": "https://assets.douga-pro.com/instagram/DMP587VATg4/thumbnail.webp",
+    "lp": "https://adadastore.com/ja/collections/sale",
+    "app": "Instagram",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/adada_7653349.webp",
+    "cluster_image": 2,
+    "cluster_multi": 1,
+    "vision": {
+      "main_visual": "小さなキャラクターが乗ったオレンジ色のプロペラ機が画面中央を飛んでいる。",
+      "palette": [
+        "白",
+        "オレンジ",
+        "ダークグレー"
+      ],
+      "layout": {
+        "copy_position": "トップ",
+        "product_position": "中央",
+        "cta_position": "なし"
+      },
+      "main_copy": "セール -30%",
+      "sub_copy": "ADADA PARIS",
+      "cta": null,
+      "emotional_tone": "ワクワク",
+      "appeal_axis": "ADADA PARISの製品が30%オフで購入できることを訴求している。",
+      "visual_style": "イラスト"
+    }
+  },
+  {
+    "id": "atsuo_9418313",
+    "src": "あつお_ご当地キャラ",
+    "copy": "厚木の非公式キャラ『あつお』でし",
+    "cost": 3576,
+    "url": "https://ad.line-scdn.net/0hEQUna69TGn5oFwTPLMVlKThHEQ9beg19CG8HQ01ULBE9JSJeHSwHbipTLBExew9jVDEHbSVLETtFfSZ3MHkpfhBKFkwuZyFOCSoqfjFRODwuZjxNJA/m1080x1080?id=4-7594793497891&streamingApp=NEWS",
+    "lp": "https://tirami-su.com/atsuo-hikoushiki/",
+    "app": "LAP",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/atsuo_9418313.jpg",
+    "cluster_image": 3,
+    "cluster_multi": 2,
+    "vision": {
+      "main_visual": "画面の中心に、疲れた表情でよだれを垂らし、魚の帽子をかぶった白いキャラクターが描かれています。",
+      "palette": [
+        "ピンク",
+        "白",
+        "黒"
+      ],
+      "layout": {
+        "copy_position": "トップ",
+        "product_position": "中央",
+        "cta_position": "なし"
+      },
+      "main_copy": "あつお",
+      "sub_copy": "しまやき",
+      "cta": null,
+      "emotional_tone": "疲労感",
+      "appeal_axis": "暑さと疲労感を表現するキャラクターの魅力を訴求しています。",
+      "visual_style": "イラスト"
+    }
+  },
+  {
+    "id": "yuzawaya_11228259",
+    "src": "ユザワヤ_あみぐるみキット",
+    "copy": "Enjoy Craft あみぐるみキット ひよこ",
+    "cost": 92,
+    "url": "https://df-thumbnail.smartnews-ads.com/?url=https%3A%2F%2Fgd.image-qoo10.jp%2Fli%2F941%2F884%2F7727884941.g_400-w-st_g.jpg&w=300&h=300&u=1&id=b01df71bc3487ba6c7fadae42319566b",
+    "lp": "https://www.qoo10.jp/g/1177963944",
+    "app": "SmartNews",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/yuzawaya_11228259.jpg",
+    "cluster_image": 1,
+    "cluster_multi": 3,
+    "vision": {
+      "main_visual": "ひよこのあみぐるみキットが画面中央に配置されています。",
+      "palette": [
+        "ブラウン",
+        "イエロー",
+        "グリーン"
+      ],
+      "layout": {
+        "copy_position": "トップ",
+        "product_position": "中央",
+        "cta_position": "なし"
+      },
+      "main_copy": "あみぐるみキット ひよこ",
+      "sub_copy": "FOR BEGINNERS あみぐるみは、かぎ針1本で編める",
+      "cta": null,
+      "emotional_tone": "可愛らしさ",
+      "appeal_axis": "初心者でも簡単に可愛いひよこのあみぐるみを作れるキットであること。",
+      "visual_style": "写真"
+    }
+  },
+  {
+    "id": "yuzurand_17168632",
+    "src": "yuzurand_スクイーズ手作りキット",
+    "copy": "スクイーズ手作りキット",
+    "cost": 92,
+    "url": "https://df-thumbnail.smartnews-ads.com/?url=https%3A%2F%2Ftshop.r10s.jp%2Fyuzurand%2Fcabinet%2F11259495%2Fcw152_1.jpg%3Ffitin%3D300%3A300&w=300&h=300&u=1&id=03f47c2bce4d889b63a1e0bc21d51715",
+    "lp": "https://item.rakuten.co.jp/yuzurand/cw152/",
+    "app": "SmartNews",
+    "local_path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/reference/refs/yuzurand_17168632.jpg",
+    "cluster_image": 1,
+    "cluster_multi": 2,
+    "vision": {
+      "main_visual": "スクイーズ作りに必要な液体材料、型、装飾品、道具が一式写っています。",
+      "palette": [
+        "ライトグリーン",
+        "ライトピンク",
+        "赤"
+      ],
+      "layout": {
+        "copy_position": "右",
+        "product_position": "中央",
+        "cta_position": "なし"
+      },
+      "main_copy": "スクイーズキット",
+      "sub_copy": "1A:1B重量比 大容量・すぐに使える",
+      "cta": null,
+      "emotional_tone": "ワクワク",
+      "appeal_axis": "手作りのスクイーズが作れるDIYキットを販売しています。",
+      "visual_style": "写真"
+    }
+  }
+]
