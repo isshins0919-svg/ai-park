@@ -1,0 +1,172 @@
+{
+  "article_id": "20260424_proust_cream2_wakiga",
+  "scorer": "claude-opus-4-7[1m] manual",
+  "scored_at": "2026-04-24T17:45:00+09:00",
+  "rubric_version": "sales_elements.md v1.0 (5層×4要素=20)",
+  "scores": [
+    {"chunk_order": 1, "funnel_position": "opening", "context_hint": "Squad Beyondエディタ表示 + PR表記 + タイトル「ワキガに悩む私が実際に体験した出来事です」",
+     "elements": {"B1_authority": 0.3, "D3_scenario": 0.3}},
+
+    {"chunk_order": 2, "funnel_position": "opening", "context_hint": "FVヒーロー画像",
+     "elements": {}},
+
+    {"chunk_order": 3, "funnel_position": "opening", "context_hint": "ストーリー導入：数日前 行きつけの服屋で...",
+     "elements": {"D3_scenario": 0.6, "B4_transparency": 0.3}},
+
+    {"chunk_order": 4, "funnel_position": "opening", "context_hint": "服屋シーン画像",
+     "elements": {"D3_scenario": 0.3}},
+
+    {"chunk_order": 5, "funnel_position": "empathy", "context_hint": "強烈な悩み告白：人の目が怖い、手術してもダメだった",
+     "elements": {"A1_pain_empathy": 0.95, "A2_fear_appeal": 0.6, "B4_transparency": 0.6}},
+
+    {"chunk_order": 6, "funnel_position": "empathy", "context_hint": "悩み画像（画像はイメージ注釈あり）",
+     "elements": {"A1_pain_empathy": 0.4}},
+
+    {"chunk_order": 7, "funnel_position": "empathy", "context_hint": "他人の反応が気になる：社会的不安",
+     "elements": {"A1_pain_empathy": 0.85, "A4_anxiety_trigger": 0.5}},
+
+    {"chunk_order": 8, "funnel_position": "empathy", "context_hint": "日常シーン4連（悩み持続の情景）",
+     "elements": {"A1_pain_empathy": 0.4, "D3_scenario": 0.4}},
+
+    {"chunk_order": 9, "funnel_position": "empathy", "context_hint": "転換語「そんな時、」",
+     "elements": {}},
+
+    {"chunk_order": 10, "funnel_position": "empathy", "context_hint": "商品発見シーン2連",
+     "elements": {}},
+
+    {"chunk_order": 11, "funnel_position": "empathy", "context_hint": "行動開始：少しでも楽になれば",
+     "elements": {"D3_scenario": 0.5}},
+
+    {"chunk_order": 12, "funnel_position": "concept", "context_hint": "クリニック訪問5連画像",
+     "elements": {"B1_authority": 0.3}},
+
+    {"chunk_order": 13, "funnel_position": "concept", "context_hint": "裏技問いかけ：独自メカニズム示唆",
+     "elements": {"C2_unique_mechanism": 0.4}},
+
+    {"chunk_order": 14, "funnel_position": "concept", "context_hint": "裏技紹介画像4連",
+     "elements": {}},
+
+    {"chunk_order": 15, "funnel_position": "mechanism", "context_hint": "問題再定義：汗を止めるだけは無意味（POINT見出し）",
+     "elements": {"C1_causality": 0.75, "C3_differentiation": 0.7}},
+
+    {"chunk_order": 16, "funnel_position": "mechanism", "context_hint": "問題再定義画像",
+     "elements": {"C1_causality": 0.3}},
+
+    {"chunk_order": 17, "funnel_position": "mechanism", "context_hint": "ワキガ=腋臭症という病気：医学的再定義",
+     "elements": {"C1_causality": 0.8, "B3_data_evidence": 0.5}},
+
+    {"chunk_order": 18, "funnel_position": "mechanism", "context_hint": "医学用語イメージ画像",
+     "elements": {}},
+
+    {"chunk_order": 19, "funnel_position": "mechanism", "context_hint": "本当の原因は皮膚に潜む2種類の菌：因果特定",
+     "elements": {"C1_causality": 0.9, "B3_data_evidence": 0.5}},
+
+    {"chunk_order": 20, "funnel_position": "mechanism", "context_hint": "菌のイラスト画像2連",
+     "elements": {"C1_causality": 0.3}},
+
+    {"chunk_order": 21, "funnel_position": "mechanism", "context_hint": "菌が汗のニオイ成分を分解：メカニズム説明",
+     "elements": {"C1_causality": 0.85}},
+
+    {"chunk_order": 22, "funnel_position": "mechanism", "context_hint": "メカニズム図",
+     "elements": {}},
+
+    {"chunk_order": 23, "funnel_position": "mechanism", "context_hint": "ツーンとしたニオイ発生・特に厄介なのは（引き延ばし）",
+     "elements": {"C1_causality": 0.7}},
+
+    {"chunk_order": 24, "funnel_position": "mechanism", "context_hint": "厄介要素画像",
+     "elements": {}},
+
+    {"chunk_order": 25, "funnel_position": "mechanism", "context_hint": "毛穴の奥に潜む→表面ケアでは届かない→市販品では対策困難：強差別化",
+     "elements": {"C1_causality": 0.8, "C3_differentiation": 0.85}},
+
+    {"chunk_order": 26, "funnel_position": "mechanism", "context_hint": "市販品比較画像",
+     "elements": {"C3_differentiation": 0.3}},
+
+    {"chunk_order": 27, "funnel_position": "mechanism", "context_hint": "菌がいる限りワキガ臭発生：因果結論",
+     "elements": {"C1_causality": 0.8}},
+
+    {"chunk_order": 28, "funnel_position": "mechanism", "context_hint": "菌残存イメージ",
+     "elements": {}},
+
+    {"chunk_order": 29, "funnel_position": "mechanism", "context_hint": "手術は菌に注目してない：手術という選択肢を論理的に否定（強差別化・反論処理）",
+     "elements": {"C3_differentiation": 0.85, "C4_objection_handling": 0.6, "A3_regret_avoidance": 0.4}},
+
+    {"chunk_order": 30, "funnel_position": "mechanism", "context_hint": "手術否定関連画像3連",
+     "elements": {}},
+
+    {"chunk_order": 31, "funnel_position": "concept", "context_hint": "裏技はお風呂後3秒で終わる：独自メカニズムハイライト",
+     "elements": {"C2_unique_mechanism": 0.8, "B3_data_evidence": 0.5}},
+
+    {"chunk_order": 32, "funnel_position": "proof", "context_hint": "裏技紹介画像2連",
+     "elements": {"C2_unique_mechanism": 0.3}},
+
+    {"chunk_order": 33, "funnel_position": "proof", "context_hint": "購入者数注釈：当社従来品比（小文字注記）",
+     "elements": {"B2_social_proof": 0.4, "B3_data_evidence": 0.3}},
+
+    {"chunk_order": 34, "funnel_position": "proof", "context_hint": "実績グラフ画像想定",
+     "elements": {"B2_social_proof": 0.4}},
+
+    {"chunk_order": 35, "funnel_position": "proof", "context_hint": "当社従来品比（注釈）",
+     "elements": {}},
+
+    {"chunk_order": 36, "funnel_position": "proof", "context_hint": "比較グラフ",
+     "elements": {}},
+
+    {"chunk_order": 37, "funnel_position": "mechanism", "context_hint": "防臭効果の作用機序として（見出し）",
+     "elements": {"C2_unique_mechanism": 0.4}},
+
+    {"chunk_order": 38, "funnel_position": "mechanism", "context_hint": "作用機序図",
+     "elements": {}},
+
+    {"chunk_order": 39, "funnel_position": "proof", "context_hint": "Y.Mさん40歳口コミ：朝塗って夜まで快適・持ち運び楽",
+     "elements": {"B2_social_proof": 0.8, "D3_scenario": 0.6, "D2_aspiration": 0.5}},
+
+    {"chunk_order": 40, "funnel_position": "proof", "context_hint": "Y.Mさん口コミ画像",
+     "elements": {"B2_social_proof": 0.5}},
+
+    {"chunk_order": 41, "funnel_position": "proof", "context_hint": "S.Hさん37歳口コミ：意識しないで過ごせるようになった解放感",
+     "elements": {"B2_social_proof": 0.75, "D2_aspiration": 0.7, "D3_scenario": 0.6}},
+
+    {"chunk_order": 42, "funnel_position": "proof", "context_hint": "S.Hさん口コミ画像",
+     "elements": {"B2_social_proof": 0.5}},
+
+    {"chunk_order": 43, "funnel_position": "concept", "context_hint": "薬用ワキガ外用剤×34万人使用：独自カテゴリ×社会的証明",
+     "elements": {"C2_unique_mechanism": 0.7, "B2_social_proof": 0.85, "B3_data_evidence": 0.7}},
+
+    {"chunk_order": 44, "funnel_position": "concept", "context_hint": "商品紹介画像3連",
+     "elements": {}},
+
+    {"chunk_order": 45, "funnel_position": "authority", "context_hint": "ワキガ研究先進企業×ワキガ治療医と共同開発：最高位の権威",
+     "elements": {"B1_authority": 0.9, "C2_unique_mechanism": 0.6, "B4_transparency": 0.4}},
+
+    {"chunk_order": 46, "funnel_position": "authority", "context_hint": "治療医画像想定",
+     "elements": {"B1_authority": 0.5}},
+
+    {"chunk_order": 47, "funnel_position": "authority", "context_hint": "クリニック販売中：医療機関承認シグナル",
+     "elements": {"B1_authority": 0.85, "B2_social_proof": 0.5}},
+
+    {"chunk_order": 48, "funnel_position": "authority", "context_hint": "クリニック画像",
+     "elements": {"B1_authority": 0.5}},
+
+    {"chunk_order": 49, "funnel_position": "proof", "context_hint": "POINT見出し：効果はあるのか？買ってみた",
+     "elements": {"D3_scenario": 0.3}},
+
+    {"chunk_order": 50, "funnel_position": "proof", "context_hint": "商品パッケージ画像",
+     "elements": {}},
+
+    {"chunk_order": 51, "funnel_position": "proof", "context_hint": "10年悩んだ筆者の詳細レビュー：変化体験×高級感×無添加×国内製造×好きな服自由",
+     "elements": {"D1_transformation": 0.8, "D2_aspiration": 0.8, "D3_scenario": 0.7, "B1_authority": 0.5, "B4_transparency": 0.5, "C2_unique_mechanism": 0.5}},
+
+    {"chunk_order": 52, "funnel_position": "proof", "context_hint": "レビュー画像4連（商品・使用シーン）",
+     "elements": {"D1_transformation": 0.4}},
+
+    {"chunk_order": 53, "funnel_position": "cta", "context_hint": "独自成分2種(塩化ベンザルコニウム+IPMP)×ウルトラ密着×口コミ(せきゆき50代/F40代/娘中学生)×リニューアル前との差×POINT本日半額以下×治療医開発×11,810円→98%OFF×アンケートキャンペーン【巨大統合チャンク】",
+     "elements": {"B1_authority": 0.7, "B2_social_proof": 0.75, "B3_data_evidence": 0.7, "C2_unique_mechanism": 0.85, "C3_differentiation": 0.5, "D3_scenario": 0.6, "E1_urgency": 0.7, "E2_offer_appeal": 0.9, "D4_scarcity": 0.5, "E4_cta_clarity": 0.7}},
+
+    {"chunk_order": 54, "funnel_position": "cta", "context_hint": "CTAボタン画像",
+     "elements": {"E4_cta_clarity": 0.9, "E2_offer_appeal": 0.5}},
+
+    {"chunk_order": 55, "funnel_position": "cta", "context_hint": "最終CTA：11,660円お得・ボディソープ実質無料・縛りなし・コンビニ後払い・お悩み解放",
+     "elements": {"E2_offer_appeal": 0.85, "E3_risk_reversal": 0.9, "C4_objection_handling": 0.75, "E4_cta_clarity": 0.6, "A3_regret_avoidance": 0.4}}
+  ]
+}

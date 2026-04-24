@@ -2,9 +2,10 @@
 
 最終更新: 2026-04-24
 
-| article_id | brand | title | fetched | chunks | dominant_layer_dist | mCVR | CVR | status |
-|---|---|---|---|---|---|---|---|---|
-| 20260424_aurelie_megumi_kakusen | Aurelie. | MEGUMIさんの角栓溶解法が話題！毛穴年齢19歳の秘密 | 2026-04-24 | 92 (text46/image46/video0) | E:24/B:16/D:15/C:13/A:10 | - | - | embedded (3072dim) |
+| article_id | brand | title | fetched | chunks | dominant_layer_dist | strategy_type | mCVR | CVR | status |
+|---|---|---|---|---|---|---|---|---|---|
+| 20260424_aurelie_megumi_kakusen | Aurelie. | MEGUMIさんの角栓溶解法が話題！毛穴年齢19歳の秘密 | 2026-04-24 | 92 (text46/image46/video0) | E:24/B:16/D:15/C:13/A:10 | 権威×オファー強押し型 | - | - | embedded (3072dim) |
+| 20260424_proust_cream2_wakiga | Proust | ワキガに悩む私が実際に体験した出来事です | 2026-04-24 | 55 (text28/image27/video0) | C:15/B:11/D:8/A:4/E:3 | 問題再定義×論理メカニズム型 | - | - | embedded (3072dim) |
 
 ---
 

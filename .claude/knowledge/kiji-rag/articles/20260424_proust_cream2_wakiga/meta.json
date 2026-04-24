@@ -1,0 +1,56 @@
+{
+  "article_id": "20260424_proust_cream2_wakiga",
+  "source_url": "https://sb-draft-preview.squadbeyond.com/articles/gGZNMWODqTJsXPSGpmQ/draft?token=08f82bdcbfbd67a2d5cd9a09e2c36461",
+  "squad_beyond_article_id": "gGZNMWODqTJsXPSGpmQ",
+  "article_title": "ワキガに悩む私が実際に体験した出来事です。",
+  "brand_name": "Proust（プルースト）",
+  "product_name": "プルーストクリーム2.0",
+  "company": "株式会社ヨミテ",
+  "product_category": "薬用ワキガ外用剤・医薬部外品",
+  "product_type": "定期コース（初回98%OFF・ボディソープセット・縛りなし）",
+  "target_persona": "30-50代・ワキガ(腋臭症)悩み・手術経験or検討層・市販品で解決しきれない層",
+  "hook_angle": "1人称ストーリー（行きつけの服屋で...）× 手術してもダメだった絶望 × 裏技発見",
+  "concept_type": "問題再定義型（汗止めは無意味/菌が原因/手術は菌に注目してない）× 医師共同開発",
+  "fetched_at": "2026-04-24T17:35:00+09:00",
+  "fetched_by": "WebFetch",
+  "total_blocks_raw": 87,
+  "total_chunks": null,
+  "cta_count_unique_url": 1,
+  "cta_orders_in_raw": [85, 86, 87],
+  "cta_destination_url": "https://shop.rmh.co.jp/lp?u=me_proust2_v12-4_fb-1&sb_tracking=true",
+  "key_offer": {
+    "list_price_jpy": 11810,
+    "discount_rate": 0.98,
+    "bundle_items": ["プルーストクリーム2.0 定期初回98%OFF", "ボディソープ（ボディクレンズウォッシュ）実質無料"],
+    "risk_reversal": ["回数縛りなし", "コンビニ後払いOK"],
+    "offer_gate": "5問のアンケート回答で定期初回98%OFFクーポン獲得"
+  },
+  "key_ingredients": [
+    "塩化ベンザルコニウム（表面菌殺菌）",
+    "イソプロピルメチルフェノール IPMP（毛穴潜伏菌殺菌）",
+    "ウルトラ密着処方"
+  ],
+  "key_authority_signals": [
+    "ワキガ治療医と共同開発",
+    "クリニックでも販売中",
+    "34万人使用実績（2025年9月20日時点）",
+    "完全国内製造",
+    "医薬部外品"
+  ],
+  "performance": {
+    "mCVR": null,
+    "landing_CVR": null,
+    "CTR": null,
+    "test_period": null,
+    "note": "成果データ未取得（2026-04-24時点）。Squad Beyondダッシュボードから補完予定。"
+  },
+  "quality_flags": {
+    "images_resolved": false,
+    "images_resolved_note": "WebFetch時点で全画像がlazy.png placeholder。実URLは後工程で再取得要。",
+    "videos_present": false,
+    "anonymization_needed": false,
+    "anonymization_note": "口コミはY.M/S.H/せきゆき/Fさん等のイニシャル・仮名レベル。年齢は40歳/37歳等含むが匿名許容範囲と判断。",
+    "editor_ui_block_note": "order 1 の '作成中のversion(入稿できません)閉じる' は Squad Beyond エディタUI。チャンク化後スコアは無視する想定。"
+  },
+  "notes": "ワキガ訴求×1人称ストーリー×問題再定義型LP。記事冒頭の情景描写強め（行きつけの服屋で...）、薬機法配慮で効果表現は控えめ、成分と医師共同開発を権威軸に置く。"
+}
