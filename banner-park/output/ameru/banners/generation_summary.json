@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-04-25T13:13:31",
+  "total_banners": 10,
+  "results": {
+    "gemini": [],
+    "openai": [
+      {
+        "id": "A1",
+        "copy": "らぶいーず、ぜんぶ、自分の手で。",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_A1.png",
+        "type": "IP_character_collection"
+      },
+      {
+        "id": "A2",
+        "copy": "公式5キャラ、自分で編める。",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_A2.png",
+        "type": "IP_character_collection"
+      },
+      {
+        "id": "A3",
+        "copy": "#らぶいーず を編む",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_A3.png",
+        "type": "IP_character_collection"
+      },
+      {
+        "id": "B1",
+        "copy": "世界でひとつの、あなたのらぶいーず",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_B1.png",
+        "type": "order_made_differentiation"
+      },
+      {
+        "id": "B2",
+        "copy": "編み始め完成済み、だから必ず完成する",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_B2.png",
+        "type": "order_made_differentiation"
+      },
+      {
+        "id": "C1",
+        "copy": "え、らぶいーずって自分で編めるの？",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_C1.png",
+        "type": "sns_emotional_copy"
+      },
+      {
+        "id": "C2",
+        "copy": "8時間で、推しが手元に。",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_C2.png",
+        "type": "sns_emotional_copy"
+      },
+      {
+        "id": "D1",
+        "copy": "できた。",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_D1.png",
+        "type": "completed_lifestyle"
+      },
+      {
+        "id": "D2",
+        "copy": "できた。自分の手で。",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_D2.png",
+        "type": "completed_lifestyle"
+      },
+      {
+        "id": "E1",
+        "copy": "はじめの1体、¥1,980",
+        "path": "/Users/ca01224/Desktop/一進VOYAGE号/banner-park/output/ameru/banners/openai/ameru_E1.png",
+        "type": "package_single"
+      }
+    ]
+  },
+  "errors": []
+}
