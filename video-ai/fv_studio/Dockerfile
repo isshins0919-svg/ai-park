@@ -17,6 +17,8 @@ COPY . .
 RUN mkdir -p video-ai/fv_studio/uploads
 
 ENV PORT=8080
+# Cloud Run の stdout ログが遅延しないよう Python を unbuffered で起動
+ENV PYTHONUNBUFFERED=1
 EXPOSE 8080
 
 # gunicorn: 1ワーカー(job状態をメモリ共有) + 8スレッド(並列リクエスト対応)
