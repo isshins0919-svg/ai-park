@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru × らぶいーず® ｜ らぶいーず、ぜんぶ、自分の手で。</title>
+<meta name="description" content="らぶいーず®公式コラボのあみぐるみキット。編み始めは完成済みでお届け。初回¥1,980（53%OFF）／いつでも解約OK／30日返金保証。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* V8 — バランス型 (A1基準) ─────────────────
+     画像LPの視覚衝撃 × HTML運用要素のハイブリッド
+     画像: FV / 5キャラ / パッケージ / お届け順 / 過程 / 最終CTA (6枚)
+     HTML: 価格表 / 5大特典 / 安心保証 / FAQ / CTAボタン6回
+  */
+  :root{
+    --ink:#2a2525;
+    --ink-soft:#6b5d52;
+    --cream:#fbf4ec;
+    --paper:#fff;
+    --pinkpale:#fce4dd;
+    --pinkdust:#e8b4a8;
+    --pinkdeep:#d98c7e;
+    --pinksoft:#f4c6bd;
+    --blue:#bcd8e8;
+    --blue-deep:#6ea6c2;
+    --gold:#c9a36a;
+    --red:#d26b5c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Zen Maru Gothic","Noto Sans JP",sans-serif;
+    background:var(--cream);color:var(--ink);
+    -webkit-font-smoothing:antialiased;font-feature-settings:"palt" 1;
+    line-height:1.85;
+  }
+  main{max-width:480px;margin:0 auto;background:var(--paper);box-shadow:0 0 80px rgba(217,140,126,.12)}
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit;text-decoration:none}
+
+  /* ── 戻る ── */
+  .nav-back{
+    position:fixed;top:14px;right:14px;z-index:60;
+    background:rgba(255,255,255,.92);border:1px solid var(--pinkpale);
+    padding:6px 12px;border-radius:999px;font-size:11px;font-weight:700;
+    color:var(--ink);letter-spacing:.05em;
+  }
+
+  /* ── ヘッダー (ameruロゴ 1回目) ── */
+  .site-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 18px;background:#fff;border-bottom:1px solid var(--pinkpale);
+    position:sticky;top:0;z-index:40;
+  }
+  .site-header__logo{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:18px;
+    letter-spacing:.18em;color:var(--ink);
+  }
+  .site-header__loveeez{
+    font-size:9px;color:var(--pinkdeep);letter-spacing:.1em;font-weight:700;
+  }
+
+  /* ── ゾーン1: 視覚衝撃 (画像主体) ── */
+  .img-section{position:relative;padding:0}
+  .img-section img{width:100%;display:block}
+
+  .between-cta{
+    padding:18px 16px 24px;text-align:center;
+    background:linear-gradient(180deg,#fff,var(--cream));
+  }
+  .between-cta__price{
+    display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:10px;
+    font-family:"Noto Serif JP",serif;
+  }
+  .between-cta__price .reg{font-size:13px;color:var(--ink-soft);text-decoration:line-through}
+  .between-cta__price .now{font-size:28px;font-weight:900;color:var(--red)}
+  .between-cta__price .yen{font-size:13px;color:var(--red);font-weight:700;margin-left:2px}
+  .between-cta__price .off{
+    background:var(--red);color:#fff;font-size:10px;
+    padding:3px 8px;border-radius:6px;font-weight:700;letter-spacing:.05em;
+  }
+  .cta-btn{
+    display:block;background:linear-gradient(180deg,#d98c7e,#b56b5e);
+    color:#fff;text-align:center;font-weight:900;font-size:17px;padding:18px;
+    border-radius:999px;letter-spacing:.05em;
+    box-shadow:0 10px 30px rgba(217,140,126,.45);
+  }
+  .cta-btn small{display:block;font-weight:500;font-size:11px;opacity:.95;margin-top:4px;letter-spacing:.18em}
+
+  /* ── オファーセクション (HTML) ── */
+  .offer{padding:50px 22px;background:linear-gradient(180deg,#fff,#fbf4ec)}
+  .offer__banner{
+    background:var(--gold);color:#fff;font-size:12px;text-align:center;font-weight:900;
+    padding:8px;letter-spacing:.2em;border-radius:6px;margin-bottom:18px;
+  }
+  .offer h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:24px;text-align:center;
+    line-height:1.5;margin-bottom:18px;
+  }
+  .offer__price{
+    background:#fff;padding:20px;border-radius:14px;margin-bottom:18px;
+    border:2px solid var(--gold);
+  }
+  .offer__price-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #ddc7bc;font-size:13px}
+  .offer__price-row:last-child{border:0}
+  .offer__price-row.now{
+    font-size:17px;font-weight:900;
+    background:#fff;padding:14px;border-radius:8px;margin-top:8px;border:2px solid var(--red);
+  }
+  .offer__price-row.now strong{color:var(--red);font-size:24px;font-family:"Noto Serif JP",serif}
+  .offer__off{
+    background:var(--red);color:#fff;font-size:11px;font-weight:700;
+    padding:3px 8px;border-radius:6px;letter-spacing:.05em;
+  }
+  .offer__save{
+    background:var(--gold);color:#fff;font-weight:900;font-size:13px;
+    text-align:center;padding:8px;border-radius:8px;letter-spacing:.05em;margin-top:6px;
+  }
+  .offer__bonuses h3{
+    text-align:center;font-family:"Noto Serif JP",serif;font-weight:900;
+    font-size:17px;margin:24px 0 14px;color:var(--pinkdeep);
+  }
+  .offer__bonus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .offer__bonus{
+    background:var(--cream);padding:14px 12px;border-radius:10px;
+    text-align:center;font-size:12px;border:1px solid var(--pinkpale);
+  }
+  .offer__bonus span.n{
+    display:inline-block;background:var(--pinkdeep);color:#fff;font-size:10px;font-weight:900;
+    padding:2px 8px;border-radius:999px;margin-bottom:6px;letter-spacing:.05em;
+  }
+  .offer__bonus strong{display:block;font-weight:900;font-size:13px;line-height:1.4;color:var(--ink)}
+  .offer__limit{text-align:center;font-size:11px;color:var(--red);font-weight:700;margin-top:14px;letter-spacing:.05em}
+
+  /* ── 安心セクション (HTML) ── */
+  .trust{padding:50px 22px;background:#fff}
+  .trust h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:22px;text-align:center;
+    line-height:1.55;margin-bottom:6px;
+  }
+  .trust > p{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:22px}
+  .trust__refund{
+    background:#fff;border:3px solid var(--red);border-radius:14px;
+    padding:18px;text-align:center;margin-bottom:18px;
+  }
+  .trust__refund strong{
+    display:block;color:var(--red);font-family:"Noto Serif JP",serif;font-weight:900;
+    font-size:22px;letter-spacing:.05em;margin-bottom:4px;
+  }
+  .trust__refund span{font-size:12px;color:var(--ink-soft)}
+  .trust__list{list-style:none;background:var(--cream);border-radius:14px;padding:14px 20px}
+  .trust__list li{
+    padding:10px 0 10px 28px;border-bottom:1px dashed var(--pinkpale);font-size:13px;
+    color:var(--ink);position:relative;line-height:1.7;
+  }
+  .trust__list li:last-child{border:0}
+  .trust__list li::before{
+    content:"✓";position:absolute;left:4px;top:11px;color:var(--gold);font-weight:900;
+  }
+
+  /* ── FAQ ── */
+  .faq{padding:50px 22px;background:linear-gradient(180deg,#fff,var(--cream))}
+  .faq h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:22px;text-align:center;
+    margin-bottom:8px;
+  }
+  .faq > p{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:24px}
+  details{
+    background:#fff;border-radius:10px;margin-bottom:8px;padding:0;
+    border:1px solid var(--pinkpale);
+  }
+  details summary{
+    list-style:none;padding:14px 16px 14px 50px;cursor:pointer;font-weight:700;
+    font-size:13px;line-height:1.6;position:relative;
+  }
+  details summary::-webkit-details-marker{display:none}
+  .faq{counter-reset:faq-counter}
+  details summary::before{
+    content:counter(faq-counter,decimal-leading-zero);counter-increment:faq-counter;
+    position:absolute;left:14px;top:14px;background:var(--pinkdeep);color:#fff;
+    width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:900;letter-spacing:.04em;
+  }
+  details summary::after{
+    content:"＋";position:absolute;right:16px;top:14px;color:var(--pinkdeep);
+    font-weight:900;font-size:14px;
+  }
+  details[open] summary::after{content:"−"}
+  details > div{
+    padding:0 16px 16px 50px;font-size:13px;line-height:1.85;color:var(--ink-soft);
+  }
+
+  /* ── 最終CTA ── */
+  .final-cta{
+    padding:30px 22px 50px;background:linear-gradient(180deg,var(--cream),#fce4dd);text-align:center;
+  }
+  .final-cta__msg{font-size:13px;line-height:2;color:var(--ink-soft);margin-bottom:22px}
+  .final-cta__btn{
+    display:block;background:linear-gradient(180deg,#d98c7e,#b56b5e);color:#fff;font-weight:900;
+    font-size:18px;padding:22px;border-radius:999px;letter-spacing:.05em;
+    box-shadow:0 14px 40px rgba(217,140,126,.5);margin-bottom:14px;
+  }
+  .final-cta__btn small{display:block;font-weight:500;font-size:11px;margin-top:4px;letter-spacing:.18em;opacity:.95}
+  .final-cta__pay{
+    display:flex;justify-content:center;gap:6px;margin-bottom:14px;font-size:9px;
+    color:var(--ink-soft);letter-spacing:.05em;flex-wrap:wrap;
+  }
+  .final-cta__pay span{background:#fff;padding:4px 8px;border-radius:4px;border:1px solid var(--pinkpale)}
+  .final-cta__reassurance{font-size:11px;color:var(--ink-soft);letter-spacing:.1em}
+
+  /* ── Sticky ── */
+  .sticky-cta{
+    position:sticky;bottom:0;z-index:30;padding:12px 16px 18px;
+    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.97) 30%);
+  }
+  .sticky-cta a{
+    display:block;background:linear-gradient(180deg,#d98c7e,#b56b5e);color:#fff;
+    font-weight:900;font-size:15px;padding:14px;border-radius:999px;letter-spacing:.05em;
+    text-align:center;box-shadow:0 6px 20px rgba(217,140,126,.45);
+  }
+
+  /* ── フッター (ameruロゴ 2回目) ── */
+  .site-footer{padding:36px 22px 80px;background:var(--cream);text-align:center;font-size:11px;
+    color:var(--ink-soft);letter-spacing:.08em;line-height:2}
+  .site-footer__logo{
+    font-family:"Noto Serif JP",serif;font-weight:900;letter-spacing:.3em;font-size:14px;
+    color:var(--ink);margin-bottom:10px;
+  }
+  .site-footer__ip{
+    background:#fff;display:inline-block;padding:6px 14px;border-radius:8px;
+    font-size:10px;font-weight:700;color:var(--ink);margin-bottom:14px;letter-spacing:.05em;
+  }
+  .site-footer__links a{margin:0 6px;color:var(--pinkdeep);text-decoration:underline}
+
+  @media (max-width:380px){
+    main{max-width:100%}
+    .offer h2,.trust h2,.faq h2{font-size:20px}
+  }
+</style>
+</head>
+<body>
+<a class="nav-back" href="10_patterns_index.html">← パターン一覧</a>
+<main>
+
+  <!-- ── ヘッダー (ロゴ 1回目) ── -->
+  <header class="site-header">
+    <div class="site-header__logo">ameru</div>
+    <div class="site-header__loveeez">×らぶいーず® 公式コラボ</div>
+  </header>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━ -->
+  <!-- ゾーン1: 直感→欲しい (ビジュアル衝撃) -->
+  <!-- ━━━━━━━━━━━━━━━━━━━ -->
+
+  <section class="img-section">
+    <img src="images/v8/01_FV.png" alt="らぶいーず、ぜんぶ、自分の手で。" fetchpriority="high">
+  </section>
+
+  <div class="between-cta">
+    <div class="between-cta__price">
+      <span class="reg">¥4,200</span>
+      <span class="now">1,980</span><span class="yen">円</span>
+      <span class="off">53%OFF</span>
+    </div>
+    <a href="#order" class="cta-btn">¥1,980で はじめてみる ▶
+      <small>5回定期便 ／ いつでも解約OK ／ 送料込み</small>
+    </a>
+  </div>
+
+  <section class="img-section">
+    <img src="images/v8/02_chars_world.png" alt="らぶいーず®公式5キャラ、ぜんぶあなたの手で" loading="lazy">
+  </section>
+
+  <section class="img-section">
+    <img src="images/v8/03_package_open.png" alt="編み始め、完成済み。だから、必ず編める" loading="lazy">
+  </section>
+
+  <div class="between-cta">
+    <a href="#order" class="cta-btn">¥1,980で はじめてみる ▶</a>
+  </div>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━ -->
+  <!-- ゾーン2: 物語 -->
+  <!-- ━━━━━━━━━━━━━━━━━━━ -->
+
+  <section class="img-section">
+    <img src="images/v8/04_delivery_5steps.png" alt="2ヶ月に1体、5体で物語が完成する" loading="lazy">
+  </section>
+
+  <section class="img-section">
+    <img src="images/v8/05_process.png" alt="糸から、あなたの子へ" loading="lazy">
+  </section>
+
+  <div class="between-cta">
+    <a href="#order" class="cta-btn">¥1,980で はじめてみる ▶</a>
+  </div>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━ -->
+  <!-- ゾーン3: HTML運用要素 (オファー) -->
+  <!-- ━━━━━━━━━━━━━━━━━━━ -->
+
+  <section class="offer" id="order">
+    <p class="offer__banner">期間限定 — 今だけの特別プラン</p>
+    <h2>はじめの1体は、<br>¥1,980。</h2>
+
+    <div class="offer__price">
+      <div class="offer__price-row"><span>通常価格</span><span style="text-decoration:line-through;color:var(--ink-soft)">¥4,200</span></div>
+      <div class="offer__price-row now">
+        <span>初回限定 <span class="offer__off">53%OFF</span></span>
+        <strong>¥1,980</strong>
+      </div>
+      <div class="offer__save">＼ 通常より ¥2,220 お得 ／</div>
+      <div class="offer__price-row" style="margin-top:8px"><span>F2〜F5（通常価格）</span><span>¥4,200 × 4回</span></div>
+      <div class="offer__price-row"><span>5回総額（税込）</span><span style="font-weight:900;color:var(--ink)">¥18,780</span></div>
+    </div>
+
+    <div class="offer__bonuses">
+      <h3>5大特典プレゼント</h3>
+      <div class="offer__bonus-grid">
+        <div class="offer__bonus"><span class="n">01</span><strong>動画教材<br>全レッスン</strong></div>
+        <div class="offer__bonus"><span class="n">02</span><strong>LINE公式<br>サポート</strong></div>
+        <div class="offer__bonus"><span class="n">03</span><strong>編み始め<br>完成済みキット</strong></div>
+        <div class="offer__bonus"><span class="n">04</span><strong>らぶいーず®<br>公式特典カード</strong></div>
+        <div class="offer__bonus" style="grid-column:span 2;background:#fff;border:2px solid var(--gold)">
+          <span class="n" style="background:var(--gold)">05</span>
+          <strong>30日返金保証 ＋ 送料完全無料</strong>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" onclick="alert('購入フォーム（実装時に切り替え）');return false" class="cta-btn" style="margin-top:24px">
+      ¥1,980で はじめてみる ▶
+      <small>5回定期便 ／ 単品購入も選べます</small>
+    </a>
+
+    <p class="offer__limit">⚠ 限定300セット — 残り 247 セット</p>
+  </section>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━ -->
+  <!-- ゾーン4: 安心 -->
+  <!-- ━━━━━━━━━━━━━━━━━━━ -->
+
+  <section class="trust">
+    <h2>安心して、はじめられる。<br>5つのお約束。</h2>
+    <p>ameru は、完成の日まで、そばにいます。</p>
+
+    <div class="trust__refund">
+      <strong>30日 全額返金保証</strong>
+      <span>「私には無理かも」と思ったら、いつでもご連絡ください。</span>
+    </div>
+
+    <ul class="trust__list">
+      <li>いつでも解約OK（縛り一切なし）</li>
+      <li>送料込み（追加費用なし）</li>
+      <li>LINE公式から、直接相談OK</li>
+      <li>動画教材・かぎ針・糸・パーツ、ぜんぶ同梱</li>
+      <li>クレジット5種・コンビニ後払い・AmazonPay対応</li>
+    </ul>
+  </section>
+
+  <!-- ── FAQ (悩みはここに統合) ── -->
+  <section class="faq">
+    <h2>よくあるご質問</h2>
+    <p>ご不安なことは、ひとつずつ解消していきます。</p>
+
+    <details>
+      <summary>編んだことがありません。本当に大丈夫ですか？</summary>
+      <div>むしろ、そんなあなたのために設計されたキットです。編み始めはこちらで完成させた状態でお届けします。動画教材とLINEサポートで、必ず完成までご一緒します。</div>
+    </details>
+
+    <details>
+      <summary>2ヶ月に1体、続けられるか不安です。</summary>
+      <div>スキップ・休会いつでも可能です。次回お届けの10日前までにご連絡いただければ、お休みいただけます。再開も自由なタイミングで。</div>
+    </details>
+
+    <details>
+      <summary>道具は別途必要ですか？</summary>
+      <div>いいえ、すべて同梱です。かぎ針・糸・とじ針・目のパーツ・編み始め完成済みのパーツまで。手元にスマホ1台あれば、その日からはじめられます。</div>
+    </details>
+
+    <details>
+      <summary>解約に縛りや違約金はありますか？</summary>
+      <div>一切ございません。1回お受け取り後でも、いつでも解約OK。違約金もありません。安心してはじめてください。</div>
+    </details>
+
+    <details>
+      <summary>ライセンスは正規ですか？</summary>
+      <div>はい、らぶいーず® 公式ライセンス商品です。すもっぴ・ぴょんちー・にゃぽ・うるる・ぱおぱおの公式 5キャラを、ご自分の手で編むことができます。</div>
+    </details>
+
+    <details>
+      <summary>まず相談だけしたいのですが…</summary>
+      <div>LINE公式アカウントから、無料相談を受け付けています。「私でもできるかな？」というご質問に、丁寧にお答えします。</div>
+    </details>
+
+    <div class="between-cta" style="background:transparent;margin-top:24px;padding:0">
+      <a href="#order" class="cta-btn">¥1,980で はじめてみる ▶</a>
+    </div>
+  </section>
+
+  <!-- ── 最終CTA ── -->
+  <section class="img-section">
+    <img src="images/v8/06_final_emotion.png" alt="完成した瞬間、もう、いっしょにいる" loading="lazy">
+  </section>
+
+  <section class="final-cta">
+    <p class="final-cta__msg">
+      自分で編んだ 1体は、世界でひとつ。<br>
+      『私には無理かも』を越えた先に、<br>
+      あなたの手で生まれる、特別な存在が待っています。
+    </p>
+
+    <a href="#order" class="final-cta__btn">
+      ¥1,980で はじめてみる ▶
+      <small>5回定期便 ／ 単品購入も選べます</small>
+    </a>
+
+    <div class="final-cta__pay">
+      <span>VISA</span><span>Master</span><span>JCB</span><span>AMEX</span><span>コンビニ後払い</span><span>AmazonPay</span>
+    </div>
+
+    <p class="final-cta__reassurance">いつでも解約OK ／ 送料込み ／ 30日返金保証 ／ 限定300セット 残247</p>
+  </section>
+
+  <!-- ── Sticky CTA ── -->
+  <div class="sticky-cta">
+    <a href="#order">¥1,980で はじめてみる ▶</a>
+  </div>
+
+  <!-- ── フッター (ロゴ 2回目) ── -->
+  <footer class="site-footer">
+    <div class="site-footer__logo">ameru</div>
+    <span class="site-footer__ip">らぶいーず® 公式ライセンス商品</span><br>
+    株式会社ヨミテ<br>
+    <div class="site-footer__links">
+      <a href="#">特定商取引法に基づく表記</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">利用規約</a>
+    </div>
+    <span style="opacity:.6;display:block;margin-top:14px">© ameru. All rights reserved.</span>
+  </footer>
+
+</main>
+</body>
+</html>
