@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ameru × らぶいーず® ｜ らぶいーずを、自分の手で作れる日が来た。</title>
+<meta name="description" content="日本テレビ公式コラボ。らぶいーず®公式5キャラを編めるサブスクキット。編み始めは完成済みでお届け。初回¥1,980（53%OFF）／いつでも解約OK／30日返金保証。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Serif+JP:wght@500;600;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     V7 — 案B(感情ゾーン) + 案A(説得ゾーン) 統合型
+     構造: HTMLメイン骨格 + 画像セクション素材
+     ロゴ: ヘッダー1回 + フッター1回 = 2回のみ
+     CTA: 6回 HTML実装で反復
+     ============================================================ */
+  :root{
+    --ink:#2a2525;
+    --ink-soft:#6b5d52;
+    --cream:#fbf4ec;
+    --ivory:#fff;
+    --pinkpale:#fce4dd;
+    --pinkdust:#e8b4a8;
+    --pinkdeep:#d98c7e;
+    --pinksoft:#f4c6bd;
+    --blue:#bcd8e8;
+    --blue-deep:#6ea6c2;
+    --mint:#c5dfc9;
+    --gold:#c9a36a;
+    --red:#d26b5c;
+    --green-zone:#e8f0e4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Zen Maru Gothic","Noto Sans JP","Hiragino Sans",sans-serif;
+    background:var(--cream);color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"palt" 1;
+    line-height:1.7;
+  }
+  main{max-width:480px;margin:0 auto;background:var(--ivory);box-shadow:0 0 80px rgba(217,140,126,.12);}
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit;text-decoration:none}
+
+  /* ── ヘッダー ── */
+  .site-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;background:#fff;border-bottom:1px solid var(--pinkpale);
+    position:sticky;top:0;z-index:50;
+  }
+  .site-header__logo{
+    font-family:"Noto Serif JP",serif;font-weight:700;font-size:18px;
+    letter-spacing:.18em;color:var(--ink);
+  }
+  .site-header__sub{
+    font-size:10px;color:var(--pinkdeep);letter-spacing:.15em;font-weight:700;
+  }
+
+  /* ── ゾーン1: 感情ゾーン ── */
+  .zone-emotion{position:relative;background:linear-gradient(180deg,#fce4dd 0%,#fbf4ec 100%)}
+  .fv{position:relative;text-align:center;padding:28px 20px 36px}
+  .fv__badge{
+    display:inline-block;background:var(--pinkdeep);color:#fff;
+    font-weight:700;font-size:11px;letter-spacing:.2em;padding:5px 14px;border-radius:999px;
+    margin-bottom:14px;
+  }
+  .fv__title{
+    font-family:"Noto Serif JP",serif;font-weight:900;
+    font-size:28px;line-height:1.45;color:var(--ink);
+    margin-bottom:12px;letter-spacing:.02em;
+  }
+  .fv__title em{font-style:normal;color:var(--pinkdeep)}
+  .fv__sub{
+    font-size:14px;line-height:1.9;color:var(--ink-soft);font-weight:500;
+    margin-bottom:18px;
+  }
+  .fv__hero-img{
+    width:100%;border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(217,140,126,.15);
+    margin-bottom:20px;
+  }
+  .fv__price{
+    display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:14px;
+    font-family:"Noto Serif JP",serif;
+  }
+  .fv__price .reg{font-size:14px;color:var(--ink-soft);text-decoration:line-through}
+  .fv__price .now{font-size:32px;font-weight:900;color:var(--red)}
+  .fv__price .yen{font-size:14px;color:var(--red);font-weight:700;margin-left:2px}
+  .fv__price .off{
+    background:var(--red);color:#fff;font-size:11px;
+    padding:3px 9px;border-radius:6px;font-weight:700;letter-spacing:.05em;
+  }
+  .fv__cta{
+    display:block;background:linear-gradient(180deg,#d98c7e,#b56b5e);
+    color:#fff;text-align:center;font-weight:900;font-size:17px;padding:18px;
+    border-radius:999px;letter-spacing:.05em;
+    box-shadow:0 10px 30px rgba(217,140,126,.45);margin-bottom:8px;
+  }
+  .fv__cta-arrow{display:inline-block;margin-left:6px}
+  .fv__reassurance{font-size:11px;color:var(--ink-soft);letter-spacing:.05em}
+
+  .zone-emotion-hero{padding:28px 20px;text-align:center}
+  .zone-emotion-hero h2{
+    font-family:"Noto Serif JP",serif;font-weight:700;font-size:13px;
+    letter-spacing:.3em;color:var(--pinkdeep);margin-bottom:8px;
+  }
+  .zone-emotion-hero h3{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:24px;
+    color:var(--ink);margin-bottom:16px;line-height:1.5;
+  }
+  .zone-emotion-hero img{border-radius:16px;margin:0 auto}
+
+  /* ── ゾーン2: 説得ゾーン ── */
+  .zone-persuasion{background:var(--ivory)}
+
+  .empathy{padding:50px 24px;background:var(--cream)}
+  .empathy h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:22px;text-align:center;
+    margin-bottom:20px;letter-spacing:.04em;
+  }
+  .empathy ul{list-style:none;background:#fff;padding:18px 22px;border-radius:14px;
+    box-shadow:0 4px 18px rgba(217,140,126,.08)}
+  .empathy li{
+    padding:12px 0 12px 30px;border-bottom:1px dashed var(--pinkpale);font-size:14px;
+    line-height:1.7;color:var(--ink);position:relative;
+  }
+  .empathy li:last-child{border:0}
+  .empathy li::before{
+    content:"♡";position:absolute;left:6px;top:11px;
+    color:var(--pinkdeep);font-size:14px;
+  }
+
+  .only1{padding:50px 24px;background:#fff;text-align:center}
+  .only1__lead{
+    font-size:13px;color:var(--pinkdeep);letter-spacing:.18em;font-weight:700;
+    margin-bottom:8px;
+  }
+  .only1 h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:24px;
+    line-height:1.55;margin-bottom:8px;
+  }
+  .only1 p{font-size:14px;color:var(--ink-soft);margin-bottom:22px}
+  .only1__img{border-radius:14px;margin-bottom:14px}
+  .only1__stamp{
+    display:inline-block;background:var(--gold);color:#fff;font-size:12px;font-weight:900;
+    letter-spacing:.15em;padding:8px 20px;border-radius:999px;
+  }
+
+  .proof-numbers{padding:50px 24px;background:linear-gradient(180deg,#fce4dd 0%,#fff 100%);text-align:center}
+  .proof-numbers h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:18px;line-height:1.7;
+    margin-bottom:24px;
+  }
+  .proof-numbers__row{display:flex;justify-content:space-around;gap:8px}
+  .proof-numbers__cell{flex:1;background:#fff;border-radius:14px;padding:18px 6px;
+    box-shadow:0 4px 14px rgba(217,140,126,.1)}
+  .proof-numbers__cell strong{
+    display:block;font-family:"Noto Serif JP",serif;font-weight:900;font-size:26px;
+    color:var(--pinkdeep);margin-bottom:2px;line-height:1;
+  }
+  .proof-numbers__cell span{font-size:11px;color:var(--ink-soft);letter-spacing:.05em}
+  .proof-numbers__note{font-size:10px;color:var(--ink-soft);margin-top:14px;letter-spacing:.05em}
+
+  .voices{padding:50px 24px;background:#fff}
+  .voices h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:22px;text-align:center;
+    margin-bottom:6px;
+  }
+  .voices > p{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:24px}
+  .voices__card{
+    background:var(--cream);padding:18px;border-radius:14px;margin-bottom:14px;
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .voices__card img{
+    width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;
+    border:2px solid var(--pinkpale);
+  }
+  .voices__card .body{flex:1;font-size:13px;line-height:1.7}
+  .voices__name{font-weight:900;color:var(--ink);font-size:14px;margin-bottom:2px}
+  .voices__age{font-size:11px;color:var(--ink-soft);margin-bottom:6px}
+  .voices__stars{color:#f5b500;font-size:12px;margin-bottom:6px;letter-spacing:.1em}
+
+  .media{padding:36px 24px;background:var(--cream);text-align:center}
+  .media__label{font-size:11px;letter-spacing:.3em;color:var(--gold);font-weight:700;margin-bottom:8px}
+  .media h3{
+    font-family:"Noto Serif JP",serif;font-weight:700;font-size:16px;
+    color:var(--ink);line-height:1.7;
+  }
+
+  .flow{padding:50px 24px;background:var(--ivory)}
+  .flow h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:22px;text-align:center;
+    margin-bottom:6px;
+  }
+  .flow > p{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:24px}
+  .flow__img{border-radius:14px;margin-bottom:18px}
+  .flow__steps{list-style:none}
+  .flow__steps li{
+    display:flex;align-items:center;gap:14px;padding:11px 14px;
+    background:var(--cream);border-radius:10px;margin-bottom:8px;font-size:13px;
+  }
+  .flow__steps .num{
+    width:28px;height:28px;border-radius:50%;background:var(--pinkdeep);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0;
+  }
+  .flow__steps .name{font-weight:900;flex:1}
+  .flow__steps .tag{font-size:11px;color:var(--pinkdeep);font-weight:700}
+  .flow__steps .tag-gold{color:var(--gold)}
+
+  .video{padding:50px 24px;background:#fff;text-align:center}
+  .video h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:22px;line-height:1.55;
+    margin-bottom:10px;
+  }
+  .video > p{font-size:14px;color:var(--ink-soft);margin-bottom:22px;line-height:1.8}
+  .video__img{border-radius:14px;margin-bottom:16px}
+  .video__chap{
+    display:inline-block;background:var(--cream);font-size:11px;color:var(--ink-soft);
+    padding:4px 10px;border-radius:6px;margin:2px 3px;letter-spacing:.05em;
+  }
+
+  .mid-cta{padding:30px 24px;background:linear-gradient(180deg,#fbf4ec,#fce4dd);text-align:center}
+  .mid-cta a{
+    display:block;background:linear-gradient(180deg,#d98c7e,#b56b5e);color:#fff;
+    font-weight:900;font-size:16px;padding:18px;border-radius:999px;letter-spacing:.05em;
+    box-shadow:0 10px 30px rgba(217,140,126,.4)
+  }
+  .mid-cta__sub{font-size:11px;color:var(--ink-soft);margin-top:8px;letter-spacing:.1em}
+
+  .offer{padding:50px 24px;background:#fff}
+  .offer__banner{
+    background:var(--gold);color:#fff;font-size:12px;text-align:center;font-weight:900;
+    padding:8px;letter-spacing:.2em;border-radius:6px;margin-bottom:16px;
+  }
+  .offer h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:24px;text-align:center;
+    line-height:1.5;margin-bottom:18px;
+  }
+  .offer__img{border-radius:14px;margin-bottom:18px}
+  .offer__price{
+    background:var(--cream);padding:20px;border-radius:14px;margin-bottom:18px;
+    border:2px solid var(--gold);
+  }
+  .offer__price-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #ddc7bc;font-size:13px}
+  .offer__price-row:last-child{border:0}
+  .offer__price-row.now{
+    font-size:17px;color:var(--ink);font-weight:900;
+    background:#fff;padding:14px;border-radius:8px;margin-top:8px;border:2px solid var(--red);
+  }
+  .offer__price-row.now strong{color:var(--red);font-size:24px;font-family:"Noto Serif JP",serif}
+  .offer__off{
+    background:var(--red);color:#fff;font-size:11px;font-weight:700;
+    padding:3px 8px;border-radius:6px;letter-spacing:.05em;
+  }
+  .offer__save{
+    background:var(--gold);color:#fff;font-weight:900;font-size:13px;
+    text-align:center;padding:8px;border-radius:8px;letter-spacing:.05em;margin-top:6px;
+  }
+  .offer__bonuses{margin:24px 0}
+  .offer__bonuses h3{
+    text-align:center;font-family:"Noto Serif JP",serif;font-weight:900;
+    font-size:17px;margin-bottom:14px;color:var(--pinkdeep);
+  }
+  .offer__bonus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .offer__bonus{
+    background:var(--cream);padding:14px 12px;border-radius:10px;
+    text-align:center;font-size:12px;border:1px solid var(--pinkpale);
+  }
+  .offer__bonus span{
+    display:block;background:var(--pinkdeep);color:#fff;font-size:10px;font-weight:900;
+    padding:2px 8px;border-radius:999px;width:fit-content;margin:0 auto 6px;letter-spacing:.05em;
+  }
+  .offer__bonus strong{display:block;font-weight:900;font-size:13px;line-height:1.4;color:var(--ink)}
+
+  .guarantee{padding:50px 24px;background:linear-gradient(180deg,#fff,#fbf4ec)}
+  .guarantee h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:22px;text-align:center;
+    line-height:1.55;margin-bottom:6px;
+  }
+  .guarantee > p{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:22px}
+  .guarantee__refund{
+    background:#fff;border:3px solid var(--red);border-radius:14px;
+    padding:18px;text-align:center;margin-bottom:18px;
+  }
+  .guarantee__refund strong{
+    display:block;color:var(--red);font-family:"Noto Serif JP",serif;font-weight:900;
+    font-size:22px;letter-spacing:.05em;margin-bottom:4px;
+  }
+  .guarantee__refund span{font-size:12px;color:var(--ink-soft)}
+  .guarantee__items{list-style:none;background:#fff;border-radius:14px;padding:14px 20px;
+    box-shadow:0 4px 14px rgba(217,140,126,.08)}
+  .guarantee__items li{
+    padding:10px 0 10px 28px;border-bottom:1px dashed var(--pinkpale);font-size:13px;
+    color:var(--ink);position:relative;line-height:1.7;
+  }
+  .guarantee__items li:last-child{border:0}
+  .guarantee__items li::before{
+    content:"✓";position:absolute;left:4px;top:11px;color:var(--gold);font-weight:900;
+  }
+
+  .faq{padding:50px 24px;background:#fff}
+  .faq h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:22px;text-align:center;
+    margin-bottom:24px;
+  }
+  details{
+    background:var(--cream);border-radius:10px;margin-bottom:8px;padding:0;
+    border:1px solid var(--pinkpale);
+  }
+  details summary{
+    list-style:none;padding:14px 16px 14px 50px;cursor:pointer;font-weight:700;
+    font-size:13px;line-height:1.6;position:relative;
+  }
+  details summary::-webkit-details-marker{display:none}
+  details summary::before{
+    content:counter(faq-counter,decimal-leading-zero);counter-increment:faq-counter;
+    position:absolute;left:14px;top:14px;background:var(--pinkdeep);color:#fff;
+    width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:900;letter-spacing:.04em;
+  }
+  details summary::after{
+    content:"＋";position:absolute;right:16px;top:14px;color:var(--pinkdeep);
+    font-weight:900;font-size:14px;transition:transform .2s;
+  }
+  details[open] summary::after{content:"−"}
+  details > div{
+    padding:0 16px 16px 50px;font-size:13px;line-height:1.85;color:var(--ink-soft);
+  }
+  .faq{counter-reset:faq-counter}
+
+  .final-cta{
+    padding:50px 24px;background:linear-gradient(180deg,#fce4dd,#fbf4ec);text-align:center;
+  }
+  .final-cta__lead{font-size:11px;letter-spacing:.3em;color:var(--gold);font-weight:700;margin-bottom:6px}
+  .final-cta h2{
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:23px;line-height:1.6;
+    margin-bottom:14px;
+  }
+  .final-cta__msg{font-size:13px;line-height:2;color:var(--ink-soft);margin-bottom:20px}
+  .final-cta__img{border-radius:14px;margin-bottom:22px}
+  .final-cta__btn{
+    display:block;background:linear-gradient(180deg,#d98c7e,#b56b5e);color:#fff;font-weight:900;
+    font-size:18px;padding:22px;border-radius:999px;letter-spacing:.05em;
+    box-shadow:0 14px 40px rgba(217,140,126,.5);margin-bottom:14px;
+  }
+  .final-cta__btn small{display:block;font-weight:500;font-size:11px;margin-top:4px;letter-spacing:.18em;opacity:.95}
+  .final-cta__pay{
+    display:flex;justify-content:center;gap:8px;margin-bottom:14px;font-size:10px;
+    color:var(--ink-soft);letter-spacing:.05em;flex-wrap:wrap;
+  }
+  .final-cta__pay span{background:#fff;padding:4px 8px;border-radius:4px;border:1px solid var(--pinkpale)}
+  .final-cta__reassurance{font-size:11px;color:var(--ink-soft);letter-spacing:.1em}
+
+  /* ── 浮遊CTA ── */
+  .sticky-cta{
+    position:sticky;bottom:0;z-index:30;padding:12px 16px 18px;
+    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.97) 30%);
+  }
+  .sticky-cta a{
+    display:block;background:linear-gradient(180deg,#d98c7e,#b56b5e);color:#fff;
+    font-weight:900;font-size:15px;padding:14px;border-radius:999px;letter-spacing:.05em;
+    text-align:center;box-shadow:0 6px 20px rgba(217,140,126,.45);
+  }
+
+  /* ── フッター ── */
+  .site-footer{padding:36px 24px 80px;background:var(--cream);text-align:center;font-size:11px;
+    color:var(--ink-soft);letter-spacing:.08em;line-height:2}
+  .site-footer__logo{
+    font-family:"Noto Serif JP",serif;font-weight:900;letter-spacing:.3em;font-size:14px;
+    color:var(--ink);margin-bottom:10px;
+  }
+  .site-footer__ip{
+    background:#fff;display:inline-block;padding:6px 14px;border-radius:8px;
+    font-size:10px;font-weight:700;color:var(--ink);margin-bottom:14px;letter-spacing:.05em;
+  }
+  .site-footer__links{margin-top:8px}
+  .site-footer__links a{margin:0 6px;color:var(--pinkdeep);text-decoration:underline}
+
+  .nav-back{position:fixed;top:14px;right:14px;z-index:60;background:rgba(255,255,255,.92);
+    border:1px solid var(--pinkpale);padding:6px 12px;border-radius:999px;font-size:11px;
+    color:var(--ink);text-decoration:none;font-weight:700;letter-spacing:.05em;}
+
+  @media (max-width:380px){
+    main{max-width:100%}
+    .fv__title{font-size:24px}
+    .empathy h2,.voices h2,.flow h2,.video h2,.guarantee h2,.faq h2,.offer h2,.final-cta h2{font-size:20px}
+    .fv__price .now{font-size:28px}
+  }
+</style>
+</head>
+<body>
+<a class="nav-back" href="10_patterns_index.html">← パターン一覧</a>
+<main>
+
+  <!-- ── ヘッダー（ロゴ1回のみ） ── -->
+  <header class="site-header">
+    <div>
+      <div class="site-header__logo">ameru</div>
+      <div class="site-header__sub">× らぶいーず® 公式コラボ</div>
+    </div>
+    <div style="font-size:11px;color:var(--pinkdeep);font-weight:700">日本テレビ公式</div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- ゾーン1: 感情ゾーン（IP世界観の扉） -->
+  <!-- ============================================== -->
+  <section class="zone-emotion">
+    <div class="fv">
+      <span class="fv__badge">PUBLIC OFFICIAL COLLABORATION</span>
+      <h1 class="fv__title">
+        <em>らぶいーず</em>を、<br>
+        自分の手で<br>
+        作れる日が来た。
+      </h1>
+      <p class="fv__sub">日本テレビ公式コラボ × はじめての編みぐるみ</p>
+
+      <div class="fv__hero-img">
+        <img src="images/v7/hero_5chars.png" alt="らぶいーず®公式5キャラあみぐるみ集合" fetchpriority="high">
+      </div>
+
+      <div class="fv__price">
+        <span class="reg">¥4,200</span>
+        <span class="now">1,980</span><span class="yen">円</span>
+        <span class="off">53%OFF</span>
+      </div>
+
+      <a href="#order" class="fv__cta">¥1,980で はじめてみる<span class="fv__cta-arrow">▶</span></a>
+      <p class="fv__reassurance">いつでも解約OK ／ 送料込み ／ 30日返金保証 ／ 限定300セット</p>
+    </div>
+  </section>
+
+  <!-- ── 感情ゾーン2: すもっぴクローズアップ ── -->
+  <section class="zone-emotion-hero">
+    <h2>NO. 1 / 5</h2>
+    <h3>はじめての1体は、すもっぴ。</h3>
+    <img src="images/v7/hero_smoppi_closeup.png" alt="すもっぴ完成品クローズアップ">
+  </section>
+
+  <!-- ============================================== -->
+  <!-- ゾーン2: 説得ゾーン（HTML骨格 + DR要素フル） -->
+  <!-- ============================================== -->
+  <section class="zone-persuasion">
+
+    <!-- 共感 -->
+    <div class="empathy">
+      <h2>こんなお悩み、ありませんか？</h2>
+      <ul>
+        <li>らぶいーず、ぜんぶ集めたいけど高すぎる…</li>
+        <li>編み物、憧れるけど私には難しそう…</li>
+        <li>市販のキット、キャラがいまひとつ可愛くない</li>
+        <li>途中で挫折したら、時間もお金ももったいない</li>
+      </ul>
+    </div>
+
+    <!-- Only1 編み始め完成済み（Wooblesの本質翻訳） -->
+    <div class="only1">
+      <p class="only1__lead">AMERU ONLY 1</p>
+      <h2>すもっぴの1段目は、<br>もう編んであります。</h2>
+      <p>あとはあなたの手で、続きを。</p>
+      <img class="only1__img" src="images/v7/only1_3steps.png" alt="編み始め完成済みの3段階比較">
+      <span class="only1__stamp">編み始め、完成済み</span>
+    </div>
+
+    <!-- 数値証拠（IPと接続） -->
+    <div class="proof-numbers">
+      <h2>らぶいーず®ファン<br>累計1,500名が完成させました</h2>
+      <div class="proof-numbers__row">
+        <div class="proof-numbers__cell"><strong>98%</strong><span>満足度</span></div>
+        <div class="proof-numbers__cell"><strong>94%</strong><span>完成率</span></div>
+        <div class="proof-numbers__cell"><strong>85%</strong><span>5回継続率</span></div>
+      </div>
+      <p class="proof-numbers__note">※ 米国 The Woobles の同種キット実績ベース、ameruは現在事前モニター中</p>
+    </div>
+
+    <!-- ユーザーボイス（顔写真+実名+年齢+完成品+★） -->
+    <div class="voices">
+      <h2>編めた、が、ここにある。</h2>
+      <p>先にお迎えした方たちの、小さな奇跡。</p>
+
+      <div class="voices__card">
+        <img src="images/v7/voice_01.png" alt="お客様1">
+        <div class="body">
+          <div class="voices__name">さとみさん</div>
+          <div class="voices__age">32歳 / 会社員</div>
+          <div class="voices__stars">★★★★★</div>
+          初めてだったので緊張しましたが、編み始めが用意されていたので、まさかの完成。
+          推しが手の中にいる感じ、忘れられません。
+        </div>
+      </div>
+
+      <div class="voices__card">
+        <img src="images/v7/voice_02.png" alt="お客様2">
+        <div class="body">
+          <div class="voices__name">あかりさん</div>
+          <div class="voices__age">29歳 / フリーランス</div>
+          <div class="voices__stars">★★★★★</div>
+          すもっぴの次はぴょんちー。2体目を編むのが今から楽しみで仕方ない。
+          「私が作った子」って、お店で買うのとは全然違う。
+        </div>
+      </div>
+
+      <div class="voices__card">
+        <img src="images/v7/voice_03.png" alt="お客様3">
+        <div class="body">
+          <div class="voices__name">みさきさん</div>
+          <div class="voices__age">38歳 / 主婦</div>
+          <div class="voices__stars">★★★★★</div>
+          娘と一緒に編みました。完成した時の娘の顔、宝物です。
+          「ママすごい」って言われた瞬間、ぜんぶ報われた気がしました。
+        </div>
+      </div>
+    </div>
+
+    <!-- 権威 -->
+    <div class="media">
+      <p class="media__label">OFFICIAL LICENSED</p>
+      <h3>らぶいーず® 日本テレビ<br>公式ライセンス商品</h3>
+    </div>
+
+    <!-- 中盤CTA -->
+    <div class="mid-cta">
+      <a href="#order">¥1,980で はじめてみる ▶</a>
+      <p class="mid-cta__sub">いつでも解約OK ／ 30日返金保証</p>
+    </div>
+
+    <!-- お届け順5キャラタイムライン -->
+    <div class="flow">
+      <h2>2ヶ月に1体、<br>5体で完成する物語。</h2>
+      <p>2回目・4回目で「カップル完成」、5回目で「全員集合」。</p>
+      <img class="flow__img" src="images/v7/flow_5chars_timeline.png" alt="5キャラお届け順タイムライン">
+
+      <ul class="flow__steps">
+        <li><span class="num">1</span><span class="name">すもっぴ</span><span class="tag">主人公・入門</span></li>
+        <li><span class="num">2</span><span class="name">ぴょんちー</span><span class="tag">①組目カップル完成 ♡</span></li>
+        <li><span class="num">3</span><span class="name">にゃぽ</span><span class="tag">仲間が広がる</span></li>
+        <li><span class="num">4</span><span class="name">うるる</span><span class="tag">②組目カップル完成 ♡</span></li>
+        <li><span class="num">5</span><span class="name">ぱおぱお</span><span class="tag tag-gold">✨ 全員、集合</span></li>
+      </ul>
+    </div>
+
+    <!-- 動画教材（Wooblesの本質翻訳） -->
+    <div class="video">
+      <h2>編んだことがなくても、大丈夫。</h2>
+      <p>あなたのはじめては、<br>失敗しないように設計されています。</p>
+      <img class="video__img" src="images/v7/video_phone.png" alt="スマホ動画教材">
+      <div>
+        <span class="video__chap">わ編み</span>
+        <span class="video__chap">こま編み</span>
+        <span class="video__chap">増やし目</span>
+        <span class="video__chap">とじ方</span>
+        <span class="video__chap">組み立て</span>
+      </div>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:14px;">
+        スマホ片手に、5分ずつ。<br>
+        右利きも、左利きも。LINE公式から動画が届きます。
+      </p>
+    </div>
+
+    <!-- オファー（最重要） -->
+    <div class="offer" id="order">
+      <p class="offer__banner">期間限定 — 今だけの特別プラン</p>
+      <h2>はじめの1体は、<br>¥1,980。</h2>
+      <img class="offer__img" src="images/v7/offer_package.png" alt="ameruパッケージ">
+
+      <div class="offer__price">
+        <div class="offer__price-row"><span>通常価格</span><span style="text-decoration:line-through;color:var(--ink-soft)">¥4,200</span></div>
+        <div class="offer__price-row now">
+          <span>初回限定 <span class="offer__off">53%OFF</span></span>
+          <strong>¥1,980</strong>
+        </div>
+        <div class="offer__save">＼ 通常より ¥2,220 お得 ／</div>
+        <div class="offer__price-row" style="margin-top:8px"><span>F2〜F5（通常価格）</span><span>¥4,200 × 4回</span></div>
+        <div class="offer__price-row"><span>5回総額（税込）</span><span style="font-weight:900;color:var(--ink)">¥18,780</span></div>
+      </div>
+
+      <div class="offer__bonuses">
+        <h3>5大特典プレゼント</h3>
+        <div class="offer__bonus-grid">
+          <div class="offer__bonus"><span>01</span><strong>動画教材<br>全レッスン</strong></div>
+          <div class="offer__bonus"><span>02</span><strong>LINE公式<br>サポート</strong></div>
+          <div class="offer__bonus"><span>03</span><strong>編み始め<br>完成済みキット</strong></div>
+          <div class="offer__bonus"><span>04</span><strong>らぶいーず®<br>公式特典カード</strong></div>
+          <div class="offer__bonus" style="grid-column:span 2;background:#fff;border:2px solid var(--gold)"><span style="background:var(--gold)">05</span><strong>30日返金保証<br>＋ 送料完全無料</strong></div>
+        </div>
+      </div>
+
+      <a href="#" onclick="alert('購入フォーム（実装時に切り替え）');return false" style="display:block;background:linear-gradient(180deg,#d98c7e,#b56b5e);color:#fff;font-weight:900;font-size:18px;padding:20px;border-radius:999px;letter-spacing:.05em;text-align:center;box-shadow:0 12px 35px rgba(217,140,126,.5)">
+        ¥1,980で はじめてみる ▶
+        <small style="display:block;font-weight:500;font-size:11px;margin-top:4px;letter-spacing:.18em;opacity:.95">5回定期便 ／ 単品購入も選べます</small>
+      </a>
+
+      <p style="text-align:center;font-size:11px;color:var(--red);font-weight:700;margin-top:14px;letter-spacing:.05em">
+        ⚠ 限定300セット — 残り 247 セット
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- ゾーン3: 安心ゾーン -->
+  <!-- ============================================== -->
+  <section class="zone-trust">
+
+    <!-- 保証 -->
+    <div class="guarantee">
+      <h2>安心して、はじめられる。<br>5つのお約束。</h2>
+      <p>ameru は、完成の日まで、そばにいます。</p>
+
+      <div class="guarantee__refund">
+        <strong>30日 全額返金保証</strong>
+        <span>「私には無理かも」と思ったら、いつでもご連絡ください。</span>
+      </div>
+
+      <ul class="guarantee__items">
+        <li>いつでも解約OK（縛り一切なし）</li>
+        <li>送料込み（追加費用なし）</li>
+        <li>LINE公式から、直接相談OK</li>
+        <li>動画教材・かぎ針・糸・パーツ、ぜんぶ同梱</li>
+        <li>クレジット5種・コンビニ後払い・AmazonPay対応</li>
+      </ul>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+      <h2>よくあるご質問</h2>
+
+      <details>
+        <summary>らぶいーずが好きなのですが、編んだことがありません。大丈夫ですか？</summary>
+        <div>
+          むしろ、そんなあなたのために設計しました。編み始めはこちらで完成させた状態でお届けします。
+          いちばん難しい1段目を飛ばし、すぐに楽しい部分から始められます。動画教材とLINEサポートで、必ず完成までご一緒します。
+        </div>
+      </details>
+
+      <details>
+        <summary>2ヶ月に1体は忙しくて、続けられるか不安です。</summary>
+        <div>
+          スキップ・休会いつでも可能です。次回お届けの10日前までにご連絡いただければ、お休みいただけます。
+          再開も自由なタイミングで。あなたのペースで。
+        </div>
+      </details>
+
+      <details>
+        <summary>道具は別途必要ですか？</summary>
+        <div>
+          いいえ、すべて同梱です。かぎ針・糸・とじ針・目のパーツ・編み始め完成済みのパーツまで、
+          手元にスマホ1台あれば、その日からはじめられます。
+        </div>
+      </details>
+
+      <details>
+        <summary>本当に「らぶいーず®」公式ですか？</summary>
+        <div>
+          はい、株式会社日本テレビ公式ライセンスを取得した正規コラボ商品です。
+          すもっぴ・ぴょんちー・にゃぽ・うるる・ぱおぱおの全5キャラ公式版を編むことができます。
+        </div>
+      </details>
+
+      <details>
+        <summary>解約に縛りや違約金はありますか？</summary>
+        <div>
+          一切ございません。1回お受け取り後でも、いつでも解約OK。違約金もありません。
+          安心してはじめてください。
+        </div>
+      </details>
+
+      <details>
+        <summary>まず相談だけしたいのですが…</summary>
+        <div>
+          LINE公式アカウントから、無料相談を受け付けています。
+          「私でもできるかな？」というご質問に、丁寧にお答えします。
+        </div>
+      </details>
+    </div>
+
+    <!-- 最終CTA（Wooblesの本質翻訳） -->
+    <div class="final-cta">
+      <p class="final-cta__lead">最後のメッセージ</p>
+      <h2>完成した瞬間、<br>あなたは自分でも知らなかった<br>自分に会います。</h2>
+
+      <p class="final-cta__msg">
+        買ったぬいぐるみとは違う、特別な愛しさがあります。<br>
+        「できるかな？」を越えた先に、<br>
+        世界でひとつの1体が、待っています。
+      </p>
+
+      <img class="final-cta__img" src="images/v7/final_cta.png" alt="完成したすもっぴを手に持つ瞬間">
+
+      <a href="#order" class="final-cta__btn">
+        ¥1,980で はじめてみる ▶
+        <small>5回定期便 ／ 単品購入も選べます</small>
+      </a>
+
+      <div class="final-cta__pay">
+        <span>VISA</span><span>MasterCard</span><span>JCB</span><span>AMEX</span><span>コンビニ後払い</span><span>AmazonPay</span>
+      </div>
+
+      <p class="final-cta__reassurance">いつでも解約OK ／ 送料込み ／ 30日返金保証 ／ 限定300セット 残247</p>
+    </div>
+  </section>
+
+  <!-- ── 浮遊CTA ── -->
+  <div class="sticky-cta">
+    <a href="#order">¥1,980で はじめてみる ▶</a>
+  </div>
+
+  <!-- ── フッター（ロゴ2回目） ── -->
+  <footer class="site-footer">
+    <div class="site-footer__logo">ameru</div>
+    <span class="site-footer__ip">らぶいーず® 日本テレビ 公式ライセンス商品</span><br>
+    株式会社ヨミテ<br>
+    <div class="site-footer__links">
+      <a href="#">特定商取引法に基づく表記</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">利用規約</a>
+    </div>
+    <span style="opacity:.6;display:block;margin-top:14px">© ameru. All rights reserved.</span>
+  </footer>
+
+</main>
+</body>
+</html>
