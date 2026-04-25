@@ -1,0 +1,1733 @@
+{
+  "article_id": "20260425_proust_cream2_fuyumotto",
+  "source_url": "https://sb-proust2-fb.discover-news.tokyo/ab/fb_ta_16",
+  "fetched_at": "2026-04-25T00:00:00+09:00",
+  "fetched_by": "SquadBeyond MCP getArticleHtml",
+  "article_title": "冬ワキガあるある言います！〜冬のワキガ対策特集〜",
+  "brand_name": "Proust（プルースト）",
+  "product_name": "プルーストクリーム2.0",
+  "company": "株式会社ヨミテ",
+  "total_blocks": 223,
+  "cta_count": 2,
+  "cta_positions": [
+    217,
+    220
+  ],
+  "cta_destination_url": "https://shop.rmh.co.jp/lp?u=me_proust2_v7-5_fb_d&sb_tracking=true",
+  "degraded_mode_notes": [
+    "HTML内に<title>タグがなかったため、article_title は冒頭ヘッドライン『冬ワキガあるある言います！』から暫定生成。正式タイトルはSquadBeyond管理画面で確認要。",
+    "lazy-load用のsrc=lazy.pngは除外し、data-src の実URLを media_url に採用。",
+    "sb-custom（吹き出し・ユーザー声カード・アニメCTAボタン）は1ブロックとしてまとめ、吹き出し内のテキストをcaption or contentに格納。",
+    "フッター（会社情報・特商法・プラポリのリンク）も含めて記録。"
+  ],
+  "blocks": [
+    {
+      "order": 1,
+      "block_type": "text",
+      "content": "PR：株式会社ヨミテ",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 2,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6354624/07f272a5-a89c-4340-9476-a0d6e866327f.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 3,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6354699/9294d962-0a41-461c-a254-a2f433e824f7.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 4,
+      "block_type": "text",
+      "content": "ワキガあるある言います！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 5,
+      "block_type": "text",
+      "content": "冬ってこんなことよくありませんか？",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 6,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6352491/b3f52ba2-63b4-4026-b131-d6f79487ad81.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 7,
+      "block_type": "text",
+      "content": "その辛い冬のワキガ悩み",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 8,
+      "block_type": "text",
+      "content": "「ワキガだから仕方ない...」",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 9,
+      "block_type": "text",
+      "content": "と放置していませんか？",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 10,
+      "block_type": "text",
+      "content": "私自身、汗をかかない冬は",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 11,
+      "block_type": "text",
+      "content": "ワキガケアを怠りがちになっていました。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 12,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6352734/863e9724-0e7b-408e-8763-842a8d5bfe33.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 13,
+      "block_type": "text",
+      "content": "そんなとき、こんなニュースが...",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 14,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6352816/92985475-1ef7-46b8-8253-fc76dd09335c.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 15,
+      "block_type": "text",
+      "content": "※画像はイメージです。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 16,
+      "block_type": "text",
+      "content": "実はそのまま放置していると",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 17,
+      "block_type": "text",
+      "content": "とある理由が原因で",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 18,
+      "block_type": "text",
+      "content": "どんどんニオイが強くなるかもしれないんです...",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 19,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6352865/a5bad8d2-5c83-4274-bbc5-cba5311060c0.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 20,
+      "block_type": "text",
+      "content": "しまいには服にニオイがこびりついて",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 21,
+      "block_type": "text",
+      "content": "何回も洗濯することもありますよね。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 22,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353268/9e4e4110-4e36-4a7b-8754-560dd6555311.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 23,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5074439/2e45fab9-0951-4a6a-a5de-3544d12c7061.png",
+      "caption": "アウターなんてもってのほか！！",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 24,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353649/822733b1-d117-48cc-bf1d-30c496237c4b.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 25,
+      "block_type": "text",
+      "content": "冬でもワキガに悩むのめんどくさいなぁ...",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 26,
+      "block_type": "text",
+      "content": "そんなあなたに朗報！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 27,
+      "block_type": "text",
+      "content": "↓↓↓",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 28,
+      "block_type": "text",
+      "content": "冬のワキガ特攻※2ケアが話題に！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 29,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278828/b916789b-1c7d-4039-95b3-d1b296af07b1.webp",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 30,
+      "block_type": "text",
+      "content": "※1 2018年10月1日〜2025年8月31日の​プルーストシリーズ商品累計出荷本数",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 31,
+      "block_type": "text",
+      "content": "※2 ワキガに対して諦めずに対処すること",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 32,
+      "block_type": "text",
+      "content": "この方法があれば...",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 33,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353677/ac292bb0-d100-4867-bc87-8a4b6c664a52.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 34,
+      "block_type": "text",
+      "content": "服も選ばずに",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 35,
+      "block_type": "text",
+      "content": "好きなものを着れると話題に✨",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 36,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/4232797/366804f8-b259-4bee-99a8-8c5cd5971652.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 37,
+      "block_type": "text",
+      "content": "※画像はイメージです。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 38,
+      "block_type": "text",
+      "content": "実はこれ、",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 39,
+      "block_type": "text",
+      "content": "ワキガ手術医と共同開発した",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 40,
+      "block_type": "text",
+      "content": "冬ワキガの救世主！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 41,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6039671/9c8f28c2-f936-495d-9c43-3ce06ee46d31.webp",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 42,
+      "block_type": "text",
+      "content": "一足先に試した人たちは",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 43,
+      "block_type": "text",
+      "content": "ニオイを気にせず",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 44,
+      "block_type": "text",
+      "content": "好きな服を楽しむ人が続出✨",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 45,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278941/c85e52e7-f0a9-496b-856d-6ff7f0ebc2e5.png",
+      "caption": "Sさん・50代\n更年期世代になってから汗にとても悩んでいました.....でもこれ使ってみたらすごいサラサラで気に入ってます♪\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。 ※薬機法に従い一部改変しています。",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 46,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278942/2f5612d0-8147-4db6-9b1a-e52ddd11de13.png",
+      "caption": "Wさん・50代\n若い方からお年寄りの方まで年齢関係なく男性女性ともに使えると思います。パッケージもすごくオシャレな感じで、女性の方でも持っていて気にならないと思います。\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。 ※薬機法に従い一部改変しています。",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 47,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278939/5d599b56-63a8-4b6b-9c28-54783fb104bd.png",
+      "caption": "Kさん・51歳\nうん、全然大丈夫！すごいサラサラしてるでしょ？私もいつも塗ってて、前まで脇の匂いがすごく気になってたけど、今はほら、平気。\n※個人の感想であり、効果効能を保証するものではありません。",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 48,
+      "block_type": "text",
+      "content": "同じように冬のワキガに悩む人に",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 49,
+      "block_type": "text",
+      "content": "特別に教えちゃいます！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 50,
+      "block_type": "text",
+      "content": "冬の方がワキガ臭い...\n原因は◯◯の増殖!?",
+      "heading_level": "h2",
+      "tag_hint": "h2",
+      "is_cta_block": false
+    },
+    {
+      "order": 51,
+      "block_type": "text",
+      "content": "「冬の方がニオイが濃いな...」",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 52,
+      "block_type": "text",
+      "content": "ワキガの人なら誰しも一度はそう思いますよね。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 53,
+      "block_type": "text",
+      "content": "実は冬の方がニオイがキツくなる原因は....",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 54,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353768/de7adea4-e823-4589-acf2-3c8139ccfc80.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 55,
+      "block_type": "text",
+      "content": "そもそもなんでワキガ臭が発生するかは",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 56,
+      "block_type": "text",
+      "content": "知っていますか？",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 57,
+      "block_type": "text",
+      "content": "ご察しの通り、",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 58,
+      "block_type": "text",
+      "content": "汗を菌が分解するときに",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 59,
+      "block_type": "text",
+      "content": "あのいや〜なニオイが発生するんです。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 60,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5784499/e6e3f34f-aaf9-4007-bfff-bde0de62a66a.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 61,
+      "block_type": "text",
+      "content": "冬は重ね着や通気性の悪い服を着ることから",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 62,
+      "block_type": "text",
+      "content": "温度・湿度が夏より上昇。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 63,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353867/e35e0545-5cc8-41ea-ad9c-8a66d8a45796.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 64,
+      "block_type": "text",
+      "content": "出典：https://lidea.today/articles/641",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 65,
+      "block_type": "text",
+      "content": "温度と湿度はワキガ菌の恰好の繁殖場所。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 66,
+      "block_type": "text",
+      "content": "たちまち増えていくんです。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 67,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5785034/883afc50-081b-43c3-9e12-0ae58ccafa94.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 68,
+      "block_type": "text",
+      "content": "さらに！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 69,
+      "block_type": "text",
+      "content": "分泌される汗も夏よりも濃縮されているんです。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 70,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353936/328784f4-f979-44bf-ae71-36ee3a44ff5b.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 71,
+      "block_type": "text",
+      "content": "出典：https://www.sincere-gc.com/beauty-column/column35/",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 72,
+      "block_type": "text",
+      "content": "だから、冬の方がクサくなる。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 73,
+      "block_type": "text",
+      "content": "まさに冬は「ワキガ菌の繁忙期」",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 74,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6023424/4dfbc5c4-4d34-40ea-88e8-20aaa7a4dcb1.mp4",
+      "caption": "※画像はイメージです",
+      "is_cta_block": false
+    },
+    {
+      "order": 75,
+      "block_type": "text",
+      "content": "だから冬のワキガケアをするなら",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 76,
+      "block_type": "text",
+      "content": "ワキガ菌の徹底殺菌",
+      "heading_level": "h2",
+      "tag_hint": "h2",
+      "is_cta_block": false
+    },
+    {
+      "order": 77,
+      "block_type": "text",
+      "content": "これがすごく大事なんです。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 78,
+      "block_type": "text",
+      "content": "そこで！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 79,
+      "block_type": "text",
+      "content": "ワキガ先進ブランドが開発した",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 80,
+      "block_type": "text",
+      "content": "「冬のワキガの特攻ケア※2」",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 81,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278826/f88e6221-bcd0-497e-81f0-fe77d7712cf3.webp",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 82,
+      "block_type": "text",
+      "content": "※1プルーストブランド史上 ※2ワキガに対して諦めずに対処すること。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 83,
+      "block_type": "text",
+      "content": "それが史上最強※とも呼び声が高い....",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 84,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6122130/c153e650-8ff0-43c4-b40a-c5be9ebf9c7a.webp",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 85,
+      "block_type": "text",
+      "content": "※プルーストブランド史上",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 86,
+      "block_type": "text",
+      "content": "プルーストクリーム2。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 87,
+      "block_type": "text",
+      "content": "プルーストクリーム2がすごいのは",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 88,
+      "block_type": "text",
+      "content": "その殺菌力。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 89,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/4721680/a972a685-7473-4132-ad6b-1d2f3d971c97.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 90,
+      "block_type": "text",
+      "content": "プルーストクリーム2は",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 91,
+      "block_type": "text",
+      "content": "史上最高数※の殺菌成分を配合。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 92,
+      "block_type": "text",
+      "content": "※プルーストブランド史上",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 93,
+      "block_type": "text",
+      "content": "ワキガ菌を徹底殺菌してワキガに効く！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 94,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6354466/cfb22b2a-c183-4dcf-b271-c2f64d3b2b29.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 95,
+      "block_type": "text",
+      "content": "プルーストクリーム2は",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 96,
+      "block_type": "text",
+      "content": "ワキガの効果効能が認められた",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 97,
+      "block_type": "text",
+      "content": "医薬部外品で",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 98,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5965302/ce685234-078e-410f-8ed8-98bbffc29deb.webp",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 99,
+      "block_type": "text",
+      "content": "しかもれっきとした",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 100,
+      "block_type": "text",
+      "content": "国内製造！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 101,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5980246/c014bea7-e1a9-416c-aef8-5906e102b120.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 102,
+      "block_type": "text",
+      "content": "もちろんスティンギングテストも",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 103,
+      "block_type": "text",
+      "content": "実施済みなんだとか。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 104,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6239764/d89f6ddd-5814-415e-9487-e2c8d667b5ca.jpg",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 105,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5074439/2e45fab9-0951-4a6a-a5de-3544d12c7061.png",
+      "caption": "これは信頼して使うことができるね！",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 106,
+      "block_type": "text",
+      "content": "シリーズ商品でも",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 107,
+      "block_type": "text",
+      "content": "「買い替えてよかった！！」と",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 108,
+      "block_type": "text",
+      "content": "満足度が脅威の98.1%※♪",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 109,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/4765093/ffa28ae1-0613-4f30-86a4-fe0201caccc2.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 110,
+      "block_type": "text",
+      "content": "「冬はこれで乗り切ってる」",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 111,
+      "block_type": "text",
+      "content": "とのお声も続出！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 112,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6034692/416cadc8-f077-4f44-a38f-817c5067ed1d.png",
+      "caption": "ほんっとに感動した！（Y.Mさん 40歳）\n汗の量と臭いでずっと悩んでました。\nほんとにピタっと気にならなくなりました！※1\n朝塗ってお出かけしても夜までとっても快適です！\n持ち運びも楽チンなのも嬉しい！\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。\n ※薬機法に従い一部改変しています。※1 商品の使用感におけるベタつきのこと。※年齢とワキガ歴は撮影当時のものです。",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 113,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6034829/1a500af6-4f8c-47da-918f-add0c4f1971f.png",
+      "caption": "夜まで快適ってすごい！（S.Hさん 37歳）\n これに出会って、気持ちが本当に楽になりました！\nいつもワキガのこと考えてたのに、意識しないで過ごすことができたのがすごく嬉しいです！\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。\n ※薬機法に従い一部改変しています。※年齢とワキガ歴は撮影当時のものです。",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 114,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6034687/f1da9360-df61-4bbd-83a6-c567ed6e5df1.png",
+      "caption": "汗染みが悩みでしたが…（Y.Aさん 24歳）\n周りからバレるほどの、汗染みが人生の悩みでした。\nでもやっと自信を持って人前に出られるようになり感動です！\nワキガ商品ってバレずに外でも使えるからすごく安心です！\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。\n ※薬機法に従い一部改変しています。※年齢とワキガ歴は撮影当時のものです。",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 115,
+      "block_type": "text",
+      "content": "塗った瞬間から",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 116,
+      "block_type": "text",
+      "content": "ワキ完全放置！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 117,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5985632/df87ab3d-7960-47a4-9ef1-569730326ad1.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 118,
+      "block_type": "text",
+      "content": "冬服もたくさん楽しめちゃうんです✨",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 119,
+      "block_type": "text",
+      "content": "冬ワキガに効くのか？\n実際に使ってみた",
+      "heading_level": "h2",
+      "tag_hint": "h2",
+      "is_cta_block": false
+    },
+    {
+      "order": 120,
+      "block_type": "text",
+      "content": "クリームタイプで",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 121,
+      "block_type": "text",
+      "content": "テクスチャーは伸びやすい✨",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 122,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5977212/ad91c1b5-5d56-472e-92fd-d71245b9c1f2.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 123,
+      "block_type": "text",
+      "content": "ワキに塗った瞬間",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 124,
+      "block_type": "text",
+      "content": "脇汗でじめってたワキが",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 125,
+      "block_type": "text",
+      "content": "サラッサラ！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 126,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5977607/783c3f43-85a4-4608-a014-3d78869e8280.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 127,
+      "block_type": "text",
+      "content": "※画像はイメージです。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 128,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/4375614/153997ff-5e08-478e-8e72-bf263c78c748.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 129,
+      "block_type": "text",
+      "content": "これは驚き❣️",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 130,
+      "block_type": "text",
+      "content": "ニオイが全然気にならない！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 131,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5980244/ca0c49e7-4926-4c5a-af07-272124c2cbe4.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 132,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5074439/2e45fab9-0951-4a6a-a5de-3544d12c7061.png",
+      "caption": "１番嬉しかったのは、\n好きな服を自由に着れるようになったこと。",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 133,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5965839/f644784a-d08f-49ba-80de-301db2093b52.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 134,
+      "block_type": "text",
+      "content": "さすがは売上No.1※ブランドが開発した",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 135,
+      "block_type": "text",
+      "content": "ワキガクリームですね‼️",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 136,
+      "block_type": "text",
+      "content": "※当社プルーストクリームの実績/TPC「ワキガ対策用デオドラントクリームに関する調査（2025年4月）」に基づく2024年の店頭・通販売上実績No.1",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 137,
+      "block_type": "text",
+      "content": "なぜプルーストクリームは\n冬ワキガに効くのか？",
+      "heading_level": "h2",
+      "tag_hint": "h2",
+      "is_cta_block": false
+    },
+    {
+      "order": 138,
+      "block_type": "text",
+      "content": "ワキガの原因は菌であることは",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 139,
+      "block_type": "text",
+      "content": "さっき説明しましたよね？",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 140,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6285695/167e8cd4-1c19-4d41-a905-44daea1ed23c.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 141,
+      "block_type": "text",
+      "content": "しかしワキガ菌はバイオフィルムに",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 142,
+      "block_type": "text",
+      "content": "守られ殺菌することが難しいんです。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 143,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/4389331/6c55789a-9052-4b18-af69-31cefd8822ee.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 144,
+      "block_type": "text",
+      "content": "※画像はイメージです。※出典：美容皮膚医学BEAUTY #50 Vol.6 No.7,2023 P14",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 145,
+      "block_type": "text",
+      "content": "※Small-molecule-induced activation of cellular respiration inhibits biofilm formation and triggers metabolic remodeling in Staphylococcus aureus",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 146,
+      "block_type": "text",
+      "content": "しかしプルーストクリーム2は",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 147,
+      "block_type": "text",
+      "content": "殺菌成分を2倍※も配合。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 148,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6279079/ce3609b8-3401-43d1-8fdf-384cfbd6e53f.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 149,
+      "block_type": "text",
+      "content": "※当社製品比",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 150,
+      "block_type": "text",
+      "content": "増殖しまくった",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 151,
+      "block_type": "text",
+      "content": "冬のワキガ菌もズバッと殺菌※！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 152,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/4406635/0c5c5849-a560-4cd3-94e1-6f43d6afd5b3.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 153,
+      "block_type": "text",
+      "content": "※防臭効果の作用機序として",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 154,
+      "block_type": "text",
+      "content": "しかも・・・",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 155,
+      "block_type": "text",
+      "content": "肌の密着することに特化した",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 156,
+      "block_type": "text",
+      "content": "殺菌成分配合の「高密着クリーム」を採用！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 157,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5965288/4d8bb411-2061-46e5-be73-c596e352b808.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 158,
+      "block_type": "text",
+      "content": "だから！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 159,
+      "block_type": "text",
+      "content": "ワキガ原因に直接塗り込むことに成功！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 160,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/4629446/a8e6651f-535e-44dd-860c-22e2418f9f22.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 161,
+      "block_type": "text",
+      "content": "制汗成分で",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 162,
+      "block_type": "text",
+      "content": "滝汗をしっかり抑えてくれるから",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 163,
+      "block_type": "text",
+      "content": "汗も出にくくなるんです！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 164,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5959071/610b1365-70ec-451b-902a-48c9df00f524.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 165,
+      "block_type": "text",
+      "content": "これがプルースト式殺菌メソッド。",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 166,
+      "block_type": "text",
+      "content": "だから冬のワキガにも効く！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 167,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5959129/6aea448f-79e1-40af-bee3-aa8b25630165.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 168,
+      "block_type": "text",
+      "content": "プルースト2なら",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 169,
+      "block_type": "text",
+      "content": "冬のワキガケアにぴったりですね✨",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 170,
+      "block_type": "image",
+      "media_url": "https://d24894ewhzyuok.cloudfront.net/uploads/article_photo/photo/1169769/81caf2a7-d537-4872-b2a1-b145b62ab2af.png",
+      "caption": "POINT 【本日半額以下!!】\n今！特別アンケートに答えるだけで\n定期初回87%OFFでゲットできる！？",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 171,
+      "block_type": "text",
+      "content": "そんな人生を変えてくれた",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 172,
+      "block_type": "text",
+      "content": "＼プルーストクリーム 2／",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 173,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6001269/c2ec2770-3d58-4146-bdfb-b537b34a151d.jpg",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 174,
+      "block_type": "text",
+      "content": "”売上No.1商品を開発したブランド”※なので",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 175,
+      "block_type": "text",
+      "content": "気になるのはお値段ですよね…！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 176,
+      "block_type": "text",
+      "content": "普通に買うと",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 177,
+      "block_type": "text",
+      "content": "通常価格で7,960円（税込）",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 178,
+      "block_type": "text",
+      "content": "とちょっとお高め…！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 179,
+      "block_type": "text",
+      "content": "※当社プルーストクリームの実績/TPC「ワキガ対策用デオドラントクリームに関する調査",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 180,
+      "block_type": "text",
+      "content": "（2025年4月）」に基づく2024年の店頭・通販売上実績No.1",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 181,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6040770/4cbd83dc-7161-403d-ac0d-5e67df5b86fc.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 182,
+      "block_type": "text",
+      "content": "＼ですが、今！／",
+      "heading_level": "h2",
+      "tag_hint": "h2",
+      "is_cta_block": false
+    },
+    {
+      "order": 183,
+      "block_type": "text",
+      "content": "プルーストクリームの",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 184,
+      "block_type": "text",
+      "content": "リニューアルを記念して",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 185,
+      "block_type": "text",
+      "content": "特別アンケートキャンペーンを実施中！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 186,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/1926549/b0f6d707-3134-4b50-b9f5-6d591fcd2420.jpg",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 187,
+      "block_type": "text",
+      "content": "たった5問のアンケートに",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 188,
+      "block_type": "text",
+      "content": "回答すると...",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 189,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6134338/2400f79f-c0ba-43ce-b94b-5dd9c7d59b10.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 190,
+      "block_type": "text",
+      "content": "＼なんと！／",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 191,
+      "block_type": "text",
+      "content": "特別価格87%OFFの",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 192,
+      "block_type": "text",
+      "content": "定期初回限定",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 193,
+      "block_type": "text",
+      "content": "＼✨980円（税込）✨／",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 194,
+      "block_type": "text",
+      "content": "でGETできちゃうんです！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 195,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5987956/38c80360-bb52-436d-bef3-695263f86aad.webp",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 196,
+      "block_type": "text",
+      "content": "しかも！今なら！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 197,
+      "block_type": "text",
+      "content": "11月限定で",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 198,
+      "block_type": "text",
+      "content": "¥10,000のギフトカードが抽選で当たる",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 199,
+      "block_type": "text",
+      "content": "キャンペーンを実施中！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 200,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6120551/03f237d7-5ee3-44cc-8525-27bc7d29db39.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 201,
+      "block_type": "text",
+      "content": "もちろん「何回買わないといけない」",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 202,
+      "block_type": "text",
+      "content": "みたいな回数縛りもないんです！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 203,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/4260436/d6378d19-ff6d-4b30-a3ce-8432e4c72cce.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 204,
+      "block_type": "text",
+      "content": "これなら",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 205,
+      "block_type": "text",
+      "content": "気軽に始められて嬉しい！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 206,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5281610/4011cb72-c4ed-435b-8a7d-b5963516670f.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 207,
+      "block_type": "text",
+      "content": "しかも",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 208,
+      "block_type": "text",
+      "content": "安心のコンビニ後払いでもOK！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 209,
+      "block_type": "image",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5975263/aa4a0d3f-5e02-4ecf-a755-bf1b1af6c6d8.png",
+      "alt_text": "",
+      "is_cta_block": false
+    },
+    {
+      "order": 210,
+      "block_type": "text",
+      "content": "届いたその日からお悩み解放！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 211,
+      "block_type": "text",
+      "content": "1日中気にならない！",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 212,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5985632/df87ab3d-7960-47a4-9ef1-569730326ad1.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 213,
+      "block_type": "text",
+      "content": "※画像はイメージです",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 214,
+      "block_type": "text",
+      "content": "5問のアンケートに答えて",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 215,
+      "block_type": "text",
+      "content": "お得にゲットしてください♪",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 216,
+      "block_type": "video",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/5094580/e6fd5378-3453-4920-9b09-a534c6a23e44.mp4",
+      "is_cta_block": false
+    },
+    {
+      "order": 217,
+      "block_type": "image",
+      "content": "CTAボタン",
+      "is_cta_block": true,
+      "cta_url": "https://shop.rmh.co.jp/lp?u=me_proust2_v7-5_fb_d&sb_tracking=true",
+      "media_url": "https://file.mysquadbeyond.com/uploads/article_photo/photo/6330081/f3fb9400-77d5-4ea3-8a7a-3403cd33afa4.png",
+      "heading_level": "body",
+      "tag_hint": "cta-button"
+    },
+    {
+      "order": 218,
+      "block_type": "text",
+      "content": "※当社プルーストクリームの実績/TPC「ワキガ対策用デオドラントクリームに関する調査",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 219,
+      "block_type": "text",
+      "content": "（2025年4月）」に基づく2024年の店頭・通販売上実績No.1",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 220,
+      "block_type": "text",
+      "content": "公式サイト：https://shop.rmh.co.jp/",
+      "is_cta_block": true,
+      "cta_url": "https://shop.rmh.co.jp/lp?u=me_proust2_v7-5_fb_d&sb_tracking=true",
+      "heading_level": "body",
+      "tag_hint": "cta-button"
+    },
+    {
+      "order": 221,
+      "block_type": "text",
+      "content": "会社情報",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 222,
+      "block_type": "text",
+      "content": "特定商取引法",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    },
+    {
+      "order": 223,
+      "block_type": "text",
+      "content": "プライバシーポリシー",
+      "heading_level": "body",
+      "tag_hint": "p",
+      "is_cta_block": false
+    }
+  ]
+}

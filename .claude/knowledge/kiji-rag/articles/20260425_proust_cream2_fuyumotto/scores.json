@@ -1,0 +1,331 @@
+{
+  "article_id": "20260425_proust_cream2_fuyumotto",
+  "scorer": "claude-opus-4-7[1m] manual via subagent",
+  "scored_at": "2026-04-25T01:00:00+09:00",
+  "rubric_version": "sales_elements.md v1.0 (5層×4要素=20)",
+  "scores": [
+    {"chunk_order": 1, "funnel_position": "opening", "context_hint": "PR表記：株式会社ヨミテ",
+     "elements": {"B1_authority": 0.3}},
+
+    {"chunk_order": 2, "funnel_position": "opening", "context_hint": "FVヒーロー画像",
+     "elements": {}},
+
+    {"chunk_order": 3, "funnel_position": "opening", "context_hint": "オープニング動画",
+     "elements": {}},
+
+    {"chunk_order": 4, "funnel_position": "empathy", "context_hint": "ワキガあるある言います！冬ってこんなことよくありませんか？（共感の入口）",
+     "elements": {"A1_pain_empathy": 0.5}},
+
+    {"chunk_order": 5, "funnel_position": "empathy", "context_hint": "あるあるイメージ画像",
+     "elements": {"A1_pain_empathy": 0.3}},
+
+    {"chunk_order": 6, "funnel_position": "empathy", "context_hint": "冬のワキガ放置告白：私自身、汗をかかない冬はケアを怠りがち（自己投影型共感）",
+     "elements": {"A1_pain_empathy": 0.7, "B4_transparency": 0.4}},
+
+    {"chunk_order": 7, "funnel_position": "empathy", "context_hint": "怠りシーン動画",
+     "elements": {}},
+
+    {"chunk_order": 8, "funnel_position": "empathy", "context_hint": "そんなとき、こんなニュースが…（転換フック）",
+     "elements": {}},
+
+    {"chunk_order": 9, "funnel_position": "empathy", "context_hint": "ニュース風画像",
+     "elements": {}},
+
+    {"chunk_order": 10, "funnel_position": "empathy", "context_hint": "放置すると原因でニオイが強くなる：恐怖喚起",
+     "elements": {"A2_fear_appeal": 0.7, "A1_pain_empathy": 0.4}},
+
+    {"chunk_order": 11, "funnel_position": "empathy", "context_hint": "悪化イメージ動画",
+     "elements": {}},
+
+    {"chunk_order": 12, "funnel_position": "empathy", "context_hint": "服にニオイがこびりつく・何回も洗濯：日常痛みシーン",
+     "elements": {"A1_pain_empathy": 0.7, "D3_scenario": 0.5}},
+
+    {"chunk_order": 13, "funnel_position": "empathy", "context_hint": "洗濯シーン動画",
+     "elements": {}},
+
+    {"chunk_order": 14, "funnel_position": "empathy", "context_hint": "アウターなんてもってのほか画像（caption強）",
+     "elements": {"A1_pain_empathy": 0.5, "D3_scenario": 0.4}},
+
+    {"chunk_order": 15, "funnel_position": "concept", "context_hint": "冬でもワキガ悩むめんどくさい→朗報：冬のワキガ特攻ケアが話題に（独自フック・新認識）",
+     "elements": {"C2_unique_mechanism": 0.5, "A1_pain_empathy": 0.3, "D2_aspiration": 0.3}},
+
+    {"chunk_order": 16, "funnel_position": "concept", "context_hint": "話題のケア商品画像",
+     "elements": {}},
+
+    {"chunk_order": 17, "funnel_position": "concept", "context_hint": "プルーストシリーズ累計出荷本数注釈・ワキガに諦めず対処・この方法があれば",
+     "elements": {"B2_social_proof": 0.4, "B3_data_evidence": 0.3}},
+
+    {"chunk_order": 18, "funnel_position": "concept", "context_hint": "メソッドイメージ画像",
+     "elements": {}},
+
+    {"chunk_order": 19, "funnel_position": "desire", "context_hint": "服も選ばずに好きなものを着れる：理想未来",
+     "elements": {"D2_aspiration": 0.7, "D3_scenario": 0.6, "D1_transformation": 0.4}},
+
+    {"chunk_order": 20, "funnel_position": "desire", "context_hint": "好きな服シーン動画",
+     "elements": {"D2_aspiration": 0.3}},
+
+    {"chunk_order": 21, "funnel_position": "authority", "context_hint": "ワキガ手術医と共同開発した冬ワキガの救世主：医療権威",
+     "elements": {"B1_authority": 0.85, "C2_unique_mechanism": 0.5}},
+
+    {"chunk_order": 22, "funnel_position": "authority", "context_hint": "手術医イメージ画像",
+     "elements": {"B1_authority": 0.4}},
+
+    {"chunk_order": 23, "funnel_position": "proof", "context_hint": "一足先に試した人たち、ニオイ気にせず好きな服を楽しむ続出（社会的証明＋理想）",
+     "elements": {"B2_social_proof": 0.6, "D2_aspiration": 0.6, "D3_scenario": 0.5}},
+
+    {"chunk_order": 24, "funnel_position": "proof", "context_hint": "Sさん50代・Wさん50代モニター口コミ画像3連（サラサラ気に入り・男女年齢関係なく使える）",
+     "elements": {"B2_social_proof": 0.7, "D1_transformation": 0.4, "D3_scenario": 0.5}},
+
+    {"chunk_order": 25, "funnel_position": "mechanism", "context_hint": "冬の方が臭い原因は◯◯の増殖！？（POINT見出し・問いかけで因果導入）",
+     "elements": {"C1_causality": 0.6, "A1_pain_empathy": 0.4}},
+
+    {"chunk_order": 26, "funnel_position": "mechanism", "context_hint": "冬ワキガ増殖イメージ画像",
+     "elements": {}},
+
+    {"chunk_order": 27, "funnel_position": "mechanism", "context_hint": "汗を菌が分解→ニオイ発生：基本メカニズム説明",
+     "elements": {"C1_causality": 0.75}},
+
+    {"chunk_order": 28, "funnel_position": "mechanism", "context_hint": "菌分解動画",
+     "elements": {}},
+
+    {"chunk_order": 29, "funnel_position": "mechanism", "context_hint": "冬は重ね着で温度・湿度上昇：環境因果",
+     "elements": {"C1_causality": 0.7}},
+
+    {"chunk_order": 30, "funnel_position": "mechanism", "context_hint": "重ね着画像",
+     "elements": {}},
+
+    {"chunk_order": 31, "funnel_position": "mechanism", "context_hint": "出典付き：温度湿度はワキガ菌の繁殖場所→たちまち増える（外部出典でデータ補強）",
+     "elements": {"C1_causality": 0.8, "B3_data_evidence": 0.6}},
+
+    {"chunk_order": 32, "funnel_position": "mechanism", "context_hint": "増殖イメージ動画",
+     "elements": {}},
+
+    {"chunk_order": 33, "funnel_position": "mechanism", "context_hint": "さらに分泌される汗も夏より濃縮：因果引き延ばし",
+     "elements": {"C1_causality": 0.7, "B3_data_evidence": 0.4}},
+
+    {"chunk_order": 34, "funnel_position": "mechanism", "context_hint": "濃縮汗イメージ画像",
+     "elements": {}},
+
+    {"chunk_order": 35, "funnel_position": "mechanism", "context_hint": "出典付き：冬の方がクサい・冬は『ワキガ菌の繁忙期』（独自季節フック確立）",
+     "elements": {"C1_causality": 0.85, "C2_unique_mechanism": 0.55, "B3_data_evidence": 0.5}},
+
+    {"chunk_order": 36, "funnel_position": "mechanism", "context_hint": "繁忙期イメージ動画",
+     "elements": {}},
+
+    {"chunk_order": 37, "funnel_position": "mechanism", "context_hint": "だから冬のワキガケアはワキガ菌の徹底殺菌が大事→ワキガ先進ブランドが冬の特攻ケアを開発（解決策提示）",
+     "elements": {"C2_unique_mechanism": 0.7, "C1_causality": 0.5, "B1_authority": 0.4}},
+
+    {"chunk_order": 38, "funnel_position": "concept", "context_hint": "冬の特攻ケア画像",
+     "elements": {}},
+
+    {"chunk_order": 39, "funnel_position": "concept", "context_hint": "プルーストブランド史上・ワキガに諦めず対処・史上最強と呼び声（権威ハイライト）",
+     "elements": {"B2_social_proof": 0.4, "C2_unique_mechanism": 0.5}},
+
+    {"chunk_order": 40, "funnel_position": "concept", "context_hint": "史上最強画像",
+     "elements": {}},
+
+    {"chunk_order": 41, "funnel_position": "concept", "context_hint": "プルーストクリーム2のすごさ＝殺菌力（商品紹介）",
+     "elements": {"C2_unique_mechanism": 0.6}},
+
+    {"chunk_order": 42, "funnel_position": "mechanism", "context_hint": "殺菌力動画",
+     "elements": {}},
+
+    {"chunk_order": 43, "funnel_position": "mechanism", "context_hint": "史上最高数の殺菌成分配合・ワキガ菌徹底殺菌（独自データ）",
+     "elements": {"C2_unique_mechanism": 0.8, "B3_data_evidence": 0.6}},
+
+    {"chunk_order": 44, "funnel_position": "mechanism", "context_hint": "殺菌成分動画",
+     "elements": {}},
+
+    {"chunk_order": 45, "funnel_position": "authority", "context_hint": "ワキガの効果効能が認められた医薬部外品（公的権威）",
+     "elements": {"B1_authority": 0.8, "C2_unique_mechanism": 0.4}},
+
+    {"chunk_order": 46, "funnel_position": "authority", "context_hint": "医薬部外品マーク画像",
+     "elements": {"B1_authority": 0.5}},
+
+    {"chunk_order": 47, "funnel_position": "authority", "context_hint": "国内製造（製造透明性・信頼）",
+     "elements": {"B1_authority": 0.6, "B4_transparency": 0.4}},
+
+    {"chunk_order": 48, "funnel_position": "authority", "context_hint": "国内製造動画",
+     "elements": {}},
+
+    {"chunk_order": 49, "funnel_position": "authority", "context_hint": "スティンギングテスト実施済み（皮膚刺激安全性証明）",
+     "elements": {"B1_authority": 0.65, "B3_data_evidence": 0.5, "C4_objection_handling": 0.5}},
+
+    {"chunk_order": 50, "funnel_position": "authority", "context_hint": "信頼して使えるね画像（caption強）",
+     "elements": {"B1_authority": 0.4}},
+
+    {"chunk_order": 51, "funnel_position": "proof", "context_hint": "シリーズ商品買い替えてよかった満足度98.1%（社会的証明＋数値）",
+     "elements": {"B2_social_proof": 0.85, "B3_data_evidence": 0.7}},
+
+    {"chunk_order": 52, "funnel_position": "proof", "context_hint": "満足度動画",
+     "elements": {"B2_social_proof": 0.3}},
+
+    {"chunk_order": 53, "funnel_position": "proof", "context_hint": "冬はこれで乗り切ってるとの声続出（社会的証明・季節フック裏打ち）",
+     "elements": {"B2_social_proof": 0.65, "D3_scenario": 0.5}},
+
+    {"chunk_order": 54, "funnel_position": "proof", "context_hint": "Y.Mさん40歳・S.Hさん37歳口コミ画像3連（朝塗って夜まで快適/意識しないで過ごせる解放感）",
+     "elements": {"B2_social_proof": 0.85, "D1_transformation": 0.7, "D2_aspiration": 0.7, "D3_scenario": 0.6}},
+
+    {"chunk_order": 55, "funnel_position": "desire", "context_hint": "塗った瞬間からワキ完全放置！（変化訴求）",
+     "elements": {"D1_transformation": 0.7, "D2_aspiration": 0.5}},
+
+    {"chunk_order": 56, "funnel_position": "desire", "context_hint": "完全放置動画",
+     "elements": {}},
+
+    {"chunk_order": 57, "funnel_position": "proof", "context_hint": "冬服楽しめる・実際に使ってみた・クリームタイプ伸びやすい（実体験レビュー）",
+     "elements": {"D1_transformation": 0.5, "D2_aspiration": 0.5, "D3_scenario": 0.5, "B4_transparency": 0.4}},
+
+    {"chunk_order": 58, "funnel_position": "proof", "context_hint": "テクスチャー動画",
+     "elements": {}},
+
+    {"chunk_order": 59, "funnel_position": "proof", "context_hint": "ワキに塗った瞬間サラッサラ（ビフォーアフター）",
+     "elements": {"D1_transformation": 0.8}},
+
+    {"chunk_order": 60, "funnel_position": "proof", "context_hint": "サラサラ動画",
+     "elements": {"D1_transformation": 0.3}},
+
+    {"chunk_order": 61, "funnel_position": "proof", "context_hint": "画像はイメージ注釈",
+     "elements": {}},
+
+    {"chunk_order": 62, "funnel_position": "proof", "context_hint": "イメージ画像",
+     "elements": {}},
+
+    {"chunk_order": 63, "funnel_position": "proof", "context_hint": "驚き！ニオイが全然気にならない！（驚き型変化）",
+     "elements": {"D1_transformation": 0.75, "D2_aspiration": 0.5}},
+
+    {"chunk_order": 64, "funnel_position": "proof", "context_hint": "ニオイ消える動画",
+     "elements": {}},
+
+    {"chunk_order": 65, "funnel_position": "desire", "context_hint": "好きな服を自由に着れるようになった画像caption（理想到達）",
+     "elements": {"D2_aspiration": 0.8, "D1_transformation": 0.6, "D3_scenario": 0.6}},
+
+    {"chunk_order": 66, "funnel_position": "desire", "context_hint": "服自由動画",
+     "elements": {"D2_aspiration": 0.3}},
+
+    {"chunk_order": 67, "funnel_position": "mechanism", "context_hint": "売上No.1ブランド開発・なぜ冬ワキガに効くのか？再因果問いかけ",
+     "elements": {"B2_social_proof": 0.7, "B1_authority": 0.4, "C1_causality": 0.4}},
+
+    {"chunk_order": 68, "funnel_position": "mechanism", "context_hint": "問いかけ動画",
+     "elements": {}},
+
+    {"chunk_order": 69, "funnel_position": "mechanism", "context_hint": "ワキガ菌はバイオフィルムに守られ殺菌が難しい（医学因果・障壁定義）",
+     "elements": {"C1_causality": 0.85, "B3_data_evidence": 0.5, "C3_differentiation": 0.4}},
+
+    {"chunk_order": 70, "funnel_position": "mechanism", "context_hint": "バイオフィルム動画",
+     "elements": {}},
+
+    {"chunk_order": 71, "funnel_position": "mechanism", "context_hint": "BEAUTY論文出典・しかしプルーストクリーム2は殺菌成分2倍配合（学術エビデンス＋差別化）",
+     "elements": {"C2_unique_mechanism": 0.75, "B3_data_evidence": 0.7, "B1_authority": 0.5, "C3_differentiation": 0.5}},
+
+    {"chunk_order": 72, "funnel_position": "mechanism", "context_hint": "成分2倍画像",
+     "elements": {}},
+
+    {"chunk_order": 73, "funnel_position": "mechanism", "context_hint": "当社製品比・冬のワキガ菌をズバッと殺菌（差別化）",
+     "elements": {"C3_differentiation": 0.6, "C2_unique_mechanism": 0.5, "C1_causality": 0.4}},
+
+    {"chunk_order": 74, "funnel_position": "mechanism", "context_hint": "殺菌動画",
+     "elements": {}},
+
+    {"chunk_order": 75, "funnel_position": "mechanism", "context_hint": "防臭効果作用機序・肌密着特化『高密着クリーム』採用（独自処方）",
+     "elements": {"C2_unique_mechanism": 0.8, "C3_differentiation": 0.5}},
+
+    {"chunk_order": 76, "funnel_position": "mechanism", "context_hint": "高密着動画",
+     "elements": {}},
+
+    {"chunk_order": 77, "funnel_position": "mechanism", "context_hint": "ワキガ原因に直接塗り込むことに成功（メカニズム結論）",
+     "elements": {"C2_unique_mechanism": 0.7, "C1_causality": 0.5}},
+
+    {"chunk_order": 78, "funnel_position": "mechanism", "context_hint": "塗り込み動画",
+     "elements": {}},
+
+    {"chunk_order": 79, "funnel_position": "mechanism", "context_hint": "制汗成分で滝汗を抑える→汗も出にくい（追加メカニズム）",
+     "elements": {"C2_unique_mechanism": 0.6, "C1_causality": 0.5}},
+
+    {"chunk_order": 80, "funnel_position": "mechanism", "context_hint": "制汗動画",
+     "elements": {}},
+
+    {"chunk_order": 81, "funnel_position": "mechanism", "context_hint": "プルースト式殺菌メソッド・冬のワキガにも効く（独自カテゴリ命名）",
+     "elements": {"C2_unique_mechanism": 0.85, "C3_differentiation": 0.5}},
+
+    {"chunk_order": 82, "funnel_position": "mechanism", "context_hint": "メソッド動画",
+     "elements": {}},
+
+    {"chunk_order": 83, "funnel_position": "concept", "context_hint": "プルースト2なら冬のワキガケアにぴったり（締め）",
+     "elements": {"D2_aspiration": 0.4}},
+
+    {"chunk_order": 84, "funnel_position": "cta", "context_hint": "POINT本日半額以下！特別アンケート定期初回87%OFF（オファー画像caption）",
+     "elements": {"E2_offer_appeal": 0.85, "E1_urgency": 0.6, "D4_scarcity": 0.5}},
+
+    {"chunk_order": 85, "funnel_position": "cta", "context_hint": "人生を変えてくれた＼プルーストクリーム2／（変化訴求＋商品再露出）",
+     "elements": {"D1_transformation": 0.6, "D2_aspiration": 0.5}},
+
+    {"chunk_order": 86, "funnel_position": "cta", "context_hint": "商品画像",
+     "elements": {}},
+
+    {"chunk_order": 87, "funnel_position": "cta", "context_hint": "売上No.1開発ブランド・通常価格7,960円ちょっとお高め（価格アンカー＋権威）",
+     "elements": {"B2_social_proof": 0.6, "B1_authority": 0.4, "E2_offer_appeal": 0.4}},
+
+    {"chunk_order": 88, "funnel_position": "cta", "context_hint": "通常価格画像",
+     "elements": {}},
+
+    {"chunk_order": 89, "funnel_position": "cta", "context_hint": "ですが今！リニューアル記念特別アンケートキャンペーン実施中（オファー導入）",
+     "elements": {"E1_urgency": 0.7, "E2_offer_appeal": 0.6, "D4_scarcity": 0.5}},
+
+    {"chunk_order": 90, "funnel_position": "cta", "context_hint": "キャンペーン画像",
+     "elements": {"E2_offer_appeal": 0.3}},
+
+    {"chunk_order": 91, "funnel_position": "cta", "context_hint": "たった5問のアンケートに回答すると（行動誘導）",
+     "elements": {"E4_cta_clarity": 0.5}},
+
+    {"chunk_order": 92, "funnel_position": "cta", "context_hint": "アンケート動画",
+     "elements": {}},
+
+    {"chunk_order": 93, "funnel_position": "cta", "context_hint": "特別価格87%OFF・定期初回限定980円（税込）でGET（中核オファー）",
+     "elements": {"E2_offer_appeal": 0.95, "E1_urgency": 0.6, "D4_scarcity": 0.5, "E4_cta_clarity": 0.5}},
+
+    {"chunk_order": 94, "funnel_position": "cta", "context_hint": "980円画像",
+     "elements": {"E2_offer_appeal": 0.5}},
+
+    {"chunk_order": 95, "funnel_position": "cta", "context_hint": "11月限定¥10,000ギフトカード抽選キャンペーン（追加特典・限定）",
+     "elements": {"E2_offer_appeal": 0.7, "D4_scarcity": 0.7, "E1_urgency": 0.6}},
+
+    {"chunk_order": 96, "funnel_position": "cta", "context_hint": "ギフトカード動画",
+     "elements": {}},
+
+    {"chunk_order": 97, "funnel_position": "cta", "context_hint": "回数縛りもない（リスクリバーサル・反論処理）",
+     "elements": {"E3_risk_reversal": 0.85, "C4_objection_handling": 0.7}},
+
+    {"chunk_order": 98, "funnel_position": "cta", "context_hint": "縛りなし画像",
+     "elements": {"E3_risk_reversal": 0.3}},
+
+    {"chunk_order": 99, "funnel_position": "cta", "context_hint": "気軽に始められて嬉しい（行動ハードル下げ）",
+     "elements": {"E3_risk_reversal": 0.4, "C4_objection_handling": 0.4}},
+
+    {"chunk_order": 100, "funnel_position": "cta", "context_hint": "気軽動画",
+     "elements": {}},
+
+    {"chunk_order": 101, "funnel_position": "cta", "context_hint": "安心のコンビニ後払いでもOK（決済リスク打ち消し）",
+     "elements": {"E3_risk_reversal": 0.7, "C4_objection_handling": 0.5}},
+
+    {"chunk_order": 102, "funnel_position": "cta", "context_hint": "後払い画像",
+     "elements": {}},
+
+    {"chunk_order": 103, "funnel_position": "cta", "context_hint": "届いたその日からお悩み解放・1日中気にならない（即効ベネフィット）",
+     "elements": {"D1_transformation": 0.7, "D2_aspiration": 0.6, "E1_urgency": 0.4}},
+
+    {"chunk_order": 104, "funnel_position": "cta", "context_hint": "解放動画",
+     "elements": {}},
+
+    {"chunk_order": 105, "funnel_position": "cta", "context_hint": "5問のアンケートに答えてお得にゲットしてください（CTA明示）",
+     "elements": {"E4_cta_clarity": 0.7, "E2_offer_appeal": 0.5, "E1_urgency": 0.4}},
+
+    {"chunk_order": 106, "funnel_position": "cta", "context_hint": "最終CTA動画",
+     "elements": {"E4_cta_clarity": 0.4}},
+
+    {"chunk_order": 107, "funnel_position": "cta", "context_hint": "CTAボタン画像",
+     "elements": {"E4_cta_clarity": 0.85, "E2_offer_appeal": 0.4}},
+
+    {"chunk_order": 108, "funnel_position": "cta", "context_hint": "売上No.1注釈・公式サイトURL・会社情報・特商法・プライバシーポリシー（フッター）",
+     "elements": {"E4_cta_clarity": 0.6, "B1_authority": 0.4, "B2_social_proof": 0.4}}
+  ]
+}

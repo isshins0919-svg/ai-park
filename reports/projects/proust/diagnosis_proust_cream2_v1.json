@@ -1,0 +1,148 @@
+{
+  "agent": "記事診断クルー",
+  "version": "1.0",
+  "diagnosis_id": "diagnosis_proust_cream2_v1",
+  "diagnosed_at": "2026-04-25T01:30:00+09:00",
+  "winner_article_id": "20260424_proust_cream2_wakiga",
+  "loser_article_id": "20260425_proust_cream2_fuyumotto",
+  "loser_selection_type": "complete_failure",
+
+  "performance_gap": {
+    "winner": {"mCVR": 0.76, "landing_CVR": 15.0, "CTR": 5.07, "PV": 1972, "period": "2026-04-20〜04-24"},
+    "loser":  {"mCVR": 0.20, "landing_CVR": 17.6, "CTR": 1.13, "PV": 1504, "period": "2025-12-19〜12-28"},
+    "mCVR_relative": 0.26,
+    "mCVR_gap_pt": 0.56,
+    "note": "敗者は王者の26% (-73%)。CTR 1.13% は王者 5.07% の約1/4で、刈り取り段階より手前の「滞在中→最初のクリック」が壊れている。"
+  },
+
+  "diagnosis_oneliner": "敗者は『情報過剰・冗長型』。チャンク量が王者の約2倍(108vs55)、ctaのE層スコアが2.4倍(14.3vs6.05)、mechanism層も2倍肥大。一方で opening の D3_scenario (体験への自己投影) が0で、読者を物語に引き込めぬまま CTA連打で押し切る構造に陥っている。",
+
+  "structural_summary": {
+    "winner_total_chunks": 55,
+    "loser_total_chunks": 108,
+    "chunk_ratio": 1.96,
+    "loser_chunk_count_by_funnel": {
+      "opening": 3, "empathy": 11, "concept": 9, "mechanism": 32, "proof": 14, "authority": 8, "cta": 25, "desire": 6
+    },
+    "winner_chunk_count_by_funnel": {
+      "opening": 4, "empathy": 7, "concept": 6, "mechanism": 18, "proof": 13, "authority": 4, "cta": 3
+    },
+    "key_insight": "敗者は mechanism(32)+cta(25)で記事の53%を占める。王者は mechanism(18)+cta(3)で38%。敗者は『説明と販促の押し付け型』、王者は『感情誘導型』。"
+  },
+
+  "total_layer_score_comparison": {
+    "winner": {"A": 4.5, "B": 15.0, "C": 15.3, "D": 8.6, "E": 6.05},
+    "loser":  {"A": 4.5, "B": 19.05, "C": 20.9, "D": 20.05, "E": 14.3},
+    "diff_w_minus_l": {"A": 0.0, "B": -4.05, "C": -5.6, "D": -11.45, "E": -8.25},
+    "interpretation": "敗者は B/C/D/E 全層で王者を上回るスコア合計。これは『要素の不足』ではなく『分量の過剰』を意味する。20要素ルーブリックを「足し算で勝つ」LP は実は負ける、という逆説的知見。"
+  },
+
+  "top_diff_cells_winner_advantage": [
+    {
+      "funnel": "concept",
+      "layer": "B",
+      "diff": 1.25,
+      "winner_score": 2.35,
+      "loser_score": 1.1,
+      "top_element": "B3_data_evidence",
+      "interpretation": "王者は concept(裏技問いかけ)で B3 data evidence をしっかり示す。敗者は概念提示が散漫。"
+    },
+    {
+      "funnel": "opening",
+      "layer": "D",
+      "diff": 1.2,
+      "winner_score": 1.2,
+      "loser_score": 0.0,
+      "top_element": "D3_scenario",
+      "interpretation": "**最重要病因**。王者は opening で『行きつけの服屋で...』と読者の D3_scenario(自己投影シナリオ)を1.2点叩き込むが、敗者は0点。読者が物語の主人公になれない冒頭設計。"
+    },
+    {
+      "funnel": "proof",
+      "layer": "C",
+      "diff": 0.8,
+      "winner_score": 0.8,
+      "loser_score": 0.0,
+      "top_element": "C2_unique_mechanism",
+      "interpretation": "王者は proof セクションでも C2_unique_mechanism を再注入する。敗者は proof で論理層が消える(数値だけになる)。"
+    }
+  ],
+
+  "loser_overspec_cells": [
+    {
+      "funnel": "cta",
+      "layer": "E",
+      "diff": -8.25,
+      "winner_score": 6.05,
+      "loser_score": 14.3,
+      "top_element": "E2_offer_appeal",
+      "note": "敗者は CTA を25チャンクに分散して E層に14.3点積む。王者は3チャンクで6.05点に圧縮。**過剰CTA は逆効果**の典型。"
+    },
+    {
+      "funnel": "mechanism",
+      "layer": "C",
+      "diff": -6.4,
+      "winner_score": 9.9,
+      "loser_score": 16.3,
+      "top_element": "C2_unique_mechanism",
+      "note": "mechanism セクションが32チャンクに肥大。論理を執拗に積み上げて読者を疲弊させている。"
+    },
+    {
+      "funnel": "mechanism",
+      "layer": "B",
+      "diff": -4.3,
+      "winner_score": 1.0,
+      "loser_score": 5.3,
+      "top_element": "B3_data_evidence",
+      "note": "mechanism中に権威・データを過剰投入。王者は authority セクションに集約しメリハリを作る。"
+    }
+  ],
+
+  "missing_layers": [
+    "opening-D (体験シナリオによる自己投影フック)",
+    "concept-B (新概念に紐づくデータ証拠)",
+    "proof-C (口コミ後の独自メカニズム再注入)"
+  ],
+
+  "swing_mode_recommendation": {
+    "mode": "B-modified",
+    "rationale": "従来の swing_mode 仕様(A=small/B=medium/C=幅最大)では捉えきれない。**両案ともに「削る」方向のmedium改修** が必要だが、削り方の幅で差を出す。",
+    "plan_A_direction": "medium-削減型: opening を再構築(D3_scenario 1.2点入れる)、cta を25→8チャンクに圧縮、mechanism を32→20に整理。**既存構造を保持しつつ濃度を倍に**。",
+    "plan_B_direction": "medium-再構築型: opening の物語型を完全リプレース(『冬の○○な日に...』ストーリー)、mechanism と cta を半分以下に圧縮、その分 authority に医師ドラマを厚く積む。**情報量1/2、感情濃度2倍**。",
+    "common_principle": "両案とも『冗長性除去×感情ロック強化』が主軸。20要素ルーブリックの『足し算最適化』は逆効果という発見を反映。"
+  },
+
+  "recommended_cards": {
+    "訴求軸":       ["医師証言", "解放×自由"],
+    "ストーリー型": ["1人称告白", "医師視点"],
+    "感情アーク型": ["絶望→希望V字"],
+    "オファー軸":   ["保証攻め"],
+    "ゲート型":     ["アンケート継続"],
+    "rationale": "1人称告白(opening-D補強) × 医師視点(concept-B補強) × V字アーク(D層を物語化, ばらまき防止) × アンケートゲート(cta-E分散→1点集中化)"
+  },
+
+  "confidence": 0.85,
+  "confidence_note": "mCVR差 0.56pt(王者比-73%)で完敗ライン明確。両記事ともPV1500-2000で十分。top_diff_cellsとoverspec_cellsの両方向で病因が一貫(opening弱・cta過剰)。**ただし発見が逆説的(スコア合計で勝つLPは実は負ける)であり、kiji-diagnosis-crew仕様書のswing_mode判定ロジックは見直しが必要**。",
+
+  "needs_manual_review": false,
+
+  "agent_spec_feedback": {
+    "what_worked": [
+      "funnel × layer マトリクス計算は病因抽出に強力",
+      "loser_overspec_cells フィールドが効いた。情報過剰型敗者の特定に必須",
+      "戦略カード推奨は欠損レイヤーから自然に導出できる"
+    ],
+    "what_needs_revision": [
+      "swing_mode 判定ロジックが『欠損深さ』前提だった。今回は『過剰さ』が病因なので既存A/B/C分類では捉えきれず",
+      "missing_layers と loser_overspec_cells の両方を見て『情報過剰型 vs 欠損型』を診断段階で分類すべき",
+      "chunk_count比較を仕様書のStep 2に追加すべき。総量の差が病因の可能性",
+      "confidence判定基準に『逆説的発見の有無』を加える"
+    ],
+    "for_next_7_agents": [
+      "kiji-prescriber: swing_mode拡張(B-modified=medium削減型/medium再構築型)を実装",
+      "kiji-rewriter: 『削る』処方の重要性を明文化。チャンク統合・冗長削除をプロセスに組み込む",
+      "kiji-flow(agent化): chunk数の総量と funnel別配分を評価軸に追加",
+      "kiji-diff: 王者・敗者の総チャンク数比 / 各funnelチャンク密度を比較指標に",
+      "kiji-visual-rhythm: 動画29本問題を捉える指標が必要(媒体別 chunk count + 連続動画検出)"
+    ]
+  }
+}

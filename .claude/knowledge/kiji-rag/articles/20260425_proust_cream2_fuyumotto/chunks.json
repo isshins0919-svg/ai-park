@@ -1,0 +1,6433 @@
+{
+  "article_id": "20260425_proust_cream2_fuyumotto",
+  "schema_version": "1.0",
+  "scored_at": "2026-04-25T01:00:00+09:00",
+  "scorer": "claude-opus-4-7[1m] manual via subagent",
+  "rubric_version": "sales_elements.md v1.0 (5層×4要素=20)",
+  "total_chunks": 108,
+  "layer_summary": {
+    "layer_avg_across_chunks": {
+      "A": 0.01,
+      "B": 0.044,
+      "C": 0.048,
+      "D": 0.046,
+      "E": 0.033
+    },
+    "dominant_layer_distribution": {
+      "B": 15,
+      "A": 6,
+      "C": 19,
+      "D": 15,
+      "E": 13
+    }
+  },
+  "chunks": [
+    {
+      "chunk_order": 1,
+      "block_type": "text",
+      "source_block_orders": [
+        1
+      ],
+      "content_text": "PR：株式会社ヨミテ",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c001",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.3,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.075,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B1_authority"
+      ],
+      "total_intensity": 0.015,
+      "funnel_position": "opening",
+      "context_hint": "PR表記：株式会社ヨミテ",
+      "embedding": "embeddings.npy[0]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 0
+    },
+    {
+      "chunk_order": 2,
+      "block_type": "image",
+      "source_block_orders": [
+        2
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6354624/07f272a5-a89c-4340-9476-a0d6e866327f.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c002",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "opening",
+      "context_hint": "FVヒーロー画像",
+      "embedding": "embeddings.npy[1]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 1
+    },
+    {
+      "chunk_order": 3,
+      "block_type": "video",
+      "source_block_orders": [
+        3
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6354699/9294d962-0a41-461c-a254-a2f433e824f7.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c003",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "opening",
+      "context_hint": "オープニング動画",
+      "embedding": "embeddings.npy[2]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 2
+    },
+    {
+      "chunk_order": 4,
+      "block_type": "text",
+      "source_block_orders": [
+        4,
+        5
+      ],
+      "content_text": "ワキガあるある言います！\n冬ってこんなことよくありませんか？",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c004",
+      "elements": {
+        "A1_pain_empathy": 0.5,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.125,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "A",
+      "dominant_elements": [
+        "A1_pain_empathy"
+      ],
+      "total_intensity": 0.025,
+      "funnel_position": "empathy",
+      "context_hint": "ワキガあるある言います！冬ってこんなことよくありませんか？（共感の入口）",
+      "embedding": "embeddings.npy[3]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 3
+    },
+    {
+      "chunk_order": 5,
+      "block_type": "image",
+      "source_block_orders": [
+        6
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6352491/b3f52ba2-63b4-4026-b131-d6f79487ad81.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c005",
+      "elements": {
+        "A1_pain_empathy": 0.3,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.075,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "A",
+      "dominant_elements": [
+        "A1_pain_empathy"
+      ],
+      "total_intensity": 0.015,
+      "funnel_position": "empathy",
+      "context_hint": "あるあるイメージ画像",
+      "embedding": "embeddings.npy[4]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 4
+    },
+    {
+      "chunk_order": 6,
+      "block_type": "text",
+      "source_block_orders": [
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "content_text": "その辛い冬のワキガ悩み\n「ワキガだから仕方ない...」\nと放置していませんか？\n私自身、汗をかかない冬は\nワキガケアを怠りがちになっていました。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c006",
+      "elements": {
+        "A1_pain_empathy": 0.7,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.4,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.175,
+        "B": 0.1,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "A",
+      "dominant_elements": [
+        "A1_pain_empathy",
+        "B4_transparency"
+      ],
+      "total_intensity": 0.055,
+      "funnel_position": "empathy",
+      "context_hint": "冬のワキガ放置告白：私自身、汗をかかない冬はケアを怠りがち（自己投影型共感）",
+      "embedding": "embeddings.npy[5]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 5
+    },
+    {
+      "chunk_order": 7,
+      "block_type": "video",
+      "source_block_orders": [
+        12
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6352734/863e9724-0e7b-408e-8763-842a8d5bfe33.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c007",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "empathy",
+      "context_hint": "怠りシーン動画",
+      "embedding": "embeddings.npy[6]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 6
+    },
+    {
+      "chunk_order": 8,
+      "block_type": "text",
+      "source_block_orders": [
+        13
+      ],
+      "content_text": "そんなとき、こんなニュースが...",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c008",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "empathy",
+      "context_hint": "そんなとき、こんなニュースが…（転換フック）",
+      "embedding": "embeddings.npy[7]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 7
+    },
+    {
+      "chunk_order": 9,
+      "block_type": "image",
+      "source_block_orders": [
+        14
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6352816/92985475-1ef7-46b8-8253-fc76dd09335c.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c009",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "empathy",
+      "context_hint": "ニュース風画像",
+      "embedding": "embeddings.npy[8]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 8
+    },
+    {
+      "chunk_order": 10,
+      "block_type": "text",
+      "source_block_orders": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "content_text": "※画像はイメージです。\n実はそのまま放置していると\nとある理由が原因で\nどんどんニオイが強くなるかもしれないんです...",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c010",
+      "elements": {
+        "A1_pain_empathy": 0.4,
+        "A2_fear_appeal": 0.7,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.275,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "A",
+      "dominant_elements": [
+        "A2_fear_appeal",
+        "A1_pain_empathy"
+      ],
+      "total_intensity": 0.055,
+      "funnel_position": "empathy",
+      "context_hint": "放置すると原因でニオイが強くなる：恐怖喚起",
+      "embedding": "embeddings.npy[9]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 9
+    },
+    {
+      "chunk_order": 11,
+      "block_type": "video",
+      "source_block_orders": [
+        19
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6352865/a5bad8d2-5c83-4274-bbc5-cba5311060c0.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c011",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "empathy",
+      "context_hint": "悪化イメージ動画",
+      "embedding": "embeddings.npy[10]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 10
+    },
+    {
+      "chunk_order": 12,
+      "block_type": "text",
+      "source_block_orders": [
+        20,
+        21
+      ],
+      "content_text": "しまいには服にニオイがこびりついて\n何回も洗濯することもありますよね。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c012",
+      "elements": {
+        "A1_pain_empathy": 0.7,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.5,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.175,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.125,
+        "E": 0.0
+      },
+      "dominant_layer": "A",
+      "dominant_elements": [
+        "A1_pain_empathy",
+        "D3_scenario"
+      ],
+      "total_intensity": 0.06,
+      "funnel_position": "empathy",
+      "context_hint": "服にニオイがこびりつく・何回も洗濯：日常痛みシーン",
+      "embedding": "embeddings.npy[11]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 11
+    },
+    {
+      "chunk_order": 13,
+      "block_type": "video",
+      "source_block_orders": [
+        22
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353268/9e4e4110-4e36-4a7b-8754-560dd6555311.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c013",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "empathy",
+      "context_hint": "洗濯シーン動画",
+      "embedding": "embeddings.npy[12]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 12
+    },
+    {
+      "chunk_order": 14,
+      "block_type": "image",
+      "source_block_orders": [
+        23,
+        24
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5074439/2e45fab9-0951-4a6a-a5de-3544d12c7061.png",
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353649/822733b1-d117-48cc-bf1d-30c496237c4b.png"
+      ],
+      "content_captions": [
+        "アウターなんてもってのほか！！",
+        ""
+      ],
+      "content_alt": [
+        "",
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c014",
+      "elements": {
+        "A1_pain_empathy": 0.5,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.4,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.125,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.1,
+        "E": 0.0
+      },
+      "dominant_layer": "A",
+      "dominant_elements": [
+        "A1_pain_empathy",
+        "D3_scenario"
+      ],
+      "total_intensity": 0.045,
+      "funnel_position": "empathy",
+      "context_hint": "アウターなんてもってのほか画像（caption強）",
+      "embedding": "embeddings.npy[13]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 13
+    },
+    {
+      "chunk_order": 15,
+      "block_type": "text",
+      "source_block_orders": [
+        25,
+        26,
+        27,
+        28
+      ],
+      "content_text": "冬でもワキガに悩むのめんどくさいなぁ...\nそんなあなたに朗報！\n↓↓↓\n冬のワキガ特攻※2ケアが話題に！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c015",
+      "elements": {
+        "A1_pain_empathy": 0.3,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.5,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.3,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.075,
+        "B": 0.0,
+        "C": 0.125,
+        "D": 0.075,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "A1_pain_empathy",
+        "D2_aspiration"
+      ],
+      "total_intensity": 0.055,
+      "funnel_position": "concept",
+      "context_hint": "冬でもワキガ悩むめんどくさい→朗報：冬のワキガ特攻ケアが話題に（独自フック・新認識）",
+      "embedding": "embeddings.npy[14]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 14
+    },
+    {
+      "chunk_order": 16,
+      "block_type": "image",
+      "source_block_orders": [
+        29
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278828/b916789b-1c7d-4039-95b3-d1b296af07b1.webp"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c016",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "concept",
+      "context_hint": "話題のケア商品画像",
+      "embedding": "embeddings.npy[15]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 15
+    },
+    {
+      "chunk_order": 17,
+      "block_type": "text",
+      "source_block_orders": [
+        30,
+        31,
+        32
+      ],
+      "content_text": "※1 2018年10月1日〜2025年8月31日の​プルーストシリーズ商品累計出荷本数\n※2 ワキガに対して諦めずに対処すること\nこの方法があれば...",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c017",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.4,
+        "B3_data_evidence": 0.3,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.175,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B2_social_proof",
+        "B3_data_evidence"
+      ],
+      "total_intensity": 0.035,
+      "funnel_position": "concept",
+      "context_hint": "プルーストシリーズ累計出荷本数注釈・ワキガに諦めず対処・この方法があれば",
+      "embedding": "embeddings.npy[16]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 16
+    },
+    {
+      "chunk_order": 18,
+      "block_type": "image",
+      "source_block_orders": [
+        33
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353677/ac292bb0-d100-4867-bc87-8a4b6c664a52.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c018",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "concept",
+      "context_hint": "メソッドイメージ画像",
+      "embedding": "embeddings.npy[17]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 17
+    },
+    {
+      "chunk_order": 19,
+      "block_type": "text",
+      "source_block_orders": [
+        34,
+        35
+      ],
+      "content_text": "服も選ばずに\n好きなものを着れると話題に✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c019",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.4,
+        "D2_aspiration": 0.7,
+        "D3_scenario": 0.6,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.425,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D2_aspiration",
+        "D3_scenario",
+        "D1_transformation"
+      ],
+      "total_intensity": 0.085,
+      "funnel_position": "desire",
+      "context_hint": "服も選ばずに好きなものを着れる：理想未来",
+      "embedding": "embeddings.npy[18]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 18
+    },
+    {
+      "chunk_order": 20,
+      "block_type": "video",
+      "source_block_orders": [
+        36
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/4232797/366804f8-b259-4bee-99a8-8c5cd5971652.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c020",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.3,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.075,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D2_aspiration"
+      ],
+      "total_intensity": 0.015,
+      "funnel_position": "desire",
+      "context_hint": "好きな服シーン動画",
+      "embedding": "embeddings.npy[19]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 19
+    },
+    {
+      "chunk_order": 21,
+      "block_type": "text",
+      "source_block_orders": [
+        37,
+        38,
+        39,
+        40
+      ],
+      "content_text": "※画像はイメージです。\n実はこれ、\nワキガ手術医と共同開発した\n冬ワキガの救世主！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c021",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.85,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.5,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.212,
+        "C": 0.125,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B1_authority",
+        "C2_unique_mechanism"
+      ],
+      "total_intensity": 0.068,
+      "funnel_position": "authority",
+      "context_hint": "ワキガ手術医と共同開発した冬ワキガの救世主：医療権威",
+      "embedding": "embeddings.npy[20]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 20
+    },
+    {
+      "chunk_order": 22,
+      "block_type": "image",
+      "source_block_orders": [
+        41
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6039671/9c8f28c2-f936-495d-9c43-3ce06ee46d31.webp"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c022",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.4,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.1,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B1_authority"
+      ],
+      "total_intensity": 0.02,
+      "funnel_position": "authority",
+      "context_hint": "手術医イメージ画像",
+      "embedding": "embeddings.npy[21]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 21
+    },
+    {
+      "chunk_order": 23,
+      "block_type": "text",
+      "source_block_orders": [
+        42,
+        43,
+        44
+      ],
+      "content_text": "一足先に試した人たちは\nニオイを気にせず\n好きな服を楽しむ人が続出✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c023",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.6,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.6,
+        "D3_scenario": 0.5,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.15,
+        "C": 0.0,
+        "D": 0.275,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "B2_social_proof",
+        "D2_aspiration",
+        "D3_scenario"
+      ],
+      "total_intensity": 0.085,
+      "funnel_position": "proof",
+      "context_hint": "一足先に試した人たち、ニオイ気にせず好きな服を楽しむ続出（社会的証明＋理想）",
+      "embedding": "embeddings.npy[22]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 22
+    },
+    {
+      "chunk_order": 24,
+      "block_type": "image",
+      "source_block_orders": [
+        45,
+        46,
+        47
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278941/c85e52e7-f0a9-496b-856d-6ff7f0ebc2e5.png",
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278942/2f5612d0-8147-4db6-9b1a-e52ddd11de13.png",
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278939/5d599b56-63a8-4b6b-9c28-54783fb104bd.png"
+      ],
+      "content_captions": [
+        "Sさん・50代\n更年期世代になってから汗にとても悩んでいました.....でもこれ使ってみたらすごいサラサラで気に入ってます♪\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。 ※薬機法に従い一部改変しています。",
+        "Wさん・50代\n若い方からお年寄りの方まで年齢関係なく男性女性ともに使えると思います。パッケージもすごくオシャレな感じで、女性の方でも持っていて気にならないと思います。\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。 ※薬機法に従い一部改変しています。",
+        "Kさん・51歳\nうん、全然大丈夫！すごいサラサラしてるでしょ？私もいつも塗ってて、前まで脇の匂いがすごく気になってたけど、今はほら、平気。\n※個人の感想であり、効果効能を保証するものではありません。"
+      ],
+      "content_alt": [
+        "",
+        "",
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c024",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.7,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.4,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.5,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.175,
+        "C": 0.0,
+        "D": 0.225,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "B2_social_proof",
+        "D3_scenario",
+        "D1_transformation"
+      ],
+      "total_intensity": 0.08,
+      "funnel_position": "proof",
+      "context_hint": "Sさん50代・Wさん50代モニター口コミ画像3連（サラサラ気に入り・男女年齢関係なく使える）",
+      "embedding": "embeddings.npy[23]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 23
+    },
+    {
+      "chunk_order": 25,
+      "block_type": "text",
+      "source_block_orders": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "content_text": "同じように冬のワキガに悩む人に\n特別に教えちゃいます！\n冬の方がワキガ臭い...\n原因は◯◯の増殖!?\n「冬の方がニオイが濃いな...」\nワキガの人なら誰しも一度はそう思いますよね。\n実は冬の方がニオイがキツくなる原因は....",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c025",
+      "elements": {
+        "A1_pain_empathy": 0.4,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.6,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.1,
+        "B": 0.0,
+        "C": 0.15,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C1_causality",
+        "A1_pain_empathy"
+      ],
+      "total_intensity": 0.05,
+      "funnel_position": "mechanism",
+      "context_hint": "冬の方が臭い原因は◯◯の増殖！？（POINT見出し・問いかけで因果導入）",
+      "embedding": "embeddings.npy[24]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 24
+    },
+    {
+      "chunk_order": 26,
+      "block_type": "image",
+      "source_block_orders": [
+        54
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353768/de7adea4-e823-4589-acf2-3c8139ccfc80.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c026",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "冬ワキガ増殖イメージ画像",
+      "embedding": "embeddings.npy[25]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 25
+    },
+    {
+      "chunk_order": 27,
+      "block_type": "text",
+      "source_block_orders": [
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "content_text": "そもそもなんでワキガ臭が発生するかは\n知っていますか？\nご察しの通り、\n汗を菌が分解するときに\nあのいや〜なニオイが発生するんです。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c027",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.75,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.188,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C1_causality"
+      ],
+      "total_intensity": 0.037,
+      "funnel_position": "mechanism",
+      "context_hint": "汗を菌が分解→ニオイ発生：基本メカニズム説明",
+      "embedding": "embeddings.npy[26]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 26
+    },
+    {
+      "chunk_order": 28,
+      "block_type": "video",
+      "source_block_orders": [
+        60
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5784499/e6e3f34f-aaf9-4007-bfff-bde0de62a66a.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c028",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "菌分解動画",
+      "embedding": "embeddings.npy[27]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 27
+    },
+    {
+      "chunk_order": 29,
+      "block_type": "text",
+      "source_block_orders": [
+        61,
+        62
+      ],
+      "content_text": "冬は重ね着や通気性の悪い服を着ることから\n温度・湿度が夏より上昇。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c029",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.7,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.175,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C1_causality"
+      ],
+      "total_intensity": 0.035,
+      "funnel_position": "mechanism",
+      "context_hint": "冬は重ね着で温度・湿度上昇：環境因果",
+      "embedding": "embeddings.npy[28]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 28
+    },
+    {
+      "chunk_order": 30,
+      "block_type": "image",
+      "source_block_orders": [
+        63
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353867/e35e0545-5cc8-41ea-ad9c-8a66d8a45796.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c030",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "重ね着画像",
+      "embedding": "embeddings.npy[29]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 29
+    },
+    {
+      "chunk_order": 31,
+      "block_type": "text",
+      "source_block_orders": [
+        64,
+        65,
+        66
+      ],
+      "content_text": "出典：https://lidea.today/articles/641\n温度と湿度はワキガ菌の恰好の繁殖場所。\nたちまち増えていくんです。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c031",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.6,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.8,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.15,
+        "C": 0.2,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C1_causality",
+        "B3_data_evidence"
+      ],
+      "total_intensity": 0.07,
+      "funnel_position": "mechanism",
+      "context_hint": "出典付き：温度湿度はワキガ菌の繁殖場所→たちまち増える（外部出典でデータ補強）",
+      "embedding": "embeddings.npy[30]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 30
+    },
+    {
+      "chunk_order": 32,
+      "block_type": "video",
+      "source_block_orders": [
+        67
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5785034/883afc50-081b-43c3-9e12-0ae58ccafa94.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c032",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "増殖イメージ動画",
+      "embedding": "embeddings.npy[31]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 31
+    },
+    {
+      "chunk_order": 33,
+      "block_type": "text",
+      "source_block_orders": [
+        68,
+        69
+      ],
+      "content_text": "さらに！\n分泌される汗も夏よりも濃縮されているんです。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c033",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.4,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.7,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.1,
+        "C": 0.175,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C1_causality",
+        "B3_data_evidence"
+      ],
+      "total_intensity": 0.055,
+      "funnel_position": "mechanism",
+      "context_hint": "さらに分泌される汗も夏より濃縮：因果引き延ばし",
+      "embedding": "embeddings.npy[32]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 32
+    },
+    {
+      "chunk_order": 34,
+      "block_type": "image",
+      "source_block_orders": [
+        70
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6353936/328784f4-f979-44bf-ae71-36ee3a44ff5b.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c034",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "濃縮汗イメージ画像",
+      "embedding": "embeddings.npy[33]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 33
+    },
+    {
+      "chunk_order": 35,
+      "block_type": "text",
+      "source_block_orders": [
+        71,
+        72,
+        73
+      ],
+      "content_text": "出典：https://www.sincere-gc.com/beauty-column/column35/\nだから、冬の方がクサくなる。\nまさに冬は「ワキガ菌の繁忙期」",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c035",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.5,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.85,
+        "C2_unique_mechanism": 0.55,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.125,
+        "C": 0.35,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C1_causality",
+        "C2_unique_mechanism",
+        "B3_data_evidence"
+      ],
+      "total_intensity": 0.095,
+      "funnel_position": "mechanism",
+      "context_hint": "出典付き：冬の方がクサい・冬は『ワキガ菌の繁忙期』（独自季節フック確立）",
+      "embedding": "embeddings.npy[34]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 34
+    },
+    {
+      "chunk_order": 36,
+      "block_type": "video",
+      "source_block_orders": [
+        74
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6023424/4dfbc5c4-4d34-40ea-88e8-20aaa7a4dcb1.mp4"
+      ],
+      "content_captions": [
+        "※画像はイメージです"
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c036",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "繁忙期イメージ動画",
+      "embedding": "embeddings.npy[35]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 35
+    },
+    {
+      "chunk_order": 37,
+      "block_type": "text",
+      "source_block_orders": [
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "content_text": "だから冬のワキガケアをするなら\nワキガ菌の徹底殺菌\nこれがすごく大事なんです。\nそこで！\nワキガ先進ブランドが開発した\n「冬のワキガの特攻ケア※2」",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c037",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.4,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.5,
+        "C2_unique_mechanism": 0.7,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.1,
+        "C": 0.3,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "C1_causality",
+        "B1_authority"
+      ],
+      "total_intensity": 0.08,
+      "funnel_position": "mechanism",
+      "context_hint": "だから冬のワキガケアはワキガ菌の徹底殺菌が大事→ワキガ先進ブランドが冬の特攻ケアを開発（解決策提示）",
+      "embedding": "embeddings.npy[36]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 36
+    },
+    {
+      "chunk_order": 38,
+      "block_type": "image",
+      "source_block_orders": [
+        81
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6278826/f88e6221-bcd0-497e-81f0-fe77d7712cf3.webp"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c038",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "concept",
+      "context_hint": "冬の特攻ケア画像",
+      "embedding": "embeddings.npy[37]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 37
+    },
+    {
+      "chunk_order": 39,
+      "block_type": "text",
+      "source_block_orders": [
+        82,
+        83
+      ],
+      "content_text": "※1プルーストブランド史上 ※2ワキガに対して諦めずに対処すること。\nそれが史上最強※とも呼び声が高い....",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c039",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.4,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.5,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.1,
+        "C": 0.125,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "B2_social_proof"
+      ],
+      "total_intensity": 0.045,
+      "funnel_position": "concept",
+      "context_hint": "プルーストブランド史上・ワキガに諦めず対処・史上最強と呼び声（権威ハイライト）",
+      "embedding": "embeddings.npy[38]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 38
+    },
+    {
+      "chunk_order": 40,
+      "block_type": "image",
+      "source_block_orders": [
+        84
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6122130/c153e650-8ff0-43c4-b40a-c5be9ebf9c7a.webp"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c040",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "concept",
+      "context_hint": "史上最強画像",
+      "embedding": "embeddings.npy[39]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 39
+    },
+    {
+      "chunk_order": 41,
+      "block_type": "text",
+      "source_block_orders": [
+        85,
+        86,
+        87,
+        88
+      ],
+      "content_text": "※プルーストブランド史上\nプルーストクリーム2。\nプルーストクリーム2がすごいのは\nその殺菌力。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c041",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.6,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.15,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism"
+      ],
+      "total_intensity": 0.03,
+      "funnel_position": "concept",
+      "context_hint": "プルーストクリーム2のすごさ＝殺菌力（商品紹介）",
+      "embedding": "embeddings.npy[40]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 40
+    },
+    {
+      "chunk_order": 42,
+      "block_type": "video",
+      "source_block_orders": [
+        89
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/4721680/a972a685-7473-4132-ad6b-1d2f3d971c97.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c042",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "殺菌力動画",
+      "embedding": "embeddings.npy[41]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 41
+    },
+    {
+      "chunk_order": 43,
+      "block_type": "text",
+      "source_block_orders": [
+        90,
+        91,
+        92,
+        93
+      ],
+      "content_text": "プルーストクリーム2は\n史上最高数※の殺菌成分を配合。\n※プルーストブランド史上\nワキガ菌を徹底殺菌してワキガに効く！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c043",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.6,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.8,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.15,
+        "C": 0.2,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "B3_data_evidence"
+      ],
+      "total_intensity": 0.07,
+      "funnel_position": "mechanism",
+      "context_hint": "史上最高数の殺菌成分配合・ワキガ菌徹底殺菌（独自データ）",
+      "embedding": "embeddings.npy[42]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 42
+    },
+    {
+      "chunk_order": 44,
+      "block_type": "video",
+      "source_block_orders": [
+        94
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6354466/cfb22b2a-c183-4dcf-b271-c2f64d3b2b29.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c044",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "殺菌成分動画",
+      "embedding": "embeddings.npy[43]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 43
+    },
+    {
+      "chunk_order": 45,
+      "block_type": "text",
+      "source_block_orders": [
+        95,
+        96,
+        97
+      ],
+      "content_text": "プルーストクリーム2は\nワキガの効果効能が認められた\n医薬部外品で",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c045",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.8,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.4,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.2,
+        "C": 0.1,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B1_authority",
+        "C2_unique_mechanism"
+      ],
+      "total_intensity": 0.06,
+      "funnel_position": "authority",
+      "context_hint": "ワキガの効果効能が認められた医薬部外品（公的権威）",
+      "embedding": "embeddings.npy[44]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 44
+    },
+    {
+      "chunk_order": 46,
+      "block_type": "image",
+      "source_block_orders": [
+        98
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5965302/ce685234-078e-410f-8ed8-98bbffc29deb.webp"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c046",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.5,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.125,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B1_authority"
+      ],
+      "total_intensity": 0.025,
+      "funnel_position": "authority",
+      "context_hint": "医薬部外品マーク画像",
+      "embedding": "embeddings.npy[45]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 45
+    },
+    {
+      "chunk_order": 47,
+      "block_type": "text",
+      "source_block_orders": [
+        99,
+        100
+      ],
+      "content_text": "しかもれっきとした\n国内製造！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c047",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.6,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.4,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.25,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B1_authority",
+        "B4_transparency"
+      ],
+      "total_intensity": 0.05,
+      "funnel_position": "authority",
+      "context_hint": "国内製造（製造透明性・信頼）",
+      "embedding": "embeddings.npy[46]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 46
+    },
+    {
+      "chunk_order": 48,
+      "block_type": "video",
+      "source_block_orders": [
+        101
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5980246/c014bea7-e1a9-416c-aef8-5906e102b120.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c048",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "authority",
+      "context_hint": "国内製造動画",
+      "embedding": "embeddings.npy[47]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 47
+    },
+    {
+      "chunk_order": 49,
+      "block_type": "text",
+      "source_block_orders": [
+        102,
+        103
+      ],
+      "content_text": "もちろんスティンギングテストも\n実施済みなんだとか。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c049",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.65,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.5,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.5,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.287,
+        "C": 0.125,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B1_authority",
+        "B3_data_evidence",
+        "C4_objection_handling"
+      ],
+      "total_intensity": 0.082,
+      "funnel_position": "authority",
+      "context_hint": "スティンギングテスト実施済み（皮膚刺激安全性証明）",
+      "embedding": "embeddings.npy[48]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 48
+    },
+    {
+      "chunk_order": 50,
+      "block_type": "image",
+      "source_block_orders": [
+        104,
+        105
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6239764/d89f6ddd-5814-415e-9487-e2c8d667b5ca.jpg",
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5074439/2e45fab9-0951-4a6a-a5de-3544d12c7061.png"
+      ],
+      "content_captions": [
+        "",
+        "これは信頼して使うことができるね！"
+      ],
+      "content_alt": [
+        "",
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c050",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.4,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.1,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B1_authority"
+      ],
+      "total_intensity": 0.02,
+      "funnel_position": "authority",
+      "context_hint": "信頼して使えるね画像（caption強）",
+      "embedding": "embeddings.npy[49]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 49
+    },
+    {
+      "chunk_order": 51,
+      "block_type": "text",
+      "source_block_orders": [
+        106,
+        107,
+        108
+      ],
+      "content_text": "シリーズ商品でも\n「買い替えてよかった！！」と\n満足度が脅威の98.1%※♪",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c051",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.85,
+        "B3_data_evidence": 0.7,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.387,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B2_social_proof",
+        "B3_data_evidence"
+      ],
+      "total_intensity": 0.077,
+      "funnel_position": "proof",
+      "context_hint": "シリーズ商品買い替えてよかった満足度98.1%（社会的証明＋数値）",
+      "embedding": "embeddings.npy[50]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 50
+    },
+    {
+      "chunk_order": 52,
+      "block_type": "video",
+      "source_block_orders": [
+        109
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/4765093/ffa28ae1-0613-4f30-86a4-fe0201caccc2.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c052",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.3,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.075,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B2_social_proof"
+      ],
+      "total_intensity": 0.015,
+      "funnel_position": "proof",
+      "context_hint": "満足度動画",
+      "embedding": "embeddings.npy[51]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 51
+    },
+    {
+      "chunk_order": 53,
+      "block_type": "text",
+      "source_block_orders": [
+        110,
+        111
+      ],
+      "content_text": "「冬はこれで乗り切ってる」\nとのお声も続出！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c053",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.65,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.5,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.163,
+        "C": 0.0,
+        "D": 0.125,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B2_social_proof",
+        "D3_scenario"
+      ],
+      "total_intensity": 0.057,
+      "funnel_position": "proof",
+      "context_hint": "冬はこれで乗り切ってるとの声続出（社会的証明・季節フック裏打ち）",
+      "embedding": "embeddings.npy[52]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 52
+    },
+    {
+      "chunk_order": 54,
+      "block_type": "image",
+      "source_block_orders": [
+        112,
+        113,
+        114
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6034692/416cadc8-f077-4f44-a38f-817c5067ed1d.png",
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6034829/1a500af6-4f8c-47da-918f-add0c4f1971f.png",
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6034687/f1da9360-df61-4bbd-83a6-c567ed6e5df1.png"
+      ],
+      "content_captions": [
+        "ほんっとに感動した！（Y.Mさん 40歳）\n汗の量と臭いでずっと悩んでました。\nほんとにピタっと気にならなくなりました！※1\n朝塗ってお出かけしても夜までとっても快適です！\n持ち運びも楽チンなのも嬉しい！\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。\n ※薬機法に従い一部改変しています。※1 商品の使用感におけるベタつきのこと。※年齢とワキガ歴は撮影当時のものです。",
+        "夜まで快適ってすごい！（S.Hさん 37歳）\n これに出会って、気持ちが本当に楽になりました！\nいつもワキガのこと考えてたのに、意識しないで過ごすことができたのがすごく嬉しいです！\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。\n ※薬機法に従い一部改変しています。※年齢とワキガ歴は撮影当時のものです。",
+        "汗染みが悩みでしたが…（Y.Aさん 24歳）\n周りからバレるほどの、汗染みが人生の悩みでした。\nでもやっと自信を持って人前に出られるようになり感動です！\nワキガ商品ってバレずに外でも使えるからすごく安心です！\n※商品モニターとしてご協力いただいた方々の感想です。年齢は撮影当時のものです。個人の感想であり、効果効能を保証するものではありません。\n ※薬機法に従い一部改変しています。※年齢とワキガ歴は撮影当時のものです。"
+      ],
+      "content_alt": [
+        "",
+        "",
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c054",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.85,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.7,
+        "D2_aspiration": 0.7,
+        "D3_scenario": 0.6,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.212,
+        "C": 0.0,
+        "D": 0.5,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "B2_social_proof",
+        "D1_transformation",
+        "D2_aspiration"
+      ],
+      "total_intensity": 0.143,
+      "funnel_position": "proof",
+      "context_hint": "Y.Mさん40歳・S.Hさん37歳口コミ画像3連（朝塗って夜まで快適/意識しないで過ごせる解放感）",
+      "embedding": "embeddings.npy[53]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 53
+    },
+    {
+      "chunk_order": 55,
+      "block_type": "text",
+      "source_block_orders": [
+        115,
+        116
+      ],
+      "content_text": "塗った瞬間から\nワキ完全放置！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c055",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.7,
+        "D2_aspiration": 0.5,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.3,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D1_transformation",
+        "D2_aspiration"
+      ],
+      "total_intensity": 0.06,
+      "funnel_position": "desire",
+      "context_hint": "塗った瞬間からワキ完全放置！（変化訴求）",
+      "embedding": "embeddings.npy[54]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 54
+    },
+    {
+      "chunk_order": 56,
+      "block_type": "video",
+      "source_block_orders": [
+        117
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5985632/df87ab3d-7960-47a4-9ef1-569730326ad1.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c056",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "desire",
+      "context_hint": "完全放置動画",
+      "embedding": "embeddings.npy[55]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 55
+    },
+    {
+      "chunk_order": 57,
+      "block_type": "text",
+      "source_block_orders": [
+        118,
+        119,
+        120,
+        121
+      ],
+      "content_text": "冬服もたくさん楽しめちゃうんです✨\n冬ワキガに効くのか？\n実際に使ってみた\nクリームタイプで\nテクスチャーは伸びやすい✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c057",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.4,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.5,
+        "D2_aspiration": 0.5,
+        "D3_scenario": 0.5,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.1,
+        "C": 0.0,
+        "D": 0.375,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D1_transformation",
+        "D2_aspiration",
+        "D3_scenario"
+      ],
+      "total_intensity": 0.095,
+      "funnel_position": "proof",
+      "context_hint": "冬服楽しめる・実際に使ってみた・クリームタイプ伸びやすい（実体験レビュー）",
+      "embedding": "embeddings.npy[56]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 56
+    },
+    {
+      "chunk_order": 58,
+      "block_type": "video",
+      "source_block_orders": [
+        122
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5977212/ad91c1b5-5d56-472e-92fd-d71245b9c1f2.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c058",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "proof",
+      "context_hint": "テクスチャー動画",
+      "embedding": "embeddings.npy[57]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 57
+    },
+    {
+      "chunk_order": 59,
+      "block_type": "text",
+      "source_block_orders": [
+        123,
+        124,
+        125
+      ],
+      "content_text": "ワキに塗った瞬間\n脇汗でじめってたワキが\nサラッサラ！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c059",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.8,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.2,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D1_transformation"
+      ],
+      "total_intensity": 0.04,
+      "funnel_position": "proof",
+      "context_hint": "ワキに塗った瞬間サラッサラ（ビフォーアフター）",
+      "embedding": "embeddings.npy[58]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 58
+    },
+    {
+      "chunk_order": 60,
+      "block_type": "video",
+      "source_block_orders": [
+        126
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5977607/783c3f43-85a4-4608-a014-3d78869e8280.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c060",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.3,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.075,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D1_transformation"
+      ],
+      "total_intensity": 0.015,
+      "funnel_position": "proof",
+      "context_hint": "サラサラ動画",
+      "embedding": "embeddings.npy[59]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 59
+    },
+    {
+      "chunk_order": 61,
+      "block_type": "text",
+      "source_block_orders": [
+        127
+      ],
+      "content_text": "※画像はイメージです。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c061",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "proof",
+      "context_hint": "画像はイメージ注釈",
+      "embedding": "embeddings.npy[60]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 60
+    },
+    {
+      "chunk_order": 62,
+      "block_type": "image",
+      "source_block_orders": [
+        128
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/4375614/153997ff-5e08-478e-8e72-bf263c78c748.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c062",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "proof",
+      "context_hint": "イメージ画像",
+      "embedding": "embeddings.npy[61]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 61
+    },
+    {
+      "chunk_order": 63,
+      "block_type": "text",
+      "source_block_orders": [
+        129,
+        130
+      ],
+      "content_text": "これは驚き❣️\nニオイが全然気にならない！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c063",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.75,
+        "D2_aspiration": 0.5,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.312,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D1_transformation",
+        "D2_aspiration"
+      ],
+      "total_intensity": 0.062,
+      "funnel_position": "proof",
+      "context_hint": "驚き！ニオイが全然気にならない！（驚き型変化）",
+      "embedding": "embeddings.npy[62]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 62
+    },
+    {
+      "chunk_order": 64,
+      "block_type": "video",
+      "source_block_orders": [
+        131
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5980244/ca0c49e7-4926-4c5a-af07-272124c2cbe4.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c064",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "proof",
+      "context_hint": "ニオイ消える動画",
+      "embedding": "embeddings.npy[63]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 63
+    },
+    {
+      "chunk_order": 65,
+      "block_type": "image",
+      "source_block_orders": [
+        132
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5074439/2e45fab9-0951-4a6a-a5de-3544d12c7061.png"
+      ],
+      "content_captions": [
+        "１番嬉しかったのは、\n好きな服を自由に着れるようになったこと。"
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c065",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.6,
+        "D2_aspiration": 0.8,
+        "D3_scenario": 0.6,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.5,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D2_aspiration",
+        "D1_transformation",
+        "D3_scenario"
+      ],
+      "total_intensity": 0.1,
+      "funnel_position": "desire",
+      "context_hint": "好きな服を自由に着れるようになった画像caption（理想到達）",
+      "embedding": "embeddings.npy[64]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 64
+    },
+    {
+      "chunk_order": 66,
+      "block_type": "video",
+      "source_block_orders": [
+        133
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5965839/f644784a-d08f-49ba-80de-301db2093b52.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c066",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.3,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.075,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D2_aspiration"
+      ],
+      "total_intensity": 0.015,
+      "funnel_position": "desire",
+      "context_hint": "服自由動画",
+      "embedding": "embeddings.npy[65]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 65
+    },
+    {
+      "chunk_order": 67,
+      "block_type": "text",
+      "source_block_orders": [
+        134,
+        135,
+        136,
+        137,
+        138,
+        139
+      ],
+      "content_text": "さすがは売上No.1※ブランドが開発した\nワキガクリームですね‼️\n※当社プルーストクリームの実績/TPC「ワキガ対策用デオドラントクリームに関する調査（2025年4月）」に基づく2024年の店頭・通販売上実績No.1\nなぜプルーストクリームは\n冬ワキガに効くのか？\nワキガの原因は菌であることは\nさっき説明しましたよね？",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c067",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.4,
+        "B2_social_proof": 0.7,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.4,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.275,
+        "C": 0.1,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B2_social_proof",
+        "B1_authority",
+        "C1_causality"
+      ],
+      "total_intensity": 0.075,
+      "funnel_position": "mechanism",
+      "context_hint": "売上No.1ブランド開発・なぜ冬ワキガに効くのか？再因果問いかけ",
+      "embedding": "embeddings.npy[66]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 66
+    },
+    {
+      "chunk_order": 68,
+      "block_type": "video",
+      "source_block_orders": [
+        140
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6285695/167e8cd4-1c19-4d41-a905-44daea1ed23c.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c068",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "問いかけ動画",
+      "embedding": "embeddings.npy[67]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 67
+    },
+    {
+      "chunk_order": 69,
+      "block_type": "text",
+      "source_block_orders": [
+        141,
+        142
+      ],
+      "content_text": "しかしワキガ菌はバイオフィルムに\n守られ殺菌することが難しいんです。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c069",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.5,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.85,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.4,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.125,
+        "C": 0.312,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C1_causality",
+        "B3_data_evidence",
+        "C3_differentiation"
+      ],
+      "total_intensity": 0.087,
+      "funnel_position": "mechanism",
+      "context_hint": "ワキガ菌はバイオフィルムに守られ殺菌が難しい（医学因果・障壁定義）",
+      "embedding": "embeddings.npy[68]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 68
+    },
+    {
+      "chunk_order": 70,
+      "block_type": "video",
+      "source_block_orders": [
+        143
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/4389331/6c55789a-9052-4b18-af69-31cefd8822ee.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c070",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "バイオフィルム動画",
+      "embedding": "embeddings.npy[69]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 69
+    },
+    {
+      "chunk_order": 71,
+      "block_type": "text",
+      "source_block_orders": [
+        144,
+        145,
+        146,
+        147
+      ],
+      "content_text": "※画像はイメージです。※出典：美容皮膚医学BEAUTY #50 Vol.6 No.7,2023 P14\n※Small-molecule-induced activation of cellular respiration inhibits biofilm formation and triggers metabolic remodeling in Staphylococcus aureus\nしかしプルーストクリーム2は\n殺菌成分を2倍※も配合。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c071",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.5,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.7,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.75,
+        "C3_differentiation": 0.5,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.3,
+        "C": 0.312,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "B3_data_evidence",
+        "B1_authority"
+      ],
+      "total_intensity": 0.123,
+      "funnel_position": "mechanism",
+      "context_hint": "BEAUTY論文出典・しかしプルーストクリーム2は殺菌成分2倍配合（学術エビデンス＋差別化）",
+      "embedding": "embeddings.npy[70]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 70
+    },
+    {
+      "chunk_order": 72,
+      "block_type": "image",
+      "source_block_orders": [
+        148
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6279079/ce3609b8-3401-43d1-8fdf-384cfbd6e53f.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c072",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "成分2倍画像",
+      "embedding": "embeddings.npy[71]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 71
+    },
+    {
+      "chunk_order": 73,
+      "block_type": "text",
+      "source_block_orders": [
+        149,
+        150,
+        151
+      ],
+      "content_text": "※当社製品比\n増殖しまくった\n冬のワキガ菌もズバッと殺菌※！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c073",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.4,
+        "C2_unique_mechanism": 0.5,
+        "C3_differentiation": 0.6,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.375,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C3_differentiation",
+        "C2_unique_mechanism",
+        "C1_causality"
+      ],
+      "total_intensity": 0.075,
+      "funnel_position": "mechanism",
+      "context_hint": "当社製品比・冬のワキガ菌をズバッと殺菌（差別化）",
+      "embedding": "embeddings.npy[72]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 72
+    },
+    {
+      "chunk_order": 74,
+      "block_type": "video",
+      "source_block_orders": [
+        152
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/4406635/0c5c5849-a560-4cd3-94e1-6f43d6afd5b3.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c074",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "殺菌動画",
+      "embedding": "embeddings.npy[73]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 73
+    },
+    {
+      "chunk_order": 75,
+      "block_type": "text",
+      "source_block_orders": [
+        153,
+        154,
+        155,
+        156
+      ],
+      "content_text": "※防臭効果の作用機序として\nしかも・・・\n肌の密着することに特化した\n殺菌成分配合の「高密着クリーム」を採用！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c075",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.8,
+        "C3_differentiation": 0.5,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.325,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "C3_differentiation"
+      ],
+      "total_intensity": 0.065,
+      "funnel_position": "mechanism",
+      "context_hint": "防臭効果作用機序・肌密着特化『高密着クリーム』採用（独自処方）",
+      "embedding": "embeddings.npy[74]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 74
+    },
+    {
+      "chunk_order": 76,
+      "block_type": "video",
+      "source_block_orders": [
+        157
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5965288/4d8bb411-2061-46e5-be73-c596e352b808.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c076",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "高密着動画",
+      "embedding": "embeddings.npy[75]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 75
+    },
+    {
+      "chunk_order": 77,
+      "block_type": "text",
+      "source_block_orders": [
+        158,
+        159
+      ],
+      "content_text": "だから！\nワキガ原因に直接塗り込むことに成功！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c077",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.5,
+        "C2_unique_mechanism": 0.7,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.3,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "C1_causality"
+      ],
+      "total_intensity": 0.06,
+      "funnel_position": "mechanism",
+      "context_hint": "ワキガ原因に直接塗り込むことに成功（メカニズム結論）",
+      "embedding": "embeddings.npy[76]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 76
+    },
+    {
+      "chunk_order": 78,
+      "block_type": "video",
+      "source_block_orders": [
+        160
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/4629446/a8e6651f-535e-44dd-860c-22e2418f9f22.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c078",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "塗り込み動画",
+      "embedding": "embeddings.npy[77]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 77
+    },
+    {
+      "chunk_order": 79,
+      "block_type": "text",
+      "source_block_orders": [
+        161,
+        162,
+        163
+      ],
+      "content_text": "制汗成分で\n滝汗をしっかり抑えてくれるから\n汗も出にくくなるんです！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c079",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.5,
+        "C2_unique_mechanism": 0.6,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.275,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "C1_causality"
+      ],
+      "total_intensity": 0.055,
+      "funnel_position": "mechanism",
+      "context_hint": "制汗成分で滝汗を抑える→汗も出にくい（追加メカニズム）",
+      "embedding": "embeddings.npy[78]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 78
+    },
+    {
+      "chunk_order": 80,
+      "block_type": "video",
+      "source_block_orders": [
+        164
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5959071/610b1365-70ec-451b-902a-48c9df00f524.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c080",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "制汗動画",
+      "embedding": "embeddings.npy[79]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 79
+    },
+    {
+      "chunk_order": 81,
+      "block_type": "text",
+      "source_block_orders": [
+        165,
+        166
+      ],
+      "content_text": "これがプルースト式殺菌メソッド。\nだから冬のワキガにも効く！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c081",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.85,
+        "C3_differentiation": 0.5,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.338,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C2_unique_mechanism",
+        "C3_differentiation"
+      ],
+      "total_intensity": 0.068,
+      "funnel_position": "mechanism",
+      "context_hint": "プルースト式殺菌メソッド・冬のワキガにも効く（独自カテゴリ命名）",
+      "embedding": "embeddings.npy[80]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 80
+    },
+    {
+      "chunk_order": 82,
+      "block_type": "video",
+      "source_block_orders": [
+        167
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5959129/6aea448f-79e1-40af-bee3-aa8b25630165.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c082",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "mechanism",
+      "context_hint": "メソッド動画",
+      "embedding": "embeddings.npy[81]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 81
+    },
+    {
+      "chunk_order": 83,
+      "block_type": "text",
+      "source_block_orders": [
+        168,
+        169
+      ],
+      "content_text": "プルースト2なら\n冬のワキガケアにぴったりですね✨",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c083",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.4,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.1,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D2_aspiration"
+      ],
+      "total_intensity": 0.02,
+      "funnel_position": "concept",
+      "context_hint": "プルースト2なら冬のワキガケアにぴったり（締め）",
+      "embedding": "embeddings.npy[82]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 82
+    },
+    {
+      "chunk_order": 84,
+      "block_type": "image",
+      "source_block_orders": [
+        170
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://d24894ewhzyuok.cloudfront.net/uploads/article_photo/photo/1169769/81caf2a7-d537-4872-b2a1-b145b62ab2af.png"
+      ],
+      "content_captions": [
+        "POINT 【本日半額以下!!】\n今！特別アンケートに答えるだけで\n定期初回87%OFFでゲットできる！？"
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c084",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.5,
+        "E1_urgency": 0.6,
+        "E2_offer_appeal": 0.85,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.125,
+        "E": 0.362
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E2_offer_appeal",
+        "E1_urgency",
+        "D4_scarcity"
+      ],
+      "total_intensity": 0.098,
+      "funnel_position": "cta",
+      "context_hint": "POINT本日半額以下！特別アンケート定期初回87%OFF（オファー画像caption）",
+      "embedding": "embeddings.npy[83]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 83
+    },
+    {
+      "chunk_order": 85,
+      "block_type": "text",
+      "source_block_orders": [
+        171,
+        172
+      ],
+      "content_text": "そんな人生を変えてくれた\n＼プルーストクリーム 2／",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c085",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.6,
+        "D2_aspiration": 0.5,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.275,
+        "E": 0.0
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D1_transformation",
+        "D2_aspiration"
+      ],
+      "total_intensity": 0.055,
+      "funnel_position": "cta",
+      "context_hint": "人生を変えてくれた＼プルーストクリーム2／（変化訴求＋商品再露出）",
+      "embedding": "embeddings.npy[84]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 84
+    },
+    {
+      "chunk_order": 86,
+      "block_type": "image",
+      "source_block_orders": [
+        173
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6001269/c2ec2770-3d58-4146-bdfb-b537b34a151d.jpg"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c086",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "cta",
+      "context_hint": "商品画像",
+      "embedding": "embeddings.npy[85]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 85
+    },
+    {
+      "chunk_order": 87,
+      "block_type": "text",
+      "source_block_orders": [
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180
+      ],
+      "content_text": "”売上No.1商品を開発したブランド”※なので\n気になるのはお値段ですよね…！\n普通に買うと\n通常価格で7,960円（税込）\nとちょっとお高め…！\n※当社プルーストクリームの実績/TPC「ワキガ対策用デオドラントクリームに関する調査\n（2025年4月）」に基づく2024年の店頭・通販売上実績No.1",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c087",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.4,
+        "B2_social_proof": 0.6,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.4,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.25,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.1
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "B2_social_proof",
+        "B1_authority",
+        "E2_offer_appeal"
+      ],
+      "total_intensity": 0.07,
+      "funnel_position": "cta",
+      "context_hint": "売上No.1開発ブランド・通常価格7,960円ちょっとお高め（価格アンカー＋権威）",
+      "embedding": "embeddings.npy[86]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 86
+    },
+    {
+      "chunk_order": 88,
+      "block_type": "image",
+      "source_block_orders": [
+        181
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6040770/4cbd83dc-7161-403d-ac0d-5e67df5b86fc.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c088",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "cta",
+      "context_hint": "通常価格画像",
+      "embedding": "embeddings.npy[87]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 87
+    },
+    {
+      "chunk_order": 89,
+      "block_type": "text",
+      "source_block_orders": [
+        182,
+        183,
+        184,
+        185
+      ],
+      "content_text": "＼ですが、今！／\nプルーストクリームの\nリニューアルを記念して\n特別アンケートキャンペーンを実施中！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c089",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.5,
+        "E1_urgency": 0.7,
+        "E2_offer_appeal": 0.6,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.125,
+        "E": 0.325
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E1_urgency",
+        "E2_offer_appeal",
+        "D4_scarcity"
+      ],
+      "total_intensity": 0.09,
+      "funnel_position": "cta",
+      "context_hint": "ですが今！リニューアル記念特別アンケートキャンペーン実施中（オファー導入）",
+      "embedding": "embeddings.npy[88]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 88
+    },
+    {
+      "chunk_order": 90,
+      "block_type": "image",
+      "source_block_orders": [
+        186
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/1926549/b0f6d707-3134-4b50-b9f5-6d591fcd2420.jpg"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c090",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.3,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.075
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E2_offer_appeal"
+      ],
+      "total_intensity": 0.015,
+      "funnel_position": "cta",
+      "context_hint": "キャンペーン画像",
+      "embedding": "embeddings.npy[89]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 89
+    },
+    {
+      "chunk_order": 91,
+      "block_type": "text",
+      "source_block_orders": [
+        187,
+        188
+      ],
+      "content_text": "たった5問のアンケートに\n回答すると...",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c091",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.5
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.125
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E4_cta_clarity"
+      ],
+      "total_intensity": 0.025,
+      "funnel_position": "cta",
+      "context_hint": "たった5問のアンケートに回答すると（行動誘導）",
+      "embedding": "embeddings.npy[90]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 90
+    },
+    {
+      "chunk_order": 92,
+      "block_type": "video",
+      "source_block_orders": [
+        189
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6134338/2400f79f-c0ba-43ce-b94b-5dd9c7d59b10.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c092",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "cta",
+      "context_hint": "アンケート動画",
+      "embedding": "embeddings.npy[91]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 91
+    },
+    {
+      "chunk_order": 93,
+      "block_type": "text",
+      "source_block_orders": [
+        190,
+        191,
+        192,
+        193,
+        194
+      ],
+      "content_text": "＼なんと！／\n特別価格87%OFFの\n定期初回限定\n＼✨980円（税込）✨／\nでGETできちゃうんです！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c093",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.5,
+        "E1_urgency": 0.6,
+        "E2_offer_appeal": 0.95,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.5
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.125,
+        "E": 0.512
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E2_offer_appeal",
+        "E1_urgency",
+        "D4_scarcity"
+      ],
+      "total_intensity": 0.128,
+      "funnel_position": "cta",
+      "context_hint": "特別価格87%OFF・定期初回限定980円（税込）でGET（中核オファー）",
+      "embedding": "embeddings.npy[92]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 92
+    },
+    {
+      "chunk_order": 94,
+      "block_type": "image",
+      "source_block_orders": [
+        195
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5987956/38c80360-bb52-436d-bef3-695263f86aad.webp"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c094",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.5,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.125
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E2_offer_appeal"
+      ],
+      "total_intensity": 0.025,
+      "funnel_position": "cta",
+      "context_hint": "980円画像",
+      "embedding": "embeddings.npy[93]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 93
+    },
+    {
+      "chunk_order": 95,
+      "block_type": "text",
+      "source_block_orders": [
+        196,
+        197,
+        198,
+        199
+      ],
+      "content_text": "しかも！今なら！\n11月限定で\n¥10,000のギフトカードが抽選で当たる\nキャンペーンを実施中！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c095",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.7,
+        "E1_urgency": 0.6,
+        "E2_offer_appeal": 0.7,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.175,
+        "E": 0.325
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "D4_scarcity",
+        "E2_offer_appeal",
+        "E1_urgency"
+      ],
+      "total_intensity": 0.1,
+      "funnel_position": "cta",
+      "context_hint": "11月限定¥10,000ギフトカード抽選キャンペーン（追加特典・限定）",
+      "embedding": "embeddings.npy[94]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 94
+    },
+    {
+      "chunk_order": 96,
+      "block_type": "video",
+      "source_block_orders": [
+        200
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6120551/03f237d7-5ee3-44cc-8525-27bc7d29db39.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c096",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "cta",
+      "context_hint": "ギフトカード動画",
+      "embedding": "embeddings.npy[95]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 95
+    },
+    {
+      "chunk_order": 97,
+      "block_type": "text",
+      "source_block_orders": [
+        201,
+        202
+      ],
+      "content_text": "もちろん「何回買わないといけない」\nみたいな回数縛りもないんです！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c097",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.7,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.85,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.175,
+        "D": 0.0,
+        "E": 0.212
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E3_risk_reversal",
+        "C4_objection_handling"
+      ],
+      "total_intensity": 0.077,
+      "funnel_position": "cta",
+      "context_hint": "回数縛りもない（リスクリバーサル・反論処理）",
+      "embedding": "embeddings.npy[96]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 96
+    },
+    {
+      "chunk_order": 98,
+      "block_type": "image",
+      "source_block_orders": [
+        203
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/4260436/d6378d19-ff6d-4b30-a3ce-8432e4c72cce.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c098",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.3,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.075
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E3_risk_reversal"
+      ],
+      "total_intensity": 0.015,
+      "funnel_position": "cta",
+      "context_hint": "縛りなし画像",
+      "embedding": "embeddings.npy[97]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 97
+    },
+    {
+      "chunk_order": 99,
+      "block_type": "text",
+      "source_block_orders": [
+        204,
+        205
+      ],
+      "content_text": "これなら\n気軽に始められて嬉しい！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c099",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.4,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.4,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.1,
+        "D": 0.0,
+        "E": 0.1
+      },
+      "dominant_layer": "C",
+      "dominant_elements": [
+        "C4_objection_handling",
+        "E3_risk_reversal"
+      ],
+      "total_intensity": 0.04,
+      "funnel_position": "cta",
+      "context_hint": "気軽に始められて嬉しい（行動ハードル下げ）",
+      "embedding": "embeddings.npy[98]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 98
+    },
+    {
+      "chunk_order": 100,
+      "block_type": "video",
+      "source_block_orders": [
+        206
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5281610/4011cb72-c4ed-435b-8a7d-b5963516670f.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c100",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "cta",
+      "context_hint": "気軽動画",
+      "embedding": "embeddings.npy[99]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 99
+    },
+    {
+      "chunk_order": 101,
+      "block_type": "text",
+      "source_block_orders": [
+        207,
+        208
+      ],
+      "content_text": "しかも\n安心のコンビニ後払いでもOK！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c101",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.5,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.7,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.125,
+        "D": 0.0,
+        "E": 0.175
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E3_risk_reversal",
+        "C4_objection_handling"
+      ],
+      "total_intensity": 0.06,
+      "funnel_position": "cta",
+      "context_hint": "安心のコンビニ後払いでもOK（決済リスク打ち消し）",
+      "embedding": "embeddings.npy[100]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 100
+    },
+    {
+      "chunk_order": 102,
+      "block_type": "image",
+      "source_block_orders": [
+        209
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5975263/aa4a0d3f-5e02-4ecf-a755-bf1b1af6c6d8.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c102",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "cta",
+      "context_hint": "後払い画像",
+      "embedding": "embeddings.npy[101]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 101
+    },
+    {
+      "chunk_order": 103,
+      "block_type": "text",
+      "source_block_orders": [
+        210,
+        211
+      ],
+      "content_text": "届いたその日からお悩み解放！\n1日中気にならない！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c103",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.7,
+        "D2_aspiration": 0.6,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.4,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.325,
+        "E": 0.1
+      },
+      "dominant_layer": "D",
+      "dominant_elements": [
+        "D1_transformation",
+        "D2_aspiration",
+        "E1_urgency"
+      ],
+      "total_intensity": 0.085,
+      "funnel_position": "cta",
+      "context_hint": "届いたその日からお悩み解放・1日中気にならない（即効ベネフィット）",
+      "embedding": "embeddings.npy[102]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 102
+    },
+    {
+      "chunk_order": 104,
+      "block_type": "video",
+      "source_block_orders": [
+        212
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5985632/df87ab3d-7960-47a4-9ef1-569730326ad1.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c104",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": "cta",
+      "context_hint": "解放動画",
+      "embedding": "embeddings.npy[103]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 103
+    },
+    {
+      "chunk_order": 105,
+      "block_type": "text",
+      "source_block_orders": [
+        213,
+        214,
+        215
+      ],
+      "content_text": "※画像はイメージです\n5問のアンケートに答えて\nお得にゲットしてください♪",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c105",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.4,
+        "E2_offer_appeal": 0.5,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.7
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.4
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E4_cta_clarity",
+        "E2_offer_appeal",
+        "E1_urgency"
+      ],
+      "total_intensity": 0.08,
+      "funnel_position": "cta",
+      "context_hint": "5問のアンケートに答えてお得にゲットしてください（CTA明示）",
+      "embedding": "embeddings.npy[104]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 104
+    },
+    {
+      "chunk_order": 106,
+      "block_type": "video",
+      "source_block_orders": [
+        216
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/5094580/e6fd5378-3453-4920-9b09-a534c6a23e44.mp4"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c106",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.4
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.1
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E4_cta_clarity"
+      ],
+      "total_intensity": 0.02,
+      "funnel_position": "cta",
+      "context_hint": "最終CTA動画",
+      "embedding": "embeddings.npy[105]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 105
+    },
+    {
+      "chunk_order": 107,
+      "block_type": "image",
+      "source_block_orders": [
+        217
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/uploads/article_photo/photo/6330081/f3fb9400-77d5-4ea3-8a7a-3403cd33afa4.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        ""
+      ],
+      "has_cta": true,
+      "cta_urls": [
+        "https://shop.rmh.co.jp/lp?u=me_proust2_v7-5_fb_d&sb_tracking=true"
+      ],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c107",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.4,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.85
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.312
+      },
+      "dominant_layer": "E",
+      "dominant_elements": [
+        "E4_cta_clarity",
+        "E2_offer_appeal"
+      ],
+      "total_intensity": 0.062,
+      "funnel_position": "cta",
+      "context_hint": "CTAボタン画像",
+      "embedding": "embeddings.npy[106]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 106
+    },
+    {
+      "chunk_order": 108,
+      "block_type": "text",
+      "source_block_orders": [
+        218,
+        219,
+        220,
+        221,
+        222,
+        223
+      ],
+      "content_text": "※当社プルーストクリームの実績/TPC「ワキガ対策用デオドラントクリームに関する調査\n（2025年4月）」に基づく2024年の店頭・通販売上実績No.1\n公式サイト：https://shop.rmh.co.jp/\n会社情報\n特定商取引法\nプライバシーポリシー",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": true,
+      "cta_urls": [
+        "https://shop.rmh.co.jp/lp?u=me_proust2_v7-5_fb_d&sb_tracking=true"
+      ],
+      "chunk_id": "20260425_proust_cream2_fuyumotto__c108",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.4,
+        "B2_social_proof": 0.4,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.6
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.2,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.15
+      },
+      "dominant_layer": "B",
+      "dominant_elements": [
+        "E4_cta_clarity",
+        "B1_authority",
+        "B2_social_proof"
+      ],
+      "total_intensity": 0.07,
+      "funnel_position": "cta",
+      "context_hint": "売上No.1注釈・公式サイトURL・会社情報・特商法・プライバシーポリシー（フッター）",
+      "embedding": "embeddings.npy[107]",
+      "embedding_model": "gemini-embedding-2-preview",
+      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_dim": 3072,
+      "embedding_index": 107
+    }
+  ],
+  "embedding_model": "gemini-embedding-2-preview",
+  "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+  "embedding_file": "embeddings.npy",
+  "embedding_index_file": "embedding_index.jsonl"
+}

@@ -1,0 +1,69 @@
+{
+  "article_id": "20260425_proust_cream2_fuyumotto",
+  "source_url": "https://sb-proust2-fb.discover-news.tokyo/ab/fb_ta_16",
+  "squad_beyond_article_id": "XLpmfoVZN--wfx_fZNWA",
+  "squad_beyond_ab_test_uid": "fb_ta_16",
+  "squad_beyond_ab_test_title": "【1219】Meta⑯（冬もっと）",
+  "article_title": "冬ワキガあるある言います！〜冬のワキガ対策特集〜",
+  "brand_name": "Proust（プルースト）",
+  "product_name": "プルーストクリーム2.0",
+  "company": "株式会社ヨミテ",
+  "product_category": "薬用ワキガ外用剤・医薬部外品",
+  "product_type": "定期コース（初回980円・縛りなし）",
+  "target_persona": "30-50代・ワキガ悩み・冬季に油断しがち層・市販品で解決しきれない層",
+  "hook_angle": "冬季ワキガ訴求（冬は汗をかかないからケアを怠りがちで実は危険）× 季節カテゴリ訴求",
+  "concept_type": "季節フック型 × 動画連打ビジュアル重視 × 後半CTA集中",
+  "fetched_at": "2026-04-25T01:00:00+09:00",
+  "fetched_by": "SquadBeyond MCP getArticleHtml",
+  "total_blocks_raw": 223,
+  "total_chunks": 108,
+  "cta_count_unique_url": 1,
+  "cta_orders_in_raw": [217, 220],
+  "cta_destination_url": "https://shop.rmh.co.jp/lp?u=me_proust2_v7-5_fb_d&sb_tracking=true",
+  "key_offer": {
+    "list_price_jpy": 11810,
+    "discount_rate": null,
+    "first_price_jpy": 980,
+    "bundle_items": [],
+    "risk_reversal": ["回数縛りなし", "コンビニ後払いOK"],
+    "offer_gate": "アンケートゲートなしの直接CTA"
+  },
+  "key_ingredients": [
+    "塩化ベンザルコニウム",
+    "イソプロピルメチルフェノール IPMP"
+  ],
+  "key_authority_signals": [
+    "医薬部外品",
+    "ワキガ治療医共同開発",
+    "98.1%の使用満足度（自社調査）"
+  ],
+  "performance": {
+    "mCVR": 0.20,
+    "landing_CVR": 17.6,
+    "CTR": 1.13,
+    "test_period": "2025-12-19 〜 2025-12-28（10日）",
+    "total_pv": 1504,
+    "total_clicks": 17,
+    "total_cv": 3,
+    "ad_status_at_collection": "finished",
+    "note": "実測値（Squad Beyond getBranchOperationReports, 2026-04-25取得）。CTR 1.13% は王者 v-02 (5.07%) の約1/4。mCVR 0.20% は王者 0.76% の約1/4。完敗ライン。"
+  },
+  "comparison_target": {
+    "winner_article_id": "20260424_proust_cream2_wakiga",
+    "winner_ab_test_uid": "fb_ta_210_2",
+    "winner_mCVR": 0.76,
+    "loser_to_winner_mCVR_ratio": 0.26
+  },
+  "quality_flags": {
+    "images_resolved": true,
+    "images_resolved_note": "data-src経由で実URL取得済（lazy.png placeholder問題は解決）",
+    "videos_present": true,
+    "videos_count": 29,
+    "videos_note": "動画29本は王者(0本)と比較して異常に多い。視覚過多が敗因仮説の一つ",
+    "anonymization_needed": false,
+    "anonymization_note": "ユーザー声カードは仮名・イニシャルレベル",
+    "title_tag_missing": true,
+    "title_tag_note": "HTMLに<title>タグなし。冒頭コピーから暫定生成"
+  },
+  "notes": "敗者LP。冬季季節フック × 動画連打 × 後半CTA集中の構造。共感層が弱く、感情ロックが効いていない。fb_ta_16 は ad_status=finished で2025-12-28に終了。CKO v4.0 の kiji-diagnosis-crew 初回診断対象（王者 vs 敗者比較）。"
+}
