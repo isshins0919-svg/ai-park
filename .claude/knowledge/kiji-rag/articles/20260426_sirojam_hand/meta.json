@@ -1,0 +1,58 @@
+{
+  "article_id": "20260426_sirojam_hand",
+  "source_url": "https://sb-hand.myown-page.com/ab/sirojam_yda001",
+  "squad_beyond_article_uid": "KpsHcKTN-vgYnuopww",
+  "squad_beyond_ab_test_uid": "sirojam_yda001",
+  "article_title": "Siro jam - 手のシワ改善ハンドセラム",
+  "brand_name": "Siro jam（シロジャム）",
+  "product_name": "Siro jam（シロジャム）ハンドセラム",
+  "company": "株式会社クロコス",
+  "product_category": "医薬部外品・ハンドセラム（シワ改善・美白・手荒れ防止）",
+  "product_type": "定期コース（初回クーポン割引・縛りなし・1回目解約可）",
+  "target_persona": "40〜70代女性・手のシワ・シミ・乾燥悩み・ハンドクリームで解決できなかった層・ネイルを楽しみたい・若い印象を与えたい層",
+  "hook_angle": "「数十年ハンドクリームで頑張っても無駄だった → 日本初のシワ改善有効成分ナイアシンアミド」問題再定義型フック",
+  "concept_type": "問題再定義×日本初権威×アンケートゲートCTA型",
+  "fetched_at": "2026-04-26T00:39:36+09:00",
+  "fetched_by": "WebFetch",
+  "total_blocks_raw": 161,
+  "cta_count_unique_url": 1,
+  "cta_orders_in_raw": [146, 147, 152, 155],
+  "cta_destination_url": "https://hand-webshop.com/lp?u=sj_nn_nn_kra_cb_1&sb_tracking=true",
+  "key_offer": {
+    "list_price_jpy": 1980,
+    "first_price_jpy": null,
+    "coupon_type": "アンケート完了後に数量限定クーポン配布（先着500名・1日更新）",
+    "bundle_items": [],
+    "risk_reversal": ["永久返金保証", "1回目解約可", "コンビニ後払いOK", "送料無料"],
+    "offer_gate": "3問アンケートゲート → クーポン発行 → CTA（アンケート継続型）"
+  },
+  "key_ingredients": [
+    "ナイアシンアミド（シワ改善・美白）",
+    "グリチルリチン酸2K（肌荒れ防止）",
+    "生コラーゲン（角質層まで浸透）"
+  ],
+  "key_authority_signals": [
+    "日本初・シワ改善+美白+手荒れ防止を認められたハンドセラム（TPCマーケティング調べ2020）",
+    "地上波TV放送・NHK出演プロ絶賛",
+    "楽天1位取得",
+    "ハンドモデル歴20年のベテラン・全国パーツモデルNo.1×3獲得",
+    "医薬部外品"
+  ],
+  "performance": {
+    "mCVR": null,
+    "landing_CVR": null,
+    "CTR": null,
+    "test_period": null,
+    "total_pv": null,
+    "note": "ユーザー情報: day100件規模で伸びている記事。実測値は未取得。"
+  },
+  "quality_flags": {
+    "images_resolved": false,
+    "images_resolved_note": "lazy.png placeholder未解決。WebFetch経由のため実画像URL取得不可。",
+    "videos_present": false,
+    "videos_count": 0,
+    "anonymization_needed": true,
+    "anonymization_note": "口コミに MAI・マミ・りっちゃん・ミカ・さーちゃん等のイニシャル/ニックネームあり。出力時は顧客A/B等に置換。"
+  },
+  "notes": "ユーザーから「めちゃくちゃ良い記事・day100件で伸びてる」と推薦。アンケートゲート型CTAの好事例として登録。「ハンドクリームでは改善不可→ナイアシンアミドで解決」の問題再定義フックが特徴的。チャンク数が少なく（推定40前後）コンパクト設計が王者型仮説。"
+}

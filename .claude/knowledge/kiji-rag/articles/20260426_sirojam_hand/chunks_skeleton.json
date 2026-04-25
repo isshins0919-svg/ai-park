@@ -1,0 +1,5487 @@
+{
+  "article_id": "20260426_sirojam_hand",
+  "schema_version": "1.0",
+  "chunks": [
+    {
+      "chunk_order": 1,
+      "block_type": "text",
+      "source_block_orders": [
+        1
+      ],
+      "content_text": "PR：株式会社クロコス",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c001",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 2,
+      "block_type": "image",
+      "source_block_orders": [
+        2
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c002",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 3,
+      "block_type": "text",
+      "source_block_orders": [
+        3,
+        4
+      ],
+      "content_text": "日本で初めてシワ改善、美白、手荒れを防ぐ効果が認められたハンドセラム\n数十年、手の乾燥対策をやり続けた結果…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c003",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 4,
+      "block_type": "image",
+      "source_block_orders": [
+        5
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "イメージ"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c004",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 5,
+      "block_type": "text",
+      "source_block_orders": [
+        6,
+        7
+      ],
+      "content_text": "え、何が原因ですか！？\n実は、当たり前にやってる習慣に落とし穴が・・・",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c005",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 6,
+      "block_type": "image",
+      "source_block_orders": [
+        8
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "イメージ"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c006",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 7,
+      "block_type": "text",
+      "source_block_orders": [
+        9,
+        10,
+        11
+      ],
+      "content_text": "手が完全におばあちゃん\nみなさん知っての通り、「年齢が出るのは仕方ない」「改善は難しい」と諦められてきました。\n衝撃の対処法を知らないだけ!?",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c007",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 8,
+      "block_type": "image",
+      "source_block_orders": [
+        12
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c008",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 9,
+      "block_type": "text",
+      "source_block_orders": [
+        13
+      ],
+      "content_text": "80代ってこんなイメージですが…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c009",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 10,
+      "block_type": "image",
+      "source_block_orders": [
+        14
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c010",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 11,
+      "block_type": "text",
+      "source_block_orders": [
+        15,
+        16,
+        17
+      ],
+      "content_text": "誰が見ても\"美の手\"！？\nイメージ 撮影当時の年齢\n地上波TVで放送されたで、シニア世代が続々と綺麗に！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c011",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 12,
+      "block_type": "image",
+      "source_block_orders": [
+        18
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c012",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 13,
+      "block_type": "text",
+      "source_block_orders": [
+        19
+      ],
+      "content_text": "この全く新しい方法、試さないのは絶対に損です！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c013",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 14,
+      "block_type": "image",
+      "source_block_orders": [
+        20
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c014",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 15,
+      "block_type": "text",
+      "source_block_orders": [
+        21
+      ],
+      "content_text": "シニア世代の手を見て、私でも…？と試したのがきっかけでした！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c015",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 16,
+      "block_type": "image",
+      "source_block_orders": [
+        22
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c016",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 17,
+      "block_type": "text",
+      "source_block_orders": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "content_text": "・・・え！？全然違う\n実はこれ、日本で初めて認められた\n【寝る前10秒】シワに効く手に塗る\"生\"コラーゲン\nとも呼ばれている方法！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c017",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 18,
+      "block_type": "image",
+      "source_block_orders": [
+        27
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c018",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 19,
+      "block_type": "text",
+      "source_block_orders": [
+        28
+      ],
+      "content_text": "同じ年齢でも手のケアをしているか、ではまるで全然違う！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c019",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 20,
+      "block_type": "image",
+      "source_block_orders": [
+        29
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c020",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 21,
+      "block_type": "text",
+      "source_block_orders": [
+        30
+      ],
+      "content_text": "「寝る前たった10秒」本当に簡単にできる方法なので、ぜひ実践してみてください！損はさせません！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c021",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 22,
+      "block_type": "image",
+      "source_block_orders": [
+        31
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c022",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 23,
+      "block_type": "text",
+      "source_block_orders": [
+        32
+      ],
+      "content_text": "MAI（女性）レビュー5.3 今あるシワの改善ができると聞いて、「本当か？」と首に塗ったんですが…すごい！顔のケアばかり気にしていましたが、首と手で印象変わる！2023.9",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c023",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 24,
+      "block_type": "image",
+      "source_block_orders": [
+        33
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c024",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 25,
+      "block_type": "text",
+      "source_block_orders": [
+        34,
+        35,
+        36
+      ],
+      "content_text": "マミ（女性）レビュー5.8 ただのハンドクリームでしょ？って思ってる方、本当にもったいないです。念願のネイルサロンにも行きました。「ネイルがしたくなる手ですね」って言われました。本当に嬉しいです。2023.9\nPOINT 原因はコレでした。普通のハンドクリームでは絶対にできないこと。\n手といえば、1日に何度もハンドクリームを塗り直すというのが鉄板ですよね？就寝時には手袋をつけて…っと！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c025",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 26,
+      "block_type": "image",
+      "source_block_orders": [
+        37
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "イメージ"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c026",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 27,
+      "block_type": "text",
+      "source_block_orders": [
+        38,
+        39
+      ],
+      "content_text": "でも、残念ながらそれでは「改善」は不可能でした\n何度塗り直しても",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c027",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 28,
+      "block_type": "image",
+      "source_block_orders": [
+        40
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c028",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 29,
+      "block_type": "text",
+      "source_block_orders": [
+        41,
+        42
+      ],
+      "content_text": "つまりこれでは手のシワは絶対に変わりません。\nさらに40代を超えると、「ふっくらの源」であり対策をしなければ年々、血管が目立つ手に必然的になってしまうんです…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c029",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 30,
+      "block_type": "image",
+      "source_block_orders": [
+        43
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c030",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 31,
+      "block_type": "text",
+      "source_block_orders": [
+        44,
+        45
+      ],
+      "content_text": "POINT ハンドモデルも納得「楽天で爆売れの秘密」\n「もう、打つ手はないの？」と迷ってしまうと思いますが効果が正式に認められている特別な成分であれば…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c031",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 32,
+      "block_type": "image",
+      "source_block_orders": [
+        46
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c032",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 33,
+      "block_type": "text",
+      "source_block_orders": [
+        47,
+        48,
+        49
+      ],
+      "content_text": "有効成分ナイアシンアミド\n「シワの発生源に届く」\n有効成分ナイアシンアミド",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c033",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 34,
+      "block_type": "image",
+      "source_block_orders": [
+        50
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c034",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 35,
+      "block_type": "text",
+      "source_block_orders": [
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "content_text": "イメージ 有効成分ナイアシンアミド\nだから…今ある深いシワに効く\nさらに、シミまでケアできるから\nもう文句なし\n有効成分ナイアシンアミド（メラニンの生成を抑え、シミ・そばかすを防ぐ） イメージ",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c035",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 36,
+      "block_type": "image",
+      "source_block_orders": [
+        56
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c036",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 37,
+      "block_type": "text",
+      "source_block_orders": [
+        57,
+        58,
+        59,
+        60,
+        61
+      ],
+      "content_text": "使い始めた時は、本当に驚いた\nこれが噂されていた秘策の正体！\nSiro jam（シロジャム）って言うんですが、40代以上の人は絶対に試すべきです…！！！\n寝る前たった10秒の習慣でOK 【日本初】✅深いシワに効く ✅シミケア ✅手荒れ防止 ハンドモデルも語る唯一の秘策\n日本で初めてシワ改善、美白、手荒れを防ぐ効果が認められたハンドセラム(TPCマーケティング(株)調べ 2020年11月30日時点) 有効成分ナイアシンアミド（シワを改善する） 有効成分ナイアシンアミド（メラニンの生成を抑え、シミ・そばかすを防ぐ） 有効成分 グリチルリチン酸2K（肌荒れ・あれ症・あせも・しもやけ・ひび・あかぎれ・にきびを防ぐ。 かみそりまけを防ぐ。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c037",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 38,
+      "block_type": "image",
+      "source_block_orders": [
+        62
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c038",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 39,
+      "block_type": "text",
+      "source_block_orders": [
+        63,
+        64
+      ],
+      "content_text": "今までサボってきた人でも始める価値がある！\nこんな手憧れますよね？",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c039",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 40,
+      "block_type": "image",
+      "source_block_orders": [
+        65,
+        66
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        ""
+      ],
+      "content_alt": [
+        "撮影当時の年齢",
+        "撮影当時の年齢"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c040",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 41,
+      "block_type": "text",
+      "source_block_orders": [
+        67,
+        68
+      ],
+      "content_text": "この実力が話題を呼び、、、TVでも特集が組まれ、今、飛ぶように売れているんです！\nその証拠に楽天でも爆売れ大ヒット！1位を取得するほど…！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c041",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 42,
+      "block_type": "image",
+      "source_block_orders": [
+        69
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c042",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 43,
+      "block_type": "text",
+      "source_block_orders": [
+        70
+      ],
+      "content_text": "これはまさに…ホンモノ！？",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c043",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 44,
+      "block_type": "image",
+      "source_block_orders": [
+        71
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c044",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 45,
+      "block_type": "text",
+      "source_block_orders": [
+        72
+      ],
+      "content_text": "POINT 塗る\"生\"コラーゲン指先や爪まで…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c045",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 46,
+      "block_type": "image",
+      "source_block_orders": [
+        73
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c046",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 47,
+      "block_type": "text",
+      "source_block_orders": [
+        74
+      ],
+      "content_text": "私がイチオシする絶大な理由があって、ハンドモデル歴20年のベテランもNHKに出演したプロも絶賛！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c047",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 48,
+      "block_type": "image",
+      "source_block_orders": [
+        75
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "イメージ"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c048",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 49,
+      "block_type": "text",
+      "source_block_orders": [
+        76
+      ],
+      "content_text": "さらには全国のパーツモデルがおすすめするなどNo.1を3つも獲得！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c049",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 50,
+      "block_type": "image",
+      "source_block_orders": [
+        77
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c050",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 51,
+      "block_type": "text",
+      "source_block_orders": [
+        78,
+        79,
+        80
+      ],
+      "content_text": "調査機関：ECキャスティング調べ　調査期間：2020/11/19〜2020/12/18（n=67）個目美容モニターやインフルエンサーを含む\n数字としても結果を出していたんです…！嘘偽りない、リアルな数字に驚き。\nというのも納得で…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c051",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 52,
+      "block_type": "image",
+      "source_block_orders": [
+        81
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "イメージ"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c052",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 53,
+      "block_type": "text",
+      "source_block_orders": [
+        82
+      ],
+      "content_text": "このSiro jam、コラーゲンを直接塗れるって騒がれているんです…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c053",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 54,
+      "block_type": "image",
+      "source_block_orders": [
+        83
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c054",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 55,
+      "block_type": "text",
+      "source_block_orders": [
+        84,
+        85,
+        86
+      ],
+      "content_text": "シワや毛穴にグングン入ってコラーゲンが水分に…！\n角質層まで\n角質層まで イメージ",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c055",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 56,
+      "block_type": "image",
+      "source_block_orders": [
+        87
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c056",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 57,
+      "block_type": "text",
+      "source_block_orders": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94
+      ],
+      "content_text": "年々、爪や指先にもおばさん感出てたけど…気になる爪や指周りもケア…シニア世代でも驚くほどなんです！\n角質層まで\nつまりシワの発生源に効きつつ、コラーゲンを直接塗ることもできる、と！\nそんな方法聞いたことなかったので、衝撃でした\n有効成分ナイアシンアミド\nPOINT 塗り心地はどう？主婦が本音で暴露！\nというわけでSiro jam",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c057",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 58,
+      "block_type": "image",
+      "source_block_orders": [
+        95
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c058",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 59,
+      "block_type": "text",
+      "source_block_orders": [
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "content_text": "使用感は…ぷるんっとしたジェルがじんわり溶けていくような新感覚…\nシワにもしっかり塗り込みやすい！\n角質層まで\nみなさん、冗談抜きで必ず1回使って判断してほしいです。\n口コミでも感動の声が止まらない…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c059",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 60,
+      "block_type": "image",
+      "source_block_orders": [
+        101
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c060",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 61,
+      "block_type": "text",
+      "source_block_orders": [
+        102
+      ],
+      "content_text": "りっちゃん（女性）レビュー5.5 感想は、ただただ良い。感動です。ハンドクリーム長年使ってきましたが、これ1本の方が手間とお金が浮くことに気づきました！綺麗になるような感覚の使用感！2023.9",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c061",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 62,
+      "block_type": "image",
+      "source_block_orders": [
+        103
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c062",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 63,
+      "block_type": "text",
+      "source_block_orders": [
+        104
+      ],
+      "content_text": "ミカ（女性）レビュー5.4 あれこれ試してきましたが、やっと「これ！」と言えるものに出会いました。わざわざ探してでもこれを買いたい、価値ある商品だと思います。2023.9",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c063",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 64,
+      "block_type": "image",
+      "source_block_orders": [
+        105
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c064",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 65,
+      "block_type": "text",
+      "source_block_orders": [
+        106
+      ],
+      "content_text": "さーちゃん（女性）レビュー5.3 週7で主婦業。ずっとハンドクリームで迷走していましたが、まさかこんな簡単な方法があったなんて…。毎日塗ります。2023.11",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c065",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 66,
+      "block_type": "image",
+      "source_block_orders": [
+        107
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c066",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 67,
+      "block_type": "text",
+      "source_block_orders": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113
+      ],
+      "content_text": "シミをケアし、今あるシワに効く新しい方法として取り上げられたSiro jamですが…\n有効成分ナイアシンアミド（メラニンの生成を抑え、シミ・そばかすを防ぐ） 有効成分ナイアシンアミド（シワを改善する）\n価格、気になりますよね？\nこのページを読んだ方、ラッキーです！\n通常は値下げされても税込1,980円なんですが…\n見逃し厳禁",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c067",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 68,
+      "block_type": "image",
+      "source_block_orders": [
+        114
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c068",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 69,
+      "block_type": "text",
+      "source_block_orders": [
+        115,
+        116
+      ],
+      "content_text": "10秒で完了する3問のアンケートに答えた後、【数量限定】特別クーポンをお渡しできます\n先着500名。1日更新",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c069",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 70,
+      "block_type": "image",
+      "source_block_orders": [
+        117
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c070",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 71,
+      "block_type": "text",
+      "source_block_orders": [
+        118,
+        119
+      ],
+      "content_text": "もちろん送料も無料\n安いからと言って「⚪︎回は買い続けてください」という契約は一切なし",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c071",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 72,
+      "block_type": "image",
+      "source_block_orders": [
+        120
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c072",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 73,
+      "block_type": "text",
+      "source_block_orders": [
+        121,
+        122
+      ],
+      "content_text": "1回目でも解約休止ができるので、このクーポン使わない理由がない！\nそもそも永久返金保証がついているので、万が一があっても大丈夫",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c073",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 74,
+      "block_type": "image",
+      "source_block_orders": [
+        123
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c074",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 75,
+      "block_type": "text",
+      "source_block_orders": [
+        124
+      ],
+      "content_text": "それでも不安だなという方は、商品を受け取って、後払いをおすすめします！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c075",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 76,
+      "block_type": "image",
+      "source_block_orders": [
+        125,
+        126
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image",
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c076",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 77,
+      "block_type": "text",
+      "source_block_orders": [
+        127,
+        128
+      ],
+      "content_text": "迷うくらいなら、この機会を有効活用した方がいい！\n同じ商品でも知らないだけで損します…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c077",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 78,
+      "block_type": "image",
+      "source_block_orders": [
+        129
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c078",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 79,
+      "block_type": "text",
+      "source_block_orders": [
+        130
+      ],
+      "content_text": "裏技級のクーポンがあるうちに最安値を利用して爆売れジェル体感してみてください！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c079",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 80,
+      "block_type": "image",
+      "source_block_orders": [
+        131,
+        132
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image",
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c080",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 81,
+      "block_type": "text",
+      "source_block_orders": [
+        133
+      ],
+      "content_text": "気になる手の悩みをお答えください。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": true,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c081",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 82,
+      "block_type": "image",
+      "source_block_orders": [
+        134
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c082",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 83,
+      "block_type": "text",
+      "source_block_orders": [
+        135,
+        136
+      ],
+      "content_text": "深いシワ 点在するシミ 血管のボコボコ 乾燥 手荒れ・アカギレ\nメラニンの生成を抑え、シミ・そばかすを防ぐ",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c083",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 84,
+      "block_type": "image",
+      "source_block_orders": [
+        137
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c084",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 85,
+      "block_type": "text",
+      "source_block_orders": [
+        138
+      ],
+      "content_text": "Siro jamの特徴です。気に入った点をお答えください。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": true,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c085",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 86,
+      "block_type": "image",
+      "source_block_orders": [
+        139
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "イメージ 撮影当時の年齢"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c086",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 87,
+      "block_type": "text",
+      "source_block_orders": [
+        140,
+        141
+      ],
+      "content_text": "シニア世代の手でも使える プロも認めた、TVで放送された方法 今ある深いシワが改善できる シミケアが可能 コラーゲンを直接塗れる\n有効成分ナイアシンアミド（シワを改善する） 有効成分ナイアシンアミド（メラニンの生成を抑え、シミ・そばかすを防ぐ）",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c087",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 88,
+      "block_type": "image",
+      "source_block_orders": [
+        142
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c088",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 89,
+      "block_type": "text",
+      "source_block_orders": [
+        143
+      ],
+      "content_text": "実際に使用してどうなりたいですか？",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": true,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c089",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 90,
+      "block_type": "image",
+      "source_block_orders": [
+        144
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c090",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 91,
+      "block_type": "text",
+      "source_block_orders": [
+        145,
+        146
+      ],
+      "content_text": "人から見られても恥ずかしくない手 時短で効率よくケア 指先まで1本で完結 ネイルを楽しむ 若い印象を与えたい\nアンケートに答えた方、今すぐクーポン使えます！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": true,
+      "cta_urls": [
+        "https://hand-webshop.com/lp?u=sj_nn_nn_kra_cb_1&sb_tracking=true"
+      ],
+      "chunk_id": "20260426_sirojam_hand__c091",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 92,
+      "block_type": "image",
+      "source_block_orders": [
+        147
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": true,
+      "cta_urls": [
+        "https://hand-webshop.com/lp?u=sj_nn_nn_kra_cb_1&sb_tracking=true"
+      ],
+      "chunk_id": "20260426_sirojam_hand__c092",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 93,
+      "block_type": "text",
+      "source_block_orders": [
+        148
+      ],
+      "content_text": "SNS効果もあり、日本だけではなく…",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c093",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 94,
+      "block_type": "image",
+      "source_block_orders": [
+        149,
+        150
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png",
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        "",
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image",
+        "lazy-load image"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c094",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 95,
+      "block_type": "text",
+      "source_block_orders": [
+        151
+      ],
+      "content_text": "クーポン使える時に買っちゃう方が損しない…！ランチ1回分なので、気になる方は先にゲットしちゃってください！",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c095",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 96,
+      "block_type": "image",
+      "source_block_orders": [
+        152
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": true,
+      "cta_urls": [
+        "https://hand-webshop.com/lp?u=sj_nn_nn_kra_cb_1&sb_tracking=true"
+      ],
+      "chunk_id": "20260426_sirojam_hand__c096",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 97,
+      "block_type": "text",
+      "source_block_orders": [
+        153,
+        154
+      ],
+      "content_text": "2回目以降もずっとお得な約36％OFFの1本4,307円（税込・送料込み）です 定期便は初回送料無料。 2回目以降は2ヶ月毎に2本お届けいたします。 定期便は1回のご購入でも停止・休止が可能です。 2回目以降キャンセルをご希望される場合は次回発送10日前までにご連絡ください。\nAmazon・楽天にはない限定価格でのご注文となります。",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c097",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 98,
+      "block_type": "image",
+      "source_block_orders": [
+        155
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://file.mysquadbeyond.com/lazy.png"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "lazy-load image"
+      ],
+      "has_cta": true,
+      "cta_urls": [
+        "https://hand-webshop.com/lp?u=sj_nn_nn_kra_cb_1&sb_tracking=true"
+      ],
+      "chunk_id": "20260426_sirojam_hand__c098",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 99,
+      "block_type": "text",
+      "source_block_orders": [
+        156,
+        157,
+        158,
+        159,
+        160
+      ],
+      "content_text": "数量限定：先着500名。1日更新。\n運営会社：株式会社クロコス 住所：福岡県 福岡県福岡市南区 大橋2-1-1-5F お問い合わせ：0120-827-122\n会社概要\n特定商取引法に基づく表示\nプライバシーポリシー",
+      "content_media_urls": [],
+      "content_captions": [],
+      "content_alt": [],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c099",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    },
+    {
+      "chunk_order": 100,
+      "block_type": "image",
+      "source_block_orders": [
+        161
+      ],
+      "content_text": "",
+      "content_media_urls": [
+        "https://id.mysquadbeyond.com/pixel.gif?visitor_id=fc429eed-183f-4428-a966-10110a5588f3&visitor_global_id=fc8967b1-d6da-4ac9-93fe-148a7e6554e1&article_uid=KpsHcKTN-vgYnuopww&request_url=https://sb-hand.myown-page.com/ab/sirojam_yda001&redirect_sbs_id=null"
+      ],
+      "content_captions": [
+        ""
+      ],
+      "content_alt": [
+        "tracking pixel"
+      ],
+      "has_cta": false,
+      "cta_urls": [],
+      "chunk_id": "20260426_sirojam_hand__c100",
+      "elements": {
+        "A1_pain_empathy": 0.0,
+        "A2_fear_appeal": 0.0,
+        "A3_regret_avoidance": 0.0,
+        "A4_anxiety_trigger": 0.0,
+        "B1_authority": 0.0,
+        "B2_social_proof": 0.0,
+        "B3_data_evidence": 0.0,
+        "B4_transparency": 0.0,
+        "C1_causality": 0.0,
+        "C2_unique_mechanism": 0.0,
+        "C3_differentiation": 0.0,
+        "C4_objection_handling": 0.0,
+        "D1_transformation": 0.0,
+        "D2_aspiration": 0.0,
+        "D3_scenario": 0.0,
+        "D4_scarcity": 0.0,
+        "E1_urgency": 0.0,
+        "E2_offer_appeal": 0.0,
+        "E3_risk_reversal": 0.0,
+        "E4_cta_clarity": 0.0
+      },
+      "layer_scores": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0
+      },
+      "dominant_layer": null,
+      "dominant_elements": [],
+      "total_intensity": 0.0,
+      "funnel_position": null,
+      "context_hint": "",
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_generated_at": null
+    }
+  ]
+}
