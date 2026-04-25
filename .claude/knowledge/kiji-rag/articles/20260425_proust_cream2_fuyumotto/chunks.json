@@ -73,7 +73,7 @@
       "context_hint": "PR表記：株式会社ヨミテ",
       "embedding": "embeddings.npy[0]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 0
     },
@@ -132,9 +132,10 @@
       "context_hint": "FVヒーロー画像",
       "embedding": "embeddings.npy[1]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 1
+      "embedding_index": 1,
+      "image_description": "1. 画像の主題は、冬のワキガの原因と解決策に関する情報提示。 2. 視覚的な訴求要素として、赤色や黒色の太字テキスト、黄色のハイライト、〇〇の伏せ字、楽天ランキング1位の実績表示が使用されている。 3. 写り込んでいるキーワードは「冬のワキガ」「クサくなります」「原因は〇〇の異常増殖と判明」「楽天ランキング1位を獲得した」「冬ワキガの救世主でワキガ臭がピタッ!?」「プルーストクリーム」「デイリーランキングNo.1」。"
     },
     {
       "chunk_order": 3,
@@ -191,7 +192,7 @@
       "context_hint": "オープニング動画",
       "embedding": "embeddings.npy[2]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 2
     },
@@ -247,7 +248,7 @@
       "context_hint": "ワキガあるある言います！冬ってこんなことよくありませんか？（共感の入口）",
       "embedding": "embeddings.npy[3]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 3
     },
@@ -308,9 +309,10 @@
       "context_hint": "あるあるイメージ画像",
       "embedding": "embeddings.npy[4]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 4
+      "embedding_index": 4,
+      "image_description": "1. **画像の主題**: ワキガに関するユーザーの悩みや困り事を箇条書きで提示したテキストコンテンツ。 2. **視覚的な訴求要素**: 緑色のチェックマーク絵文字と赤色文字を用いて、問題提起を箇条書きで強調している。 3. **テキストキーワード**: インナー、ワキガ臭、残る、アウター、封印、暖房、汗をかく、怖い。"
     },
     {
       "chunk_order": 6,
@@ -368,7 +370,7 @@
       "context_hint": "冬のワキガ放置告白：私自身、汗をかかない冬はケアを怠りがち（自己投影型共感）",
       "embedding": "embeddings.npy[5]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 5
     },
@@ -427,7 +429,7 @@
       "context_hint": "怠りシーン動画",
       "embedding": "embeddings.npy[6]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 6
     },
@@ -480,7 +482,7 @@
       "context_hint": "そんなとき、こんなニュースが…（転換フック）",
       "embedding": "embeddings.npy[7]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 7
     },
@@ -539,9 +541,10 @@
       "context_hint": "ニュース風画像",
       "embedding": "embeddings.npy[8]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 8
+      "embedding_index": 8,
+      "image_description": "1. 白衣を着用した中年の男性医師が正面を向いている。 2. 画面上部に「JAPAN MORNING」のロゴ、左下には「LIVE」のテロップが表示されている。 3. 下部のテロップキーワードは「冬だからワキガケアしないのはかなり危険です。」"
     },
     {
       "chunk_order": 10,
@@ -598,7 +601,7 @@
       "context_hint": "放置すると原因でニオイが強くなる：恐怖喚起",
       "embedding": "embeddings.npy[9]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 9
     },
@@ -657,7 +660,7 @@
       "context_hint": "悪化イメージ動画",
       "embedding": "embeddings.npy[10]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 10
     },
@@ -714,7 +717,7 @@
       "context_hint": "服にニオイがこびりつく・何回も洗濯：日常痛みシーン",
       "embedding": "embeddings.npy[11]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 11
     },
@@ -773,7 +776,7 @@
       "context_hint": "洗濯シーン動画",
       "embedding": "embeddings.npy[12]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 12
     },
@@ -839,9 +842,10 @@
       "context_hint": "アウターなんてもってのほか画像（caption強）",
       "embedding": "embeddings.npy[13]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 13
+      "embedding_index": 13,
+      "image_description": "顔部分が空白の人物の抽象的な線画アイコン。記事の装飾や、特定人物の代理としてのビジュアル要素。テキストの写り込みなし。 / 1. 画像の主題：汚れたアウターを持つ、嫌悪感を露わにした女性。 2. 視覚的な訴求要素：脇部分に黄ばんだ汚れと臭気を表す視覚効果が加えられたアウターと、それを見て顔をしかめる女性が写っている。問題提起のビジュアル装飾。 3. テキストキーワード：アウターなんて、毎日洗えないし"
     },
     {
       "chunk_order": 15,
@@ -899,7 +903,7 @@
       "context_hint": "冬でもワキガ悩むめんどくさい→朗報：冬のワキガ特攻ケアが話題に（独自フック・新認識）",
       "embedding": "embeddings.npy[14]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 14
     },
@@ -958,9 +962,10 @@
       "context_hint": "話題のケア商品画像",
       "embedding": "embeddings.npy[15]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 15
+      "embedding_index": 15,
+      "image_description": "1. **画像の主題**: 美白クリーム「PROUST CREAM 2.0」のチューブと箱が写っており、商品の販売実績を訴求している。 2. **視覚的な訴求要素**: 商品写真に加え、「160万本突破」という実績表示と「注文殺到」という人気を強調するテロップが配置されている。 3. **テキストが写り込んでいれば、そのキーワードのみ抜粋**: すでに、160万本突破、※1、PROUST CREAM 2.0、注文殺到。"
     },
     {
       "chunk_order": 17,
@@ -1016,7 +1021,7 @@
       "context_hint": "プルーストシリーズ累計出荷本数注釈・ワキガに諦めず対処・この方法があれば",
       "embedding": "embeddings.npy[16]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 16
     },
@@ -1075,9 +1080,10 @@
       "context_hint": "メソッドイメージ画像",
       "embedding": "embeddings.npy[17]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 17
+      "embedding_index": 17,
+      "image_description": "1. この画像は、3つのメリットを箇条書きで提示する日本語のテキスト要素である。 2. 各項目行の左端に緑色のチェックマークの絵文字が配置されている。 3. インナー、ワキガ臭、アウター、安心、暖房、汗かきづらい。"
     },
     {
       "chunk_order": 19,
@@ -1133,7 +1139,7 @@
       "context_hint": "服も選ばずに好きなものを着れる：理想未来",
       "embedding": "embeddings.npy[18]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 18
     },
@@ -1194,7 +1200,7 @@
       "context_hint": "好きな服シーン動画",
       "embedding": "embeddings.npy[19]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 19
     },
@@ -1253,7 +1259,7 @@
       "context_hint": "ワキガ手術医と共同開発した冬ワキガの救世主：医療権威",
       "embedding": "embeddings.npy[20]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 20
     },
@@ -1314,9 +1320,10 @@
       "context_hint": "手術医イメージ画像",
       "embedding": "embeddings.npy[21]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 21
+      "embedding_index": 21,
+      "image_description": "1. **画像の主題（誰／何が写っているか）** 白衣を着用しマイクを持つ男性医師。 2. **視覚的な訴求要素（ビフォーアフター比較／実績バッジ／商品写真／グラフ／ビジュアル装飾 等）** 専門家としての医師の肖像。背景にはクリニックのロゴと名称。メディア出演歴を示す実績テキストボックス。 3. **テキストが写り込んでいれば、そのキーワードのみ抜粋** ワキガ手術医, 共同開発, 銀座マイアミ美容外科, 丸山院長, TBSテレビ, 雑誌anan, Hanako, からだにいいこと, LEON, 他多数出演, MYAMI CLINIC, PRO UST."
     },
     {
       "chunk_order": 23,
@@ -1373,7 +1380,7 @@
       "context_hint": "一足先に試した人たち、ニオイ気にせず好きな服を楽しむ続出（社会的証明＋理想）",
       "embedding": "embeddings.npy[22]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 22
     },
@@ -1444,9 +1451,10 @@
       "context_hint": "Sさん50代・Wさん50代モニター口コミ画像3連（サラサラ気に入り・男女年齢関係なく使える）",
       "embedding": "embeddings.npy[23]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 23
+      "embedding_index": 23,
+      "image_description": "1. 笑顔で片腕を上げ、脇を見せている女性。 2. 清潔で滑らかな脇の肌が強調されている。 3. テキストの写り込みはない。 / 1. 屋外で撮影された中年の女性の顔のアップ。 2. 特定の視覚的訴求要素は無く、自然な表情の人物を写している。 3. 右上の建物に「リー」というテキストの一部が写り込んでいる。 / 1. 30代から40代と見られる日本人女性が、片腕を上げて脇を見せるポーズ。 2. 脱毛ケア後の脇の状態、またはケア中の脇の状態を提示。女性の満足感を示す表情とポーズ。 3. なし。"
     },
     {
       "chunk_order": 25,
@@ -1505,7 +1513,7 @@
       "context_hint": "冬の方が臭い原因は◯◯の増殖！？（POINT見出し・問いかけで因果導入）",
       "embedding": "embeddings.npy[24]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 24
     },
@@ -1564,9 +1572,10 @@
       "context_hint": "冬ワキガ増殖イメージ画像",
       "embedding": "embeddings.npy[25]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 25
+      "embedding_index": 25,
+      "image_description": "黒い背景に赤い文字で日本語のテキストが書かれた画像。テキストキーワードは「ワキガ菌の」「大繁殖」。"
     },
     {
       "chunk_order": 27,
@@ -1623,7 +1632,7 @@
       "context_hint": "汗を菌が分解→ニオイ発生：基本メカニズム説明",
       "embedding": "embeddings.npy[26]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 26
     },
@@ -1682,7 +1691,7 @@
       "context_hint": "菌分解動画",
       "embedding": "embeddings.npy[27]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 27
     },
@@ -1738,7 +1747,7 @@
       "context_hint": "冬は重ね着で温度・湿度上昇：環境因果",
       "embedding": "embeddings.npy[28]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 28
     },
@@ -1797,9 +1806,10 @@
       "context_hint": "重ね着画像",
       "embedding": "embeddings.npy[29]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 29
+      "embedding_index": 29,
+      "image_description": "冬および夏の条件下における脳の温度と湿度の変化を示す折れ線グラフが二つ。上段が温度変化、下段が湿度変化を表し、それぞれ「冬の条件」と「夏の条件」が比較されている。グラフ中央には「夏よりも冬のほうが 脳の温度・湿度が高い！」という強調テキストが配置されている。 キーワード：＜冬および夏の条件での脳の温湿度の変化＞, 温度変化, 踏み台昇降, 冬の条件, 夏の条件, スタート, 分, 湿度変化。"
     },
     {
       "chunk_order": 31,
@@ -1855,7 +1865,7 @@
       "context_hint": "出典付き：温度湿度はワキガ菌の繁殖場所→たちまち増える（外部出典でデータ補強）",
       "embedding": "embeddings.npy[30]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 30
     },
@@ -1914,7 +1924,7 @@
       "context_hint": "増殖イメージ動画",
       "embedding": "embeddings.npy[31]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 31
     },
@@ -1971,7 +1981,7 @@
       "context_hint": "さらに分泌される汗も夏より濃縮：因果引き延ばし",
       "embedding": "embeddings.npy[32]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 32
     },
@@ -2030,9 +2040,10 @@
       "context_hint": "濃縮汗イメージ画像",
       "embedding": "embeddings.npy[33]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 33
+      "embedding_index": 33,
+      "image_description": "1. **画像の主題**: 夏と冬、異なる季節に汗をかく男性。 2. **視覚的な訴求要素**: 夏の汗と冬の汗の状態を左右で比較するイラスト。太陽が輝く夏の情景と雪が舞う冬の情景が描かれており、中央の矢印は冬の汗の方がニオイが濃いことを示唆している。 3. **テキストキーワード**: 夏の汗、冬の汗、ニオイが濃い、水分多く、サラサラ、ニオイ薄め、ミネラル・乳酸汗、ミネラル・乳酸が濃縮、ニオイ濃い。"
     },
     {
       "chunk_order": 35,
@@ -2089,7 +2100,7 @@
       "context_hint": "出典付き：冬の方がクサい・冬は『ワキガ菌の繁忙期』（独自季節フック確立）",
       "embedding": "embeddings.npy[34]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 34
     },
@@ -2148,7 +2159,7 @@
       "context_hint": "繁忙期イメージ動画",
       "embedding": "embeddings.npy[35]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 35
     },
@@ -2210,7 +2221,7 @@
       "context_hint": "だから冬のワキガケアはワキガ菌の徹底殺菌が大事→ワキガ先進ブランドが冬の特攻ケアを開発（解決策提示）",
       "embedding": "embeddings.npy[36]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 36
     },
@@ -2269,9 +2280,10 @@
       "context_hint": "冬の特攻ケア画像",
       "embedding": "embeddings.npy[37]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 37
+      "embedding_index": 37,
+      "image_description": "1. ワキガケア商品のシルエットが中央に配置されている。 2. 煌びやかな金色の背景、商品のシルエット、そして「日本正式承認」の実績バッジが視覚的な訴求要素となっている。 3. NEWS, 衝撃, ワキガケア, リニューアル, 日本正式承認, 史上最強, ワキガ特攻ケア, 50歳から"
     },
     {
       "chunk_order": 39,
@@ -2326,7 +2338,7 @@
       "context_hint": "プルーストブランド史上・ワキガに諦めず対処・史上最強と呼び声（権威ハイライト）",
       "embedding": "embeddings.npy[38]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 38
     },
@@ -2385,9 +2397,10 @@
       "context_hint": "史上最強画像",
       "embedding": "embeddings.npy[39]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 39
+      "embedding_index": 39,
+      "image_description": "1. **画像の主題:** プルーストクリーム2.0の製品（チューブと箱）。 2. **視覚的な訴求要素:** 製品のクローズアップ写真と、清潔感のある抽象的な背景。 3. **テキストキーワード:** PROUST CREAM 2.0, 2025年, 秋, 新発売, プルーストクリーム 2, frees you to focus on your life, Double antibacterial ingredients, Ultra-adhesive formula, Paraben-free, Co-developed with an aesthetics surgeon, 30g, 1.05oz, MADE IN JAPAN, Taking odor care to the next level."
     },
     {
       "chunk_order": 41,
@@ -2443,7 +2456,7 @@
       "context_hint": "プルーストクリーム2のすごさ＝殺菌力（商品紹介）",
       "embedding": "embeddings.npy[40]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 40
     },
@@ -2502,7 +2515,7 @@
       "context_hint": "殺菌力動画",
       "embedding": "embeddings.npy[41]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 41
     },
@@ -2561,7 +2574,7 @@
       "context_hint": "史上最高数の殺菌成分配合・ワキガ菌徹底殺菌（独自データ）",
       "embedding": "embeddings.npy[42]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 42
     },
@@ -2620,7 +2633,7 @@
       "context_hint": "殺菌成分動画",
       "embedding": "embeddings.npy[43]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 43
     },
@@ -2678,7 +2691,7 @@
       "context_hint": "ワキガの効果効能が認められた医薬部外品（公的権威）",
       "embedding": "embeddings.npy[44]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 44
     },
@@ -2739,9 +2752,10 @@
       "context_hint": "医薬部外品マーク画像",
       "embedding": "embeddings.npy[45]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 45
+      "embedding_index": 45,
+      "image_description": "1. **画像の主題**: 医薬部外品と化粧品の違いを説明するビジュアルであり、特定の医薬部外品「プルーストクリーム2.0」を紹介している。 2. **視覚的な訴求要素**: 一般的な化粧品容器3点と、「プルーストクリーム2.0」のチューブ型容器の商品写真が左右で比較されており、異なる背景色でカテゴリを区別している。 3. **テキストキーワード**: 「医薬部外品とは」、「化粧品」、「体を清潔にしたり、見た目を美しくしたりする目的で皮膚等に塗布するもの。」、「プルーストクリーム2.0」、「〈医薬部外品〉」、「PROUST CREAM 2.0」、「ワキガ・制汗に効果効能が認められた有効成分が一定濃度で配合されているもの。」"
     },
     {
       "chunk_order": 47,
@@ -2796,7 +2810,7 @@
       "context_hint": "国内製造（製造透明性・信頼）",
       "embedding": "embeddings.npy[46]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 46
     },
@@ -2855,7 +2869,7 @@
       "context_hint": "国内製造動画",
       "embedding": "embeddings.npy[47]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 47
     },
@@ -2913,7 +2927,7 @@
       "context_hint": "スティンギングテスト実施済み（皮膚刺激安全性証明）",
       "embedding": "embeddings.npy[48]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 48
     },
@@ -2978,9 +2992,10 @@
       "context_hint": "信頼して使えるね画像（caption強）",
       "embedding": "embeddings.npy[49]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 49
+      "embedding_index": 49,
+      "image_description": "医療用手袋を着用した手が、小さな白いガーゼが貼られた人の腕に触れている場面。これは何らかのテスト実施状況を示すビジュアル要素。キーワードとして「スティングングテスト実施済み」「安全性にも配慮」が写り込んでいる。 / 顔部分が空白の人物の抽象的な線画アイコン。記事の装飾や、特定人物の代理としてのビジュアル要素。テキストの写り込みなし。"
     },
     {
       "chunk_order": 51,
@@ -3036,7 +3051,7 @@
       "context_hint": "シリーズ商品買い替えてよかった満足度98.1%（社会的証明＋数値）",
       "embedding": "embeddings.npy[50]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 50
     },
@@ -3097,7 +3112,7 @@
       "context_hint": "満足度動画",
       "embedding": "embeddings.npy[51]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 51
     },
@@ -3154,7 +3169,7 @@
       "context_hint": "冬はこれで乗り切ってるとの声続出（社会的証明・季節フック裏打ち）",
       "embedding": "embeddings.npy[52]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 52
     },
@@ -3225,9 +3240,10 @@
       "context_hint": "Y.Mさん40歳・S.Hさん37歳口コミ画像3連（朝塗って夜まで快適/意識しないで過ごせる解放感）",
       "embedding": "embeddings.npy[53]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 53
+      "embedding_index": 53,
+      "image_description": "母親が赤ちゃんを抱っこしている人物写真。女性と赤ちゃんの顔は絵文字で隠されている。テキストとして「ワキガ歴 20年」が記載されている。 / 顔を隠した女性が片腕を上げたポーズで写っている。このポーズは、脇に関するテキストと連携した視覚的訴求要素として機能している。画像下部には「ワキガ歴 17年」というテキストが記載されている。 / 1. 若い女性が、背景の緑の葉と赤い花の茂みをバックに立っている。 2. 「ワキガ歴7年」というテキストと合わせて、広告の主題に関わる人物を示すイメージビジュアルとして機能している。 3. ワキガ歴 7年"
     },
     {
       "chunk_order": 55,
@@ -3282,7 +3298,7 @@
       "context_hint": "塗った瞬間からワキ完全放置！（変化訴求）",
       "embedding": "embeddings.npy[54]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 54
     },
@@ -3341,7 +3357,7 @@
       "context_hint": "完全放置動画",
       "embedding": "embeddings.npy[55]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 55
     },
@@ -3401,7 +3417,7 @@
       "context_hint": "冬服楽しめる・実際に使ってみた・クリームタイプ伸びやすい（実体験レビュー）",
       "embedding": "embeddings.npy[56]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 56
     },
@@ -3460,7 +3476,7 @@
       "context_hint": "テクスチャー動画",
       "embedding": "embeddings.npy[57]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 57
     },
@@ -3517,7 +3533,7 @@
       "context_hint": "ワキに塗った瞬間サラッサラ（ビフォーアフター）",
       "embedding": "embeddings.npy[58]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 58
     },
@@ -3578,7 +3594,7 @@
       "context_hint": "サラサラ動画",
       "embedding": "embeddings.npy[59]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 59
     },
@@ -3631,7 +3647,7 @@
       "context_hint": "画像はイメージ注釈",
       "embedding": "embeddings.npy[60]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 60
     },
@@ -3690,9 +3706,10 @@
       "context_hint": "イメージ画像",
       "embedding": "embeddings.npy[61]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 61
+      "embedding_index": 61,
+      "image_description": "1. 昼と夜、それぞれの時間帯における街の風景が描かれている。 2. 1日の時間の経過（昼から夜への移り変わり）を表現した比較ビジュアル。 3. 1日過ごしてみると"
     },
     {
       "chunk_order": 63,
@@ -3747,7 +3764,7 @@
       "context_hint": "驚き！ニオイが全然気にならない！（驚き型変化）",
       "embedding": "embeddings.npy[62]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 62
     },
@@ -3806,7 +3823,7 @@
       "context_hint": "ニオイ消える動画",
       "embedding": "embeddings.npy[63]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 63
     },
@@ -3869,9 +3886,10 @@
       "context_hint": "好きな服を自由に着れるようになった画像caption（理想到達）",
       "embedding": "embeddings.npy[64]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 64
+      "embedding_index": 64,
+      "image_description": "顔部分が空白の人物の抽象的な線画アイコン。記事の装飾や、特定人物の代理としてのビジュアル要素。テキストの写り込みなし。"
     },
     {
       "chunk_order": 66,
@@ -3930,7 +3948,7 @@
       "context_hint": "服自由動画",
       "embedding": "embeddings.npy[65]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 65
     },
@@ -3992,7 +4010,7 @@
       "context_hint": "売上No.1ブランド開発・なぜ冬ワキガに効くのか？再因果問いかけ",
       "embedding": "embeddings.npy[66]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 66
     },
@@ -4051,7 +4069,7 @@
       "context_hint": "問いかけ動画",
       "embedding": "embeddings.npy[67]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 67
     },
@@ -4109,7 +4127,7 @@
       "context_hint": "ワキガ菌はバイオフィルムに守られ殺菌が難しい（医学因果・障壁定義）",
       "embedding": "embeddings.npy[68]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 68
     },
@@ -4168,7 +4186,7 @@
       "context_hint": "バイオフィルム動画",
       "embedding": "embeddings.npy[69]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 69
     },
@@ -4228,7 +4246,7 @@
       "context_hint": "BEAUTY論文出典・しかしプルーストクリーム2は殺菌成分2倍配合（学術エビデンス＋差別化）",
       "embedding": "embeddings.npy[70]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 70
     },
@@ -4287,9 +4305,10 @@
       "context_hint": "成分2倍画像",
       "embedding": "embeddings.npy[71]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 71
+      "embedding_index": 71,
+      "image_description": "1. **画像の主題**: イソプロメチルフェノールと塩化ベンザルコニウム液を含む3つの薬品ボトルが写っている。 2. **視覚的な訴求要素**: 赤枠で囲まれた2つのボトル（イソプロメチルフェノール、塩化ベンザルコニウム液）が強調され、それらの組み合わせを示す「×」マークと大きな赤いテキストで装飾されている。 3. **キーワード**: イソプロメチルフェノール、塩化ベンザルコニウム液、クロルヒドロキシアルミニウム、イソプロピルメチルフェノール、塩化ベンザルコニウム、×"
     },
     {
       "chunk_order": 73,
@@ -4346,7 +4365,7 @@
       "context_hint": "当社製品比・冬のワキガ菌をズバッと殺菌（差別化）",
       "embedding": "embeddings.npy[72]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 72
     },
@@ -4405,7 +4424,7 @@
       "context_hint": "殺菌動画",
       "embedding": "embeddings.npy[73]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 73
     },
@@ -4464,7 +4483,7 @@
       "context_hint": "防臭効果作用機序・肌密着特化『高密着クリーム』採用（独自処方）",
       "embedding": "embeddings.npy[74]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 74
     },
@@ -4523,7 +4542,7 @@
       "context_hint": "高密着動画",
       "embedding": "embeddings.npy[75]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 75
     },
@@ -4580,7 +4599,7 @@
       "context_hint": "ワキガ原因に直接塗り込むことに成功（メカニズム結論）",
       "embedding": "embeddings.npy[76]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 76
     },
@@ -4639,7 +4658,7 @@
       "context_hint": "塗り込み動画",
       "embedding": "embeddings.npy[77]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 77
     },
@@ -4697,7 +4716,7 @@
       "context_hint": "制汗成分で滝汗を抑える→汗も出にくい（追加メカニズム）",
       "embedding": "embeddings.npy[78]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 78
     },
@@ -4756,7 +4775,7 @@
       "context_hint": "制汗動画",
       "embedding": "embeddings.npy[79]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 79
     },
@@ -4813,7 +4832,7 @@
       "context_hint": "プルースト式殺菌メソッド・冬のワキガにも効く（独自カテゴリ命名）",
       "embedding": "embeddings.npy[80]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 80
     },
@@ -4872,7 +4891,7 @@
       "context_hint": "メソッド動画",
       "embedding": "embeddings.npy[81]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 81
     },
@@ -4928,7 +4947,7 @@
       "context_hint": "プルースト2なら冬のワキガケアにぴったり（締め）",
       "embedding": "embeddings.npy[82]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 82
     },
@@ -4991,9 +5010,10 @@
       "context_hint": "POINT本日半額以下！特別アンケート定期初回87%OFF（オファー画像caption）",
       "embedding": "embeddings.npy[83]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 83
+      "embedding_index": 83,
+      "image_description": "何も写っていない空白の画像。視覚的な訴求要素、およびテキストの写り込みはない。"
     },
     {
       "chunk_order": 85,
@@ -5048,7 +5068,7 @@
       "context_hint": "人生を変えてくれた＼プルーストクリーム2／（変化訴求＋商品再露出）",
       "embedding": "embeddings.npy[84]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 84
     },
@@ -5107,9 +5127,10 @@
       "context_hint": "商品画像",
       "embedding": "embeddings.npy[85]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 85
+      "embedding_index": 85,
+      "image_description": "1. 女性の右半身と、PROUST CREAMのチューブと箱が写っています。 2. PROUST CREAMのチューブと箱の2つの商品が提示されています。女性の手にはネイルアートが施されています。 3. PROUST, CREAM, 2.0, proust cream hand, you to focus on your life, 30g"
     },
     {
       "chunk_order": 87,
@@ -5170,7 +5191,7 @@
       "context_hint": "売上No.1開発ブランド・通常価格7,960円ちょっとお高め（価格アンカー＋権威）",
       "embedding": "embeddings.npy[86]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 86
     },
@@ -5229,9 +5250,10 @@
       "context_hint": "通常価格画像",
       "embedding": "embeddings.npy[87]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 87
+      "embedding_index": 87,
+      "image_description": "1. ワキガ対策クリーム「PROUST CREAM 2.0」の商品パッケージ、クリームのテクスチャ、および医師の人物。ECサイト上の商品情報画面も含まれる。 2. 視覚的な訴求要素として、商品写真、医師の人物写真、診察実績バッジ、「殺菌成分2倍配合」の強調表示、および価格表示がある。 3. キーワードは、殺菌成分2倍配合、制汗力UP、ワキガに効く！、医師共同開発、¥7,960。"
     },
     {
       "chunk_order": 89,
@@ -5289,7 +5311,7 @@
       "context_hint": "ですが今！リニューアル記念特別アンケートキャンペーン実施中（オファー導入）",
       "embedding": "embeddings.npy[88]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 88
     },
@@ -5350,9 +5372,10 @@
       "context_hint": "キャンペーン画像",
       "embedding": "embeddings.npy[89]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 89
+      "embedding_index": 89,
+      "image_description": "1. **画像の主題**: スーツ姿の男性と女性が、炎のようなオーラをまとって気合を入れている様子。 2. **視覚的な訴求要素**: 強い決意や覚悟を表現するビジュアル装飾。 3. **テキストが写り込んでいれば、そのキーワードのみ抜粋**: 多くの人に使ってほしいから、赤字覚悟"
     },
     {
       "chunk_order": 91,
@@ -5406,7 +5429,7 @@
       "context_hint": "たった5問のアンケートに回答すると（行動誘導）",
       "embedding": "embeddings.npy[90]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 90
     },
@@ -5465,7 +5488,7 @@
       "context_hint": "アンケート動画",
       "embedding": "embeddings.npy[91]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 91
     },
@@ -5526,7 +5549,7 @@
       "context_hint": "特別価格87%OFF・定期初回限定980円（税込）でGET（中核オファー）",
       "embedding": "embeddings.npy[92]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 92
     },
@@ -5587,9 +5610,10 @@
       "context_hint": "980円画像",
       "embedding": "embeddings.npy[93]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 93
+      "embedding_index": 93,
+      "image_description": "1. **画像の主題**: PROUST CREAM 2.0という医薬部外品のチューブと箱のパッケージが写っている。 2. **視覚的な訴求要素**: 商品パッケージの写真がメインで、通常価格7,960円から定期初回限定特別価格980円への割引が強調されている。87%OFFの割引率もバッジで提示され、「送料無料」「定期縛りなし」といった購入メリットも明記されている。 3. **テキストキーワード**: 医薬部外品、PROUST CREAM 2.0、プルーストクリーム2.0、PROUST CREAM frees you to focus on your life.、Double antibacterial ingredients、Ultra-adhesive formula、Co-developed with an omimissis surgeon、30g / 1.05oz、MADE IN JAPAN、お得な定期コース、定期初回限定特別価格、87% OFF、通常価格、7,960円(税込)、980円(税込)、送料無料、定期縛りなし、スーパーやドラッグストアではご購入いただけません!、※1世帯1回限りのご購入となります。2回目以降は1本あたり約24%OFFの5,980円(税込)で2本ずつお届けします。合計金額は11,960円(税込)です。"
     },
     {
       "chunk_order": 95,
@@ -5647,7 +5671,7 @@
       "context_hint": "11月限定¥10,000ギフトカード抽選キャンペーン（追加特典・限定）",
       "embedding": "embeddings.npy[94]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 94
     },
@@ -5706,7 +5730,7 @@
       "context_hint": "ギフトカード動画",
       "embedding": "embeddings.npy[95]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 95
     },
@@ -5763,7 +5787,7 @@
       "context_hint": "回数縛りもない（リスクリバーサル・反論処理）",
       "embedding": "embeddings.npy[96]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 96
     },
@@ -5824,9 +5848,10 @@
       "context_hint": "縛りなし画像",
       "embedding": "embeddings.npy[97]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 97
+      "embedding_index": 97,
+      "image_description": "1. スマートフォンで通話している笑顔の若い日本人女性。 2. 笑顔の人物が電話を使用する様子で、サービス利用の手軽さや満足感を間接的に示唆。 3. 「定期縛りなし！」「お得に始めれる！」「送料無料！」「無駄なお金もかからない🎵」"
     },
     {
       "chunk_order": 99,
@@ -5881,7 +5906,7 @@
       "context_hint": "気軽に始められて嬉しい（行動ハードル下げ）",
       "embedding": "embeddings.npy[98]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 98
     },
@@ -5940,7 +5965,7 @@
       "context_hint": "気軽動画",
       "embedding": "embeddings.npy[99]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 99
     },
@@ -5997,7 +6022,7 @@
       "context_hint": "安心のコンビニ後払いでもOK（決済リスク打ち消し）",
       "embedding": "embeddings.npy[100]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 100
     },
@@ -6056,9 +6081,10 @@
       "context_hint": "後払い画像",
       "embedding": "embeddings.npy[101]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 101
+      "embedding_index": 101,
+      "image_description": "1. **画像の主題**: オンラインショッピングにおけるコンビニ後払い決済の利用プロセスを説明するイラスト。荷物を受け取る女性と配達員、段ボール箱、クレジットカード、コンビニエンスストアが写っている。 2. **視覚的な訴求要素**: 商品受け取りからコンビニ支払いまでの一連の流れをイラストと矢印で表現している。「クレジットカード」の画像と並べて「不要!!」と大きく表示することで、クレジットカードが不要である点を強調している。 3. **テキストキーワード**: コンビニ後払いなら, クレジットカード, 不要!!, 商品受取, 中身チェック, コンビニ支払い"
     },
     {
       "chunk_order": 103,
@@ -6114,7 +6140,7 @@
       "context_hint": "届いたその日からお悩み解放・1日中気にならない（即効ベネフィット）",
       "embedding": "embeddings.npy[102]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 102
     },
@@ -6173,7 +6199,7 @@
       "context_hint": "解放動画",
       "embedding": "embeddings.npy[103]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 103
     },
@@ -6232,7 +6258,7 @@
       "context_hint": "5問のアンケートに答えてお得にゲットしてください（CTA明示）",
       "embedding": "embeddings.npy[104]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 104
     },
@@ -6293,7 +6319,7 @@
       "context_hint": "最終CTA動画",
       "embedding": "embeddings.npy[105]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 105
     },
@@ -6357,9 +6383,10 @@
       "context_hint": "CTAボタン画像",
       "embedding": "embeddings.npy[106]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
-      "embedding_index": 106
+      "embedding_index": 106,
+      "image_description": "1. **画像の主題（誰／何が写っているか）** 「PROUST CREAM 2.0」という商品のパッケージと、初回購入に関するキャンペーン情報。 2. **視覚的な訴求要素** 商品パッケージ、売上No.1の実績バッジ、初回購入限定の割引価格と送料無料の提示、申し込みを促す行動喚起ボタン状のビジュアル装飾。 3. **テキストが写り込んでいれば、そのキーワードのみ抜粋** 売上日本No.1、ワキガクリーム、待望の、リニューアル、PROUST CREAM 2.0、PROUST CREAM helps you to focus on your life.、本日、定期初回、980円、税込、送料、無料、ここをクリックして簡単30秒で申し込む。"
     },
     {
       "chunk_order": 108,
@@ -6421,13 +6448,13 @@
       "context_hint": "売上No.1注釈・公式サイトURL・会社情報・特商法・プライバシーポリシー（フッター）",
       "embedding": "embeddings.npy[107]",
       "embedding_model": "gemini-embedding-2-preview",
-      "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+      "embedding_generated_at": "2026-04-26T01:38:05+09:00",
       "embedding_dim": 3072,
       "embedding_index": 107
     }
   ],
   "embedding_model": "gemini-embedding-2-preview",
-  "embedding_generated_at": "2026-04-25T10:14:18+09:00",
+  "embedding_generated_at": "2026-04-26T01:38:05+09:00",
   "embedding_file": "embeddings.npy",
   "embedding_index_file": "embedding_index.jsonl"
 }

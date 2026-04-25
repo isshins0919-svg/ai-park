@@ -50,6 +50,10 @@ def build_embed_text(chunk):
     alts = [a for a in chunk.get("content_alt", []) if a]
     if alts:
         parts.append(f"[alt] {' / '.join(alts)}")
+    # Image description (Gemini Vision で生成、describe_images.py の出力)
+    img_desc = chunk.get("image_description")
+    if img_desc:
+        parts.append(f"[画像説明] {img_desc}")
     dom = chunk.get("dominant_elements", [])
     if dom:
         parts.append(f"[主要訴求要素] {', '.join(dom)}")

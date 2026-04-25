@@ -191,6 +191,25 @@ python3 .claude/knowledge/kiji-rag/tools/apply_scores.py \
 
 出力の `dominant_layer distribution` と `layer avg` を報告。
 
+### Step 8.5: 画像説明文化（Gemini Vision で全imageチャンクをdescribe）
+
+**ver.1.2 で追加**。前回までは画像チャンクが「ほぼ空文字」でembeddingされて検索でヒットしない問題があった。Gemini Vision で各画像を1〜3文に説明 → embed_text に含める。
+
+```bash
+python3 .claude/knowledge/kiji-rag/tools/describe_images.py \
+  .claude/knowledge/kiji-rag/articles/<article_id>/chunks.json
+```
+
+挙動:
+- blocks_raw.json から実画像URL取得（lazy.png / pixel.gif は自動スキップ）
+- 各imageチャンクに `image_description` フィールド注入
+- `image_descriptions.json` キャッシュ生成（再実行高速化）
+
+**前提: 実画像URLが解決済みであること**
+- 自社案件 → `getArticleHtml` MCP経由なら自動解決済み ✅
+- 他社案件（クロコス/他ドメイン等）→ WebFetchだと lazy.png のまま → Chrome MCP / 手動スクショで補完が必要
+  - 詳細: memory `feedback_kiji_image_acquisition.md`（記事LP画像取得3経路ルール）
+
 ### Step 9: embedding-2 ベクトル化
 
 ```bash
@@ -199,6 +218,8 @@ python3 .claude/knowledge/kiji-rag/tools/embed_chunks.py \
 ```
 
 `embeddings.npy` (N×3072) と `embedding_index.jsonl` が生成される。所要時間 = チャンク数 × 0.35秒程度。
+
+**ver.1.2 改訂**: `image_description` フィールドが入っている場合は自動で `[画像説明]` プレフィックス付きで embed text に含まれる。画像系クエリ（「ビフォーアフター手の画像」「医師がテレビ出演しているシーン」等）でヒットするようになる。
 
 ### Step 10: INDEX.md 更新
 

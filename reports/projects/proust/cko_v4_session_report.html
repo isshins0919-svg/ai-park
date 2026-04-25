@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CKO v4.0 セッションレポート — proust cream2 初回診断</title>
+<style>
+  :root {
+    --navy: #0f172a;
+    --navy2: #1e293b;
+    --navy3: #334155;
+    --blue: #3b82f6;
+    --cyan: #06b6d4;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f97316;
+    --yellow: #eab308;
+    --purple: #a855f7;
+    --pink: #ec4899;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #334155;
+    --card: #1e293b;
+    --card2: #0f172a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -10%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(59,130,246,0.08) 0%, transparent 70%);
+  }
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #f1f5f9, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  header .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .meta-pill {
+    background: var(--navy3);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .meta-pill span { color: var(--text); font-weight: 600; }
+
+  /* NAV */
+  nav {
+    background: var(--navy2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 60px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  nav a {
+    display: block;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  nav a:hover, nav a.active { color: var(--blue); border-color: var(--blue); }
+
+  /* MAIN */
+  main { max-width: 1200px; margin: 0 auto; padding: 48px 60px; }
+
+  section { margin-bottom: 64px; }
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .icon { font-size: 24px; }
+  .section-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+    padding-left: 36px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+  /* METRIC CARD */
+  .metric-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .metric-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .metric-value { font-size: 32px; font-weight: 800; margin-bottom: 4px; }
+  .metric-sub { font-size: 12px; color: var(--muted); }
+  .metric-card.winner { border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.05); }
+  .metric-card.loser { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.05); }
+  .metric-card.info { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.05); }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .badge-green { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .badge-red { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .badge-blue { background: rgba(59,130,246,0.15); color: #3b82f6; }
+  .badge-yellow { background: rgba(234,179,8,0.15); color: #eab308; }
+  .badge-purple { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .badge-orange { background: rgba(249,115,22,0.15); color: #f97316; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #3b82f6, #06b6d4, #a855f7);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid var(--navy);
+  }
+  .timeline-item.done::before { background: var(--green); }
+  .timeline-item.warn::before { background: var(--orange); }
+  .timeline-date {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .timeline-body {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* GLOSSARY */
+  .glossary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .glossary-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .glossary-term {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cyan);
+    margin-bottom: 6px;
+    font-family: monospace;
+  }
+  .glossary-def {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .glossary-example {
+    margin-top: 8px;
+    background: var(--navy);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 11px;
+    color: #64748b;
+    font-family: monospace;
+  }
+
+  /* FUNNEL CHART */
+  .funnel-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .funnel-table th {
+    background: var(--navy3);
+    padding: 8px 12px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .funnel-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(51,65,85,0.5);
+    text-align: center;
+  }
+  .funnel-table .funnel-name {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .score-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 80px;
+  }
+  .bar-bg {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  /* BAR CHART */
+  .bar-chart { display: flex; flex-direction: column; gap: 12px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; }
+  .bar-label { font-size: 12px; color: var(--muted); width: 100px; text-align: right; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 24px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; position: relative; }
+  .bar-segment { height: 100%; display: inline-block; transition: width 0.6s; }
+  .bar-val { font-size: 12px; font-weight: 700; width: 50px; flex-shrink: 0; }
+
+  /* DIAGNOSIS CARD */
+  .diagnosis-headline {
+    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(249,115,22,0.05));
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .diagnosis-headline .label {
+    font-size: 11px;
+    color: #ef4444;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .diagnosis-headline p {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  /* FLOW */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding: 20px 0;
+  }
+  .flow-step {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    position: relative;
+  }
+  .flow-step-inner {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .flow-step-inner.active {
+    border-color: var(--blue);
+    background: rgba(59,130,246,0.08);
+  }
+  .flow-icon { font-size: 24px; }
+  .flow-name { font-size: 11px; font-weight: 700; color: var(--text); }
+  .flow-sub { font-size: 10px; color: var(--muted); }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--border);
+    font-size: 18px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  /* SWING MODE */
+  .swing-card {
+    background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(59,130,246,0.08));
+    border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .swing-mode-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #a855f7, #3b82f6);
+    color: white;
+    font-size: 20px;
+    font-weight: 900;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 48px;
+    margin-bottom: 12px;
+  }
+
+  /* CODE BLOCK */
+  pre {
+    background: #0a0f1a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 11px;
+    overflow-x: auto;
+    color: #e2e8f0;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    line-height: 1.7;
+  }
+  code { font-family: 'Fira Code', 'Consolas', monospace; }
+
+  /* FINDING */
+  .finding {
+    background: var(--card);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .finding.warn { border-color: var(--orange); }
+  .finding.danger { border-color: var(--red); }
+  .finding.success { border-color: var(--green); }
+  .finding strong { font-size: 13px; display: block; margin-bottom: 4px; }
+  .finding p { font-size: 12px; color: var(--muted); }
+
+  /* DIFF TABLE */
+  .diff-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+  .diff-table th {
+    background: rgba(255,255,255,0.05);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .diff-table td { padding: 8px 12px; border-top: 1px solid rgba(51,65,85,0.4); }
+  .diff-positive { color: #22c55e; font-weight: 700; }
+  .diff-negative { color: #ef4444; font-weight: 700; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy2);
+    border-top: 1px solid var(--border);
+    padding: 32px 60px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  /* SCROLL ANIMATION */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    main { padding: 24px 20px; }
+    header { padding: 24px 20px; }
+    nav { padding: 0 20px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .glossary-grid { grid-template-columns: 1fr; }
+  }
+
+  /* SPECIAL: chunk ratio viz */
+  .chunk-viz {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    height: 120px;
+    margin: 16px 0;
+  }
+  .chunk-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .chunk-bar-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100px;
+    position: relative;
+  }
+  .chunk-bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .chunk-label { font-size: 11px; color: var(--muted); text-align: center; }
+
+  /* STARS */
+  .confidence-stars { display: flex; gap: 4px; align-items: center; }
+  .star { font-size: 18px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-badge">SESSION REPORT · CKO v4.0</div>
+  <h1>🩺 プルーストクリーム2.0 記事LP初回診断</h1>
+  <p class="subtitle">kiji-diagnosis-crew v1.1 — 王者記事LP vs 敗者記事LP 逆説的発見レポート + 画像盲目問題解決</p>
+  <div class="header-meta">
+    <div class="meta-pill">実行日: <span>2026-04-25 → 2026-04-26 更新</span></div>
+    <div class="meta-pill">ブランド: <span>Proust + Siro jam</span></div>
+    <div class="meta-pill">RAG記事数: <span>4記事 / 355チャンク</span></div>
+    <div class="meta-pill">画像description: <span>27枚生成済</span></div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#overview" class="active">📋 概要</a>
+  <a href="#glossary">📖 用語解説</a>
+  <a href="#performance">📊 成果データ</a>
+  <a href="#pipeline">⚙️ パイプライン</a>
+  <a href="#diagnosis">🩺 診断結果</a>
+  <a href="#matrix">🗂️ Funnelマトリクス</a>
+  <a href="#prescription">💊 処方箋方針</a>
+  <a href="#image-pipeline">🖼️ 画像盲目問題</a>
+  <a href="#next">🚀 次のアクション</a>
+</nav>
+
+<main>
+
+<!-- ========== OVERVIEW ========== -->
+<section id="overview">
+  <div class="section-title"><span class="icon">📋</span>今回やったこと</div>
+  <p class="section-desc">CKO v4.0（記事LP改善自動化）の Phase 1「診断」を初めて実際に走らせた。</p>
+
+  <!-- 5-phase flow -->
+  <div class="card" style="margin-bottom:24px;">
+    <div class="card-title">CKO v4.0 — 5フェーズ全体像</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-step-inner active">
+          <div class="flow-icon">🩺</div>
+          <div class="flow-name">Phase 1<br>診断</div>
+          <div class="flow-sub" style="color:#22c55e;font-weight:700;">✅ 今回完了</div>
+        </div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="flow-step-inner">
+          <div class="flow-icon">💊</div>
+          <div class="flow-name">Phase 2<br>処方</div>
+          <div class="flow-sub">kiji-prescriber</div>
+        </div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="flow-step-inner">
+          <div class="flow-icon">✏️</div>
+          <div class="flow-name">Phase 3<br>制作</div>
+          <div class="flow-sub">kiji-rewriter</div>
+        </div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="flow-step-inner">
+          <div class="flow-icon">🚦</div>
+          <div class="flow-name">Phase 4<br>品質ゲート</div>
+          <div class="flow-sub">10審査員</div>
+        </div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="flow-step-inner">
+          <div class="flow-icon">🚀</div>
+          <div class="flow-name">Phase 5<br>配信・学習</div>
+          <div class="flow-sub">SquadBeyond</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="card">
+    <div class="card-title">セッション進行タイムライン</div>
+    <div class="timeline">
+      <div class="timeline-item done">
+        <div class="timeline-date">Step 1</div>
+        <div class="timeline-title">既存骨格の動作確認</div>
+        <div class="timeline-body">kiji-rag検索・SquadBeyond MCP接続・proust王者LP (55チャンク embedded済) を確認</div>
+      </div>
+      <div class="timeline-item warn">
+        <div class="timeline-date">Step 2 (修正あり)</div>
+        <div class="timeline-title">敗者LP候補の選定 ← データ先・議論後の鉄則発動</div>
+        <div class="timeline-body">最初: 感覚でMBhVPUvWEMQKswXQeFYwAを候補にして3人壁打ち → 実測したらmCVR差+0.08pt（有意差なし）で的外れ発覚。<br>→ 実測データを先に確認する鉄則をmemoryに刻んで方針転換。</div>
+      </div>
+      <div class="timeline-item done">
+        <div class="timeline-date">Step 3</div>
+        <div class="timeline-title">敗者LP確定: fb_ta_16「冬もっと」</div>
+        <div class="timeline-body">getBranchOperationReports で実績確認 → mCVR 0.20%（王者比-73%）の完敗を確認 → 「完敗ライン(<0.70%)」を大きく下回る</div>
+      </div>
+      <div class="timeline-item done">
+        <div class="timeline-date">Step 4</div>
+        <div class="timeline-title">敗者記事LP を kiji-rag に登録</div>
+        <div class="timeline-body">getArticleHtml → blocks_raw.json(223ブロック) → 108チャンク → 20要素スコアリング → embedding (3072次元ベクトル)</div>
+      </div>
+      <div class="timeline-item done">
+        <div class="timeline-date">Step 5</div>
+        <div class="timeline-title">初回診断実行 + 逆説的発見</div>
+        <div class="timeline-body">funnel × 20要素の差分計算 → 「敗者はスコア合計で王者を上回る情報過剰型」という逆説を発見 → kiji-diagnosis-crew を v1.1 に即改訂</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GLOSSARY ========== -->
+<section id="glossary">
+  <div class="section-title"><span class="icon">📖</span>用語解説</div>
+  <p class="section-desc">今回のセッションで登場した専門用語を全部わかりやすく解説。</p>
+
+  <div class="glossary-grid">
+    <div class="glossary-item">
+      <div class="glossary-term">mCVR（エムシーブイアール）</div>
+      <div class="glossary-def">
+        <strong>記事経由コンバージョン率</strong>。記事LPを見た人が最終的に買った割合。<br>
+        <code>mCVR = CV数 ÷ PV数 × 100</code><br><br>
+        CTRだけだと「クリックしたけど買わない」人を拾ってしまうのでmCVRを最重要指標にしている。
+      </div>
+      <div class="glossary-example">
+        王者: PV 1972 / CV 15件 → mCVR 0.76%<br>
+        敗者: PV 1504 / CV  3件 → mCVR 0.20%
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">funnel_position（ファネルポジション）</div>
+      <div class="glossary-def">
+        記事LPの中で「今どこを読んでいるか」を表す位置情報。購買心理の流れに沿って7段階に分類する。
+      </div>
+      <div class="glossary-example">
+        opening → empathy → concept → mechanism → proof → authority → cta
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">20要素スコアリング（A〜E層）</div>
+      <div class="glossary-def">
+        記事LPの各チャンクを「どの心理に働きかけているか」で20要素×0〜1点で評価する仕組み。<br><br>
+        • <strong>A層</strong>: 共感・恐怖・後悔・不安（痛みへの共鳴）<br>
+        • <strong>B層</strong>: 権威・社会証明・データ・透明性（信頼の構築）<br>
+        • <strong>C層</strong>: 因果・独自メカニズム・差別化・反論処理（論理の証明）<br>
+        • <strong>D層</strong>: 変化・憧れ・シナリオ・希少性（欲求の喚起）<br>
+        • <strong>E層</strong>: 緊急性・オファー・リスク逆転・CTA明確さ（行動の促進）
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">chunk（チャンク）</div>
+      <div class="glossary-def">
+        記事LPをAIが処理しやすい単位に分割したテキストの塊。画像・テキスト・動画をそれぞれ1チャンクとして扱う。<br><br>
+        チャンク数が多い = 記事が長い・情報量が多いことを意味する。
+      </div>
+      <div class="glossary-example">
+        王者:  55チャンク（text28 / image27 / video 0）<br>
+        敗者: 108チャンク（text161 / image33 / video29）
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">embedding（エンベディング）</div>
+      <div class="glossary-def">
+        テキストを数値のベクトル（3072個の数字の羅列）に変換すること。<br>
+        意味が似ているチャンク同士は数値的に近くなるため「意味検索」が可能になる。<br><br>
+        kiji-ragでは全チャンクをembeddingして「王者LPの勝ちパターンを意味で検索」できるようにしている。
+      </div>
+      <div class="glossary-example">
+        「ワキガの悩み」→ [0.023, -0.14, 0.87, ...] (3072次元)
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">swing_mode（スイングモード）</div>
+      <div class="glossary-def">
+        改善の2案（A案/B案）をどのくらいの変化幅で作るかの方針。<br><br>
+        • <strong>A = small</strong>: 両案とも小改修（局所的な修正）<br>
+        • <strong>B = medium</strong>: 両案とも中規模改修<br>
+        • <strong>C = 幅最大</strong>: A案=small / B案=large（幅広く試す）<br>
+        • <strong>B-modified ★今回</strong>: 両案とも「削る」方向のmedium改修（新発見から生まれたモード）
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">kiji-rag（記事ラグ）</div>
+      <div class="glossary-def">
+        記事LP専用のVector RAG（Retrieval-Augmented Generation）システム。<br>
+        過去の王者記事LPをembeddingで蓄積し、「今書こうとしているチャンクに似た勝ちパターン」を瞬時に参照できる。<br><br>
+        商品LP（EC-ForceのLP）とは完全に分離した別DBで管理。
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">D3_scenario（ディースリーシナリオ）</div>
+      <div class="glossary-def">
+        20要素のうちD層の3番目「シナリオ = 読者が自分を主人公として物語に投影できるか」を評価する指標。<br><br>
+        王者記事LPは冒頭で「行きつけの服屋で...」という具体的シナリオを入れてD3を1.2点獲得。<br>
+        敗者は0点 → 読者が物語の主人公になれないまま終わる。
+      </div>
+      <div class="glossary-example">
+        王者 opening D3_scenario: 1.2点<br>
+        敗者 opening D3_scenario: 0.0点 ← 最重要病因
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">SquadBeyond MCP</div>
+      <div class="glossary-def">
+        記事LPのABテスト配信プラットフォーム「SquadBeyond」をClaude Codeから直接操作できるツール。<br><br>
+        今回はlistAbTests / getBranchOperationReportsで実績データを取得し、配信中記事のmCVRを確認した。
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">情報過剰型敗者（逆説的発見）</div>
+      <div class="glossary-def">
+        「要素をたくさん入れれば勝てる」は間違い、という今回発見した逆説。<br><br>
+        敗者はB/C/D/E層スコア合計で王者を上回るのに負ける。原因は「情報の過剰・冗長化」による読者の疲弊。<br>
+        <strong>20要素ルーブリックの足し算最適化は逆効果</strong>というのがCKO v4.0の核心知見。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PERFORMANCE ========== -->
+<section id="performance">
+  <div class="section-title"><span class="icon">📊</span>成果データ比較</div>
+  <p class="section-desc">両記事LPの実測パフォーマンス。すべてSquadBeyond MCPで取得した実数値。</p>
+
+  <div class="grid-4" style="margin-bottom:24px;">
+    <div class="metric-card winner">
+      <div class="metric-label">mCVR — 王者</div>
+      <div class="metric-value" style="color:#22c55e;">0.76%</div>
+      <div class="metric-sub">wakiga / fb_ta_210_2</div>
+    </div>
+    <div class="metric-card loser">
+      <div class="metric-label">mCVR — 敗者</div>
+      <div class="metric-value" style="color:#ef4444;">0.20%</div>
+      <div class="metric-sub">冬もっと / fb_ta_16</div>
+    </div>
+    <div class="metric-card loser">
+      <div class="metric-label">mCVR差（王者比）</div>
+      <div class="metric-value" style="color:#f97316;">-73%</div>
+      <div class="metric-sub">完敗ライン確定</div>
+    </div>
+    <div class="metric-card info">
+      <div class="metric-label">CTR比</div>
+      <div class="metric-value" style="color:#3b82f6;">1/4.5</div>
+      <div class="metric-sub">王者5.07% / 敗者1.13%</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🏆 王者記事LP</div>
+      <table class="diff-table">
+        <tr><td>article_id</td><td style="font-family:monospace;font-size:11px;">20260424_proust_cream2_wakiga</td></tr>
+        <tr><td>ABテスト</td><td>fb_ta_210_2</td></tr>
+        <tr><td>mCVR</td><td class="diff-positive">0.76%</td></tr>
+        <tr><td>CTR</td><td class="diff-positive">5.07%</td></tr>
+        <tr><td>landing_CVR</td><td>15.0%</td></tr>
+        <tr><td>PV</td><td>1,972</td></tr>
+        <tr><td>チャンク数</td><td>55</td></tr>
+        <tr><td>動画</td><td>0本</td></tr>
+        <tr><td>戦略型</td><td>問題再定義 × 論理メカニズム型</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">💀 敗者記事LP</div>
+      <table class="diff-table">
+        <tr><td>article_id</td><td style="font-family:monospace;font-size:11px;">20260425_proust_cream2_fuyumotto</td></tr>
+        <tr><td>ABテスト</td><td>fb_ta_16</td></tr>
+        <tr><td>mCVR</td><td class="diff-negative">0.20%</td></tr>
+        <tr><td>CTR</td><td class="diff-negative">1.13%</td></tr>
+        <tr><td>landing_CVR</td><td>17.6%</td></tr>
+        <tr><td>PV</td><td>1,504</td></tr>
+        <tr><td>チャンク数</td><td>108（王者の1.96倍）</td></tr>
+        <tr><td>動画</td><td>29本 ← 異常値</td></tr>
+        <tr><td>戦略型</td><td>季節フック × 動画連打 × 後半CTA集中</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chunk viz -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">チャンク数比較（王者 vs 敗者）</div>
+    <div class="chunk-viz">
+      <div class="chunk-col">
+        <div class="chunk-bar-wrap">
+          <div class="chunk-bar" style="height:51%;background:linear-gradient(180deg,#22c55e,#16a34a);">55</div>
+        </div>
+        <div class="chunk-label">王者<br>55 チャンク</div>
+      </div>
+      <div class="chunk-col">
+        <div class="chunk-bar-wrap">
+          <div class="chunk-bar" style="height:100%;background:linear-gradient(180deg,#ef4444,#b91c1c);">108</div>
+        </div>
+        <div class="chunk-label">敗者<br>108 チャンク<br><span style="color:#ef4444;font-weight:700;">1.96倍</span></div>
+      </div>
+    </div>
+    <div class="finding danger">
+      <strong>⚠️ チャンク比 1.96 → 「情報過剰型敗者」と判定</strong>
+      <p>閾値: 1.5倍超で情報過剰型の疑い。今回は1.96倍で明確に過剰。敗者のmechanism(32)+cta(25)で記事の53%を占める「説明と販促の押し付け型」構造。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PIPELINE ========== -->
+<section id="pipeline">
+  <div class="section-title"><span class="icon">⚙️</span>RAG登録パイプライン</div>
+  <p class="section-desc">敗者記事LPをkiji-ragに取り込んだ処理の流れ。</p>
+
+  <div class="card">
+    <div class="card-title">実行ステップ</div>
+    <div class="flow" style="flex-direction:column;gap:12px;">
+      <div style="display:flex;align-items:center;gap:16px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:12px 16px;">
+        <div style="font-size:20px;">🌐</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;">Step 1: getArticleHtml（SquadBeyond MCP）</div>
+          <div style="font-size:12px;color:var(--muted);">fb_ta_16 のHTML取得 → 223ブロック（text161 / image33 / video29）を blocks_raw.json に保存</div>
+        </div>
+        <div class="badge badge-green" style="margin-left:auto;">完了</div>
+      </div>
+      <div style="text-align:center;color:var(--muted);">↓</div>
+      <div style="display:flex;align-items:center;gap:16px;background:rgba(168,85,247,0.05);border:1px solid rgba(168,85,247,0.2);border-radius:8px;padding:12px 16px;">
+        <div style="font-size:20px;">🔪</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;">Step 2: チャンク化（merge_blocks.py）</div>
+          <div style="font-size:12px;color:var(--muted);">223ブロック → 108チャンクに統合。funnel_positionラベル付け → chunks_skeleton.json</div>
+        </div>
+        <div class="badge badge-green" style="margin-left:auto;">完了</div>
+      </div>
+      <div style="text-align:center;color:var(--muted);">↓</div>
+      <div style="display:flex;align-items:center;gap:16px;background:rgba(234,179,8,0.05);border:1px solid rgba(234,179,8,0.2);border-radius:8px;padding:12px 16px;">
+        <div style="font-size:20px;">🏷️</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;">Step 3: 20要素スコアリング（subagent × Claude）</div>
+          <div style="font-size:12px;color:var(--muted);">108チャンク全てをA1〜E4の20要素で0〜1点評価 → scores.json（API過負荷で直接Python実行に切り替え）</div>
+        </div>
+        <div class="badge badge-green" style="margin-left:auto;">完了</div>
+      </div>
+      <div style="text-align:center;color:var(--muted);">↓</div>
+      <div style="display:flex;align-items:center;gap:16px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:8px;padding:12px 16px;">
+        <div style="font-size:20px;">🔢</div>
+        <div>
+          <div style="font-weight:700;font-size:13px;">Step 4: Embedding生成（embed_chunks.py）</div>
+          <div style="font-size:12px;color:var(--muted);">108チャンク × 3072次元ベクトル → embeddings.npy / embedding_index.jsonl</div>
+        </div>
+        <div class="badge badge-green" style="margin-left:auto;">完了</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;padding:12px;background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.2);border-radius:8px;font-size:12px;">
+      <strong style="color:#22c55e;">✅ 登録完了:</strong>
+      <code>.claude/knowledge/kiji-rag/articles/20260425_proust_cream2_fuyumotto/</code><br>
+      → blocks_raw.json / chunks_skeleton.json / scores.json / chunks.json / embeddings.npy / embedding_index.jsonl / meta.json
+    </div>
+  </div>
+</section>
+
+<!-- ========== DIAGNOSIS ========== -->
+<section id="diagnosis">
+  <div class="section-title"><span class="icon">🩺</span>診断結果</div>
+  <p class="section-desc">kiji-diagnosis-crew v1.1 が出力した診断書 (confidence: 85%)</p>
+
+  <!-- Oneliner -->
+  <div class="diagnosis-headline">
+    <div class="label">🩺 病因ワンライナー</div>
+    <p>敗者は『情報過剰・冗長型』。チャンク量が王者の約2倍(108 vs 55)、CTAのE層スコアが2.4倍(14.3 vs 6.05)、mechanism層も2倍肥大。一方で <strong>opening の D3_scenario（体験への自己投影）が0点</strong>で、読者を物語に引き込めぬまま CTA連打で押し切る構造に陥っている。</p>
+  </div>
+
+  <!-- Confidence -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">診断信頼度</div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="confidence-stars">
+        <span class="star" style="color:#eab308;">★</span>
+        <span class="star" style="color:#eab308;">★</span>
+        <span class="star" style="color:#eab308;">★</span>
+        <span class="star" style="color:#eab308;">★</span>
+        <span class="star" style="color:rgba(234,179,8,0.3);">★</span>
+      </div>
+      <div style="font-size:28px;font-weight:800;color:#eab308;">85%</div>
+      <div style="font-size:12px;color:var(--muted);">
+        mCVR差 0.56pt（王者比-73%）で完敗ライン明確 / 両記事PV1500-2000で十分 / top_diff_cellsとoverspec_cellsの両方向で病因一致<br>
+        <span style="color:#f97316;">⚠️ 発見が逆説的（スコア合計で勝つLPが負ける）のでmanual_review推奨</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top diff cells -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">王者有利トップ3セル（敗者の欠損）</div>
+    <table class="diff-table">
+      <tr>
+        <th>順位</th><th>Funnel位置</th><th>Layer</th><th>差分(W-L)</th><th>注目要素</th><th>解釈</th>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">最重要</span></td>
+        <td><strong>opening</strong></td>
+        <td><span class="badge badge-purple">D層</span></td>
+        <td class="diff-positive">+1.2</td>
+        <td>D3_scenario</td>
+        <td style="font-size:11px;">王者は冒頭「行きつけの服屋で...」で読者の自己投影を叩き込む。敗者は0点。</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><strong>concept</strong></td>
+        <td><span class="badge badge-blue">B層</span></td>
+        <td class="diff-positive">+1.25</td>
+        <td>B3_data_evidence</td>
+        <td style="font-size:11px;">王者は概念提示でデータ証拠を同時投入。敗者は散漫。</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><strong>proof</strong></td>
+        <td><span class="badge badge-yellow">C層</span></td>
+        <td class="diff-positive">+0.8</td>
+        <td>C2_unique_mechanism</td>
+        <td style="font-size:11px;">王者はproofセクションでも独自メカニズムを再注入。敗者は数値だけになる。</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Overspec cells -->
+  <div class="card">
+    <div class="card-title">敗者過剰設計セル（スコアで王者を上回る = 詰めすぎ）</div>
+    <table class="diff-table">
+      <tr>
+        <th>Funnel位置</th><th>Layer</th><th>差分(W-L)</th><th>注目要素</th><th>解釈</th>
+      </tr>
+      <tr>
+        <td><strong>cta</strong></td>
+        <td><span class="badge badge-orange">E層</span></td>
+        <td class="diff-negative">-8.25</td>
+        <td>E2_offer_appeal</td>
+        <td style="font-size:11px;">CTAを<strong>25チャンク</strong>に分散してE層14.3点積む。王者は3チャンク/6.05点に圧縮。過剰CTAは逆効果の典型。</td>
+      </tr>
+      <tr>
+        <td><strong>mechanism</strong></td>
+        <td><span class="badge badge-yellow">C層</span></td>
+        <td class="diff-negative">-6.4</td>
+        <td>C2_unique_mechanism</td>
+        <td style="font-size:11px;">mechanismが<strong>32チャンク</strong>に肥大。論理を執拗に積み上げて読者を疲弊させる。</td>
+      </tr>
+      <tr>
+        <td><strong>mechanism</strong></td>
+        <td><span class="badge badge-blue">B層</span></td>
+        <td class="diff-negative">-4.3</td>
+        <td>B3_data_evidence</td>
+        <td style="font-size:11px;">mechanism中に権威・データを過剰投入。王者はauthorityセクションに集約してメリハリを作る。</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ========== MATRIX ========== -->
+<section id="matrix">
+  <div class="section-title"><span class="icon">🗂️</span>Funnel × Layer 全体スコア比較</div>
+  <p class="section-desc">各層の合計スコア。敗者はB/C/D/E層全てで王者を上回るのに負けるという逆説。</p>
+
+  <div class="card">
+    <div class="card-title">全体スコア合計（Funnel横断）</div>
+
+    <div style="margin-bottom:16px;">
+      <!-- Layer A -->
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+          <span><strong>A層</strong> 共感・恐怖・後悔・不安</span>
+          <span style="color:var(--muted);">王者 4.5 / 敗者 4.5</span>
+        </div>
+        <div style="display:flex;gap:4px;height:20px;">
+          <div style="flex:4.5;background:#3b82f6;border-radius:3px 0 0 3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">4.5</div>
+          <div style="flex:4.5;background:#f97316;border-radius:0 3px 3px 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">4.5</div>
+          <div style="flex:11;"></div>
+        </div>
+      </div>
+      <!-- Layer B -->
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+          <span><strong>B層</strong> 権威・社会証明・データ・透明性</span>
+          <span style="color:var(--muted);">王者 15.0 / 敗者 19.05</span>
+        </div>
+        <div style="display:flex;gap:4px;height:20px;">
+          <div style="flex:15;background:#3b82f6;border-radius:3px 0 0 3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">15.0</div>
+          <div style="flex:19;background:#ef4444;border-radius:0 3px 3px 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">19.05 ↑</div>
+          <div style="flex:6;"></div>
+        </div>
+      </div>
+      <!-- Layer C -->
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+          <span><strong>C層</strong> 因果・独自メカニズム・差別化・反論</span>
+          <span style="color:var(--muted);">王者 15.3 / 敗者 20.9</span>
+        </div>
+        <div style="display:flex;gap:4px;height:20px;">
+          <div style="flex:15.3;background:#3b82f6;border-radius:3px 0 0 3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">15.3</div>
+          <div style="flex:20.9;background:#ef4444;border-radius:0 3px 3px 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">20.9 ↑</div>
+          <div style="flex:3.8;"></div>
+        </div>
+      </div>
+      <!-- Layer D -->
+      <div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+          <span><strong>D層</strong> 変化・憧れ・シナリオ・希少性</span>
+          <span style="color:var(--muted);">王者 8.6 / 敗者 20.05</span>
+        </div>
+        <div style="display:flex;gap:4px;height:20px;">
+          <div style="flex:8.6;background:#3b82f6;border-radius:3px 0 0 3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">8.6</div>
+          <div style="flex:20.05;background:#ef4444;border-radius:0 3px 3px 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">20.05 ↑</div>
+          <div style="flex:11.35;"></div>
+        </div>
+      </div>
+      <!-- Layer E -->
+      <div style="margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+          <span><strong>E層</strong> 緊急性・オファー・リスク逆転・CTA</span>
+          <span style="color:var(--muted);">王者 6.05 / 敗者 14.3</span>
+        </div>
+        <div style="display:flex;gap:4px;height:20px;">
+          <div style="flex:6.05;background:#3b82f6;border-radius:3px 0 0 3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">6.05</div>
+          <div style="flex:14.3;background:#ef4444;border-radius:0 3px 3px 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">14.3 ↑</div>
+          <div style="flex:19.65;"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;font-size:11px;margin-top:12px;">
+        <div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;background:#3b82f6;border-radius:2px;"></div>王者（勝ち記事LP）</div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="width:12px;height:12px;background:#ef4444;border-radius:2px;"></div>敗者（負け記事LP）</div>
+      </div>
+    </div>
+
+    <div class="finding danger">
+      <strong>🔑 逆説的発見: スコア合計で勝つLPが負ける</strong>
+      <p>B/C/D/E層全てで敗者が王者を上回る。これは「要素の不足」ではなく「分量の過剰」が病因であることを示す。20要素ルーブリックの「足し算最適化」は逆効果。</p>
+    </div>
+  </div>
+
+  <!-- Funnel chunk distribution -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">Funnel別チャンク数分布</div>
+    <table class="funnel-table">
+      <tr>
+        <th style="text-align:left;">Funnel</th>
+        <th>王者</th>
+        <th>敗者</th>
+        <th>比率</th>
+        <th>コメント</th>
+      </tr>
+      <tr>
+        <td class="funnel-name">opening（冒頭）</td>
+        <td>4</td>
+        <td>3</td>
+        <td><span class="badge badge-green">0.75</span></td>
+        <td style="font-size:11px;text-align:left;">敗者の方が少ない唯一のセクション</td>
+      </tr>
+      <tr>
+        <td class="funnel-name">empathy（共感）</td>
+        <td>7</td>
+        <td>11</td>
+        <td><span class="badge badge-yellow">1.57</span></td>
+        <td style="font-size:11px;text-align:left;"></td>
+      </tr>
+      <tr>
+        <td class="funnel-name">concept（概念）</td>
+        <td>6</td>
+        <td>9</td>
+        <td><span class="badge badge-yellow">1.5</span></td>
+        <td style="font-size:11px;text-align:left;"></td>
+      </tr>
+      <tr>
+        <td class="funnel-name">mechanism（メカニズム）</td>
+        <td>18</td>
+        <td style="color:#ef4444;font-weight:700;">32</td>
+        <td><span class="badge badge-red">1.78</span></td>
+        <td style="font-size:11px;text-align:left;color:#ef4444;">過剰 — 読者を疲弊させる</td>
+      </tr>
+      <tr>
+        <td class="funnel-name">proof（証拠）</td>
+        <td>13</td>
+        <td>14</td>
+        <td><span class="badge badge-green">1.08</span></td>
+        <td style="font-size:11px;text-align:left;"></td>
+      </tr>
+      <tr>
+        <td class="funnel-name">authority（権威）</td>
+        <td>4</td>
+        <td>8</td>
+        <td><span class="badge badge-yellow">2.0</span></td>
+        <td style="font-size:11px;text-align:left;"></td>
+      </tr>
+      <tr>
+        <td class="funnel-name">cta（行動促進）</td>
+        <td>3</td>
+        <td style="color:#ef4444;font-weight:700;">25</td>
+        <td><span class="badge badge-red">8.3</span></td>
+        <td style="font-size:11px;text-align:left;color:#ef4444;">最大問題 — CTA連打は逆効果</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ========== PRESCRIPTION ========== -->
+<section id="prescription">
+  <div class="section-title"><span class="icon">💊</span>処方箋方針（次フェーズへの橋渡し）</div>
+  <p class="section-desc">診断書が出した swing_mode と推奨カード。実際の書き換えは kiji-prescriber が行う。</p>
+
+  <div class="swing-card" style="margin-bottom:16px;">
+    <div class="swing-mode-badge">B</div>
+    <div style="font-size:16px;font-weight:800;margin-bottom:8px;">swing_mode: B-modified（新発見から生まれたモード）</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">
+      従来のA/B/Cモードでは「欠損深さ」で判定していたが、今回の病因は「過剰さ」。<br>
+      <strong>両案ともに「削る」方向のmedium改修</strong>が必要。削り方の幅で差を出す。
+    </div>
+    <div class="grid-2">
+      <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:16px;">
+        <div style="font-size:12px;font-weight:700;color:#22c55e;margin-bottom:8px;">📋 A案: medium-削減型</div>
+        <div style="font-size:12px;color:var(--muted);">
+          ① opening を再構築（D3_scenario 1.2点投入）<br>
+          ② cta を 25 → 8チャンクに圧縮<br>
+          ③ mechanism を 32 → 20チャンクに整理<br>
+          <strong style="color:var(--text);">既存構造を保持しつつ濃度を倍に</strong>
+        </div>
+      </div>
+      <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:8px;padding:16px;">
+        <div style="font-size:12px;font-weight:700;color:#a855f7;margin-bottom:8px;">🔄 B案: medium-再構築型</div>
+        <div style="font-size:12px;color:var(--muted);">
+          ① opening を物語型に完全リプレース（『冬の○○な日に...』）<br>
+          ② mechanism + cta を半分以下に圧縮<br>
+          ③ 削いた分 authority に医師ドラマを厚く積む<br>
+          <strong style="color:var(--text);">情報量1/2・感情濃度2倍</strong>
+        </div>
+      </div>
+    </div>
+    <div class="finding" style="margin-top:12px;">
+      <strong>🔗 共通原則</strong>
+      <p>両案とも「冗長性除去 × 感情ロック強化」が主軸。20要素ルーブリックの足し算最適化は逆効果という発見を両案に反映。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">推奨カードデッキ</div>
+    <div class="grid-2" style="gap:12px;">
+      <div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">訴求軸</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="badge badge-blue">医師証言</span>
+          <span class="badge badge-blue">解放×自由</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">ストーリー型</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="badge badge-purple">1人称告白</span>
+          <span class="badge badge-purple">医師視点</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">感情アーク型</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="badge badge-orange">絶望→希望V字</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">オファー軸 / ゲート型</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="badge badge-green">保証攻め</span>
+          <span class="badge badge-yellow">アンケート継続</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--muted);">
+      根拠: 1人称告白(opening-D補強) × 医師視点(concept-B補強) × V字アーク(D層を物語化) × アンケートゲート(cta-E分散→1点集中化)
+    </div>
+  </div>
+</section>
+
+<!-- ========== IMAGE PIPELINE ========== -->
+<section id="image-pipeline">
+  <div class="section-title"><span class="icon">🖼️</span>画像盲目問題の解決（2026-04-26 追記）</div>
+  <p class="section-desc">RAG化した記事の画像が embedding 時に空文字でしか入っていなかった問題を発見・解決した。</p>
+
+  <!-- Problem -->
+  <div class="diagnosis-headline">
+    <div class="label">🚨 発見した重大問題</div>
+    <p>fuyumotto 記事 27枚の画像チャンクは、URL自体は <code>getArticleHtml</code> MCP で解決済みだったが、<strong>embedding時には空文字 ('') だけが渡されていた</strong>。つまり<strong>RAG検索で1ミリも引っかからない画像盲目状態</strong>で完成していた。</p>
+  </div>
+
+  <!-- 3 routes -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">画像取得3経路ルール（自社/他社/越権で使い分け）</div>
+    <div class="grid-3" style="gap:12px;">
+      <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:16px;">
+        <div style="font-size:11px;color:#22c55e;font-weight:700;margin-bottom:6px;">① 自社案件（ヨミテ等）</div>
+        <div style="font-size:18px;font-weight:800;margin-bottom:8px;">getArticleHtml MCP</div>
+        <div style="font-size:11px;color:var(--muted);">data-src経由で実URL自動解決。今回 fuyumotto はこれで33枚全部取れていた</div>
+        <div class="badge badge-green" style="margin-top:8px;">✅ 動作確認済</div>
+      </div>
+      <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:8px;padding:16px;">
+        <div style="font-size:11px;color:#a855f7;font-weight:700;margin-bottom:6px;">② 他社案件（クロコス等）</div>
+        <div style="font-size:18px;font-weight:800;margin-bottom:8px;">Claude in Chrome MCP</div>
+        <div style="font-size:11px;color:var(--muted);">MCPアカウント越境不可。Chrome経由でDOM操作 → data-src 抽出。シロジャムは次セッションで実行</div>
+        <div class="badge badge-purple" style="margin-top:8px;">🚧 次セッション</div>
+      </div>
+      <div style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);border-radius:8px;padding:16px;">
+        <div style="font-size:11px;color:#f97316;font-weight:700;margin-bottom:6px;">③ MCP越権・全部詰まる時</div>
+        <div style="font-size:18px;font-weight:800;margin-bottom:8px;">手動スクショ → Vision</div>
+        <div style="font-size:11px;color:var(--muted);">人間がキャプチャ → Claude Visionで読む。最後の手段</div>
+        <div class="badge badge-orange" style="margin-top:8px;">🔧 fallback</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pipeline -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">画像→Description→Embedding 統合パイプライン</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-step-inner active">
+          <div class="flow-icon">🌐</div>
+          <div class="flow-name">URL解決</div>
+          <div class="flow-sub">3経路で取得</div>
+        </div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="flow-step-inner active">
+          <div class="flow-icon">🤖</div>
+          <div class="flow-name">Vision説明</div>
+          <div class="flow-sub">gemini-2.5-flash<br>1〜3文 / 画像</div>
+        </div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="flow-step-inner active">
+          <div class="flow-icon">📝</div>
+          <div class="flow-name">image_description<br>注入</div>
+          <div class="flow-sub">chunks.jsonに付与</div>
+        </div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="flow-step-inner active">
+          <div class="flow-icon">🔢</div>
+          <div class="flow-name">Embedding</div>
+          <div class="flow-sub">画像説明を含めて<br>3072dim化</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;font-size:12px;color:var(--muted);">
+      実装: <code>describe_images.py</code> 新規 + <code>embed_chunks.py</code> 改修（image_description自動含有）
+    </div>
+  </div>
+
+  <!-- Sample -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">生成された image_description サンプル（fuyumotto）</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="finding">
+        <strong>chunk2 (opening) — FV画像</strong>
+        <p>画像の主題は冬のワキガの原因と解決策の情報提示。視覚的訴求要素として赤色や黒色の太字テキスト、黄色のハイライト、楽天ランキング1位の実績表示。キーワード:「冬のワキガ」「原因は〇〇の異常増殖と判明」「楽天ランキング1位」「プルーストクリーム」</p>
+      </div>
+      <div class="finding">
+        <strong>chunk9 (empathy) — TV医師出演画像</strong>
+        <p>白衣を着用した中年の男性医師が正面を向いている。画面上部に「JAPAN MORNING」のロゴ、左下には「LIVE」のテロップ。下部のテロップキーワードは「冬だからワキガケアしないのはかなり危険です。」</p>
+      </div>
+      <div class="finding">
+        <strong>chunk16 (concept) — 商品実績画像</strong>
+        <p>美白クリーム「PROUST CREAM 2.0」のチューブと箱。「160万本突破」という実績表示と「注文殺到」という人気を強調するテロップが配置されている</p>
+      </div>
+    </div>
+    <div style="margin-top:12px;background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:12px;font-size:12px;">
+      <strong style="color:#22c55e;">✅ Before/After:</strong>
+      画像クエリ「医師がテレビ出演しているシーン」「楽天1位バッジが入った商品画像」が
+      <strong>RAG検索で実際に上位ヒットするように</strong>なった
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="card">
+    <div class="card-title">記事別 画像description適用状況</div>
+    <table class="diff-table">
+      <tr>
+        <th>article_id</th><th>画像数</th><th>URL解決</th><th>Description</th><th>状態</th>
+      </tr>
+      <tr>
+        <td><code>20260424_proust_cream2_wakiga</code></td>
+        <td>27枚</td>
+        <td><span class="badge badge-green">✅</span></td>
+        <td><span class="badge badge-yellow">未処理</span></td>
+        <td>次回適用</td>
+      </tr>
+      <tr>
+        <td><code>20260424_aurelie_megumi_kakusen</code></td>
+        <td>46枚</td>
+        <td><span class="badge badge-green">✅</span></td>
+        <td><span class="badge badge-yellow">未処理</span></td>
+        <td>次回適用</td>
+      </tr>
+      <tr>
+        <td><code>20260425_proust_cream2_fuyumotto</code></td>
+        <td>33枚</td>
+        <td><span class="badge badge-green">✅</span></td>
+        <td><span class="badge badge-green">27/27 ✅</span></td>
+        <td>完了</td>
+      </tr>
+      <tr>
+        <td><code>20260426_sirojam_hand</code></td>
+        <td>50枚</td>
+        <td><span class="badge badge-red">lazy.png</span></td>
+        <td><span class="badge badge-red">未処理</span></td>
+        <td>Chrome MCP待ち</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ========== NEXT ========== -->
+<section id="next">
+  <div class="section-title"><span class="icon">🚀</span>次のアクション（残り7体agent）</div>
+  <p class="section-desc">今回の初回診断で得た知見をもとに調整が必要なagent仕様。</p>
+
+  <div class="grid-2">
+    <div class="finding">
+      <strong>kiji-prescriber-crew</strong>
+      <p>swing_mode B-modified（medium削減型 / medium再構築型）を実装。「削る」という概念を処方に組み込む。</p>
+    </div>
+    <div class="finding">
+      <strong>kiji-rewriter</strong>
+      <p>「削る」処方の重要性を明文化。チャンク統合・冗長削除をプロセスの最初のステップに組み込む。</p>
+    </div>
+    <div class="finding">
+      <strong>kiji-flow（agent化）</strong>
+      <p>chunk数の総量とfunnel別配分を評価軸に追加。「機能別チャンク密度の偏り検出」が必須指標に。</p>
+    </div>
+    <div class="finding">
+      <strong>kiji-diff</strong>
+      <p>王者・敗者の総チャンク数比 / 各funnelチャンク密度を比較指標に追加。</p>
+    </div>
+    <div class="finding warn">
+      <strong>kiji-visual-rhythm</strong>
+      <p>動画29本問題を捉える指標が必要。媒体別chunk count + 連続動画検出（王者は0本 vs 敗者は29本）。</p>
+    </div>
+    <div class="finding">
+      <strong>kiji-diagnosis-crew v1.1 → 改訂済み ✅</strong>
+      <p>chunk_count比較必須化 / swing_mode 3分類（欠損型/過剰型/混合型）/ 「逆説的発見」判定フラグ追加。</p>
+    </div>
+  </div>
+
+  <!-- Key insight -->
+  <div style="background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(168,85,247,0.1));border:1px solid rgba(59,130,246,0.3);border-radius:12px;padding:24px;margin-top:20px;">
+    <div style="font-size:11px;color:#3b82f6;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">🔑 CKO v4.0 核心知見（今回確立）</div>
+    <p style="font-size:15px;font-weight:700;line-height:1.8;margin-bottom:12px;">
+      「20要素ルーブリックでスコア合計が高い記事LPが勝つ」という前提は間違い。<br>
+      <span style="color:#ef4444;">情報過剰・冗長型のLPはスコアで勝っても mCVR で負ける。</span>
+    </p>
+    <p style="font-size:13px;color:var(--muted);">
+      正解は「必要な要素を必要な位置に適量入れる」こと。openingのD3_scenario（自己投影シナリオ）1チャンクが、mechanismの余分な10チャンクより価値が高い場合がある。<br>
+      この逆説的発見が残り7体のagent設計指針を全て変える。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>CKO v4.0 セッションレポート — kiji-diagnosis-crew v1.1 | proust cream2 初回診断 | 2026-04-25</p>
+  <p style="margin-top:4px;">一進VOYAGE号 | <code>reports/projects/proust/cko_v4_session_report.html</code></p>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('nav a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('nav a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+      const id = a.getAttribute('href').slice(1);
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('section').forEach(s => {
+    s.classList.add('fade-in');
+    observer.observe(s);
+  });
+
+  // Active nav on scroll
+  window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
